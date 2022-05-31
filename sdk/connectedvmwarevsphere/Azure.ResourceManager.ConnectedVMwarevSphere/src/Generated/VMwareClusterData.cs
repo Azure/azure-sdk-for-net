@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing the VMwareCluster data model. </summary>
     public partial class VMwareClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareClusterData(AzureLocation location) : base(location)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             NetworkIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VMwareClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

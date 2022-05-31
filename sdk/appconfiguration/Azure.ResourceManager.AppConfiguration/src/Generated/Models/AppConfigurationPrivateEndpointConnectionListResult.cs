@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class AppConfigurationPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionListResult"/>. </summary>
         internal AppConfigurationPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         internal AppConfigurationPrivateEndpointConnectionListResult(IReadOnlyList<AppConfigurationPrivateEndpointConnectionData> value, string nextLink)

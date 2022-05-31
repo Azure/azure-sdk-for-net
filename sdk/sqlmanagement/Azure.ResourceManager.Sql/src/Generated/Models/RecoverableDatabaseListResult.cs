@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The response to a list recoverable databases request. </summary>
     internal partial class RecoverableDatabaseListResult
     {
-        /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseListResult"/>. </summary>
         /// <param name="value"> A list of recoverable databases. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RecoverableDatabaseListResult(IEnumerable<RecoverableDatabaseData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseListResult"/>. </summary>
         /// <param name="value"> A list of recoverable databases. </param>
         internal RecoverableDatabaseListResult(IReadOnlyList<RecoverableDatabaseData> value)
         {

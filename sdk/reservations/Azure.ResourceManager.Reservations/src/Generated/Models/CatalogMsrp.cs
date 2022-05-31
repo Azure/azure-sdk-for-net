@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Pricing information about the SKU. </summary>
     internal partial class CatalogMsrp
     {
-        /// <summary> Initializes a new instance of CatalogMsrp. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogMsrp"/>. </summary>
         internal CatalogMsrp()
         {
         }
 
-        /// <summary> Initializes a new instance of CatalogMsrp. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogMsrp"/>. </summary>
         /// <param name="p1Y"> Amount in pricing currency. Tax not included. </param>
         internal CatalogMsrp(PurchasePrice p1Y)
         {

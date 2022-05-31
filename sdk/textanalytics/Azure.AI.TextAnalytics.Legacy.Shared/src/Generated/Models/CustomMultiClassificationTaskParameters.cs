@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The CustomMultiClassificationTaskParameters. </summary>
     internal partial class CustomMultiClassificationTaskParameters
     {
-        /// <summary> Initializes a new instance of CustomMultiClassificationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiClassificationTaskParameters"/>. </summary>
         /// <param name="projectName"></param>
         /// <param name="deploymentName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>

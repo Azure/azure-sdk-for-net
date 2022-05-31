@@ -14,7 +14,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure the autogrid layout. </summary>
     public partial class AutoGridLayoutOptions
     {
-        /// <summary> Initializes a new instance of AutoGridLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoGridLayoutOptions"/>. </summary>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public AutoGridLayoutOptions(IEnumerable<string> inputIds)
@@ -27,7 +27,7 @@ namespace Azure.Communication.MediaComposition
             InputIds = inputIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of AutoGridLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoGridLayoutOptions"/>. </summary>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <param name="highlightDominantSpeaker"> Toggle dominant speaker highlighting. </param>
         internal AutoGridLayoutOptions(IList<string> inputIds, bool? highlightDominantSpeaker)

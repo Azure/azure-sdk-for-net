@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static Site Function Overview ARM resource. </summary>
     public partial class StaticSiteFunctionOverviewARMResource : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSiteFunctionOverviewARMResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverviewARMResource"/>. </summary>
         public StaticSiteFunctionOverviewARMResource()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteFunctionOverviewARMResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteFunctionOverviewARMResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

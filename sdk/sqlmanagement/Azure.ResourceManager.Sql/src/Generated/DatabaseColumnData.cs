@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the DatabaseColumn data model. </summary>
     public partial class DatabaseColumnData : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseColumnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseColumnData"/>. </summary>
         public DatabaseColumnData()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseColumnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseColumnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

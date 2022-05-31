@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CORS policy for the Cosmos DB database account. </summary>
     public partial class CorsPolicy
     {
-        /// <summary> Initializes a new instance of CorsPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="CorsPolicy"/>. </summary>
         /// <param name="allowedOrigins"> The origin domains that are permitted to make a request against the service via CORS. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
         public CorsPolicy(string allowedOrigins)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AllowedOrigins = allowedOrigins;
         }
 
-        /// <summary> Initializes a new instance of CorsPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="CorsPolicy"/>. </summary>
         /// <param name="allowedOrigins"> The origin domains that are permitted to make a request against the service via CORS. </param>
         /// <param name="allowedMethods"> The methods (HTTP request verbs) that the origin domain may use for a CORS request. </param>
         /// <param name="allowedHeaders"> The request headers that the origin domain may specify on the CORS request. </param>

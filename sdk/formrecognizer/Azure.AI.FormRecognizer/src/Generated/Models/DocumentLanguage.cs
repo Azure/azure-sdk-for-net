@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object representing the detected language for a given text span. </summary>
     public partial class DocumentLanguage
     {
-        /// <summary> Initializes a new instance of DocumentLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentLanguage"/>. </summary>
         /// <param name="languageCode"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the language applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentLanguage"/>. </summary>
         /// <param name="languageCode"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the language applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>

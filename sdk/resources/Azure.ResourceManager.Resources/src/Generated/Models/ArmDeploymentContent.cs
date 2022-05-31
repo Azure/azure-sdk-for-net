@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment operation parameters. </summary>
     public partial class ArmDeploymentContent
     {
-        /// <summary> Initializes a new instance of ArmDeploymentContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentContent"/>. </summary>
         /// <param name="properties"> The deployment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ArmDeploymentContent(ArmDeploymentProperties properties)

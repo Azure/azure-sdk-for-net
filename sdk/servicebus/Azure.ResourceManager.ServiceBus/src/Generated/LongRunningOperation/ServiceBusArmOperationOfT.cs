@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceBus
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of ServiceBusArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusArmOperation{T}" /> for mocking. </summary>
         protected ServiceBusArmOperation()
         {
         }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Reservations
     /// <summary> A class representing the ReservationResponse data model. </summary>
     public partial class ReservationResponseData : ResourceData
     {
-        /// <summary> Initializes a new instance of ReservationResponseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationResponseData"/>. </summary>
         internal ReservationResponseData()
         {
             Kind = "Microsoft.Compute";
         }
 
-        /// <summary> Initializes a new instance of ReservationResponseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationResponseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Used for updating a disk access resource. </summary>
     public partial class DiskAccessPatch
     {
-        /// <summary> Initializes a new instance of DiskAccessPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskAccessPatch"/>. </summary>
         public DiskAccessPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

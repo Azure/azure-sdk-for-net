@@ -10,12 +10,12 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Abstract base type for data identities. </summary>
     public partial class SearchIndexerDataIdentity
     {
-        /// <summary> Initializes a new instance of SearchIndexerDataIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>. </summary>
         public SearchIndexerDataIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerDataIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
         internal SearchIndexerDataIdentity(string oDataType)
         {

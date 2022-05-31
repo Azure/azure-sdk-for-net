@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Set of data with rendering instructions. </summary>
     public partial class DiagnosticData
     {
-        /// <summary> Initializes a new instance of DiagnosticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticData"/>. </summary>
         public DiagnosticData()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticData"/>. </summary>
         /// <param name="table"> Data in table form. </param>
         /// <param name="renderingProperties"> Properties that describe how the table should be rendered. </param>
         internal DiagnosticData(DataTableResponseObject table, Rendering renderingProperties)

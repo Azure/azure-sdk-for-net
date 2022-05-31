@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of CosmosDBArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBArmOperation" /> for mocking. </summary>
         protected CosmosDBArmOperation()
         {
         }

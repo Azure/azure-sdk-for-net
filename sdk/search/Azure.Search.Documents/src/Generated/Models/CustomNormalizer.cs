@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Allows you to configure normalization for filterable, sortable, and facetable fields, which by default operate with strict matching. This is a user-defined configuration consisting of at least one or more filters, which modify the token that is stored. </summary>
     public partial class CustomNormalizer : LexicalNormalizer
     {
-        /// <summary> Initializes a new instance of CustomNormalizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomNormalizer"/>. </summary>
         /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in &apos;.microsoft&apos; nor &apos;.lucene&apos;, nor be named &apos;asciifolding&apos;, &apos;standard&apos;, &apos;lowercase&apos;, &apos;uppercase&apos;, or &apos;elision&apos;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CustomNormalizer(string name) : base(name)
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = "#Microsoft.Azure.Search.CustomNormalizer";
         }
 
-        /// <summary> Initializes a new instance of CustomNormalizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomNormalizer"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the normalizer. </param>
         /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in &apos;.microsoft&apos; nor &apos;.lucene&apos;, nor be named &apos;asciifolding&apos;, &apos;standard&apos;, &apos;lowercase&apos;, &apos;uppercase&apos;, or &apos;elision&apos;. </param>
         /// <param name="tokenFilters"> A list of token filters used to filter out or modify the input token. For example, you can specify a lowercase filter that converts all characters to lowercase. The filters are run in the order in which they are listed. </param>

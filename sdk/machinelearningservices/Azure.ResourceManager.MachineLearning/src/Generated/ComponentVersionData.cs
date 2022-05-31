@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the ComponentVersion data model. </summary>
     public partial class ComponentVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ComponentVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentVersionData"/>. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public ComponentVersionData(ComponentVersionProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of ComponentVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

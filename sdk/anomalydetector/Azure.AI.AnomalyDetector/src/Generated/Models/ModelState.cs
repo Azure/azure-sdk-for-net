@@ -13,7 +13,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The ModelState. </summary>
     public partial class ModelState
     {
-        /// <summary> Initializes a new instance of ModelState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelState"/>. </summary>
         internal ModelState()
         {
             EpochIds = new ChangeTrackingList<int>();
@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector.Models
             LatenciesInSeconds = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of ModelState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelState"/>. </summary>
         /// <param name="epochIds"> Epoch id. </param>
         /// <param name="trainLosses"></param>
         /// <param name="validationLosses"></param>

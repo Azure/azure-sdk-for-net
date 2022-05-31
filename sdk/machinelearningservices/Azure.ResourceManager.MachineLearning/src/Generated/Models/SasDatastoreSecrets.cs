@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Datastore SAS secrets. </summary>
     public partial class SasDatastoreSecrets : DatastoreSecrets
     {
-        /// <summary> Initializes a new instance of SasDatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDatastoreSecrets"/>. </summary>
         public SasDatastoreSecrets()
         {
             SecretsType = SecretsType.Sas;
         }
 
-        /// <summary> Initializes a new instance of SasDatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="sasToken"> Storage container SAS token. </param>
         internal SasDatastoreSecrets(SecretsType secretsType, string sasToken) : base(secretsType)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The HdfsDatastore. </summary>
     public partial class HdfsDatastore : DatastoreProperties
     {
-        /// <summary> Initializes a new instance of HdfsDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsDatastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>
         /// <param name="nameNodeAddress"> [Required] IP Address or DNS HostName. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="nameNodeAddress"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = DatastoreType.Hdfs;
         }
 
-        /// <summary> Initializes a new instance of HdfsDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsDatastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

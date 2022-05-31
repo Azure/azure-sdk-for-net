@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> The configuration settings of the Azure Active Directory default authorization policy. </summary>
     public partial class DefaultAuthorizationPolicy
     {
-        /// <summary> Initializes a new instance of DefaultAuthorizationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultAuthorizationPolicy"/>. </summary>
         public DefaultAuthorizationPolicy()
         {
             AllowedApplications = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DefaultAuthorizationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultAuthorizationPolicy"/>. </summary>
         /// <param name="allowedPrincipals"> The configuration settings of the Azure Active Directory allowed principals. </param>
         /// <param name="allowedApplications"> The configuration settings of the Azure Active Directory allowed applications. </param>
         internal DefaultAuthorizationPolicy(AllowedPrincipals allowedPrincipals, IList<string> allowedApplications)

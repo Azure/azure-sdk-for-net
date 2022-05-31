@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition for a job. </summary>
     public partial class MachineLearningJobProperties : ResourceBase
     {
-        /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobProperties"/>. </summary>
         public MachineLearningJobProperties()
         {
             Services = new ChangeTrackingDictionary<string, JobService>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

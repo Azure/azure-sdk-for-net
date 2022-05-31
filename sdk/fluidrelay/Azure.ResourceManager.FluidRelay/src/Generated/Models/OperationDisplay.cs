@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> The object that represents the operation. </summary>
     public partial class OperationDisplay
     {
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
         internal OperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
         /// <param name="provider"> Service provider: Microsoft.FluidRelay. </param>
         /// <param name="resource"> Type on which the operation is performed, e.g., &apos;servers&apos;. </param>
         /// <param name="operation"> Operation type, e.g., read, write, delete, etc. </param>

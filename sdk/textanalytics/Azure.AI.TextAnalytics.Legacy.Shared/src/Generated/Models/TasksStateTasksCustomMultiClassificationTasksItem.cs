@@ -13,14 +13,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The TasksStateTasksCustomMultiClassificationTasksItem. </summary>
     internal partial class TasksStateTasksCustomMultiClassificationTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksCustomMultiClassificationTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksCustomMultiClassificationTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         internal TasksStateTasksCustomMultiClassificationTasksItem(DateTimeOffset lastUpdateDateTime, State status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksCustomMultiClassificationTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksCustomMultiClassificationTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>

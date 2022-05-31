@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ServerCommunicationLink data model. </summary>
     public partial class ServerCommunicationLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerCommunicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerCommunicationLinkData"/>. </summary>
         public ServerCommunicationLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerCommunicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerCommunicationLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

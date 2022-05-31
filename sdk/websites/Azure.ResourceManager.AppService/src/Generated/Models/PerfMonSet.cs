@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Metric information. </summary>
     public partial class PerfMonSet
     {
-        /// <summary> Initializes a new instance of PerfMonSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerfMonSet"/>. </summary>
         internal PerfMonSet()
         {
             Values = new ChangeTrackingList<PerfMonSample>();
         }
 
-        /// <summary> Initializes a new instance of PerfMonSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerfMonSet"/>. </summary>
         /// <param name="name"> Unique key name of the counter. </param>
         /// <param name="startOn"> Start time of the period. </param>
         /// <param name="endOn"> End time of the period. </param>

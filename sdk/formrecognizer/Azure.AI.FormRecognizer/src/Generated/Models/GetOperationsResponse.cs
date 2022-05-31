@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> List Operations response object. </summary>
     internal partial class GetOperationsResponse
     {
-        /// <summary> Initializes a new instance of GetOperationsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetOperationsResponse"/>. </summary>
         /// <param name="value"> List of operations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GetOperationsResponse(IEnumerable<ModelOperationInfo> value)
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetOperationsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetOperationsResponse"/>. </summary>
         /// <param name="value"> List of operations. </param>
         /// <param name="nextLink"> Link to the next page of operations. </param>
         internal GetOperationsResponse(IReadOnlyList<ModelOperationInfo> value, string nextLink)

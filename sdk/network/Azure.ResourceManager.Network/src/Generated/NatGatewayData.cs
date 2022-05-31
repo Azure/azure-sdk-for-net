@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the NatGateway data model. </summary>
     public partial class NatGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NatGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatGatewayData"/>. </summary>
         public NatGatewayData()
         {
             Zones = new ChangeTrackingList<string>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
             Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of NatGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

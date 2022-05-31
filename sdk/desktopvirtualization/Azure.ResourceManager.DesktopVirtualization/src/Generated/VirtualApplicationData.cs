@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> A class representing the VirtualApplication data model. </summary>
     public partial class VirtualApplicationData : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplicationData"/>. </summary>
         /// <param name="commandLineSetting"> Specifies whether this published application can be launched with command line arguments provided by the client, command line arguments specified at publish time, or no command line arguments at all. </param>
         public VirtualApplicationData(CommandLineSetting commandLineSetting)
         {
             CommandLineSetting = commandLineSetting;
         }
 
-        /// <summary> Initializes a new instance of VirtualApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

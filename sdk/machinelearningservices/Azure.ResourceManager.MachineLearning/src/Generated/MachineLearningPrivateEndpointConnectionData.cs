@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the MachineLearningPrivateEndpointConnection data model. </summary>
     public partial class MachineLearningPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpointConnectionData"/>. </summary>
         public MachineLearningPrivateEndpointConnectionData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

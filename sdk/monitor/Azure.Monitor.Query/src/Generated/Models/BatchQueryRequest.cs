@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> An single request in a batch. </summary>
     internal partial class BatchQueryRequest
     {
-        /// <summary> Initializes a new instance of BatchQueryRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchQueryRequest"/>. </summary>
         /// <param name="id"> The error details. </param>
         /// <param name="body"> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </param>
         /// <param name="workspace"> Workspace Id to be included in the query. </param>

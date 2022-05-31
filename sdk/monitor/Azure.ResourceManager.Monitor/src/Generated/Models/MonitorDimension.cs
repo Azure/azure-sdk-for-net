@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specifies the criteria for converting log to metric. </summary>
     public partial class MonitorDimension
     {
-        /// <summary> Initializes a new instance of MonitorDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitorDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="operator"> Operator for dimension values. </param>
         /// <param name="values"> List of dimension values. </param>

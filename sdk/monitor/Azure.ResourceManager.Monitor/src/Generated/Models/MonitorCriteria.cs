@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specifies the criteria for converting log to metric. </summary>
     public partial class MonitorCriteria
     {
-        /// <summary> Initializes a new instance of MonitorCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorCriteria"/>. </summary>
         /// <param name="metricName"> Name of the metric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> is null. </exception>
         public MonitorCriteria(string metricName)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Dimensions = new ChangeTrackingList<MonitorDimension>();
         }
 
-        /// <summary> Initializes a new instance of MonitorCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorCriteria"/>. </summary>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="dimensions"> List of Dimensions for creating metric. </param>
         internal MonitorCriteria(string metricName, IList<MonitorDimension> dimensions)

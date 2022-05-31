@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Availability information of a product system. </summary>
     public partial class AvailabilityInformation
     {
-        /// <summary> Initializes a new instance of AvailabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityInformation"/>. </summary>
         internal AvailabilityInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityInformation"/>. </summary>
         /// <param name="availabilityStage"> Current availability stage of the product. Availability stage. </param>
         /// <param name="disabledReason"> Reason why the product is disabled. </param>
         /// <param name="disabledReasonMessage"> Message for why the product is disabled. </param>

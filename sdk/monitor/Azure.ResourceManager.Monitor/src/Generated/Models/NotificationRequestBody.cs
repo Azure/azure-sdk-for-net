@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The request body which contain contact detail metadata. </summary>
     public partial class NotificationRequestBody
     {
-        /// <summary> Initializes a new instance of NotificationRequestBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRequestBody"/>. </summary>
         /// <param name="alertType"> The name of the supported alert type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertType"/> is null. </exception>
         public NotificationRequestBody(string alertType)

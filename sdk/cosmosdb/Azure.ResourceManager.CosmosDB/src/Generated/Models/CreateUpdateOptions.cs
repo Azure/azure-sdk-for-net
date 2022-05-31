@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> CreateUpdateOptions are a list of key-value pairs that describe the resource. Supported keys are &quot;If-Match&quot;, &quot;If-None-Match&quot;, &quot;Session-Token&quot; and &quot;Throughput&quot;. </summary>
     public partial class CreateUpdateOptions
     {
-        /// <summary> Initializes a new instance of CreateUpdateOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateUpdateOptions"/>. </summary>
         public CreateUpdateOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of CreateUpdateOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateUpdateOptions"/>. </summary>
         /// <param name="throughput"> Request Units per second. For example, &quot;throughput&quot;: 10000. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal CreateUpdateOptions(int? throughput, AutoscaleSettings autoscaleSettings)

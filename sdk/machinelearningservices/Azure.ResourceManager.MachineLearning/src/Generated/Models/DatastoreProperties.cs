@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition for datastore contents configuration. </summary>
     public partial class DatastoreProperties : ResourceBase
     {
-        /// <summary> Initializes a new instance of DatastoreProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreProperties"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> is null. </exception>
         public DatastoreProperties(DatastoreCredentials credentials)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Credentials = credentials;
         }
 
-        /// <summary> Initializes a new instance of DatastoreProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

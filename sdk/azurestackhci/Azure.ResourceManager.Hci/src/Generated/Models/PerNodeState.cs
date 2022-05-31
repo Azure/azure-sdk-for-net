@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Status of Arc agent for a particular node in HCI Cluster. </summary>
     public partial class PerNodeState
     {
-        /// <summary> Initializes a new instance of PerNodeState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerNodeState"/>. </summary>
         internal PerNodeState()
         {
         }
 
-        /// <summary> Initializes a new instance of PerNodeState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerNodeState"/>. </summary>
         /// <param name="name"> Name of the Node in HCI Cluster. </param>
         /// <param name="arcInstance"> Fully qualified resource ID for the Arc agent of this node. </param>
         /// <param name="state"> State of Arc agent in this node. </param>

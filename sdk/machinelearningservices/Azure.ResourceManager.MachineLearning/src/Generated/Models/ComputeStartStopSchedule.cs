@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Compute start stop schedule properties. </summary>
     public partial class ComputeStartStopSchedule
     {
-        /// <summary> Initializes a new instance of ComputeStartStopSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopSchedule"/>. </summary>
         internal ComputeStartStopSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeStartStopSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopSchedule"/>. </summary>
         /// <param name="id"> Schedule id. </param>
         /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
         /// <param name="action"> The compute power action. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Recurrence schedule definition. </summary>
     public partial class RecurrenceSchedule : ScheduleBase
     {
-        /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecurrenceSchedule"/>. </summary>
         /// <param name="frequency"> [Required] Specifies frequency with with which to trigger schedule. </param>
         /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
         public RecurrenceSchedule(RecurrenceFrequency frequency, int interval)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ScheduleType = ScheduleType.Recurrence;
         }
 
-        /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecurrenceSchedule"/>. </summary>
         /// <param name="endOn">
         /// Specifies end time of schedule in ISO 8601 format.
         /// If not present, the schedule will run indefinitely

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the graphs and their properties. </summary>
     internal partial class GremlinGraphListResult
     {
-        /// <summary> Initializes a new instance of GremlinGraphListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphListResult"/>. </summary>
         internal GremlinGraphListResult()
         {
             Value = new ChangeTrackingList<GremlinGraphData>();
         }
 
-        /// <summary> Initializes a new instance of GremlinGraphListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphListResult"/>. </summary>
         /// <param name="value"> List of graphs and their properties. </param>
         internal GremlinGraphListResult(IReadOnlyList<GremlinGraphData> value)
         {

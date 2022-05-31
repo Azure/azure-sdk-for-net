@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Common resource representation. </summary>
     public partial class NetworkResourceData
     {
-        /// <summary> Initializes a new instance of NetworkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkResourceData"/>. </summary>
         public NetworkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

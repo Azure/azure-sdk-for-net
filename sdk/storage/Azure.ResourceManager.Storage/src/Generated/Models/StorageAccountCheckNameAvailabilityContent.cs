@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The parameters used to check the availability of the storage account name. </summary>
     public partial class StorageAccountCheckNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of StorageAccountCheckNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCheckNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The storage account name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public StorageAccountCheckNameAvailabilityContent(string name)

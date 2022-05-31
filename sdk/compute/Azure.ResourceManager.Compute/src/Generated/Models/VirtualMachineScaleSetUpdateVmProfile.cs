@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set virtual machine profile. </summary>
     public partial class VirtualMachineScaleSetUpdateVmProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateVmProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateVmProfile"/>. </summary>
         public VirtualMachineScaleSetUpdateVmProfile()
         {
         }

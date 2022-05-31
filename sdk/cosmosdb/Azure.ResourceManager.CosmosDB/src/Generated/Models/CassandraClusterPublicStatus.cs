@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Properties of a managed Cassandra cluster public status. </summary>
     public partial class CassandraClusterPublicStatus
     {
-        /// <summary> Initializes a new instance of CassandraClusterPublicStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterPublicStatus"/>. </summary>
         internal CassandraClusterPublicStatus()
         {
             ConnectionErrors = new ChangeTrackingList<ConnectionError>();
             DataCenters = new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>();
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterPublicStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterPublicStatus"/>. </summary>
         /// <param name="eTag"></param>
         /// <param name="reaperStatus"></param>
         /// <param name="connectionErrors"> List relevant information about any connection errors to the Datacenters. </param>

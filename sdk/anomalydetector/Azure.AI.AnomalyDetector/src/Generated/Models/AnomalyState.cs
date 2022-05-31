@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The AnomalyState. </summary>
     public partial class AnomalyState
     {
-        /// <summary> Initializes a new instance of AnomalyState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyState"/>. </summary>
         /// <param name="timestamp"> timestamp. </param>
         internal AnomalyState(DateTimeOffset timestamp)
         {
@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector.Models
             Errors = new ChangeTrackingList<ErrorResponse>();
         }
 
-        /// <summary> Initializes a new instance of AnomalyState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyState"/>. </summary>
         /// <param name="timestamp"> timestamp. </param>
         /// <param name="value"></param>
         /// <param name="errors"> Error message for the current timestamp. </param>

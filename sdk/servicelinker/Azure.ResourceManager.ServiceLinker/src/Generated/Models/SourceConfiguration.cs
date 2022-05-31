@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> A configuration item for source resource. </summary>
     public partial class SourceConfiguration
     {
-        /// <summary> Initializes a new instance of SourceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceConfiguration"/>. </summary>
         internal SourceConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceConfiguration"/>. </summary>
         /// <param name="name"> The name of setting. </param>
         /// <param name="value"> The value of setting. </param>
         internal SourceConfiguration(string name, string value)

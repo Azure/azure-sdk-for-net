@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The CustomEntitiesTaskParameters. </summary>
     internal partial class CustomEntitiesTaskParameters
     {
-        /// <summary> Initializes a new instance of CustomEntitiesTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesTaskParameters"/>. </summary>
         /// <param name="projectName"></param>
         /// <param name="deploymentName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>

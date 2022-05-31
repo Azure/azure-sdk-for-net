@@ -10,7 +10,7 @@ namespace Azure.Communication.MediaComposition.Models
     /// <summary> The dimensions of the scene or objects in the scene. </summary>
     public partial class LayoutResolution
     {
-        /// <summary> Initializes a new instance of LayoutResolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="LayoutResolution"/>. </summary>
         /// <param name="width"> Width of the object. </param>
         /// <param name="height"> Height of the object. </param>
         public LayoutResolution(int width, int height)

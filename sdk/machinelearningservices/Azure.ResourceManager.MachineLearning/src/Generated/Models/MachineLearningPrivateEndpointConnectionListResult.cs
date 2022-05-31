@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> List of private endpoint connection associated with the specified workspace. </summary>
     internal partial class MachineLearningPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpointConnectionListResult"/>. </summary>
         internal MachineLearningPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal MachineLearningPrivateEndpointConnectionListResult(IReadOnlyList<MachineLearningPrivateEndpointConnectionData> value)
         {

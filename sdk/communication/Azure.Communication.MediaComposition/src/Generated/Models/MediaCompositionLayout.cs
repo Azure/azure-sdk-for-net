@@ -12,12 +12,12 @@ namespace Azure.Communication.MediaComposition.Models
     /// <summary> Configure a layout. </summary>
     public partial class MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of MediaCompositionLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaCompositionLayout"/>. </summary>
         public MediaCompositionLayout()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaCompositionLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaCompositionLayout"/>. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="grid"> Configure the grid layout. </param>
         /// <param name="autoGrid"> Configure the autogrid layout. </param>

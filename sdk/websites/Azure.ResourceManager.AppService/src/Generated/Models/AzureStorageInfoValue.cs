@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Azure Files or Blob Storage access information value for dictionary storage. </summary>
     public partial class AzureStorageInfoValue
     {
-        /// <summary> Initializes a new instance of AzureStorageInfoValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageInfoValue"/>. </summary>
         public AzureStorageInfoValue()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureStorageInfoValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageInfoValue"/>. </summary>
         /// <param name="storageType"> Type of storage. </param>
         /// <param name="accountName"> Name of the storage account. </param>
         /// <param name="shareName"> Name of the file share (container name, for Blob storage). </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> The configuration settings of the Twitter provider. </summary>
     public partial class TwitterProvider
     {
-        /// <summary> Initializes a new instance of TwitterProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwitterProvider"/>. </summary>
         public TwitterProvider()
         {
         }
 
-        /// <summary> Initializes a new instance of TwitterProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="TwitterProvider"/>. </summary>
         /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the Twitter provider. </param>
         internal TwitterProvider(bool? enabled, TwitterRegistration registration)

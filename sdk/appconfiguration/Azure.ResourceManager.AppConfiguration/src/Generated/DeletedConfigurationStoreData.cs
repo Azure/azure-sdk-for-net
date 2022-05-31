@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class representing the DeletedConfigurationStore data model. </summary>
     public partial class DeletedConfigurationStoreData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedConfigurationStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedConfigurationStoreData"/>. </summary>
         internal DeletedConfigurationStoreData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DeletedConfigurationStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedConfigurationStoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

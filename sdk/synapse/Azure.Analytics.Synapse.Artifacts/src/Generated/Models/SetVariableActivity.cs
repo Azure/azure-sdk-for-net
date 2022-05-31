@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Set value for a Variable. </summary>
     public partial class SetVariableActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of SetVariableActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SetVariableActivity(string name) : base(name)
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SetVariable";
         }
 
-        /// <summary> Initializes a new instance of SetVariableActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

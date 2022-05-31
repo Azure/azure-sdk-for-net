@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB indexing policy. </summary>
     public partial class IndexingPolicy
     {
-        /// <summary> Initializes a new instance of IndexingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexingPolicy"/>. </summary>
         public IndexingPolicy()
         {
             IncludedPaths = new ChangeTrackingList<IncludedPath>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             SpatialIndexes = new ChangeTrackingList<SpatialSpec>();
         }
 
-        /// <summary> Initializes a new instance of IndexingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexingPolicy"/>. </summary>
         /// <param name="automatic"> Indicates if the indexing policy is automatic. </param>
         /// <param name="indexingMode"> Indicates the indexing mode. </param>
         /// <param name="includedPaths"> List of paths to include in the indexing. </param>

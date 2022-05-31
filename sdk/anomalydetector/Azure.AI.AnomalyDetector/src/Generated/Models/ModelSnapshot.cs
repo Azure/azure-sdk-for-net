@@ -12,7 +12,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The ModelSnapshot. </summary>
     public partial class ModelSnapshot
     {
-        /// <summary> Initializes a new instance of ModelSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelSnapshot"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
@@ -27,7 +27,7 @@ namespace Azure.AI.AnomalyDetector.Models
             VariablesCount = variablesCount;
         }
 
-        /// <summary> Initializes a new instance of ModelSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelSnapshot"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>

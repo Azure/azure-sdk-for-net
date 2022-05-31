@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The TritonModelJobInput. </summary>
     public partial class TritonModelJobInput : JobInput
     {
-        /// <summary> Initializes a new instance of TritonModelJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="TritonModelJobInput"/>. </summary>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public TritonModelJobInput(Uri uri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobInputType = JobInputType.TritonModel;
         }
 
-        /// <summary> Initializes a new instance of TritonModelJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="TritonModelJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Input Asset Delivery Mode. </param>

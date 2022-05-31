@@ -12,7 +12,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Base class for topology source nodes. </summary>
     public partial class SourceNodeBase
     {
-        /// <summary> Initializes a new instance of SourceNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceNodeBase"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SourceNodeBase(string name)
@@ -25,7 +25,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of SourceNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceNodeBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         internal SourceNodeBase(string type, string name)

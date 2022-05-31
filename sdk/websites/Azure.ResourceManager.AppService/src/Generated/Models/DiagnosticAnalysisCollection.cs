@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Diagnostic Analyses. </summary>
     internal partial class DiagnosticAnalysisCollection
     {
-        /// <summary> Initializes a new instance of DiagnosticAnalysisCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticAnalysisCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiagnosticAnalysisCollection(IEnumerable<AnalysisDefinitionData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticAnalysisCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticAnalysisCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal DiagnosticAnalysisCollection(IReadOnlyList<AnalysisDefinitionData> value, string nextLink)

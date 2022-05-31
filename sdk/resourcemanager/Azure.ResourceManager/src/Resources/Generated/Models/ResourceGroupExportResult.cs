@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Resource group export result. </summary>
     public partial class ResourceGroupExportResult
     {
-        /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupExportResult"/>. </summary>
         internal ResourceGroupExportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupExportResult"/>. </summary>
         /// <param name="template"> The template content. </param>
         /// <param name="error"> The template export error. </param>
         internal ResourceGroupExportResult(BinaryData template, ResponseError error)

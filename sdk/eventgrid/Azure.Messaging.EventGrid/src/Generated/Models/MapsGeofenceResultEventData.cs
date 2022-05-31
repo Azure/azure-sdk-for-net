@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Maps.GeofenceResult event. </summary>
     public partial class MapsGeofenceResultEventData : MapsGeofenceEventProperties
     {
-        /// <summary> Initializes a new instance of MapsGeofenceResultEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsGeofenceResultEventData"/>. </summary>
         internal MapsGeofenceResultEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MapsGeofenceResultEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsGeofenceResultEventData"/>. </summary>
         /// <param name="expiredGeofenceGeometryId"> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </param>
         /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
         /// <param name="invalidPeriodGeofenceGeometryId"> Lists of the geometry ID of the geofence which is in invalid period relative to the user time in the request. </param>

@@ -10,13 +10,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Lists all the discoverable ONVIF devices on the same subnet as the Edge Module. </summary>
     public partial class OnvifDeviceDiscoverRequest : MethodRequest
     {
-        /// <summary> Initializes a new instance of OnvifDeviceDiscoverRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifDeviceDiscoverRequest"/>. </summary>
         public OnvifDeviceDiscoverRequest()
         {
             MethodName = "onvifDeviceDiscover";
         }
 
-        /// <summary> Initializes a new instance of OnvifDeviceDiscoverRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifDeviceDiscoverRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="discoveryDuration"> The amount of time that the ONVIF device discovery will wait for supported device responses. </param>

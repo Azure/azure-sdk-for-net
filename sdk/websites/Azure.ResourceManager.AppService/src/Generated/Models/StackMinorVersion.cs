@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Application stack minor version. </summary>
     public partial class StackMinorVersion
     {
-        /// <summary> Initializes a new instance of StackMinorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="StackMinorVersion"/>. </summary>
         public StackMinorVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of StackMinorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="StackMinorVersion"/>. </summary>
         /// <param name="displayVersion"> Application stack minor version (display only). </param>
         /// <param name="runtimeVersion"> Application stack minor version (runtime only). </param>
         /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>

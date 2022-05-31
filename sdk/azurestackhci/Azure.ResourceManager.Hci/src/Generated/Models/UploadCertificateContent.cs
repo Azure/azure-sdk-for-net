@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The UploadCertificateRequest. </summary>
     public partial class UploadCertificateContent
     {
-        /// <summary> Initializes a new instance of UploadCertificateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadCertificateContent"/>. </summary>
         public UploadCertificateContent()
         {
         }

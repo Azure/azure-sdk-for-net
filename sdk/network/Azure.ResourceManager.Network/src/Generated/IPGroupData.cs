@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the IPGroup data model. </summary>
     public partial class IPGroupData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of IPGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPGroupData"/>. </summary>
         public IPGroupData()
         {
             IPAddresses = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
             FirewallPolicies = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of IPGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

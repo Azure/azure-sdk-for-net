@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Job output definition container information on where to find job output/logs. </summary>
     public partial class JobOutput
     {
-        /// <summary> Initializes a new instance of JobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobOutput"/>. </summary>
         public JobOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of JobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         internal JobOutput(string description, JobOutputType jobOutputType)

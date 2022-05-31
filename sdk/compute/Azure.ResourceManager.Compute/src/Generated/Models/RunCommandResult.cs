@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The RunCommandResult. </summary>
     public partial class RunCommandResult
     {
-        /// <summary> Initializes a new instance of RunCommandResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandResult"/>. </summary>
         internal RunCommandResult()
         {
             Value = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of RunCommandResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunCommandResult"/>. </summary>
         /// <param name="value"> Run command operation response. </param>
         internal RunCommandResult(IReadOnlyList<InstanceViewStatus> value)
         {

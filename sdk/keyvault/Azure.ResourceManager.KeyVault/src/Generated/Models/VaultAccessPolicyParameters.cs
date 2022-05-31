@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Parameters for updating the access policy in a vault. </summary>
     public partial class VaultAccessPolicyParameters : ResourceData
     {
-        /// <summary> Initializes a new instance of VaultAccessPolicyParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultAccessPolicyParameters"/>. </summary>
         /// <param name="properties"> Properties of the access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public VaultAccessPolicyParameters(VaultAccessPolicyProperties properties)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of VaultAccessPolicyParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultAccessPolicyParameters"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

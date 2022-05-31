@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The GitHub action container configuration. </summary>
     public partial class GitHubActionContainerConfiguration
     {
-        /// <summary> Initializes a new instance of GitHubActionContainerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubActionContainerConfiguration"/>. </summary>
         public GitHubActionContainerConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubActionContainerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubActionContainerConfiguration"/>. </summary>
         /// <param name="serverUri"> The server URL for the container registry where the build will be hosted. </param>
         /// <param name="imageName"> The image name for the build. </param>
         /// <param name="username"> The username used to upload the image to the container registry. </param>

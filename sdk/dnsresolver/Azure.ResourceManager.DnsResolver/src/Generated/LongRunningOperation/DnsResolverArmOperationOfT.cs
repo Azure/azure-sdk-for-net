@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DnsResolver
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of DnsResolverArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverArmOperation{T}" /> for mocking. </summary>
         protected DnsResolverArmOperation()
         {
         }

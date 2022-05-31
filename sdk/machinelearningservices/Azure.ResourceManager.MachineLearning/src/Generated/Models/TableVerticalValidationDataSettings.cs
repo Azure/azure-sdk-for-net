@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Validation settings for AutoML Table vertical tasks - Classification/Regression/Forecasting. </summary>
     public partial class TableVerticalValidationDataSettings : ValidationDataSettings
     {
-        /// <summary> Initializes a new instance of TableVerticalValidationDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableVerticalValidationDataSettings"/>. </summary>
         public TableVerticalValidationDataSettings()
         {
             CvSplitColumnNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TableVerticalValidationDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableVerticalValidationDataSettings"/>. </summary>
         /// <param name="data"> Validation data MLTable. </param>
         /// <param name="validationDataSize">
         /// The fraction of training dataset that needs to be set aside for validation purpose.

@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The request payload for cancel all media operations. </summary>
     internal partial class CancelAllMediaOperationsRequest
     {
-        /// <summary> Initializes a new instance of CancelAllMediaOperationsRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelAllMediaOperationsRequest"/>. </summary>
         public CancelAllMediaOperationsRequest()
         {
         }

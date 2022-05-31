@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Every relation is an entity graph of a certain relationType, where all entities are connected and have specific roles within the relation context. </summary>
     internal partial class HealthcareRelationInternal
     {
-        /// <summary> Initializes a new instance of HealthcareRelationInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelationInternal"/>. </summary>
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Models
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of HealthcareRelationInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelationInternal"/>. </summary>
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
         internal HealthcareRelationInternal(HealthcareEntityRelationType relationType, IList<HealthcareRelationEntity> entities)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class TextClassification : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of TextClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextClassification"/>. </summary>
         public TextClassification()
         {
             TaskType = TaskType.TextClassification;
         }
 
-        /// <summary> Initializes a new instance of TextClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextClassification"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="primaryMetric"> Primary metric for Text-Classification task. </param>

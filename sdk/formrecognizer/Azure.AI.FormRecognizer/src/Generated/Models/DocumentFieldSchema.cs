@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Description of the field semantic schema using a JSON Schema style syntax. </summary>
     public partial class DocumentFieldSchema
     {
-        /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFieldSchema"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         internal DocumentFieldSchema(DocumentFieldType type)
         {
@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Properties = new ChangeTrackingDictionary<string, DocumentFieldSchema>();
         }
 
-        /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFieldSchema"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="description"> Field description. </param>
         /// <param name="example"> Example field content. </param>

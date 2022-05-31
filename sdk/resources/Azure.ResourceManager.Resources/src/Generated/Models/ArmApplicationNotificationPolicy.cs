@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Managed application notification policy. </summary>
     internal partial class ArmApplicationNotificationPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationNotificationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationNotificationPolicy"/>. </summary>
         /// <param name="notificationEndpoints"> The managed application notification endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationEndpoints"/> is null. </exception>
         public ArmApplicationNotificationPolicy(IEnumerable<ArmApplicationNotificationEndpoint> notificationEndpoints)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             NotificationEndpoints = notificationEndpoints.ToList();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationNotificationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationNotificationPolicy"/>. </summary>
         /// <param name="notificationEndpoints"> The managed application notification endpoint. </param>
         internal ArmApplicationNotificationPolicy(IList<ArmApplicationNotificationEndpoint> notificationEndpoints)
         {

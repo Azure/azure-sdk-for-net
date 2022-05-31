@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> The Address update parameters. </summary>
     public partial class AddressResourcePatch
     {
-        /// <summary> Initializes a new instance of AddressResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressResourcePatch"/>. </summary>
         public AddressResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

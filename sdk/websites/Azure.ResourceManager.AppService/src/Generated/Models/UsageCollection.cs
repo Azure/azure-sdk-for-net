@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of usages. </summary>
     internal partial class UsageCollection
     {
-        /// <summary> Initializes a new instance of UsageCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal UsageCollection(IEnumerable<AppServiceUsage> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of UsageCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal UsageCollection(IReadOnlyList<AppServiceUsage> value, string nextLink)

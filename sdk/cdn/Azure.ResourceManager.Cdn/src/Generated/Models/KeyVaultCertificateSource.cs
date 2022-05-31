@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Describes the parameters for using a user&apos;s KeyVault certificate for securing custom domain. </summary>
     public partial class KeyVaultCertificateSource
     {
-        /// <summary> Initializes a new instance of KeyVaultCertificateSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateSource"/>. </summary>
         /// <param name="sourceType"></param>
         /// <param name="subscriptionId"> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </param>
         /// <param name="resourceGroupName"> Resource group of the user&apos;s Key Vault containing the SSL certificate. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
             DeleteRule = deleteRule;
         }
 
-        /// <summary> Initializes a new instance of KeyVaultCertificateSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateSource"/>. </summary>
         /// <param name="sourceType"></param>
         /// <param name="subscriptionId"> Subscription Id of the user&apos;s Key Vault containing the SSL certificate. </param>
         /// <param name="resourceGroupName"> Resource group of the user&apos;s Key Vault containing the SSL certificate. </param>

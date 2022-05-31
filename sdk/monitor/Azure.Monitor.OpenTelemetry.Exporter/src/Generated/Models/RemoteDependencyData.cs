@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> An instance of Remote Dependency represents an interaction of the monitored component with a remote component/service like SQL or an HTTP endpoint. </summary>
     internal partial class RemoteDependencyData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of RemoteDependencyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDependencyData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="name"> Name of the command initiated with this dependency call. Low cardinality value. Examples are stored procedure name and URL path template. </param>
         /// <param name="duration"> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Class for data inputs. </summary>
     public partial class TableVerticalDataSettings : DataSettings
     {
-        /// <summary> Initializes a new instance of TableVerticalDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableVerticalDataSettings"/>. </summary>
         /// <param name="targetColumnName">
         /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Initializes a new instance of TableVerticalDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableVerticalDataSettings"/>. </summary>
         /// <param name="targetColumnName">
         /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.

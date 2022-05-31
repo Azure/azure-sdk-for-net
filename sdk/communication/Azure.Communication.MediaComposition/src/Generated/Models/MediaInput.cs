@@ -12,12 +12,12 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Media input to be used in the composition. </summary>
     public partial class MediaInput
     {
-        /// <summary> Initializes a new instance of MediaInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaInput"/>. </summary>
         public MediaInput()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaInput"/>. </summary>
         /// <param name="groupCall"> Group call to be used as an input or output. </param>
         /// <param name="room"> Group call to be used as an input or output. </param>
         /// <param name="teamsMeeting"> A Teams meeting to be used as an input or output. </param>

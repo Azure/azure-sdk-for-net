@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Describes information on user who created this ComputeInstance. </summary>
     public partial class ComputeInstanceCreatedBy
     {
-        /// <summary> Initializes a new instance of ComputeInstanceCreatedBy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeInstanceCreatedBy"/>. </summary>
         internal ComputeInstanceCreatedBy()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeInstanceCreatedBy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeInstanceCreatedBy"/>. </summary>
         /// <param name="userName"> Name of the user. </param>
         /// <param name="userOrgId"> Uniquely identifies user&apos; Azure Active Directory organization. </param>
         /// <param name="userId"> Uniquely identifies the user within his/her organization. </param>

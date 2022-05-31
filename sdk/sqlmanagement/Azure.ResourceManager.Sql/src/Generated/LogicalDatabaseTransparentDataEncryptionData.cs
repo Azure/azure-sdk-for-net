@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the LogicalDatabaseTransparentDataEncryption data model. </summary>
     public partial class LogicalDatabaseTransparentDataEncryptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalDatabaseTransparentDataEncryptionData"/>. </summary>
         public LogicalDatabaseTransparentDataEncryptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalDatabaseTransparentDataEncryptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

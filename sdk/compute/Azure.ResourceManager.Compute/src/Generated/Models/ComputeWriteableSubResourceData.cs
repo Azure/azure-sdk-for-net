@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The ComputeWriteableSubResourceData. </summary>
     public partial class ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of ComputeWriteableSubResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeWriteableSubResourceData"/>. </summary>
         public ComputeWriteableSubResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeWriteableSubResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeWriteableSubResourceData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         internal ComputeWriteableSubResourceData(ResourceIdentifier id)
         {

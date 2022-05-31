@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The azure resource info when target service type is AzureResource. </summary>
     public partial class AzureResource : TargetServiceBase
     {
-        /// <summary> Initializes a new instance of AzureResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResource"/>. </summary>
         public AzureResource()
         {
             ServiceType = TargetServiceType.AzureResource;
         }
 
-        /// <summary> Initializes a new instance of AzureResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResource"/>. </summary>
         /// <param name="serviceType"> The target service type. </param>
         /// <param name="id"> The Id of azure resource. </param>
         /// <param name="resourceProperties"> The azure resource connection related properties. </param>

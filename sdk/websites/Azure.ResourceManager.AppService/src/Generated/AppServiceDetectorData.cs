@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the AppServiceDetector data model. </summary>
     public partial class AppServiceDetectorData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDetectorData"/>. </summary>
         public AppServiceDetectorData()
         {
             Dataset = new ChangeTrackingList<DiagnosticData>();
             DataProvidersMetadata = new ChangeTrackingList<DataProviderMetadata>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDetectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

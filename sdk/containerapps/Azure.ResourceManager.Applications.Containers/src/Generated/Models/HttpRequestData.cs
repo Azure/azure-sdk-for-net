@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> HTTPGet specifies the http request to perform. </summary>
     public partial class HttpRequestData
     {
-        /// <summary> Initializes a new instance of HttpRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpRequestData"/>. </summary>
         /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
         public HttpRequestData(int port)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             Port = port;
         }
 
-        /// <summary> Initializes a new instance of HttpRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpRequestData"/>. </summary>
         /// <param name="host"> Host name to connect to, defaults to the pod IP. You probably want to set &quot;Host&quot; in httpHeaders instead. </param>
         /// <param name="httpHeaders"> Custom headers to set in the request. HTTP allows repeated headers. </param>
         /// <param name="path"> Path to access on the HTTP server. </param>

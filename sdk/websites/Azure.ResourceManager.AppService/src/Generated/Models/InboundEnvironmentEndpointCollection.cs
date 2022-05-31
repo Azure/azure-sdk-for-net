@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Inbound Environment Endpoints. </summary>
     internal partial class InboundEnvironmentEndpointCollection
     {
-        /// <summary> Initializes a new instance of InboundEnvironmentEndpointCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEnvironmentEndpointCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal InboundEnvironmentEndpointCollection(IEnumerable<InboundEnvironmentEndpoint> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of InboundEnvironmentEndpointCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEnvironmentEndpointCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal InboundEnvironmentEndpointCollection(IReadOnlyList<InboundEnvironmentEndpoint> value, string nextLink)

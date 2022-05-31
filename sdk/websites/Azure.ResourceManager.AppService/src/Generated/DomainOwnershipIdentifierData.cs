@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the DomainOwnershipIdentifier data model. </summary>
     public partial class DomainOwnershipIdentifierData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of DomainOwnershipIdentifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainOwnershipIdentifierData"/>. </summary>
         public DomainOwnershipIdentifierData()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainOwnershipIdentifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainOwnershipIdentifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

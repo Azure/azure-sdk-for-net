@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Integration runtime debug resource. </summary>
     public partial class IntegrationRuntimeDebugResource : SubResourceDebugResource
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeDebugResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDebugResource"/>. </summary>
         /// <param name="properties"> Integration runtime properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public IntegrationRuntimeDebugResource(IntegrationRuntime properties)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeDebugResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDebugResource"/>. </summary>
         /// <param name="name"> The resource name. </param>
         /// <param name="properties"> Integration runtime properties. </param>
         internal IntegrationRuntimeDebugResource(string name, IntegrationRuntime properties) : base(name)

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Resource properties. </summary>
     public partial class DataCollectionRuleAssociationProperties : DataCollectionRuleAssociationData
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleAssociationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationProperties"/>. </summary>
         public DataCollectionRuleAssociationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleAssociationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

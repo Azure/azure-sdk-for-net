@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object representing various categories of entities. </summary>
     public partial class DocumentEntity
     {
-        /// <summary> Initializes a new instance of DocumentEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentEntity"/>. </summary>
         /// <param name="category"> Entity type. </param>
         /// <param name="content"> Entity content. </param>
         /// <param name="spans"> Location of the entity in the reading order concatenated content. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentEntity"/>. </summary>
         /// <param name="category"> Entity type. </param>
         /// <param name="subCategory"> Entity sub type. </param>
         /// <param name="content"> Entity content. </param>

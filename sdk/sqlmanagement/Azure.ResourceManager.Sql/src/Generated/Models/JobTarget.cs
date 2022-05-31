@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A job target, for example a specific database or a container of databases that is evaluated during job execution. </summary>
     public partial class JobTarget
     {
-        /// <summary> Initializes a new instance of JobTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobTarget"/>. </summary>
         /// <param name="targetType"> The target type. </param>
         public JobTarget(JobTargetType targetType)
         {
             TargetType = targetType;
         }
 
-        /// <summary> Initializes a new instance of JobTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobTarget"/>. </summary>
         /// <param name="membershipType"> Whether the target is included or excluded from the group. </param>
         /// <param name="targetType"> The target type. </param>
         /// <param name="serverName"> The target server name. </param>

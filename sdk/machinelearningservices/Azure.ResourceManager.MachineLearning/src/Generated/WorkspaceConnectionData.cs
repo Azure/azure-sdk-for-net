@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the WorkspaceConnection data model. </summary>
     public partial class WorkspaceConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionData"/>. </summary>
         public WorkspaceConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

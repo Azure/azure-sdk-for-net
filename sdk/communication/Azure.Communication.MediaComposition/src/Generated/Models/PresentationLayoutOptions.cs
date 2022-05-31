@@ -14,7 +14,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure the presentation layout. </summary>
     public partial class PresentationLayoutOptions
     {
-        /// <summary> Initializes a new instance of PresentationLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresentationLayoutOptions"/>. </summary>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="presenterId"/> or <paramref name="audienceIds"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.Communication.MediaComposition
             AudienceIds = audienceIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of PresentationLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresentationLayoutOptions"/>. </summary>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
         /// <param name="audiencePosition"> Position of the audience streams. </param>

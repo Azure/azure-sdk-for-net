@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Image for the product. </summary>
     public partial class ImageInformation
     {
-        /// <summary> Initializes a new instance of ImageInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageInformation"/>. </summary>
         internal ImageInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageInformation"/>. </summary>
         /// <param name="imageType"> Type of the image. </param>
         /// <param name="imageUri"> Url of the image. </param>
         internal ImageInformation(ImageType? imageType, Uri imageUri)

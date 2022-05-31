@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure data lake store read settings. </summary>
     public partial class AzureDataLakeStoreReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStoreReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreReadSettings"/>. </summary>
         public AzureDataLakeStoreReadSettings()
         {
             Type = "AzureDataLakeStoreReadSettings";
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeStoreReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

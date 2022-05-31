@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Datastore account key secrets. </summary>
     public partial class AccountKeyDatastoreSecrets : DatastoreSecrets
     {
-        /// <summary> Initializes a new instance of AccountKeyDatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountKeyDatastoreSecrets"/>. </summary>
         public AccountKeyDatastoreSecrets()
         {
             SecretsType = SecretsType.AccountKey;
         }
 
-        /// <summary> Initializes a new instance of AccountKeyDatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountKeyDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="key"> Storage account key. </param>
         internal AccountKeyDatastoreSecrets(SecretsType secretsType, string key) : base(secretsType)

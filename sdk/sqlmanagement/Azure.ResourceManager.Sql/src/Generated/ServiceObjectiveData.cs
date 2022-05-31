@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ServiceObjective data model. </summary>
     public partial class ServiceObjectiveData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceObjectiveData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveData"/>. </summary>
         public ServiceObjectiveData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceObjectiveData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

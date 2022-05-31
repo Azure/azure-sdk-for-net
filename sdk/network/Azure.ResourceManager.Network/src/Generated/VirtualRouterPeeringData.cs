@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the VirtualRouterPeering data model. </summary>
     public partial class VirtualRouterPeeringData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VirtualRouterPeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterPeeringData"/>. </summary>
         public VirtualRouterPeeringData()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualRouterPeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualRouterPeeringData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

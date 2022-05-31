@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Reference to an asset via its ARM resource ID. </summary>
     public partial class IdAssetReference : AssetReferenceBase
     {
-        /// <summary> Initializes a new instance of IdAssetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdAssetReference"/>. </summary>
         /// <param name="assetId"> [Required] ARM resource ID of the asset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
         public IdAssetReference(string assetId)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ReferenceType = ReferenceType.Id;
         }
 
-        /// <summary> Initializes a new instance of IdAssetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdAssetReference"/>. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
         /// <param name="assetId"> [Required] ARM resource ID of the asset. </param>
         internal IdAssetReference(ReferenceType referenceType, string assetId) : base(referenceType)

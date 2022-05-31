@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The CustomEntitiesResult. </summary>
     internal partial class CustomEntitiesResult
     {
-        /// <summary> Initializes a new instance of CustomEntitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of CustomEntitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntitiesResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>

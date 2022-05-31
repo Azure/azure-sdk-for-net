@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the SiteConfig data model. </summary>
     public partial class SiteConfigData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of SiteConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigData"/>. </summary>
         public SiteConfigData()
         {
             DefaultDocuments = new ChangeTrackingList<string>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService
             AzureStorageAccounts = new ChangeTrackingDictionary<string, AzureStorageInfoValue>();
         }
 
-        /// <summary> Initializes a new instance of SiteConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

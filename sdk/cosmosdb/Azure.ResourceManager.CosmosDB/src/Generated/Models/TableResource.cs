@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB table resource object. </summary>
     public partial class TableResource
     {
-        /// <summary> Initializes a new instance of TableResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public TableResource(string id)

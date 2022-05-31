@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure Data Lake Gen1 datastore configuration. </summary>
     public partial class AzureDataLakeGen1Datastore : DatastoreProperties
     {
-        /// <summary> Initializes a new instance of AzureDataLakeGen1Datastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeGen1Datastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>
         /// <param name="storeName"> [Required] Azure Data Lake store name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="storeName"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = DatastoreType.AzureDataLakeGen1;
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeGen1Datastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeGen1Datastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

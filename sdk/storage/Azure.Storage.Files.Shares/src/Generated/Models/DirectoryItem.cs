@@ -12,7 +12,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> A listed directory item. </summary>
     internal partial class DirectoryItem
     {
-        /// <summary> Initializes a new instance of DirectoryItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectoryItem"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal DirectoryItem(string name)
@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.Shares.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of DirectoryItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectoryItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="fileId"></param>
         /// <param name="properties"> File properties. </param>

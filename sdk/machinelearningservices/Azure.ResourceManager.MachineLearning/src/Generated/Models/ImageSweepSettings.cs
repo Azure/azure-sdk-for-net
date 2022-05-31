@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
     public partial class ImageSweepSettings
     {
-        /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSweepSettings"/>. </summary>
         /// <param name="limits"> [Required] Limit settings for model sweeping and hyperparameter sweeping. </param>
         /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="limits"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SamplingAlgorithm = samplingAlgorithm;
         }
 
-        /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSweepSettings"/>. </summary>
         /// <param name="earlyTermination"> Type of early termination policy. </param>
         /// <param name="limits"> [Required] Limit settings for model sweeping and hyperparameter sweeping. </param>
         /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>

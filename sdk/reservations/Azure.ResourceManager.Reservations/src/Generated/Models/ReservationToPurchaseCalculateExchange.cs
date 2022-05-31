@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Reservation purchase details. </summary>
     public partial class ReservationToPurchaseCalculateExchange
     {
-        /// <summary> Initializes a new instance of ReservationToPurchaseCalculateExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationToPurchaseCalculateExchange"/>. </summary>
         internal ReservationToPurchaseCalculateExchange()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationToPurchaseCalculateExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationToPurchaseCalculateExchange"/>. </summary>
         /// <param name="properties"></param>
         /// <param name="billingCurrencyTotal"></param>
         internal ReservationToPurchaseCalculateExchange(PurchaseRequestContent properties, PurchasePrice billingCurrencyTotal)

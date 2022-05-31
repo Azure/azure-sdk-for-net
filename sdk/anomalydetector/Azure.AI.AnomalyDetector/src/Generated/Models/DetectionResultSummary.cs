@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The DetectionResultSummary. </summary>
     public partial class DetectionResultSummary
     {
-        /// <summary> Initializes a new instance of DetectionResultSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionResultSummary"/>. </summary>
         /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
         /// <param name="setupInfo"> Detection request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="setupInfo"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.AI.AnomalyDetector.Models
             SetupInfo = setupInfo;
         }
 
-        /// <summary> Initializes a new instance of DetectionResultSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionResultSummary"/>. </summary>
         /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
         /// <param name="errors"> Error message when detection is failed. </param>
         /// <param name="variableStates"></param>

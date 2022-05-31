@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Topology of the specified resource group. </summary>
     public partial class Topology
     {
-        /// <summary> Initializes a new instance of Topology. </summary>
+        /// <summary> Initializes a new instance of <see cref="Topology"/>. </summary>
         internal Topology()
         {
             Resources = new ChangeTrackingList<TopologyResource>();
         }
 
-        /// <summary> Initializes a new instance of Topology. </summary>
+        /// <summary> Initializes a new instance of <see cref="Topology"/>. </summary>
         /// <param name="id"> GUID representing the operation id. </param>
         /// <param name="createdOn"> The datetime when the topology was initially created for the resource group. </param>
         /// <param name="lastModified"> The datetime when the topology was last modified. </param>

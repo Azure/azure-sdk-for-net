@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The request of entire or last anomaly detection. </summary>
     public partial class DetectRequest
     {
-        /// <summary> Initializes a new instance of DetectRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectRequest"/>. </summary>
         /// <param name="series"> Time series data points. Points should be sorted by timestamp in ascending order to match the anomaly detection result. If the data is not sorted correctly or there is duplicated timestamp, the API will not work. In such case, an error message will be returned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public DetectRequest(IEnumerable<TimeSeriesPoint> series)

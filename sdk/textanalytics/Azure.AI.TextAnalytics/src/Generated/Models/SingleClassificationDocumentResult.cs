@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The SingleClassificationDocumentResult. </summary>
     internal partial class SingleClassificationDocumentResult : DocumentResult
     {
-        /// <summary> Initializes a new instance of SingleClassificationDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleClassificationDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="class"></param>
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Models
             Class = @class;
         }
 
-        /// <summary> Initializes a new instance of SingleClassificationDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleClassificationDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

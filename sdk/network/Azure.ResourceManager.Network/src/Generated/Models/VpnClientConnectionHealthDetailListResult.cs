@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of virtual network gateway vpn client connection health. </summary>
     public partial class VpnClientConnectionHealthDetailListResult
     {
-        /// <summary> Initializes a new instance of VpnClientConnectionHealthDetailListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealthDetailListResult"/>. </summary>
         internal VpnClientConnectionHealthDetailListResult()
         {
             Value = new ChangeTrackingList<VpnClientConnectionHealthDetail>();
         }
 
-        /// <summary> Initializes a new instance of VpnClientConnectionHealthDetailListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealthDetailListResult"/>. </summary>
         /// <param name="value"> List of vpn client connection health. </param>
         internal VpnClientConnectionHealthDetailListResult(IReadOnlyList<VpnClientConnectionHealthDetail> value)
         {

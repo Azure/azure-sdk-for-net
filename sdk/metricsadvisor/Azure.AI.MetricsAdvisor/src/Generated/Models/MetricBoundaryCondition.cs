@@ -11,7 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     public partial class MetricBoundaryCondition
     {
 
-        /// <summary> Initializes a new instance of MetricBoundaryCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricBoundaryCondition"/>. </summary>
         /// <param name="lowerBound">
         /// lower bound
         /// 

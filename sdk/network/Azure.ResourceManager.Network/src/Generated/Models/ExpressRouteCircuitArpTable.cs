@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The ARP table associated with the ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCircuitArpTable
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitArpTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitArpTable"/>. </summary>
         internal ExpressRouteCircuitArpTable()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitArpTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitArpTable"/>. </summary>
         /// <param name="age"> Entry age in minutes. </param>
         /// <param name="interface"> Interface address. </param>
         /// <param name="ipAddress"> The IP address. </param>

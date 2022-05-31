@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Error model. </summary>
     public partial class DefaultErrorResponseError
     {
-        /// <summary> Initializes a new instance of DefaultErrorResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultErrorResponseError"/>. </summary>
         internal DefaultErrorResponseError()
         {
             Details = new ChangeTrackingList<DefaultErrorResponseErrorDetailsItem>();
         }
 
-        /// <summary> Initializes a new instance of DefaultErrorResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultErrorResponseError"/>. </summary>
         /// <param name="code"> Standardized string to programmatically identify the error. </param>
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>

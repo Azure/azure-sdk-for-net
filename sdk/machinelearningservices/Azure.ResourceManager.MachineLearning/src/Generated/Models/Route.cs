@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The Route. </summary>
     public partial class Route
     {
-        /// <summary> Initializes a new instance of Route. </summary>
+        /// <summary> Initializes a new instance of <see cref="Route"/>. </summary>
         /// <param name="path"> [Required] The path for the route. </param>
         /// <param name="port"> [Required] The port for the route. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>

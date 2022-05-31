@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A DataLakeAnalytics compute. </summary>
     public partial class DataLakeAnalyticsCompute : Compute
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsCompute"/>. </summary>
         public DataLakeAnalyticsCompute()
         {
             ComputeType = ComputeType.DataLakeAnalytics;
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsCompute"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>

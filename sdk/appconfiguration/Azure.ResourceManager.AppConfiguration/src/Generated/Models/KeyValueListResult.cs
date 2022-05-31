@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> The result of a request to list key-values. </summary>
     internal partial class KeyValueListResult
     {
-        /// <summary> Initializes a new instance of KeyValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyValueListResult"/>. </summary>
         internal KeyValueListResult()
         {
             Value = new ChangeTrackingList<KeyValueData>();
         }
 
-        /// <summary> Initializes a new instance of KeyValueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyValueListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         internal KeyValueListResult(IReadOnlyList<KeyValueData> value, string nextLink)

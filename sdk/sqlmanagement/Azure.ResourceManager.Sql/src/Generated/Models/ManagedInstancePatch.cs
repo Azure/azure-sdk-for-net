@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An update request for an Azure SQL Database managed instance. </summary>
     public partial class ManagedInstancePatch
     {
-        /// <summary> Initializes a new instance of ManagedInstancePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePatch"/>. </summary>
         public ManagedInstancePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

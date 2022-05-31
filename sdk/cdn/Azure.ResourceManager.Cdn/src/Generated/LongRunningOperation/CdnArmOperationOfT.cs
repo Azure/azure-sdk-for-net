@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of CdnArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnArmOperation{T}" /> for mocking. </summary>
         protected CdnArmOperation()
         {
         }

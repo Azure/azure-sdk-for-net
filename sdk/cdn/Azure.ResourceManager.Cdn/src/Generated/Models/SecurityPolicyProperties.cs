@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The json object containing security policy parameters. </summary>
     public partial class SecurityPolicyProperties
     {
-        /// <summary> Initializes a new instance of SecurityPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
         public SecurityPolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
         /// <param name="policyType"> The type of the Security policy to create. </param>
         internal SecurityPolicyProperties(SecurityPolicyType policyType)
         {

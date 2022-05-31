@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class representing the LocalUser data model. </summary>
     public partial class LocalUserData : ResourceData
     {
-        /// <summary> Initializes a new instance of LocalUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalUserData"/>. </summary>
         public LocalUserData()
         {
             PermissionScopes = new ChangeTrackingList<PermissionScope>();
             SshAuthorizedKeys = new ChangeTrackingList<SshPublicKey>();
         }
 
-        /// <summary> Initializes a new instance of LocalUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

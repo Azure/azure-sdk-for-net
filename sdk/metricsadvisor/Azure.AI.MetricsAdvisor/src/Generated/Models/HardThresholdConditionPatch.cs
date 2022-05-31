@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The HardThresholdConditionPatch. </summary>
     internal partial class HardThresholdConditionPatch
     {
-        /// <summary> Initializes a new instance of HardThresholdConditionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardThresholdConditionPatch"/>. </summary>
         public HardThresholdConditionPatch()
         {
         }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a site. </summary>
     public partial class SitePatchResource : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of SitePatchResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SitePatchResource"/>. </summary>
         public SitePatchResource()
         {
             HostNames = new ChangeTrackingList<string>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             TrafficManagerHostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SitePatchResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SitePatchResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

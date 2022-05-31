@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </summary>
     public partial class ImageVerticalDataSettings : DataSettings
     {
-        /// <summary> Initializes a new instance of ImageVerticalDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageVerticalDataSettings"/>. </summary>
         /// <param name="targetColumnName">
         /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Initializes a new instance of ImageVerticalDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageVerticalDataSettings"/>. </summary>
         /// <param name="targetColumnName">
         /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.

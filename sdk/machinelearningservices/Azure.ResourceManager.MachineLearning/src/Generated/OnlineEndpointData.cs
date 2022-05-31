@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the OnlineEndpoint data model. </summary>
     public partial class OnlineEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of OnlineEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of OnlineEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

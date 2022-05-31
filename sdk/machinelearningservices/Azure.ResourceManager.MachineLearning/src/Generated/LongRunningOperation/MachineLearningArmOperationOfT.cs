@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of MachineLearningArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningArmOperation{T}" /> for mocking. </summary>
         protected MachineLearningArmOperation()
         {
         }

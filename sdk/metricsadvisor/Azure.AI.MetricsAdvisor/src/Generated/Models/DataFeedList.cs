@@ -13,13 +13,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DataFeedList. </summary>
     internal partial class DataFeedList
     {
-        /// <summary> Initializes a new instance of DataFeedList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedList"/>. </summary>
         internal DataFeedList()
         {
             Value = new ChangeTrackingList<DataFeedDetail>();
         }
 
-        /// <summary> Initializes a new instance of DataFeedList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
         internal DataFeedList(string nextLink, IReadOnlyList<DataFeedDetail> value)

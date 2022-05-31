@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Management group creation parameters. </summary>
     public partial class ManagementGroupCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ManagementGroupCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupCreateOrUpdateContent"/>. </summary>
         public ManagementGroupCreateOrUpdateContent()
         {
             Children = new ChangeTrackingList<ManagementGroupChildOptions>();

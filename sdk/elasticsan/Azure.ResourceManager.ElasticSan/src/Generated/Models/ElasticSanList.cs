@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> List of Elastic Sans. </summary>
     internal partial class ElasticSanList
     {
-        /// <summary> Initializes a new instance of ElasticSanList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanList"/>. </summary>
         /// <param name="value"> An array of Elastic San objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ElasticSanList(IEnumerable<ElasticSanData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanList"/>. </summary>
         /// <param name="value"> An array of Elastic San objects. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal ElasticSanList(IReadOnlyList<ElasticSanData> value, string nextLink)

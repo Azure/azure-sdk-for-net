@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class representing the DataCenterResource data model. </summary>
     public partial class DataCenterResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataCenterResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterResourceData"/>. </summary>
         public DataCenterResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCenterResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

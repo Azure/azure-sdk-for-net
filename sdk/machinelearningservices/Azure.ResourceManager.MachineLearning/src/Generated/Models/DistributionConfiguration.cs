@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition for job distribution configuration. </summary>
     public partial class DistributionConfiguration
     {
-        /// <summary> Initializes a new instance of DistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributionConfiguration"/>. </summary>
         public DistributionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         internal DistributionConfiguration(DistributionType distributionType)
         {

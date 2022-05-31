@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The AutoscaleSettings. </summary>
     internal partial class AutoscaleSettings
     {
-        /// <summary> Initializes a new instance of AutoscaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettings"/>. </summary>
         public AutoscaleSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoscaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettings"/>. </summary>
         /// <param name="maxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
         internal AutoscaleSettings(int? maxThroughput)
         {

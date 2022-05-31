@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The LanguageDetectionAnalysisInput. </summary>
     internal partial class LanguageDetectionAnalysisInput
     {
-        /// <summary> Initializes a new instance of LanguageDetectionAnalysisInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionAnalysisInput"/>. </summary>
         public LanguageDetectionAnalysisInput()
         {
             Documents = new ChangeTrackingList<LanguageInput>();

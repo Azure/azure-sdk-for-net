@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> An update history of the ImmutabilityPolicy of a blob container. </summary>
     public partial class UpdateHistoryProperty
     {
-        /// <summary> Initializes a new instance of UpdateHistoryProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateHistoryProperty"/>. </summary>
         internal UpdateHistoryProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateHistoryProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateHistoryProperty"/>. </summary>
         /// <param name="update"> The ImmutabilityPolicy update type of a blob container, possible values include: put, lock and extend. </param>
         /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>
         /// <param name="timestamp"> Returns the date and time the ImmutabilityPolicy was updated. </param>

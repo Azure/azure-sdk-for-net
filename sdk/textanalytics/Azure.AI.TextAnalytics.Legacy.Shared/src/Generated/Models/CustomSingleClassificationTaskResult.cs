@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The CustomSingleClassificationTaskResult. </summary>
     internal partial class CustomSingleClassificationTaskResult
     {
-        /// <summary> Initializes a new instance of CustomSingleClassificationTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSingleClassificationTaskResult"/>. </summary>
         internal CustomSingleClassificationTaskResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomSingleClassificationTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSingleClassificationTaskResult"/>. </summary>
         /// <param name="results"></param>
         internal CustomSingleClassificationTaskResult(CustomSingleClassificationResult results)
         {

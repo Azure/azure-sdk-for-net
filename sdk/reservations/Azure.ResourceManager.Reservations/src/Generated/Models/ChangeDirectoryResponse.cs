@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Change directory response. </summary>
     public partial class ChangeDirectoryResponse
     {
-        /// <summary> Initializes a new instance of ChangeDirectoryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDirectoryResponse"/>. </summary>
         internal ChangeDirectoryResponse()
         {
             Reservations = new ChangeTrackingList<ChangeDirectoryResult>();
         }
 
-        /// <summary> Initializes a new instance of ChangeDirectoryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDirectoryResponse"/>. </summary>
         /// <param name="reservationOrder"> Change directory result for reservation order or reservation. </param>
         /// <param name="reservations"></param>
         internal ChangeDirectoryResponse(ChangeDirectoryResult reservationOrder, IReadOnlyList<ChangeDirectoryResult> reservations)

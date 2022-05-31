@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The policy definition group. </summary>
     public partial class PolicyDefinitionGroup
     {
-        /// <summary> Initializes a new instance of PolicyDefinitionGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionGroup"/>. </summary>
         /// <param name="name"> The name of the group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PolicyDefinitionGroup(string name)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of PolicyDefinitionGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionGroup"/>. </summary>
         /// <param name="name"> The name of the group. </param>
         /// <param name="displayName"> The group&apos;s display name. </param>
         /// <param name="category"> The group&apos;s category. </param>

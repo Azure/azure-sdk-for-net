@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of server firewall rules. </summary>
     public partial class FirewallRuleList
     {
-        /// <summary> Initializes a new instance of FirewallRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleList"/>. </summary>
         public FirewallRuleList()
         {
             Values = new ChangeTrackingList<FirewallRuleData>();

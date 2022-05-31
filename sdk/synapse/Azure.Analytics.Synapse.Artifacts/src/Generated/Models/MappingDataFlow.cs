@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Mapping data flow. </summary>
     public partial class MappingDataFlow : DataFlow
     {
-        /// <summary> Initializes a new instance of MappingDataFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="MappingDataFlow"/>. </summary>
         public MappingDataFlow()
         {
             Sources = new ChangeTrackingList<DataFlowSource>();
@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "MappingDataFlow";
         }
 
-        /// <summary> Initializes a new instance of MappingDataFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="MappingDataFlow"/>. </summary>
         /// <param name="type"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The ListStorageAccountKeysResult. </summary>
     public partial class ListStorageAccountKeysResult
     {
-        /// <summary> Initializes a new instance of ListStorageAccountKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListStorageAccountKeysResult"/>. </summary>
         internal ListStorageAccountKeysResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ListStorageAccountKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListStorageAccountKeysResult"/>. </summary>
         /// <param name="userStorageKey"></param>
         internal ListStorageAccountKeysResult(string userStorageKey)
         {

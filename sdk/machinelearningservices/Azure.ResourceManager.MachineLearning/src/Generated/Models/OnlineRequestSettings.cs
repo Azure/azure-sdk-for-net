@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Online deployment scoring requests configuration. </summary>
     public partial class OnlineRequestSettings
     {
-        /// <summary> Initializes a new instance of OnlineRequestSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineRequestSettings"/>. </summary>
         public OnlineRequestSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of OnlineRequestSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineRequestSettings"/>. </summary>
         /// <param name="maxConcurrentRequestsPerInstance"> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </param>
         /// <param name="maxQueueWait">
         /// The maximum amount of time a request will stay in the queue in ISO 8601 format.

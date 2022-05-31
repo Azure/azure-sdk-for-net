@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualHubIpConfigurations list. </summary>
     internal partial class ListVirtualHubIPConfigurationResults
     {
-        /// <summary> Initializes a new instance of ListVirtualHubIPConfigurationResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubIPConfigurationResults"/>. </summary>
         internal ListVirtualHubIPConfigurationResults()
         {
             Value = new ChangeTrackingList<HubIPConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of ListVirtualHubIPConfigurationResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubIPConfigurationResults"/>. </summary>
         /// <param name="value"> The list of VirtualHubIpConfigurations. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal ListVirtualHubIPConfigurationResults(IReadOnlyList<HubIPConfigurationData> value, string nextLink)

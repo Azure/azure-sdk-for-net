@@ -10,7 +10,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Definition of sorting of hierarchy nodes. </summary>
     internal partial class HierarchiesSortParameter
     {
-        /// <summary> Initializes a new instance of HierarchiesSortParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="HierarchiesSortParameter"/>. </summary>
         public HierarchiesSortParameter()
         {
         }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The steps of a managed instance operation. </summary>
     public partial class ManagedInstanceOperationSteps
     {
-        /// <summary> Initializes a new instance of ManagedInstanceOperationSteps. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationSteps"/>. </summary>
         internal ManagedInstanceOperationSteps()
         {
             StepsList = new ChangeTrackingList<UpsertManagedServerOperationStep>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceOperationSteps. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceOperationSteps"/>. </summary>
         /// <param name="totalSteps"> The total number of operation steps. </param>
         /// <param name="currentStep"> The number of current operation steps. </param>
         /// <param name="stepsList"> The operation steps list. </param>

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing the DiskAccess data model. </summary>
     public partial class DiskAccessData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DiskAccessData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskAccessData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DiskAccessData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<ComputePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of DiskAccessData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskAccessData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

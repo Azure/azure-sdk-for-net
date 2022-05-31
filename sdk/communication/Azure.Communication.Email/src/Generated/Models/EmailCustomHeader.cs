@@ -12,7 +12,7 @@ namespace Azure.Communication.Email.Models
     /// <summary> Custom header for email. </summary>
     public partial class EmailCustomHeader
     {
-        /// <summary> Initializes a new instance of EmailCustomHeader. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailCustomHeader"/>. </summary>
         /// <param name="name"> Header name. </param>
         /// <param name="value"> Header value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

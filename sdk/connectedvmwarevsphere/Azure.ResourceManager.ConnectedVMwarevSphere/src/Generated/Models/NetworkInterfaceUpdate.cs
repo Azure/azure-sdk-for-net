@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the network interface update. </summary>
     public partial class NetworkInterfaceUpdate
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceUpdate"/>. </summary>
         public NetworkInterfaceUpdate()
         {
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of recommendations. </summary>
     internal partial class RecommendationCollection
     {
-        /// <summary> Initializes a new instance of RecommendationCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendationCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RecommendationCollection(IEnumerable<AppServiceRecommendation> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RecommendationCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendationCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal RecommendationCollection(IReadOnlyList<AppServiceRecommendation> value, string nextLink)

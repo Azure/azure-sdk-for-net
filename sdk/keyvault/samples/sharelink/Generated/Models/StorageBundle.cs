@@ -13,13 +13,13 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> A Storage account bundle consists of key vault storage account details plus its attributes. </summary>
     public partial class StorageBundle
     {
-        /// <summary> Initializes a new instance of StorageBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBundle"/>. </summary>
         internal StorageBundle()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of StorageBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBundle"/>. </summary>
         /// <param name="id"> The storage account id. </param>
         /// <param name="resourceId"> The storage account resource id. </param>
         /// <param name="activeKeyName"> The current active storage account key name. </param>

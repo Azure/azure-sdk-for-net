@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ServiceLinker
     /// <summary> A class representing the LinkerResource data model. </summary>
     public partial class LinkerResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of LinkerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerResourceData"/>. </summary>
         public LinkerResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkerResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

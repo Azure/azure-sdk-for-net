@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> SKU of the namespace. </summary>
     public partial class ServiceBusSku
     {
-        /// <summary> Initializes a new instance of ServiceBusSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         public ServiceBusSku(ServiceBusSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ServiceBusSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSku"/>. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The billing tier of this particular SKU. </param>
         /// <param name="capacity"> The specified messaging units for the tier. For Premium tier, capacity are 1,2 and 4. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of policy assignments. </summary>
     internal partial class PolicyAssignmentListResult
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentListResult"/>. </summary>
         internal PolicyAssignmentListResult()
         {
             Value = new ChangeTrackingList<PolicyAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentListResult"/>. </summary>
         /// <param name="value"> An array of policy assignments. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal PolicyAssignmentListResult(IReadOnlyList<PolicyAssignmentData> value, string nextLink)

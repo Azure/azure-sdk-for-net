@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> A class representing the SessionHost data model. </summary>
     public partial class SessionHostData : ResourceData
     {
-        /// <summary> Initializes a new instance of SessionHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostData"/>. </summary>
         public SessionHostData()
         {
             SessionHostHealthCheckResults = new ChangeTrackingList<SessionHostHealthCheckReport>();
         }
 
-        /// <summary> Initializes a new instance of SessionHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

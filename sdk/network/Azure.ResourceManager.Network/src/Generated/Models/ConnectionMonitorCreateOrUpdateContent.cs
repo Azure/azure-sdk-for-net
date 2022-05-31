@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the operation to create a connection monitor. </summary>
     public partial class ConnectionMonitorCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorCreateOrUpdateContent"/>. </summary>
         public ConnectionMonitorCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

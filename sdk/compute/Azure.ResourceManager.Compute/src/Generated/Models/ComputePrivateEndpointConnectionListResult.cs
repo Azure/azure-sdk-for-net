@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class ComputePrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of ComputePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePrivateEndpointConnectionListResult"/>. </summary>
         internal ComputePrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<ComputePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ComputePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         /// <param name="nextLink"> The uri to fetch the next page of snapshots. Call ListNext() with this to fetch the next page of snapshots. </param>
         internal ComputePrivateEndpointConnectionListResult(IReadOnlyList<ComputePrivateEndpointConnectionData> value, string nextLink)

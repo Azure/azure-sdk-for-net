@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListServiceTags API service call. </summary>
     public partial class ServiceTagsListResult : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceTagsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagsListResult"/>. </summary>
         internal ServiceTagsListResult()
         {
             Values = new ChangeTrackingList<ServiceTagInformation>();
         }
 
-        /// <summary> Initializes a new instance of ServiceTagsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagsListResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

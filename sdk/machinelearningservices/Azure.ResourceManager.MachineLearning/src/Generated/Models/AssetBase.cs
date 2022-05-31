@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The AssetBase. </summary>
     public partial class AssetBase : ResourceBase
     {
-        /// <summary> Initializes a new instance of AssetBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetBase"/>. </summary>
         public AssetBase()
         {
         }
 
-        /// <summary> Initializes a new instance of AssetBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetBase"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

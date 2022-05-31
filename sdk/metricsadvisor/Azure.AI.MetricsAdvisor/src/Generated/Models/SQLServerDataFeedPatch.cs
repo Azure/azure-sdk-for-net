@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SQLServerDataFeedPatch. </summary>
     internal partial class SQLServerDataFeedPatch : DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of SQLServerDataFeedPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SQLServerDataFeedPatch"/>. </summary>
         public SQLServerDataFeedPatch()
         {
             DataSourceType = DataFeedSourceKind.SqlServer;

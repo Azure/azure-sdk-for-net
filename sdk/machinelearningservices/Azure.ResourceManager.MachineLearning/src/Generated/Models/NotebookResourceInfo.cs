@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The NotebookResourceInfo. </summary>
     public partial class NotebookResourceInfo
     {
-        /// <summary> Initializes a new instance of NotebookResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookResourceInfo"/>. </summary>
         internal NotebookResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NotebookResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookResourceInfo"/>. </summary>
         /// <param name="fqdn"></param>
         /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
         /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Dapr component metadata. </summary>
     public partial class DaprMetadata
     {
-        /// <summary> Initializes a new instance of DaprMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprMetadata"/>. </summary>
         public DaprMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of DaprMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprMetadata"/>. </summary>
         /// <param name="name"> Metadata property name. </param>
         /// <param name="value"> Metadata property value. </param>
         /// <param name="secretRef"> Name of the Dapr Component secret from which to pull the metadata property value. </param>

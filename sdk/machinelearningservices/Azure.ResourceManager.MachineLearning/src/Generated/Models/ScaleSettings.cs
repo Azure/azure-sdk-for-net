@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> scale settings for AML Compute. </summary>
     public partial class ScaleSettings
     {
-        /// <summary> Initializes a new instance of ScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScaleSettings"/>. </summary>
         /// <param name="maxNodeCount"> Max number of nodes to use. </param>
         public ScaleSettings(int maxNodeCount)
         {
             MaxNodeCount = maxNodeCount;
         }
 
-        /// <summary> Initializes a new instance of ScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScaleSettings"/>. </summary>
         /// <param name="maxNodeCount"> Max number of nodes to use. </param>
         /// <param name="minNodeCount"> Min number of nodes to use. </param>
         /// <param name="nodeIdleTimeBeforeScaleDown"> Node Idle Time before scaling down amlCompute. This string needs to be in the RFC Format. </param>

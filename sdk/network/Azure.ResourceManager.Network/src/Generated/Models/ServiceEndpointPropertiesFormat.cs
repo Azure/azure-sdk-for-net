@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The service endpoint properties. </summary>
     public partial class ServiceEndpointPropertiesFormat
     {
-        /// <summary> Initializes a new instance of ServiceEndpointPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPropertiesFormat"/>. </summary>
         public ServiceEndpointPropertiesFormat()
         {
             Locations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPropertiesFormat"/>. </summary>
         /// <param name="service"> The type of the endpoint service. </param>
         /// <param name="locations"> A list of locations. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint resource. </param>

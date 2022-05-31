@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The FqdnEndpoint. </summary>
     public partial class FqdnEndpoint
     {
-        /// <summary> Initializes a new instance of FqdnEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="FqdnEndpoint"/>. </summary>
         internal FqdnEndpoint()
         {
             EndpointDetails = new ChangeTrackingList<FqdnEndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of FqdnEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="FqdnEndpoint"/>. </summary>
         /// <param name="domainName"></param>
         /// <param name="endpointDetails"></param>
         internal FqdnEndpoint(string domainName, IReadOnlyList<FqdnEndpointDetail> endpointDetails)

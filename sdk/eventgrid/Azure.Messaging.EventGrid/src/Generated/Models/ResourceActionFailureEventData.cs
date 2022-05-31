@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionFailure event. This is raised when a resource action operation fails. </summary>
     public partial class ResourceActionFailureEventData
     {
-        /// <summary> Initializes a new instance of ResourceActionFailureEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceActionFailureEventData"/>. </summary>
         internal ResourceActionFailureEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceActionFailureEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceActionFailureEventData"/>. </summary>
         /// <param name="tenantId"> The tenant ID of the resource. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>

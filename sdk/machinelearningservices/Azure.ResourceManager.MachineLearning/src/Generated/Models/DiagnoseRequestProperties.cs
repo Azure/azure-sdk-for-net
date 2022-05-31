@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The DiagnoseRequestProperties. </summary>
     public partial class DiagnoseRequestProperties
     {
-        /// <summary> Initializes a new instance of DiagnoseRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnoseRequestProperties"/>. </summary>
         public DiagnoseRequestProperties()
         {
             Udr = new ChangeTrackingDictionary<string, BinaryData>();

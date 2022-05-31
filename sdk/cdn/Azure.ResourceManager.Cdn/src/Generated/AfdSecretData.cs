@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing the AfdSecret data model. </summary>
     public partial class AfdSecretData : ResourceData
     {
-        /// <summary> Initializes a new instance of AfdSecretData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdSecretData"/>. </summary>
         public AfdSecretData()
         {
         }
 
-        /// <summary> Initializes a new instance of AfdSecretData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdSecretData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

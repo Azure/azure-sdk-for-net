@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> NAT rule collection resource. </summary>
     public partial class AzureFirewallNatRuleCollection : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of AzureFirewallNatRuleCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRuleCollection"/>. </summary>
         public AzureFirewallNatRuleCollection()
         {
             Rules = new ChangeTrackingList<AzureFirewallNatRule>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNatRuleCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRuleCollection"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within the Azure firewall. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the MongoDB database events and their properties. </summary>
     internal partial class RestorableMongodbDatabasesListResult
     {
-        /// <summary> Initializes a new instance of RestorableMongodbDatabasesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableMongodbDatabasesListResult"/>. </summary>
         internal RestorableMongodbDatabasesListResult()
         {
             Value = new ChangeTrackingList<RestorableMongodbDatabase>();
         }
 
-        /// <summary> Initializes a new instance of RestorableMongodbDatabasesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableMongodbDatabasesListResult"/>. </summary>
         /// <param name="value"> List of MongoDB database events and their properties. </param>
         internal RestorableMongodbDatabasesListResult(IReadOnlyList<RestorableMongodbDatabase> value)
         {

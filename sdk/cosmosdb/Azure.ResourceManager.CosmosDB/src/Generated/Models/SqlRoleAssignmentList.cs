@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The relevant Role Assignments. </summary>
     internal partial class SqlRoleAssignmentList
     {
-        /// <summary> Initializes a new instance of SqlRoleAssignmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlRoleAssignmentList"/>. </summary>
         internal SqlRoleAssignmentList()
         {
             Value = new ChangeTrackingList<SqlRoleAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of SqlRoleAssignmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlRoleAssignmentList"/>. </summary>
         /// <param name="value"> List of Role Assignments and their properties. </param>
         internal SqlRoleAssignmentList(IReadOnlyList<SqlRoleAssignmentData> value)
         {

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the VirtualNetworkRule data model. </summary>
     public partial class VirtualNetworkRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRuleData"/>. </summary>
         public VirtualNetworkRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

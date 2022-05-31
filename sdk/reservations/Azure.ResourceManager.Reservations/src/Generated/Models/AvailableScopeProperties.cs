@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The AvailableScopeProperties. </summary>
     public partial class AvailableScopeProperties
     {
-        /// <summary> Initializes a new instance of AvailableScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableScopeProperties"/>. </summary>
         internal AvailableScopeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableScopeProperties"/>. </summary>
         /// <param name="properties"></param>
         internal AvailableScopeProperties(SubscriptionScopeProperties properties)
         {

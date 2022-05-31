@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The AnalyzeTextEntityLinkingInput. </summary>
     internal partial class AnalyzeTextEntityLinkingInput : AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextEntityLinkingInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextEntityLinkingInput"/>. </summary>
         public AnalyzeTextEntityLinkingInput()
         {
             Kind = AnalyzeTextTaskKind.EntityLinking;

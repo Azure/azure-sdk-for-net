@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the FirewallRule data model. </summary>
     public partial class FirewallRuleData : ProxyResourceWithWritableName
     {
-        /// <summary> Initializes a new instance of FirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleData"/>. </summary>
         public FirewallRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

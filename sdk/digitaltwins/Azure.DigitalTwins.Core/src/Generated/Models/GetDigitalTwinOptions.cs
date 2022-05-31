@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class GetDigitalTwinOptions
     {
-        /// <summary> Initializes a new instance of GetDigitalTwinOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetDigitalTwinOptions"/>. </summary>
         public GetDigitalTwinOptions()
         {
         }

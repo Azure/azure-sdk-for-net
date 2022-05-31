@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the JobStep data model. </summary>
     public partial class JobStepData : ResourceData
     {
-        /// <summary> Initializes a new instance of JobStepData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepData"/>. </summary>
         public JobStepData()
         {
         }
 
-        /// <summary> Initializes a new instance of JobStepData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

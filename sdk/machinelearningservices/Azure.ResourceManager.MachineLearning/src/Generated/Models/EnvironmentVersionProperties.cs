@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Environment version details. </summary>
     public partial class EnvironmentVersionProperties : AssetBase
     {
-        /// <summary> Initializes a new instance of EnvironmentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentVersionProperties"/>. </summary>
         public EnvironmentVersionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EnvironmentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

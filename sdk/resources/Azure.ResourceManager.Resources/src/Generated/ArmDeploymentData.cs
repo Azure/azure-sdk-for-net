@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the ArmDeployment data model. </summary>
     public partial class ArmDeploymentData : ResourceData
     {
-        /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentData"/>. </summary>
         internal ArmDeploymentData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

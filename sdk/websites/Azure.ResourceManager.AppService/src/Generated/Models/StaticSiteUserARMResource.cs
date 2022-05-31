@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static Site User ARM resource. </summary>
     public partial class StaticSiteUserARMResource : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSiteUserARMResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserARMResource"/>. </summary>
         public StaticSiteUserARMResource()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserARMResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserARMResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

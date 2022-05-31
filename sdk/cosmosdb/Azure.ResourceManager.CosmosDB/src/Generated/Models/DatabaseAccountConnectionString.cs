@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Connection string for the Cosmos DB account. </summary>
     public partial class DatabaseAccountConnectionString
     {
-        /// <summary> Initializes a new instance of DatabaseAccountConnectionString. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountConnectionString"/>. </summary>
         internal DatabaseAccountConnectionString()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseAccountConnectionString. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountConnectionString"/>. </summary>
         /// <param name="connectionString"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
         internal DatabaseAccountConnectionString(string connectionString, string description)

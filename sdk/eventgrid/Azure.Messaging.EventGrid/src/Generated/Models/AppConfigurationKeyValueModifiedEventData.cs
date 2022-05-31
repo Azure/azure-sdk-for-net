@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.KeyValueModified event. </summary>
     public partial class AppConfigurationKeyValueModifiedEventData
     {
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueModifiedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueModifiedEventData"/>. </summary>
         internal AppConfigurationKeyValueModifiedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueModifiedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueModifiedEventData"/>. </summary>
         /// <param name="key"> The key used to identify the key-value that was modified. </param>
         /// <param name="label"> The label, if any, used to identify the key-value that was modified. </param>
         /// <param name="etag"> The etag representing the new state of the key-value. </param>

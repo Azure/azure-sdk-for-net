@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> AFDOrigin properties needed for origin update. </summary>
     public partial class AfdOriginPatch
     {
-        /// <summary> Initializes a new instance of AfdOriginPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdOriginPatch"/>. </summary>
         public AfdOriginPatch()
         {
         }

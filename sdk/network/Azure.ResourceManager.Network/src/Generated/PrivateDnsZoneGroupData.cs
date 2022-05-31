@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the PrivateDnsZoneGroup data model. </summary>
     public partial class PrivateDnsZoneGroupData : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of PrivateDnsZoneGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneGroupData"/>. </summary>
         public PrivateDnsZoneGroupData()
         {
             PrivateDnsZoneConfigs = new ChangeTrackingList<PrivateDnsZoneConfig>();
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsZoneGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

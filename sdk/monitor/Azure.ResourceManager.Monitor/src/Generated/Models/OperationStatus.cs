@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The status of operation. </summary>
     public partial class OperationStatus
     {
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         internal OperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         /// <param name="id"> The operation Id. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="startOn"> Start time of the job in standard ISO8601 format. </param>

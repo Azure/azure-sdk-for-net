@@ -13,14 +13,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The TasksStateTasksExtractiveSummarizationTasksItem. </summary>
     internal partial class TasksStateTasksExtractiveSummarizationTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksExtractiveSummarizationTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksExtractiveSummarizationTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         internal TasksStateTasksExtractiveSummarizationTasksItem(DateTimeOffset lastUpdateDateTime, State status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksExtractiveSummarizationTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksExtractiveSummarizationTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A class that describes a test that failed during NSG and UDR validation. </summary>
     public partial class VnetValidationTestFailure : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of VnetValidationTestFailure. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetValidationTestFailure"/>. </summary>
         public VnetValidationTestFailure()
         {
         }
 
-        /// <summary> Initializes a new instance of VnetValidationTestFailure. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetValidationTestFailure"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

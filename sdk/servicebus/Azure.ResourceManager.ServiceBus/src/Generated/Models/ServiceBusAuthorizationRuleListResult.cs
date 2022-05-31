@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The response to the List Namespace operation. </summary>
     internal partial class ServiceBusAuthorizationRuleListResult
     {
-        /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusAuthorizationRuleListResult"/>. </summary>
         internal ServiceBusAuthorizationRuleListResult()
         {
             Value = new ChangeTrackingList<ServiceBusAuthorizationRuleData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusAuthorizationRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusAuthorizationRuleListResult"/>. </summary>
         /// <param name="value"> Result of the List Authorization Rules operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Authorization Rules. </param>
         internal ServiceBusAuthorizationRuleListResult(IReadOnlyList<ServiceBusAuthorizationRuleData> value, string nextLink)

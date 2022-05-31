@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ElasticPool data model. </summary>
     public partial class ElasticPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ElasticPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ElasticPoolData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

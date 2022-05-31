@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A HDInsight compute. </summary>
     public partial class HDInsightCompute : Compute
     {
-        /// <summary> Initializes a new instance of HDInsightCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightCompute"/>. </summary>
         public HDInsightCompute()
         {
             ComputeType = ComputeType.HDInsight;
         }
 
-        /// <summary> Initializes a new instance of HDInsightCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightCompute"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>

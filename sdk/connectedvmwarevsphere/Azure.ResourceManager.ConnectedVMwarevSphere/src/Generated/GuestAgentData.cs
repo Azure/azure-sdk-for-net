@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing the GuestAgent data model. </summary>
     public partial class GuestAgentData : ResourceData
     {
-        /// <summary> Initializes a new instance of GuestAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestAgentData"/>. </summary>
         public GuestAgentData()
         {
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of GuestAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

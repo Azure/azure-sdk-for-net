@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Virtual Network route contract used to pass routing information for a Virtual Network. </summary>
     public partial class VnetRoute : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of VnetRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetRoute"/>. </summary>
         public VnetRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of VnetRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetRoute"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

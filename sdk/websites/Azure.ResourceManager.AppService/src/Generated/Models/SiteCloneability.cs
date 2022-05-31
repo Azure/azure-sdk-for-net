@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Represents whether or not an app is cloneable. </summary>
     public partial class SiteCloneability
     {
-        /// <summary> Initializes a new instance of SiteCloneability. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteCloneability"/>. </summary>
         internal SiteCloneability()
         {
             BlockingFeatures = new ChangeTrackingList<SiteCloneabilityCriterion>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
             BlockingCharacteristics = new ChangeTrackingList<SiteCloneabilityCriterion>();
         }
 
-        /// <summary> Initializes a new instance of SiteCloneability. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteCloneability"/>. </summary>
         /// <param name="result"> Name of app. </param>
         /// <param name="blockingFeatures"> List of features enabled on app that prevent cloning. </param>
         /// <param name="unsupportedFeatures">

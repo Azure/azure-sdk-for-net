@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing the AfdRule data model. </summary>
     public partial class AfdRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of AfdRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdRuleData"/>. </summary>
         public AfdRuleData()
         {
             Conditions = new ChangeTrackingList<DeliveryRuleCondition>();
             Actions = new ChangeTrackingList<DeliveryRuleAction>();
         }
 
-        /// <summary> Initializes a new instance of AfdRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

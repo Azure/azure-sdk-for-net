@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
     public partial class IntegrationRuntimeDataProxyProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeDataProxyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDataProxyProperties"/>. </summary>
         public IntegrationRuntimeDataProxyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeDataProxyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDataProxyProperties"/>. </summary>
         /// <param name="connectVia"> The self-hosted integration runtime reference. </param>
         /// <param name="stagingLinkedService"> The staging linked service reference. </param>
         /// <param name="path"> The path to contain the staged data in the Blob storage. </param>

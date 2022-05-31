@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The FlavorData. </summary>
     public partial class FlavorData
     {
-        /// <summary> Initializes a new instance of FlavorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlavorData"/>. </summary>
         public FlavorData()
         {
             Data = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of FlavorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlavorData"/>. </summary>
         /// <param name="data"> Model flavor-specific data. </param>
         internal FlavorData(IDictionary<string, string> data)
         {

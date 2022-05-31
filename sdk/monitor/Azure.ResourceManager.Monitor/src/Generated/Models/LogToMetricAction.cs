@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specify action need to be taken when rule type is converting log to metric. </summary>
     public partial class LogToMetricAction : MonitorAction
     {
-        /// <summary> Initializes a new instance of LogToMetricAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogToMetricAction"/>. </summary>
         /// <param name="criteria"> Criteria of Metric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="criteria"/> is null. </exception>
         public LogToMetricAction(IEnumerable<MonitorCriteria> criteria)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             OdataType = "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.LogToMetricAction";
         }
 
-        /// <summary> Initializes a new instance of LogToMetricAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogToMetricAction"/>. </summary>
         /// <param name="odataType"> Specifies the action. Supported values - AlertingAction, LogToMetricAction. </param>
         /// <param name="criteria"> Criteria of Metric. </param>
         internal LogToMetricAction(string odataType, IList<MonitorCriteria> criteria) : base(odataType)

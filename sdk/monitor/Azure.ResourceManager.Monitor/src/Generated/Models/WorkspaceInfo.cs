@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Information about a Log Analytics Workspace. </summary>
     public partial class WorkspaceInfo
     {
-        /// <summary> Initializes a new instance of WorkspaceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceInfo"/>. </summary>
         /// <param name="id"> Azure Resource Manager identifier of the Log Analytics Workspace. </param>
         /// <param name="location"> Location of the Log Analytics workspace. </param>
         /// <param name="customerId"> Log Analytics workspace identifier. </param>

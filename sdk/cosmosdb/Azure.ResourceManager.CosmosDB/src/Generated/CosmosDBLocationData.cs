@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class representing the CosmosDBLocation data model. </summary>
     public partial class CosmosDBLocationData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBLocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationData"/>. </summary>
         public CosmosDBLocationData()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBLocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

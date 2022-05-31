@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The managed identity of a resource. </summary>
     public partial class ManagedIdentity
     {
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         public ManagedIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         /// <param name="identityType"> The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user assigned identities. The type &apos;None&apos; will remove any identities from the resource. </param>
         /// <param name="principalId"> The principal id of the system assigned identity. </param>
         /// <param name="tenantId"> The tenant id of the system assigned identity. </param>

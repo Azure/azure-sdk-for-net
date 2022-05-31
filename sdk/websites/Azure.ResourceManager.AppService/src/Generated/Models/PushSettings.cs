@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Push settings for the App. </summary>
     public partial class PushSettings : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of PushSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PushSettings"/>. </summary>
         public PushSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of PushSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PushSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

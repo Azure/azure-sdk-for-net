@@ -14,7 +14,7 @@ namespace Azure.Communication.Email.Models
     /// <summary> Message payload for sending an email. </summary>
     public partial class EmailMessage
     {
-        /// <summary> Initializes a new instance of EmailMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailMessage"/>. </summary>
         /// <param name="sender"> Sender email address from a verified domain. </param>
         /// <param name="content"> Email content to be sent. </param>
         /// <param name="recipients"> Recipients for the email. </param>

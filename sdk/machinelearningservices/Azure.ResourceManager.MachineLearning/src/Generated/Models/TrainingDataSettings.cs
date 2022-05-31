@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Training data input. </summary>
     public partial class TrainingDataSettings
     {
-        /// <summary> Initializes a new instance of TrainingDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrainingDataSettings"/>. </summary>
         /// <param name="data"> [Required] Training data MLTable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public TrainingDataSettings(MLTableJobInput data)

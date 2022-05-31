@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment on error behavior with additional details. </summary>
     public partial class ErrorDeploymentExtended
     {
-        /// <summary> Initializes a new instance of ErrorDeploymentExtended. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDeploymentExtended"/>. </summary>
         internal ErrorDeploymentExtended()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorDeploymentExtended. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDeploymentExtended"/>. </summary>
         /// <param name="provisioningState"> The state of the provisioning for the on error deployment. </param>
         /// <param name="deploymentType"> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </param>
         /// <param name="deploymentName"> The deployment to be used on error case. </param>

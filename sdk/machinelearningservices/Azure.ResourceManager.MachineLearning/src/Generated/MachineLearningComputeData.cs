@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the MachineLearningCompute data model. </summary>
     public partial class MachineLearningComputeData : ResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>
         public MachineLearningComputeData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

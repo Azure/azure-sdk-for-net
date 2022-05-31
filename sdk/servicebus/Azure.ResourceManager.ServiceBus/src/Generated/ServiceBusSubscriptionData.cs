@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A class representing the ServiceBusSubscription data model. </summary>
     public partial class ServiceBusSubscriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceBusSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSubscriptionData"/>. </summary>
         public ServiceBusSubscriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

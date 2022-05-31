@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
     /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>
     public partial class CustomLocationPropertiesAuthentication
     {
-        /// <summary> Initializes a new instance of CustomLocationPropertiesAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationPropertiesAuthentication"/>. </summary>
         public CustomLocationPropertiesAuthentication()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomLocationPropertiesAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationPropertiesAuthentication"/>. </summary>
         /// <param name="customLocationPropertiesAuthenticationType"> The type of the Custom Locations authentication. </param>
         /// <param name="value"> The kubeconfig value. </param>
         internal CustomLocationPropertiesAuthentication(string customLocationPropertiesAuthenticationType, string value)

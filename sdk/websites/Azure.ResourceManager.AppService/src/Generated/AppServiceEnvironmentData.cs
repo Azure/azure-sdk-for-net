@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the AppServiceEnvironment data model. </summary>
     public partial class AppServiceEnvironmentData : AppServiceResource
     {
-        /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppServiceEnvironmentData(AzureLocation location) : base(location)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
             UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The required set of inputs to validate a VNET. </summary>
     public partial class VnetContent : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of VnetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetContent"/>. </summary>
         public VnetContent()
         {
         }
 
-        /// <summary> Initializes a new instance of VnetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

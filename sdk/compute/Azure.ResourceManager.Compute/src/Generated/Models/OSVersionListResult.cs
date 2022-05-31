@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The OSVersionListResult. </summary>
     internal partial class OSVersionListResult
     {
-        /// <summary> Initializes a new instance of OSVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSVersionListResult"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OSVersionListResult(IEnumerable<CloudServiceOSVersionData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of OSVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSVersionListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal OSVersionListResult(IReadOnlyList<CloudServiceOSVersionData> value, string nextLink)

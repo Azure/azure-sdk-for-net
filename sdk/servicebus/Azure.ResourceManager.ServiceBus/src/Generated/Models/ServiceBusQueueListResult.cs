@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The response to the List Queues operation. </summary>
     internal partial class ServiceBusQueueListResult
     {
-        /// <summary> Initializes a new instance of ServiceBusQueueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusQueueListResult"/>. </summary>
         internal ServiceBusQueueListResult()
         {
             Value = new ChangeTrackingList<ServiceBusQueueData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusQueueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusQueueListResult"/>. </summary>
         /// <param name="value"> Result of the List Queues operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of queues. </param>
         internal ServiceBusQueueListResult(IReadOnlyList<ServiceBusQueueData> value, string nextLink)

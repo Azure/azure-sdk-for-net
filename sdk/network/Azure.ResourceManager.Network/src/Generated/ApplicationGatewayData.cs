@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the ApplicationGateway data model. </summary>
     public partial class ApplicationGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayData"/>. </summary>
         public ApplicationGatewayData()
         {
             Zones = new ChangeTrackingList<string>();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
             CustomErrorConfigurations = new ChangeTrackingList<ApplicationGatewayCustomError>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

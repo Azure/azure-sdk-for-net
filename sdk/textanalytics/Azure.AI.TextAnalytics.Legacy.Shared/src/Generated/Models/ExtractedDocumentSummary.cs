@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The ExtractedDocumentSummary. </summary>
     internal partial class ExtractedDocumentSummary
     {
-        /// <summary> Initializes a new instance of ExtractedDocumentSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractedDocumentSummary"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="sentences"> A ranked list of sentences representing the extracted summary. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of ExtractedDocumentSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractedDocumentSummary"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="sentences"> A ranked list of sentences representing the extracted summary. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>

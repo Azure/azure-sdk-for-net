@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the VpnSiteLinkConnection data model. </summary>
     public partial class VpnSiteLinkConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VpnSiteLinkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnSiteLinkConnectionData"/>. </summary>
         public VpnSiteLinkConnectionData()
         {
             IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
             EgressNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VpnSiteLinkConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnSiteLinkConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

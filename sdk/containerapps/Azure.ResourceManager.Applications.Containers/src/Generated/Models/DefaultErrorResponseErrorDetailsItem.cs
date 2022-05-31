@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Detailed errors. </summary>
     public partial class DefaultErrorResponseErrorDetailsItem
     {
-        /// <summary> Initializes a new instance of DefaultErrorResponseErrorDetailsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultErrorResponseErrorDetailsItem"/>. </summary>
         internal DefaultErrorResponseErrorDetailsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of DefaultErrorResponseErrorDetailsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultErrorResponseErrorDetailsItem"/>. </summary>
         /// <param name="code"> Standardized string to programmatically identify the error. </param>
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>

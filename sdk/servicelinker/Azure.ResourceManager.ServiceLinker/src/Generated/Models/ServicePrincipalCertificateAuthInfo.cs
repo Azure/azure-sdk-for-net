@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The authentication info when authType is servicePrincipal certificate. </summary>
     public partial class ServicePrincipalCertificateAuthInfo : AuthInfoBase
     {
-        /// <summary> Initializes a new instance of ServicePrincipalCertificateAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalCertificateAuthInfo"/>. </summary>
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="certificate"> ServicePrincipal certificate for servicePrincipal auth. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             AuthType = AuthType.ServicePrincipalCertificate;
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalCertificateAuthInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalCertificateAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>

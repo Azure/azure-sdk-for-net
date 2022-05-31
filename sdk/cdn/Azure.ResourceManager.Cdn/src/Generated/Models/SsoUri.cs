@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The URI required to login to the supplemental portal from the Azure portal. </summary>
     public partial class SsoUri
     {
-        /// <summary> Initializes a new instance of SsoUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsoUri"/>. </summary>
         internal SsoUri()
         {
         }
 
-        /// <summary> Initializes a new instance of SsoUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsoUri"/>. </summary>
         /// <param name="availableSsoUri"> The URI used to login to the supplemental portal. </param>
         internal SsoUri(Uri availableSsoUri)
         {

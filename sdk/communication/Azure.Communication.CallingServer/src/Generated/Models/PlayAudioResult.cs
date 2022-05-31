@@ -10,14 +10,14 @@ namespace Azure.Communication.CallingServer
     /// <summary> The response payload for play audio operation. </summary>
     public partial class PlayAudioResult
     {
-        /// <summary> Initializes a new instance of PlayAudioResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayAudioResult"/>. </summary>
         /// <param name="status"> The status of the operation. </param>
         internal PlayAudioResult(OperationStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of PlayAudioResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayAudioResult"/>. </summary>
         /// <param name="operationId"> The operation id. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>

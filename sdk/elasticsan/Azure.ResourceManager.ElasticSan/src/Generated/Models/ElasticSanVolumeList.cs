@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> List of Volumes. </summary>
     internal partial class ElasticSanVolumeList
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeList"/>. </summary>
         /// <param name="value"> An array of Volume objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ElasticSanVolumeList(IEnumerable<ElasticSanVolumeData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeList"/>. </summary>
         /// <param name="value"> An array of Volume objects. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal ElasticSanVolumeList(IReadOnlyList<ElasticSanVolumeData> value, string nextLink)

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of ComputeArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeArmOperation" /> for mocking. </summary>
         protected ComputeArmOperation()
         {
         }

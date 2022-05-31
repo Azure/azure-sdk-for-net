@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Details about restoring a deleted app. </summary>
     public partial class DeletedAppRestoreRequest : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of DeletedAppRestoreRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAppRestoreRequest"/>. </summary>
         public DeletedAppRestoreRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedAppRestoreRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAppRestoreRequest"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

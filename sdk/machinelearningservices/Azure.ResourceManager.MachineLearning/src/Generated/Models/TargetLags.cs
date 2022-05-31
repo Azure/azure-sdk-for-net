@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The number of past periods to lag from the target column. </summary>
     public partial class TargetLags
     {
-        /// <summary> Initializes a new instance of TargetLags. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetLags"/>. </summary>
         public TargetLags()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetLags. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetLags"/>. </summary>
         /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
         internal TargetLags(TargetLagsMode mode)
         {

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A static site user provided function. </summary>
     public partial class StaticSiteUserProvidedFunctionApp : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionApp. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserProvidedFunctionApp"/>. </summary>
         public StaticSiteUserProvidedFunctionApp()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionApp. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserProvidedFunctionApp"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

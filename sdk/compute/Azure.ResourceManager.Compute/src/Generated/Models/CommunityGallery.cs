@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the Community Gallery that you want to create or update. </summary>
     public partial class CommunityGallery : PirCommunityGalleryResourceData
     {
-        /// <summary> Initializes a new instance of CommunityGallery. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGallery"/>. </summary>
         internal CommunityGallery()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunityGallery. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGallery"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure File datastore configuration. </summary>
     public partial class AzureFileDatastore : DatastoreProperties
     {
-        /// <summary> Initializes a new instance of AzureFileDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileDatastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>
         /// <param name="accountName"> [Required] Storage account name. </param>
         /// <param name="fileShareName"> [Required] TODO - File share name. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = DatastoreType.AzureFile;
         }
 
-        /// <summary> Initializes a new instance of AzureFileDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileDatastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition of a schedule. </summary>
     public partial class ScheduleBase
     {
-        /// <summary> Initializes a new instance of ScheduleBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleBase"/>. </summary>
         public ScheduleBase()
         {
         }
 
-        /// <summary> Initializes a new instance of ScheduleBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleBase"/>. </summary>
         /// <param name="endOn">
         /// Specifies end time of schedule in ISO 8601 format.
         /// If not present, the schedule will run indefinitely

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The response to the List Subscriptions operation. </summary>
     internal partial class ServiceBusSubscriptionListResult
     {
-        /// <summary> Initializes a new instance of ServiceBusSubscriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSubscriptionListResult"/>. </summary>
         internal ServiceBusSubscriptionListResult()
         {
             Value = new ChangeTrackingList<ServiceBusSubscriptionData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusSubscriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusSubscriptionListResult"/>. </summary>
         /// <param name="value"> Result of the List Subscriptions operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of subscriptions. </param>
         internal ServiceBusSubscriptionListResult(IReadOnlyList<ServiceBusSubscriptionData> value, string nextLink)

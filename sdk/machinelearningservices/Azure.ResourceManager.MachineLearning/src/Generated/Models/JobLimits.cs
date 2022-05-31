@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The JobLimits. </summary>
     public partial class JobLimits
     {
-        /// <summary> Initializes a new instance of JobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobLimits"/>. </summary>
         public JobLimits()
         {
         }
 
-        /// <summary> Initializes a new instance of JobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobLimits"/>. </summary>
         /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
         /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
         internal JobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout)

@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The VariableValues. </summary>
     public partial class VariableValues
     {
-        /// <summary> Initializes a new instance of VariableValues. </summary>
+        /// <summary> Initializes a new instance of <see cref="VariableValues"/>. </summary>
         /// <param name="name"> variable name. </param>
         /// <param name="timestamps"> timestamps. </param>
         /// <param name="values"> values. </param>

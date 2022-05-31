@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Holds billing meter details for each type of billing. </summary>
     public partial class BillingMeterDetails
     {
-        /// <summary> Initializes a new instance of BillingMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingMeterDetails"/>. </summary>
         internal BillingMeterDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingMeterDetails"/>. </summary>
         /// <param name="name"> Represents Billing type name. </param>
         /// <param name="meterDetails"> Represents MeterDetails. </param>
         /// <param name="meteringType"> Represents Metering type (eg one-time or recurrent). </param>

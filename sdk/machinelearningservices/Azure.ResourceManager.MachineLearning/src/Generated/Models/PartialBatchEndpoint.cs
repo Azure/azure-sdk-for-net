@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Mutable Batch endpoint configuration. </summary>
     internal partial class PartialBatchEndpoint
     {
-        /// <summary> Initializes a new instance of PartialBatchEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartialBatchEndpoint"/>. </summary>
         public PartialBatchEndpoint()
         {
         }

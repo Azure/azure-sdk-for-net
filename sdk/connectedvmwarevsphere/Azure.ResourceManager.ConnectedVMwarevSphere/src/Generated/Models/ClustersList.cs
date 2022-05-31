@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of Clusters. </summary>
     internal partial class ClustersList
     {
-        /// <summary> Initializes a new instance of ClustersList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClustersList"/>. </summary>
         /// <param name="value"> Array of Clusters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ClustersList(IEnumerable<VMwareClusterData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClustersList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClustersList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of Clusters. </param>
         /// <param name="value"> Array of Clusters. </param>
         internal ClustersList(string nextLink, IReadOnlyList<VMwareClusterData> value)

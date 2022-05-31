@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of connection monitors. </summary>
     internal partial class ConnectionMonitorListResult
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorListResult"/>. </summary>
         internal ConnectionMonitorListResult()
         {
             Value = new ChangeTrackingList<ConnectionMonitorData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorListResult"/>. </summary>
         /// <param name="value"> Information about connection monitors. </param>
         internal ConnectionMonitorListResult(IReadOnlyList<ConnectionMonitorData> value)
         {

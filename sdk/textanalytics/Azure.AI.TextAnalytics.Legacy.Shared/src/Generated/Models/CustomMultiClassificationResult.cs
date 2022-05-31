@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The CustomMultiClassificationResult. </summary>
     internal partial class CustomMultiClassificationResult
     {
-        /// <summary> Initializes a new instance of CustomMultiClassificationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiClassificationResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of CustomMultiClassificationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiClassificationResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>

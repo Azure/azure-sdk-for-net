@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Common properties for the deployment script. </summary>
     internal partial class ArmDeploymentScriptPropertiesBase
     {
-        /// <summary> Initializes a new instance of ArmDeploymentScriptPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptPropertiesBase"/>. </summary>
         internal ArmDeploymentScriptPropertiesBase()
         {
         }

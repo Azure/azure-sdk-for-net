@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ManagedInstanceLongTermRetentionPolicy data model. </summary>
     public partial class ManagedInstanceLongTermRetentionPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLongTermRetentionPolicyData"/>. </summary>
         public ManagedInstanceLongTermRetentionPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLongTermRetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

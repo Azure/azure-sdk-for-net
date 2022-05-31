@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> Result info class to be used to report result status for actions/operations. </summary>
     public partial class ResultInfo
     {
-        /// <summary> Initializes a new instance of ResultInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResultInfo"/>. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
         /// <param name="subcode"> The subcode that further classifies the result. </param>
         internal ResultInfo(int code, int subcode)
@@ -19,7 +19,7 @@ namespace Azure.Communication.CallingServer
             Subcode = subcode;
         }
 
-        /// <summary> Initializes a new instance of ResultInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResultInfo"/>. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
         /// <param name="subcode"> The subcode that further classifies the result. </param>
         /// <param name="message"> The message is a detail explanation of subcode. </param>

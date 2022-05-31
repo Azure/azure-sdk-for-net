@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Command job definition. </summary>
     public partial class JobInput
     {
-        /// <summary> Initializes a new instance of JobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobInput"/>. </summary>
         public JobInput()
         {
         }
 
-        /// <summary> Initializes a new instance of JobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         internal JobInput(string description, JobInputType jobInputType)

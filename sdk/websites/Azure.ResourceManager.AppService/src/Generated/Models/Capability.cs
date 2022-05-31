@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Describes the capabilities/features allowed for a specific SKU. </summary>
     public partial class Capability
     {
-        /// <summary> Initializes a new instance of Capability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Capability"/>. </summary>
         public Capability()
         {
         }
 
-        /// <summary> Initializes a new instance of Capability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Capability"/>. </summary>
         /// <param name="name"> Name of the SKU capability. </param>
         /// <param name="value"> Value of the SKU capability. </param>
         /// <param name="reason"> Reason of the SKU capability. </param>

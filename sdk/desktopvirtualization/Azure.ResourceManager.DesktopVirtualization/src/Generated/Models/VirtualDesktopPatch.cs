@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Desktop properties that can be patched. </summary>
     public partial class VirtualDesktopPatch
     {
-        /// <summary> Initializes a new instance of VirtualDesktopPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDesktopPatch"/>. </summary>
         public VirtualDesktopPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ResourcesResponseEndpointsPropertiesItemsItem. </summary>
     public partial class ResourcesResponseEndpointsPropertiesItemsItem
     {
-        /// <summary> Initializes a new instance of ResourcesResponseEndpointsPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
         internal ResourcesResponseEndpointsPropertiesItemsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourcesResponseEndpointsPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="endpointId"></param>

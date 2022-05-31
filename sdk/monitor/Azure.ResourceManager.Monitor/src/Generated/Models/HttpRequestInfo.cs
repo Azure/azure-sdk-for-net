@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The Http request info. </summary>
     public partial class HttpRequestInfo
     {
-        /// <summary> Initializes a new instance of HttpRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpRequestInfo"/>. </summary>
         internal HttpRequestInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HttpRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpRequestInfo"/>. </summary>
         /// <param name="clientRequestId"> the client request id. </param>
         /// <param name="clientIpAddress"> the client Ip Address. </param>
         /// <param name="method"> the Http request method. </param>

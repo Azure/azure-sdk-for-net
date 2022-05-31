@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the NetworkFeatures data model. </summary>
     public partial class NetworkFeaturesData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of NetworkFeaturesData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFeaturesData"/>. </summary>
         public NetworkFeaturesData()
         {
             HybridConnections = new ChangeTrackingList<RelayServiceConnectionEntityData>();
             HybridConnectionsV2 = new ChangeTrackingList<HybridConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFeaturesData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFeaturesData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

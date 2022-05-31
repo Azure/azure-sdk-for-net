@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> ExpressRouteConnection list. </summary>
     internal partial class ExpressRouteConnectionList
     {
-        /// <summary> Initializes a new instance of ExpressRouteConnectionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionList"/>. </summary>
         internal ExpressRouteConnectionList()
         {
             Value = new ChangeTrackingList<ExpressRouteConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteConnectionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionList"/>. </summary>
         /// <param name="value"> The list of ExpressRoute connections. </param>
         internal ExpressRouteConnectionList(IReadOnlyList<ExpressRouteConnectionData> value)
         {

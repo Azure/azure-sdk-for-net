@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The parameters that can be provided when updating the storage account properties. </summary>
     public partial class StorageAccountPatch
     {
-        /// <summary> Initializes a new instance of StorageAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountPatch"/>. </summary>
         public StorageAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

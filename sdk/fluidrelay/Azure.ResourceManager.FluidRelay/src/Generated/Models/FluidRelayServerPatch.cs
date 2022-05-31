@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> The updatable properties of a Fluid Relay server. </summary>
     public partial class FluidRelayServerPatch
     {
-        /// <summary> Initializes a new instance of FluidRelayServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayServerPatch"/>. </summary>
         public FluidRelayServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

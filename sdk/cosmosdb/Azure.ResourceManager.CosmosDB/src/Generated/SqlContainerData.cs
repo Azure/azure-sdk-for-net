@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class representing the SqlContainer data model. </summary>
     public partial class SqlContainerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SqlContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SqlContainerData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SqlContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

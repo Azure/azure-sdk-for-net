@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Grafana
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of GrafanaArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaArmOperation" /> for mocking. </summary>
         protected GrafanaArmOperation()
         {
         }

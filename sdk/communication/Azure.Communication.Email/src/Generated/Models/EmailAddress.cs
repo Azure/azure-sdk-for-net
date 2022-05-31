@@ -12,7 +12,7 @@ namespace Azure.Communication.Email.Models
     /// <summary> An object representing the email address and its display name. </summary>
     public partial class EmailAddress
     {
-        /// <summary> Initializes a new instance of EmailAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailAddress"/>. </summary>
         /// <param name="email"> Email address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public EmailAddress(string email)

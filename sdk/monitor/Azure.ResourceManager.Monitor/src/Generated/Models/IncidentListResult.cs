@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The List incidents operation response. </summary>
     internal partial class IncidentListResult
     {
-        /// <summary> Initializes a new instance of IncidentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentListResult"/>. </summary>
         internal IncidentListResult()
         {
             Value = new ChangeTrackingList<MonitorIncident>();
         }
 
-        /// <summary> Initializes a new instance of IncidentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentListResult"/>. </summary>
         /// <param name="value"> the incident collection. </param>
         internal IncidentListResult(IReadOnlyList<MonitorIncident> value)
         {

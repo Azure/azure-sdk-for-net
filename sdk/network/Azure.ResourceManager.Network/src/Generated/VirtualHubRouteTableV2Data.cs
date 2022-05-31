@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the VirtualHubRouteTableV2 data model. </summary>
     public partial class VirtualHubRouteTableV2Data : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTableV2Data"/>. </summary>
         public VirtualHubRouteTableV2Data()
         {
             Routes = new ChangeTrackingList<VirtualHubRouteV2>();
             AttachedConnections = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRouteTableV2Data"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

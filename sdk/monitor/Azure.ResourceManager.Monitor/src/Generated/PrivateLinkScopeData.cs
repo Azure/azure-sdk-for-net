@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class representing the PrivateLinkScope data model. </summary>
     public partial class PrivateLinkScopeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PrivateLinkScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopeData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PrivateLinkScopeData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkScopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

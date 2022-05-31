@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> IP configuration. </summary>
     public partial class IPConfiguration
     {
-        /// <summary> Initializes a new instance of IPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPConfiguration"/>. </summary>
         public IPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of IPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPConfiguration"/>. </summary>
         /// <param name="subnet"> The reference to the subnet bound to the IP configuration. </param>
         /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> Private IP address allocation method. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Details of NetworkIntentPolicyConfiguration for PrepareNetworkPoliciesRequest. </summary>
     public partial class NetworkIntentPolicyConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkIntentPolicyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkIntentPolicyConfiguration"/>. </summary>
         public NetworkIntentPolicyConfiguration()
         {
         }

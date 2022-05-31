@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Device details. </summary>
     public partial class DeviceDetails
     {
-        /// <summary> Initializes a new instance of DeviceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceDetails"/>. </summary>
         internal DeviceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceDetails"/>. </summary>
         /// <param name="serialNumber"> device serial number. </param>
         /// <param name="managementResourceId"> Management Resource Id. </param>
         /// <param name="managementResourceTenantId"> Management Resource Tenant ID. </param>

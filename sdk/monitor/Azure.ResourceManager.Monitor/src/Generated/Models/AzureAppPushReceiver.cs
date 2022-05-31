@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The Azure mobile App push notification receiver. </summary>
     public partial class AzureAppPushReceiver
     {
-        /// <summary> Initializes a new instance of AzureAppPushReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureAppPushReceiver"/>. </summary>
         /// <param name="name"> The name of the Azure mobile app push receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="emailAddress"> The email address registered for the Azure mobile app. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="emailAddress"/> is null. </exception>

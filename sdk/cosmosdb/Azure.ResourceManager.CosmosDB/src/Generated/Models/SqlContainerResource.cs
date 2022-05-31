@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB SQL container resource object. </summary>
     public partial class SqlContainerResource
     {
-        /// <summary> Initializes a new instance of SqlContainerResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainerResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SqlContainerResource(string id)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of SqlContainerResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainerResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL container. </param>
         /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </param>
         /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>

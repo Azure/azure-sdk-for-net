@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Parameters describes the request to regenerate access keys. </summary>
     public partial class RegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of RegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegenerateKeyContent"/>. </summary>
         public RegenerateKeyContent()
         {
         }

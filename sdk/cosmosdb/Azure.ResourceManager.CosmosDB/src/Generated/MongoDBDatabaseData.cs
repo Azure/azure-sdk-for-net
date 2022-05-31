@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class representing the MongoDBDatabase data model. </summary>
     public partial class MongoDBDatabaseData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MongoDBDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MongoDBDatabaseData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

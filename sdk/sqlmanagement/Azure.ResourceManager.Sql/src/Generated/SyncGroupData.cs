@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the SyncGroup data model. </summary>
     public partial class SyncGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SyncGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupData"/>. </summary>
         public SyncGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

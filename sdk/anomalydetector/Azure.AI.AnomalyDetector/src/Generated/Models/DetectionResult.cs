@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> Response of the given resultId. </summary>
     public partial class DetectionResult
     {
-        /// <summary> Initializes a new instance of DetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionResult"/>. </summary>
         /// <param name="resultId"></param>
         /// <param name="summary"></param>
         /// <param name="results"> Detection result for each timestamp. </param>
@@ -35,7 +35,7 @@ namespace Azure.AI.AnomalyDetector.Models
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of DetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionResult"/>. </summary>
         /// <param name="resultId"></param>
         /// <param name="summary"></param>
         /// <param name="results"> Detection result for each timestamp. </param>

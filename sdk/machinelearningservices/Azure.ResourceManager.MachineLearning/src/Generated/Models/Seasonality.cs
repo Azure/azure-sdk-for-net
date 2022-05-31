@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting seasonality. </summary>
     public partial class Seasonality
     {
-        /// <summary> Initializes a new instance of Seasonality. </summary>
+        /// <summary> Initializes a new instance of <see cref="Seasonality"/>. </summary>
         public Seasonality()
         {
         }
 
-        /// <summary> Initializes a new instance of Seasonality. </summary>
+        /// <summary> Initializes a new instance of <see cref="Seasonality"/>. </summary>
         /// <param name="mode"> [Required] Seasonality mode. </param>
         internal Seasonality(SeasonalityMode mode)
         {

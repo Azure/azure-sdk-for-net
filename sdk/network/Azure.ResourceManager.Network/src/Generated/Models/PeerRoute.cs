@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Peer routing details. </summary>
     public partial class PeerRoute
     {
-        /// <summary> Initializes a new instance of PeerRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerRoute"/>. </summary>
         internal PeerRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of PeerRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerRoute"/>. </summary>
         /// <param name="localAddress"> The peer&apos;s local address. </param>
         /// <param name="network"> The route&apos;s network prefix. </param>
         /// <param name="nextHop"> The route&apos;s next hop. </param>

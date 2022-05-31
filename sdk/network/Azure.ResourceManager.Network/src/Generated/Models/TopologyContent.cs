@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the representation of topology. </summary>
     public partial class TopologyContent
     {
-        /// <summary> Initializes a new instance of TopologyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologyContent"/>. </summary>
         public TopologyContent()
         {
         }

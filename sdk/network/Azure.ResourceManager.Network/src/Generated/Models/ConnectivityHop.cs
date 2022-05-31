@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Information about a hop between the source and the destination. </summary>
     public partial class ConnectivityHop
     {
-        /// <summary> Initializes a new instance of ConnectivityHop. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityHop"/>. </summary>
         internal ConnectivityHop()
         {
             NextHopIds = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             Issues = new ChangeTrackingList<ConnectivityIssue>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityHop. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityHop"/>. </summary>
         /// <param name="connectivityHopType"> The type of the hop. </param>
         /// <param name="id"> The ID of the hop. </param>
         /// <param name="address"> The IP address of the hop. </param>

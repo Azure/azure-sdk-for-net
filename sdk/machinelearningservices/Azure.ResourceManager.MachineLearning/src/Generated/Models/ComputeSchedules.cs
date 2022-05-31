@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The list of schedules to be applied on the computes. </summary>
     internal partial class ComputeSchedules
     {
-        /// <summary> Initializes a new instance of ComputeSchedules. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSchedules"/>. </summary>
         internal ComputeSchedules()
         {
             ComputeStartStop = new ChangeTrackingList<ComputeStartStopSchedule>();
         }
 
-        /// <summary> Initializes a new instance of ComputeSchedules. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSchedules"/>. </summary>
         /// <param name="computeStartStop"> The list of compute start stop schedules to be applied. </param>
         internal ComputeSchedules(IReadOnlyList<ComputeStartStopSchedule> computeStartStop)
         {

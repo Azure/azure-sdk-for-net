@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> The PasswordCredential. </summary>
     public partial class PasswordCredential
     {
-        /// <summary> Initializes a new instance of PasswordCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="PasswordCredential"/>. </summary>
         internal PasswordCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of PasswordCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="PasswordCredential"/>. </summary>
         /// <param name="secretText"></param>
         /// <param name="keyId"></param>
         /// <param name="startOn"></param>

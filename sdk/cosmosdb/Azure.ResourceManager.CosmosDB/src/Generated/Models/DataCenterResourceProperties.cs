@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Properties of a managed Cassandra data center. </summary>
     public partial class DataCenterResourceProperties
     {
-        /// <summary> Initializes a new instance of DataCenterResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterResourceProperties"/>. </summary>
         public DataCenterResourceProperties()
         {
             SeedNodes = new ChangeTrackingList<SeedNode>();
         }
 
-        /// <summary> Initializes a new instance of DataCenterResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterResourceProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the resource at the time the operation was called. </param>
         /// <param name="dataCenterLocation"> The region this data center should be created in. </param>
         /// <param name="delegatedSubnetId"> Resource id of a subnet the nodes in this data center should have their network interfaces connected to. The subnet must be in the same region specified in &apos;dataCenterLocation&apos; and must be able to route to the subnet specified in the cluster&apos;s &apos;delegatedManagementSubnetId&apos; property. This resource id will be of the form &apos;/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;&apos;. </param>

@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureLogAnalyticsParameterPatch. </summary>
     internal partial class AzureLogAnalyticsParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureLogAnalyticsParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureLogAnalyticsParameterPatch"/>. </summary>
         public AzureLogAnalyticsParameterPatch()
         {
         }

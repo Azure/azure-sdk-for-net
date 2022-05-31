@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the VpnConnection data model. </summary>
     public partial class VpnConnectionData : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of VpnConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionData"/>. </summary>
         public VpnConnectionData()
         {
             IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
             VpnLinkConnections = new ChangeTrackingList<VpnSiteLinkConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of VpnConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

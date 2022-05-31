@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Regression task in AutoML Table vertical. </summary>
     public partial class Regression : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of Regression. </summary>
+        /// <summary> Initializes a new instance of <see cref="Regression"/>. </summary>
         public Regression()
         {
             AllowedModels = new ChangeTrackingList<RegressionModels>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.Regression;
         }
 
-        /// <summary> Initializes a new instance of Regression. </summary>
+        /// <summary> Initializes a new instance of <see cref="Regression"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="allowedModels"> Allowed models for regression task. </param>

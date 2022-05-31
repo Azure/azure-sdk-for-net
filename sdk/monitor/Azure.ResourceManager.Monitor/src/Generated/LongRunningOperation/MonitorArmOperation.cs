@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of MonitorArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorArmOperation" /> for mocking. </summary>
         protected MonitorArmOperation()
         {
         }

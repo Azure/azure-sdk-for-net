@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a private endpoint connection. </summary>
     public partial class PrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         internal PrivateEndpointConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>

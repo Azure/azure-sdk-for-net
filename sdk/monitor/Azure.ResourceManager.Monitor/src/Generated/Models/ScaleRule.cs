@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A rule that provide the triggers and parameters for the scaling action. </summary>
     public partial class ScaleRule
     {
-        /// <summary> Initializes a new instance of ScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScaleRule"/>. </summary>
         /// <param name="metricTrigger"> the trigger that results in a scaling action. </param>
         /// <param name="scaleAction"> the parameters for the scaling action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricTrigger"/> or <paramref name="scaleAction"/> is null. </exception>

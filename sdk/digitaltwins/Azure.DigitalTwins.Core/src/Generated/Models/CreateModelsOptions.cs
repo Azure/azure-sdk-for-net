@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class CreateModelsOptions
     {
-        /// <summary> Initializes a new instance of CreateModelsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateModelsOptions"/>. </summary>
         public CreateModelsOptions()
         {
         }

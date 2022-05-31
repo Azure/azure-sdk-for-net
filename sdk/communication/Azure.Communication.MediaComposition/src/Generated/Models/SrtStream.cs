@@ -13,7 +13,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Srt stream to be used as an input or output. </summary>
     public partial class SrtStream
     {
-        /// <summary> Initializes a new instance of SrtStream. </summary>
+        /// <summary> Initializes a new instance of <see cref="SrtStream"/>. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resolution"/> or <paramref name="streamUrl"/> is null. </exception>

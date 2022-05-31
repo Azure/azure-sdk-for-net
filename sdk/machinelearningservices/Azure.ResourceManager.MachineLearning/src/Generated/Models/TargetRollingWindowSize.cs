@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting target rolling window size. </summary>
     public partial class TargetRollingWindowSize
     {
-        /// <summary> Initializes a new instance of TargetRollingWindowSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetRollingWindowSize"/>. </summary>
         public TargetRollingWindowSize()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetRollingWindowSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetRollingWindowSize"/>. </summary>
         /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
         internal TargetRollingWindowSize(TargetRollingWindowSizeMode mode)
         {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of hostname bindings. </summary>
     internal partial class HostNameBindingCollection
     {
-        /// <summary> Initializes a new instance of HostNameBindingCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostNameBindingCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HostNameBindingCollection(IEnumerable<HostNameBindingData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of HostNameBindingCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostNameBindingCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal HostNameBindingCollection(IReadOnlyList<HostNameBindingData> value, string nextLink)

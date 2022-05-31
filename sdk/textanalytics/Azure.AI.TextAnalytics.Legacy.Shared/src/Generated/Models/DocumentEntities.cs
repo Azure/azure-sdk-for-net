@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The DocumentEntities. </summary>
     internal partial class DocumentEntities
     {
-        /// <summary> Initializes a new instance of DocumentEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentEntities"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentEntities"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>

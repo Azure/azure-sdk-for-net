@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Holds details about billing type and its meter guids. </summary>
     public partial class MeterDetails
     {
-        /// <summary> Initializes a new instance of MeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MeterDetails"/>. </summary>
         internal MeterDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of MeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MeterDetails"/>. </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>

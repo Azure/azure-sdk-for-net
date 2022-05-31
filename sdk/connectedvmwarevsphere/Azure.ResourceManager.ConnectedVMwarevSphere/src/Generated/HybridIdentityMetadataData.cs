@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing the HybridIdentityMetadata data model. </summary>
     public partial class HybridIdentityMetadataData : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridIdentityMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataData"/>. </summary>
         public HybridIdentityMetadataData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

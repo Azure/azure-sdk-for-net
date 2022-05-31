@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Container App Ingress configuration. </summary>
     public partial class IngressProvider
     {
-        /// <summary> Initializes a new instance of IngressProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngressProvider"/>. </summary>
         public IngressProvider()
         {
             Traffic = new ChangeTrackingList<TrafficWeight>();
             CustomDomains = new ChangeTrackingList<CustomDomain>();
         }
 
-        /// <summary> Initializes a new instance of IngressProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngressProvider"/>. </summary>
         /// <param name="fqdn"> Hostname. </param>
         /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
         /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>

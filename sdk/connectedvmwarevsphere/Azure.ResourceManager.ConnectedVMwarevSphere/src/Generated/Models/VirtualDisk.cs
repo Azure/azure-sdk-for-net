@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Virtual disk model. </summary>
     public partial class VirtualDisk
     {
-        /// <summary> Initializes a new instance of VirtualDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDisk"/>. </summary>
         public VirtualDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDisk"/>. </summary>
         /// <param name="name"> Gets or sets the name of the virtual disk. </param>
         /// <param name="label"> Gets or sets the label of the virtual disk in vCenter. </param>
         /// <param name="diskObjectId"> Gets or sets the disk object id. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the network interface ip settings. </summary>
     public partial class NicIPSettings
     {
-        /// <summary> Initializes a new instance of NicIPSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NicIPSettings"/>. </summary>
         public NicIPSettings()
         {
             DnsServers = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             IPAddressInfo = new ChangeTrackingList<NicIPAddressSettings>();
         }
 
-        /// <summary> Initializes a new instance of NicIPSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NicIPSettings"/>. </summary>
         /// <param name="allocationMethod"> Gets or sets the nic allocation method. </param>
         /// <param name="dnsServers"> Gets or sets the dns servers. </param>
         /// <param name="gateway"> Gets or sets the gateway. </param>

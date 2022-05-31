@@ -11,7 +11,7 @@ namespace Azure.Security.Attestation
     public partial class AttestationResult
     {
 
-        /// <summary> Initializes a new instance of AttestationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationResult"/>. </summary>
         /// <param name="internalJti"> Unique Identifier for the token. </param>
         /// <param name="internalIss"> The Principal who issued the token. </param>
         /// <param name="internalIat"> The time at which the token was issued, in the number of seconds since 1970-01-0T00:00:00Z UTC. </param>

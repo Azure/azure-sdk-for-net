@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> Response of listing models. </summary>
     internal partial class ModelList
     {
-        /// <summary> Initializes a new instance of ModelList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelList"/>. </summary>
         /// <param name="models"> List of models. </param>
         /// <param name="currentCount"> Current count of trained multivariate models. </param>
         /// <param name="maxCount"> Max number of models that can be trained for this subscription. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.AnomalyDetector.Models
             MaxCount = maxCount;
         }
 
-        /// <summary> Initializes a new instance of ModelList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelList"/>. </summary>
         /// <param name="models"> List of models. </param>
         /// <param name="currentCount"> Current count of trained multivariate models. </param>
         /// <param name="maxCount"> Max number of models that can be trained for this subscription. </param>

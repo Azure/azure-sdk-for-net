@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Represents a RegistrationInfo definition. </summary>
     public partial class RegistrationInfoPatch
     {
-        /// <summary> Initializes a new instance of RegistrationInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationInfoPatch"/>. </summary>
         public RegistrationInfoPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of RegistrationInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationInfoPatch"/>. </summary>
         /// <param name="expirationOn"> Expiration time of registration token. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
         internal RegistrationInfoPatch(DateTimeOffset? expirationOn, RegistrationTokenOperation? registrationTokenOperation)

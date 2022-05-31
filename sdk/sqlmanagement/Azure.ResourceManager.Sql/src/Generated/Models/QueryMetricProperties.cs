@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of a topquery metric in one interval. </summary>
     public partial class QueryMetricProperties
     {
-        /// <summary> Initializes a new instance of QueryMetricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryMetricProperties"/>. </summary>
         public QueryMetricProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of QueryMetricProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryMetricProperties"/>. </summary>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="displayName"> The UI appropriate name for the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>

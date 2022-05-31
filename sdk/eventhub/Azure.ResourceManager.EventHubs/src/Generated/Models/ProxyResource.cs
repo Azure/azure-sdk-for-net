@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     public partial class ProxyResource : ResourceData
     {
-        /// <summary> Initializes a new instance of ProxyResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyResource"/>. </summary>
         public ProxyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of ProxyResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

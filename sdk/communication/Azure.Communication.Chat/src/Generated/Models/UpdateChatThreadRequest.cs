@@ -10,7 +10,7 @@ namespace Azure.Communication.Chat
     /// <summary> Request payload for updating a chat thread. </summary>
     internal partial class UpdateChatThreadRequest
     {
-        /// <summary> Initializes a new instance of UpdateChatThreadRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateChatThreadRequest"/>. </summary>
         public UpdateChatThreadRequest()
         {
         }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ArcScVmm
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of ArcScVmmArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcScVmmArmOperation{T}" /> for mocking. </summary>
         protected ArcScVmmArmOperation()
         {
         }

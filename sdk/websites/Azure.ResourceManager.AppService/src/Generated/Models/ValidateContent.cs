@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Resource validation request content. </summary>
     public partial class ValidateContent
     {
-        /// <summary> Initializes a new instance of ValidateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="validateResourceType"> Resource type used for verification. </param>
         /// <param name="location"> Expected location of the resource. </param>

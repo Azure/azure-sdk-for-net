@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the MachineLearningWorkspace data model. </summary>
     public partial class MachineLearningWorkspaceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceData"/>. </summary>
         public MachineLearningWorkspaceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning
             SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

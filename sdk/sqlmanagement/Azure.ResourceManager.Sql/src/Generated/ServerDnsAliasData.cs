@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ServerDnsAlias data model. </summary>
     public partial class ServerDnsAliasData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerDnsAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerDnsAliasData"/>. </summary>
         public ServerDnsAliasData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerDnsAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerDnsAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

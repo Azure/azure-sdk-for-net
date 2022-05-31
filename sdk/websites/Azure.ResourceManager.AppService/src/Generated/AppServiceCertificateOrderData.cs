@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the AppServiceCertificateOrder data model. </summary>
     public partial class AppServiceCertificateOrderData : AppServiceResource
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateOrderData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppServiceCertificateOrderData(AzureLocation location) : base(location)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService
             AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

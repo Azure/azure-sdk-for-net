@@ -11,7 +11,7 @@ namespace Azure.Storage.Queues.Models
     public partial class QueueMetrics
     {
 
-        /// <summary> Initializes a new instance of QueueMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueMetrics"/>. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Queue service. </param>
         /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>

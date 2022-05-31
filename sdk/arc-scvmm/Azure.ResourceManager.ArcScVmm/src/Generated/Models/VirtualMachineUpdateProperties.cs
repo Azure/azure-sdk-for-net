@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the resource properties. </summary>
     public partial class VirtualMachineUpdateProperties
     {
-        /// <summary> Initializes a new instance of VirtualMachineUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineUpdateProperties"/>. </summary>
         public VirtualMachineUpdateProperties()
         {
             AvailabilitySets = new ChangeTrackingList<AvailabilitySetListItem>();

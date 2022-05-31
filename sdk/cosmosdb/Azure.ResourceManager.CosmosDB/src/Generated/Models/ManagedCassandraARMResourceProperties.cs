@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The core properties of ARM resources. </summary>
     public partial class ManagedCassandraARMResourceProperties : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedCassandraARMResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCassandraARMResourceProperties"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedCassandraARMResourceProperties(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedCassandraARMResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedCassandraARMResourceProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

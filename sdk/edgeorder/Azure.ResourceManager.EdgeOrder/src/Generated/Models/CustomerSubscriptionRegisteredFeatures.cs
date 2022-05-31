@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Represents subscription registered features. </summary>
     public partial class CustomerSubscriptionRegisteredFeatures
     {
-        /// <summary> Initializes a new instance of CustomerSubscriptionRegisteredFeatures. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomerSubscriptionRegisteredFeatures"/>. </summary>
         public CustomerSubscriptionRegisteredFeatures()
         {
         }

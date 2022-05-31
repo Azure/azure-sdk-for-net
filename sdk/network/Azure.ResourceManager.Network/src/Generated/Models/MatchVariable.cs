@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Define match variables. </summary>
     public partial class MatchVariable
     {
-        /// <summary> Initializes a new instance of MatchVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchVariable"/>. </summary>
         /// <param name="variableName"> Match Variable. </param>
         public MatchVariable(WebApplicationFirewallMatchVariable variableName)
         {
             VariableName = variableName;
         }
 
-        /// <summary> Initializes a new instance of MatchVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchVariable"/>. </summary>
         /// <param name="variableName"> Match Variable. </param>
         /// <param name="selector"> The selector of match variable. </param>
         internal MatchVariable(WebApplicationFirewallMatchVariable variableName, string selector)

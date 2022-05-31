@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class TextNer : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of TextNer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextNer"/>. </summary>
         public TextNer()
         {
             TaskType = TaskType.TextNER;
         }
 
-        /// <summary> Initializes a new instance of TextNer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextNer"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="primaryMetric">

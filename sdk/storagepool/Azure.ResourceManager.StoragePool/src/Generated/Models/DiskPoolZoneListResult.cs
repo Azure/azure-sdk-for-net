@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> List Disk Pool skus operation response. </summary>
     internal partial class DiskPoolZoneListResult
     {
-        /// <summary> Initializes a new instance of DiskPoolZoneListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolZoneListResult"/>. </summary>
         internal DiskPoolZoneListResult()
         {
             Value = new ChangeTrackingList<DiskPoolZoneInfo>();
         }
 
-        /// <summary> Initializes a new instance of DiskPoolZoneListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolZoneListResult"/>. </summary>
         /// <param name="value"> The list of Disk Pool Skus. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal DiskPoolZoneListResult(IReadOnlyList<DiskPoolZoneInfo> value, string nextLink)

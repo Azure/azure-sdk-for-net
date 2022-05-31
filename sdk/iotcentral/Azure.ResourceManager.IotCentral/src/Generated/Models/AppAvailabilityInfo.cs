@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> The properties indicating whether a given IoT Central application name or subdomain is available. </summary>
     public partial class AppAvailabilityInfo
     {
-        /// <summary> Initializes a new instance of AppAvailabilityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppAvailabilityInfo"/>. </summary>
         internal AppAvailabilityInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AppAvailabilityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppAvailabilityInfo"/>. </summary>
         /// <param name="nameAvailable"> The value which indicates whether the provided name is available. </param>
         /// <param name="reason"> The reason for unavailability. </param>
         /// <param name="message"> The detailed reason message. </param>

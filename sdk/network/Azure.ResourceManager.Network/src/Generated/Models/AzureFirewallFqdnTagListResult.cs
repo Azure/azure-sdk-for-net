@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListAzureFirewallFqdnTags API service call. </summary>
     internal partial class AzureFirewallFqdnTagListResult
     {
-        /// <summary> Initializes a new instance of AzureFirewallFqdnTagListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTagListResult"/>. </summary>
         internal AzureFirewallFqdnTagListResult()
         {
             Value = new ChangeTrackingList<AzureFirewallFqdnTag>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallFqdnTagListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTagListResult"/>. </summary>
         /// <param name="value"> List of Azure Firewall FQDN Tags in a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal AzureFirewallFqdnTagListResult(IReadOnlyList<AzureFirewallFqdnTag> value, string nextLink)

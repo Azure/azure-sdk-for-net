@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> A class representing the HostPool data model. </summary>
     public partial class HostPoolData : ResourceModelWithAllowedPropertySet
     {
-        /// <summary> Initializes a new instance of HostPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="hostPoolType"> HostPool type for desktop. </param>
         /// <param name="loadBalancerType"> The type of the load balancer. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             PreferredAppGroupType = preferredAppGroupType;
         }
 
-        /// <summary> Initializes a new instance of HostPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

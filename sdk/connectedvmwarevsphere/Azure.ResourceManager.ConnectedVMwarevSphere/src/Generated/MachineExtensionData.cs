@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing the MachineExtension data model. </summary>
     public partial class MachineExtensionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MachineExtensionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

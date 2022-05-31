@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Secret definition. </summary>
     public partial class AppSecret
     {
-        /// <summary> Initializes a new instance of AppSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSecret"/>. </summary>
         public AppSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of AppSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSecret"/>. </summary>
         /// <param name="name"> Secret Name. </param>
         /// <param name="value"> Secret Value. </param>
         internal AppSecret(string name, string value)

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Properties specific to a ManagedOnlineDeployment. </summary>
     public partial class ManagedOnlineDeployment : OnlineDeploymentProperties
     {
-        /// <summary> Initializes a new instance of ManagedOnlineDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedOnlineDeployment"/>. </summary>
         public ManagedOnlineDeployment()
         {
             EndpointComputeType = EndpointComputeType.Managed;
         }
 
-        /// <summary> Initializes a new instance of ManagedOnlineDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedOnlineDeployment"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>

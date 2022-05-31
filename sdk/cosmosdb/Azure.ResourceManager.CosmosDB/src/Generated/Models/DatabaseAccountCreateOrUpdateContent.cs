@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update Cosmos DB database accounts. </summary>
     public partial class DatabaseAccountCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             NetworkAclBypassResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

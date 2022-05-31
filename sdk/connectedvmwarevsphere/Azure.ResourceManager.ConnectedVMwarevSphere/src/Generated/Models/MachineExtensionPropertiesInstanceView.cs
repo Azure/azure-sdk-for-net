@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> The machine extension instance view. </summary>
     public partial class MachineExtensionPropertiesInstanceView : MachineExtensionInstanceView
     {
-        /// <summary> Initializes a new instance of MachineExtensionPropertiesInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionPropertiesInstanceView"/>. </summary>
         public MachineExtensionPropertiesInstanceView()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionPropertiesInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionPropertiesInstanceView"/>. </summary>
         /// <param name="name"> The machine extension name. </param>
         /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>

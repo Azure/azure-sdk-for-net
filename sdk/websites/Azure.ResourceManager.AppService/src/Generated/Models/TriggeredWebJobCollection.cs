@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Kudu continuous web job information elements. </summary>
     internal partial class TriggeredWebJobCollection
     {
-        /// <summary> Initializes a new instance of TriggeredWebJobCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggeredWebJobCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggeredWebJobCollection(IEnumerable<TriggeredWebJobData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TriggeredWebJobCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggeredWebJobCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal TriggeredWebJobCollection(IReadOnlyList<TriggeredWebJobData> value, string nextLink)

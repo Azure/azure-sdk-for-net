@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the SqlJob data model. </summary>
     public partial class SqlJobData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlJobData"/>. </summary>
         public SqlJobData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkTableStatus. </summary>
     public partial class LinkTableStatus
     {
-        /// <summary> Initializes a new instance of LinkTableStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableStatus"/>. </summary>
         internal LinkTableStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableStatus"/>. </summary>
         /// <param name="id"> Link table id. </param>
         /// <param name="status"> Link table status. </param>
         /// <param name="errorMessage"> Link table error message. </param>

@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> Contains an input document to be analyzed by the service. </summary>
     internal partial class MultiLanguageInput
     {
-        /// <summary> Initializes a new instance of MultiLanguageInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageInput"/>. </summary>
         /// <param name="id"> A unique, non-empty document identifier. </param>
         /// <param name="text"> The input text to process. </param>
         public MultiLanguageInput(string id, string text)

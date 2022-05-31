@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Ingest track discontinuity detected event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventTrackDiscontinuityDetected event. </summary>
     public partial class MediaLiveEventTrackDiscontinuityDetectedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventTrackDiscontinuityDetectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventTrackDiscontinuityDetectedEventData"/>. </summary>
         internal MediaLiveEventTrackDiscontinuityDetectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventTrackDiscontinuityDetectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventTrackDiscontinuityDetectedEventData"/>. </summary>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="trackName"> Gets the track name. </param>
         /// <param name="bitrate"> Gets the bitrate. </param>

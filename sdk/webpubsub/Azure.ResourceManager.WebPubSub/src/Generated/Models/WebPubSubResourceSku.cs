@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Describes an available sku.&quot;. </summary>
     public partial class WebPubSubResourceSku
     {
-        /// <summary> Initializes a new instance of WebPubSubResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubResourceSku"/>. </summary>
         internal WebPubSubResourceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of WebPubSubResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubResourceSku"/>. </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The exact set of keys that define this sku. </param>
         /// <param name="capacity"> Specifies the unit of the resource. </param>

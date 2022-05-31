@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.DynaTrace
     /// <summary> A class representing the TagRule data model. </summary>
     public partial class TagRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of TagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagRuleData"/>. </summary>
         public TagRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of TagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

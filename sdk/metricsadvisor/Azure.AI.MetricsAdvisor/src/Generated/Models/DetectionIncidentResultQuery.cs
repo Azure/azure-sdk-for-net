@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DetectionIncidentResultQuery. </summary>
     internal partial class DetectionIncidentResultQuery
     {
-        /// <summary> Initializes a new instance of DetectionIncidentResultQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionIncidentResultQuery"/>. </summary>
         /// <param name="startTime"> start time. </param>
         /// <param name="endTime"> end time. </param>
         public DetectionIncidentResultQuery(DateTimeOffset startTime, DateTimeOffset endTime)

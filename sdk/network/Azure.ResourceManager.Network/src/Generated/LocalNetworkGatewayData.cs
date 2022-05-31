@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the LocalNetworkGateway data model. </summary>
     public partial class LocalNetworkGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of LocalNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayData"/>. </summary>
         public LocalNetworkGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of LocalNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

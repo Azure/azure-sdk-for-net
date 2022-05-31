@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Origin group properties needed for origin group creation or update. </summary>
     public partial class CdnOriginGroupPatch
     {
-        /// <summary> Initializes a new instance of CdnOriginGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnOriginGroupPatch"/>. </summary>
         public CdnOriginGroupPatch()
         {
             Origins = new ChangeTrackingList<WritableSubResource>();

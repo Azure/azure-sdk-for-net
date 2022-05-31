@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Description of a Check Name availability request properties. </summary>
     public partial class CheckNameAvailability
     {
-        /// <summary> Initializes a new instance of CheckNameAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailability"/>. </summary>
         /// <param name="name"> The Name to check the namespace name availability and The namespace name can contain only letters, numbers, and hyphens. The namespace must start with a letter, and it must end with a letter or number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CheckNameAvailability(string name)

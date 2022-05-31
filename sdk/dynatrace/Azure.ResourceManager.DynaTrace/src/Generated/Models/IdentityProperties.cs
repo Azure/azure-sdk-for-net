@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DynaTrace.Models
     /// <summary> The properties of the managed service identities assigned to this resource. </summary>
     public partial class IdentityProperties
     {
-        /// <summary> Initializes a new instance of IdentityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityProperties"/>. </summary>
         /// <param name="managedIdentityType"> The type of managed identity assigned to this resource. </param>
         public IdentityProperties(ManagedIdentityType managedIdentityType)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DynaTrace.Models
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of IdentityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityProperties"/>. </summary>
         /// <param name="tenantId"> The Active Directory tenant id of the principal. </param>
         /// <param name="principalId"> The active directory identifier of this principal. </param>
         /// <param name="managedIdentityType"> The type of managed identity assigned to this resource. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Describes the result of resource validation. </summary>
     public partial class ValidateResponse
     {
-        /// <summary> Initializes a new instance of ValidateResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateResponse"/>. </summary>
         internal ValidateResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidateResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateResponse"/>. </summary>
         /// <param name="status"> Result of validation. </param>
         /// <param name="error"> Error details for the case when validation fails. </param>
         internal ValidateResponse(string status, ValidateResponseError error)

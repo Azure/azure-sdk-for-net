@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Classification task in AutoML Table vertical. </summary>
     public partial class Classification : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of Classification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Classification"/>. </summary>
         public Classification()
         {
             AllowedModels = new ChangeTrackingList<ClassificationModels>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.Classification;
         }
 
-        /// <summary> Initializes a new instance of Classification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Classification"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="allowedModels"> Allowed models for classification task. </param>

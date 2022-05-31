@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the OS disk image. </summary>
     public partial class GalleryOSDiskImage : GalleryDiskImage
     {
-        /// <summary> Initializes a new instance of GalleryOSDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryOSDiskImage"/>. </summary>
         public GalleryOSDiskImage()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryOSDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryOSDiskImage"/>. </summary>
         /// <param name="sizeInGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are &apos;None&apos;, &apos;ReadOnly&apos;, and &apos;ReadWrite&apos;. </param>
         /// <param name="source"> The gallery artifact version source. </param>

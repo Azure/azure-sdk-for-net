@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machines scale set IP Configuration&apos;s PublicIPAddress configuration. </summary>
     public partial class VirtualMachineScaleSetPublicIPAddressConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineScaleSetPublicIPAddressConfiguration(string name)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             IPTags = new ChangeTrackingList<VirtualMachineScaleSetIPTag>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
         /// <param name="sku"> Describes the public IP Sku. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>

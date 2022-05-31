@@ -12,7 +12,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> &quot;A Microsoft Teams user. </summary>
     public partial class MicrosoftTeamsUserIdentifierModel
     {
-        /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/>. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public MicrosoftTeamsUserIdentifierModel(string userId)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure Blob datastore configuration. </summary>
     public partial class AzureBlobDatastore : DatastoreProperties
     {
-        /// <summary> Initializes a new instance of AzureBlobDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobDatastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> is null. </exception>
         public AzureBlobDatastore(DatastoreCredentials credentials) : base(credentials)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = DatastoreType.AzureBlob;
         }
 
-        /// <summary> Initializes a new instance of AzureBlobDatastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobDatastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

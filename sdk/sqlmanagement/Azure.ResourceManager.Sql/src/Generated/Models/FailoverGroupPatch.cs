@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A failover group update request. </summary>
     public partial class FailoverGroupPatch
     {
-        /// <summary> Initializes a new instance of FailoverGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupPatch"/>. </summary>
         public FailoverGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

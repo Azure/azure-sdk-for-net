@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The set of data plane operations permitted through this Role Definition. </summary>
     public partial class Permission
     {
-        /// <summary> Initializes a new instance of Permission. </summary>
+        /// <summary> Initializes a new instance of <see cref="Permission"/>. </summary>
         public Permission()
         {
             DataActions = new ChangeTrackingList<string>();
             NotDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Permission. </summary>
+        /// <summary> Initializes a new instance of <see cref="Permission"/>. </summary>
         /// <param name="dataActions"> An array of data actions that are allowed. </param>
         /// <param name="notDataActions"> An array of data actions that are denied. </param>
         internal Permission(IList<string> dataActions, IList<string> notDataActions)

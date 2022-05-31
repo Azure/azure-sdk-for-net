@@ -13,13 +13,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> Response containing the status of each telemetry item. </summary>
     internal partial class TrackResponse
     {
-        /// <summary> Initializes a new instance of TrackResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackResponse"/>. </summary>
         internal TrackResponse()
         {
             Errors = new ChangeTrackingList<TelemetryErrorDetails>();
         }
 
-        /// <summary> Initializes a new instance of TrackResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackResponse"/>. </summary>
         /// <param name="itemsReceived"> The number of items received. </param>
         /// <param name="itemsAccepted"> The number of items accepted. </param>
         /// <param name="errors"> An array of error detail objects. </param>

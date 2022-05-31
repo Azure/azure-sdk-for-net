@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> A FluidRelay REST API operation. </summary>
     public partial class OperationResult
     {
-        /// <summary> Initializes a new instance of OperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResult"/>. </summary>
         internal OperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResult"/>. </summary>
         /// <param name="name"> Operation name: {provider}/{resource}/{operation}. </param>
         /// <param name="display"> The object that represents the operation. </param>
         /// <param name="isDataAction"> Indicates whether the operation is a data action. </param>

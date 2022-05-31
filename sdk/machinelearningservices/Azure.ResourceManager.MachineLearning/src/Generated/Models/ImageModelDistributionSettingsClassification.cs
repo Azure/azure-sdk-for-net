@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelDistributionSettingsClassification : ImageModelDistributionSettings
     {
-        /// <summary> Initializes a new instance of ImageModelDistributionSettingsClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsClassification"/>. </summary>
         public ImageModelDistributionSettingsClassification()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelDistributionSettingsClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsClassification"/>. </summary>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is &apos;adam&apos; or &apos;adamw&apos;. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
         /// <param name="beta1"> Value of &apos;beta1&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1]. </param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class AutoMLVertical
     {
-        /// <summary> Initializes a new instance of AutoMLVertical. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>
         public AutoMLVertical()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoMLVertical. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoMLVertical"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         internal AutoMLVertical(LogVerbosity? logVerbosity, TaskType taskType)

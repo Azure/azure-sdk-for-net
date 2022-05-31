@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> SkuInformation object. </summary>
     public partial class ResourceTypeSku
     {
-        /// <summary> Initializes a new instance of ResourceTypeSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSku"/>. </summary>
         internal ResourceTypeSku()
         {
             LocationInfo = new ChangeTrackingList<SkuLocationInfo>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSku"/>. </summary>
         /// <param name="sku"> The Sku tier. </param>
         /// <param name="locationInfo"> Availability of the SKU for the location/zone. </param>
         /// <param name="san"> Scalability targets for the San account for a given tier. </param>

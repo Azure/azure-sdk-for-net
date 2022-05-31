@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Machine Learning compute object. </summary>
     public partial class Compute
     {
-        /// <summary> Initializes a new instance of Compute. </summary>
+        /// <summary> Initializes a new instance of <see cref="Compute"/>. </summary>
         public Compute()
         {
             ProvisioningErrors = new ChangeTrackingList<ErrorResponse>();
         }
 
-        /// <summary> Initializes a new instance of Compute. </summary>
+        /// <summary> Initializes a new instance of <see cref="Compute"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>

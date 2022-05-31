@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A metric availability value. </summary>
     public partial class MetricAvailability
     {
-        /// <summary> Initializes a new instance of MetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAvailability"/>. </summary>
         internal MetricAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAvailability"/>. </summary>
         /// <param name="retention"> The length of retention for the database metric. </param>
         /// <param name="timeGrain"> The granularity of the database metric. </param>
         internal MetricAvailability(string retention, string timeGrain)

@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> Model factory for read-only models. </summary>
     public static partial class CallingServerModelFactory
     {
-        /// <summary> Initializes a new instance of PlayAudioResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayAudioResult"/>. </summary>
         /// <param name="operationId"> The operation id. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
             return new PlayAudioResult(operationId, status, operationContext, resultInfo);
         }
 
-        /// <summary> Initializes a new instance of ResultInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResultInfo"/>. </summary>
         /// <param name="code"> The result code associated with the operation. </param>
         /// <param name="subcode"> The subcode that further classifies the result. </param>
         /// <param name="message"> The message is a detail explanation of subcode. </param>
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallingServer
             return new ResultInfo(code, subcode, message);
         }
 
-        /// <summary> Initializes a new instance of CancelAllMediaOperationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelAllMediaOperationsResult"/>. </summary>
         /// <param name="operationId"> The operation id. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallingServer
             return new CancelAllMediaOperationsResult(operationId, status, operationContext, resultInfo);
         }
 
-        /// <summary> Initializes a new instance of AddParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantResult"/>. </summary>
         /// <param name="participantId"> The id of the added participant. </param>
         /// <returns> A new <see cref="CallingServer.AddParticipantResult"/> instance for mocking. </returns>
         public static AddParticipantResult AddParticipantResult(string participantId = null)
@@ -52,7 +52,7 @@ namespace Azure.Communication.CallingServer
             return new AddParticipantResult(participantId);
         }
 
-        /// <summary> Initializes a new instance of StartRecordingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartRecordingResult"/>. </summary>
         /// <param name="recordingId"> The recording id of the started recording. </param>
         /// <returns> A new <see cref="CallingServer.StartRecordingResult"/> instance for mocking. </returns>
         public static StartRecordingResult StartRecordingResult(string recordingId = null)
@@ -60,7 +60,7 @@ namespace Azure.Communication.CallingServer
             return new StartRecordingResult(recordingId);
         }
 
-        /// <summary> Initializes a new instance of CallRecordingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallRecordingProperties"/>. </summary>
         /// <param name="recordingState"> The state of the recording. </param>
         /// <returns> A new <see cref="CallingServer.CallRecordingProperties"/> instance for mocking. </returns>
         public static CallRecordingProperties CallRecordingProperties(CallRecordingState recordingState = default)
@@ -68,7 +68,7 @@ namespace Azure.Communication.CallingServer
             return new CallRecordingProperties(recordingState);
         }
 
-        /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnectionStateChangedEvent"/>. </summary>
         /// <param name="serverCallId"> The server call.id. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="callConnectionState"> The call connection state. </param>
@@ -78,7 +78,7 @@ namespace Azure.Communication.CallingServer
             return new CallConnectionStateChangedEvent(serverCallId, callConnectionId, callConnectionState);
         }
 
-        /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallRecordingStateChangeEvent"/>. </summary>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"> The state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>
@@ -89,7 +89,7 @@ namespace Azure.Communication.CallingServer
             return new CallRecordingStateChangeEvent(recordingId, state, startDateTime, serverCallId);
         }
 
-        /// <summary> Initializes a new instance of AddParticipantResultEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantResultEvent"/>. </summary>
         /// <param name="resultInfo"> The result details. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>
@@ -99,7 +99,7 @@ namespace Azure.Communication.CallingServer
             return new AddParticipantResultEvent(resultInfo, operationContext, status);
         }
 
-        /// <summary> Initializes a new instance of PlayAudioResultEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayAudioResultEvent"/>. </summary>
         /// <param name="resultInfo"> The result details. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>
@@ -109,7 +109,7 @@ namespace Azure.Communication.CallingServer
             return new PlayAudioResultEvent(resultInfo, operationContext, status);
         }
 
-        /// <summary> Initializes a new instance of ToneReceivedEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ToneReceivedEvent"/>. </summary>
         /// <param name="toneInfo"> The tone info. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <returns> A new <see cref="CallingServer.ToneReceivedEvent"/> instance for mocking. </returns>
@@ -118,7 +118,7 @@ namespace Azure.Communication.CallingServer
             return new ToneReceivedEvent(toneInfo, callConnectionId);
         }
 
-        /// <summary> Initializes a new instance of ToneInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ToneInfo"/>. </summary>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"> The tone value. </param>
         /// <returns> A new <see cref="CallingServer.ToneInfo"/> instance for mocking. </returns>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of RouteTables and a URL nextLink to get the next set of results. </summary>
     internal partial class ListHubRouteTablesResult
     {
-        /// <summary> Initializes a new instance of ListHubRouteTablesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListHubRouteTablesResult"/>. </summary>
         internal ListHubRouteTablesResult()
         {
             Value = new ChangeTrackingList<HubRouteTableData>();
         }
 
-        /// <summary> Initializes a new instance of ListHubRouteTablesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListHubRouteTablesResult"/>. </summary>
         /// <param name="value"> List of RouteTables. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
         internal ListHubRouteTablesResult(IReadOnlyList<HubRouteTableData> value, string nextLink)

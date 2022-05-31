@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing the ResourcePool data model. </summary>
     public partial class ResourcePoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ResourcePoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcePoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ResourcePoolData(AzureLocation location) : base(location)
         {
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of ResourcePoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcePoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the MSDeployStatus data model. </summary>
     public partial class MSDeployStatusData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of MSDeployStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MSDeployStatusData"/>. </summary>
         public MSDeployStatusData()
         {
         }
 
-        /// <summary> Initializes a new instance of MSDeployStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MSDeployStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

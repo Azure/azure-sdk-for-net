@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of transparent data encryptions. </summary>
     internal partial class LogicalDatabaseTransparentDataEncryptionListResult
     {
-        /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalDatabaseTransparentDataEncryptionListResult"/>. </summary>
         internal LogicalDatabaseTransparentDataEncryptionListResult()
         {
             Value = new ChangeTrackingList<LogicalDatabaseTransparentDataEncryptionData>();
         }
 
-        /// <summary> Initializes a new instance of LogicalDatabaseTransparentDataEncryptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicalDatabaseTransparentDataEncryptionListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal LogicalDatabaseTransparentDataEncryptionListResult(IReadOnlyList<LogicalDatabaseTransparentDataEncryptionData> value, string nextLink)

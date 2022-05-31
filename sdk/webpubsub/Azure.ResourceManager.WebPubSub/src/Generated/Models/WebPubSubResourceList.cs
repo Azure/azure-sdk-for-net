@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Object that includes an array of resources and a possible link for next set. </summary>
     internal partial class WebPubSubResourceList
     {
-        /// <summary> Initializes a new instance of WebPubSubResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubResourceList"/>. </summary>
         internal WebPubSubResourceList()
         {
             Value = new ChangeTrackingList<WebPubSubData>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubResourceList"/>. </summary>
         /// <param name="value"> List of the resources. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).

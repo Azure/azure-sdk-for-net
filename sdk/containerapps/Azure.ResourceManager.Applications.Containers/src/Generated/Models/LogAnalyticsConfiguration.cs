@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Log analytics configuration. </summary>
     public partial class LogAnalyticsConfiguration
     {
-        /// <summary> Initializes a new instance of LogAnalyticsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsConfiguration"/>. </summary>
         public LogAnalyticsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsConfiguration"/>. </summary>
         /// <param name="customerId"> Log analytics customer id. </param>
         /// <param name="sharedKey"> Log analytics customer key. </param>
         internal LogAnalyticsConfiguration(string customerId, string sharedKey)

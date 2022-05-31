@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB SQL userDefinedFunction resource object. </summary>
     public partial class SqlUserDefinedFunctionResource
     {
-        /// <summary> Initializes a new instance of SqlUserDefinedFunctionResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlUserDefinedFunctionResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL userDefinedFunction. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SqlUserDefinedFunctionResource(string id)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of SqlUserDefinedFunctionResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlUserDefinedFunctionResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL userDefinedFunction. </param>
         /// <param name="body"> Body of the User Defined Function. </param>
         internal SqlUserDefinedFunctionResource(string id, string body)

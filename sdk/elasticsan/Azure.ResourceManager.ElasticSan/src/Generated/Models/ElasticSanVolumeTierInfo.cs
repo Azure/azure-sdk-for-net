@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Volume scalability target. </summary>
     public partial class ElasticSanVolumeTierInfo
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeTierInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeTierInfo"/>. </summary>
         internal ElasticSanVolumeTierInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeTierInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeTierInfo"/>. </summary>
         /// <param name="maxSizeGiB"> Maximum volume capacity in GiB. </param>
         /// <param name="minSizeGiB"> Minimum volume capacity in GiB. </param>
         /// <param name="minIncrementSizeGiB"> Increment volume capacity in GiB. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Username / Password Credentials to connect to vcenter. </summary>
     public partial class VICredential
     {
-        /// <summary> Initializes a new instance of VICredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="VICredential"/>. </summary>
         public VICredential()
         {
         }
 
-        /// <summary> Initializes a new instance of VICredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="VICredential"/>. </summary>
         /// <param name="username"> Gets or sets username to connect with the vCenter. </param>
         /// <param name="password"> Gets or sets the password to connect with the vCenter. </param>
         internal VICredential(string username, string password)

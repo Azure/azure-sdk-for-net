@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB MongoDB collection index key. </summary>
     public partial class MongoIndex
     {
-        /// <summary> Initializes a new instance of MongoIndex. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoIndex"/>. </summary>
         public MongoIndex()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoIndex. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoIndex"/>. </summary>
         /// <param name="key"> Cosmos DB MongoDB collection index keys. </param>
         /// <param name="options"> Cosmos DB MongoDB collection index key options. </param>
         internal MongoIndex(MongoIndexKeys key, MongoIndexOptions options)

@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Content and layout elements extracted from a page from the input. </summary>
     public partial class DocumentPage
     {
-        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentPage"/>. </summary>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Lines = lines.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentPage"/>. </summary>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="angle"> The general orientation of the content in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a certificate. </summary>
     public partial class CertificatePatch : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of CertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificatePatch"/>. </summary>
         public CertificatePatch()
         {
             HostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificatePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

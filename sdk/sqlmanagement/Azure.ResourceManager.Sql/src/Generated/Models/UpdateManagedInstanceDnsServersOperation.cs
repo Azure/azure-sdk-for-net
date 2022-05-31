@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A recoverable managed database resource. </summary>
     public partial class UpdateManagedInstanceDnsServersOperation : ResourceData
     {
-        /// <summary> Initializes a new instance of UpdateManagedInstanceDnsServersOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateManagedInstanceDnsServersOperation"/>. </summary>
         public UpdateManagedInstanceDnsServersOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateManagedInstanceDnsServersOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateManagedInstanceDnsServersOperation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

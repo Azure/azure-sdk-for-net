@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The OSFamilyListResult. </summary>
     internal partial class OSFamilyListResult
     {
-        /// <summary> Initializes a new instance of OSFamilyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSFamilyListResult"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OSFamilyListResult(IEnumerable<CloudServiceOSFamilyData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of OSFamilyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSFamilyListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal OSFamilyListResult(IReadOnlyList<CloudServiceOSFamilyData> value, string nextLink)

@@ -15,7 +15,7 @@ namespace Azure.Communication.PhoneNumbers
     public static partial class PhoneNumbersModelFactory
     {
 
-        /// <summary> Initializes a new instance of PhoneNumberCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCost"/>. </summary>
         /// <param name="amount"> The cost amount. </param>
         /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>

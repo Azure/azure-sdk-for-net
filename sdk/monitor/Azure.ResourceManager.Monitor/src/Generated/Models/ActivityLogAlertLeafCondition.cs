@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An Activity Log alert condition that is met by comparing an activity log field and value. </summary>
     public partial class ActivityLogAlertLeafCondition
     {
-        /// <summary> Initializes a new instance of ActivityLogAlertLeafCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertLeafCondition"/>. </summary>
         /// <param name="field"> The name of the field that this condition will examine. The possible values for this field are (case-insensitive): &apos;resourceId&apos;, &apos;category&apos;, &apos;caller&apos;, &apos;level&apos;, &apos;operationName&apos;, &apos;resourceGroup&apos;, &apos;resourceProvider&apos;, &apos;status&apos;, &apos;subStatus&apos;, &apos;resourceType&apos;, or anything beginning with &apos;properties.&apos;. </param>
         /// <param name="equalsValue"> The field value will be compared to this value (case-insensitive) to determine if the condition is met. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="field"/> or <paramref name="equalsValue"/> is null. </exception>

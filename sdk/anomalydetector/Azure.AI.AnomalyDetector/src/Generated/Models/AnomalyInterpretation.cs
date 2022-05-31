@@ -10,12 +10,12 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The AnomalyInterpretation. </summary>
     public partial class AnomalyInterpretation
     {
-        /// <summary> Initializes a new instance of AnomalyInterpretation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyInterpretation"/>. </summary>
         internal AnomalyInterpretation()
         {
         }
 
-        /// <summary> Initializes a new instance of AnomalyInterpretation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyInterpretation"/>. </summary>
         /// <param name="variable"></param>
         /// <param name="contributionScore"></param>
         /// <param name="correlationChanges"></param>

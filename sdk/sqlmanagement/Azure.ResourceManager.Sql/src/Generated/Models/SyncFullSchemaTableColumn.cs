@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of the column in the table of database full schema. </summary>
     public partial class SyncFullSchemaTableColumn
     {
-        /// <summary> Initializes a new instance of SyncFullSchemaTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaTableColumn"/>. </summary>
         internal SyncFullSchemaTableColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncFullSchemaTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaTableColumn"/>. </summary>
         /// <param name="dataSize"> Data size of the column. </param>
         /// <param name="dataType"> Data type of the column. </param>
         /// <param name="errorId"> Error id of the column. </param>

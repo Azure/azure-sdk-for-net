@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Get Operation response object. </summary>
     public partial class ModelOperation : ModelOperationInfo
     {
-        /// <summary> Initializes a new instance of ModelOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelOperation"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        /// <summary> Initializes a new instance of ModelOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelOperation"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>

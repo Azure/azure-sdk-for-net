@@ -14,7 +14,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> The result of a phone number search operation. </summary>
     public partial class PhoneNumberSearchResult
     {
-        /// <summary> Initializes a new instance of PhoneNumberSearchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchResult"/>. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
         /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. geographic, or tollFree. </param>
@@ -51,7 +51,7 @@ namespace Azure.Communication.PhoneNumbers
             SearchExpiresOn = searchExpiresOn;
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberSearchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberSearchResult"/>. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
         /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. geographic, or tollFree. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The object representing the policy for taking backups on an account. </summary>
     public partial class BackupPolicy
     {
-        /// <summary> Initializes a new instance of BackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPolicy"/>. </summary>
         public BackupPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPolicy"/>. </summary>
         /// <param name="policyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
         internal BackupPolicy(BackupPolicyType policyType, BackupPolicyMigrationState migrationState)

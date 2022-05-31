@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> String list resource. </summary>
     public partial class StringList : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringList"/>. </summary>
         public StringList()
         {
             Properties = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringList"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

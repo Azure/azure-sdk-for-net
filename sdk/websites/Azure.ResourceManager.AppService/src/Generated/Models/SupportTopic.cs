@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Defines a unique Support Topic. </summary>
     public partial class SupportTopic
     {
-        /// <summary> Initializes a new instance of SupportTopic. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTopic"/>. </summary>
         internal SupportTopic()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportTopic. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTopic"/>. </summary>
         /// <param name="id"> Support Topic Id. </param>
         /// <param name="pesId"> Unique resource Id. </param>
         internal SupportTopic(string id, string pesId)

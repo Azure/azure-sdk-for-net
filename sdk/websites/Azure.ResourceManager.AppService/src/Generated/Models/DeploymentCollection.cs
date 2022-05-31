@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of app deployments. </summary>
     internal partial class DeploymentCollection
     {
-        /// <summary> Initializes a new instance of DeploymentCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DeploymentCollection(IEnumerable<DeploymentData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DeploymentCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal DeploymentCollection(IReadOnlyList<DeploymentData> value, string nextLink)

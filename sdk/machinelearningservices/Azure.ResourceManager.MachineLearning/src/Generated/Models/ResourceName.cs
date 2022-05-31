@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The Resource Name. </summary>
     public partial class ResourceName
     {
-        /// <summary> Initializes a new instance of ResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceName"/>. </summary>
         internal ResourceName()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceName"/>. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         internal ResourceName(string value, string localizedValue)

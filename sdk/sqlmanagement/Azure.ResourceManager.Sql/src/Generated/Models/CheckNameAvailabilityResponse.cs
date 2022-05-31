@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The result of a name availability check. </summary>
     public partial class CheckNameAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResponse"/>. </summary>
         internal CheckNameAvailabilityResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResponse"/>. </summary>
         /// <param name="name"> The name whose availability was checked. </param>
         /// <param name="available"> True if the name is available, otherwise false. </param>
         /// <param name="reason"> The reason code explaining why the name is unavailable. Will be undefined if the name is available. </param>

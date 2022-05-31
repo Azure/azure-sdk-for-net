@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureBlobParameterPatch. </summary>
     internal partial class AzureBlobParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureBlobParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobParameterPatch"/>. </summary>
         public AzureBlobParameterPatch()
         {
         }

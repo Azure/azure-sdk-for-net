@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class representing the SqlRoleDefinition data model. </summary>
     public partial class SqlRoleDefinitionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlRoleDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlRoleDefinitionData"/>. </summary>
         public SqlRoleDefinitionData()
         {
             AssignableScopes = new ChangeTrackingList<string>();
             Permissions = new ChangeTrackingList<Permission>();
         }
 
-        /// <summary> Initializes a new instance of SqlRoleDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlRoleDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

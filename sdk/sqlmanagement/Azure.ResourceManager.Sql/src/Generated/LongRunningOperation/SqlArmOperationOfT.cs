@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of SqlArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlArmOperation{T}" /> for mocking. </summary>
         protected SqlArmOperation()
         {
         }

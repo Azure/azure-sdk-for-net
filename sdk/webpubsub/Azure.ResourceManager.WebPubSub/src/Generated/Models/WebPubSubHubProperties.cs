@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Properties of a hub. </summary>
     public partial class WebPubSubHubProperties
     {
-        /// <summary> Initializes a new instance of WebPubSubHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubProperties"/>. </summary>
         public WebPubSubHubProperties()
         {
             EventHandlers = new ChangeTrackingList<EventHandler>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubProperties"/>. </summary>
         /// <param name="eventHandlers"> Event handler of a hub. </param>
         /// <param name="anonymousConnectPolicy"> The settings for configuring if anonymous connections are allowed for this hub: &quot;allow&quot; or &quot;deny&quot;. Default to &quot;deny&quot;. </param>
         internal WebPubSubHubProperties(IList<EventHandler> eventHandlers, string anonymousConnectPolicy)

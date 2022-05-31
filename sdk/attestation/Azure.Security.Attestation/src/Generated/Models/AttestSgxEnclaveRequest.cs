@@ -12,7 +12,7 @@ namespace Azure.Security.Attestation
     /// <summary> Attestation request for Intel SGX enclaves. </summary>
     internal partial class AttestSgxEnclaveRequest
     {
-        /// <summary> Initializes a new instance of AttestSgxEnclaveRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestSgxEnclaveRequest"/>. </summary>
         public AttestSgxEnclaveRequest()
         {
         }

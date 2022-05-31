@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the DdosCustomPolicy data model. </summary>
     public partial class DdosCustomPolicyData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of DdosCustomPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyData"/>. </summary>
         public DdosCustomPolicyData()
         {
             PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
             ProtocolCustomSettings = new ChangeTrackingList<ProtocolCustomSettingsFormat>();
         }
 
-        /// <summary> Initializes a new instance of DdosCustomPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

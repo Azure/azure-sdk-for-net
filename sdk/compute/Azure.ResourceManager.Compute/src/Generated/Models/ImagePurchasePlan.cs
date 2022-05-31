@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
     public partial class ImagePurchasePlan
     {
-        /// <summary> Initializes a new instance of ImagePurchasePlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImagePurchasePlan"/>. </summary>
         public ImagePurchasePlan()
         {
         }
 
-        /// <summary> Initializes a new instance of ImagePurchasePlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImagePurchasePlan"/>. </summary>
         /// <param name="name"> The plan ID. </param>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="product"> The product ID. </param>

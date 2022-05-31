@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Collection of Storage for Environments. </summary>
     internal partial class ManagedEnvironmentStoragesCollection
     {
-        /// <summary> Initializes a new instance of ManagedEnvironmentStoragesCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStoragesCollection"/>. </summary>
         /// <param name="value"> Collection of storage resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ManagedEnvironmentStoragesCollection(IEnumerable<ManagedEnvironmentStorageData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ManagedEnvironmentStoragesCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStoragesCollection"/>. </summary>
         /// <param name="value"> Collection of storage resources. </param>
         internal ManagedEnvironmentStoragesCollection(IReadOnlyList<ManagedEnvironmentStorageData> value)
         {

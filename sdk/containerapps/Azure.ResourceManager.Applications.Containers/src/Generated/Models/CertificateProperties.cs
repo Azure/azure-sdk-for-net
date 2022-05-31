@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Certificate resource specific properties. </summary>
     public partial class CertificateProperties
     {
-        /// <summary> Initializes a new instance of CertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateProperties"/>. </summary>
         public CertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the certificate. </param>
         /// <param name="password"> Certificate password. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>

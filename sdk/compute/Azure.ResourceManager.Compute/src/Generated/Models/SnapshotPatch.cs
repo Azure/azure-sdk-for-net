@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Snapshot update resource. </summary>
     public partial class SnapshotPatch
     {
-        /// <summary> Initializes a new instance of SnapshotPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPatch"/>. </summary>
         public SnapshotPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

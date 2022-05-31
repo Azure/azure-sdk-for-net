@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.IotCentral
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of IotCentralArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralArmOperation" /> for mocking. </summary>
         protected IotCentralArmOperation()
         {
         }

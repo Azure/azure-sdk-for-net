@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The MultiLanguageAnalysisInput. </summary>
     internal partial class MultiLanguageAnalysisInput
     {
-        /// <summary> Initializes a new instance of MultiLanguageAnalysisInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageAnalysisInput"/>. </summary>
         public MultiLanguageAnalysisInput()
         {
             Documents = new ChangeTrackingList<MultiLanguageInput>();

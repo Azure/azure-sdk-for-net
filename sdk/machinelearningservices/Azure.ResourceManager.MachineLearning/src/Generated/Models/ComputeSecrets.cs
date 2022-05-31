@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Secrets related to a Machine Learning compute. Might differ for every type of compute. </summary>
     public partial class ComputeSecrets
     {
-        /// <summary> Initializes a new instance of ComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSecrets"/>. </summary>
         internal ComputeSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         internal ComputeSecrets(ComputeType computeType)
         {

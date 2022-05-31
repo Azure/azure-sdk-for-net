@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Azure Blob Storage content. </summary>
     internal partial class AzureBlobContentSource
     {
-        /// <summary> Initializes a new instance of AzureBlobContentSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobContentSource"/>. </summary>
         /// <param name="containerUrl"> Azure Blob Storage container URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> is null. </exception>
         public AzureBlobContentSource(string containerUrl)

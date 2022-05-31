@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The InferenceContainerProperties. </summary>
     public partial class InferenceContainerProperties
     {
-        /// <summary> Initializes a new instance of InferenceContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="InferenceContainerProperties"/>. </summary>
         public InferenceContainerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of InferenceContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="InferenceContainerProperties"/>. </summary>
         /// <param name="livenessRoute"> The route to check the liveness of the inference server container. </param>
         /// <param name="readinessRoute"> The route to check the readiness of the inference server container. </param>
         /// <param name="scoringRoute"> The port to send the scoring requests to, within the inference server container. </param>

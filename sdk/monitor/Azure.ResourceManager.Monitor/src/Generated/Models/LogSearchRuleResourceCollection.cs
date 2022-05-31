@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a collection of Log Search rule resources. </summary>
     internal partial class LogSearchRuleResourceCollection
     {
-        /// <summary> Initializes a new instance of LogSearchRuleResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSearchRuleResourceCollection"/>. </summary>
         internal LogSearchRuleResourceCollection()
         {
             Value = new ChangeTrackingList<LogSearchRuleData>();
         }
 
-        /// <summary> Initializes a new instance of LogSearchRuleResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSearchRuleResourceCollection"/>. </summary>
         /// <param name="value"> The values for the Log Search Rule resources. </param>
         internal LogSearchRuleResourceCollection(IReadOnlyList<LogSearchRuleData> value)
         {

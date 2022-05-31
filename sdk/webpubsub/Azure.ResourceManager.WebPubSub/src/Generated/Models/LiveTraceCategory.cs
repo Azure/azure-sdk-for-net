@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Live trace category configuration of a Microsoft.SignalRService resource. </summary>
     public partial class LiveTraceCategory
     {
-        /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveTraceCategory"/>. </summary>
         public LiveTraceCategory()
         {
         }
 
-        /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveTraceCategory"/>. </summary>
         /// <param name="name">
         /// Gets or sets the live trace category&apos;s name.
         /// Available values: ConnectivityLogs, MessagingLogs.

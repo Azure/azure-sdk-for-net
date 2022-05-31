@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The subscribe to tone event. </summary>
     public partial class ToneReceivedEvent
     {
-        /// <summary> Initializes a new instance of ToneReceivedEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ToneReceivedEvent"/>. </summary>
         /// <param name="toneInfo"> The tone info. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toneInfo"/> is null. </exception>
         internal ToneReceivedEvent(ToneInfo toneInfo)
@@ -25,7 +25,7 @@ namespace Azure.Communication.CallingServer
             ToneInfo = toneInfo;
         }
 
-        /// <summary> Initializes a new instance of ToneReceivedEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ToneReceivedEvent"/>. </summary>
         /// <param name="toneInfo"> The tone info. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
         internal ToneReceivedEvent(ToneInfo toneInfo, string callConnectionId)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of Extensions in HCI cluster. </summary>
     internal partial class ExtensionList
     {
-        /// <summary> Initializes a new instance of ExtensionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionList"/>. </summary>
         internal ExtensionList()
         {
             Value = new ChangeTrackingList<ArcExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of ExtensionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionList"/>. </summary>
         /// <param name="value"> List of Extensions in HCI cluster. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal ExtensionList(IReadOnlyList<ArcExtensionData> value, string nextLink)

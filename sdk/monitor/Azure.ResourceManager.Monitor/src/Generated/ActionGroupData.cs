@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class representing the ActionGroup data model. </summary>
     public partial class ActionGroupData : AzureResource
     {
-        /// <summary> Initializes a new instance of ActionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ActionGroupData(AzureLocation location) : base(location)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor
             EventHubReceivers = new ChangeTrackingList<EventHubReceiver>();
         }
 
-        /// <summary> Initializes a new instance of ActionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

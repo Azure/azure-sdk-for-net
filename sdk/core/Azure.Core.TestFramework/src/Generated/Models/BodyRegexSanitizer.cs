@@ -12,7 +12,7 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Sanitizer for a request body. </summary>
     public partial class BodyRegexSanitizer
     {
-        /// <summary> Initializes a new instance of BodyRegexSanitizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="BodyRegexSanitizer"/>. </summary>
         /// <param name="regex"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="regex"/> or <paramref name="value"/> is null. </exception>

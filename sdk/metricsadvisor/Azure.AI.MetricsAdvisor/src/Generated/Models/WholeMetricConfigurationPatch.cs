@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The WholeMetricConfigurationPatch. </summary>
     internal partial class WholeMetricConfigurationPatch
     {
-        /// <summary> Initializes a new instance of WholeMetricConfigurationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="WholeMetricConfigurationPatch"/>. </summary>
         public WholeMetricConfigurationPatch()
         {
         }

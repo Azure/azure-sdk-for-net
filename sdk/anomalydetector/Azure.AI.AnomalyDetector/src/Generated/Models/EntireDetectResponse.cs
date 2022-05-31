@@ -15,7 +15,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The response of entire anomaly detection. </summary>
     public partial class EntireDetectResponse
     {
-        /// <summary> Initializes a new instance of EntireDetectResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntireDetectResponse"/>. </summary>
         /// <param name="period"> Frequency extracted from the series, zero means no recurrent pattern has been found. </param>
         /// <param name="expectedValues"> ExpectedValues contain expected value for each input point. The index of the array is consistent with the input series. </param>
         /// <param name="upperMargins"> UpperMargins contain upper margin of each input point. UpperMargin is used to calculate upperBoundary, which equals to expectedValue + (100 - marginScale)*upperMargin. Anomalies in response can be filtered by upperBoundary and lowerBoundary. By adjusting marginScale value, less significant anomalies can be filtered in client side. The index of the array is consistent with the input series. </param>
@@ -61,7 +61,7 @@ namespace Azure.AI.AnomalyDetector.Models
             Severity = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of EntireDetectResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntireDetectResponse"/>. </summary>
         /// <param name="period"> Frequency extracted from the series, zero means no recurrent pattern has been found. </param>
         /// <param name="expectedValues"> ExpectedValues contain expected value for each input point. The index of the array is consistent with the input series. </param>
         /// <param name="upperMargins"> UpperMargins contain upper margin of each input point. UpperMargin is used to calculate upperBoundary, which equals to expectedValue + (100 - marginScale)*upperMargin. Anomalies in response can be filtered by upperBoundary and lowerBoundary. By adjusting marginScale value, less significant anomalies can be filtered in client side. The index of the array is consistent with the input series. </param>

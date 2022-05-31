@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the RecommendedAction data model. </summary>
     public partial class RecommendedActionData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecommendedActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionData"/>. </summary>
         public RecommendedActionData()
         {
             EstimatedImpact = new ChangeTrackingList<RecommendedActionImpactRecord>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
             Details = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of RecommendedActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendedActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

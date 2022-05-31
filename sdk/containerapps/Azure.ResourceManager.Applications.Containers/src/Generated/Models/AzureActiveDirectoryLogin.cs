@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> The configuration settings of the Azure Active Directory login flow. </summary>
     public partial class AzureActiveDirectoryLogin
     {
-        /// <summary> Initializes a new instance of AzureActiveDirectoryLogin. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureActiveDirectoryLogin"/>. </summary>
         public AzureActiveDirectoryLogin()
         {
             LoginParameters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureActiveDirectoryLogin. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureActiveDirectoryLogin"/>. </summary>
         /// <param name="loginParameters">
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form &quot;key=value&quot;.

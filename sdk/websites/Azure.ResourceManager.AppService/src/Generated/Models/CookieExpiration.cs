@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the session cookie&apos;s expiration. </summary>
     public partial class CookieExpiration
     {
-        /// <summary> Initializes a new instance of CookieExpiration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CookieExpiration"/>. </summary>
         public CookieExpiration()
         {
         }
 
-        /// <summary> Initializes a new instance of CookieExpiration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CookieExpiration"/>. </summary>
         /// <param name="convention"> The convention used when determining the session cookie&apos;s expiration. </param>
         /// <param name="timeToExpiration"> The time after the request is made when the session cookie should expire. </param>
         internal CookieExpiration(CookieExpirationConvention? convention, string timeToExpiration)

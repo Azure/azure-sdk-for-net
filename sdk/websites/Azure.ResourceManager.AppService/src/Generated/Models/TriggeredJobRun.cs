@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Triggered Web Job Run Information. </summary>
     public partial class TriggeredJobRun
     {
-        /// <summary> Initializes a new instance of TriggeredJobRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggeredJobRun"/>. </summary>
         public TriggeredJobRun()
         {
         }
 
-        /// <summary> Initializes a new instance of TriggeredJobRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggeredJobRun"/>. </summary>
         /// <param name="webJobId"> Job ID. </param>
         /// <param name="webJobName"> Job name. </param>
         /// <param name="status"> Job status. </param>

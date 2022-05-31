@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the AppServiceCertificateResource data model. </summary>
     public partial class AppServiceCertificateResourceData : AppServiceResource
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppServiceCertificateResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

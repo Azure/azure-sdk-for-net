@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the SecurityRule data model. </summary>
     public partial class SecurityRuleData : NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of SecurityRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityRuleData"/>. </summary>
         public SecurityRuleData()
         {
             SourceAddressPrefixes = new ChangeTrackingList<string>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
             DestinationPortRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

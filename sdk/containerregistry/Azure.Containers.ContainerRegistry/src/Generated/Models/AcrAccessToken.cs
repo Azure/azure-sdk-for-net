@@ -10,12 +10,12 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The AcrAccessToken. </summary>
     internal partial class AcrAccessToken
     {
-        /// <summary> Initializes a new instance of AcrAccessToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrAccessToken"/>. </summary>
         internal AcrAccessToken()
         {
         }
 
-        /// <summary> Initializes a new instance of AcrAccessToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrAccessToken"/>. </summary>
         /// <param name="accessToken"> The access token for performing authenticated requests. </param>
         internal AcrAccessToken(string accessToken)
         {

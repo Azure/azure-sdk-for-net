@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The ExtractiveSummarizationTaskResult. </summary>
     internal partial class ExtractiveSummarizationTaskResult
     {
-        /// <summary> Initializes a new instance of ExtractiveSummarizationTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskResult"/>. </summary>
         internal ExtractiveSummarizationTaskResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtractiveSummarizationTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskResult"/>. </summary>
         /// <param name="results"></param>
         internal ExtractiveSummarizationTaskResult(ExtractiveSummarizationResult results)
         {

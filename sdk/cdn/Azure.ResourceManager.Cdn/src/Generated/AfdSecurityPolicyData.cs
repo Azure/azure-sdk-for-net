@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing the AfdSecurityPolicy data model. </summary>
     public partial class AfdSecurityPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of AfdSecurityPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdSecurityPolicyData"/>. </summary>
         public AfdSecurityPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of AfdSecurityPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdSecurityPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

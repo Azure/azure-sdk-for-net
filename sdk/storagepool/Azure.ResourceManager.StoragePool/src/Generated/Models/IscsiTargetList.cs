@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> List of iSCSI Targets. </summary>
     internal partial class IscsiTargetList
     {
-        /// <summary> Initializes a new instance of IscsiTargetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IscsiTargetList"/>. </summary>
         /// <param name="value"> An array of iSCSI Targets in a Disk Pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IscsiTargetList(IEnumerable<IscsiTargetData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IscsiTargetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IscsiTargetList"/>. </summary>
         /// <param name="value"> An array of iSCSI Targets in a Disk Pool. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal IscsiTargetList(IReadOnlyList<IscsiTargetData> value, string nextLink)

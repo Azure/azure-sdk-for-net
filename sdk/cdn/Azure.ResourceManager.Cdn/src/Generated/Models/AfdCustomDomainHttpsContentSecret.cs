@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
     internal partial class AfdCustomDomainHttpsContentSecret
     {
-        /// <summary> Initializes a new instance of AfdCustomDomainHttpsContentSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdCustomDomainHttpsContentSecret"/>. </summary>
         public AfdCustomDomainHttpsContentSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of AfdCustomDomainHttpsContentSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdCustomDomainHttpsContentSecret"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         internal AfdCustomDomainHttpsContentSecret(ResourceIdentifier id)
         {

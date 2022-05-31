@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Private Endpoint Connection Approval ARM resource. </summary>
     public partial class PrivateLinkConnectionApprovalRequestResource : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of PrivateLinkConnectionApprovalRequestResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequestResource"/>. </summary>
         public PrivateLinkConnectionApprovalRequestResource()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkConnectionApprovalRequestResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequestResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

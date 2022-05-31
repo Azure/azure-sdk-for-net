@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ElasticSan
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of ElasticSanArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanArmOperation" /> for mocking. </summary>
         protected ElasticSanArmOperation()
         {
         }

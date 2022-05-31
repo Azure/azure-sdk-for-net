@@ -13,7 +13,7 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The ConfigurationQueriesTestInput. </summary>
     public partial class ConfigurationQueriesTestInput
     {
-        /// <summary> Initializes a new instance of ConfigurationQueriesTestInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationQueriesTestInput"/>. </summary>
         public ConfigurationQueriesTestInput()
         {
             CustomMetricQueries = new ChangeTrackingDictionary<string, string>();

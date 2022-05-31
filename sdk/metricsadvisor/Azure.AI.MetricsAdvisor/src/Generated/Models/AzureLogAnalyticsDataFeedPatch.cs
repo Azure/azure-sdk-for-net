@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureLogAnalyticsDataFeedPatch. </summary>
     internal partial class AzureLogAnalyticsDataFeedPatch : DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of AzureLogAnalyticsDataFeedPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureLogAnalyticsDataFeedPatch"/>. </summary>
         public AzureLogAnalyticsDataFeedPatch()
         {
             DataSourceType = DataFeedSourceKind.LogAnalytics;

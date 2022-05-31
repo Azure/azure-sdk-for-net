@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing the DiskRestorePoint data model. </summary>
     public partial class DiskRestorePointData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiskRestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointData"/>. </summary>
         internal DiskRestorePointData()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskRestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

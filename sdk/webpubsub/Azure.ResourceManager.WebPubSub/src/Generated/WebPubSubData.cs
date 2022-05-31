@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A class representing the WebPubSub data model. </summary>
     public partial class WebPubSubData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WebPubSubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubData"/>. </summary>
         /// <param name="location"> The location. </param>
         public WebPubSubData(AzureLocation location) : base(location)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.WebPubSub
             SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkData>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

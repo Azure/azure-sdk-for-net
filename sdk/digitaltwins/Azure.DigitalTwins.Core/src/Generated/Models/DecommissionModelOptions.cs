@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class DecommissionModelOptions
     {
-        /// <summary> Initializes a new instance of DecommissionModelOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DecommissionModelOptions"/>. </summary>
         public DecommissionModelOptions()
         {
         }

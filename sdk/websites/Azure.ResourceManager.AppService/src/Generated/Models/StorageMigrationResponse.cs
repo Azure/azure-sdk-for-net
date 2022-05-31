@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Response for a migration of app content request. </summary>
     public partial class StorageMigrationResponse : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StorageMigrationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMigrationResponse"/>. </summary>
         public StorageMigrationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageMigrationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMigrationResponse"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

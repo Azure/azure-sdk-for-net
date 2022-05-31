@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchResourceEncryptionKey
     {
 
-        /// <summary> Initializes a new instance of SearchResourceEncryptionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchResourceEncryptionKey"/>. </summary>
         /// <param name="keyName"> The name of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="keyVersion"> The version of your Azure Key Vault key to be used to encrypt your data at rest. </param>
         /// <param name="vaultUri"> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be https://my-keyvault-name.vault.azure.net. </param>

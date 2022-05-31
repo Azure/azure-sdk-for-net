@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Volume Group request. </summary>
     public partial class ElasticSanElasticSanVolumeGroupPatch
     {
-        /// <summary> Initializes a new instance of ElasticSanElasticSanVolumeGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanElasticSanVolumeGroupPatch"/>. </summary>
         public ElasticSanElasticSanVolumeGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

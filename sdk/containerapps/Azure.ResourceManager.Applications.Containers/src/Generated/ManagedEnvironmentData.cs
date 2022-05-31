@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Applications.Containers
     /// <summary> A class representing the ManagedEnvironment data model. </summary>
     public partial class ManagedEnvironmentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedEnvironmentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

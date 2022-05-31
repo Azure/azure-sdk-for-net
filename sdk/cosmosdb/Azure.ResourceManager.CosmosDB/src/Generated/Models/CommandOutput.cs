@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Response of /command api. </summary>
     public partial class CommandOutput
     {
-        /// <summary> Initializes a new instance of CommandOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommandOutput"/>. </summary>
         internal CommandOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of CommandOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommandOutput"/>. </summary>
         /// <param name="commandOutputValue"> Output of the command. </param>
         internal CommandOutput(string commandOutputValue)
         {

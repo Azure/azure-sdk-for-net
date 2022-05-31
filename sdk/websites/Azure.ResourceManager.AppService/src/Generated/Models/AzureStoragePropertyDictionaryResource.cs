@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> AzureStorageInfo dictionary resource. </summary>
     public partial class AzureStoragePropertyDictionaryResource : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of AzureStoragePropertyDictionaryResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStoragePropertyDictionaryResource"/>. </summary>
         public AzureStoragePropertyDictionaryResource()
         {
             Properties = new ChangeTrackingDictionary<string, AzureStorageInfoValue>();
         }
 
-        /// <summary> Initializes a new instance of AzureStoragePropertyDictionaryResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStoragePropertyDictionaryResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

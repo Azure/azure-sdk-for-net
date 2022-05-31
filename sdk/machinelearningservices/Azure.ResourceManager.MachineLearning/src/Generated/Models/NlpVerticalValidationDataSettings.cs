@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The NlpVerticalValidationDataSettings. </summary>
     public partial class NlpVerticalValidationDataSettings : ValidationDataSettings
     {
-        /// <summary> Initializes a new instance of NlpVerticalValidationDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpVerticalValidationDataSettings"/>. </summary>
         public NlpVerticalValidationDataSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of NlpVerticalValidationDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpVerticalValidationDataSettings"/>. </summary>
         /// <param name="data"> Validation data MLTable. </param>
         /// <param name="validationDataSize">
         /// The fraction of training dataset that needs to be set aside for validation purpose.

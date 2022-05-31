@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Management group patch parameters. </summary>
     public partial class ManagementGroupPatch
     {
-        /// <summary> Initializes a new instance of ManagementGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupPatch"/>. </summary>
         public ManagementGroupPatch()
         {
         }

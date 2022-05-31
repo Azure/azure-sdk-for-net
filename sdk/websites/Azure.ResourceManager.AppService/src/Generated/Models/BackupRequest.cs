@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a backup which will be performed. </summary>
     public partial class BackupRequest : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of BackupRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRequest"/>. </summary>
         public BackupRequest()
         {
             Databases = new ChangeTrackingList<DatabaseBackupSetting>();
         }
 
-        /// <summary> Initializes a new instance of BackupRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRequest"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

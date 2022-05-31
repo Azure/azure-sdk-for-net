@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Class representing the MPEG4 Configuration. </summary>
     public partial class VideoEncoderConfiguration
     {
-        /// <summary> Initializes a new instance of VideoEncoderConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoEncoderConfiguration"/>. </summary>
         public VideoEncoderConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VideoEncoderConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoEncoderConfiguration"/>. </summary>
         /// <param name="encoding"> The video codec used by the Media Profile. </param>
         /// <param name="quality"> Relative value representing the quality of the video. </param>
         /// <param name="resolution"> The Video Resolution. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ConnectionError. </summary>
     public partial class ConnectionError
     {
-        /// <summary> Initializes a new instance of ConnectionError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionError"/>. </summary>
         internal ConnectionError()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionError"/>. </summary>
         /// <param name="connectionState"> The kind of connection error that occurred. </param>
         /// <param name="ipFrom"> The IP of host that originated the failed connection. </param>
         /// <param name="ipTo"> The IP that the connection attempted to reach. </param>

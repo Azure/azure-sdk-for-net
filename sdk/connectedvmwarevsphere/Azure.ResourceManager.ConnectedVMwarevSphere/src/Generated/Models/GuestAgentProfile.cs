@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the resource properties. </summary>
     public partial class GuestAgentProfile
     {
-        /// <summary> Initializes a new instance of GuestAgentProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestAgentProfile"/>. </summary>
         public GuestAgentProfile()
         {
             ErrorDetails = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of GuestAgentProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestAgentProfile"/>. </summary>
         /// <param name="vmUuid"> Specifies the VM&apos;s unique SMBIOS ID. </param>
         /// <param name="status"> The status of the hybrid machine agent. </param>
         /// <param name="lastStatusChange"> The time of the last status change. </param>

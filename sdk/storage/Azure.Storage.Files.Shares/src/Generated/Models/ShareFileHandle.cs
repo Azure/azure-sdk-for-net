@@ -12,7 +12,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> A listed Azure Storage handle item. </summary>
     public partial class ShareFileHandle
     {
-        /// <summary> Initializes a new instance of ShareFileHandle. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareFileHandle"/>. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"> File or directory name including full path starting from share root. </param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>
@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.Shares.Models
             OpenedOn = openedOn;
         }
 
-        /// <summary> Initializes a new instance of ShareFileHandle. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareFileHandle"/>. </summary>
         /// <param name="handleId"> XSMB service handle ID. </param>
         /// <param name="path"> File or directory name including full path starting from share root. </param>
         /// <param name="fileId"> FileId uniquely identifies the file or directory. </param>

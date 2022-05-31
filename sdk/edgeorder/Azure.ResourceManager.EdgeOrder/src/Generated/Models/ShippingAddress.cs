@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Shipping address where customer wishes to receive the device. </summary>
     public partial class ShippingAddress
     {
-        /// <summary> Initializes a new instance of ShippingAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="country"> Name of the Country. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streetAddress1"/> or <paramref name="country"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Country = country;
         }
 
-        /// <summary> Initializes a new instance of ShippingAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="streetAddress2"> Street Address line 2. </param>
         /// <param name="streetAddress3"> Street Address line 3. </param>

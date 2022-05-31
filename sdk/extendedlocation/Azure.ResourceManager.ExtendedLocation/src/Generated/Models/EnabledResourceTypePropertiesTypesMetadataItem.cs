@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
     /// <summary> Metadata of the Resource Type. </summary>
     public partial class EnabledResourceTypePropertiesTypesMetadataItem
     {
-        /// <summary> Initializes a new instance of EnabledResourceTypePropertiesTypesMetadataItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledResourceTypePropertiesTypesMetadataItem"/>. </summary>
         public EnabledResourceTypePropertiesTypesMetadataItem()
         {
         }
 
-        /// <summary> Initializes a new instance of EnabledResourceTypePropertiesTypesMetadataItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledResourceTypePropertiesTypesMetadataItem"/>. </summary>
         /// <param name="apiVersion"> Api Version of Resource Type. </param>
         /// <param name="resourceProviderNamespace"> Resource Provider Namespace of Resource Type. </param>
         /// <param name="resourceType"> Resource Type. </param>

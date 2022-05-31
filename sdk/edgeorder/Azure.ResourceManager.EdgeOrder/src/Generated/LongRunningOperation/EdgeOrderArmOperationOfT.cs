@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EdgeOrder
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of EdgeOrderArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderArmOperation{T}" /> for mocking. </summary>
         protected EdgeOrderArmOperation()
         {
         }

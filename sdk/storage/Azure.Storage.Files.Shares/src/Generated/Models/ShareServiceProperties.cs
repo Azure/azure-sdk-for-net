@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareServiceProperties
     {
 
-        /// <summary> Initializes a new instance of ShareServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareServiceProperties"/>. </summary>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for files. </param>
         /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for files. </param>
         /// <param name="cors"> The set of CORS rules. </param>

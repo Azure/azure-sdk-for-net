@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A request to check whether the specified name for a resource is available. </summary>
     public partial class CheckNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CheckNameAvailabilityContent(string name)

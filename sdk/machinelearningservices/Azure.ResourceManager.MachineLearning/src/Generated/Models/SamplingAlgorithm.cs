@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class SamplingAlgorithm
     {
-        /// <summary> Initializes a new instance of SamplingAlgorithm. </summary>
+        /// <summary> Initializes a new instance of <see cref="SamplingAlgorithm"/>. </summary>
         public SamplingAlgorithm()
         {
         }
 
-        /// <summary> Initializes a new instance of SamplingAlgorithm. </summary>
+        /// <summary> Initializes a new instance of <see cref="SamplingAlgorithm"/>. </summary>
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
         internal SamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType)
         {

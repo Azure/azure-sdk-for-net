@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Azure Data Lake Gen2 datastore configuration. </summary>
     public partial class AzureDataLakeGen2Datastore : DatastoreProperties
     {
-        /// <summary> Initializes a new instance of AzureDataLakeGen2Datastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeGen2Datastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>
         /// <param name="accountName"> [Required] Storage account name. </param>
         /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DatastoreType = DatastoreType.AzureDataLakeGen2;
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeGen2Datastore. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeGen2Datastore"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

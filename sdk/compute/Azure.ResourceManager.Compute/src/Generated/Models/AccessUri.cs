@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A disk access SAS uri. </summary>
     public partial class AccessUri
     {
-        /// <summary> Initializes a new instance of AccessUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessUri"/>. </summary>
         internal AccessUri()
         {
         }
 
-        /// <summary> Initializes a new instance of AccessUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessUri"/>. </summary>
         /// <param name="accessSas"> A SAS uri for accessing a disk. </param>
         /// <param name="securityDataAccessSas"> A SAS uri for accessing a VM guest state. </param>
         internal AccessUri(string accessSas, string securityDataAccessSas)

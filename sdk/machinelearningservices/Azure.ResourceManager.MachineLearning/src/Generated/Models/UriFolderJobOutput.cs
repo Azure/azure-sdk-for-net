@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UriFolderJobOutput. </summary>
     public partial class UriFolderJobOutput : JobOutput
     {
-        /// <summary> Initializes a new instance of UriFolderJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFolderJobOutput"/>. </summary>
         public UriFolderJobOutput()
         {
             JobOutputType = JobOutputType.UriFolder;
         }
 
-        /// <summary> Initializes a new instance of UriFolderJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFolderJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>

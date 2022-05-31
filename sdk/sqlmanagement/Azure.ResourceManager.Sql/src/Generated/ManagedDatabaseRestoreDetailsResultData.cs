@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ManagedDatabaseRestoreDetailsResult data model. </summary>
     public partial class ManagedDatabaseRestoreDetailsResultData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailsResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailsResultData"/>. </summary>
         public ManagedDatabaseRestoreDetailsResultData()
         {
             UnrestorableFiles = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailsResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailsResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

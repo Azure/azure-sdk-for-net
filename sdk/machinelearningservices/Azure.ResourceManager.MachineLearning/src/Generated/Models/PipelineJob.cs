@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Pipeline Job definition: defines generic to MFE attributes. </summary>
     public partial class PipelineJob : MachineLearningJobProperties
     {
-        /// <summary> Initializes a new instance of PipelineJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineJob"/>. </summary>
         public PipelineJob()
         {
             Inputs = new ChangeTrackingDictionary<string, JobInput>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobType = JobType.Pipeline;
         }
 
-        /// <summary> Initializes a new instance of PipelineJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The related metadata items for the function. </summary>
     internal partial class MetadataFunctionRelated
     {
-        /// <summary> Initializes a new instance of MetadataFunctionRelated. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataFunctionRelated"/>. </summary>
         internal MetadataFunctionRelated()
         {
             Tables = new ChangeTrackingList<string>();

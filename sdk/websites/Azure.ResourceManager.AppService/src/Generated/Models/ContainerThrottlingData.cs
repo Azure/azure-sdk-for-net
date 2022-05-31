@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The ContainerThrottlingData. </summary>
     public partial class ContainerThrottlingData
     {
-        /// <summary> Initializes a new instance of ContainerThrottlingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerThrottlingData"/>. </summary>
         public ContainerThrottlingData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerThrottlingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerThrottlingData"/>. </summary>
         /// <param name="periods"></param>
         /// <param name="throttledPeriods"></param>
         /// <param name="throttledTime"></param>

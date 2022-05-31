@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Edgenode is a global Point of Presence (POP) location used to deliver CDN content to end users. </summary>
     public partial class EdgeNode : ResourceData
     {
-        /// <summary> Initializes a new instance of EdgeNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeNode"/>. </summary>
         public EdgeNode()
         {
             IPAddressGroups = new ChangeTrackingList<IPAddressGroup>();
         }
 
-        /// <summary> Initializes a new instance of EdgeNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeNode"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

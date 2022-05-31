@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An azure function receiver. </summary>
     public partial class AzureFunctionReceiver
     {
-        /// <summary> Initializes a new instance of AzureFunctionReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionReceiver"/>. </summary>
         /// <param name="name"> The name of the azure function receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="functionAppResourceId"> The azure resource id of the function app. </param>
         /// <param name="functionName"> The function name in the function app. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
             HttpTriggerUri = httpTriggerUri;
         }
 
-        /// <summary> Initializes a new instance of AzureFunctionReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionReceiver"/>. </summary>
         /// <param name="name"> The name of the azure function receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="functionAppResourceId"> The azure resource id of the function app. </param>
         /// <param name="functionName"> The function name in the function app. </param>

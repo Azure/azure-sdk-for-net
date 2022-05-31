@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition for datastore secrets. </summary>
     public partial class DatastoreSecrets
     {
-        /// <summary> Initializes a new instance of DatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreSecrets"/>. </summary>
         public DatastoreSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of DatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         internal DatastoreSecrets(SecretsType secretsType)
         {

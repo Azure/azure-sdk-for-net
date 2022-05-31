@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppConfiguration
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of AppConfigurationArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationArmOperation" /> for mocking. </summary>
         protected AppConfigurationArmOperation()
         {
         }

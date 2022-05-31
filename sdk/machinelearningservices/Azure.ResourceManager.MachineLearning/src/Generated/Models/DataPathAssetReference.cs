@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Reference to an asset via its path in a datastore. </summary>
     public partial class DataPathAssetReference : AssetReferenceBase
     {
-        /// <summary> Initializes a new instance of DataPathAssetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPathAssetReference"/>. </summary>
         public DataPathAssetReference()
         {
             ReferenceType = ReferenceType.DataPath;
         }
 
-        /// <summary> Initializes a new instance of DataPathAssetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPathAssetReference"/>. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
         /// <param name="datastoreId"> ARM resource ID of the datastore where the asset is located. </param>
         /// <param name="path"> The path of the file/directory in the datastore. </param>

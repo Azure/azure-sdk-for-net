@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes virtual machine scale set operating system disk Update Object. This should be used for Updating VMSS OS Disk. </summary>
     public partial class VirtualMachineScaleSetUpdateOSDisk
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateOSDisk"/>. </summary>
         public VirtualMachineScaleSetUpdateOSDisk()
         {
             VhdContainers = new ChangeTrackingList<string>();

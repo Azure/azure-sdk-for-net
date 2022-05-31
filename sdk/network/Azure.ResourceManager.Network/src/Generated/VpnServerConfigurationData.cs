@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the VpnServerConfiguration data model. </summary>
     public partial class VpnServerConfigurationData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VpnServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationData"/>. </summary>
         public VpnServerConfigurationData()
         {
             VpnProtocols = new ChangeTrackingList<VpnGatewayTunnelingProtocol>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
             P2SVpnGateways = new ChangeTrackingList<P2SVpnGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

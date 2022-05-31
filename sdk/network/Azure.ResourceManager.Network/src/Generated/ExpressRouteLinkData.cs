@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the ExpressRouteLink data model. </summary>
     public partial class ExpressRouteLinkData : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of ExpressRouteLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkData"/>. </summary>
         public ExpressRouteLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteLinkData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of child port resource that is unique among child port resources of the parent. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

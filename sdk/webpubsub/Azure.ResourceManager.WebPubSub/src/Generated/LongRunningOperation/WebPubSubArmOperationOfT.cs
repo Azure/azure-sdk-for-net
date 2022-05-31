@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.WebPubSub
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of WebPubSubArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubArmOperation{T}" /> for mocking. </summary>
         protected WebPubSubArmOperation()
         {
         }

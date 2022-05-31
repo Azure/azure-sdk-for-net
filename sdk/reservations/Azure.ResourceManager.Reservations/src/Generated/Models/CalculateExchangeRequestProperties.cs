@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Calculate exchange request properties. </summary>
     public partial class CalculateExchangeRequestProperties
     {
-        /// <summary> Initializes a new instance of CalculateExchangeRequestProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeRequestProperties"/>. </summary>
         public CalculateExchangeRequestProperties()
         {
             ReservationsToPurchase = new ChangeTrackingList<PurchaseRequestContent>();

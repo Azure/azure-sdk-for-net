@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A set of rules governing the network accessibility of a vault. </summary>
     public partial class NetworkRuleSet
     {
-        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
         public NetworkRuleSet()
         {
             IPRules = new ChangeTrackingList<IPRule>();
             VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
         /// <param name="bypass"> Tells what traffic can bypass network rules. This can be &apos;AzureServices&apos; or &apos;None&apos;.  If not specified the default is &apos;AzureServices&apos;. </param>
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>

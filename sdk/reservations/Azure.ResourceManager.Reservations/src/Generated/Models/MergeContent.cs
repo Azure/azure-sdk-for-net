@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The MergeRequest. </summary>
     public partial class MergeContent
     {
-        /// <summary> Initializes a new instance of MergeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MergeContent"/>. </summary>
         public MergeContent()
         {
             Sources = new ChangeTrackingList<string>();

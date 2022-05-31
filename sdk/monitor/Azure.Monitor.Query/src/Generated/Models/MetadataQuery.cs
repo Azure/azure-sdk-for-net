@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Queries are stored pieces of KQL, along with a list of relevant metadata items. </summary>
     internal partial class MetadataQuery
     {
-        /// <summary> Initializes a new instance of MetadataQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataQuery"/>. </summary>
         /// <param name="id"> The ID of the query. </param>
         /// <param name="body"> The KQL body of the query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="body"/> is null. </exception>

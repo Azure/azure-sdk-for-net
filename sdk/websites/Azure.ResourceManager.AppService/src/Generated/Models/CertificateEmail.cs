@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> SSL certificate email. </summary>
     public partial class CertificateEmail : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of CertificateEmail. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateEmail"/>. </summary>
         public CertificateEmail()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateEmail. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateEmail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

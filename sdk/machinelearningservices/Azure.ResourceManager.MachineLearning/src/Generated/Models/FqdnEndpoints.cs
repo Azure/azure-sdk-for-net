@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The FqdnEndpoints. </summary>
     public partial class FqdnEndpoints
     {
-        /// <summary> Initializes a new instance of FqdnEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="FqdnEndpoints"/>. </summary>
         internal FqdnEndpoints()
         {
         }
 
-        /// <summary> Initializes a new instance of FqdnEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="FqdnEndpoints"/>. </summary>
         /// <param name="properties"></param>
         internal FqdnEndpoints(FqdnEndpointsProperties properties)
         {

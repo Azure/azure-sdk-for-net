@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The ApiProfile. </summary>
     public partial class ApiProfile
     {
-        /// <summary> Initializes a new instance of ApiProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiProfile"/>. </summary>
         internal ApiProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiProfile"/>. </summary>
         /// <param name="profileVersion"> The profile version. </param>
         /// <param name="apiVersion"> The API version. </param>
         internal ApiProfile(string profileVersion, string apiVersion)

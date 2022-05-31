@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The status of capabilities enabled on the device. </summary>
     public partial class DeviceCapabilities
     {
-        /// <summary> Initializes a new instance of DeviceCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceCapabilities"/>. </summary>
         public DeviceCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceCapabilities"/>. </summary>
         /// <param name="isIotEdgeDevice"> The property that determines if the device is an edge device or not. </param>
         internal DeviceCapabilities(bool? isIotEdgeDevice)
         {

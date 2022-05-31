@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Collection of Outbound Environment Endpoints. </summary>
     internal partial class OutboundEnvironmentEndpointList
     {
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointList"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OutboundEnvironmentEndpointList(IEnumerable<OutboundEnvironmentEndpoint> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointList"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal OutboundEnvironmentEndpointList(IReadOnlyList<OutboundEnvironmentEndpoint> value, string nextLink)

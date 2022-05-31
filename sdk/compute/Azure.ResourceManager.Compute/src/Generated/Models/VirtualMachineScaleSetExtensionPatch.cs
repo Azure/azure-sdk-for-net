@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a Virtual Machine Scale Set Extension. </summary>
     public partial class VirtualMachineScaleSetExtensionPatch : ComputeSubResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetExtensionPatch"/>. </summary>
         public VirtualMachineScaleSetExtensionPatch()
         {
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetExtensionPatch"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="resourceType"> Resource type. </param>

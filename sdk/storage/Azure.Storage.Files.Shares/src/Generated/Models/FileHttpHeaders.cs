@@ -12,7 +12,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Parameter group. </summary>
     internal partial class FileHttpHeaders
     {
-        /// <summary> Initializes a new instance of FileHttpHeaders. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileHttpHeaders"/>. </summary>
         public FileHttpHeaders()
         {
         }

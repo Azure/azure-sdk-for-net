@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The PostgreSqlDataFeedPatch. </summary>
     internal partial class PostgreSqlDataFeedPatch : DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of PostgreSqlDataFeedPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlDataFeedPatch"/>. </summary>
         public PostgreSqlDataFeedPatch()
         {
             DataSourceType = DataFeedSourceKind.PostgreSql;

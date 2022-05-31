@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The desired maximum forecast horizon in units of time-series frequency. </summary>
     public partial class ForecastHorizon
     {
-        /// <summary> Initializes a new instance of ForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastHorizon"/>. </summary>
         public ForecastHorizon()
         {
         }
 
-        /// <summary> Initializes a new instance of ForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastHorizon"/>. </summary>
         /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
         internal ForecastHorizon(ForecastHorizonMode mode)
         {

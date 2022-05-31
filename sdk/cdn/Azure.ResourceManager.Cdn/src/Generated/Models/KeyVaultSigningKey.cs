@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Describes the parameters for using a user&apos;s KeyVault for URL Signing Key. </summary>
     public partial class KeyVaultSigningKey
     {
-        /// <summary> Initializes a new instance of KeyVaultSigningKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKey"/>. </summary>
         /// <param name="keyType"></param>
         /// <param name="subscriptionId"> Subscription Id of the user&apos;s Key Vault containing the secret. </param>
         /// <param name="resourceGroupName"> Resource group of the user&apos;s Key Vault containing the secret. </param>

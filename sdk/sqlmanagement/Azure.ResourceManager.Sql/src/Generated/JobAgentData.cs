@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the JobAgent data model. </summary>
     public partial class JobAgentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of JobAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobAgentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public JobAgentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of JobAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

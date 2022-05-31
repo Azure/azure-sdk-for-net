@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the disallowed disk types. </summary>
     internal partial class Disallowed
     {
-        /// <summary> Initializes a new instance of Disallowed. </summary>
+        /// <summary> Initializes a new instance of <see cref="Disallowed"/>. </summary>
         public Disallowed()
         {
             DiskTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Disallowed. </summary>
+        /// <summary> Initializes a new instance of <see cref="Disallowed"/>. </summary>
         /// <param name="diskTypes"> A list of disk types. </param>
         internal Disallowed(IList<string> diskTypes)
         {

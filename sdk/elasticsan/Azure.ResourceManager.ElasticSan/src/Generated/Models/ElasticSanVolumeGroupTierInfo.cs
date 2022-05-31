@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Volume Group scalability target. </summary>
     internal partial class ElasticSanVolumeGroupTierInfo
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeGroupTierInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupTierInfo"/>. </summary>
         internal ElasticSanVolumeGroupTierInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeGroupTierInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupTierInfo"/>. </summary>
         /// <param name="maxElasticSanVolumeCount"> Maximum number of Volumes per Volume Groups per San account. </param>
         internal ElasticSanVolumeGroupTierInfo(long? maxElasticSanVolumeCount)
         {

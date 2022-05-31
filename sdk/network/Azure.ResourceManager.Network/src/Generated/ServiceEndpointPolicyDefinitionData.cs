@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the ServiceEndpointPolicyDefinition data model. </summary>
     public partial class ServiceEndpointPolicyDefinitionData : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionData"/>. </summary>
         public ServiceEndpointPolicyDefinitionData()
         {
             ServiceResources = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

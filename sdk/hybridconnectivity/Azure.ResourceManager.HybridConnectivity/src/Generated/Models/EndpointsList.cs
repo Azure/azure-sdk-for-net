@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     /// <summary> The list of endpoints. </summary>
     internal partial class EndpointsList
     {
-        /// <summary> Initializes a new instance of EndpointsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointsList"/>. </summary>
         internal EndpointsList()
         {
             Value = new ChangeTrackingList<EndpointResourceData>();
         }
 
-        /// <summary> Initializes a new instance of EndpointsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointsList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of endpoints list. </param>
         /// <param name="value"> The list of endpoint. </param>
         internal EndpointsList(string nextLink, IReadOnlyList<EndpointResourceData> value)

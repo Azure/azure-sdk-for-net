@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DnsForwardingRulesetsRestOperations. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetsRestOperations" />. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>

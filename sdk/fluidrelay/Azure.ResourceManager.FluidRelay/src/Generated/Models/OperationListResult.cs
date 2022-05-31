@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> Result of GET request to list FluidRelay operations. </summary>
     internal partial class OperationListResult
     {
-        /// <summary> Initializes a new instance of OperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationListResult"/>. </summary>
         internal OperationListResult()
         {
             Value = new ChangeTrackingList<OperationResult>();
         }
 
-        /// <summary> Initializes a new instance of OperationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationListResult"/>. </summary>
         /// <param name="value"> List of FluidRelay operations supported by the Microsoft.FluidRelay provider. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
         internal OperationListResult(IReadOnlyList<OperationResult> value, string nextLink)

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specify action need to be taken when rule type is Alert. </summary>
     public partial class AlertingAction : MonitorAction
     {
-        /// <summary> Initializes a new instance of AlertingAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertingAction"/>. </summary>
         /// <param name="severity"> Severity of the alert. </param>
         /// <param name="trigger"> The trigger condition that results in the alert rule being. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trigger"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             OdataType = "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction";
         }
 
-        /// <summary> Initializes a new instance of AlertingAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertingAction"/>. </summary>
         /// <param name="odataType"> Specifies the action. Supported values - AlertingAction, LogToMetricAction. </param>
         /// <param name="severity"> Severity of the alert. </param>
         /// <param name="aznsAction"> Azure action group reference. </param>

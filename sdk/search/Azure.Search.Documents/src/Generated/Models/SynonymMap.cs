@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SynonymMap
     {
 
-        /// <summary> Initializes a new instance of SynonymMap. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynonymMap"/>. </summary>
         /// <param name="name"> The name of the synonym map. </param>
         /// <param name="format"> The format of the synonym map. Only the &apos;solr&apos; format is currently supported. </param>
         /// <param name="synonyms"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>

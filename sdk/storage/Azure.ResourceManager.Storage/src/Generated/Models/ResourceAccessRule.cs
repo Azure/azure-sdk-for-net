@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Resource Access Rule. </summary>
     public partial class ResourceAccessRule
     {
-        /// <summary> Initializes a new instance of ResourceAccessRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceAccessRule"/>. </summary>
         public ResourceAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceAccessRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceAccessRule"/>. </summary>
         /// <param name="tenantId"> Tenant Id. </param>
         /// <param name="resourceId"> Resource Id. </param>
         internal ResourceAccessRule(string tenantId, string resourceId)

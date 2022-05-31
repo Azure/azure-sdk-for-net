@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureCosmosDBParameterPatch. </summary>
     internal partial class AzureCosmosDBParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureCosmosDBParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBParameterPatch"/>. </summary>
         public AzureCosmosDBParameterPatch()
         {
         }

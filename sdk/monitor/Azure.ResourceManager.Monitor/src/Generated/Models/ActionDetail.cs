@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The action detail. </summary>
     public partial class ActionDetail
     {
-        /// <summary> Initializes a new instance of ActionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionDetail"/>. </summary>
         internal ActionDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ActionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionDetail"/>. </summary>
         /// <param name="mechanismType"> The mechanism type. </param>
         /// <param name="name"> The name of the action. </param>
         /// <param name="status"> The status of the action. </param>

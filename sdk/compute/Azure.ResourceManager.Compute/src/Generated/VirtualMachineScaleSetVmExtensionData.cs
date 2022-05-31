@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing the VirtualMachineScaleSetVmExtension data model. </summary>
     public partial class VirtualMachineScaleSetVmExtensionData : ComputeSubResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionData"/>. </summary>
         public VirtualMachineScaleSetVmExtensionData()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="resourceType"> Resource type. </param>

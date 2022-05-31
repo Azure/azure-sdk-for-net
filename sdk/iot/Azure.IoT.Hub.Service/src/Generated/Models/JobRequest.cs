@@ -12,7 +12,7 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The JobRequest. </summary>
     public partial class JobRequest
     {
-        /// <summary> Initializes a new instance of JobRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRequest"/>. </summary>
         public JobRequest()
         {
         }

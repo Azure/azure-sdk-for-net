@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of certificates. </summary>
     internal partial class CertificateCollection
     {
-        /// <summary> Initializes a new instance of CertificateCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CertificateCollection(IEnumerable<CertificateData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CertificateCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal CertificateCollection(IReadOnlyList<CertificateData> value, string nextLink)

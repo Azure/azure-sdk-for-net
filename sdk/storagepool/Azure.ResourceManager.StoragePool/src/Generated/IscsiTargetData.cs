@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool
     /// <summary> A class representing the IscsiTarget data model. </summary>
     public partial class IscsiTargetData : ResourceData
     {
-        /// <summary> Initializes a new instance of IscsiTargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IscsiTargetData"/>. </summary>
         /// <param name="aclMode"> Mode for Target connectivity. </param>
         /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:server&quot;. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StoragePool
             Sessions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IscsiTargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IscsiTargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

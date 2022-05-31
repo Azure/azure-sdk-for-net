@@ -10,14 +10,14 @@ namespace Azure.Communication.CallingServer
     /// <summary> The AddParticipantResultEvent. </summary>
     public partial class AddParticipantResultEvent
     {
-        /// <summary> Initializes a new instance of AddParticipantResultEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantResultEvent"/>. </summary>
         /// <param name="status"> The status of the operation. </param>
         internal AddParticipantResultEvent(OperationStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of AddParticipantResultEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantResultEvent"/>. </summary>
         /// <param name="resultInfo"> The result details. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>

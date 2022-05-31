@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Result of Diagnose. </summary>
     public partial class DiagnoseResult
     {
-        /// <summary> Initializes a new instance of DiagnoseResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnoseResult"/>. </summary>
         internal DiagnoseResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnoseResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnoseResult"/>. </summary>
         /// <param name="code"> Code for workspace setup error. </param>
         /// <param name="level"> Level of workspace setup error. </param>
         /// <param name="message"> Message of workspace setup error. </param>

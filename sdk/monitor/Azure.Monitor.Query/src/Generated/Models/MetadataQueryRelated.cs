@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The related metadata items for the query. </summary>
     internal partial class MetadataQueryRelated
     {
-        /// <summary> Initializes a new instance of MetadataQueryRelated. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataQueryRelated"/>. </summary>
         internal MetadataQueryRelated()
         {
             Categories = new ChangeTrackingList<string>();

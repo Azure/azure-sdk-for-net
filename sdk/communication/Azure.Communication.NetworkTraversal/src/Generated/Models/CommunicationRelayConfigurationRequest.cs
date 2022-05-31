@@ -10,7 +10,7 @@ namespace Azure.Communication.NetworkTraversal
     /// <summary> Request for a CommunicationRelayConfiguration. </summary>
     internal partial class CommunicationRelayConfigurationRequest
     {
-        /// <summary> Initializes a new instance of CommunicationRelayConfigurationRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationRelayConfigurationRequest"/>. </summary>
         public CommunicationRelayConfigurationRequest()
         {
         }

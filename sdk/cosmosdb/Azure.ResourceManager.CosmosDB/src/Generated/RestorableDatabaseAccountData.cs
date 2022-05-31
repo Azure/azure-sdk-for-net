@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class representing the RestorableDatabaseAccount data model. </summary>
     public partial class RestorableDatabaseAccountData : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableDatabaseAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountData"/>. </summary>
         internal RestorableDatabaseAccountData()
         {
             RestorableLocations = new ChangeTrackingList<RestorableLocationResource>();
         }
 
-        /// <summary> Initializes a new instance of RestorableDatabaseAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

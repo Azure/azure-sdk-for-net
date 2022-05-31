@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the ResourceHealthMetadata data model. </summary>
     public partial class ResourceHealthMetadataData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of ResourceHealthMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthMetadataData"/>. </summary>
         public ResourceHealthMetadataData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

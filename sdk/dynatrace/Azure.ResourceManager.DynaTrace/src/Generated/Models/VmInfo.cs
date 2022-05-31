@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DynaTrace.Models
     /// <summary> Details of VM Resource having Dynatrace OneAgent installed. </summary>
     public partial class VmInfo
     {
-        /// <summary> Initializes a new instance of VmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInfo"/>. </summary>
         internal VmInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of VmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInfo"/>. </summary>
         /// <param name="resourceId"> Azure VM resource ID. </param>
         /// <param name="version"> Version of the Dynatrace agent installed on the VM. </param>
         /// <param name="monitoringType"> The monitoring mode of OneAgent. </param>

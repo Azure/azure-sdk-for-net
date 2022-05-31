@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The CustomMultiLabelClassificationResult. </summary>
     internal partial class CustomMultiLabelClassificationResult : CustomResult
     {
-        /// <summary> Initializes a new instance of CustomMultiLabelClassificationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of CustomMultiLabelClassificationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>

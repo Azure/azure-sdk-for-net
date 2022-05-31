@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static sites user roles invitation resource. </summary>
     public partial class StaticSiteUserInvitationRequestResource : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSiteUserInvitationRequestResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserInvitationRequestResource"/>. </summary>
         public StaticSiteUserInvitationRequestResource()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserInvitationRequestResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteUserInvitationRequestResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

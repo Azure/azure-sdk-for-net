@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a static site when patching. </summary>
     public partial class StaticSiteARMResourcePatch : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSiteARMResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteARMResourcePatch"/>. </summary>
         public StaticSiteARMResourcePatch()
         {
             CustomDomains = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionApp>();
         }
 
-        /// <summary> Initializes a new instance of StaticSiteARMResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteARMResourcePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> Train result of a model including status, errors and diagnose info for model and variables. </summary>
     public partial class ModelInfo
     {
-        /// <summary> Initializes a new instance of ModelInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
         /// <param name="source"> Source link to the input variables. Each variable should be a csv file with two columns, `timestamp` and `value`. By default, the file name of the variable will be used as its variable name. </param>
         /// <param name="startTime"> A required field, indicating the start time of training data. Should be date-time. </param>
         /// <param name="endTime"> A required field, indicating the end time of training data. Should be date-time. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.AnomalyDetector.Models
             Errors = new ChangeTrackingList<ErrorResponse>();
         }
 
-        /// <summary> Initializes a new instance of ModelInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
         /// <param name="slidingWindow"> An optional field, indicating how many previous points will be used to compute the anomaly score of the subsequent point. </param>
         /// <param name="alignPolicy"></param>
         /// <param name="source"> Source link to the input variables. Each variable should be a csv file with two columns, `timestamp` and `value`. By default, the file name of the variable will be used as its variable name. </param>

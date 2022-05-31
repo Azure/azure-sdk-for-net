@@ -12,7 +12,7 @@ namespace Azure.Communication.Identity.Models
     /// <summary> The TeamsUserAccessTokenRequest. </summary>
     internal partial class TeamsUserAccessTokenRequest
     {
-        /// <summary> Initializes a new instance of TeamsUserAccessTokenRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeamsUserAccessTokenRequest"/>. </summary>
         /// <param name="token"> AAD access token of a Teams User to acquire a new Communication Identity access token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         public TeamsUserAccessTokenRequest(string token)

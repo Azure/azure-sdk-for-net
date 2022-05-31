@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Result of the request to calculate template hash. It contains a string of minified template and its hash. </summary>
     public partial class TemplateHashResult
     {
-        /// <summary> Initializes a new instance of TemplateHashResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateHashResult"/>. </summary>
         internal TemplateHashResult()
         {
         }
 
-        /// <summary> Initializes a new instance of TemplateHashResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateHashResult"/>. </summary>
         /// <param name="minifiedTemplate"> The minified template string. </param>
         /// <param name="templateHash"> The template hash. </param>
         internal TemplateHashResult(string minifiedTemplate, string templateHash)

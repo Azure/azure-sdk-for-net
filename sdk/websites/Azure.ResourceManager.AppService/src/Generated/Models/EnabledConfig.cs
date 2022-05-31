@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Enabled configuration. </summary>
     internal partial class EnabledConfig
     {
-        /// <summary> Initializes a new instance of EnabledConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledConfig"/>. </summary>
         public EnabledConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of EnabledConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledConfig"/>. </summary>
         /// <param name="enabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
         internal EnabledConfig(bool? enabled)
         {

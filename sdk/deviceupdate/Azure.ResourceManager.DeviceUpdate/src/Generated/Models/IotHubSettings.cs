@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Device Update account integration with IoT Hub settings. </summary>
     public partial class IotHubSettings
     {
-        /// <summary> Initializes a new instance of IotHubSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubSettings"/>. </summary>
         /// <param name="resourceId"> IoTHub resource ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public IotHubSettings(string resourceId)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of IotHubSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubSettings"/>. </summary>
         /// <param name="resourceId"> IoTHub resource ID. </param>
         /// <param name="ioTHubConnectionString"> IoTHub connection string. </param>
         /// <param name="eventHubConnectionString"> EventHub connection string. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Details on latency for a time series. </summary>
     public partial class AzureReachabilityReportLatencyInfo
     {
-        /// <summary> Initializes a new instance of AzureReachabilityReportLatencyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportLatencyInfo"/>. </summary>
         internal AzureReachabilityReportLatencyInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureReachabilityReportLatencyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportLatencyInfo"/>. </summary>
         /// <param name="timeStamp"> The time stamp. </param>
         /// <param name="score"> The relative latency score between 1 and 100, higher values indicating a faster connection. </param>
         internal AzureReachabilityReportLatencyInfo(DateTimeOffset? timeStamp, int? score)

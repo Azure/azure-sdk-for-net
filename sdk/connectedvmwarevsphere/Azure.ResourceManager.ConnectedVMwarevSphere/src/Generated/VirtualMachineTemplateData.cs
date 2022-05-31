@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing the VirtualMachineTemplate data model. </summary>
     public partial class VirtualMachineTemplateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineTemplateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualMachineTemplateData(AzureLocation location) : base(location)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

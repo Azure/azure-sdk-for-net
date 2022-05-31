@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Early termination policies enable canceling poor-performing runs before they complete. </summary>
     public partial class EarlyTerminationPolicy
     {
-        /// <summary> Initializes a new instance of EarlyTerminationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EarlyTerminationPolicy"/>. </summary>
         public EarlyTerminationPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of EarlyTerminationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EarlyTerminationPolicy"/>. </summary>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>

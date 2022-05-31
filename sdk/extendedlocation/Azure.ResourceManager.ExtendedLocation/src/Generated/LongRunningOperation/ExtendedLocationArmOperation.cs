@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ExtendedLocation
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of ExtendedLocationArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocationArmOperation" /> for mocking. </summary>
         protected ExtendedLocationArmOperation()
         {
         }

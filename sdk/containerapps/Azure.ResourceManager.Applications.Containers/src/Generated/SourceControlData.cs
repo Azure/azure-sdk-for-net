@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Applications.Containers
     /// <summary> A class representing the SourceControl data model. </summary>
     public partial class SourceControlData : ResourceData
     {
-        /// <summary> Initializes a new instance of SourceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlData"/>. </summary>
         public SourceControlData()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

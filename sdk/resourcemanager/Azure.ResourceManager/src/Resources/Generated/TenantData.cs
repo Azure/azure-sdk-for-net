@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the Tenant data model. </summary>
     public partial class TenantData
     {
-        /// <summary> Initializes a new instance of TenantData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantData"/>. </summary>
         internal TenantData()
         {
             Domains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TenantData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantData"/>. </summary>
         /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000. </param>
         /// <param name="tenantId"> The tenant ID. For example, 00000000-0000-0000-0000-000000000000. </param>
         /// <param name="tenantCategory"> Category of the tenant. </param>

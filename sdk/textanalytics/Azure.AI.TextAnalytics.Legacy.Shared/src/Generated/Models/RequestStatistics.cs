@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
     internal partial class RequestStatistics
     {
-        /// <summary> Initializes a new instance of RequestStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestStatistics"/>. </summary>
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>

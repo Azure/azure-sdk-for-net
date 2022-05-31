@@ -12,7 +12,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Identifies a teams meeting or group call defined in inputs. </summary>
     public partial class CommunicationCallIdentifierModel
     {
-        /// <summary> Initializes a new instance of CommunicationCallIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationCallIdentifierModel"/>. </summary>
         /// <param name="call"> The id of the teams meeting or call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="call"/> is null. </exception>
         public CommunicationCallIdentifierModel(string call)

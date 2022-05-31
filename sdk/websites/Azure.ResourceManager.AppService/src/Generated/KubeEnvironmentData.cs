@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the KubeEnvironment data model. </summary>
     public partial class KubeEnvironmentData : AppServiceResource
     {
-        /// <summary> Initializes a new instance of KubeEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubeEnvironmentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public KubeEnvironmentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of KubeEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubeEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

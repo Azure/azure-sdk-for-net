@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the TemplateSpec data model. </summary>
     public partial class TemplateSpecData : ResourceData
     {
-        /// <summary> Initializes a new instance of TemplateSpecData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecData"/>. </summary>
         /// <param name="location"> The location of the Template Spec. It cannot be changed after Template Spec creation. It must be one of the supported Azure locations. </param>
         public TemplateSpecData(AzureLocation location)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
             Versions = new ChangeTrackingDictionary<string, TemplateSpecVersionInfo>();
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

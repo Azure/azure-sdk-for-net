@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureEventHubsDataFeedPatch. </summary>
     internal partial class AzureEventHubsDataFeedPatch : DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of AzureEventHubsDataFeedPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEventHubsDataFeedPatch"/>. </summary>
         public AzureEventHubsDataFeedPatch()
         {
             DataSourceType = DataFeedSourceKind.AzureEventHubs;

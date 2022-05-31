@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> General information regarding the current resource. </summary>
     internal partial class GetInfoResponse
     {
-        /// <summary> Initializes a new instance of GetInfoResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetInfoResponse"/>. </summary>
         /// <param name="customDocumentModels"> Info regarding custom document models. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> is null. </exception>
         internal GetInfoResponse(AccountProperties customDocumentModels)

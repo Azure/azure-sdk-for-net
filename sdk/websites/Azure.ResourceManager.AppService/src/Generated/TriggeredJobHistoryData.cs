@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the TriggeredJobHistory data model. </summary>
     public partial class TriggeredJobHistoryData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of TriggeredJobHistoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggeredJobHistoryData"/>. </summary>
         public TriggeredJobHistoryData()
         {
             Runs = new ChangeTrackingList<TriggeredJobRun>();
         }
 
-        /// <summary> Initializes a new instance of TriggeredJobHistoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggeredJobHistoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

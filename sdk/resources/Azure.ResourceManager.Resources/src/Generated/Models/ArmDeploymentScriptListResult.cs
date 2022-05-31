@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of deployment scripts. </summary>
     internal partial class ArmDeploymentScriptListResult
     {
-        /// <summary> Initializes a new instance of ArmDeploymentScriptListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptListResult"/>. </summary>
         internal ArmDeploymentScriptListResult()
         {
             Value = new ChangeTrackingList<ArmDeploymentScriptData>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentScriptListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptListResult"/>. </summary>
         /// <param name="value"> An array of deployment scripts. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ArmDeploymentScriptListResult(IReadOnlyList<ArmDeploymentScriptData> value, string nextLink)

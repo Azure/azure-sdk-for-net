@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Sweep job definition. </summary>
     public partial class SweepJob : MachineLearningJobProperties
     {
-        /// <summary> Initializes a new instance of SweepJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SweepJob"/>. </summary>
         /// <param name="objective"> [Required] Optimization objective. </param>
         /// <param name="samplingAlgorithm"> [Required] The hyperparameter sampling algorithm. </param>
         /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobType = JobType.Sweep;
         }
 
-        /// <summary> Initializes a new instance of SweepJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SweepJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

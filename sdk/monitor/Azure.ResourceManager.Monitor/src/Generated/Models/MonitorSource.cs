@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specifies the log search query. </summary>
     public partial class MonitorSource
     {
-        /// <summary> Initializes a new instance of MonitorSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSource"/>. </summary>
         /// <param name="dataSourceId"> The resource uri over which log search query is to be run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceId"/> is null. </exception>
         public MonitorSource(string dataSourceId)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             DataSourceId = dataSourceId;
         }
 
-        /// <summary> Initializes a new instance of MonitorSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSource"/>. </summary>
         /// <param name="query"> Log search query. Required for action type - AlertingAction. </param>
         /// <param name="authorizedResources"> List of  Resource referred into query. </param>
         /// <param name="dataSourceId"> The resource uri over which log search query is to be run. </param>

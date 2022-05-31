@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra table cluster key. </summary>
     public partial class ClusterKey
     {
-        /// <summary> Initializes a new instance of ClusterKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterKey"/>. </summary>
         public ClusterKey()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterKey"/>. </summary>
         /// <param name="name"> Name of the Cosmos DB Cassandra table cluster key. </param>
         /// <param name="orderBy"> Order of the Cosmos DB Cassandra table cluster key, only support &quot;Asc&quot; and &quot;Desc&quot;. </param>
         internal ClusterKey(string name, string orderBy)

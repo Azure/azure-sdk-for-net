@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list domains. It contains a list of domain objects and a URL link to get the next set of results. </summary>
     internal partial class AfdCustomDomainListResult
     {
-        /// <summary> Initializes a new instance of AfdCustomDomainListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdCustomDomainListResult"/>. </summary>
         internal AfdCustomDomainListResult()
         {
             Value = new ChangeTrackingList<AfdCustomDomainData>();
         }
 
-        /// <summary> Initializes a new instance of AfdCustomDomainListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdCustomDomainListResult"/>. </summary>
         /// <param name="value"> List of AzureFrontDoor domains within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of domain objects if there are any. </param>
         internal AfdCustomDomainListResult(IReadOnlyList<AfdCustomDomainData> value, string nextLink)

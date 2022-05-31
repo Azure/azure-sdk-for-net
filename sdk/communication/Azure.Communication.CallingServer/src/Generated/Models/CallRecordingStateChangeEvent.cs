@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The call recording state change event. </summary>
     public partial class CallRecordingStateChangeEvent
     {
-        /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallRecordingStateChangeEvent"/>. </summary>
         /// <param name="state"> The state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>
         internal CallRecordingStateChangeEvent(CallRecordingState state, DateTimeOffset startDateTime)
@@ -21,7 +21,7 @@ namespace Azure.Communication.CallingServer
             StartDateTime = startDateTime;
         }
 
-        /// <summary> Initializes a new instance of CallRecordingStateChangeEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallRecordingStateChangeEvent"/>. </summary>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"> The state of the recording. </param>
         /// <param name="startDateTime"> The time of the recording started. </param>

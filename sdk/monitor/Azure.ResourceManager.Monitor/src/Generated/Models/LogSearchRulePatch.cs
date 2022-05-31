@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The log search rule resource for patch operations. </summary>
     public partial class LogSearchRulePatch
     {
-        /// <summary> Initializes a new instance of LogSearchRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSearchRulePatch"/>. </summary>
         public LogSearchRulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

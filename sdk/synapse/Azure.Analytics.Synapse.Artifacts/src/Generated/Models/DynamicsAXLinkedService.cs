@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Dynamics AX linked service. </summary>
     public partial class DynamicsAXLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of DynamicsAXLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXLinkedService"/>. </summary>
         /// <param name="url"> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </param>
         /// <param name="servicePrincipalId"> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey"> Specify the application&apos;s key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </param>
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "DynamicsAX";
         }
 
-        /// <summary> Initializes a new instance of DynamicsAXLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

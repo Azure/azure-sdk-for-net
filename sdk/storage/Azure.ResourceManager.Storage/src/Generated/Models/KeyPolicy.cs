@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> KeyPolicy assigned to the storage account. </summary>
     internal partial class KeyPolicy
     {
-        /// <summary> Initializes a new instance of KeyPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPolicy"/>. </summary>
         /// <param name="keyExpirationPeriodInDays"> The key expiration period in days. </param>
         public KeyPolicy(int keyExpirationPeriodInDays)
         {

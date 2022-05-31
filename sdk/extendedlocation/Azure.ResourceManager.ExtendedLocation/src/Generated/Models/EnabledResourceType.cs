@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
     /// <summary> EnabledResourceType definition. </summary>
     public partial class EnabledResourceType : ResourceData
     {
-        /// <summary> Initializes a new instance of EnabledResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledResourceType"/>. </summary>
         public EnabledResourceType()
         {
             TypesMetadata = new ChangeTrackingList<EnabledResourceTypePropertiesTypesMetadataItem>();
         }
 
-        /// <summary> Initializes a new instance of EnabledResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledResourceType"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

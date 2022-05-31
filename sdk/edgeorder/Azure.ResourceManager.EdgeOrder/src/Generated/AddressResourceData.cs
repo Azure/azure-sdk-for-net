@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A class representing the AddressResource data model. </summary>
     public partial class AddressResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AddressResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder
             ContactDetails = contactDetails;
         }
 
-        /// <summary> Initializes a new instance of AddressResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The resource model definition for an Azure Resource Manager resource with an etag. </summary>
     public partial class AzureEntityResource : ResourceData
     {
-        /// <summary> Initializes a new instance of AzureEntityResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEntityResource"/>. </summary>
         public AzureEntityResource()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureEntityResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEntityResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

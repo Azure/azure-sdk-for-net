@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The complex type of the extended location. </summary>
     public partial class ExtendedLocation
     {
-        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         public ExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
         internal ExtendedLocation(string name, ExtendedLocationTypes? extendedLocationType)

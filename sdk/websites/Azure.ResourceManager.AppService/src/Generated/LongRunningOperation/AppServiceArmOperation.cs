@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of AppServiceArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceArmOperation" /> for mocking. </summary>
         protected AppServiceArmOperation()
         {
         }

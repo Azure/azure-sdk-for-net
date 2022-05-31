@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a set of certificates which are all in the same Key Vault. </summary>
     public partial class VaultSecretGroup
     {
-        /// <summary> Initializes a new instance of VaultSecretGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultSecretGroup"/>. </summary>
         public VaultSecretGroup()
         {
             VaultCertificates = new ChangeTrackingList<VaultCertificate>();
         }
 
-        /// <summary> Initializes a new instance of VaultSecretGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultSecretGroup"/>. </summary>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         internal VaultSecretGroup(WritableSubResource sourceVault, IList<VaultCertificate> vaultCertificates)

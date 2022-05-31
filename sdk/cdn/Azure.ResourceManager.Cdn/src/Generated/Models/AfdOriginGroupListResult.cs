@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list origin groups. It contains a list of origin groups objects and a URL link to get the next set of results. </summary>
     internal partial class AfdOriginGroupListResult
     {
-        /// <summary> Initializes a new instance of AfdOriginGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdOriginGroupListResult"/>. </summary>
         internal AfdOriginGroupListResult()
         {
             Value = new ChangeTrackingList<AfdOriginGroupData>();
         }
 
-        /// <summary> Initializes a new instance of AfdOriginGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdOriginGroupListResult"/>. </summary>
         /// <param name="value"> List of CDN origin groups within an endpoint. </param>
         /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
         internal AfdOriginGroupListResult(IReadOnlyList<AfdOriginGroupData> value, string nextLink)

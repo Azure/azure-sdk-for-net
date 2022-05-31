@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Command job definition. </summary>
     public partial class CommandJob : MachineLearningJobProperties
     {
-        /// <summary> Initializes a new instance of CommandJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommandJob"/>. </summary>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="environmentId"/> is null. </exception>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobType = JobType.Command;
         }
 
-        /// <summary> Initializes a new instance of CommandJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommandJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

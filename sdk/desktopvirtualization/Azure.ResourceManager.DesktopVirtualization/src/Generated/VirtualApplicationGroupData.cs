@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> A class representing the VirtualApplicationGroup data model. </summary>
     public partial class VirtualApplicationGroupData : ResourceModelWithAllowedPropertySet
     {
-        /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplicationGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="hostPoolArmPath"> HostPool arm path of ApplicationGroup. </param>
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ApplicationGroupType = applicationGroupType;
         }
 
-        /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplicationGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

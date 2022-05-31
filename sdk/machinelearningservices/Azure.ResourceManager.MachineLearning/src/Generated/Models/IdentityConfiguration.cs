@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition for identity configuration. </summary>
     public partial class IdentityConfiguration
     {
-        /// <summary> Initializes a new instance of IdentityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityConfiguration"/>. </summary>
         public IdentityConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityConfiguration"/>. </summary>
         /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
         internal IdentityConfiguration(IdentityConfigurationType identityType)
         {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Forward shipment details. </summary>
     public partial class ForwardShippingDetails
     {
-        /// <summary> Initializes a new instance of ForwardShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardShippingDetails"/>. </summary>
         internal ForwardShippingDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ForwardShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardShippingDetails"/>. </summary>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
         /// <param name="trackingId"> TrackingId of the package. </param>

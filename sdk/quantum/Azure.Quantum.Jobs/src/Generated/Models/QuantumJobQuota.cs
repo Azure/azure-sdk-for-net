@@ -10,12 +10,12 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> Quota information. </summary>
     public partial class QuantumJobQuota
     {
-        /// <summary> Initializes a new instance of QuantumJobQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumJobQuota"/>. </summary>
         internal QuantumJobQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of QuantumJobQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumJobQuota"/>. </summary>
         /// <param name="dimension"> The name of the dimension associated with the quota. </param>
         /// <param name="scope"> The scope at which the quota is applied. </param>
         /// <param name="providerId"> The unique identifier for the provider. </param>

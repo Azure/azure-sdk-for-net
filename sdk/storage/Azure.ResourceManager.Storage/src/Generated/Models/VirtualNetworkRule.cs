@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Virtual Network rule. </summary>
     public partial class VirtualNetworkRule
     {
-        /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRule"/>. </summary>
         /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkResourceId"/> is null. </exception>
         public VirtualNetworkRule(string virtualNetworkResourceId)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             Action = "Allow";
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRule"/>. </summary>
         /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <param name="state"> Gets the state of virtual network rule. </param>

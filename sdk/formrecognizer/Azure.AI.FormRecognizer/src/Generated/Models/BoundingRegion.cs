@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Bounding box on a specific page of the input. </summary>
     public partial class BoundingRegion
     {
-        /// <summary> Initializes a new instance of BoundingRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/>. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
         /// <param name="boundingBoxPrivate"> Bounding box on the page, or the entire page if not specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBoxPrivate"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             BoundingBoxPrivate = boundingBoxPrivate.ToList();
         }
 
-        /// <summary> Initializes a new instance of BoundingRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="BoundingRegion"/>. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
         /// <param name="boundingBoxPrivate"> Bounding box on the page, or the entire page if not specified. </param>
         internal BoundingRegion(int pageNumber, IReadOnlyList<float> boundingBoxPrivate)

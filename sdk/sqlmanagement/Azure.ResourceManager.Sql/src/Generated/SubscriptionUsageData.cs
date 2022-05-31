@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the SubscriptionUsage data model. </summary>
     public partial class SubscriptionUsageData : ResourceData
     {
-        /// <summary> Initializes a new instance of SubscriptionUsageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionUsageData"/>. </summary>
         public SubscriptionUsageData()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionUsageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionUsageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Retry settings for a batch inference operation. </summary>
     public partial class PartialBatchRetrySettings
     {
-        /// <summary> Initializes a new instance of PartialBatchRetrySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartialBatchRetrySettings"/>. </summary>
         public PartialBatchRetrySettings()
         {
         }

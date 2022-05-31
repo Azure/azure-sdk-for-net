@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of stamp capacities. </summary>
     internal partial class StampCapacityCollection
     {
-        /// <summary> Initializes a new instance of StampCapacityCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="StampCapacityCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StampCapacityCollection(IEnumerable<StampCapacity> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of StampCapacityCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="StampCapacityCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal StampCapacityCollection(IReadOnlyList<StampCapacity> value, string nextLink)

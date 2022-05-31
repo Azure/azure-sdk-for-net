@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class representing the ManagementPolicy data model. </summary>
     public partial class ManagementPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagementPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyData"/>. </summary>
         public ManagementPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

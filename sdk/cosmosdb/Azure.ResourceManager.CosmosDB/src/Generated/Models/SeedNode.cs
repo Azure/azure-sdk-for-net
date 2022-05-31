@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The SeedNode. </summary>
     public partial class SeedNode
     {
-        /// <summary> Initializes a new instance of SeedNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="SeedNode"/>. </summary>
         public SeedNode()
         {
         }
 
-        /// <summary> Initializes a new instance of SeedNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="SeedNode"/>. </summary>
         /// <param name="ipAddress"> IP address of this seed node. </param>
         internal SeedNode(string ipAddress)
         {

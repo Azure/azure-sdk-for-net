@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The child information of a management group used during creation. </summary>
     public partial class ManagementGroupChildOptions
     {
-        /// <summary> Initializes a new instance of ManagementGroupChildOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupChildOptions"/>. </summary>
         internal ManagementGroupChildOptions()
         {
             Children = new ChangeTrackingList<ManagementGroupChildOptions>();

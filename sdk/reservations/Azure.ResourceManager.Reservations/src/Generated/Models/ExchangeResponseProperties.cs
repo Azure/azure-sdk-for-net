@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Exchange response properties. </summary>
     public partial class ExchangeResponseProperties
     {
-        /// <summary> Initializes a new instance of ExchangeResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangeResponseProperties"/>. </summary>
         internal ExchangeResponseProperties()
         {
             ReservationsToPurchase = new ChangeTrackingList<ReservationToPurchaseExchange>();
             ReservationsToExchange = new ChangeTrackingList<ReservationToReturnForExchange>();
         }
 
-        /// <summary> Initializes a new instance of ExchangeResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangeResponseProperties"/>. </summary>
         /// <param name="sessionId"> Exchange session identifier. </param>
         /// <param name="netPayable"></param>
         /// <param name="refundsTotal"></param>

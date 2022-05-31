@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The sub-request submitted with the quota request. </summary>
     public partial class SubRequest
     {
-        /// <summary> Initializes a new instance of SubRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubRequest"/>. </summary>
         internal SubRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of SubRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubRequest"/>. </summary>
         /// <param name="limit"> Quota (resource limit). </param>
         /// <param name="name"> The resource name. </param>
         /// <param name="resourceType"> Resource type for which the quota check was made. </param>

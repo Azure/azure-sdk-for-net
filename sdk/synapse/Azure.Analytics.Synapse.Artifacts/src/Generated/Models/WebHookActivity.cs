@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> WebHook activity. </summary>
     public partial class WebHookActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of WebHookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebHookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="url"> WebHook activity target endpoint and path. Type: string (or Expression with resultType string). </param>
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "WebHook";
         }
 
-        /// <summary> Initializes a new instance of WebHookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebHookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

@@ -12,7 +12,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Aggregate variable represents any aggregation calculation. Aggregate Variables does not support interpolation. </summary>
     public partial class AggregateVariable : TimeSeriesVariable
     {
-        /// <summary> Initializes a new instance of AggregateVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregateVariable"/>. </summary>
         /// <param name="aggregation"> Aggregation time series expression when kind is &quot;aggregate&quot; is used to represent the aggregation that needs to be performed directly using event properties like &quot;$event.Temperature&quot;. For example, aggregation for calculating range of temperature changes can be written as: &quot;max($event.Temperature)-min($event.Temperature)&quot;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/> is null. </exception>
         public AggregateVariable(TimeSeriesExpression aggregation)
@@ -26,7 +26,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Kind = "aggregate";
         }
 
-        /// <summary> Initializes a new instance of AggregateVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="AggregateVariable"/>. </summary>
         /// <param name="kind"> Allowed &quot;kind&quot; values are - &quot;numeric&quot; or &quot;aggregate&quot;. While &quot;numeric&quot; allows you to specify value of the reconstructed signal and the expression to aggregate them, the &quot;aggregate&quot; kind lets you directly aggregate on the event properties without specifying value. </param>
         /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </param>
         /// <param name="aggregation"> Aggregation time series expression when kind is &quot;aggregate&quot; is used to represent the aggregation that needs to be performed directly using event properties like &quot;$event.Temperature&quot;. For example, aggregation for calculating range of temperature changes can be written as: &quot;max($event.Temperature)-min($event.Temperature)&quot;. </param>

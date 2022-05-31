@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Desired properties of the cluster. </summary>
     public partial class ClusterDesiredProperties
     {
-        /// <summary> Initializes a new instance of ClusterDesiredProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterDesiredProperties"/>. </summary>
         public ClusterDesiredProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterDesiredProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterDesiredProperties"/>. </summary>
         /// <param name="windowsServerSubscription"> Desired state of Windows Server Subscription. </param>
         /// <param name="diagnosticLevel"> Desired level of diagnostic data emitted by the cluster. </param>
         internal ClusterDesiredProperties(WindowsServerSubscription? windowsServerSubscription, DiagnosticLevel? diagnosticLevel)

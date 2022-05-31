@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VpnServerConfigurations list associated with VirtualWan Response. </summary>
     public partial class VpnServerConfigurationsResponse
     {
-        /// <summary> Initializes a new instance of VpnServerConfigurationsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationsResponse"/>. </summary>
         internal VpnServerConfigurationsResponse()
         {
             VpnServerConfigurationResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigurationsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationsResponse"/>. </summary>
         /// <param name="vpnServerConfigurationResourceIds"> List of VpnServerConfigurations associated with VirtualWan. </param>
         internal VpnServerConfigurationsResponse(IReadOnlyList<string> vpnServerConfigurationResourceIds)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition for asset references. </summary>
     public partial class AssetReferenceBase
     {
-        /// <summary> Initializes a new instance of AssetReferenceBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetReferenceBase"/>. </summary>
         public AssetReferenceBase()
         {
         }
 
-        /// <summary> Initializes a new instance of AssetReferenceBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssetReferenceBase"/>. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
         internal AssetReferenceBase(ReferenceType referenceType)
         {

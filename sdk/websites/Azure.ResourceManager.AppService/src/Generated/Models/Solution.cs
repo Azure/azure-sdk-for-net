@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class Representing Solution for problems detected. </summary>
     public partial class Solution
     {
-        /// <summary> Initializes a new instance of Solution. </summary>
+        /// <summary> Initializes a new instance of <see cref="Solution"/>. </summary>
         public Solution()
         {
             Data = new ChangeTrackingList<IList<NameValuePair>>();
             Metadata = new ChangeTrackingList<IList<NameValuePair>>();
         }
 
-        /// <summary> Initializes a new instance of Solution. </summary>
+        /// <summary> Initializes a new instance of <see cref="Solution"/>. </summary>
         /// <param name="id"> Solution Id. </param>
         /// <param name="displayName"> Display Name of the solution. </param>
         /// <param name="order"> Order of the solution. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the token store. </summary>
     public partial class TokenStore
     {
-        /// <summary> Initializes a new instance of TokenStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="TokenStore"/>. </summary>
         public TokenStore()
         {
         }
 
-        /// <summary> Initializes a new instance of TokenStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="TokenStore"/>. </summary>
         /// <param name="enabled">
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         ///  The default is &lt;code&gt;false&lt;/code&gt;.

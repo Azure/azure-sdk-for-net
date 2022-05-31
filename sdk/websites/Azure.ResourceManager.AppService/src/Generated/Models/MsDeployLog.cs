@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> MSDeploy log. </summary>
     public partial class MsDeployLog : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of MsDeployLog. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsDeployLog"/>. </summary>
         public MsDeployLog()
         {
             Entries = new ChangeTrackingList<MsDeployLogEntry>();
         }
 
-        /// <summary> Initializes a new instance of MsDeployLog. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsDeployLog"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

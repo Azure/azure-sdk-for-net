@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A remote private endpoint connection. </summary>
     public partial class RemotePrivateEndpointConnection : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnection"/>. </summary>
         public RemotePrivateEndpointConnection()
         {
             IPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

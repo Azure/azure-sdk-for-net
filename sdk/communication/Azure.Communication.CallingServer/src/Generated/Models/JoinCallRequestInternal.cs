@@ -15,7 +15,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The request payload for join call. </summary>
     internal partial class JoinCallRequestInternal
     {
-        /// <summary> Initializes a new instance of JoinCallRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="JoinCallRequestInternal"/>. </summary>
         /// <param name="source"> The source of the call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>

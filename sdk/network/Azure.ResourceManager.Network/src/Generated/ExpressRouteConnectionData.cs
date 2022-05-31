@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the ExpressRouteConnection data model. </summary>
     public partial class ExpressRouteConnectionData : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of ExpressRouteConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionData"/>. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ExpressRouteConnectionData(string name)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the express route connection resource. </param>

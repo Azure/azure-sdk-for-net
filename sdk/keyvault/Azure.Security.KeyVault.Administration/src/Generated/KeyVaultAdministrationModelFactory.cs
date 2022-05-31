@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Model factory for read-only models. </summary>
     public static partial class KeyVaultAdministrationModelFactory
     {
-        /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleDefinition"/>. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
         /// <param name="type"> The role definition type. </param>
@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Administration
             return new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions?.ToList(), assignableScopes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of KeyVaultRoleAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignment"/>. </summary>
         /// <param name="id"> The role assignment ID. </param>
         /// <param name="name"> The role assignment name. </param>
         /// <param name="type"> The role assignment type. </param>
@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Administration
             return new KeyVaultRoleAssignment(id, name, type, properties);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultRoleAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignmentProperties"/>. </summary>
         /// <param name="scope"> The role scope. </param>
         /// <param name="roleDefinitionId"> The role definition ID. </param>
         /// <param name="principalId"> The principal ID. </param>

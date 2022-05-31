@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
     /// <summary> Custom Locations operation. </summary>
     public partial class CustomLocationOperation
     {
-        /// <summary> Initializes a new instance of CustomLocationOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationOperation"/>. </summary>
         internal CustomLocationOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomLocationOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationOperation"/>. </summary>
         /// <param name="isDataAction"> Is this Operation a data plane operation. </param>
         /// <param name="name"> The name of the compute operation. </param>
         /// <param name="origin"> The origin of the compute operation. </param>

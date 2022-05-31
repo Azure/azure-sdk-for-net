@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> Model factory for read-only models. </summary>
     internal static partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2ModelFactory
     {
-        /// <summary> Initializes a new instance of AnomalyAlertConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyAlertConfiguration"/>. </summary>
         /// <param name="id"> anomaly alerting configuration unique id. </param>
         /// <param name="name"> anomaly alerting configuration name. </param>
         /// <param name="description"> anomaly alerting configuration description. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new AnomalyAlertConfiguration(id, name, description, crossMetricsOperator, dimensionsToSplitAlert?.ToList(), idsOfHooksToAlert?.ToList(), metricAlertConfigurations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AnomalyAlert. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyAlert"/>. </summary>
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdOn"> created time. </param>
@@ -47,7 +47,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new AnomalyAlert(id, timestamp, createdOn, lastModified);
         }
 
-        /// <summary> Initializes a new instance of AnomalyDetectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetectionConfiguration"/>. </summary>
         /// <param name="id"> anomaly detection configuration unique id. </param>
         /// <param name="name"> anomaly detection configuration name. </param>
         /// <param name="description"> anomaly detection configuration description. </param>
@@ -64,7 +64,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new AnomalyDetectionConfiguration(id, name, description, metricId, wholeSeriesDetectionConditions, seriesGroupDetectionConditions?.ToList(), seriesDetectionConditions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IncidentRootCause. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentRootCause"/>. </summary>
         /// <param name="seriesKey"></param>
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
         /// <param name="contributionScore"> score of the root cause. </param>
@@ -77,7 +77,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new IncidentRootCause(seriesKey, paths?.ToList(), contributionScore, description);
         }
 
-        /// <summary> Initializes a new instance of DataFeedMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedMetric"/>. </summary>
         /// <param name="id"> metric id. </param>
         /// <param name="name"> metric name. </param>
         /// <param name="displayName"> metric display name. </param>
@@ -88,7 +88,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new DataFeedMetric(id, name, displayName, description);
         }
 
-        /// <summary> Initializes a new instance of DataFeedIngestionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionStatus"/>. </summary>
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest ingestion task status for this data slice. </param>
         /// <param name="message"> the trimmed message of last ingestion job. </param>
@@ -98,7 +98,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new DataFeedIngestionStatus(timestamp, status, message);
         }
 
-        /// <summary> Initializes a new instance of DataFeedIngestionProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionProgress"/>. </summary>
         /// <param name="latestSuccessTimestamp">
         /// the timestamp of latest success ingestion job.
         /// null indicates not available
@@ -113,7 +113,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new DataFeedIngestionProgress(latestSuccessTimestamp, latestActiveTimestamp);
         }
 
-        /// <summary> Initializes a new instance of EnrichmentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnrichmentStatus"/>. </summary>
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest enrichment status for this data slice. </param>
         /// <param name="message"> the trimmed message describes details of the enrichment status. </param>

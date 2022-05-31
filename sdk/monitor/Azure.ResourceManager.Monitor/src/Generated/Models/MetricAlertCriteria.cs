@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The rule criteria that defines the conditions of the alert rule. </summary>
     public partial class MetricAlertCriteria
     {
-        /// <summary> Initializes a new instance of MetricAlertCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertCriteria"/>. </summary>
         public MetricAlertCriteria()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MetricAlertCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertCriteria"/>. </summary>
         /// <param name="odataType"> specifies the type of the alert criteria. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal MetricAlertCriteria(Odatatype odataType, IDictionary<string, BinaryData> additionalProperties)

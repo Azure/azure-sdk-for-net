@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> A class represent managed identities used for request and response. </summary>
     public partial class ManagedIdentity
     {
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         public ManagedIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         /// <param name="identityType"> Represent the identity type: systemAssigned, userAssigned, None. </param>
         /// <param name="userAssignedIdentities"> Get or set the user assigned identities. </param>
         /// <param name="principalId">

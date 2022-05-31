@@ -10,7 +10,7 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> To configure Answer span prediction feature. </summary>
     public partial class ShortAnswerOptions
     {
-        /// <summary> Initializes a new instance of ShortAnswerOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortAnswerOptions"/>. </summary>
         public ShortAnswerOptions()
         {
             Enable = true;

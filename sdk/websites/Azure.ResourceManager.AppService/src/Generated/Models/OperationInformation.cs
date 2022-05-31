@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> An operation on a resource. </summary>
     public partial class OperationInformation
     {
-        /// <summary> Initializes a new instance of OperationInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationInformation"/>. </summary>
         internal OperationInformation()
         {
             Errors = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of OperationInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationInformation"/>. </summary>
         /// <param name="id"> Operation ID. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="status"> The current status of the operation. </param>

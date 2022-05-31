@@ -13,7 +13,7 @@ namespace Azure.Communication.MediaComposition.Models
     /// <summary> The Participant. </summary>
     public partial class ParticipantInput
     {
-        /// <summary> Initializes a new instance of ParticipantInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParticipantInput"/>. </summary>
         /// <param name="id"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </param>
         /// <param name="call"> The id of the teams meeting or call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="call"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.Communication.MediaComposition.Models
             Call = call;
         }
 
-        /// <summary> Initializes a new instance of ParticipantInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParticipantInput"/>. </summary>
         /// <param name="id"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
         /// <param name="call"> The id of the teams meeting or call. </param>

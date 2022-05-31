@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has &apos;tags&apos; and a &apos;location&apos;. </summary>
     public partial class TrackedResource : Resource
     {
-        /// <summary> Initializes a new instance of TrackedResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackedResource"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public TrackedResource(string location)
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of TrackedResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackedResource"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>

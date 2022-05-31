@@ -13,7 +13,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Base class for pipeline extension processors. Pipeline extensions allow for custom media analysis and processing to be plugged into the Video Analyzer pipeline. </summary>
     public partial class ExtensionProcessorBase : ProcessorNodeBase
     {
-        /// <summary> Initializes a new instance of ExtensionProcessorBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionProcessorBase"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint"> Endpoint details of the pipeline extension plugin. </param>
@@ -43,7 +43,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.ExtensionProcessorBase";
         }
 
-        /// <summary> Initializes a new instance of ExtensionProcessorBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionProcessorBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

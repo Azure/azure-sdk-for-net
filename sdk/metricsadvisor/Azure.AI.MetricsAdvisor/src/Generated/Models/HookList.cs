@@ -14,13 +14,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The HookList. </summary>
     internal partial class HookList
     {
-        /// <summary> Initializes a new instance of HookList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HookList"/>. </summary>
         internal HookList()
         {
             Value = new ChangeTrackingList<NotificationHook>();
         }
 
-        /// <summary> Initializes a new instance of HookList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HookList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
         internal HookList(string nextLink, IReadOnlyList<NotificationHook> value)

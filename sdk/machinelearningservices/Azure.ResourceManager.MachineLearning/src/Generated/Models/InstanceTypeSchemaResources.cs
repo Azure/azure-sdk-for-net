@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Resource requests/limits for this instance type. </summary>
     public partial class InstanceTypeSchemaResources
     {
-        /// <summary> Initializes a new instance of InstanceTypeSchemaResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceTypeSchemaResources"/>. </summary>
         public InstanceTypeSchemaResources()
         {
             Requests = new ChangeTrackingDictionary<string, string>();
             Limits = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of InstanceTypeSchemaResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceTypeSchemaResources"/>. </summary>
         /// <param name="requests"> Resource requests for this instance type. </param>
         /// <param name="limits"> Resource limits for this instance type. </param>
         internal InstanceTypeSchemaResources(IDictionary<string, string> requests, IDictionary<string, string> limits)

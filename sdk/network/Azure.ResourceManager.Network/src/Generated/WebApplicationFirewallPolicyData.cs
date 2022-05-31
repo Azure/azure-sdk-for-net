@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the WebApplicationFirewallPolicy data model. </summary>
     public partial class WebApplicationFirewallPolicyData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of WebApplicationFirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyData"/>. </summary>
         public WebApplicationFirewallPolicyData()
         {
             CustomRules = new ChangeTrackingList<WebApplicationFirewallCustomRule>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
             PathBasedRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of WebApplicationFirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

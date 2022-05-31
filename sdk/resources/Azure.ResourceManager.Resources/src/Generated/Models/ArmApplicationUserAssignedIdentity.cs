@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Represents the user assigned identity that is contained within the UserAssignedIdentities dictionary on ResourceIdentity. </summary>
     public partial class ArmApplicationUserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of ArmApplicationUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationUserAssignedIdentity"/>. </summary>
         public ArmApplicationUserAssignedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationUserAssignedIdentity"/>. </summary>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="tenantId"> The tenant id of user assigned identity. </param>
         internal ArmApplicationUserAssignedIdentity(Guid? principalId, Guid? tenantId)

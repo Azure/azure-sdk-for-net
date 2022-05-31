@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing the CloudServiceOSVersion data model. </summary>
     public partial class CloudServiceOSVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudServiceOSVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceOSVersionData"/>. </summary>
         internal CloudServiceOSVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceOSVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceOSVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

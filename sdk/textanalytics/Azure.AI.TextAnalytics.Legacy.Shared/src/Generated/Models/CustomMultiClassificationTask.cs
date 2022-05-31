@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The CustomMultiClassificationTask. </summary>
     internal partial class CustomMultiClassificationTask
     {
-        /// <summary> Initializes a new instance of CustomMultiClassificationTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMultiClassificationTask"/>. </summary>
         public CustomMultiClassificationTask()
         {
         }

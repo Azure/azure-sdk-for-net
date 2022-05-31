@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DynaTrace.Models
     /// <summary> The response of a MonitorResource list operation. </summary>
     internal partial class MonitorResourceListResult
     {
-        /// <summary> Initializes a new instance of MonitorResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorResourceListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="nextLink"/> is null. </exception>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DynaTrace.Models
             NextLink = nextLink;
         }
 
-        /// <summary> Initializes a new instance of MonitorResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorResourceListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal MonitorResourceListResult(IReadOnlyList<MonitorResourceData> value, string nextLink)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Azure File Properties. </summary>
     public partial class AzureFileProperties
     {
-        /// <summary> Initializes a new instance of AzureFileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileProperties"/>. </summary>
         public AzureFileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileProperties"/>. </summary>
         /// <param name="accountName"> Storage account name for azure file. </param>
         /// <param name="accountKey"> Storage account key for azure file. </param>
         /// <param name="accessMode"> Access mode for storage. </param>

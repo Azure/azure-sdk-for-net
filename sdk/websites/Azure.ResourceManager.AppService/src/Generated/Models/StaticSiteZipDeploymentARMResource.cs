@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static site zip deployment ARM resource. </summary>
     public partial class StaticSiteZipDeploymentARMResource : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSiteZipDeploymentARMResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteZipDeploymentARMResource"/>. </summary>
         public StaticSiteZipDeploymentARMResource()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteZipDeploymentARMResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteZipDeploymentARMResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

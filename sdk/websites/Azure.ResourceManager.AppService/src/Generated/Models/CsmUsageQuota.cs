@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Usage of the quota resource. </summary>
     public partial class CsmUsageQuota
     {
-        /// <summary> Initializes a new instance of CsmUsageQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmUsageQuota"/>. </summary>
         internal CsmUsageQuota()
         {
         }
 
-        /// <summary> Initializes a new instance of CsmUsageQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmUsageQuota"/>. </summary>
         /// <param name="unit"> Units of measurement for the quota resource. </param>
         /// <param name="nextResetOn"> Next reset time for the resource counter. </param>
         /// <param name="currentValue"> The current value of the resource counter. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Customized setup scripts. </summary>
     public partial class ScriptsToExecute
     {
-        /// <summary> Initializes a new instance of ScriptsToExecute. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptsToExecute"/>. </summary>
         public ScriptsToExecute()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptsToExecute. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptsToExecute"/>. </summary>
         /// <param name="startupScript"> Script that&apos;s run every time the machine starts. </param>
         /// <param name="creationScript"> Script that&apos;s run only once during provision of the compute. </param>
         internal ScriptsToExecute(ScriptReference startupScript, ScriptReference creationScript)

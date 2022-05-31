@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A webhook receiver. </summary>
     public partial class WebhookReceiver
     {
-        /// <summary> Initializes a new instance of WebhookReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookReceiver"/>. </summary>
         /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="serviceUri"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ServiceUri = serviceUri;
         }
 
-        /// <summary> Initializes a new instance of WebhookReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookReceiver"/>. </summary>
         /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>

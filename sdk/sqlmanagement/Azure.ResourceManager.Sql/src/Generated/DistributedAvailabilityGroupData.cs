@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the DistributedAvailabilityGroup data model. </summary>
     public partial class DistributedAvailabilityGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of DistributedAvailabilityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupData"/>. </summary>
         public DistributedAvailabilityGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of DistributedAvailabilityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

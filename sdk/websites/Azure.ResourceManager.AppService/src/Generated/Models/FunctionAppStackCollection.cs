@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Function app Stacks. </summary>
     internal partial class FunctionAppStackCollection
     {
-        /// <summary> Initializes a new instance of FunctionAppStackCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppStackCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FunctionAppStackCollection(IEnumerable<FunctionAppStack> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of FunctionAppStackCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppStackCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal FunctionAppStackCollection(IReadOnlyList<FunctionAppStack> value, string nextLink)

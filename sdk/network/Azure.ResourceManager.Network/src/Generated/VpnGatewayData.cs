@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the VpnGateway data model. </summary>
     public partial class VpnGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VpnGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayData"/>. </summary>
         public VpnGatewayData()
         {
             Connections = new ChangeTrackingList<VpnConnectionData>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
             NatRules = new ChangeTrackingList<VpnGatewayNatRuleData>();
         }
 
-        /// <summary> Initializes a new instance of VpnGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

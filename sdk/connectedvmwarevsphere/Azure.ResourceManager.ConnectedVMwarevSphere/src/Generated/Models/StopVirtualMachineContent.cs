@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the stop action properties. </summary>
     public partial class StopVirtualMachineContent
     {
-        /// <summary> Initializes a new instance of StopVirtualMachineContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopVirtualMachineContent"/>. </summary>
         public StopVirtualMachineContent()
         {
         }

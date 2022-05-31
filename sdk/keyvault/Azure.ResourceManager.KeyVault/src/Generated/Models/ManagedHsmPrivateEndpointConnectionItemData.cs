@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Private endpoint connection item. </summary>
     public partial class ManagedHsmPrivateEndpointConnectionItemData
     {
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionItemData"/>. </summary>
         internal ManagedHsmPrivateEndpointConnectionItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionItemData"/>. </summary>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>

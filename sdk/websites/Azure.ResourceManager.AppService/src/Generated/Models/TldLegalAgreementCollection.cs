@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of top-level domain legal agreements. </summary>
     internal partial class TldLegalAgreementCollection
     {
-        /// <summary> Initializes a new instance of TldLegalAgreementCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreementCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TldLegalAgreementCollection(IEnumerable<TldLegalAgreement> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TldLegalAgreementCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="TldLegalAgreementCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal TldLegalAgreementCollection(IReadOnlyList<TldLegalAgreement> value, string nextLink)

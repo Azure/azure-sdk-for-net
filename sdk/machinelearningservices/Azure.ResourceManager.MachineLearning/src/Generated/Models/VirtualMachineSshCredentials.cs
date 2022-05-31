@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Admin credentials for virtual machine. </summary>
     public partial class VirtualMachineSshCredentials
     {
-        /// <summary> Initializes a new instance of VirtualMachineSshCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSshCredentials"/>. </summary>
         public VirtualMachineSshCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineSshCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSshCredentials"/>. </summary>
         /// <param name="username"> Username of admin account. </param>
         /// <param name="password"> Password of admin account. </param>
         /// <param name="publicKeyData"> Public key data. </param>

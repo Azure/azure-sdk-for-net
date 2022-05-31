@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraTablePropertiesOptions. </summary>
     public partial class CassandraTablePropertiesOptions : OptionsResource
     {
-        /// <summary> Initializes a new instance of CassandraTablePropertiesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraTablePropertiesOptions"/>. </summary>
         public CassandraTablePropertiesOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraTablePropertiesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraTablePropertiesOptions"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal CassandraTablePropertiesOptions(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)

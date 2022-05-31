@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Execute data flow activity. </summary>
     public partial class ExecuteDataFlowActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of ExecuteDataFlowActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataflow"> Data flow reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataflow"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "ExecuteDataFlow";
         }
 
-        /// <summary> Initializes a new instance of ExecuteDataFlowActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

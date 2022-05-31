@@ -12,7 +12,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> Detection request. </summary>
     public partial class DetectionRequest
     {
-        /// <summary> Initializes a new instance of DetectionRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionRequest"/>. </summary>
         /// <param name="source"> Source link to the input variables. Each variable should be a csv with two columns, `timestamp` and `value`. The file name of the variable will be used as its name. The variables used in detection should be exactly the same with those used in the training phase. </param>
         /// <param name="startTime"> A required field, indicating the start time of data for detection. Should be date-time. </param>
         /// <param name="endTime"> A required field, indicating the end time of data for detection. Should be date-time. </param>

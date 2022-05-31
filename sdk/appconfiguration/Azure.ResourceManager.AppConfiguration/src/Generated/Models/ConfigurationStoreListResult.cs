@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> The result of a request to list configuration stores. </summary>
     internal partial class ConfigurationStoreListResult
     {
-        /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationStoreListResult"/>. </summary>
         internal ConfigurationStoreListResult()
         {
             Value = new ChangeTrackingList<ConfigurationStoreData>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationStoreListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationStoreListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         internal ConfigurationStoreListResult(IReadOnlyList<ConfigurationStoreData> value, string nextLink)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> A list of IoT Central Application Templates with a next link. </summary>
     internal partial class AppTemplatesResult
     {
-        /// <summary> Initializes a new instance of AppTemplatesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppTemplatesResult"/>. </summary>
         internal AppTemplatesResult()
         {
             Value = new ChangeTrackingList<AppTemplate>();
         }
 
-        /// <summary> Initializes a new instance of AppTemplatesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppTemplatesResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of IoT Central application templates. </param>
         /// <param name="value"> A list of IoT Central Application Templates. </param>
         internal AppTemplatesResult(string nextLink, IReadOnlyList<AppTemplate> value)

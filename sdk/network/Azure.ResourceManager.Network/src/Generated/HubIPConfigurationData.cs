@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the HubIPConfiguration data model. </summary>
     public partial class HubIPConfigurationData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of HubIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubIPConfigurationData"/>. </summary>
         public HubIPConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of HubIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubIPConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

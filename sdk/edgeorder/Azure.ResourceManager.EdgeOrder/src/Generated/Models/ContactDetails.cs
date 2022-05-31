@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Contact Details. </summary>
     public partial class ContactDetails
     {
-        /// <summary> Initializes a new instance of ContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactDetails"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EmailList = emailList.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactDetails"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>

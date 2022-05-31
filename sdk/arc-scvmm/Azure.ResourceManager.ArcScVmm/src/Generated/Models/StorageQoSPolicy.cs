@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> The StorageQoSPolicy definition. </summary>
     public partial class StorageQoSPolicy
     {
-        /// <summary> Initializes a new instance of StorageQoSPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQoSPolicy"/>. </summary>
         internal StorageQoSPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageQoSPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQoSPolicy"/>. </summary>
         /// <param name="name"> The name of the policy. </param>
         /// <param name="id"> The ID of the QoS policy. </param>
         /// <param name="iopsMaximum"> The maximum IO operations per second. </param>

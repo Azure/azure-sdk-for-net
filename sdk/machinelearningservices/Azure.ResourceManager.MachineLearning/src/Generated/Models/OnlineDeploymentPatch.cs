@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Strictly used in update requests. </summary>
     public partial class OnlineDeploymentPatch
     {
-        /// <summary> Initializes a new instance of OnlineDeploymentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnlineDeploymentPatch"/>. </summary>
         public OnlineDeploymentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

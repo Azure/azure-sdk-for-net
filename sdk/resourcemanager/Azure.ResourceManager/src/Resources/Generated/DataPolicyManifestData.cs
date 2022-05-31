@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the DataPolicyManifest data model. </summary>
     public partial class DataPolicyManifestData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPolicyManifestData"/>. </summary>
         internal DataPolicyManifestData()
         {
             Namespaces = new ChangeTrackingList<string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources
             CustomDefinitions = new ChangeTrackingList<DataManifestCustomResourceFunctionDefinition>();
         }
 
-        /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPolicyManifestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

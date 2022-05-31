@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the WorkerPoolResource data model. </summary>
     public partial class WorkerPoolResourceData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of WorkerPoolResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkerPoolResourceData"/>. </summary>
         public WorkerPoolResourceData()
         {
             InstanceNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkerPoolResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkerPoolResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

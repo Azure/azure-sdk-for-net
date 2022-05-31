@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureTableParameterPatch. </summary>
     internal partial class AzureTableParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureTableParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureTableParameterPatch"/>. </summary>
         public AzureTableParameterPatch()
         {
         }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UriFolderJobInput. </summary>
     public partial class UriFolderJobInput : JobInput
     {
-        /// <summary> Initializes a new instance of UriFolderJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFolderJobInput"/>. </summary>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public UriFolderJobInput(Uri uri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobInputType = JobInputType.UriFolder;
         }
 
-        /// <summary> Initializes a new instance of UriFolderJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFolderJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Input Asset Delivery Mode. </param>

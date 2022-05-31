@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The MultiClassificationDocumentResult. </summary>
     internal partial class MultiClassificationDocumentResult : DocumentResult
     {
-        /// <summary> Initializes a new instance of MultiClassificationDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiClassificationDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="class"></param>
@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Models
             Class = @class.ToList();
         }
 
-        /// <summary> Initializes a new instance of MultiClassificationDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiClassificationDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

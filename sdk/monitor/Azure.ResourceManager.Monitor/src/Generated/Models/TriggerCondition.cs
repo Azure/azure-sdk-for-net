@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The condition that results in the Log Search rule. </summary>
     public partial class TriggerCondition
     {
-        /// <summary> Initializes a new instance of TriggerCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerCondition"/>. </summary>
         /// <param name="thresholdOperator"> Evaluation operation for rule - &apos;GreaterThan&apos; or &apos;LessThan. </param>
         /// <param name="threshold"> Result or count threshold based on which rule should be triggered. </param>
         public TriggerCondition(ConditionalOperator thresholdOperator, double threshold)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Threshold = threshold;
         }
 
-        /// <summary> Initializes a new instance of TriggerCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerCondition"/>. </summary>
         /// <param name="thresholdOperator"> Evaluation operation for rule - &apos;GreaterThan&apos; or &apos;LessThan. </param>
         /// <param name="threshold"> Result or count threshold based on which rule should be triggered. </param>
         /// <param name="metricTrigger"> Trigger condition for metric query rule. </param>

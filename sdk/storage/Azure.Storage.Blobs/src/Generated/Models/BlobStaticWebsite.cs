@@ -11,7 +11,7 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobStaticWebsite
     {
 
-        /// <summary> Initializes a new instance of BlobStaticWebsite. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobStaticWebsite"/>. </summary>
         /// <param name="enabled"> Indicates whether this account is hosting a static website. </param>
         /// <param name="indexDocument"> The default name of the index page under each directory. </param>
         /// <param name="errorDocument404Path"> The absolute path of the custom 404 page. </param>

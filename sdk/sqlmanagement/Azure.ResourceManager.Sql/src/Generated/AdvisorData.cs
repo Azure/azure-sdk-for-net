@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the Advisor data model. </summary>
     public partial class AdvisorData : ResourceData
     {
-        /// <summary> Initializes a new instance of AdvisorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvisorData"/>. </summary>
         public AdvisorData()
         {
             RecommendedActions = new ChangeTrackingList<RecommendedActionData>();
         }
 
-        /// <summary> Initializes a new instance of AdvisorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvisorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

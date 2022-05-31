@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The resource of an Azure Cosmos DB SQL container event. </summary>
     public partial class RestorableSqlContainerPropertiesResource
     {
-        /// <summary> Initializes a new instance of RestorableSqlContainerPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlContainerPropertiesResource"/>. </summary>
         internal RestorableSqlContainerPropertiesResource()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableSqlContainerPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlContainerPropertiesResource"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this container event. </param>
         /// <param name="eventTimestamp"> The when this container event happened. </param>

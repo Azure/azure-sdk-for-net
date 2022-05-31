@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The visibility list of the private link service. </summary>
     internal partial class PrivateLinkServicePropertiesVisibility : ResourceSet
     {
-        /// <summary> Initializes a new instance of PrivateLinkServicePropertiesVisibility. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServicePropertiesVisibility"/>. </summary>
         public PrivateLinkServicePropertiesVisibility()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServicePropertiesVisibility. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServicePropertiesVisibility"/>. </summary>
         /// <param name="subscriptions"> The list of subscriptions. </param>
         internal PrivateLinkServicePropertiesVisibility(IList<string> subscriptions) : base(subscriptions)
         {

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Azure proxy only resource. This resource is not tracked by Azure Resource Manager. </summary>
     public partial class ProxyOnlyResource : ResourceData
     {
-        /// <summary> Initializes a new instance of ProxyOnlyResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyOnlyResource"/>. </summary>
         public ProxyOnlyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of ProxyOnlyResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyOnlyResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

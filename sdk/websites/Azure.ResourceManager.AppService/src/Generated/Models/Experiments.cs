@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Routing rules in production experiments. </summary>
     internal partial class Experiments
     {
-        /// <summary> Initializes a new instance of Experiments. </summary>
+        /// <summary> Initializes a new instance of <see cref="Experiments"/>. </summary>
         public Experiments()
         {
             RampUpRules = new ChangeTrackingList<RampUpRule>();
         }
 
-        /// <summary> Initializes a new instance of Experiments. </summary>
+        /// <summary> Initializes a new instance of <see cref="Experiments"/>. </summary>
         /// <param name="rampUpRules"> List of ramp-up rules. </param>
         internal Experiments(IList<RampUpRule> rampUpRules)
         {

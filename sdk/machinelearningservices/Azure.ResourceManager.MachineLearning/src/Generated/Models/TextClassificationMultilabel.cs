@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class TextClassificationMultilabel : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextClassificationMultilabel"/>. </summary>
         public TextClassificationMultilabel()
         {
             TaskType = TaskType.TextClassificationMultilabel;
         }
 
-        /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextClassificationMultilabel"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="primaryMetric">

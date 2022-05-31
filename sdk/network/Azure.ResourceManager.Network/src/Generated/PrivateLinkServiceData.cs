@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the PrivateLinkService data model. </summary>
     public partial class PrivateLinkServiceData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of PrivateLinkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceData"/>. </summary>
         public PrivateLinkServiceData()
         {
             LoadBalancerFrontendIPConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
             Fqdns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

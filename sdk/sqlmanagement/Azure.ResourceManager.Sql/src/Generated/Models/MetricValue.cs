@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Represents database metrics. </summary>
     public partial class MetricValue
     {
-        /// <summary> Initializes a new instance of MetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
         internal MetricValue()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
         /// <param name="count"> The number of values for the metric. </param>
         /// <param name="average"> The average value of the metric. </param>
         /// <param name="maximum"> The max value of the metric. </param>

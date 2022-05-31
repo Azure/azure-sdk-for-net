@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The ChangeDirectoryRequest. </summary>
     public partial class ChangeDirectoryContent
     {
-        /// <summary> Initializes a new instance of ChangeDirectoryContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDirectoryContent"/>. </summary>
         public ChangeDirectoryContent()
         {
         }

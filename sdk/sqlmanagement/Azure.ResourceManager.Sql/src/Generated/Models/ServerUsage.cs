@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Represents server metrics. </summary>
     public partial class ServerUsage
     {
-        /// <summary> Initializes a new instance of ServerUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerUsage"/>. </summary>
         internal ServerUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerUsage"/>. </summary>
         /// <param name="name"> Name of the server usage metric. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="displayName"> The metric display name. </param>

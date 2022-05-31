@@ -13,7 +13,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> A processor that allows the pipeline topology to send video frames to a Cognitive Services Vision extension. Inference results are relayed to downstream nodes. </summary>
     public partial class CognitiveServicesVisionProcessor : ProcessorNodeBase
     {
-        /// <summary> Initializes a new instance of CognitiveServicesVisionProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesVisionProcessor"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint"> Endpoint to which this processor should connect. </param>
@@ -43,7 +43,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.CognitiveServicesVisionProcessor";
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesVisionProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesVisionProcessor"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

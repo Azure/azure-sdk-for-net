@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The response payload of start call recording operation. </summary>
     public partial class StartRecordingResult
     {
-        /// <summary> Initializes a new instance of StartRecordingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartRecordingResult"/>. </summary>
         internal StartRecordingResult()
         {
         }
 
-        /// <summary> Initializes a new instance of StartRecordingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartRecordingResult"/>. </summary>
         /// <param name="recordingId"> The recording id of the started recording. </param>
         internal StartRecordingResult(string recordingId)
         {

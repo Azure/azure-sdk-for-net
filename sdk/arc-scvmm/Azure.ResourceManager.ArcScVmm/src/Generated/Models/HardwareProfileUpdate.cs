@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the resource properties. </summary>
     public partial class HardwareProfileUpdate
     {
-        /// <summary> Initializes a new instance of HardwareProfileUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareProfileUpdate"/>. </summary>
         public HardwareProfileUpdate()
         {
         }

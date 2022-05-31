@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Resource properties. </summary>
     public partial class DataCollectionEndpointProperties : DataCollectionEndpointData
     {
-        /// <summary> Initializes a new instance of DataCollectionEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointProperties"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataCollectionEndpointProperties(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionEndpointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

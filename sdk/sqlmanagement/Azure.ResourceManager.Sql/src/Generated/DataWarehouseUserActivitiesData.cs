@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the DataWarehouseUserActivities data model. </summary>
     public partial class DataWarehouseUserActivitiesData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataWarehouseUserActivitiesData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataWarehouseUserActivitiesData"/>. </summary>
         public DataWarehouseUserActivitiesData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataWarehouseUserActivitiesData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataWarehouseUserActivitiesData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

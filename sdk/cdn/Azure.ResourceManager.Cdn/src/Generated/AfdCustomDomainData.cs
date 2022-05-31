@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing the AfdCustomDomain data model. </summary>
     public partial class AfdCustomDomainData : ResourceData
     {
-        /// <summary> Initializes a new instance of AfdCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdCustomDomainData"/>. </summary>
         public AfdCustomDomainData()
         {
         }
 
-        /// <summary> Initializes a new instance of AfdCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

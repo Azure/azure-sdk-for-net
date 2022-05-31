@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the ProcessModuleInfo data model. </summary>
     public partial class ProcessModuleInfoData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of ProcessModuleInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoData"/>. </summary>
         public ProcessModuleInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProcessModuleInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

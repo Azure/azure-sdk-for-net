@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the ExpressRoutePort data model. </summary>
     public partial class ExpressRoutePortData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRoutePortData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortData"/>. </summary>
         public ExpressRoutePortData()
         {
             Links = new ChangeTrackingList<ExpressRouteLinkData>();
             Circuits = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRoutePortData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

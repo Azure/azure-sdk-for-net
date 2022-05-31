@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An export managed database operation result resource. </summary>
     public partial class DatabaseExtensions : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseExtensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseExtensions"/>. </summary>
         public DatabaseExtensions()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseExtensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseExtensions"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> A list of services that support encryption. </summary>
     public partial class EncryptionServices
     {
-        /// <summary> Initializes a new instance of EncryptionServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionServices"/>. </summary>
         public EncryptionServices()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionServices"/>. </summary>
         /// <param name="blob"> The encryption function of the blob storage service. </param>
         /// <param name="file"> The encryption function of the file storage service. </param>
         /// <param name="table"> The encryption function of the table storage service. </param>

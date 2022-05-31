@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Database backup settings. </summary>
     public partial class DatabaseBackupSetting
     {
-        /// <summary> Initializes a new instance of DatabaseBackupSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseBackupSetting"/>. </summary>
         /// <param name="databaseType"> Database type (e.g. SqlAzure / MySql). </param>
         public DatabaseBackupSetting(DatabaseType databaseType)
         {
             DatabaseType = databaseType;
         }
 
-        /// <summary> Initializes a new instance of DatabaseBackupSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseBackupSetting"/>. </summary>
         /// <param name="databaseType"> Database type (e.g. SqlAzure / MySql). </param>
         /// <param name="name"></param>
         /// <param name="connectionStringName">

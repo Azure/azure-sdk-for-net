@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the SqlAgentConfiguration data model. </summary>
     public partial class SqlAgentConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlAgentConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlAgentConfigurationData"/>. </summary>
         public SqlAgentConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlAgentConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlAgentConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

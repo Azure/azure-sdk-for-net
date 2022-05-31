@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The List SAS credentials operation response. </summary>
     public partial class ListAccountSasResponse
     {
-        /// <summary> Initializes a new instance of ListAccountSasResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListAccountSasResponse"/>. </summary>
         internal ListAccountSasResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ListAccountSasResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListAccountSasResponse"/>. </summary>
         /// <param name="accountSasToken"> List SAS credentials of storage account. </param>
         internal ListAccountSasResponse(string accountSasToken)
         {

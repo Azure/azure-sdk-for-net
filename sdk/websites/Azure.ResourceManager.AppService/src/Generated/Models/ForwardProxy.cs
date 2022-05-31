@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
     public partial class ForwardProxy
     {
-        /// <summary> Initializes a new instance of ForwardProxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardProxy"/>. </summary>
         public ForwardProxy()
         {
         }
 
-        /// <summary> Initializes a new instance of ForwardProxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardProxy"/>. </summary>
         /// <param name="convention"> The convention used to determine the url of the request made. </param>
         /// <param name="customHostHeaderName"> The name of the header containing the host of the request. </param>
         /// <param name="customProtoHeaderName"> The name of the header containing the scheme of the request. </param>

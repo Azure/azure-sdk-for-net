@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> AFDOrigin group properties needed for origin group creation or update. </summary>
     public partial class AfdOriginGroupPatch
     {
-        /// <summary> Initializes a new instance of AfdOriginGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdOriginGroupPatch"/>. </summary>
         public AfdOriginGroupPatch()
         {
         }

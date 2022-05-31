@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application gateway backendhealth http settings. </summary>
     public partial class ApplicationGatewayBackendHealthServer
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthServer"/>. </summary>
         internal ApplicationGatewayBackendHealthServer()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthServer"/>. </summary>
         /// <param name="address"> IP address or FQDN of backend server. </param>
         /// <param name="ipConfiguration"> Reference to IP configuration of backend server. </param>
         /// <param name="health"> Health of backend server. </param>

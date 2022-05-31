@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> A condition for the delivery rule. </summary>
     public partial class DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleCondition"/>. </summary>
         public DeliveryRuleCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         internal DeliveryRuleCondition(MatchVariable name)
         {

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the JitRequest data model. </summary>
     public partial class JitRequestData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of JitRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitRequestData"/>. </summary>
         /// <param name="location"> The location. </param>
         public JitRequestData(AzureLocation location) : base(location)
         {
             JitAuthorizationPolicies = new ChangeTrackingList<JitAuthorizationPolicies>();
         }
 
-        /// <summary> Initializes a new instance of JitRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

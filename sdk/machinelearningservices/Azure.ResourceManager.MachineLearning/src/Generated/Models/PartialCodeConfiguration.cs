@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Configuration for a scoring code asset. </summary>
     public partial class PartialCodeConfiguration
     {
-        /// <summary> Initializes a new instance of PartialCodeConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartialCodeConfiguration"/>. </summary>
         public PartialCodeConfiguration()
         {
         }

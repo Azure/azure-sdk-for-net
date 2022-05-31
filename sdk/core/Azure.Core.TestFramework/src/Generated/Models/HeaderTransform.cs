@@ -12,7 +12,7 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> The HeaderTransform. </summary>
     public partial class HeaderTransform
     {
-        /// <summary> Initializes a new instance of HeaderTransform. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeaderTransform"/>. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>

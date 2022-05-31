@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Definition of a component version: defines resources that span component types. </summary>
     public partial class ComponentVersionProperties : AssetBase
     {
-        /// <summary> Initializes a new instance of ComponentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentVersionProperties"/>. </summary>
         public ComponentVersionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ComponentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Communication
     /// <summary> A class representing the CommunicationService data model. </summary>
     public partial class CommunicationServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceData"/>. </summary>
         public CommunicationServiceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

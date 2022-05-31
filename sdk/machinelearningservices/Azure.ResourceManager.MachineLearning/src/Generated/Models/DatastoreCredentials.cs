@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition for datastore credentials. </summary>
     public partial class DatastoreCredentials
     {
-        /// <summary> Initializes a new instance of DatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreCredentials"/>. </summary>
         public DatastoreCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of DatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         internal DatastoreCredentials(CredentialsType credentialsType)
         {

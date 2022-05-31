@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Define match conditions. </summary>
     public partial class MatchCondition
     {
-        /// <summary> Initializes a new instance of MatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchCondition"/>. </summary>
         /// <param name="matchVariable"> Match variable to compare against. </param>
         /// <param name="operator"> Describes operator to be matched. </param>
         /// <param name="matchValue"> List of possible match values. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<TransformType>();
         }
 
-        /// <summary> Initializes a new instance of MatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchCondition"/>. </summary>
         /// <param name="matchVariable"> Match variable to compare against. </param>
         /// <param name="selector"> Selector can used to match a specific key for QueryString, Cookies, RequestHeader or PostArgs. </param>
         /// <param name="operator"> Describes operator to be matched. </param>

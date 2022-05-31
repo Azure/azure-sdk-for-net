@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the ExpressRouteCrossConnectionPeering data model. </summary>
     public partial class ExpressRouteCrossConnectionPeeringData : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionPeeringData"/>. </summary>
         public ExpressRouteCrossConnectionPeeringData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionPeeringData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>

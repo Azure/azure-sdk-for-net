@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The resource management error response. </summary>
     public partial class ErrorResponseCommon : ErrorResponse
     {
-        /// <summary> Initializes a new instance of ErrorResponseCommon. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResponseCommon"/>. </summary>
         internal ErrorResponseCommon()
         {
             Details = new ChangeTrackingList<ErrorResponseCommon>();
             AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
         }
 
-        /// <summary> Initializes a new instance of ErrorResponseCommon. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResponseCommon"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
         /// <param name="details"> The error details. </param>

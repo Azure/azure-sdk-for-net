@@ -14,7 +14,7 @@ namespace Azure.Communication.NetworkTraversal
     /// <summary> A relay configuration containing the STUN/TURN URLs and credentials. </summary>
     public partial class CommunicationRelayConfiguration
     {
-        /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationRelayConfiguration"/>. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </param>
         /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iceServers"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.Communication.NetworkTraversal
             IceServers = iceServers.ToList();
         }
 
-        /// <summary> Initializes a new instance of CommunicationRelayConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationRelayConfiguration"/>. </summary>
         /// <param name="expiresOn"> The date for which the username and credentials are not longer valid. Will be 48 hours from request time. </param>
         /// <param name="iceServers"> An array representing the credentials and the STUN/TURN server URLs for use in ICE negotiations. </param>
         internal CommunicationRelayConfiguration(DateTimeOffset expiresOn, IList<CommunicationIceServer> iceServers)

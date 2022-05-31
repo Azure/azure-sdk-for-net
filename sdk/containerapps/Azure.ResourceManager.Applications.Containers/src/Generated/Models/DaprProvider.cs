@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Container App Dapr configuration. </summary>
     public partial class DaprProvider
     {
-        /// <summary> Initializes a new instance of DaprProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprProvider"/>. </summary>
         public DaprProvider()
         {
         }
 
-        /// <summary> Initializes a new instance of DaprProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprProvider"/>. </summary>
         /// <param name="enabled"> Boolean indicating if the Dapr side car is enabled. </param>
         /// <param name="appId"> Dapr application identifier. </param>
         /// <param name="appProtocol"> Tells Dapr which protocol your application is using. Valid options are http and grpc. Default is http. </param>

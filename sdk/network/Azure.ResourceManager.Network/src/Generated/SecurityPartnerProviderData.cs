@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the SecurityPartnerProvider data model. </summary>
     public partial class SecurityPartnerProviderData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of SecurityPartnerProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPartnerProviderData"/>. </summary>
         public SecurityPartnerProviderData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityPartnerProviderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPartnerProviderData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

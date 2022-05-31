@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The ServicePrincipalInKVParamPatch. </summary>
     internal partial class ServicePrincipalInKVParamPatch
     {
-        /// <summary> Initializes a new instance of ServicePrincipalInKVParamPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalInKVParamPatch"/>. </summary>
         public ServicePrincipalInKVParamPatch()
         {
         }

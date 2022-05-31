@@ -12,14 +12,14 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Represents a metric value. </summary>
     public partial class MetricValue
     {
-        /// <summary> Initializes a new instance of MetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
         /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
         internal MetricValue(DateTimeOffset timeStamp)
         {
             TimeStamp = timeStamp;
         }
 
-        /// <summary> Initializes a new instance of MetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
         /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="average"> the average value in the time range. </param>
         /// <param name="minimum"> the least value in the time range. </param>

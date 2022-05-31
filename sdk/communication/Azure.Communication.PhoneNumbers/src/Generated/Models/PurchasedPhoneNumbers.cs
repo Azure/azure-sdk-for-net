@@ -14,7 +14,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> The list of purchased phone numbers. </summary>
     internal partial class PurchasedPhoneNumbers
     {
-        /// <summary> Initializes a new instance of PurchasedPhoneNumbers. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumbers"/>. </summary>
         /// <param name="phoneNumbers"> Represents a list of phone numbers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
         internal PurchasedPhoneNumbers(IEnumerable<PurchasedPhoneNumber> phoneNumbers)
@@ -27,7 +27,7 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumbers = phoneNumbers.ToList();
         }
 
-        /// <summary> Initializes a new instance of PurchasedPhoneNumbers. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumbers"/>. </summary>
         /// <param name="phoneNumbers"> Represents a list of phone numbers. </param>
         /// <param name="nextLink"> Represents the URL link to the next page of phone number results. </param>
         internal PurchasedPhoneNumbers(IReadOnlyList<PurchasedPhoneNumber> phoneNumbers, string nextLink)

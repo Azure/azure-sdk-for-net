@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Request body to build a new custom model. </summary>
     internal partial class BuildDocumentModelRequest
     {
-        /// <summary> Initializes a new instance of BuildDocumentModelRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelRequest"/>. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="buildMode"> Custom model build mode. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>

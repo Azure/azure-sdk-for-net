@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The ListWorkspaceKeysResult. </summary>
     public partial class ListWorkspaceKeysResult
     {
-        /// <summary> Initializes a new instance of ListWorkspaceKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListWorkspaceKeysResult"/>. </summary>
         internal ListWorkspaceKeysResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ListWorkspaceKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListWorkspaceKeysResult"/>. </summary>
         /// <param name="userStorageKey"></param>
         /// <param name="userStorageResourceId"></param>
         /// <param name="appInsightsInstrumentationKey"></param>

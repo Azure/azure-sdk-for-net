@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A log metrics trigger descriptor. </summary>
     public partial class LogMetricTrigger
     {
-        /// <summary> Initializes a new instance of LogMetricTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogMetricTrigger"/>. </summary>
         public LogMetricTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of LogMetricTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogMetricTrigger"/>. </summary>
         /// <param name="thresholdOperator"> Evaluation operation for Metric -&apos;GreaterThan&apos; or &apos;LessThan&apos; or &apos;Equal&apos;. </param>
         /// <param name="threshold"> The threshold of the metric trigger. </param>
         /// <param name="metricTriggerType"> Metric Trigger Type - &apos;Consecutive&apos; or &apos;Total&apos;. </param>

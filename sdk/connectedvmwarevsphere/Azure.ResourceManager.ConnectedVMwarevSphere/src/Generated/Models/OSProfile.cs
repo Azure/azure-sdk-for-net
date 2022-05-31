@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the resource properties. </summary>
     public partial class OSProfile
     {
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         public OSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="adminUsername"> Gets or sets administrator username. </param>
         /// <param name="adminPassword"> Gets or sets administrator password. </param>

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Resource properties. </summary>
     public partial class DataCollectionRuleProperties : DataCollectionRuleData
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleProperties"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataCollectionRuleProperties(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

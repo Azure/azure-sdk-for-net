@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> settings for security policy patterns to match. </summary>
     public partial class SecurityPolicyWebApplicationFirewallAssociation
     {
-        /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewallAssociation"/>. </summary>
         public SecurityPolicyWebApplicationFirewallAssociation()
         {
             Domains = new ChangeTrackingList<ActivatedResourceReference>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewallAssociation"/>. </summary>
         /// <param name="domains"> List of domains. </param>
         /// <param name="patternsToMatch"> List of paths. </param>
         internal SecurityPolicyWebApplicationFirewallAssociation(IList<ActivatedResourceReference> domains, IList<string> patternsToMatch)
