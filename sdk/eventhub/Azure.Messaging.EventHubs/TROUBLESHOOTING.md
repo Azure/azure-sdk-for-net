@@ -426,7 +426,7 @@ For more information on ways to request support, please see: [Support][SUPPORT].
 [IoTHubDocs]: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-endpoints
 [IoTEventHubEndpoint]: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messages-read-builtin
 [IoTHubSAS]: https://docs.microsoft.com/azure/iot-hub/iot-hub-dev-guide-sas#security-tokens
-[RBAC]: https://docs.microsoft.com/e/azure/event-hubs/authorize-access-azure-active-directory
+[RBAC]: https://docs.microsoft.com/azure/event-hubs/authorize-access-azure-active-directory
 [SoftDeleteBlobStorage]: https://docs.microsoft.comazure/storage/blobs/soft-delete-blob-overview
 [TroubleshootAuthenticationAuthorization]: https://docs.microsoft.com/azure/event-hubs/troubleshoot-authentication-authorization
 [UnauthorizedAccessException]: https://docs.microsoft.com/dotnet/api/system.unauthorizedaccessexception
