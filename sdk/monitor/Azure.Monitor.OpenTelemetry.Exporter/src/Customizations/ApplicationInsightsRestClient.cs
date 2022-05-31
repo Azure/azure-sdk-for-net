@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.WriteError("FailedToSend", ex);
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.WriteError("FailedToSend", ex);
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
