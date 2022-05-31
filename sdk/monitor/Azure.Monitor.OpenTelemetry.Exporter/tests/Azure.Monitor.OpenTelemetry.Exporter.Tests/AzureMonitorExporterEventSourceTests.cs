@@ -43,6 +43,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private void Test(Action<string, string> writeAction, int expectedId, string expectedName)
         {
+            var name = nameof(AzureMonitorExporterEventSourceTests);
+
             try
             {
                 // Normally our Listener will write to the Debugger.
@@ -50,10 +52,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 var writer = new TestWriter();
                 TelemetryDebugWriter.Writer = writer;
 
-                writeAction(nameof(AzureMonitorExporterEventSourceTests), "hello world");
+                writeAction(name, "hello world");
 
                 var test = writer.Messages.Single();
-                Assert.Equal($"OpenTelemetry-AzureMonitor-Exporter - EventId: [{expectedId}], EventName: [{expectedName}], Message: [AzureMonitorExporterEventSourceTests - hello world]", test);
+                Assert.Equal($"OpenTelemetry-AzureMonitor-Exporter - EventId: [{expectedId}], EventName: [{expectedName}], Message: [{name} - hello world]", test);
             }
             finally
             {
@@ -64,6 +66,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private void TestException(Action<string, Exception> writeAction, int expectedId, string expectedName)
         {
+            var name = nameof(AzureMonitorExporterEventSourceTests);
+
             try
             {
                 // Normally our Listener will write to the Debugger.
@@ -71,19 +75,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 var writer = new TestWriter();
                 TelemetryDebugWriter.Writer = writer;
 
-                writeAction(nameof(AzureMonitorExporterEventSourceTests), new Exception("hello world"));
+                writeAction(name, new Exception("hello world"));
 
                 var test = writer.Messages.Single();
-                Assert.Equal($"OpenTelemetry-AzureMonitor-Exporter - EventId: [{expectedId}], EventName: [{expectedName}], Message: [AzureMonitorExporterEventSourceTests - System.Exception: hello world]", test);
+                Assert.Equal($"OpenTelemetry-AzureMonitor-Exporter - EventId: [{expectedId}], EventName: [{expectedName}], Message: [{name} - System.Exception: hello world]", test);
             }
             finally
             {
+                // Reset singleton to not affect other tests.
                 TelemetryDebugWriter.Writer = new TelemetryDebugWriter();
             }
         }
 
         private void TestAggregateException(Action<string, Exception> writeAction, int expectedId, string expectedName)
         {
+            var name = nameof(AzureMonitorExporterEventSourceTests);
+
             try
             {
                 // Normally our Listener will write to the Debugger.
@@ -91,13 +98,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 var writer = new TestWriter();
                 TelemetryDebugWriter.Writer = writer;
 
-                writeAction(nameof(AzureMonitorExporterEventSourceTests), new AggregateException(new Exception("hello world1"), new Exception("hello world2)")));
+                writeAction(name, new AggregateException(new Exception("hello world_1"), new Exception("hello world_2)")));
 
                 var test = writer.Messages.Single();
-                Assert.Equal($"OpenTelemetry-AzureMonitor-Exporter - EventId: [{expectedId}], EventName: [{expectedName}], Message: [AzureMonitorExporterEventSourceTests - System.Exception: hello world1]", test);
+                Assert.Equal($"OpenTelemetry-AzureMonitor-Exporter - EventId: [{expectedId}], EventName: [{expectedName}], Message: [{name} - System.Exception: hello world_1]", test);
             }
             finally
             {
+                // Reset singleton to not affect other tests.
                 TelemetryDebugWriter.Writer = new TelemetryDebugWriter();
             }
         }
