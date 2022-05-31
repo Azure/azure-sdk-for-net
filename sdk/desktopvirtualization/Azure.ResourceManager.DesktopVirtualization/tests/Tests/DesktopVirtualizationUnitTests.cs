@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
     public class DesktopVirtualizationUnitTests : ManagementRecordedTestBase<DesktopVirtualizationManagementTestEnvironment>
     {
         public ArmClient armClient { get; set; }
-        public Subscription Subscription { get; set; }
+        public SubscriptionResource Subscription { get; set; }
         public ResourceGroupCollection ResourceGroups { get; set; }
 
         public DesktopVirtualizationUnitTests() : base(true)
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
         {
             var workspaceName = "testWorkspaceCrudWS";
             var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroup)await ResourceGroups.GetAsync(resourceGroupName);
+            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
             var workspaceCollection = rg.GetVirtualWorkspaces();
             var workspaceData = new VirtualWorkspaceData(
                 "brazilsouth");
 
             var opWorkspaceCreate = await workspaceCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 workspaceName,
                 workspaceData);
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             workspaceData.FriendlyName = "Friendly Name";
             opWorkspaceCreate = await workspaceCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 workspaceName,
                 workspaceData);
 
@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 workspaceName);
 
             var workspace = getOp.Value;
-            var deleteOp = await workspace.DeleteAsync(true);
+            var deleteOp = await workspace.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
             Assert.AreEqual(200, deleteOp.GetRawResponse().Status);
 
-            deleteOp = await workspace.DeleteAsync(true);
+            deleteOp = await workspace.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             var hostPoolName = $"testHostPoolCrud{caseNumber}";
 
             var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroup)await ResourceGroups.GetAsync(resourceGroupName);
+            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
             var hostPoolCollection = rg.GetHostPools();
             var hostPoolData = new HostPoolData(
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 preferredAppGroupType);
 
             var op = await hostPoolCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             hostPoolData.FriendlyName = "Friendly Name";
             op = await hostPoolCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
 
@@ -183,13 +183,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 hostPoolName);
 
             var hostPool = getOp.Value;
-            var deleteOp = await hostPool.DeleteAsync(true);
+            var deleteOp = await hostPool.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
             Assert.AreEqual(200, deleteOp.GetRawResponse().Status);
 
-            deleteOp = await hostPool.DeleteAsync(true);
+            deleteOp = await hostPool.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             var applicationGroupName = "testDesktopApplicationGroupCrudAG";
 
             var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroup)await ResourceGroups.GetAsync(resourceGroupName);
+            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
             var hostPoolCollection = rg.GetHostPools();
             var hostPoolData = new HostPoolData(
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 PreferredAppGroupType.Desktop);
 
             var opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             var agData = new VirtualApplicationGroupData("brazilsouth", opHostPoolCreate.Value.Data.Id, ApplicationGroupType.Desktop);
 
             var opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 applicationGroupName,
                 agData);
 
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             agData.FriendlyName = "Friendly Name";
             opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 applicationGroupName,
                 agData);
 
@@ -259,13 +259,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 applicationGroupName);
 
             var applicationGroup = getOp.Value;
-            var deleteOp = await applicationGroup.DeleteAsync(true);
+            var deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
             Assert.AreEqual(200, deleteOp.GetRawResponse().Status);
 
-            deleteOp = await applicationGroup.DeleteAsync(true);
+            deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 Assert.AreEqual(404, ex.Status);
             }
 
-            await opHostPoolCreate.Value.DeleteAsync(true);
+            await opHostPoolCreate.Value.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             var applicationGroupName = "testDesktopApplicationCrudAG";
 
             var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroup)await ResourceGroups.GetAsync(resourceGroupName);
+            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
             var hostPoolCollection = rg.GetHostPools();
             var hostPoolData = new HostPoolData(
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 PreferredAppGroupType.Desktop);
 
             var opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
 
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             var agData = new VirtualApplicationGroupData("brazilsouth", opHostPoolCreate.Value.Data.Id, ApplicationGroupType.Desktop);
 
             var opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 applicationGroupName,
                 agData);
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             var desktopCollection = desktopApplicationGroup.GetVirtualDesktops();
 
-            AsyncPageable<VirtualDesktop> desktops = desktopCollection.GetAllAsync();
+            AsyncPageable<VirtualDesktopResource> desktops = desktopCollection.GetAllAsync();
 
             Assert.IsNotNull(desktops);
 
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             var desktop = desktopList[0];
 
-            await desktop.UpdateAsync(new VirtualDesktopUpdateOptions { Description = "Updated", FriendlyName = "UpdatedFriendlyName" });
+            await desktop.UpdateAsync(new VirtualDesktopPatch { Description = "Updated", FriendlyName = "UpdatedFriendlyName" });
 
             var updatedDesktop = await desktopCollection.GetAsync(desktop.Id.Name);
 
@@ -347,13 +347,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             Assert.AreEqual(applicationGroupName, getOp.Value.Data.Name);
 
             var applicationGroup = getOp.Value;
-            var deleteOp = await applicationGroup.DeleteAsync(true);
+            var deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
             Assert.AreEqual(200, deleteOp.GetRawResponse().Status);
 
-            deleteOp = await applicationGroup.DeleteAsync(true);
+            deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 Assert.AreEqual(404, ex.Status);
             }
 
-            await opHostPoolCreate.Value.DeleteAsync(true);
+            await opHostPoolCreate.Value.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             var applicationGroupName = "testRemoteApplicationCrudAG";
 
             var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroup)await ResourceGroups.GetAsync(resourceGroupName);
+            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
             var hostPoolCollection = rg.GetHostPools();
             var hostPoolData = new HostPoolData(
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 PreferredAppGroupType.Desktop);
 
             var opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
 
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             var agData = new VirtualApplicationGroupData("brazilsouth", opHostPoolCreate.Value.Data.Id, ApplicationGroupType.RemoteApp);
 
             var opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 applicationGroupName,
                 agData);
 
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             var railApplications = railApplicationGroup.GetVirtualApplications();
 
-            AsyncPageable<VirtualApplication> applications = railApplications.GetAllAsync();
+            AsyncPageable<VirtualApplicationResource> applications = railApplications.GetAllAsync();
 
             Assert.IsNotNull(applications);
 
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             applicationData.Description = "Note Pad";
             applicationData.ShowInPortal = true;
 
-            var opCreate = await railApplications.CreateOrUpdateAsync(true, "notepad", applicationData);
+            var opCreate = await railApplications.CreateOrUpdateAsync(WaitUntil.Completed, "notepad", applicationData);
 
             Assert.IsNotNull(opCreate);
 
@@ -436,20 +436,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             applicationData.Description = "NotePad";
 
-            var opUpdate = await railApplications.CreateOrUpdateAsync(true, "notepad", applicationData);
+            var opUpdate = await railApplications.CreateOrUpdateAsync(WaitUntil.Completed, "notepad", applicationData);
 
             Assert.IsNotNull(opUpdate);
 
             Assert.AreEqual("testRemoteApplicationCrudAG/notepad", opUpdate.Value.Data.Name);
             Assert.AreEqual("NotePad", opUpdate.Value.Data.Description);
 
-            var opDelete = await opUpdate.Value.DeleteAsync(true);
+            var opDelete = await opUpdate.Value.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(opDelete);
 
             Assert.AreEqual(200, opDelete.GetRawResponse().Status);
 
-            opDelete = await opUpdate.Value.DeleteAsync(true);
+            opDelete = await opUpdate.Value.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(opDelete);
 
@@ -464,8 +464,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 Assert.AreEqual(404, ex.Status);
             }
 
-            await opApplicationGroupCreate.Value.DeleteAsync(true);
-            await opHostPoolCreate.Value.DeleteAsync(true);
+            await opApplicationGroupCreate.Value.DeleteAsync(WaitUntil.Completed);
+            await opHostPoolCreate.Value.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             var applicationGroupName = "testRemoteApplicationGroupCrudAG";
 
             var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroup)await ResourceGroups.GetAsync(resourceGroupName);
+            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
             var hostPoolCollection = rg.GetHostPools();
             var hostPoolData = new HostPoolData(
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 PreferredAppGroupType.Desktop);
 
             var opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
 
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             var agData = new VirtualApplicationGroupData("brazilsouth", opHostPoolCreate.Value.Data.Id, ApplicationGroupType.RemoteApp);
 
             var op = await agCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 applicationGroupName,
                 agData);
 
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             agData.FriendlyName = "Friendly Name";
             op = await agCollection.CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 applicationGroupName,
                 agData);
 
@@ -521,13 +521,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 applicationGroupName);
 
             var applicationGroup = getOp.Value;
-            var deleteOp = await applicationGroup.DeleteAsync(true);
+            var deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
             Assert.AreEqual(200, deleteOp.GetRawResponse().Status);
 
-            deleteOp = await applicationGroup.DeleteAsync(true);
+            deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
                 Assert.AreEqual(404, ex.Status);
             }
 
-            await opHostPoolCreate.Value.DeleteAsync(true);
+            await opHostPoolCreate.Value.DeleteAsync(WaitUntil.Completed);
         }
     }
 }
