@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TopologyResource
+    public partial class TopologyResourceInfo
     {
-        internal static TopologyResource DeserializeTopologyResource(JsonElement element)
+        internal static TopologyResourceInfo DeserializeTopologyResourceInfo(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> id = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new TopologyResource(name.Value, id.Value, Optional.ToNullable(location), Optional.ToList(associations));
+            return new TopologyResourceInfo(name.Value, id.Value, Optional.ToNullable(location), Optional.ToList(associations));
         }
     }
 }

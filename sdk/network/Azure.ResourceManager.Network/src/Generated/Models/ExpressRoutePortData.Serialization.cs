@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRoutePortData DeserializeExpressRoutePortData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -101,7 +102,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -277,7 +283,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRoutePortData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new ExpressRoutePortData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
     }
 }

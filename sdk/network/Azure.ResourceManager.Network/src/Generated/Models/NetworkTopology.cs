@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Topology of the specified resource group. </summary>
-    public partial class Topology
+    public partial class NetworkTopology
     {
-        /// <summary> Initializes a new instance of Topology. </summary>
-        internal Topology()
+        /// <summary> Initializes a new instance of NetworkTopology. </summary>
+        internal NetworkTopology()
         {
-            Resources = new ChangeTrackingList<TopologyResource>();
+            Resources = new ChangeTrackingList<TopologyResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of Topology. </summary>
+        /// <summary> Initializes a new instance of NetworkTopology. </summary>
         /// <param name="id"> GUID representing the operation id. </param>
         /// <param name="createdOn"> The datetime when the topology was initially created for the resource group. </param>
         /// <param name="lastModified"> The datetime when the topology was last modified. </param>
         /// <param name="resources"> A list of topology resources. </param>
-        internal Topology(string id, DateTimeOffset? createdOn, DateTimeOffset? lastModified, IReadOnlyList<TopologyResource> resources)
+        internal NetworkTopology(string id, DateTimeOffset? createdOn, DateTimeOffset? lastModified, IReadOnlyList<TopologyResourceInfo> resources)
         {
             Id = id;
             CreatedOn = createdOn;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The datetime when the topology was last modified. </summary>
         public DateTimeOffset? LastModified { get; }
         /// <summary> A list of topology resources. </summary>
-        public IReadOnlyList<TopologyResource> Resources { get; }
+        public IReadOnlyList<TopologyResourceInfo> Resources { get; }
     }
 }
