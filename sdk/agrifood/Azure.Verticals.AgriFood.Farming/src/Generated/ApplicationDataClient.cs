@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    /// <summary> The ApplicationData service client. </summary>
+    /// <summary> Data plane generated client for ApplicationData. </summary>
     public partial class ApplicationDataClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };

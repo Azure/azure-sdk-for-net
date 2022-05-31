@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Template
 {
-    /// <summary> The Template service client. </summary>
+    /// <summary> Data plane generated client for Template. </summary>
     public partial class TemplateClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };

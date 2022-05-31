@@ -14,7 +14,7 @@ using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Certificate
 {
-    /// <summary> The ConfidentialLedgerCertificate service client. </summary>
+    /// <summary> Data plane generated client for ConfidentialLedgerCertificate. </summary>
     public partial class ConfidentialLedgerCertificateClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
@@ -47,9 +47,9 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerCertificateClient(endpoint, credential);
-        /// 
+        ///
         /// Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
-        /// 
+        ///
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
         /// Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
@@ -57,16 +57,16 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
-        /// 
+        ///
         /// Response Body:
-        /// 
+        ///
         /// Schema for <c>LedgerIdentityInformation</c>:
         /// <code>{
         ///   ledgerId: string, # Optional. Id for the ledger.
         ///   ledgerTlsCertificate: string, # Required. PEM-encoded certificate used for TLS by the Confidential Ledger.
         /// }
         /// </code>
-        /// 
+        ///
         /// </remarks>
         public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestContext context = null)
         {
@@ -99,9 +99,9 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("<https://my-service.azure.com>");
         /// var client = new ConfidentialLedgerCertificateClient(endpoint, credential);
-        /// 
+        ///
         /// Response response = client.GetLedgerIdentity("<ledgerId>");
-        /// 
+        ///
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
         /// Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
@@ -109,16 +109,16 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
-        /// 
+        ///
         /// Response Body:
-        /// 
+        ///
         /// Schema for <c>LedgerIdentityInformation</c>:
         /// <code>{
         ///   ledgerId: string, # Optional. Id for the ledger.
         ///   ledgerTlsCertificate: string, # Required. PEM-encoded certificate used for TLS by the Confidential Ledger.
         /// }
         /// </code>
-        /// 
+        ///
         /// </remarks>
         public virtual Response GetLedgerIdentity(string ledgerId, RequestContext context = null)
         {

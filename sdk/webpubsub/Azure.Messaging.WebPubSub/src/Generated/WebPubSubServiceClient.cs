@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
 {
-    /// <summary> The WebPubSubService service client. </summary>
+    /// <summary> Data plane generated client for WebPubSubService. </summary>
     public partial class WebPubSubServiceClient
     {
         private readonly HttpPipeline _pipeline;

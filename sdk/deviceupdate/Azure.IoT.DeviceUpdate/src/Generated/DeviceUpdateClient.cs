@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.IoT.DeviceUpdate
 {
-    /// <summary> The DeviceUpdate service client. </summary>
+    /// <summary> Data plane generated client for DeviceUpdate. </summary>
     public partial class DeviceUpdateClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://api.adu.microsoft.com/.default" };

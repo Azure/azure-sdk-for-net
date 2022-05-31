@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.QuestionAnswering.Projects
 {
-    /// <summary> The QuestionAnsweringProjects service client. </summary>
+    /// <summary> Data plane generated client for QuestionAnsweringProjects. </summary>
     public partial class QuestionAnsweringProjectsClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";

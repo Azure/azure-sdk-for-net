@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Administration
 {
-    /// <summary> The PurviewMetadataRoles service client. </summary>
+    /// <summary> Data plane generated client for PurviewMetadataRoles. </summary>
     public partial class PurviewMetadataRolesClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
