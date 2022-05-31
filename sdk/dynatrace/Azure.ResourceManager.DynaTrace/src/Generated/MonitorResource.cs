@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.DynaTrace
         /// <summary>
         /// Returns the payload that needs to be passed in the request body for installing Dynatrace agent on a VM.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getVMHostPayload
-        /// Operation Id: Monitors_GetVmHostPayload
+        /// Operation Id: Monitors_GetVMHostPayload
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VmExtensionPayload>> GetVmHostPayloadAsync(CancellationToken cancellationToken = default)
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.DynaTrace
         /// <summary>
         /// Returns the payload that needs to be passed in the request body for installing Dynatrace agent on a VM.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getVMHostPayload
-        /// Operation Id: Monitors_GetVmHostPayload
+        /// Operation Id: Monitors_GetVMHostPayload
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VmExtensionPayload> GetVmHostPayload(CancellationToken cancellationToken = default)
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.DynaTrace
         /// <summary>
         /// Gets the SSO configuration details from the partner.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getSSODetails
-        /// Operation Id: Monitors_GetSsoDetails
+        /// Operation Id: Monitors_GetSSODetails
         /// </summary>
         /// <param name="content"> The details of the get sso details request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.DynaTrace
         /// <summary>
         /// Gets the SSO configuration details from the partner.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/getSSODetails
-        /// Operation Id: Monitors_GetSsoDetails
+        /// Operation Id: Monitors_GetSSODetails
         /// </summary>
         /// <param name="content"> The details of the get sso details request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

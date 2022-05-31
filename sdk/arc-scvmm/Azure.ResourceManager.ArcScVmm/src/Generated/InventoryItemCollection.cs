@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <summary>
         /// Returns the list of inventoryItems in the given VMMServer.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems
-        /// Operation Id: InventoryItems_ListByVmmServer
+        /// Operation Id: InventoryItems_ListByVMMServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="InventoryItemResource" /> that may take multiple service requests to iterate over. </returns>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <summary>
         /// Returns the list of inventoryItems in the given VMMServer.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems
-        /// Operation Id: InventoryItems_ListByVmmServer
+        /// Operation Id: InventoryItems_ListByVMMServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InventoryItemResource" /> that may take multiple service requests to iterate over. </returns>

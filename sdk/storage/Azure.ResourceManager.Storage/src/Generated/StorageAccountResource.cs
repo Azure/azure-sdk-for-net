@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary>
         /// List SAS credentials of a storage account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListAccountSas
-        /// Operation Id: StorageAccounts_ListAccountSas
+        /// Operation Id: StorageAccounts_ListAccountSAS
         /// </summary>
         /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary>
         /// List SAS credentials of a storage account.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListAccountSas
-        /// Operation Id: StorageAccounts_ListAccountSas
+        /// Operation Id: StorageAccounts_ListAccountSAS
         /// </summary>
         /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary>
         /// List service SAS credentials of a specific resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListServiceSas
-        /// Operation Id: StorageAccounts_ListServiceSas
+        /// Operation Id: StorageAccounts_ListServiceSAS
         /// </summary>
         /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary>
         /// List service SAS credentials of a specific resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListServiceSas
-        /// Operation Id: StorageAccounts_ListServiceSas
+        /// Operation Id: StorageAccounts_ListServiceSAS
         /// </summary>
         /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

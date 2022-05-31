@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary>
         /// List Volumes in a VolumeGroup.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes
-        /// Operation Id: Volumes_ListByElasticSanVolumeGroup
+        /// Operation Id: Volumes_ListByVolumeGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticSanVolumeResource" /> that may take multiple service requests to iterate over. </returns>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary>
         /// List Volumes in a VolumeGroup.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes
-        /// Operation Id: Volumes_ListByElasticSanVolumeGroup
+        /// Operation Id: Volumes_ListByVolumeGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticSanVolumeResource" /> that may take multiple service requests to iterate over. </returns>

@@ -4031,7 +4031,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary>
         /// Description for Swaps two deployment slots of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/slotsswap
-        /// Operation Id: WebApps_SwapSlot
+        /// Operation Id: WebApps_SwapSlotSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
@@ -4061,7 +4061,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary>
         /// Description for Swaps two deployment slots of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/slotsswap
-        /// Operation Id: WebApps_SwapSlot
+        /// Operation Id: WebApps_SwapSlotSlot
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
