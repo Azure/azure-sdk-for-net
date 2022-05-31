@@ -14,13 +14,18 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     {
         internal static DatabaseVmDetails DeserializeDatabaseVmDetails(JsonElement element)
         {
-            Optional<string> virtualMachineId = default;
+            Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<SapVirtualInstanceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachineId"))
                 {
-                    virtualMachineId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    virtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))

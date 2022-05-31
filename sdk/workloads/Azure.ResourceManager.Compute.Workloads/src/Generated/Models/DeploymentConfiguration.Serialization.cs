@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation");
-                writer.WriteStringValue(AppLocation);
+                writer.WriteStringValue(AppLocation.Value);
             }
             if (Optional.IsDefined(InfrastructureConfiguration))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
 
         internal static DeploymentConfiguration DeserializeDeploymentConfiguration(JsonElement element)
         {
-            Optional<string> appLocation = default;
+            Optional<AzureLocation> appLocation = default;
             Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
             Optional<SoftwareConfiguration> softwareConfiguration = default;
             SapConfigurationType configurationType = default;
@@ -45,7 +45,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             {
                 if (property.NameEquals("appLocation"))
                 {
-                    appLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("infrastructureConfiguration"))
@@ -74,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                     continue;
                 }
             }
-            return new DeploymentConfiguration(configurationType, appLocation.Value, infrastructureConfiguration.Value, softwareConfiguration.Value);
+            return new DeploymentConfiguration(configurationType, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> instanceNo = default;
-            Optional<string> subnet = default;
+            Optional<ResourceIdentifier> subnet = default;
             Optional<MessageServerProperties> messageServerProperties = default;
             Optional<EnqueueServerProperties> enqueueServerProperties = default;
             Optional<GatewayServerProperties> gatewayServerProperties = default;
@@ -128,7 +128,12 @@ namespace Azure.ResourceManager.Compute.Workloads
                         }
                         if (property0.NameEquals("subnet"))
                         {
-                            subnet = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnet = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("messageServerProperties"))

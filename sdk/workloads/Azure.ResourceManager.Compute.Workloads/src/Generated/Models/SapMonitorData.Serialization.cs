@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Compute.Workloads
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(SapAppLocation))
+            if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation");
-                writer.WriteStringValue(SapAppLocation);
+                writer.WriteStringValue(AppLocation.Value);
             }
             if (Optional.IsDefined(RoutingPreference))
             {
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Compute.Workloads
                 writer.WritePropertyName("logAnalyticsWorkspaceArmId");
                 writer.WriteStringValue(LogAnalyticsWorkspaceArmId);
             }
-            if (Optional.IsDefined(MonitorSubnet))
+            if (Optional.IsDefined(MonitorSubnetId))
             {
                 writer.WritePropertyName("monitorSubnet");
-                writer.WriteStringValue(MonitorSubnet);
+                writer.WriteStringValue(MonitorSubnetId);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Compute.Workloads
             SystemData systemData = default;
             Optional<WorkloadMonitorProvisioningState> provisioningState = default;
             Optional<ResponseError> errors = default;
-            Optional<string> appLocation = default;
+            Optional<AzureLocation> appLocation = default;
             Optional<RoutingPreference> routingPreference = default;
             Optional<ManagedRGConfiguration> managedResourceGroupConfiguration = default;
             Optional<ResourceIdentifier> logAnalyticsWorkspaceArmId = default;
-            Optional<string> monitorSubnet = default;
+            Optional<ResourceIdentifier> monitorSubnet = default;
             Optional<ResourceIdentifier> msiArmId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -144,7 +144,12 @@ namespace Azure.ResourceManager.Compute.Workloads
                         }
                         if (property0.NameEquals("appLocation"))
                         {
-                            appLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            appLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("routingPreference"))
@@ -179,7 +184,12 @@ namespace Azure.ResourceManager.Compute.Workloads
                         }
                         if (property0.NameEquals("monitorSubnet"))
                         {
-                            monitorSubnet = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            monitorSubnet = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("msiArmId"))
@@ -196,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Workloads
                     continue;
                 }
             }
-            return new SapMonitorData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), errors.Value, appLocation.Value, Optional.ToNullable(routingPreference), managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value);
+            return new SapMonitorData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), errors.Value, Optional.ToNullable(appLocation), Optional.ToNullable(routingPreference), managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value);
         }
     }
 }

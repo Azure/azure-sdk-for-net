@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation");
-                writer.WriteStringValue(AppLocation);
+                writer.WriteStringValue(AppLocation.Value);
             }
             if (Optional.IsDefined(InfrastructureConfiguration))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
 
         internal static DeploymentWithOSConfiguration DeserializeDeploymentWithOSConfiguration(JsonElement element)
         {
-            Optional<string> appLocation = default;
+            Optional<AzureLocation> appLocation = default;
             Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
             Optional<SoftwareConfiguration> softwareConfiguration = default;
             Optional<OSSapConfiguration> osSapConfiguration = default;
@@ -51,7 +51,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             {
                 if (property.NameEquals("appLocation"))
                 {
-                    appLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("infrastructureConfiguration"))
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                     continue;
                 }
             }
-            return new DeploymentWithOSConfiguration(configurationType, appLocation.Value, infrastructureConfiguration.Value, softwareConfiguration.Value, osSapConfiguration.Value);
+            return new DeploymentWithOSConfiguration(configurationType, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value, osSapConfiguration.Value);
         }
     }
 }

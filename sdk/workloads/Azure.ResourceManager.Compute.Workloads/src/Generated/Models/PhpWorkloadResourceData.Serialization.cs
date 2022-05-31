@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Compute.Workloads
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(PhpAppLocation))
+            if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation");
-                writer.WriteStringValue(PhpAppLocation);
+                writer.WriteStringValue(AppLocation.Value);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> appLocation = default;
+            Optional<AzureLocation> appLocation = default;
             Optional<ManagedRGConfiguration> managedResourceGroupConfiguration = default;
             Optional<UserProfile> adminUserProfile = default;
             Optional<VmssNodesProfile> webNodesProfile = default;
@@ -209,7 +209,12 @@ namespace Azure.ResourceManager.Compute.Workloads
                     {
                         if (property0.NameEquals("appLocation"))
                         {
-                            appLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            appLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"))
@@ -346,7 +351,7 @@ namespace Azure.ResourceManager.Compute.Workloads
                     continue;
                 }
             }
-            return new PhpWorkloadResourceData(id, name, type, systemData, tags, location, kind, sku.Value, identity.Value, appLocation.Value, managedResourceGroupConfiguration.Value, adminUserProfile.Value, webNodesProfile.Value, controllerProfile.Value, networkProfile.Value, databaseProfile.Value, siteProfile.Value, fileshareProfile.Value, phpProfile.Value, searchProfile.Value, cacheProfile.Value, backupProfile.Value, Optional.ToNullable(provisioningState));
+            return new PhpWorkloadResourceData(id, name, type, systemData, tags, location, kind, sku.Value, identity.Value, Optional.ToNullable(appLocation), managedResourceGroupConfiguration.Value, adminUserProfile.Value, webNodesProfile.Value, controllerProfile.Value, networkProfile.Value, databaseProfile.Value, siteProfile.Value, fileshareProfile.Value, phpProfile.Value, searchProfile.Value, cacheProfile.Value, backupProfile.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

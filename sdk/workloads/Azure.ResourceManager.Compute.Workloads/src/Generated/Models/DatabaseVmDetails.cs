@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> The Database VM Details. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>
         /// <param name="virtualMachineId"></param>
         /// <param name="status"> Defines the SAP Instance status. </param>
-        internal DatabaseVmDetails(string virtualMachineId, SapVirtualInstanceStatus? status)
+        internal DatabaseVmDetails(ResourceIdentifier virtualMachineId, SapVirtualInstanceStatus? status)
         {
             VirtualMachineId = virtualMachineId;
             Status = status;
         }
 
         /// <summary> Gets the virtual machine id. </summary>
-        public string VirtualMachineId { get; }
+        public ResourceIdentifier VirtualMachineId { get; }
         /// <summary> Defines the SAP Instance status. </summary>
         public SapVirtualInstanceStatus? Status { get; }
     }

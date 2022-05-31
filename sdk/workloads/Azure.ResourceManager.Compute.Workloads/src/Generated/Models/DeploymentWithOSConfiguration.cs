@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> Deployment along with OS Configuration. </summary>
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="infrastructureConfiguration"> The infrastructure configuration. </param>
         /// <param name="softwareConfiguration"> The software configuration. </param>
         /// <param name="osSapConfiguration"> The OS and SAP configuration. </param>
-        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, string appLocation, InfrastructureConfiguration infrastructureConfiguration, SoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration) : base(configurationType)
+        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration) : base(configurationType)
         {
             AppLocation = appLocation;
             InfrastructureConfiguration = infrastructureConfiguration;
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         }
 
         /// <summary> The geo-location where the SAP system is to be created. </summary>
-        public string AppLocation { get; set; }
+        public AzureLocation? AppLocation { get; set; }
         /// <summary> The infrastructure configuration. </summary>
         public InfrastructureConfiguration InfrastructureConfiguration { get; set; }
         /// <summary> The software configuration. </summary>

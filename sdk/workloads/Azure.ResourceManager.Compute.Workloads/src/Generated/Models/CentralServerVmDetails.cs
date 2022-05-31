@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> The Central Server VM Details. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Initializes a new instance of CentralServerVmDetails. </summary>
         /// <param name="virtualMachineType"> Defines the type of central server VM. </param>
         /// <param name="virtualMachineId"></param>
-        internal CentralServerVmDetails(CentralServerVirtualMachineType? virtualMachineType, string virtualMachineId)
+        internal CentralServerVmDetails(CentralServerVirtualMachineType? virtualMachineType, ResourceIdentifier virtualMachineId)
         {
             VirtualMachineType = virtualMachineType;
             VirtualMachineId = virtualMachineId;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Defines the type of central server VM. </summary>
         public CentralServerVirtualMachineType? VirtualMachineType { get; }
         /// <summary> Gets the virtual machine id. </summary>
-        public string VirtualMachineId { get; }
+        public ResourceIdentifier VirtualMachineId { get; }
     }
 }

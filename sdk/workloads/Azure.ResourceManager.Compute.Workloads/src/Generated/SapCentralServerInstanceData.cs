@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="instanceNo"> The central server instance id. </param>
-        /// <param name="subnet"> The central server subnet. </param>
+        /// <param name="subnetId"> The central server subnet. </param>
         /// <param name="messageServerProperties"> Defines the SAP message server properties. </param>
         /// <param name="enqueueServerProperties"> Defines the SAP enqueue server properties. </param>
         /// <param name="gatewayServerProperties"> Defines the SAP Gateway Server properties. </param>
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="health"> Defines the SAP Instance health. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the Central Instance errors. </param>
-        internal SapCentralServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, string subnet, MessageServerProperties messageServerProperties, EnqueueServerProperties enqueueServerProperties, GatewayServerProperties gatewayServerProperties, EnqueueReplicationServerProperties enqueueReplicationServerProperties, string kernelVersion, string kernelPatch, IReadOnlyList<CentralServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        internal SapCentralServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, MessageServerProperties messageServerProperties, EnqueueServerProperties enqueueServerProperties, GatewayServerProperties gatewayServerProperties, EnqueueReplicationServerProperties enqueueReplicationServerProperties, string kernelVersion, string kernelPatch, IReadOnlyList<CentralServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
         {
             InstanceNo = instanceNo;
-            Subnet = subnet;
+            SubnetId = subnetId;
             MessageServerProperties = messageServerProperties;
             EnqueueServerProperties = enqueueServerProperties;
             GatewayServerProperties = gatewayServerProperties;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary> The central server instance id. </summary>
         public string InstanceNo { get; }
         /// <summary> The central server subnet. </summary>
-        public string Subnet { get; }
+        public ResourceIdentifier SubnetId { get; }
         /// <summary> Defines the SAP message server properties. </summary>
         public MessageServerProperties MessageServerProperties { get; set; }
         /// <summary> Defines the SAP enqueue server properties. </summary>

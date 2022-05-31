@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="subnet"> The database subnet. </param>
+        /// <param name="subnetId"> The database subnet. </param>
         /// <param name="databaseSid"> The database SID. </param>
         /// <param name="databaseType"> The SAP database type. </param>
         /// <param name="ipAddress"> The database IP Address. </param>
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="status"> Defines the SAP Instance status. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the Database Instance errors. </param>
-        internal SapDatabaseInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string subnet, string databaseSid, string databaseType, string ipAddress, IReadOnlyList<DatabaseVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        internal SapDatabaseInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, string databaseSid, string databaseType, string ipAddress, IReadOnlyList<DatabaseVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
         {
-            Subnet = subnet;
+            SubnetId = subnetId;
             DatabaseSid = databaseSid;
             DatabaseType = databaseType;
             IPAddress = ipAddress;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         }
 
         /// <summary> The database subnet. </summary>
-        public string Subnet { get; }
+        public ResourceIdentifier SubnetId { get; }
         /// <summary> The database SID. </summary>
         public string DatabaseSid { get; }
         /// <summary> The SAP database type. </summary>

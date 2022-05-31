@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> subnet = default;
+            Optional<ResourceIdentifier> subnet = default;
             Optional<string> databaseSid = default;
             Optional<string> databaseType = default;
             Optional<string> ipAddress = default;
@@ -98,7 +98,12 @@ namespace Azure.ResourceManager.Compute.Workloads
                     {
                         if (property0.NameEquals("subnet"))
                         {
-                            subnet = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnet = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("databaseSid"))

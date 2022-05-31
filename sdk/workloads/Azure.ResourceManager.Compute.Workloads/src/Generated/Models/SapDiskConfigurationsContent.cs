@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
@@ -19,13 +20,9 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
         /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
         /// <param name="dbVmSku"> The VM SKU for database instance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appLocation"/> or <paramref name="dbVmSku"/> is null. </exception>
-        public SapDiskConfigurationsContent(string appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku)
+        /// <exception cref="ArgumentNullException"> <paramref name="dbVmSku"/> is null. </exception>
+        public SapDiskConfigurationsContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDatabaseType databaseType, SapDeploymentType deploymentType, string dbVmSku)
         {
-            if (appLocation == null)
-            {
-                throw new ArgumentNullException(nameof(appLocation));
-            }
             if (dbVmSku == null)
             {
                 throw new ArgumentNullException(nameof(dbVmSku));
@@ -40,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         }
 
         /// <summary> The geo-location where the SAP resources will be created. </summary>
-        public string AppLocation { get; }
+        public AzureLocation AppLocation { get; }
         /// <summary> Defines the environment type - Production/Non Production. </summary>
         public SapEnvironmentType Environment { get; }
         /// <summary> Defines the SAP Product type. </summary>

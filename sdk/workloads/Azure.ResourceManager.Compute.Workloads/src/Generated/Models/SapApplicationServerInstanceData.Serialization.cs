@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> instanceNo = default;
-            Optional<string> subnet = default;
+            Optional<ResourceIdentifier> subnet = default;
             Optional<string> hostname = default;
             Optional<string> kernelVersion = default;
             Optional<string> kernelPatch = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             Optional<long?> gatewayPort = default;
             Optional<long?> icmHttpPort = default;
             Optional<long?> icmHttpsPort = default;
-            Optional<string> virtualMachineId = default;
+            Optional<ResourceIdentifier> virtualMachineId = default;
             Optional<SapVirtualInstanceStatus> status = default;
             Optional<SapHealthState> health = default;
             Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
@@ -109,7 +109,12 @@ namespace Azure.ResourceManager.Compute.Workloads
                         }
                         if (property0.NameEquals("subnet"))
                         {
-                            subnet = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            subnet = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostname"))
@@ -164,7 +169,12 @@ namespace Azure.ResourceManager.Compute.Workloads
                         }
                         if (property0.NameEquals("virtualMachineId"))
                         {
-                            virtualMachineId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            virtualMachineId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"))

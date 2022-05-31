@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
@@ -16,21 +16,15 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="appLocation"> The geo-location where the SAP resources will be created. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
         /// <param name="databaseType"> The database type. Eg: HANA, DB2, etc. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appLocation"/> is null. </exception>
-        public SapAvailabilityZoneDetailsContent(string appLocation, SapProductType sapProduct, SapDatabaseType databaseType)
+        public SapAvailabilityZoneDetailsContent(AzureLocation appLocation, SapProductType sapProduct, SapDatabaseType databaseType)
         {
-            if (appLocation == null)
-            {
-                throw new ArgumentNullException(nameof(appLocation));
-            }
-
             AppLocation = appLocation;
             SapProduct = sapProduct;
             DatabaseType = databaseType;
         }
 
         /// <summary> The geo-location where the SAP resources will be created. </summary>
-        public string AppLocation { get; }
+        public AzureLocation AppLocation { get; }
         /// <summary> Defines the SAP Product type. </summary>
         public SapProductType SapProduct { get; }
         /// <summary> The database type. Eg: HANA, DB2, etc. </summary>

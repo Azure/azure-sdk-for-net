@@ -45,18 +45,35 @@ rename-rules:
   SSD: Ssd
 
 directive:
+  - from: swagger-document
+    where: $.definitions..appLocation
+    transform: >
+      $['x-ms-format'] = 'azure-location';
+  - from: swagger-document
+    where: $.definitions..subnetId
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+  - from: swagger-document
+    where: $.definitions..subnet
+    transform: >
+      $['x-ms-format'] = 'arm-id';
+      $['x-ms-client-name'] = 'subnetId';
+  - from: swagger-document
+    where: $.definitions..virtualMachineId
+    transform: >
+      $['x-ms-format'] = 'arm-id';
   - from: monitors.json
     where: $.definitions
     transform: >
       $.Monitor['x-ms-client-name'] = 'SapMonitor';
-      $.MonitorProperties.properties.appLocation['x-ms-client-name'] = 'sapAppLocation';
       $.MonitorProperties.properties.logAnalyticsWorkspaceArmId['x-ms-format'] = 'arm-id';
+      $.MonitorProperties.properties.monitorSubnet['x-ms-format'] = 'arm-id';
+      $.MonitorProperties.properties.monitorSubnet['x-ms-client-name'] = 'monitorSubnetId';
       $.MonitorProperties.properties.msiArmId['x-ms-format'] = 'arm-id';
       $.ProviderInstance['x-ms-client-name'] = 'SapProviderInstance';
   - from: phpWorkloads.json
     where: $.definitions
     transform: >
-      $.phpWorkloadResourceProperties.properties.appLocation['x-ms-client-name'] = 'phpAppLocation';
       $.nodeProfile.properties.nodeResourceIds.items['x-ms-format'] = 'arm-id';
       $.networkProfile.properties.vNetResourceId['x-ms-format'] = 'arm-id';
       $.networkProfile.properties.loadBalancerResourceId['x-ms-format'] = 'arm-id';
@@ -67,11 +84,4 @@ directive:
       $.fileshareProfile.properties.storageResourceId['x-ms-format'] = 'arm-id';
       $.cacheProfile.properties.cacheResourceId['x-ms-format'] = 'arm-id';
       $.backupProfile.properties.vaultResourceId['x-ms-format'] = 'arm-id';
-  - from: SAPVirtualInstance.json
-    where: $.definitions
-    transform: >
-      $.SingleServerConfiguration.properties.subnetId['x-ms-format'] = 'arm-id';
-      $.CentralServerConfiguration.properties.subnetId['x-ms-format'] = 'arm-id';
-      $.DatabaseConfiguration.properties.subnetId['x-ms-format'] = 'arm-id';
-      $.ApplicationServerConfiguration.properties.subnetId['x-ms-format'] = 'arm-id';
 ```

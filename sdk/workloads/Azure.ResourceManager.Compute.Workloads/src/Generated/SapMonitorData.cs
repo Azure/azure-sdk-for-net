@@ -31,21 +31,21 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> State of provisioning of the SAP monitor. </param>
         /// <param name="errors"> Defines the SAP monitor errors. </param>
-        /// <param name="sapAppLocation"> The SAP monitor resources will be deployed in the SAP monitoring region. The subnet region should be same as the SAP monitoring region. </param>
+        /// <param name="appLocation"> The SAP monitor resources will be deployed in the SAP monitoring region. The subnet region should be same as the SAP monitoring region. </param>
         /// <param name="routingPreference"> Sets the routing preference of the SAP monitor. By default only RFC1918 traffic is routed to the customer VNET. </param>
         /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
         /// <param name="logAnalyticsWorkspaceArmId"> The ARM ID of the Log Analytics Workspace that is used for SAP monitoring. </param>
-        /// <param name="monitorSubnet"> The subnet which the SAP monitor will be deployed in. </param>
+        /// <param name="monitorSubnetId"> The subnet which the SAP monitor will be deployed in. </param>
         /// <param name="msiArmId"> The ARM ID of the MSI used for SAP monitoring. </param>
-        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, string sapAppLocation, RoutingPreference? routingPreference, ManagedRGConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, string monitorSubnet, ResourceIdentifier msiArmId) : base(id, name, resourceType, systemData, tags, location)
+        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, AzureLocation? appLocation, RoutingPreference? routingPreference, ManagedRGConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, ResourceIdentifier monitorSubnetId, ResourceIdentifier msiArmId) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Errors = errors;
-            SapAppLocation = sapAppLocation;
+            AppLocation = appLocation;
             RoutingPreference = routingPreference;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
             LogAnalyticsWorkspaceArmId = logAnalyticsWorkspaceArmId;
-            MonitorSubnet = monitorSubnet;
+            MonitorSubnetId = monitorSubnetId;
             MsiArmId = msiArmId;
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary> Defines the SAP monitor errors. </summary>
         public ResponseError Errors { get; }
         /// <summary> The SAP monitor resources will be deployed in the SAP monitoring region. The subnet region should be same as the SAP monitoring region. </summary>
-        public string SapAppLocation { get; set; }
+        public AzureLocation? AppLocation { get; set; }
         /// <summary> Sets the routing preference of the SAP monitor. By default only RFC1918 traffic is routed to the customer VNET. </summary>
         public RoutingPreference? RoutingPreference { get; set; }
         /// <summary> Managed resource group configuration. </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary> The ARM ID of the Log Analytics Workspace that is used for SAP monitoring. </summary>
         public ResourceIdentifier LogAnalyticsWorkspaceArmId { get; set; }
         /// <summary> The subnet which the SAP monitor will be deployed in. </summary>
-        public string MonitorSubnet { get; set; }
+        public ResourceIdentifier MonitorSubnetId { get; set; }
         /// <summary> The ARM ID of the MSI used for SAP monitoring. </summary>
         public ResourceIdentifier MsiArmId { get; }
     }

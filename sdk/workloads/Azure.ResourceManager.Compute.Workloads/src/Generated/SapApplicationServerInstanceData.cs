@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="instanceNo"> The application server instance id. </param>
-        /// <param name="subnet"> The application server subnet. </param>
+        /// <param name="subnetId"> The application server subnet. </param>
         /// <param name="hostname"> The application server SAP host name. </param>
         /// <param name="kernelVersion"> The application server SAP kernel version. </param>
         /// <param name="kernelPatch"> The application server SAP kernel patch. </param>
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="health"> Defines the SAP Instance health. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the Application Instance errors. </param>
-        internal SapApplicationServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, string subnet, string hostname, string kernelVersion, string kernelPatch, string ipAddress, long? gatewayPort, long? icmHttpPort, long? icmHttpsPort, string virtualMachineId, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        internal SapApplicationServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, string hostname, string kernelVersion, string kernelPatch, string ipAddress, long? gatewayPort, long? icmHttpPort, long? icmHttpsPort, ResourceIdentifier virtualMachineId, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
         {
             InstanceNo = instanceNo;
-            Subnet = subnet;
+            SubnetId = subnetId;
             Hostname = hostname;
             KernelVersion = kernelVersion;
             KernelPatch = kernelPatch;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary> The application server instance id. </summary>
         public string InstanceNo { get; }
         /// <summary> The application server subnet. </summary>
-        public string Subnet { get; }
+        public ResourceIdentifier SubnetId { get; }
         /// <summary> The application server SAP host name. </summary>
         public string Hostname { get; }
         /// <summary> The application server SAP kernel version. </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary> The application server ICM HTTPS Port. </summary>
         public long? IcmHttpsPort { get; }
         /// <summary> The virtual machine. </summary>
-        public string VirtualMachineId { get; }
+        public ResourceIdentifier VirtualMachineId { get; }
         /// <summary> Defines the SAP Instance status. </summary>
         public SapVirtualInstanceStatus? Status { get; }
         /// <summary> Defines the SAP Instance health. </summary>

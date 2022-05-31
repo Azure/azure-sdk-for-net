@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> Discovery Details. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="configurationType"> The configuration Type. </param>
         /// <param name="centralServerVmId"> The virtual machine ID of the Central Server. </param>
         /// <param name="appLocation"> The geo-location where the SAP system exists. </param>
-        internal DiscoveryConfiguration(SapConfigurationType configurationType, string centralServerVmId, string appLocation) : base(configurationType)
+        internal DiscoveryConfiguration(SapConfigurationType configurationType, string centralServerVmId, AzureLocation? appLocation) : base(configurationType)
         {
             CentralServerVmId = centralServerVmId;
             AppLocation = appLocation;
@@ -30,6 +32,6 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> The virtual machine ID of the Central Server. </summary>
         public string CentralServerVmId { get; set; }
         /// <summary> The geo-location where the SAP system exists. </summary>
-        public string AppLocation { get; }
+        public AzureLocation? AppLocation { get; }
     }
 }

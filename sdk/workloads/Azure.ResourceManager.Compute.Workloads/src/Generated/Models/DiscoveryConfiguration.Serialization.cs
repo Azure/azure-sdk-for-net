@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         internal static DiscoveryConfiguration DeserializeDiscoveryConfiguration(JsonElement element)
         {
             Optional<string> centralServerVmId = default;
-            Optional<string> appLocation = default;
+            Optional<AzureLocation> appLocation = default;
             SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,7 +39,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("appLocation"))
                 {
-                    appLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configurationType"))
@@ -48,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                     continue;
                 }
             }
-            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, appLocation.Value);
+            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, Optional.ToNullable(appLocation));
         }
     }
 }

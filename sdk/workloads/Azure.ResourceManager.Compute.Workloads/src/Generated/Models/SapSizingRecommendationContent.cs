@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="saps"> The SAP Application Performance Standard measurement. </param>
         /// <param name="dbMemory"> The database memory configuration. </param>
         /// <param name="databaseType"> The database type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="appLocation"/> is null. </exception>
-        public SapSizingRecommendationContent(string appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType)
+        public SapSizingRecommendationContent(AzureLocation appLocation, SapEnvironmentType environment, SapProductType sapProduct, SapDeploymentType deploymentType, long saps, long dbMemory, SapDatabaseType databaseType)
         {
-            if (appLocation == null)
-            {
-                throw new ArgumentNullException(nameof(appLocation));
-            }
-
             AppLocation = appLocation;
             Environment = environment;
             SapProduct = sapProduct;
@@ -38,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         }
 
         /// <summary> The geo-location where the resource is to be created. </summary>
-        public string AppLocation { get; }
+        public AzureLocation AppLocation { get; }
         /// <summary> Defines the environment type - Production/Non Production. </summary>
         public SapEnvironmentType Environment { get; }
         /// <summary> Defines the SAP Product type. </summary>
