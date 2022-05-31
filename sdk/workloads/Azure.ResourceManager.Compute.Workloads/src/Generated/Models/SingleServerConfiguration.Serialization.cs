@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element)
         {
             Optional<NetworkConfiguration> networkConfiguration = default;
-            Optional<SAPDatabaseType> databaseType = default;
+            Optional<SapDatabaseType> databaseType = default;
             string subnetId = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
-            SAPDeploymentType deploymentType = default;
+            SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    databaseType = new SAPDatabaseType(property.Value.GetString());
+                    databaseType = new SapDatabaseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subnetId"))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("deploymentType"))
                 {
-                    deploymentType = new SAPDeploymentType(property.Value.GetString());
+                    deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appResourceGroup"))

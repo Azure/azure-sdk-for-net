@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP sizing recommendations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
-        /// Operation Id: SAPSizingRecommendations
+        /// Operation Id: SapSizingRecommendations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<SAPSizingRecommendationResult>> SAPSizingRecommendationsAsync(this SubscriptionResource subscriptionResource, string location, SAPSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(this SubscriptionResource subscriptionResource, string location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return await GetExtensionClient(subscriptionResource).SAPSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get SAP sizing recommendations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
-        /// Operation Id: SAPSizingRecommendations
+        /// Operation Id: SapSizingRecommendations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<SAPSizingRecommendationResult> SAPSizingRecommendations(this SubscriptionResource subscriptionResource, string location, SAPSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SapSizingRecommendationResult> SapSizingRecommendations(this SubscriptionResource subscriptionResource, string location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(subscriptionResource).SAPSizingRecommendations(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Get SAP supported SKUs.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
-        /// Operation Id: SAPSupportedSku
+        /// Operation Id: SapSupportedSku
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<SAPSupportedResourceSkusResult>> SAPSupportedSkuAsync(this SubscriptionResource subscriptionResource, string location, SAPSupportedSkusContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(this SubscriptionResource subscriptionResource, string location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return await GetExtensionClient(subscriptionResource).SAPSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get SAP supported SKUs.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
-        /// Operation Id: SAPSupportedSku
+        /// Operation Id: SapSupportedSku
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<SAPSupportedResourceSkusResult> SAPSupportedSku(this SubscriptionResource subscriptionResource, string location, SAPSupportedSkusContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SapSupportedResourceSkusResult> SapSupportedSku(this SubscriptionResource subscriptionResource, string location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(subscriptionResource).SAPSupportedSku(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Get SAP Disk Configurations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
-        /// Operation Id: SAPDiskConfigurations
+        /// Operation Id: SapDiskConfigurations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<SAPDiskConfigurationsResult>> SAPDiskConfigurationsAsync(this SubscriptionResource subscriptionResource, string location, SAPDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(this SubscriptionResource subscriptionResource, string location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return await GetExtensionClient(subscriptionResource).SAPDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get SAP Disk Configurations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
-        /// Operation Id: SAPDiskConfigurations
+        /// Operation Id: SapDiskConfigurations
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<SAPDiskConfigurationsResult> SAPDiskConfigurations(this SubscriptionResource subscriptionResource, string location, SAPDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SapDiskConfigurationsResult> SapDiskConfigurations(this SubscriptionResource subscriptionResource, string location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(subscriptionResource).SAPDiskConfigurations(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
         }
 
         /// <summary>
         /// Get SAP Availability Zone Details.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
-        /// Operation Id: SAPAvailabilityZoneDetails
+        /// Operation Id: SapAvailabilityZoneDetails
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -173,17 +173,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static async Task<Response<SAPAvailabilityZoneDetailsResult>> SAPAvailabilityZoneDetailsAsync(this SubscriptionResource subscriptionResource, string location, SAPAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this SubscriptionResource subscriptionResource, string location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return await GetExtensionClient(subscriptionResource).SAPAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get SAP Availability Zone Details.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
-        /// Operation Id: SAPAvailabilityZoneDetails
+        /// Operation Id: SapAvailabilityZoneDetails
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of Azure region. </param>
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public static Response<SAPAvailabilityZoneDetailsResult> SAPAvailabilityZoneDetails(this SubscriptionResource subscriptionResource, string location, SAPAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
+        public static Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this SubscriptionResource subscriptionResource, string location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(subscriptionResource).SAPAvailabilityZoneDetails(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SAPVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SAPVirtualInstanceResource> GetSAPVirtualInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSAPVirtualInstancesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -218,10 +218,10 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SAPVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SAPVirtualInstanceResource> GetSAPVirtualInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetSAPVirtualInstances(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetSapVirtualInstances(cancellationToken);
         }
 
         /// <summary>
@@ -325,12 +325,12 @@ namespace Azure.ResourceManager.Compute.Workloads
             return resourceGroupResource.GetPhpWorkloadResources().Get(phpWorkloadName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SAPVirtualInstanceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of SapVirtualInstanceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SAPVirtualInstanceResources and their operations over a SAPVirtualInstanceResource. </returns>
-        public static SAPVirtualInstanceCollection GetSAPVirtualInstances(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
+        public static SapVirtualInstanceCollection GetSapVirtualInstances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetSAPVirtualInstances();
+            return GetExtensionClient(resourceGroupResource).GetSapVirtualInstances();
         }
 
         /// <summary>
@@ -344,9 +344,9 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SAPVirtualInstanceResource>> GetSAPVirtualInstanceAsync(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SapVirtualInstanceResource>> GetSapVirtualInstanceAsync(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSAPVirtualInstances().GetAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSapVirtualInstances().GetAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SAPVirtualInstanceResource> GetSAPVirtualInstance(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
+        public static Response<SapVirtualInstanceResource> GetSapVirtualInstance(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSAPVirtualInstances().Get(sapVirtualInstanceName, cancellationToken);
+            return resourceGroupResource.GetSapVirtualInstances().Get(sapVirtualInstanceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MonitorResources in the ResourceGroupResource. </summary>
@@ -443,77 +443,77 @@ namespace Azure.ResourceManager.Compute.Workloads
         }
         #endregion
 
-        #region SAPVirtualInstanceResource
+        #region SapVirtualInstanceResource
         /// <summary>
-        /// Gets an object representing a <see cref="SAPVirtualInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SAPVirtualInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SAPVirtualInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapVirtualInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapVirtualInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapVirtualInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SAPVirtualInstanceResource" /> object. </returns>
-        public static SAPVirtualInstanceResource GetSAPVirtualInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapVirtualInstanceResource" /> object. </returns>
+        public static SapVirtualInstanceResource GetSapVirtualInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SAPVirtualInstanceResource.ValidateResourceId(id);
-                return new SAPVirtualInstanceResource(client, id);
+                SapVirtualInstanceResource.ValidateResourceId(id);
+                return new SapVirtualInstanceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SAPCentralServerInstanceResource
+        #region SapCentralServerInstanceResource
         /// <summary>
-        /// Gets an object representing a <see cref="SAPCentralServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SAPCentralServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SAPCentralServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapCentralServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapCentralServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapCentralServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SAPCentralServerInstanceResource" /> object. </returns>
-        public static SAPCentralServerInstanceResource GetSAPCentralServerInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapCentralServerInstanceResource" /> object. </returns>
+        public static SapCentralServerInstanceResource GetSapCentralServerInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SAPCentralServerInstanceResource.ValidateResourceId(id);
-                return new SAPCentralServerInstanceResource(client, id);
+                SapCentralServerInstanceResource.ValidateResourceId(id);
+                return new SapCentralServerInstanceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SAPDatabaseInstanceResource
+        #region SapDatabaseInstanceResource
         /// <summary>
-        /// Gets an object representing a <see cref="SAPDatabaseInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SAPDatabaseInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SAPDatabaseInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapDatabaseInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapDatabaseInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapDatabaseInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SAPDatabaseInstanceResource" /> object. </returns>
-        public static SAPDatabaseInstanceResource GetSAPDatabaseInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapDatabaseInstanceResource" /> object. </returns>
+        public static SapDatabaseInstanceResource GetSapDatabaseInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SAPDatabaseInstanceResource.ValidateResourceId(id);
-                return new SAPDatabaseInstanceResource(client, id);
+                SapDatabaseInstanceResource.ValidateResourceId(id);
+                return new SapDatabaseInstanceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SAPApplicationServerInstanceResource
+        #region SapApplicationServerInstanceResource
         /// <summary>
-        /// Gets an object representing a <see cref="SAPApplicationServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SAPApplicationServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SAPApplicationServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapApplicationServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapApplicationServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapApplicationServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SAPApplicationServerInstanceResource" /> object. </returns>
-        public static SAPApplicationServerInstanceResource GetSAPApplicationServerInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapApplicationServerInstanceResource" /> object. </returns>
+        public static SapApplicationServerInstanceResource GetSapApplicationServerInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SAPApplicationServerInstanceResource.ValidateResourceId(id);
-                return new SAPApplicationServerInstanceResource(client, id);
+                SapApplicationServerInstanceResource.ValidateResourceId(id);
+                return new SapApplicationServerInstanceResource(client, id);
             }
             );
         }

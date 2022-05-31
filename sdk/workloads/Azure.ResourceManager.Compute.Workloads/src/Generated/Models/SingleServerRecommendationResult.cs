@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> The recommended configuration for a single server SAP system. </summary>
-    public partial class SingleServerRecommendationResult : SAPSizingRecommendationResult
+    public partial class SingleServerRecommendationResult : SapSizingRecommendationResult
     {
         /// <summary> Initializes a new instance of SingleServerRecommendationResult. </summary>
         internal SingleServerRecommendationResult()
         {
-            DeploymentType = SAPDeploymentType.SingleServer;
+            DeploymentType = SapDeploymentType.SingleServer;
         }
 
         /// <summary> Initializes a new instance of SingleServerRecommendationResult. </summary>
         /// <param name="deploymentType"> The deployment Type. </param>
         /// <param name="vmSku"> The recommended VM SKU for single server. </param>
-        internal SingleServerRecommendationResult(SAPDeploymentType deploymentType, string vmSku) : base(deploymentType)
+        internal SingleServerRecommendationResult(SapDeploymentType deploymentType, string vmSku) : base(deploymentType)
         {
             VmSku = vmSku;
             DeploymentType = deploymentType;

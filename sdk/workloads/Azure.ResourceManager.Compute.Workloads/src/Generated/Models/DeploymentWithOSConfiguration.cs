@@ -8,12 +8,12 @@
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> Deployment along with OS Configuration. </summary>
-    public partial class DeploymentWithOSConfiguration : SAPConfiguration
+    public partial class DeploymentWithOSConfiguration : SapConfiguration
     {
         /// <summary> Initializes a new instance of DeploymentWithOSConfiguration. </summary>
         public DeploymentWithOSConfiguration()
         {
-            ConfigurationType = SAPConfigurationType.DeploymentWithOSConfig;
+            ConfigurationType = SapConfigurationType.DeploymentWithOSConfig;
         }
 
         /// <summary> Initializes a new instance of DeploymentWithOSConfiguration. </summary>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="infrastructureConfiguration"> The infrastructure configuration. </param>
         /// <param name="softwareConfiguration"> The software configuration. </param>
         /// <param name="osSapConfiguration"> The OS and SAP configuration. </param>
-        internal DeploymentWithOSConfiguration(SAPConfigurationType configurationType, string appLocation, InfrastructureConfiguration infrastructureConfiguration, SoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration) : base(configurationType)
+        internal DeploymentWithOSConfiguration(SapConfigurationType configurationType, string appLocation, InfrastructureConfiguration infrastructureConfiguration, SoftwareConfiguration softwareConfiguration, OSSapConfiguration osSapConfiguration) : base(configurationType)
         {
             AppLocation = appLocation;
             InfrastructureConfiguration = infrastructureConfiguration;

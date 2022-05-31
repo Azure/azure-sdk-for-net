@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             CentralServer = centralServer;
             ApplicationServer = applicationServer;
             DatabaseServer = databaseServer;
-            DeploymentType = SAPDeploymentType.ThreeTier;
+            DeploymentType = SapDeploymentType.ThreeTier;
         }
 
         /// <summary> Initializes a new instance of ThreeTierConfiguration. </summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="applicationServer"> The application server configuration. </param>
         /// <param name="databaseServer"> The database configuration. </param>
         /// <param name="highAvailabilityConfig"> The high availability configuration. </param>
-        internal ThreeTierConfiguration(SAPDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer, HighAvailabilityConfiguration highAvailabilityConfig) : base(deploymentType, appResourceGroup)
+        internal ThreeTierConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer, HighAvailabilityConfiguration highAvailabilityConfig) : base(deploymentType, appResourceGroup)
         {
             NetworkConfiguration = networkConfiguration;
             CentralServer = centralServer;
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> The high availability configuration. </summary>
         internal HighAvailabilityConfiguration HighAvailabilityConfig { get; set; }
         /// <summary> The high availability type. </summary>
-        public SAPHighAvailabilityType? HighAvailabilityType
+        public SapHighAvailabilityType? HighAvailabilityType
         {
-            get => HighAvailabilityConfig is null ? default(SAPHighAvailabilityType?) : HighAvailabilityConfig.HighAvailabilityType;
+            get => HighAvailabilityConfig is null ? default(SapHighAvailabilityType?) : HighAvailabilityConfig.HighAvailabilityType;
             set
             {
                 HighAvailabilityConfig = value.HasValue ? new HighAvailabilityConfiguration(value.Value) : null;

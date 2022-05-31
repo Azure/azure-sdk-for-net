@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>
         /// <param name="virtualMachineId"></param>
         /// <param name="status"> Defines the SAP Instance status. </param>
-        internal DatabaseVmDetails(string virtualMachineId, SAPVirtualInstanceStatus? status)
+        internal DatabaseVmDetails(string virtualMachineId, SapVirtualInstanceStatus? status)
         {
             VirtualMachineId = virtualMachineId;
             Status = status;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Gets the virtual machine id. </summary>
         public string VirtualMachineId { get; }
         /// <summary> Defines the SAP Instance status. </summary>
-        public SAPVirtualInstanceStatus? Status { get; }
+        public SapVirtualInstanceStatus? Status { get; }
     }
 }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of database VMs. </param>
-        internal DatabaseConfiguration(SAPDatabaseType? databaseType, string subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
+        internal DatabaseConfiguration(SapDatabaseType? databaseType, string subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
         {
             DatabaseType = databaseType;
             SubnetId = subnetId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         }
 
         /// <summary> The database type. </summary>
-        public SAPDatabaseType? DatabaseType { get; set; }
+        public SapDatabaseType? DatabaseType { get; set; }
         /// <summary> The subnet id. </summary>
         public string SubnetId { get; set; }
         /// <summary> Gets or sets the virtual machine configuration. </summary>

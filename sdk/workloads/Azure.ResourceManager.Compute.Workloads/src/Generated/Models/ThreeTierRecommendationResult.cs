@@ -8,12 +8,12 @@
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> The recommended configuration for a three tier SAP system. </summary>
-    public partial class ThreeTierRecommendationResult : SAPSizingRecommendationResult
+    public partial class ThreeTierRecommendationResult : SapSizingRecommendationResult
     {
         /// <summary> Initializes a new instance of ThreeTierRecommendationResult. </summary>
         internal ThreeTierRecommendationResult()
         {
-            DeploymentType = SAPDeploymentType.ThreeTier;
+            DeploymentType = SapDeploymentType.ThreeTier;
         }
 
         /// <summary> Initializes a new instance of ThreeTierRecommendationResult. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="centralServerInstanceCount"> The central server instance count. </param>
         /// <param name="applicationServerVmSku"> The application server VM SKU. </param>
         /// <param name="applicationServerInstanceCount"> The application server instance count. </param>
-        internal ThreeTierRecommendationResult(SAPDeploymentType deploymentType, string dbVmSku, long? databaseInstanceCount, string centralServerVmSku, long? centralServerInstanceCount, string applicationServerVmSku, long? applicationServerInstanceCount) : base(deploymentType)
+        internal ThreeTierRecommendationResult(SapDeploymentType deploymentType, string dbVmSku, long? databaseInstanceCount, string centralServerVmSku, long? centralServerInstanceCount, string applicationServerVmSku, long? applicationServerInstanceCount) : base(deploymentType)
         {
             DbVmSku = dbVmSku;
             DatabaseInstanceCount = databaseInstanceCount;

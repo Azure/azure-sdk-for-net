@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="kernelPatch"> The ERS server SAP kernel patch. </param>
         /// <param name="ipAddress"> The ERS server SAP IP Address. </param>
         /// <param name="health"> Defines the SAP Instance health. </param>
-        internal EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion, string instanceNo, string hostname, string kernelVersion, string kernelPatch, string ipAddress, SAPHealthState? health)
+        internal EnqueueReplicationServerProperties(EnqueueReplicationServerType? ersVersion, string instanceNo, string hostname, string kernelVersion, string kernelPatch, string ipAddress, SapHealthState? health)
         {
             ErsVersion = ersVersion;
             InstanceNo = instanceNo;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> The ERS server SAP IP Address. </summary>
         public string IPAddress { get; }
         /// <summary> Defines the SAP Instance health. </summary>
-        public SAPHealthState? Health { get; }
+        public SapHealthState? Health { get; }
     }
 }

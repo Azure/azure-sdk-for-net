@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             Optional<string> hostname = default;
             Optional<string> ipAddress = default;
             Optional<long?> port = default;
-            Optional<SAPHealthState> health = default;
+            Optional<SapHealthState> health = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostname"))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    health = new SAPHealthState(property.Value.GetString());
+                    health = new SapHealthState(property.Value.GetString());
                     continue;
                 }
             }

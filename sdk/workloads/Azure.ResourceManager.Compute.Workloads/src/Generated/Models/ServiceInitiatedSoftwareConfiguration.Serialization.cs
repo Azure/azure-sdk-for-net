@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             string sapFqdn = default;
             string sshPrivateKey = default;
             Optional<HighAvailabilitySoftwareConfiguration> highAvailabilitySoftwareConfiguration = default;
-            SAPSoftwareInstallationType softwareInstallationType = default;
+            SapSoftwareInstallationType softwareInstallationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bomUrl"))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("softwareInstallationType"))
                 {
-                    softwareInstallationType = new SAPSoftwareInstallationType(property.Value.GetString());
+                    softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
                     continue;
                 }
             }

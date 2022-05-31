@@ -143,27 +143,27 @@ namespace Azure.ResourceManager.Compute.Workloads
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.ProviderInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.ProviderInstanceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.ProviderInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.ProviderInstanceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SAPApplicationServerInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>, System.Collections.IEnumerable
+    public partial class SapApplicationServerInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>, System.Collections.IEnumerable
     {
-        protected SAPApplicationServerInstanceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationInstanceName, Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationInstanceName, Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected SapApplicationServerInstanceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationInstanceName, Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationInstanceName, Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string applicationInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string applicationInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> Get(string applicationInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>> GetAsync(string applicationInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> Get(string applicationInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>> GetAsync(string applicationInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SAPApplicationServerInstanceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SapApplicationServerInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SAPApplicationServerInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SapApplicationServerInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Workloads.Models.ErrorDefinition ErrorsProperties { get { throw null; } }
         public long? GatewayPort { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState? Health { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string Hostname { get { throw null; } }
         public long? IcmHttpPort { get { throw null; } }
         public long? IcmHttpsPort { get { throw null; } }
@@ -172,190 +172,190 @@ namespace Azure.ResourceManager.Compute.Workloads
         public string KernelPatch { get { throw null; } }
         public string KernelVersion { get { throw null; } }
         public Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
         public string Subnet { get { throw null; } }
         public string VirtualMachineId { get { throw null; } }
     }
-    public partial class SAPApplicationServerInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapApplicationServerInstanceResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected SAPApplicationServerInstanceResource() { }
-        public virtual Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceData Data { get { throw null; } }
+        protected SapApplicationServerInstanceResource() { }
+        public virtual Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SAPApplicationServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SAPApplicationServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SapApplicationServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SapApplicationServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SAPCentralServerInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>, System.Collections.IEnumerable
+    public partial class SapCentralServerInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>, System.Collections.IEnumerable
     {
-        protected SAPCentralServerInstanceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string centralInstanceName, Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string centralInstanceName, Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected SapCentralServerInstanceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string centralInstanceName, Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string centralInstanceName, Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string centralInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string centralInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> Get(string centralInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>> GetAsync(string centralInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> Get(string centralInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>> GetAsync(string centralInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SAPCentralServerInstanceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SapCentralServerInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SAPCentralServerInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SapCentralServerInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Compute.Workloads.Models.EnqueueReplicationServerProperties EnqueueReplicationServerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.EnqueueServerProperties EnqueueServerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.ErrorDefinition ErrorsProperties { get { throw null; } }
         public Azure.ResourceManager.Compute.Workloads.Models.GatewayServerProperties GatewayServerProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState? Health { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string InstanceNo { get { throw null; } }
         public string KernelPatch { get { throw null; } }
         public string KernelVersion { get { throw null; } }
         public Azure.ResourceManager.Compute.Workloads.Models.MessageServerProperties MessageServerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
         public string Subnet { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Workloads.Models.CentralServerVmDetails> VmDetails { get { throw null; } }
     }
-    public partial class SAPCentralServerInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapCentralServerInstanceResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected SAPCentralServerInstanceResource() { }
-        public virtual Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceData Data { get { throw null; } }
+        protected SapCentralServerInstanceResource() { }
+        public virtual Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string centralInstanceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SAPCentralServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SAPCentralServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SapCentralServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SapCentralServerInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SAPDatabaseInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>, System.Collections.IEnumerable
+    public partial class SapDatabaseInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>, System.Collections.IEnumerable
     {
-        protected SAPDatabaseInstanceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string databaseInstanceName, Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string databaseInstanceName, Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected SapDatabaseInstanceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string databaseInstanceName, Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string databaseInstanceName, Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string databaseInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string databaseInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> Get(string databaseInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>> GetAsync(string databaseInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> Get(string databaseInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>> GetAsync(string databaseInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SAPDatabaseInstanceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SapDatabaseInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SAPDatabaseInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SapDatabaseInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string DatabaseSid { get { throw null; } }
         public string DatabaseType { get { throw null; } }
         public Azure.ResourceManager.Compute.Workloads.Models.ErrorDefinition ErrorsProperties { get { throw null; } }
         public string IPAddress { get { throw null; } }
         public Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
         public string Subnet { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Workloads.Models.DatabaseVmDetails> VmDetails { get { throw null; } }
     }
-    public partial class SAPDatabaseInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapDatabaseInstanceResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected SAPDatabaseInstanceResource() { }
-        public virtual Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceData Data { get { throw null; } }
+        protected SapDatabaseInstanceResource() { }
+        public virtual Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string databaseInstanceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SAPVirtualInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>, System.Collections.IEnumerable
+    public partial class SapVirtualInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>, System.Collections.IEnumerable
     {
-        protected SAPVirtualInstanceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sapVirtualInstanceName, Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sapVirtualInstanceName, Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected SapVirtualInstanceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sapVirtualInstanceName, Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sapVirtualInstanceName, Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceData data = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> Get(string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>> GetAsync(string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> Get(string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>> GetAsync(string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SAPVirtualInstanceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SapVirtualInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SAPVirtualInstanceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType environment, Azure.ResourceManager.Compute.Workloads.Models.SAPProductType sapProduct, Azure.ResourceManager.Compute.Workloads.Models.SAPConfiguration configuration) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPConfiguration Configuration { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType Environment { get { throw null; } set { } }
+        public SapVirtualInstanceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType environment, Azure.ResourceManager.Compute.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Compute.Workloads.Models.SapConfiguration configuration) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapConfiguration Configuration { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType Environment { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.ErrorDefinition ErrorsProperties { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState? Health { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public Azure.ResourceManager.Compute.Workloads.Models.UserAssignedServiceIdentity Identity { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPProductType SapProduct { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState? State { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapProductType SapProduct { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState? State { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
     }
-    public partial class SAPVirtualInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class SapVirtualInstanceResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected SAPVirtualInstanceResource() { }
-        public virtual Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceData Data { get { throw null; } }
+        protected SapVirtualInstanceResource() { }
+        public virtual Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource> GetSAPApplicationServerInstance(string applicationInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource>> GetSAPApplicationServerInstanceAsync(string applicationInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceCollection GetSAPApplicationServerInstances() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource> GetSAPCentralServerInstance(string centralInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource>> GetSAPCentralServerInstanceAsync(string centralInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceCollection GetSAPCentralServerInstances() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource> GetSAPDatabaseInstance(string databaseInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource>> GetSAPDatabaseInstanceAsync(string databaseInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceCollection GetSAPDatabaseInstances() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource> GetSapApplicationServerInstance(string applicationInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource>> GetSapApplicationServerInstanceAsync(string applicationInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceCollection GetSapApplicationServerInstances() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource> GetSapCentralServerInstance(string centralInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource>> GetSapCentralServerInstanceAsync(string centralInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceCollection GetSapCentralServerInstances() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource> GetSapDatabaseInstance(string databaseInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource>> GetSapDatabaseInstanceAsync(string databaseInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceCollection GetSapDatabaseInstances() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult> Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult>> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult> Stop(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.StopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Workloads.Models.OperationStatusResult>> StopAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.Workloads.Models.StopContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> Update(Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>> UpdateAsync(Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> Update(Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>> UpdateAsync(Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WordpressInstanceResource : Azure.ResourceManager.ArmResource
     {
@@ -395,26 +395,26 @@ namespace Azure.ResourceManager.Compute.Workloads
         public static Azure.Pageable<Azure.ResourceManager.Compute.Workloads.PhpWorkloadResource> GetPhpWorkloadResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.PhpWorkloadResource> GetPhpWorkloadResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Compute.Workloads.ProviderInstanceResource GetProviderInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.SAPApplicationServerInstanceResource GetSAPApplicationServerInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.SAPCentralServerInstanceResource GetSAPCentralServerInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.SAPDatabaseInstanceResource GetSAPDatabaseInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> GetSAPVirtualInstance(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource>> GetSAPVirtualInstanceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource GetSAPVirtualInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceCollection GetSAPVirtualInstances(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> GetSAPVirtualInstances(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.SAPVirtualInstanceResource> GetSAPVirtualInstancesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.SapApplicationServerInstanceResource GetSapApplicationServerInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.SapCentralServerInstanceResource GetSapCentralServerInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.SapDatabaseInstanceResource GetSapDatabaseInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> GetSapVirtualInstance(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource>> GetSapVirtualInstanceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource GetSapVirtualInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceCollection GetSapVirtualInstances(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> GetSapVirtualInstances(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Compute.Workloads.Models.SkuDefinition> GetSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Compute.Workloads.Models.SkuDefinition> GetSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Compute.Workloads.WordpressInstanceResource GetWordpressInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SAPAvailabilityZoneDetailsResult> SAPAvailabilityZoneDetails(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SAPAvailabilityZoneDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SAPAvailabilityZoneDetailsResult>> SAPAvailabilityZoneDetailsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SAPAvailabilityZoneDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SAPDiskConfigurationsResult> SAPDiskConfigurations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SAPDiskConfigurationsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SAPDiskConfigurationsResult>> SAPDiskConfigurationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SAPDiskConfigurationsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SAPSizingRecommendationResult> SAPSizingRecommendations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SAPSizingRecommendationContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SAPSizingRecommendationResult>> SAPSizingRecommendationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SAPSizingRecommendationContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SAPSupportedResourceSkusResult> SAPSupportedSku(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SAPSupportedSkusContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SAPSupportedResourceSkusResult>> SAPSupportedSkuAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SAPSupportedSkusContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SapAvailabilityZoneDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SapAvailabilityZoneDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SapDiskConfigurationsResult> SapDiskConfigurations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SapDiskConfigurationsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SapDiskConfigurationsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SapSizingRecommendationResult> SapSizingRecommendations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SapSizingRecommendationContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SapSizingRecommendationResult>> SapSizingRecommendationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SapSizingRecommendationContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SapSupportedResourceSkusResult> SapSupportedSku(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SapSupportedSkusContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.Workloads.Models.SapSupportedResourceSkusResult>> SapSupportedSkuAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Compute.Workloads.Models.SapSupportedSkusContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Compute.Workloads.Models
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     public partial class DatabaseConfiguration
     {
         public DatabaseConfiguration(string subnetId, Azure.ResourceManager.Compute.Workloads.Models.VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount) { }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType? DatabaseType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType? DatabaseType { get { throw null; } set { } }
         public long InstanceCount { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     public partial class DatabaseVmDetails
     {
         internal DatabaseVmDetails() { }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
         public string VirtualMachineId { get { throw null; } }
     }
     public partial class DB2ProviderInstanceProperties : Azure.ResourceManager.Compute.Workloads.Models.ProviderSpecificProperties
@@ -588,14 +588,14 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         public string StorageAccountId { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
     }
-    public partial class DeploymentConfiguration : Azure.ResourceManager.Compute.Workloads.Models.SAPConfiguration
+    public partial class DeploymentConfiguration : Azure.ResourceManager.Compute.Workloads.Models.SapConfiguration
     {
         public DeploymentConfiguration() { }
         public string AppLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.InfrastructureConfiguration InfrastructureConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.SoftwareConfiguration SoftwareConfiguration { get { throw null; } set { } }
     }
-    public partial class DeploymentWithOSConfiguration : Azure.ResourceManager.Compute.Workloads.Models.SAPConfiguration
+    public partial class DeploymentWithOSConfiguration : Azure.ResourceManager.Compute.Workloads.Models.SapConfiguration
     {
         public DeploymentWithOSConfiguration() { }
         public string AppLocation { get { throw null; } set { } }
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         public Azure.ResourceManager.Compute.Workloads.Models.OSSapConfiguration OSSapConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.SoftwareConfiguration SoftwareConfiguration { get { throw null; } set { } }
     }
-    public partial class DiscoveryConfiguration : Azure.ResourceManager.Compute.Workloads.Models.SAPConfiguration
+    public partial class DiscoveryConfiguration : Azure.ResourceManager.Compute.Workloads.Models.SapConfiguration
     {
         public DiscoveryConfiguration() { }
         public string AppLocation { get { throw null; } }
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     {
         public EnqueueReplicationServerProperties() { }
         public Azure.ResourceManager.Compute.Workloads.Models.EnqueueReplicationServerType? ErsVersion { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState? Health { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string Hostname { get { throw null; } }
         public string InstanceNo { get { throw null; } }
         public string IPAddress { get { throw null; } }
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     public partial class EnqueueServerProperties
     {
         public EnqueueServerProperties() { }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState? Health { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string Hostname { get { throw null; } }
         public string IPAddress { get { throw null; } }
         public long? Port { get { throw null; } }
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     public partial class GatewayServerProperties
     {
         public GatewayServerProperties() { }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState? Health { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public long? Port { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     public partial class MessageServerProperties
     {
         public MessageServerProperties() { }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState? Health { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string Hostname { get { throw null; } }
         public long? HttpPort { get { throw null; } }
         public long? HttpsPort { get { throw null; } }
@@ -1133,99 +1133,99 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.RoutingPreference left, Azure.ResourceManager.Compute.Workloads.Models.RoutingPreference right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SAPApplicationServerInstancePatch
+    public partial class SapApplicationServerInstancePatch
     {
-        public SAPApplicationServerInstancePatch() { }
+        public SapApplicationServerInstancePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class SAPAvailabilityZoneDetailsContent
+    public partial class SapAvailabilityZoneDetailsContent
     {
-        public SAPAvailabilityZoneDetailsContent(string appLocation, Azure.ResourceManager.Compute.Workloads.Models.SAPProductType sapProduct, Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType databaseType) { }
+        public SapAvailabilityZoneDetailsContent(string appLocation, Azure.ResourceManager.Compute.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType databaseType) { }
         public string AppLocation { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType DatabaseType { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPProductType SapProduct { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType DatabaseType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapProductType SapProduct { get { throw null; } }
     }
-    public partial class SAPAvailabilityZoneDetailsResult
+    public partial class SapAvailabilityZoneDetailsResult
     {
-        internal SAPAvailabilityZoneDetailsResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Workloads.Models.SAPAvailabilityZonePair> AvailabilityZonePairs { get { throw null; } }
+        internal SapAvailabilityZoneDetailsResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Workloads.Models.SapAvailabilityZonePair> AvailabilityZonePairs { get { throw null; } }
     }
-    public partial class SAPAvailabilityZonePair
+    public partial class SapAvailabilityZonePair
     {
-        internal SAPAvailabilityZonePair() { }
+        internal SapAvailabilityZonePair() { }
         public long? ZoneA { get { throw null; } }
         public long? ZoneB { get { throw null; } }
     }
-    public partial class SAPCentralServerInstancePatch
+    public partial class SapCentralServerInstancePatch
     {
-        public SAPCentralServerInstancePatch() { }
+        public SapCentralServerInstancePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class SAPConfiguration
+    public partial class SapConfiguration
     {
-        public SAPConfiguration() { }
+        public SapConfiguration() { }
     }
-    public partial class SAPDatabaseInstancePatch
+    public partial class SapDatabaseInstancePatch
     {
-        public SAPDatabaseInstancePatch() { }
+        public SapDatabaseInstancePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SAPDatabaseScaleMethod : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseScaleMethod>
+    public readonly partial struct SapDatabaseScaleMethod : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseScaleMethod>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SAPDatabaseScaleMethod(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseScaleMethod ScaleUp { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseScaleMethod other) { throw null; }
+        public SapDatabaseScaleMethod(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseScaleMethod ScaleUp { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseScaleMethod other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseScaleMethod left, Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseScaleMethod right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseScaleMethod (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseScaleMethod left, Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseScaleMethod right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseScaleMethod left, Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseScaleMethod right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseScaleMethod (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseScaleMethod left, Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseScaleMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SAPDatabaseType : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType>
+    public readonly partial struct SapDatabaseType : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SAPDatabaseType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType DB2 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType Hana { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType other) { throw null; }
+        public SapDatabaseType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType DB2 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType Hana { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType left, Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType left, Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType left, Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType left, Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SAPDeploymentType : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType>
+    public readonly partial struct SapDeploymentType : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SAPDeploymentType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType SingleServer { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType ThreeTier { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType other) { throw null; }
+        public SapDeploymentType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType SingleServer { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType ThreeTier { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType left, Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType left, Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType left, Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType left, Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SAPDiskConfiguration
+    public partial class SapDiskConfiguration
     {
-        internal SAPDiskConfiguration() { }
+        internal SapDiskConfiguration() { }
         public long? DiskCount { get { throw null; } }
         public long? DiskIopsReadWrite { get { throw null; } }
         public long? DiskMBpsReadWrite { get { throw null; } }
@@ -1234,80 +1234,80 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         public string DiskType { get { throw null; } }
         public string Volume { get { throw null; } }
     }
-    public partial class SAPDiskConfigurationsContent
+    public partial class SapDiskConfigurationsContent
     {
-        public SAPDiskConfigurationsContent(string appLocation, Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType environment, Azure.ResourceManager.Compute.Workloads.Models.SAPProductType sapProduct, Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType databaseType, Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType deploymentType, string dbVmSku) { }
+        public SapDiskConfigurationsContent(string appLocation, Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType environment, Azure.ResourceManager.Compute.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType databaseType, Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType deploymentType, string dbVmSku) { }
         public string AppLocation { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType DatabaseType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType DatabaseType { get { throw null; } }
         public string DbVmSku { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType DeploymentType { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType Environment { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPProductType SapProduct { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType DeploymentType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType Environment { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapProductType SapProduct { get { throw null; } }
     }
-    public partial class SAPDiskConfigurationsResult
+    public partial class SapDiskConfigurationsResult
     {
-        internal SAPDiskConfigurationsResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Workloads.Models.SAPDiskConfiguration> DiskConfigurations { get { throw null; } }
+        internal SapDiskConfigurationsResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Workloads.Models.SapDiskConfiguration> DiskConfigurations { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SAPEnvironmentType : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType>
+    public readonly partial struct SapEnvironmentType : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SAPEnvironmentType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType NonProd { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType Prod { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType other) { throw null; }
+        public SapEnvironmentType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType NonProd { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType Prod { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType left, Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType left, Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType left, Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType left, Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SAPHealthState : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState>
+    public readonly partial struct SapHealthState : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SapHealthState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SAPHealthState(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState Degraded { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState Healthy { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState Unhealthy { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState other) { throw null; }
+        public SapHealthState(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapHealthState Degraded { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapHealthState Healthy { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapHealthState Unhealthy { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapHealthState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SapHealthState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState left, Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState left, Azure.ResourceManager.Compute.Workloads.Models.SAPHealthState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SapHealthState left, Azure.ResourceManager.Compute.Workloads.Models.SapHealthState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SapHealthState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SapHealthState left, Azure.ResourceManager.Compute.Workloads.Models.SapHealthState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SAPHighAvailabilityType : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType>
+    public readonly partial struct SapHighAvailabilityType : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SAPHighAvailabilityType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType AvailabilitySet { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType AvailabilityZone { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType other) { throw null; }
+        public SapHighAvailabilityType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType AvailabilitySet { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType AvailabilityZone { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType left, Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType left, Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType left, Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType left, Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SAPInstallWithoutOSConfigSoftwareConfiguration : Azure.ResourceManager.Compute.Workloads.Models.SoftwareConfiguration
+    public partial class SapInstallWithoutOSConfigSoftwareConfiguration : Azure.ResourceManager.Compute.Workloads.Models.SoftwareConfiguration
     {
-        public SAPInstallWithoutOSConfigSoftwareConfiguration(System.Uri bomUri, string sapBitsStorageAccountId, string softwareVersion) { }
+        public SapInstallWithoutOSConfigSoftwareConfiguration(System.Uri bomUri, string sapBitsStorageAccountId, string softwareVersion) { }
         public System.Uri BomUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.HighAvailabilitySoftwareConfiguration HighAvailabilitySoftwareConfiguration { get { throw null; } set { } }
         public string SapBitsStorageAccountId { get { throw null; } set { } }
@@ -1328,66 +1328,66 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         public string SapUsername { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SAPProductType : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SAPProductType>
+    public readonly partial struct SapProductType : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SapProductType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SAPProductType(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPProductType ECC { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPProductType Other { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPProductType S4Hana { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SAPProductType other) { throw null; }
+        public SapProductType(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapProductType ECC { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapProductType Other { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapProductType S4Hana { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SapProductType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SAPProductType left, Azure.ResourceManager.Compute.Workloads.Models.SAPProductType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SAPProductType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SAPProductType left, Azure.ResourceManager.Compute.Workloads.Models.SAPProductType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SapProductType left, Azure.ResourceManager.Compute.Workloads.Models.SapProductType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SapProductType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SapProductType left, Azure.ResourceManager.Compute.Workloads.Models.SapProductType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SAPSizingRecommendationContent
+    public partial class SapSizingRecommendationContent
     {
-        public SAPSizingRecommendationContent(string appLocation, Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType environment, Azure.ResourceManager.Compute.Workloads.Models.SAPProductType sapProduct, Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType deploymentType, long saps, long dbMemory, Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType databaseType) { }
+        public SapSizingRecommendationContent(string appLocation, Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType environment, Azure.ResourceManager.Compute.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType deploymentType, long saps, long dbMemory, Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType databaseType) { }
         public string AppLocation { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType DatabaseType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType DatabaseType { get { throw null; } }
         public long DbMemory { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseScaleMethod? DbScaleMethod { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType DeploymentType { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType Environment { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType? HighAvailabilityType { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPProductType SapProduct { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseScaleMethod? DbScaleMethod { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType DeploymentType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType Environment { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType? HighAvailabilityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapProductType SapProduct { get { throw null; } }
         public long Saps { get { throw null; } }
     }
-    public partial class SAPSizingRecommendationResult
+    public partial class SapSizingRecommendationResult
     {
-        internal SAPSizingRecommendationResult() { }
+        internal SapSizingRecommendationResult() { }
     }
-    public partial class SAPSupportedResourceSkusResult
+    public partial class SapSupportedResourceSkusResult
     {
-        internal SAPSupportedResourceSkusResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Workloads.Models.SAPSupportedSku> SupportedSkus { get { throw null; } }
+        internal SapSupportedResourceSkusResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Workloads.Models.SapSupportedSku> SupportedSkus { get { throw null; } }
     }
-    public partial class SAPSupportedSku
+    public partial class SapSupportedSku
     {
-        internal SAPSupportedSku() { }
+        internal SapSupportedSku() { }
         public bool? IsAppServerCertified { get { throw null; } }
         public bool? IsDatabaseCertified { get { throw null; } }
         public string VmSku { get { throw null; } }
     }
-    public partial class SAPSupportedSkusContent
+    public partial class SapSupportedSkusContent
     {
-        public SAPSupportedSkusContent(string appLocation, Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType environment, Azure.ResourceManager.Compute.Workloads.Models.SAPProductType sapProduct, Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType deploymentType, Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType databaseType) { }
+        public SapSupportedSkusContent(string appLocation, Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType environment, Azure.ResourceManager.Compute.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType deploymentType, Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType databaseType) { }
         public string AppLocation { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType DatabaseType { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPDeploymentType DeploymentType { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPEnvironmentType Environment { get { throw null; } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType? HighAvailabilityType { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPProductType SapProduct { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType DatabaseType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapDeploymentType DeploymentType { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapEnvironmentType Environment { get { throw null; } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType? HighAvailabilityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapProductType SapProduct { get { throw null; } }
     }
-    public partial class SAPVirtualInstancePatch
+    public partial class SapVirtualInstancePatch
     {
-        public SAPVirtualInstancePatch() { }
+        public SapVirtualInstancePatch() { }
         public Azure.ResourceManager.Compute.Workloads.Models.UserAssignedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
@@ -1413,51 +1413,51 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SAPVirtualInstanceState : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState>
+    public readonly partial struct SapVirtualInstanceState : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SAPVirtualInstanceState(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState DiscoveryFailed { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState DiscoveryInProgress { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState DiscoveryPending { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState InfrastructureDeploymentFailed { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState InfrastructureDeploymentInProgress { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState InfrastructureDeploymentPending { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState RegistrationComplete { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState SoftwareInstallationFailed { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState SoftwareInstallationInProgress { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState SoftwareInstallationPending { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState other) { throw null; }
+        public SapVirtualInstanceState(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState DiscoveryFailed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState DiscoveryInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState DiscoveryPending { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState InfrastructureDeploymentFailed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState InfrastructureDeploymentInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState InfrastructureDeploymentPending { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState RegistrationComplete { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState SoftwareInstallationFailed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState SoftwareInstallationInProgress { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState SoftwareInstallationPending { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState left, Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState left, Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState left, Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState left, Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SAPVirtualInstanceStatus : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus>
+    public readonly partial struct SapVirtualInstanceStatus : System.IEquatable<Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public SAPVirtualInstanceStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus Offline { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus PartiallyRunning { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus Running { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus Starting { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus Stopping { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus Unavailable { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus other) { throw null; }
+        public SapVirtualInstanceStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus Offline { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus PartiallyRunning { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus Running { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus Starting { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus Stopping { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus Unavailable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus left, Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus left, Azure.ResourceManager.Compute.Workloads.Models.SAPVirtualInstanceStatus right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus left, Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus left, Azure.ResourceManager.Compute.Workloads.Models.SapVirtualInstanceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SearchProfile : Azure.ResourceManager.Compute.Workloads.Models.NodeProfile
@@ -1495,12 +1495,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     public partial class SingleServerConfiguration : Azure.ResourceManager.Compute.Workloads.Models.InfrastructureConfiguration
     {
         public SingleServerConfiguration(string appResourceGroup, string subnetId, Azure.ResourceManager.Compute.Workloads.Models.VirtualMachineConfiguration virtualMachineConfiguration) : base (default(string)) { }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPDatabaseType? DatabaseType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapDatabaseType? DatabaseType { get { throw null; } set { } }
         public bool? IsSecondaryIPEnabled { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.VirtualMachineConfiguration VirtualMachineConfiguration { get { throw null; } set { } }
     }
-    public partial class SingleServerRecommendationResult : Azure.ResourceManager.Compute.Workloads.Models.SAPSizingRecommendationResult
+    public partial class SingleServerRecommendationResult : Azure.ResourceManager.Compute.Workloads.Models.SapSizingRecommendationResult
     {
         internal SingleServerRecommendationResult() { }
         public string VmSku { get { throw null; } }
@@ -1621,10 +1621,10 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         public Azure.ResourceManager.Compute.Workloads.Models.ApplicationServerConfiguration ApplicationServer { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.CentralServerConfiguration CentralServer { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Workloads.Models.DatabaseConfiguration DatabaseServer { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Workloads.Models.SAPHighAvailabilityType? HighAvailabilityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Workloads.Models.SapHighAvailabilityType? HighAvailabilityType { get { throw null; } set { } }
         public bool? IsSecondaryIPEnabled { get { throw null; } set { } }
     }
-    public partial class ThreeTierRecommendationResult : Azure.ResourceManager.Compute.Workloads.Models.SAPSizingRecommendationResult
+    public partial class ThreeTierRecommendationResult : Azure.ResourceManager.Compute.Workloads.Models.SapSizingRecommendationResult
     {
         internal ThreeTierRecommendationResult() { }
         public long? ApplicationServerInstanceCount { get { throw null; } }

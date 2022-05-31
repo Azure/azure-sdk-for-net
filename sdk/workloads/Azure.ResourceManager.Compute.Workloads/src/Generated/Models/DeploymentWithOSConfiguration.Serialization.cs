@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
             Optional<SoftwareConfiguration> softwareConfiguration = default;
             Optional<OSSapConfiguration> osSapConfiguration = default;
-            SAPConfigurationType configurationType = default;
+            SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appLocation"))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("configurationType"))
                 {
-                    configurationType = new SAPConfigurationType(property.Value.GetString());
+                    configurationType = new SapConfigurationType(property.Value.GetString());
                     continue;
                 }
             }

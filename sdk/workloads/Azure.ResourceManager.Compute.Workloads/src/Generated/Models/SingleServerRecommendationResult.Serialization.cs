@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         internal static SingleServerRecommendationResult DeserializeSingleServerRecommendationResult(JsonElement element)
         {
             Optional<string> vmSku = default;
-            SAPDeploymentType deploymentType = default;
+            SapDeploymentType deploymentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSku"))
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("deploymentType"))
                 {
-                    deploymentType = new SAPDeploymentType(property.Value.GetString());
+                    deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
             }

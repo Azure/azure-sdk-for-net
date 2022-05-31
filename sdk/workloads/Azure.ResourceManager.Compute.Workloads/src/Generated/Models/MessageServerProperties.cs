@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="hostname"> The message server SAP host name. </param>
         /// <param name="ipAddress"> The message server IP Address. </param>
         /// <param name="health"> Defines the SAP Instance health. </param>
-        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, string ipAddress, SAPHealthState? health)
+        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, string ipAddress, SapHealthState? health)
         {
             MsPort = msPort;
             InternalMsPort = internalMsPort;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> The message server IP Address. </summary>
         public string IPAddress { get; }
         /// <summary> Defines the SAP Instance health. </summary>
-        public SAPHealthState? Health { get; }
+        public SapHealthState? Health { get; }
     }
 }

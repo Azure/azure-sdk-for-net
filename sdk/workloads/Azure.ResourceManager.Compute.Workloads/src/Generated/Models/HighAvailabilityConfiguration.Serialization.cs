@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
 
         internal static HighAvailabilityConfiguration DeserializeHighAvailabilityConfiguration(JsonElement element)
         {
-            SAPHighAvailabilityType highAvailabilityType = default;
+            SapHighAvailabilityType highAvailabilityType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("highAvailabilityType"))
                 {
-                    highAvailabilityType = new SAPHighAvailabilityType(property.Value.GetString());
+                    highAvailabilityType = new SapHighAvailabilityType(property.Value.GetString());
                     continue;
                 }
             }

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
 
         /// <summary> Initializes a new instance of SoftwareConfiguration. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
-        internal SoftwareConfiguration(SAPSoftwareInstallationType softwareInstallationType)
+        internal SoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType)
         {
             SoftwareInstallationType = softwareInstallationType;
         }
 
         /// <summary> The SAP software installation Type. </summary>
-        internal SAPSoftwareInstallationType SoftwareInstallationType { get; set; }
+        internal SapSoftwareInstallationType SoftwareInstallationType { get; set; }
     }
 }

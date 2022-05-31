@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             SapBitsStorageAccountId = sapBitsStorageAccountId;
             SapFqdn = sapFqdn;
             SshPrivateKey = sshPrivateKey;
-            SoftwareInstallationType = SAPSoftwareInstallationType.ServiceInitiated;
+            SoftwareInstallationType = SapSoftwareInstallationType.ServiceInitiated;
         }
 
         /// <summary> Initializes a new instance of ServiceInitiatedSoftwareConfiguration. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="sapFqdn"> The FQDN to set for the SAP system during install. </param>
         /// <param name="sshPrivateKey"> The SSH private key. </param>
         /// <param name="highAvailabilitySoftwareConfiguration"> Gets or sets the HA software configuration. </param>
-        internal ServiceInitiatedSoftwareConfiguration(SAPSoftwareInstallationType softwareInstallationType, Uri bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType)
+        internal ServiceInitiatedSoftwareConfiguration(SapSoftwareInstallationType softwareInstallationType, Uri bomUri, string softwareVersion, string sapBitsStorageAccountId, string sapFqdn, string sshPrivateKey, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration) : base(softwareInstallationType)
         {
             BomUri = bomUri;
             SoftwareVersion = softwareVersion;

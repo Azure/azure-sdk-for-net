@@ -8,12 +8,12 @@
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> Deployment Configuration. </summary>
-    public partial class DeploymentConfiguration : SAPConfiguration
+    public partial class DeploymentConfiguration : SapConfiguration
     {
         /// <summary> Initializes a new instance of DeploymentConfiguration. </summary>
         public DeploymentConfiguration()
         {
-            ConfigurationType = SAPConfigurationType.Deployment;
+            ConfigurationType = SapConfigurationType.Deployment;
         }
 
         /// <summary> Initializes a new instance of DeploymentConfiguration. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="appLocation"> The geo-location where the SAP system is to be created. </param>
         /// <param name="infrastructureConfiguration"> The infrastructure configuration. </param>
         /// <param name="softwareConfiguration"> The software configuration. </param>
-        internal DeploymentConfiguration(SAPConfigurationType configurationType, string appLocation, InfrastructureConfiguration infrastructureConfiguration, SoftwareConfiguration softwareConfiguration) : base(configurationType)
+        internal DeploymentConfiguration(SapConfigurationType configurationType, string appLocation, InfrastructureConfiguration infrastructureConfiguration, SoftwareConfiguration softwareConfiguration) : base(configurationType)
         {
             AppLocation = appLocation;
             InfrastructureConfiguration = infrastructureConfiguration;

@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> Discovery Details. </summary>
-    public partial class DiscoveryConfiguration : SAPConfiguration
+    public partial class DiscoveryConfiguration : SapConfiguration
     {
         /// <summary> Initializes a new instance of DiscoveryConfiguration. </summary>
         public DiscoveryConfiguration()
         {
-            ConfigurationType = SAPConfigurationType.Discovery;
+            ConfigurationType = SapConfigurationType.Discovery;
         }
 
         /// <summary> Initializes a new instance of DiscoveryConfiguration. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         /// <param name="centralServerVmId"> The virtual machine ID of the Central Server. </param>
         /// <param name="appLocation"> The geo-location where the SAP system exists. </param>
-        internal DiscoveryConfiguration(SAPConfigurationType configurationType, string centralServerVmId, string appLocation) : base(configurationType)
+        internal DiscoveryConfiguration(SapConfigurationType configurationType, string centralServerVmId, string appLocation) : base(configurationType)
         {
             CentralServerVmId = centralServerVmId;
             AppLocation = appLocation;

@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SAPInstallWithoutOSConfig": return SAPInstallWithoutOSConfigSoftwareConfiguration.DeserializeSAPInstallWithoutOSConfigSoftwareConfiguration(element);
+                    case "SAPInstallWithoutOSConfig": return SapInstallWithoutOSConfigSoftwareConfiguration.DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(element);
                     case "ServiceInitiated": return ServiceInitiatedSoftwareConfiguration.DeserializeServiceInitiatedSoftwareConfiguration(element);
                 }
             }
-            SAPSoftwareInstallationType softwareInstallationType = default;
+            SapSoftwareInstallationType softwareInstallationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softwareInstallationType"))
                 {
-                    softwareInstallationType = new SAPSoftwareInstallationType(property.Value.GetString());
+                    softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
                     continue;
                 }
             }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             ApplicationServerConfiguration applicationServer = default;
             DatabaseConfiguration databaseServer = default;
             Optional<HighAvailabilityConfiguration> highAvailabilityConfig = default;
-            SAPDeploymentType deploymentType = default;
+            SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("deploymentType"))
                 {
-                    deploymentType = new SAPDeploymentType(property.Value.GetString());
+                    deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appResourceGroup"))

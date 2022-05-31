@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     {
         /// <summary> Initializes a new instance of HighAvailabilityConfiguration. </summary>
         /// <param name="highAvailabilityType"> The high availability type. </param>
-        public HighAvailabilityConfiguration(SAPHighAvailabilityType highAvailabilityType)
+        public HighAvailabilityConfiguration(SapHighAvailabilityType highAvailabilityType)
         {
             HighAvailabilityType = highAvailabilityType;
         }
 
         /// <summary> The high availability type. </summary>
-        public SAPHighAvailabilityType HighAvailabilityType { get; set; }
+        public SapHighAvailabilityType HighAvailabilityType { get; set; }
     }
 }

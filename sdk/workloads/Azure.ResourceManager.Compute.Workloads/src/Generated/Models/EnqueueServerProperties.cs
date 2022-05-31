@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="ipAddress"> The enqueue server SAP IP Address. </param>
         /// <param name="port"> The enqueue server Port. </param>
         /// <param name="health"> Defines the SAP Instance health. </param>
-        internal EnqueueServerProperties(string hostname, string ipAddress, long? port, SAPHealthState? health)
+        internal EnqueueServerProperties(string hostname, string ipAddress, long? port, SapHealthState? health)
         {
             Hostname = hostname;
             IPAddress = ipAddress;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> The enqueue server Port. </summary>
         public long? Port { get; }
         /// <summary> Defines the SAP Instance health. </summary>
-        public SAPHealthState? Health { get; }
+        public SapHealthState? Health { get; }
     }
 }

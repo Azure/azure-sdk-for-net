@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SAPVirtualInstanceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapVirtualInstanceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SAPVirtualInstanceData data = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapVirtualInstanceData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SAPVirtualInstanceData data = null, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapVirtualInstanceData data = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SAPVirtualInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SapVirtualInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -155,13 +155,13 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceData value = default;
+                        SapVirtualInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SAPVirtualInstanceData.DeserializeSAPVirtualInstanceData(document.RootElement);
+                        value = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SAPVirtualInstanceData)null, message.Response);
+                    return Response.FromValue((SapVirtualInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SAPVirtualInstanceData> Get(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
+        public Response<SapVirtualInstanceData> Get(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -186,19 +186,19 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceData value = default;
+                        SapVirtualInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SAPVirtualInstanceData.DeserializeSAPVirtualInstanceData(document.RootElement);
+                        value = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SAPVirtualInstanceData)null, message.Response);
+                    return Response.FromValue((SapVirtualInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SAPVirtualInstancePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapVirtualInstancePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SAPVirtualInstanceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SAPVirtualInstancePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<SapVirtualInstanceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapVirtualInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -243,9 +243,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceData value = default;
+                        SapVirtualInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SAPVirtualInstanceData.DeserializeSAPVirtualInstanceData(document.RootElement);
+                        value = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SAPVirtualInstanceData> Update(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SAPVirtualInstancePatch patch, CancellationToken cancellationToken = default)
+        public Response<SapVirtualInstanceData> Update(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapVirtualInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceData value = default;
+                        SapVirtualInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SAPVirtualInstanceData.DeserializeSAPVirtualInstanceData(document.RootElement);
+                        value = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SAPVirtualInstanceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SapVirtualInstanceList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -392,9 +392,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceList value = default;
+                        SapVirtualInstanceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SAPVirtualInstanceList.DeserializeSAPVirtualInstanceList(document.RootElement);
+                        value = SapVirtualInstanceList.DeserializeSapVirtualInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SAPVirtualInstanceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<SapVirtualInstanceList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -419,9 +419,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceList value = default;
+                        SapVirtualInstanceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SAPVirtualInstanceList.DeserializeSAPVirtualInstanceList(document.RootElement);
+                        value = SapVirtualInstanceList.DeserializeSapVirtualInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SAPVirtualInstanceList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SapVirtualInstanceList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -461,9 +461,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceList value = default;
+                        SapVirtualInstanceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SAPVirtualInstanceList.DeserializeSAPVirtualInstanceList(document.RootElement);
+                        value = SapVirtualInstanceList.DeserializeSapVirtualInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SAPVirtualInstanceList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<SapVirtualInstanceList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -486,9 +486,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceList value = default;
+                        SapVirtualInstanceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SAPVirtualInstanceList.DeserializeSAPVirtualInstanceList(document.RootElement);
+                        value = SapVirtualInstanceList.DeserializeSapVirtualInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SAPVirtualInstanceList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SapVirtualInstanceList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -680,9 +680,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceList value = default;
+                        SapVirtualInstanceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SAPVirtualInstanceList.DeserializeSAPVirtualInstanceList(document.RootElement);
+                        value = SapVirtualInstanceList.DeserializeSapVirtualInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SAPVirtualInstanceList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<SapVirtualInstanceList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -709,9 +709,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceList value = default;
+                        SapVirtualInstanceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SAPVirtualInstanceList.DeserializeSAPVirtualInstanceList(document.RootElement);
+                        value = SapVirtualInstanceList.DeserializeSapVirtualInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SAPVirtualInstanceList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SapVirtualInstanceList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -750,9 +750,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceList value = default;
+                        SapVirtualInstanceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SAPVirtualInstanceList.DeserializeSAPVirtualInstanceList(document.RootElement);
+                        value = SapVirtualInstanceList.DeserializeSapVirtualInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SAPVirtualInstanceList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<SapVirtualInstanceList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -777,9 +777,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             {
                 case 200:
                     {
-                        SAPVirtualInstanceList value = default;
+                        SapVirtualInstanceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SAPVirtualInstanceList.DeserializeSAPVirtualInstanceList(document.RootElement);
+                        value = SapVirtualInstanceList.DeserializeSapVirtualInstanceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         internal static GatewayServerProperties DeserializeGatewayServerProperties(JsonElement element)
         {
             Optional<long?> port = default;
-            Optional<SAPHealthState> health = default;
+            Optional<SapHealthState> health = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    health = new SAPHealthState(property.Value.GetString());
+                    health = new SapHealthState(property.Value.GetString());
                     continue;
                 }
             }

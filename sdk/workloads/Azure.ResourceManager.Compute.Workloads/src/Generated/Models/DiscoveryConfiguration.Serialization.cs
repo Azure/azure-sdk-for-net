@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         {
             Optional<string> centralServerVmId = default;
             Optional<string> appLocation = default;
-            SAPConfigurationType configurationType = default;
+            SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("centralServerVmId"))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("configurationType"))
                 {
-                    configurationType = new SAPConfigurationType(property.Value.GetString());
+                    configurationType = new SapConfigurationType(property.Value.GetString());
                     continue;
                 }
             }

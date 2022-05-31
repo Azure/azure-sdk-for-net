@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Compute.Workloads
             return GetCachedClient(Client => new PhpWorkloadResourceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SAPVirtualInstanceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SAPVirtualInstanceResources and their operations over a SAPVirtualInstanceResource. </returns>
-        public virtual SAPVirtualInstanceCollection GetSAPVirtualInstances()
+        /// <summary> Gets a collection of SapVirtualInstanceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
+        public virtual SapVirtualInstanceCollection GetSapVirtualInstances()
         {
-            return GetCachedClient(Client => new SAPVirtualInstanceCollection(Client, Id));
+            return GetCachedClient(Client => new SapVirtualInstanceCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of MonitorResources in the ResourceGroupResource. </summary>

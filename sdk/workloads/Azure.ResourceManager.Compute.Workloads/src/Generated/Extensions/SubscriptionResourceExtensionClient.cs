@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Compute.Workloads
         private PhpWorkloadsRestOperations _phpWorkloadResourcePhpWorkloadsRestClient;
         private ClientDiagnostics _defaultClientDiagnostics;
         private WorkloadsRestOperations _defaultRestClient;
-        private ClientDiagnostics _sapVirtualInstanceClientDiagnostics;
-        private SAPVirtualInstancesRestOperations _sapVirtualInstanceRestClient;
+        private ClientDiagnostics _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics;
+        private SAPVirtualInstancesRestOperations _sapVirtualInstanceSAPVirtualInstancesRestClient;
         private ClientDiagnostics _monitormonitorsClientDiagnostics;
         private MonitorsRestOperations _monitormonitorsRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Compute.Workloads
         private PhpWorkloadsRestOperations PhpWorkloadResourcePhpWorkloadsRestClient => _phpWorkloadResourcePhpWorkloadsRestClient ??= new PhpWorkloadsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PhpWorkloadResource.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private WorkloadsRestOperations DefaultRestClient => _defaultRestClient ??= new WorkloadsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics SAPVirtualInstanceClientDiagnostics => _sapVirtualInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", SAPVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
-        private SAPVirtualInstancesRestOperations SAPVirtualInstanceRestClient => _sapVirtualInstanceRestClient ??= new SAPVirtualInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SAPVirtualInstanceResource.ResourceType));
+        private ClientDiagnostics SapVirtualInstanceSAPVirtualInstancesClientDiagnostics => _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
+        private SAPVirtualInstancesRestOperations SapVirtualInstanceSAPVirtualInstancesRestClient => _sapVirtualInstanceSAPVirtualInstancesRestClient ??= new SAPVirtualInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapVirtualInstanceResource.ResourceType));
         private ClientDiagnostics MonitormonitorsClientDiagnostics => _monitormonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", MonitorResource.ResourceType.Namespace, Diagnostics);
         private MonitorsRestOperations MonitormonitorsRestClient => _monitormonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorResource.ResourceType));
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -147,18 +147,18 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP sizing recommendations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
-        /// Operation Id: SAPSizingRecommendations
+        /// Operation Id: SapSizingRecommendations
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Sizing Recommendation Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SAPSizingRecommendationResult>> SAPSizingRecommendationsAsync(string location, SAPSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(string location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SAPSizingRecommendations");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapSizingRecommendations");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.SAPSizingRecommendationsAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.SapSizingRecommendationsAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -171,18 +171,18 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP sizing recommendations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSizingRecommendations
-        /// Operation Id: SAPSizingRecommendations
+        /// Operation Id: SapSizingRecommendations
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Sizing Recommendation Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SAPSizingRecommendationResult> SAPSizingRecommendations(string location, SAPSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<SapSizingRecommendationResult> SapSizingRecommendations(string location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SAPSizingRecommendations");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapSizingRecommendations");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.SAPSizingRecommendations(Id.SubscriptionId, location, content, cancellationToken);
+                var response = DefaultRestClient.SapSizingRecommendations(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -195,18 +195,18 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP supported SKUs.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
-        /// Operation Id: SAPSupportedSku
+        /// Operation Id: SapSupportedSku
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Supported SKU Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SAPSupportedResourceSkusResult>> SAPSupportedSkuAsync(string location, SAPSupportedSkusContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(string location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SAPSupportedSku");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapSupportedSku");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.SAPSupportedSkuAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.SapSupportedSkuAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP supported SKUs.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getSapSupportedSku
-        /// Operation Id: SAPSupportedSku
+        /// Operation Id: SapSupportedSku
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Supported SKU Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SAPSupportedResourceSkusResult> SAPSupportedSku(string location, SAPSupportedSkusContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<SapSupportedResourceSkusResult> SapSupportedSku(string location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SAPSupportedSku");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapSupportedSku");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.SAPSupportedSku(Id.SubscriptionId, location, content, cancellationToken);
+                var response = DefaultRestClient.SapSupportedSku(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -243,18 +243,18 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP Disk Configurations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
-        /// Operation Id: SAPDiskConfigurations
+        /// Operation Id: SapDiskConfigurations
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Disk Configurations Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SAPDiskConfigurationsResult>> SAPDiskConfigurationsAsync(string location, SAPDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(string location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SAPDiskConfigurations");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapDiskConfigurations");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.SAPDiskConfigurationsAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.SapDiskConfigurationsAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -267,18 +267,18 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP Disk Configurations.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getDiskConfigurations
-        /// Operation Id: SAPDiskConfigurations
+        /// Operation Id: SapDiskConfigurations
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Disk Configurations Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SAPDiskConfigurationsResult> SAPDiskConfigurations(string location, SAPDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<SapDiskConfigurationsResult> SapDiskConfigurations(string location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SAPDiskConfigurations");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapDiskConfigurations");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.SAPDiskConfigurations(Id.SubscriptionId, location, content, cancellationToken);
+                var response = DefaultRestClient.SapDiskConfigurations(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -291,18 +291,18 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP Availability Zone Details.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
-        /// Operation Id: SAPAvailabilityZoneDetails
+        /// Operation Id: SapAvailabilityZoneDetails
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Availability Zone Details Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SAPAvailabilityZoneDetailsResult>> SAPAvailabilityZoneDetailsAsync(string location, SAPAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(string location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SAPAvailabilityZoneDetails");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapAvailabilityZoneDetails");
             scope.Start();
             try
             {
-                var response = await DefaultRestClient.SAPAvailabilityZoneDetailsAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                var response = await DefaultRestClient.SapAvailabilityZoneDetailsAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -315,18 +315,18 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary>
         /// Get SAP Availability Zone Details.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/locations/{location}/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails
-        /// Operation Id: SAPAvailabilityZoneDetails
+        /// Operation Id: SapAvailabilityZoneDetails
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> SAP Availability Zone Details Request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SAPAvailabilityZoneDetailsResult> SAPAvailabilityZoneDetails(string location, SAPAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(string location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SAPAvailabilityZoneDetails");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SapAvailabilityZoneDetails");
             scope.Start();
             try
             {
-                var response = DefaultRestClient.SAPAvailabilityZoneDetails(Id.SubscriptionId, location, content, cancellationToken);
+                var response = DefaultRestClient.SapAvailabilityZoneDetails(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -342,17 +342,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// Operation Id: SAPVirtualInstances_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SAPVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SAPVirtualInstanceResource> GetSAPVirtualInstancesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SAPVirtualInstanceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SapVirtualInstanceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SAPVirtualInstanceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSAPVirtualInstances");
+                using var scope = SapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapVirtualInstances");
                 scope.Start();
                 try
                 {
-                    var response = await SAPVirtualInstanceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SAPVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SapVirtualInstanceSAPVirtualInstancesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -360,14 +360,14 @@ namespace Azure.ResourceManager.Compute.Workloads
                     throw;
                 }
             }
-            async Task<Page<SAPVirtualInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SapVirtualInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SAPVirtualInstanceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSAPVirtualInstances");
+                using var scope = SapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapVirtualInstances");
                 scope.Start();
                 try
                 {
-                    var response = await SAPVirtualInstanceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SAPVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await SapVirtualInstanceSAPVirtualInstancesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -384,17 +384,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// Operation Id: SAPVirtualInstances_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SAPVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SAPVirtualInstanceResource> GetSAPVirtualInstances(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(CancellationToken cancellationToken = default)
         {
-            Page<SAPVirtualInstanceResource> FirstPageFunc(int? pageSizeHint)
+            Page<SapVirtualInstanceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = SAPVirtualInstanceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSAPVirtualInstances");
+                using var scope = SapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapVirtualInstances");
                 scope.Start();
                 try
                 {
-                    var response = SAPVirtualInstanceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SAPVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SapVirtualInstanceSAPVirtualInstancesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -402,14 +402,14 @@ namespace Azure.ResourceManager.Compute.Workloads
                     throw;
                 }
             }
-            Page<SAPVirtualInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SapVirtualInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = SAPVirtualInstanceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSAPVirtualInstances");
+                using var scope = SapVirtualInstanceSAPVirtualInstancesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSapVirtualInstances");
                 scope.Start();
                 try
                 {
-                    var response = SAPVirtualInstanceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SAPVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = SapVirtualInstanceSAPVirtualInstancesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SapVirtualInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

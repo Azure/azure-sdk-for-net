@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
 
         internal static DatabaseConfiguration DeserializeDatabaseConfiguration(JsonElement element)
         {
-            Optional<SAPDatabaseType> databaseType = default;
+            Optional<SapDatabaseType> databaseType = default;
             string subnetId = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    databaseType = new SAPDatabaseType(property.Value.GetString());
+                    databaseType = new SapDatabaseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subnetId"))

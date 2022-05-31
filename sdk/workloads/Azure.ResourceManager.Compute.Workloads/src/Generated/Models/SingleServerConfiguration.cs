@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
 
             SubnetId = subnetId;
             VirtualMachineConfiguration = virtualMachineConfiguration;
-            DeploymentType = SAPDeploymentType.SingleServer;
+            DeploymentType = SapDeploymentType.SingleServer;
         }
 
         /// <summary> Initializes a new instance of SingleServerConfiguration. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="databaseType"> The database type. </param>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
-        internal SingleServerConfiguration(SAPDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, SAPDatabaseType? databaseType, string subnetId, VirtualMachineConfiguration virtualMachineConfiguration) : base(deploymentType, appResourceGroup)
+        internal SingleServerConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, string subnetId, VirtualMachineConfiguration virtualMachineConfiguration) : base(deploymentType, appResourceGroup)
         {
             NetworkConfiguration = networkConfiguration;
             DatabaseType = databaseType;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         }
 
         /// <summary> The database type. </summary>
-        public SAPDatabaseType? DatabaseType { get; set; }
+        public SapDatabaseType? DatabaseType { get; set; }
         /// <summary> The subnet id. </summary>
         public string SubnetId { get; set; }
         /// <summary> Gets or sets the virtual machine configuration. </summary>

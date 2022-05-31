@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         internal static DatabaseVmDetails DeserializeDatabaseVmDetails(JsonElement element)
         {
             Optional<string> virtualMachineId = default;
-            Optional<SAPVirtualInstanceStatus> status = default;
+            Optional<SapVirtualInstanceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachineId"))
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new SAPVirtualInstanceStatus(property.Value.GetString());
+                    status = new SapVirtualInstanceStatus(property.Value.GetString());
                     continue;
                 }
             }

@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Initializes a new instance of InfrastructureConfiguration. </summary>
         /// <param name="deploymentType"> The deployment Type. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
-        internal InfrastructureConfiguration(SAPDeploymentType deploymentType, string appResourceGroup)
+        internal InfrastructureConfiguration(SapDeploymentType deploymentType, string appResourceGroup)
         {
             DeploymentType = deploymentType;
             AppResourceGroup = appResourceGroup;
         }
 
         /// <summary> The deployment Type. </summary>
-        internal SAPDeploymentType DeploymentType { get; set; }
+        internal SapDeploymentType DeploymentType { get; set; }
         /// <summary> The application resource group where SAP system resources will be deployed. </summary>
         public string AppResourceGroup { get; set; }
     }
