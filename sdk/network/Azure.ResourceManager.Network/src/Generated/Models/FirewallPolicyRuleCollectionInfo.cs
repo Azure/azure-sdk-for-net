@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the rule collection. </summary>
-    public partial class FirewallPolicyRuleCollection
+    public partial class FirewallPolicyRuleCollectionInfo
     {
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollection. </summary>
-        public FirewallPolicyRuleCollection()
+        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionInfo. </summary>
+        public FirewallPolicyRuleCollectionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollection. </summary>
+        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionInfo. </summary>
         /// <param name="ruleCollectionType"> The type of the rule collection. </param>
         /// <param name="name"> The name of the rule collection. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>
-        internal FirewallPolicyRuleCollection(FirewallPolicyRuleCollectionType ruleCollectionType, string name, int? priority)
+        internal FirewallPolicyRuleCollectionInfo(FirewallPolicyRuleCollectionType ruleCollectionType, string name, int? priority)
         {
             RuleCollectionType = ruleCollectionType;
             Name = name;

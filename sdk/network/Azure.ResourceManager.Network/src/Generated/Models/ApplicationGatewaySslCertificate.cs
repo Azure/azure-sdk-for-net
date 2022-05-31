@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="publicCertData"> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the SSL certificate resource. </param>
-        internal ApplicationGatewaySslCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, string data, string password, string publicCertData, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewaySslCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string data, string password, string publicCertData, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             Data = data;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Base-64 encoded pfx certificate. Only applicable in PUT Request. </summary>
         public string Data { get; set; }
         /// <summary> Password for the pfx file specified in data. Only applicable in PUT request. </summary>

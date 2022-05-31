@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The remote IP address. Acceptable values are valid IPv4 addresses. </summary>
         public string RemoteIPAddress { get; }
         /// <summary> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of them, then this parameter must be specified. Otherwise optional). </summary>
-        public string TargetNicResourceId { get; set; }
+        public ResourceIdentifier TargetNicResourceId { get; set; }
     }
 }
