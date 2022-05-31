@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    /// <summary> The OAuthTokens service client. </summary>
+    /// <summary> Data plane generated client for OAuthTokens. </summary>
     public partial class OAuthTokensClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };

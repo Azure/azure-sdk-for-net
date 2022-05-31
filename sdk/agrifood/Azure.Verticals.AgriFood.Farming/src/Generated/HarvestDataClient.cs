@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    /// <summary> The HarvestData service client. </summary>
+    /// <summary> Data plane generated client for HarvestData. </summary>
     public partial class HarvestDataClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
