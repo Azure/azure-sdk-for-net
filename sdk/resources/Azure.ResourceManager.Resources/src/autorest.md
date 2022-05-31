@@ -44,7 +44,7 @@ override-operation-name:
   Deployments_WhatIfAtSubscriptionScope: WhatIf
   Deployments_WhatIfAtTenantScope: WhatIf
   Deployments_CheckExistenceAtScope: CheckExistence
-  JitRequests_ListBySubscription: GetJitRequestDefinitions
+  jitRequests_ListBySubscription: GetJitRequestDefinitions
   Deployments_CalculateTemplateHash: CalculateDeploymentTemplateHash 
 
 operation-groups-to-omit:
