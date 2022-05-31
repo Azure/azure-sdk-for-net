@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             FileShareType shareType = default;
             FileShareStorageType storageType = default;
             Optional<long> shareSizeInGB = default;
-            Optional<string> storageResourceId = default;
+            Optional<ResourceIdentifier> storageResourceId = default;
             Optional<string> shareName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("storageResourceId"))
                 {
-                    storageResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    storageResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("shareName"))

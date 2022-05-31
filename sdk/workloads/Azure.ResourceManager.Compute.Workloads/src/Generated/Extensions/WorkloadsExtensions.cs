@@ -538,20 +538,20 @@ namespace Azure.ResourceManager.Compute.Workloads
         }
         #endregion
 
-        #region ProviderInstanceResource
+        #region SapProviderInstanceResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderInstanceResource.CreateResourceIdentifier" /> to create a <see cref="ProviderInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SapProviderInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SapProviderInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapProviderInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderInstanceResource" /> object. </returns>
-        public static ProviderInstanceResource GetProviderInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapProviderInstanceResource" /> object. </returns>
+        public static SapProviderInstanceResource GetSapProviderInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProviderInstanceResource.ValidateResourceId(id);
-                return new ProviderInstanceResource(client, id);
+                SapProviderInstanceResource.ValidateResourceId(id);
+                return new SapProviderInstanceResource(client, id);
             }
             );
         }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             OSImageProfile osImage = default;
             DiskInfo osDisk = default;
             Optional<IList<DiskInfo>> dataDisks = default;
-            Optional<IReadOnlyList<string>> nodeResourceIds = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> nodeResourceIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("autoScaleMinCount"))
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceIdentifier(item.GetString()));
                     }
                     nodeResourceIds = array;
                     continue;

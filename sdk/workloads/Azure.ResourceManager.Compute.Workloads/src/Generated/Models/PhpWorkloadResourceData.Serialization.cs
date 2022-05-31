@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Compute.Workloads
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppLocation))
+            if (Optional.IsDefined(PhpAppLocation))
             {
                 writer.WritePropertyName("appLocation");
-                writer.WriteStringValue(AppLocation);
+                writer.WriteStringValue(PhpAppLocation);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {

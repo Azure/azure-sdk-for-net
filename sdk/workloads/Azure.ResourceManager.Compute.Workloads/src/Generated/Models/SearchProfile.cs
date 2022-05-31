@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="dataDisks"> Data disks details. This property is not in use right now. </param>
         /// <param name="nodeResourceIds"> VM/VMSS resource ARM Ids. </param>
         /// <param name="searchType"> Search type. </param>
-        internal SearchProfile(string name, string nodeSku, OSImageProfile osImage, DiskInfo osDisk, IList<DiskInfo> dataDisks, IReadOnlyList<string> nodeResourceIds, SearchType searchType) : base(name, nodeSku, osImage, osDisk, dataDisks, nodeResourceIds)
+        internal SearchProfile(string name, string nodeSku, OSImageProfile osImage, DiskInfo osDisk, IList<DiskInfo> dataDisks, IReadOnlyList<ResourceIdentifier> nodeResourceIds, SearchType searchType) : base(name, nodeSku, osImage, osDisk, dataDisks, nodeResourceIds)
         {
             SearchType = searchType;
         }

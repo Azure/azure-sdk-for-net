@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         {
             Optional<NetworkConfiguration> networkConfiguration = default;
             Optional<SapDatabaseType> databaseType = default;
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("subnetId"))
                 {
-                    subnetId = property.Value.GetString();
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualMachineConfiguration"))

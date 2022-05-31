@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
-    public partial class DB2ProviderInstanceProperties : IUtf8JsonSerializable
+    public partial class Db2ProviderInstanceProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             writer.WriteEndObject();
         }
 
-        internal static DB2ProviderInstanceProperties DeserializeDB2ProviderInstanceProperties(JsonElement element)
+        internal static Db2ProviderInstanceProperties DeserializeDb2ProviderInstanceProperties(JsonElement element)
         {
             Optional<string> hostname = default;
             Optional<string> dbName = default;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                     continue;
                 }
             }
-            return new DB2ProviderInstanceProperties(providerType, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value);
+            return new Db2ProviderInstanceProperties(providerType, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value);
         }
     }
 }

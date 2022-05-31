@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     {
         internal static ProviderInstanceListResult DeserializeProviderInstanceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ProviderInstanceData>> value = default;
+            Optional<IReadOnlyList<SapProviderInstanceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProviderInstanceData> array = new List<ProviderInstanceData>();
+                    List<SapProviderInstanceData> array = new List<SapProviderInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderInstanceData.DeserializeProviderInstanceData(item));
+                        array.Add(SapProviderInstanceData.DeserializeSapProviderInstanceData(item));
                     }
                     value = array;
                     continue;

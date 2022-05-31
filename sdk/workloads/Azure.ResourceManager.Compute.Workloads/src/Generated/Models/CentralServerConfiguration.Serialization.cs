@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
 
         internal static CentralServerConfiguration DeserializeCentralServerConfiguration(JsonElement element)
         {
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             VirtualMachineConfiguration virtualMachineConfiguration = default;
             long instanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"))
                 {
-                    subnetId = property.Value.GetString();
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualMachineConfiguration"))

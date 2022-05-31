@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/>, <paramref name="subnetId"/> or <paramref name="virtualMachineConfiguration"/> is null. </exception>
-        public SingleServerConfiguration(string appResourceGroup, string subnetId, VirtualMachineConfiguration virtualMachineConfiguration) : base(appResourceGroup)
+        public SingleServerConfiguration(string appResourceGroup, ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration) : base(appResourceGroup)
         {
             if (appResourceGroup == null)
             {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="databaseType"> The database type. </param>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
-        internal SingleServerConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, string subnetId, VirtualMachineConfiguration virtualMachineConfiguration) : base(deploymentType, appResourceGroup)
+        internal SingleServerConfiguration(SapDeploymentType deploymentType, string appResourceGroup, NetworkConfiguration networkConfiguration, SapDatabaseType? databaseType, ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration) : base(deploymentType, appResourceGroup)
         {
             NetworkConfiguration = networkConfiguration;
             DatabaseType = databaseType;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> The database type. </summary>
         public SapDatabaseType? DatabaseType { get; set; }
         /// <summary> The subnet id. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Gets or sets the virtual machine configuration. </summary>
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
     }

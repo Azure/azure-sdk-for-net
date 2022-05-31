@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="logAnalyticsWorkspaceArmId"> The ARM ID of the Log Analytics Workspace that is used for SAP monitoring. </param>
         /// <param name="monitorSubnet"> The subnet which the SAP monitor will be deployed in. </param>
         /// <param name="msiArmId"> The ARM ID of the MSI used for SAP monitoring. </param>
-        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, string sapAppLocation, RoutingPreference? routingPreference, ManagedRGConfiguration managedResourceGroupConfiguration, string logAnalyticsWorkspaceArmId, string monitorSubnet, string msiArmId) : base(id, name, resourceType, systemData, tags, location)
+        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, string sapAppLocation, RoutingPreference? routingPreference, ManagedRGConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, string monitorSubnet, ResourceIdentifier msiArmId) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Errors = errors;
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Compute.Workloads
         }
 
         /// <summary> The ARM ID of the Log Analytics Workspace that is used for SAP monitoring. </summary>
-        public string LogAnalyticsWorkspaceArmId { get; set; }
+        public ResourceIdentifier LogAnalyticsWorkspaceArmId { get; set; }
         /// <summary> The subnet which the SAP monitor will be deployed in. </summary>
         public string MonitorSubnet { get; set; }
         /// <summary> The ARM ID of the MSI used for SAP monitoring. </summary>
-        public string MsiArmId { get; }
+        public ResourceIdentifier MsiArmId { get; }
     }
 }

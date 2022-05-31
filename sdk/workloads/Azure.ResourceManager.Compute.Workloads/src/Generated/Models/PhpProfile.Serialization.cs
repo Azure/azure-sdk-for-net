@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
 
         internal static PhpProfile DeserializePhpProfile(JsonElement element)
         {
-            PHPVersion version = default;
+            PhpVersion version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"))
                 {
-                    version = new PHPVersion(property.Value.GetString());
+                    version = new PhpVersion(property.Value.GetString());
                     continue;
                 }
             }

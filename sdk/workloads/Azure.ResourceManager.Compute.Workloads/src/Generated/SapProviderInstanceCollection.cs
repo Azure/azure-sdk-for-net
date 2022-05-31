@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute.Workloads
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProviderInstanceResource" /> and their operations.
-    /// Each <see cref="ProviderInstanceResource" /> in the collection will belong to the same instance of <see cref="SapMonitorResource" />.
-    /// To get a <see cref="ProviderInstanceCollection" /> instance call the GetProviderInstances method from an instance of <see cref="SapMonitorResource" />.
+    /// A class representing a collection of <see cref="SapProviderInstanceResource" /> and their operations.
+    /// Each <see cref="SapProviderInstanceResource" /> in the collection will belong to the same instance of <see cref="SapMonitorResource" />.
+    /// To get a <see cref="SapProviderInstanceCollection" /> instance call the GetSapProviderInstances method from an instance of <see cref="SapMonitorResource" />.
     /// </summary>
-    public partial class ProviderInstanceCollection : ArmCollection, IEnumerable<ProviderInstanceResource>, IAsyncEnumerable<ProviderInstanceResource>
+    public partial class SapProviderInstanceCollection : ArmCollection, IEnumerable<SapProviderInstanceResource>, IAsyncEnumerable<SapProviderInstanceResource>
     {
-        private readonly ClientDiagnostics _providerInstanceClientDiagnostics;
-        private readonly ProviderInstancesRestOperations _providerInstanceRestClient;
+        private readonly ClientDiagnostics _sapProviderInstanceProviderInstancesClientDiagnostics;
+        private readonly ProviderInstancesRestOperations _sapProviderInstanceProviderInstancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderInstanceCollection"/> class for mocking. </summary>
-        protected ProviderInstanceCollection()
+        /// <summary> Initializes a new instance of the <see cref="SapProviderInstanceCollection"/> class for mocking. </summary>
+        protected SapProviderInstanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderInstanceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SapProviderInstanceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ProviderInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SapProviderInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _providerInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", ProviderInstanceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ProviderInstanceResource.ResourceType, out string providerInstanceApiVersion);
-            _providerInstanceRestClient = new ProviderInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerInstanceApiVersion);
+            _sapProviderInstanceProviderInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", SapProviderInstanceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SapProviderInstanceResource.ResourceType, out string sapProviderInstanceProviderInstancesApiVersion);
+            _sapProviderInstanceProviderInstancesRestClient = new ProviderInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sapProviderInstanceProviderInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProviderInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerInstanceName, ProviderInstanceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SapProviderInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerInstanceName, SapProviderInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _providerInstanceClientDiagnostics.CreateScope("ProviderInstanceCollection.CreateOrUpdate");
+            using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _providerInstanceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<ProviderInstanceResource>(new ProviderInstanceOperationSource(Client), _providerInstanceClientDiagnostics, Pipeline, _providerInstanceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _sapProviderInstanceProviderInstancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<SapProviderInstanceResource>(new SapProviderInstanceOperationSource(Client), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, _sapProviderInstanceProviderInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ProviderInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string providerInstanceName, ProviderInstanceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SapProviderInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string providerInstanceName, SapProviderInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _providerInstanceClientDiagnostics.CreateScope("ProviderInstanceCollection.CreateOrUpdate");
+            using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _providerInstanceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<ProviderInstanceResource>(new ProviderInstanceOperationSource(Client), _providerInstanceClientDiagnostics, Pipeline, _providerInstanceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _sapProviderInstanceProviderInstancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data, cancellationToken);
+                var operation = new WorkloadsArmOperation<SapProviderInstanceResource>(new SapProviderInstanceOperationSource(Client), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, _sapProviderInstanceProviderInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
-        public virtual async Task<Response<ProviderInstanceResource>> GetAsync(string providerInstanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SapProviderInstanceResource>> GetAsync(string providerInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
 
-            using var scope = _providerInstanceClientDiagnostics.CreateScope("ProviderInstanceCollection.Get");
+            using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _providerInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken).ConfigureAwait(false);
+                var response = await _sapProviderInstanceProviderInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProviderInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapProviderInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
-        public virtual Response<ProviderInstanceResource> Get(string providerInstanceName, CancellationToken cancellationToken = default)
+        public virtual Response<SapProviderInstanceResource> Get(string providerInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
 
-            using var scope = _providerInstanceClientDiagnostics.CreateScope("ProviderInstanceCollection.Get");
+            using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _providerInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken);
+                var response = _sapProviderInstanceProviderInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProviderInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapProviderInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// Operation Id: ProviderInstances_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProviderInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProviderInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SapProviderInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SapProviderInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderInstanceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SapProviderInstanceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _providerInstanceClientDiagnostics.CreateScope("ProviderInstanceCollection.GetAll");
+                using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _providerInstanceRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sapProviderInstanceProviderInstancesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SapProviderInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.Compute.Workloads
                     throw;
                 }
             }
-            async Task<Page<ProviderInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SapProviderInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _providerInstanceClientDiagnostics.CreateScope("ProviderInstanceCollection.GetAll");
+                using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _providerInstanceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _sapProviderInstanceProviderInstancesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SapProviderInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,17 +225,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// Operation Id: ProviderInstances_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProviderInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProviderInstanceResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SapProviderInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SapProviderInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ProviderInstanceResource> FirstPageFunc(int? pageSizeHint)
+            Page<SapProviderInstanceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _providerInstanceClientDiagnostics.CreateScope("ProviderInstanceCollection.GetAll");
+                using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _providerInstanceRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sapProviderInstanceProviderInstancesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SapProviderInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.Compute.Workloads
                     throw;
                 }
             }
-            Page<ProviderInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SapProviderInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _providerInstanceClientDiagnostics.CreateScope("ProviderInstanceCollection.GetAll");
+                using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _providerInstanceRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _sapProviderInstanceProviderInstancesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new SapProviderInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.Compute.Workloads
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
 
-            using var scope = _providerInstanceClientDiagnostics.CreateScope("ProviderInstanceCollection.Exists");
+            using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _providerInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sapProviderInstanceProviderInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.Compute.Workloads
         {
             Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
 
-            using var scope = _providerInstanceClientDiagnostics.CreateScope("ProviderInstanceCollection.Exists");
+            using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _providerInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken: cancellationToken);
+                var response = _sapProviderInstanceProviderInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             }
         }
 
-        IEnumerator<ProviderInstanceResource> IEnumerable<ProviderInstanceResource>.GetEnumerator()
+        IEnumerator<SapProviderInstanceResource> IEnumerable<SapProviderInstanceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ProviderInstanceResource> IAsyncEnumerable<ProviderInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SapProviderInstanceResource> IAsyncEnumerable<SapProviderInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

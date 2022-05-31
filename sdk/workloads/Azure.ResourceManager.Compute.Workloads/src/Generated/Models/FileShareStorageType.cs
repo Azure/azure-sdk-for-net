@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string StandardGRSValue = "Standard_GRS";
-        private const string StandardZRSValue = "Standard_ZRS";
-        private const string PremiumLRSValue = "Premium_LRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string StandardGrsValue = "Standard_GRS";
+        private const string StandardZrsValue = "Standard_ZRS";
+        private const string PremiumLrsValue = "Premium_LRS";
 
         /// <summary> Standard_LRS. </summary>
-        public static FileShareStorageType StandardLRS { get; } = new FileShareStorageType(StandardLRSValue);
+        public static FileShareStorageType StandardLrs { get; } = new FileShareStorageType(StandardLrsValue);
         /// <summary> Standard_GRS. </summary>
-        public static FileShareStorageType StandardGRS { get; } = new FileShareStorageType(StandardGRSValue);
+        public static FileShareStorageType StandardGrs { get; } = new FileShareStorageType(StandardGrsValue);
         /// <summary> Standard_ZRS. </summary>
-        public static FileShareStorageType StandardZRS { get; } = new FileShareStorageType(StandardZRSValue);
+        public static FileShareStorageType StandardZrs { get; } = new FileShareStorageType(StandardZrsValue);
         /// <summary> Premium_LRS. </summary>
-        public static FileShareStorageType PremiumLRS { get; } = new FileShareStorageType(PremiumLRSValue);
+        public static FileShareStorageType PremiumLrs { get; } = new FileShareStorageType(PremiumLrsValue);
         /// <summary> Determines if two <see cref="FileShareStorageType"/> values are the same. </summary>
         public static bool operator ==(FileShareStorageType left, FileShareStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FileShareStorageType"/> values are not the same. </summary>

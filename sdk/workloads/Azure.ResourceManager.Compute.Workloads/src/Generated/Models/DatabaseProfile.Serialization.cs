@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             Optional<long> storageIops = default;
             Optional<int> backupRetentionDays = default;
             Optional<EnableSslEnforcement> sslEnforcementEnabled = default;
-            Optional<string> serverResourceId = default;
+            Optional<ResourceIdentifier> serverResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -162,7 +162,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("serverResourceId"))
                 {
-                    serverResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    serverResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         private const string SecondaryValue = "Secondary";
         private const string UnknownValue = "Unknown";
         private const string AscsValue = "ASCS";
-        private const string ERSInactiveValue = "ERSInactive";
-        private const string ERSValue = "ERS";
+        private const string ErsInactiveValue = "ERSInactive";
+        private const string ErsValue = "ERS";
         private const string StandbyValue = "Standby";
 
         /// <summary> Primary. </summary>
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> ASCS. </summary>
         public static CentralServerVirtualMachineType Ascs { get; } = new CentralServerVirtualMachineType(AscsValue);
         /// <summary> ERSInactive. </summary>
-        public static CentralServerVirtualMachineType ERSInactive { get; } = new CentralServerVirtualMachineType(ERSInactiveValue);
+        public static CentralServerVirtualMachineType ErsInactive { get; } = new CentralServerVirtualMachineType(ErsInactiveValue);
         /// <summary> ERS. </summary>
-        public static CentralServerVirtualMachineType ERS { get; } = new CentralServerVirtualMachineType(ERSValue);
+        public static CentralServerVirtualMachineType Ers { get; } = new CentralServerVirtualMachineType(ErsValue);
         /// <summary> Standby. </summary>
         public static CentralServerVirtualMachineType Standby { get; } = new CentralServerVirtualMachineType(StandbyValue);
         /// <summary> Determines if two <see cref="CentralServerVirtualMachineType"/> values are the same. </summary>

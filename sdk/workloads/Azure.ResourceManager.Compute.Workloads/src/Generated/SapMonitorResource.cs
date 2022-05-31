@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Compute.Workloads
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ProviderInstanceResources in the SapMonitor. </summary>
-        /// <returns> An object representing collection of ProviderInstanceResources and their operations over a ProviderInstanceResource. </returns>
-        public virtual ProviderInstanceCollection GetProviderInstances()
+        /// <summary> Gets a collection of SapProviderInstanceResources in the SapMonitor. </summary>
+        /// <returns> An object representing collection of SapProviderInstanceResources and their operations over a SapProviderInstanceResource. </returns>
+        public virtual SapProviderInstanceCollection GetSapProviderInstances()
         {
-            return GetCachedClient(Client => new ProviderInstanceCollection(Client, Id));
+            return GetCachedClient(Client => new SapProviderInstanceCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProviderInstanceResource>> GetProviderInstanceAsync(string providerInstanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SapProviderInstanceResource>> GetSapProviderInstanceAsync(string providerInstanceName, CancellationToken cancellationToken = default)
         {
-            return await GetProviderInstances().GetAsync(providerInstanceName, cancellationToken).ConfigureAwait(false);
+            return await GetSapProviderInstances().GetAsync(providerInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProviderInstanceResource> GetProviderInstance(string providerInstanceName, CancellationToken cancellationToken = default)
+        public virtual Response<SapProviderInstanceResource> GetSapProviderInstance(string providerInstanceName, CancellationToken cancellationToken = default)
         {
-            return GetProviderInstances().Get(providerInstanceName, cancellationToken);
+            return GetSapProviderInstances().Get(providerInstanceName, cancellationToken);
         }
 
         /// <summary>

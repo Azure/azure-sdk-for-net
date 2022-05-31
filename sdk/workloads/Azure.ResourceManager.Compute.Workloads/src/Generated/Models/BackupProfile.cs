@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> Backup profile. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Initializes a new instance of BackupProfile. </summary>
         /// <param name="backupEnabled"> Whether to enable Azure backup for the workload. </param>
         /// <param name="vaultResourceId"> Backup vault resource Id. </param>
-        internal BackupProfile(EnableBackup backupEnabled, string vaultResourceId)
+        internal BackupProfile(EnableBackup backupEnabled, ResourceIdentifier vaultResourceId)
         {
             BackupEnabled = backupEnabled;
             VaultResourceId = vaultResourceId;
@@ -29,6 +31,6 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Whether to enable Azure backup for the workload. </summary>
         public EnableBackup BackupEnabled { get; set; }
         /// <summary> Backup vault resource Id. </summary>
-        public string VaultResourceId { get; }
+        public ResourceIdentifier VaultResourceId { get; }
     }
 }

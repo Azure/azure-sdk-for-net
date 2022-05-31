@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     public enum DiskStorageType
     {
         /// <summary> Premium_LRS. </summary>
-        PremiumLRS,
+        PremiumLrs,
         /// <summary> Standard_LRS. </summary>
-        StandardLRS,
+        StandardLrs,
         /// <summary> StandardSSD_LRS. </summary>
-        StandardSSDLRS
+        StandardSsdLrs
     }
 }

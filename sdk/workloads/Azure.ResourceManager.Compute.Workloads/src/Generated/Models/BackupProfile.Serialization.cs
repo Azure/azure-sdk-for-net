@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         internal static BackupProfile DeserializeBackupProfile(JsonElement element)
         {
             EnableBackup backupEnabled = default;
-            Optional<string> vaultResourceId = default;
+            Optional<ResourceIdentifier> vaultResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupEnabled"))
@@ -33,7 +33,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("vaultResourceId"))
                 {
-                    vaultResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vaultResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

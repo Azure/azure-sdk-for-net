@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             string skuName = default;
             RedisCacheFamily family = default;
             long capacity = default;
-            Optional<string> cacheResourceId = default;
+            Optional<ResourceIdentifier> cacheResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -60,7 +60,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("cacheResourceId"))
                 {
-                    cacheResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    cacheResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

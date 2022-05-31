@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="sslEnforcementEnabled"> Whether to enable SSL enforcement on the database. </param>
         /// <param name="serverResourceId"> Azure Database Server resource Id. </param>
-        internal DatabaseProfile(DatabaseType databaseType, string serverName, string version, string sku, DatabaseTier tier, HAEnabled? haEnabled, string storageSku, long? storageInGB, long? storageIops, int? backupRetentionDays, EnableSslEnforcement? sslEnforcementEnabled, string serverResourceId)
+        internal DatabaseProfile(DatabaseType databaseType, string serverName, string version, string sku, DatabaseTier tier, HAEnabled? haEnabled, string storageSku, long? storageInGB, long? storageIops, int? backupRetentionDays, EnableSslEnforcement? sslEnforcementEnabled, ResourceIdentifier serverResourceId)
         {
             DatabaseType = databaseType;
             ServerName = serverName;
@@ -81,6 +82,6 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Whether to enable SSL enforcement on the database. </summary>
         public EnableSslEnforcement? SslEnforcementEnabled { get; set; }
         /// <summary> Azure Database Server resource Id. </summary>
-        public string ServerResourceId { get; }
+        public ResourceIdentifier ServerResourceId { get; }
     }
 }

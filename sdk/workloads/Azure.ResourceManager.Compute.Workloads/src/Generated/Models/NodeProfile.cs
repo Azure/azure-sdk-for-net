@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             OSImage = osImage;
             OSDisk = osDisk;
             DataDisks = new ChangeTrackingList<DiskInfo>();
-            NodeResourceIds = new ChangeTrackingList<string>();
+            NodeResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NodeProfile. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="osDisk"> OS disk details. </param>
         /// <param name="dataDisks"> Data disks details. This property is not in use right now. </param>
         /// <param name="nodeResourceIds"> VM/VMSS resource ARM Ids. </param>
-        internal NodeProfile(string name, string nodeSku, OSImageProfile osImage, DiskInfo osDisk, IList<DiskInfo> dataDisks, IReadOnlyList<string> nodeResourceIds)
+        internal NodeProfile(string name, string nodeSku, OSImageProfile osImage, DiskInfo osDisk, IList<DiskInfo> dataDisks, IReadOnlyList<ResourceIdentifier> nodeResourceIds)
         {
             Name = name;
             NodeSku = nodeSku;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Data disks details. This property is not in use right now. </summary>
         public IList<DiskInfo> DataDisks { get; }
         /// <summary> VM/VMSS resource ARM Ids. </summary>
-        public IReadOnlyList<string> NodeResourceIds { get; }
+        public IReadOnlyList<ResourceIdentifier> NodeResourceIds { get; }
     }
 }

@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     {
         public static string ToSerialString(this DiskStorageType value) => value switch
         {
-            DiskStorageType.PremiumLRS => "Premium_LRS",
-            DiskStorageType.StandardLRS => "Standard_LRS",
-            DiskStorageType.StandardSSDLRS => "StandardSSD_LRS",
+            DiskStorageType.PremiumLrs => "Premium_LRS",
+            DiskStorageType.StandardLrs => "Standard_LRS",
+            DiskStorageType.StandardSsdLrs => "StandardSSD_LRS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DiskStorageType value.")
         };
 
         public static DiskStorageType ToDiskStorageType(this string value)
         {
-            if (string.Equals(value, "Premium_LRS", StringComparison.InvariantCultureIgnoreCase)) return DiskStorageType.PremiumLRS;
-            if (string.Equals(value, "Standard_LRS", StringComparison.InvariantCultureIgnoreCase)) return DiskStorageType.StandardLRS;
-            if (string.Equals(value, "StandardSSD_LRS", StringComparison.InvariantCultureIgnoreCase)) return DiskStorageType.StandardSSDLRS;
+            if (string.Equals(value, "Premium_LRS", StringComparison.InvariantCultureIgnoreCase)) return DiskStorageType.PremiumLrs;
+            if (string.Equals(value, "Standard_LRS", StringComparison.InvariantCultureIgnoreCase)) return DiskStorageType.StandardLrs;
+            if (string.Equals(value, "StandardSSD_LRS", StringComparison.InvariantCultureIgnoreCase)) return DiskStorageType.StandardSsdLrs;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DiskStorageType value.");
         }
     }

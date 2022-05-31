@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Initializes a new instance of ProviderInstanceListResult. </summary>
         internal ProviderInstanceListResult()
         {
-            Value = new ChangeTrackingList<ProviderInstanceData>();
+            Value = new ChangeTrackingList<SapProviderInstanceData>();
         }
 
         /// <summary> Initializes a new instance of ProviderInstanceListResult. </summary>
         /// <param name="value"> The list of provider instances. </param>
         /// <param name="nextLink"> The URL to get the next set of provider instances. </param>
-        internal ProviderInstanceListResult(IReadOnlyList<ProviderInstanceData> value, string nextLink)
+        internal ProviderInstanceListResult(IReadOnlyList<SapProviderInstanceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of provider instances. </summary>
-        public IReadOnlyList<ProviderInstanceData> Value { get; }
+        public IReadOnlyList<SapProviderInstanceData> Value { get; }
         /// <summary> The URL to get the next set of provider instances. </summary>
         public string NextLink { get; }
     }

@@ -12,15 +12,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Workloads
 {
-    /// <summary> A class representing the ProviderInstance data model. </summary>
-    public partial class ProviderInstanceData : ResourceData
+    /// <summary> A class representing the SapProviderInstance data model. </summary>
+    public partial class SapProviderInstanceData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProviderInstanceData. </summary>
-        public ProviderInstanceData()
+        /// <summary> Initializes a new instance of SapProviderInstanceData. </summary>
+        public SapProviderInstanceData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProviderInstanceData. </summary>
+        /// <summary> Initializes a new instance of SapProviderInstanceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="provisioningState"> State of provisioning of the provider instance. </param>
         /// <param name="errors"> Defines the provider instance errors. </param>
         /// <param name="providerSettings"> Defines the provider instance errors. </param>
-        internal ProviderInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, ProviderSpecificProperties providerSettings) : base(id, name, resourceType, systemData)
+        internal SapProviderInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, ProviderSpecificProperties providerSettings) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Errors = errors;

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> File share profile. </summary>
@@ -25,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="shareSizeInGB"> File share size in GB. </param>
         /// <param name="storageResourceId"> File share storage resource id. </param>
         /// <param name="shareName"> File share name. </param>
-        internal FileshareProfile(FileShareType shareType, FileShareStorageType storageType, long? shareSizeInGB, string storageResourceId, string shareName)
+        internal FileshareProfile(FileShareType shareType, FileShareStorageType storageType, long? shareSizeInGB, ResourceIdentifier storageResourceId, string shareName)
         {
             ShareType = shareType;
             StorageType = storageType;
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> File share size in GB. </summary>
         public long? ShareSizeInGB { get; set; }
         /// <summary> File share storage resource id. </summary>
-        public string StorageResourceId { get; }
+        public ResourceIdentifier StorageResourceId { get; }
         /// <summary> File share name. </summary>
         public string ShareName { get; }
     }

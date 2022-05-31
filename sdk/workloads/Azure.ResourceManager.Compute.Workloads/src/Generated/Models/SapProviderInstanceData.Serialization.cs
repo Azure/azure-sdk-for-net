@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Workloads
 {
-    public partial class ProviderInstanceData : IUtf8JsonSerializable
+    public partial class SapProviderInstanceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             writer.WriteEndObject();
         }
 
-        internal static ProviderInstanceData DeserializeProviderInstanceData(JsonElement element)
+        internal static SapProviderInstanceData DeserializeSapProviderInstanceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Workloads
                     continue;
                 }
             }
-            return new ProviderInstanceData(id, name, type, systemData, Optional.ToNullable(provisioningState), errors.Value, providerSettings.Value);
+            return new SapProviderInstanceData(id, name, type, systemData, Optional.ToNullable(provisioningState), errors.Value, providerSettings.Value);
         }
     }
 }

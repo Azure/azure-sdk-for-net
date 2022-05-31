@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Compute.Workloads
             Optional<string> appLocation = default;
             Optional<RoutingPreference> routingPreference = default;
             Optional<ManagedRGConfiguration> managedResourceGroupConfiguration = default;
-            Optional<string> logAnalyticsWorkspaceArmId = default;
+            Optional<ResourceIdentifier> logAnalyticsWorkspaceArmId = default;
             Optional<string> monitorSubnet = default;
-            Optional<string> msiArmId = default;
+            Optional<ResourceIdentifier> msiArmId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -169,7 +169,12 @@ namespace Azure.ResourceManager.Compute.Workloads
                         }
                         if (property0.NameEquals("logAnalyticsWorkspaceArmId"))
                         {
-                            logAnalyticsWorkspaceArmId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            logAnalyticsWorkspaceArmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("monitorSubnet"))
@@ -179,7 +184,12 @@ namespace Azure.ResourceManager.Compute.Workloads
                         }
                         if (property0.NameEquals("msiArmId"))
                         {
-                            msiArmId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            msiArmId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

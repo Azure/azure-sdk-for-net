@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="family"> Cache family. </param>
         /// <param name="capacity"> Cache capacity. </param>
         /// <param name="cacheResourceId"> Cache resource Id. </param>
-        internal CacheProfile(string name, string skuName, RedisCacheFamily family, long capacity, string cacheResourceId)
+        internal CacheProfile(string name, string skuName, RedisCacheFamily family, long capacity, ResourceIdentifier cacheResourceId)
         {
             Name = name;
             SkuName = skuName;
@@ -53,6 +54,6 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Cache capacity. </summary>
         public long Capacity { get; set; }
         /// <summary> Cache resource Id. </summary>
-        public string CacheResourceId { get; }
+        public ResourceIdentifier CacheResourceId { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of database VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> or <paramref name="virtualMachineConfiguration"/> is null. </exception>
-        public DatabaseConfiguration(string subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
+        public DatabaseConfiguration(ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
         {
             if (subnetId == null)
             {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of database VMs. </param>
-        internal DatabaseConfiguration(SapDatabaseType? databaseType, string subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
+        internal DatabaseConfiguration(SapDatabaseType? databaseType, ResourceIdentifier subnetId, VirtualMachineConfiguration virtualMachineConfiguration, long instanceCount)
         {
             DatabaseType = databaseType;
             SubnetId = subnetId;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> The database type. </summary>
         public SapDatabaseType? DatabaseType { get; set; }
         /// <summary> The subnet id. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Gets or sets the virtual machine configuration. </summary>
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
         /// <summary> The number of database VMs. </summary>

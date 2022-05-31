@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             Optional<string> loadBalancerTier = default;
             Optional<int> capacity = default;
             Optional<AzureFrontDoorEnabled> azureFrontDoorEnabled = default;
-            Optional<string> vNetResourceId = default;
-            Optional<string> loadBalancerResourceId = default;
-            Optional<string> azureFrontDoorResourceId = default;
-            Optional<string> frontEndPublicIpResourceId = default;
+            Optional<ResourceIdentifier> vNetResourceId = default;
+            Optional<ResourceIdentifier> loadBalancerResourceId = default;
+            Optional<ResourceIdentifier> azureFrontDoorResourceId = default;
+            Optional<ResourceIdentifier> frontEndPublicIpResourceId = default;
             Optional<IReadOnlyList<string>> outboundPublicIpResourceIds = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,22 +92,42 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                 }
                 if (property.NameEquals("vNetResourceId"))
                 {
-                    vNetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vNetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("loadBalancerResourceId"))
                 {
-                    loadBalancerResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    loadBalancerResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("azureFrontDoorResourceId"))
                 {
-                    azureFrontDoorResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    azureFrontDoorResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("frontEndPublicIpResourceId"))
                 {
-                    frontEndPublicIpResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    frontEndPublicIpResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("outboundPublicIpResourceIds"))

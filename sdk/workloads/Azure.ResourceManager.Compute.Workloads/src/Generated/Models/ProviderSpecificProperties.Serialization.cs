@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Db2": return DB2ProviderInstanceProperties.DeserializeDB2ProviderInstanceProperties(element);
+                    case "Db2": return Db2ProviderInstanceProperties.DeserializeDb2ProviderInstanceProperties(element);
                     case "MsSqlServer": return MsSqlServerProviderInstanceProperties.DeserializeMsSqlServerProviderInstanceProperties(element);
                     case "PrometheusHaCluster": return PrometheusHaClusterProviderInstanceProperties.DeserializePrometheusHaClusterProviderInstanceProperties(element);
                     case "PrometheusOS": return PrometheusOSProviderInstanceProperties.DeserializePrometheusOSProviderInstanceProperties(element);

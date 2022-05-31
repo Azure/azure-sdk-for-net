@@ -10,15 +10,15 @@ using System;
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> Gets or sets the DB2 provider properties. </summary>
-    public partial class DB2ProviderInstanceProperties : ProviderSpecificProperties
+    public partial class Db2ProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of DB2ProviderInstanceProperties. </summary>
-        public DB2ProviderInstanceProperties()
+        /// <summary> Initializes a new instance of Db2ProviderInstanceProperties. </summary>
+        public Db2ProviderInstanceProperties()
         {
             ProviderType = "Db2";
         }
 
-        /// <summary> Initializes a new instance of DB2ProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of Db2ProviderInstanceProperties. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="hostname"> Gets or sets the target virtual machine name. </param>
         /// <param name="dbName"> Gets or sets the db2 database name. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="dbPassword"> Gets or sets the db2 database password. </param>
         /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        internal DB2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid) : base(providerType)
+        internal Db2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid) : base(providerType)
         {
             Hostname = hostname;
             DbName = dbName;

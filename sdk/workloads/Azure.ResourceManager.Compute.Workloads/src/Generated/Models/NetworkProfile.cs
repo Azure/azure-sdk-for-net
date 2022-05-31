@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="azureFrontDoorResourceId"> Azure front door resource id. </param>
         /// <param name="frontEndPublicIPResourceId"> Loadbalancer front-end IP address resource Id. </param>
         /// <param name="outboundPublicIPResourceIds"> List of outbound public IP resource IDs. </param>
-        internal NetworkProfile(LoadBalancerType loadBalancerType, string loadBalancerSku, string loadBalancerTier, int? capacity, AzureFrontDoorEnabled? azureFrontDoorEnabled, string vNetResourceId, string loadBalancerResourceId, string azureFrontDoorResourceId, string frontEndPublicIPResourceId, IReadOnlyList<string> outboundPublicIPResourceIds)
+        internal NetworkProfile(LoadBalancerType loadBalancerType, string loadBalancerSku, string loadBalancerTier, int? capacity, AzureFrontDoorEnabled? azureFrontDoorEnabled, ResourceIdentifier vNetResourceId, ResourceIdentifier loadBalancerResourceId, ResourceIdentifier azureFrontDoorResourceId, ResourceIdentifier frontEndPublicIPResourceId, IReadOnlyList<string> outboundPublicIPResourceIds)
         {
             LoadBalancerType = loadBalancerType;
             LoadBalancerSku = loadBalancerSku;
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Whether to enable Azure front door. </summary>
         public AzureFrontDoorEnabled? AzureFrontDoorEnabled { get; set; }
         /// <summary> Virtual network resource Id. </summary>
-        public string VNetResourceId { get; }
+        public ResourceIdentifier VNetResourceId { get; }
         /// <summary> Azure Loadbalancer or ApplicationGateway resource Id. </summary>
-        public string LoadBalancerResourceId { get; }
+        public ResourceIdentifier LoadBalancerResourceId { get; }
         /// <summary> Azure front door resource id. </summary>
-        public string AzureFrontDoorResourceId { get; }
+        public ResourceIdentifier AzureFrontDoorResourceId { get; }
         /// <summary> Loadbalancer front-end IP address resource Id. </summary>
-        public string FrontEndPublicIPResourceId { get; }
+        public ResourceIdentifier FrontEndPublicIPResourceId { get; }
         /// <summary> List of outbound public IP resource IDs. </summary>
         public IReadOnlyList<string> OutboundPublicIPResourceIds { get; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <param name="nodeResourceIds"> VM/VMSS resource ARM Ids. </param>
         /// <param name="autoScaleMinCount"> Minimum number of nodes for autoscale. </param>
         /// <param name="autoScaleMaxCount"> Maximum number of nodes for autoscale. </param>
-        internal VmssNodesProfile(string name, string nodeSku, OSImageProfile osImage, DiskInfo osDisk, IList<DiskInfo> dataDisks, IReadOnlyList<string> nodeResourceIds, int? autoScaleMinCount, int? autoScaleMaxCount) : base(name, nodeSku, osImage, osDisk, dataDisks, nodeResourceIds)
+        internal VmssNodesProfile(string name, string nodeSku, OSImageProfile osImage, DiskInfo osDisk, IList<DiskInfo> dataDisks, IReadOnlyList<ResourceIdentifier> nodeResourceIds, int? autoScaleMinCount, int? autoScaleMaxCount) : base(name, nodeSku, osImage, osDisk, dataDisks, nodeResourceIds)
         {
             AutoScaleMinCount = autoScaleMinCount;
             AutoScaleMaxCount = autoScaleMaxCount;

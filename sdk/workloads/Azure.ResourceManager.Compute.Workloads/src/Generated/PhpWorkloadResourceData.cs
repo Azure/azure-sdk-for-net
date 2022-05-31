@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="kind"> Indicates which kind of php workload this resource represent e.g WordPress. </param>
         /// <param name="sku"> Php workloads SKU. </param>
         /// <param name="identity"> Identity for the resource. Currently not supported. </param>
-        /// <param name="appLocation"> The infra resources for PHP workload will be created in this location. </param>
+        /// <param name="phpAppLocation"> The infra resources for PHP workload will be created in this location. </param>
         /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration of the workload. </param>
         /// <param name="adminUserProfile"> Admin user profile used for VM and VMSS. </param>
         /// <param name="webNodesProfile"> VMSS web nodes profile. </param>
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cacheProfile"> Cache profile. </param>
         /// <param name="backupProfile"> Backup profile. </param>
         /// <param name="provisioningState"> Php workload resource provisioning state. </param>
-        internal PhpWorkloadResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadKind kind, WorkloadsSku sku, PhpWorkloadResourceIdentity identity, string appLocation, ManagedRGConfiguration managedResourceGroupConfiguration, UserProfile adminUserProfile, VmssNodesProfile webNodesProfile, NodeProfile controllerProfile, NetworkProfile networkProfile, DatabaseProfile databaseProfile, SiteProfile siteProfile, FileshareProfile fileshareProfile, PhpProfile phpProfile, SearchProfile searchProfile, CacheProfile cacheProfile, BackupProfile backupProfile, PhpWorkloadProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal PhpWorkloadResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadKind kind, WorkloadsSku sku, PhpWorkloadResourceIdentity identity, string phpAppLocation, ManagedRGConfiguration managedResourceGroupConfiguration, UserProfile adminUserProfile, VmssNodesProfile webNodesProfile, NodeProfile controllerProfile, NetworkProfile networkProfile, DatabaseProfile databaseProfile, SiteProfile siteProfile, FileshareProfile fileshareProfile, PhpProfile phpProfile, SearchProfile searchProfile, CacheProfile cacheProfile, BackupProfile backupProfile, PhpWorkloadProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Sku = sku;
             Identity = identity;
-            AppLocation = appLocation;
+            PhpAppLocation = phpAppLocation;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
             AdminUserProfile = adminUserProfile;
             WebNodesProfile = webNodesProfile;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary> Identity for the resource. Currently not supported. </summary>
         public PhpWorkloadResourceIdentity Identity { get; set; }
         /// <summary> The infra resources for PHP workload will be created in this location. </summary>
-        public string AppLocation { get; set; }
+        public string PhpAppLocation { get; set; }
         /// <summary> Managed resource group configuration of the workload. </summary>
         internal ManagedRGConfiguration ManagedResourceGroupConfiguration { get; set; }
         /// <summary> Managed resource group name. </summary>
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary> PHP profile. </summary>
         internal PhpProfile PhpProfile { get; set; }
         /// <summary> PHP version. </summary>
-        public PHPVersion? PhpVersion
+        public PhpVersion? PhpVersion
         {
-            get => PhpProfile is null ? default(PHPVersion?) : PhpProfile.Version;
+            get => PhpProfile is null ? default(PhpVersion?) : PhpProfile.Version;
             set
             {
                 PhpProfile = value.HasValue ? new PhpProfile(value.Value) : null;

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     {
         /// <summary> Initializes a new instance of PhpProfile. </summary>
         /// <param name="version"> PHP version. </param>
-        public PhpProfile(PHPVersion version)
+        public PhpProfile(PhpVersion version)
         {
             Version = version;
         }
 
         /// <summary> PHP version. </summary>
-        public PHPVersion Version { get; set; }
+        public PhpVersion Version { get; set; }
     }
 }
