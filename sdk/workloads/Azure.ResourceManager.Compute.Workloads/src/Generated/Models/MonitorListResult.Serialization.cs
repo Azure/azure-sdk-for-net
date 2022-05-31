@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
     {
         internal static MonitorListResult DeserializeMonitorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<WorkloadMonitorData>> value = default;
+            Optional<IReadOnlyList<SapMonitorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkloadMonitorData> array = new List<WorkloadMonitorData>();
+                    List<SapMonitorData> array = new List<SapMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadMonitorData.DeserializeWorkloadMonitorData(item));
+                        array.Add(SapMonitorData.DeserializeSapMonitorData(item));
                     }
                     value = array;
                     continue;

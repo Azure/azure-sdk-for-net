@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
     /// <summary> Tags field of the resource. </summary>
-    public partial class WorkloadMonitorPatch
+    public partial class SapMonitorPatch
     {
-        /// <summary> Initializes a new instance of WorkloadMonitorPatch. </summary>
-        public WorkloadMonitorPatch()
+        /// <summary> Initializes a new instance of SapMonitorPatch. </summary>
+        public SapMonitorPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

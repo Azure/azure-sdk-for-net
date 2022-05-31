@@ -38,7 +38,9 @@ rename-rules:
   SAP: Sap
 
 directive:
-  - rename-model:
-      from: Monitor
-      to: WorkloadMonitor
+  - from: monitors.json
+    where: $.definitions
+    transform: >
+      $.Monitor['x-ms-client-name'] = 'SapMonitor';
+      $.MonitorProperties.properties.appLocation['x-ms-client-name'] = 'sapAppLocation';
 ```

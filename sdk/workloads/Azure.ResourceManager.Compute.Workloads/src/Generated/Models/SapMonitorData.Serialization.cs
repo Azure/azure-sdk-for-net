@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Workloads
 {
-    public partial class WorkloadMonitorData : IUtf8JsonSerializable
+    public partial class SapMonitorData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Compute.Workloads
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppLocation))
+            if (Optional.IsDefined(SapAppLocation))
             {
                 writer.WritePropertyName("appLocation");
-                writer.WriteStringValue(AppLocation);
+                writer.WriteStringValue(SapAppLocation);
             }
             if (Optional.IsDefined(RoutingPreference))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             writer.WriteEndObject();
         }
 
-        internal static WorkloadMonitorData DeserializeWorkloadMonitorData(JsonElement element)
+        internal static SapMonitorData DeserializeSapMonitorData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute.Workloads
                     continue;
                 }
             }
-            return new WorkloadMonitorData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), errors.Value, appLocation.Value, Optional.ToNullable(routingPreference), managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value);
+            return new SapMonitorData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), errors.Value, appLocation.Value, Optional.ToNullable(routingPreference), managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value);
         }
     }
 }

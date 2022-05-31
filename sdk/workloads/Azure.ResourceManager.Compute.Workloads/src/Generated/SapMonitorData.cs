@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Workloads
 {
-    /// <summary> A class representing the WorkloadMonitor data model. </summary>
-    public partial class WorkloadMonitorData : TrackedResourceData
+    /// <summary> A class representing the SapMonitor data model. </summary>
+    public partial class SapMonitorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadMonitorData. </summary>
+        /// <summary> Initializes a new instance of SapMonitorData. </summary>
         /// <param name="location"> The location. </param>
-        public WorkloadMonitorData(AzureLocation location) : base(location)
+        public SapMonitorData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadMonitorData. </summary>
+        /// <summary> Initializes a new instance of SapMonitorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> State of provisioning of the SAP monitor. </param>
         /// <param name="errors"> Defines the SAP monitor errors. </param>
-        /// <param name="appLocation"> The SAP monitor resources will be deployed in the SAP monitoring region. The subnet region should be same as the SAP monitoring region. </param>
+        /// <param name="sapAppLocation"> The SAP monitor resources will be deployed in the SAP monitoring region. The subnet region should be same as the SAP monitoring region. </param>
         /// <param name="routingPreference"> Sets the routing preference of the SAP monitor. By default only RFC1918 traffic is routed to the customer VNET. </param>
         /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
         /// <param name="logAnalyticsWorkspaceArmId"> The ARM ID of the Log Analytics Workspace that is used for SAP monitoring. </param>
         /// <param name="monitorSubnet"> The subnet which the SAP monitor will be deployed in. </param>
         /// <param name="msiArmId"> The ARM ID of the MSI used for SAP monitoring. </param>
-        internal WorkloadMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, string appLocation, RoutingPreference? routingPreference, ManagedRGConfiguration managedResourceGroupConfiguration, string logAnalyticsWorkspaceArmId, string monitorSubnet, string msiArmId) : base(id, name, resourceType, systemData, tags, location)
+        internal SapMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, string sapAppLocation, RoutingPreference? routingPreference, ManagedRGConfiguration managedResourceGroupConfiguration, string logAnalyticsWorkspaceArmId, string monitorSubnet, string msiArmId) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Errors = errors;
-            AppLocation = appLocation;
+            SapAppLocation = sapAppLocation;
             RoutingPreference = routingPreference;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
             LogAnalyticsWorkspaceArmId = logAnalyticsWorkspaceArmId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <summary> Defines the SAP monitor errors. </summary>
         public ResponseError Errors { get; }
         /// <summary> The SAP monitor resources will be deployed in the SAP monitoring region. The subnet region should be same as the SAP monitoring region. </summary>
-        public string AppLocation { get; set; }
+        public string SapAppLocation { get; set; }
         /// <summary> Sets the routing preference of the SAP monitor. By default only RFC1918 traffic is routed to the customer VNET. </summary>
         public RoutingPreference? RoutingPreference { get; set; }
         /// <summary> Managed resource group configuration. </summary>

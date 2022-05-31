@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Compute.Workloads
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProviderInstanceResource" /> and their operations.
-    /// Each <see cref="ProviderInstanceResource" /> in the collection will belong to the same instance of <see cref="WorkloadMonitorResource" />.
-    /// To get a <see cref="ProviderInstanceCollection" /> instance call the GetProviderInstances method from an instance of <see cref="WorkloadMonitorResource" />.
+    /// Each <see cref="ProviderInstanceResource" /> in the collection will belong to the same instance of <see cref="SapMonitorResource" />.
+    /// To get a <see cref="ProviderInstanceCollection" /> instance call the GetProviderInstances method from an instance of <see cref="SapMonitorResource" />.
     /// </summary>
     public partial class ProviderInstanceCollection : ArmCollection, IEnumerable<ProviderInstanceResource>, IAsyncEnumerable<ProviderInstanceResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Compute.Workloads
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WorkloadMonitorResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkloadMonitorResource.ResourceType), nameof(id));
+            if (id.ResourceType != SapMonitorResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SapMonitorResource.ResourceType), nameof(id));
         }
 
         /// <summary>
