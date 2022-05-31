@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
 namespace Azure.Storage
@@ -95,6 +96,14 @@ namespace Azure.Storage
 
         private static void ThrowIfNotSupported()
         {
+            // Added to prevent using if framework version can use the provided and supported
+            // AES by System.Security.Cryptography library instead
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                throw Errors.CryptographyAlgorithmNotSupported();
+            }
+#endif
             // Always supported in this implementation.
             //if (!IsSupported)
             //{
