@@ -31,22 +31,22 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
-        /// <param name="restorePointCollectionId"> The unique id of the restore point collection. </param>
+        /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
-        internal RestorePointGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestorePointCollectionSourceProperties source, string provisioningState, string restorePointCollectionId, IReadOnlyList<RestorePointData> restorePoints) : base(id, name, resourceType, systemData, tags, location)
+        internal RestorePointGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestorePointCollectionSource source, string provisioningState, string restorePointGroupId, IReadOnlyList<RestorePointData> restorePoints) : base(id, name, resourceType, systemData, tags, location)
         {
             Source = source;
             ProvisioningState = provisioningState;
-            RestorePointCollectionId = restorePointCollectionId;
+            RestorePointGroupId = restorePointGroupId;
             RestorePoints = restorePoints;
         }
 
         /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
-        public RestorePointCollectionSourceProperties Source { get; set; }
+        public RestorePointCollectionSource Source { get; set; }
         /// <summary> The provisioning state of the restore point collection. </summary>
         public string ProvisioningState { get; }
         /// <summary> The unique id of the restore point collection. </summary>
-        public string RestorePointCollectionId { get; }
+        public string RestorePointGroupId { get; }
         /// <summary> A list containing all restore points created under this restore point collection. </summary>
         public IReadOnlyList<RestorePointData> RestorePoints { get; }
     }

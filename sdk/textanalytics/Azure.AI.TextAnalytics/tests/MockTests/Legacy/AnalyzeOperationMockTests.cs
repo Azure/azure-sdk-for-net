@@ -15,7 +15,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Legacy.Tests
 {
-    [Ignore("Not yet implemented")]
     public class AnalyzeOperationMockTests : ClientTestBase
     {
         private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";
@@ -444,49 +443,47 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         [Test]
         public async Task AnalyzeOperationRecognizePiiEntitiesWithPiiOptionsFull()
         {
-            //var mockResponse = new MockResponse(202);
-            //mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader("Operation-Location", "something/jobs/2a96a91f-7edf-4931-a880-3fdee1d56f15"));
 
-            //var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
-            //var client = CreateTestClient(mockTransport);
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var client = CreateTestClient(mockTransport);
 
-            //var documents = new List<string>
-            //{
-            //    "Elon Musk is the CEO of SpaceX and Tesla."
-            //};
+            var documents = new List<string>
+            {
+                "Elon Musk is the CEO of SpaceX and Tesla."
+            };
 
-            //var options = new RecognizePiiEntitiesOptions()
-            //{
-            //    ModelVersion = "latest",
-            //    DisableServiceLogs = true,
-            //    IncludeStatistics = true,
-            //    DomainFilter = PiiEntityDomain.ProtectedHealthInformation,
-            //    CategoriesFilter = { PiiEntityCategory.USSocialSecurityNumber }
-            //};
+            var options = new RecognizePiiEntitiesOptions()
+            {
+                ModelVersion = "latest",
+                DisableServiceLogs = true,
+                IncludeStatistics = true,
+                DomainFilter = (TextAnalytics.PiiEntityDomain)PiiEntityDomain.ProtectedHealthInformation,
+                CategoriesFilter = { PiiEntityCategory.USSocialSecurityNumber }
+            };
 
-            //var actions = new RecognizePiiEntitiesAction(options);
+            var actions = new RecognizePiiEntitiesAction(options);
 
-            //TextAnalyticsActions batchActions = new TextAnalyticsActions()
-            //{
-            //    RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { actions },
-            //};
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                RecognizePiiEntitiesActions = new List<RecognizePiiEntitiesAction>() { actions },
+            };
 
-            //await client.StartAnalyzeActionsAsync(documents, batchActions);
+            await client.StartAnalyzeActionsAsync(documents, batchActions);
 
-            //var contentString = GetString(mockTransport.Requests.Single().Content);
-            //ValidateRequestOptions(contentString, true);
+            var contentString = GetString(mockTransport.Requests.Single().Content);
+            ValidateRequestOptions(contentString, true);
 
-            //string domaintFilter = contentString.Substring(contentString.IndexOf("domain"), 13);
+            string domaintFilter = contentString.Substring(contentString.IndexOf("domain"), 13);
 
-            //var expectedDomainFilterContent = "domain\":\"phi\"";
-            //Assert.AreEqual(expectedDomainFilterContent, domaintFilter);
+            var expectedDomainFilterContent = "domain\":\"phi\"";
+            Assert.AreEqual(expectedDomainFilterContent, domaintFilter);
 
-            //string piiCategories = contentString.Substring(contentString.IndexOf("piiCategories"), 41);
+            string piiCategories = contentString.Substring(contentString.IndexOf("piiCategories"), 41);
 
-            //var expectedPiiCategoriesContent = "piiCategories\":[\"USSocialSecurityNumber\"]";
-            //Assert.AreEqual(expectedPiiCategoriesContent, piiCategories);
-            await Task.Yield();
-            throw new NotImplementedException();
+            var expectedPiiCategoriesContent = "piiCategories\":[\"USSocialSecurityNumber\"]";
+            Assert.AreEqual(expectedPiiCategoriesContent, piiCategories);
         }
 
         #endregion Pii entities

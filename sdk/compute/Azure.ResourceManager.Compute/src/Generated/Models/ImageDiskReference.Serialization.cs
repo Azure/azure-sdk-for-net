@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageDiskReference DeserializeImageDiskReference(JsonElement element)
         {
-            string id = default;
+            ResourceIdentifier id = default;
             Optional<int> lun = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lun"))

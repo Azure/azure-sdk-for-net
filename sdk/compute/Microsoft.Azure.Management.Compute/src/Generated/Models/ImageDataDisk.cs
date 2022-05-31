@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// for the managed disk. NOTE: UltraSSD_LRS can only be used with data
         /// disks, it cannot be used with OS Disk. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS',
-        /// 'Premium_ZRS', 'StandardSSD_ZRS'</param>
+        /// 'Premium_ZRS', 'StandardSSD_ZRS', 'PremiumV2_LRS'</param>
         /// <param name="diskEncryptionSet">Specifies the customer managed disk
         /// encryption set resource id for the managed image disk.</param>
         public ImageDataDisk(int lun, SubResource snapshot = default(SubResource), SubResource managedDisk = default(SubResource), string blobUri = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), string storageAccountType = default(string), DiskEncryptionSetParameters diskEncryptionSet = default(DiskEncryptionSetParameters))

@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of the given AzureFrontDoor rule set under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/usages
         /// Operation Id: AfdRuleSets_ListResourceUsage
         /// </summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of the given AzureFrontDoor rule set under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/ruleSets/{ruleSetName}/usages
         /// Operation Id: AfdRuleSets_ListResourceUsage
         /// </summary>

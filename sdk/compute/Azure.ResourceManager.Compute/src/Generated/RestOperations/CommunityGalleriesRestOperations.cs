@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string location, string publicGalleryName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string publicGalleryName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,12 +62,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="publicGalleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CommunityGallery>> GetAsync(string subscriptionId, string location, string publicGalleryName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="publicGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<CommunityGallery>> GetAsync(string subscriptionId, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
             using var message = CreateGetRequest(subscriptionId, location, publicGalleryName);
@@ -91,12 +90,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="publicGalleryName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/> or <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CommunityGallery> Get(string subscriptionId, string location, string publicGalleryName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="publicGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<CommunityGallery> Get(string subscriptionId, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
             using var message = CreateGetRequest(subscriptionId, location, publicGalleryName);

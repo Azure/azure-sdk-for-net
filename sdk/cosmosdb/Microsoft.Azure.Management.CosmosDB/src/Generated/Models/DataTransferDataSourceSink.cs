@@ -10,13 +10,11 @@
 
 namespace Microsoft.Azure.Management.CosmosDB.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for all DataTransfer source/sink
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DataTransferDataSourceSink")]
     public partial class DataTransferDataSourceSink
     {
         /// <summary>

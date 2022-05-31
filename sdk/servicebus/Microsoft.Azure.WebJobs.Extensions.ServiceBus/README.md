@@ -274,7 +274,9 @@ public static async Task Run(
 
 ## Troubleshooting
 
-Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
+If your function triggers an unhandled exception and you haven't already settled the message, the extension will attempt to abandon the message so that it becomes available for receiving again immediately.
+
+Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for more troubleshooting guidance.
 
 ## Next steps
 

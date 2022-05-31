@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations.Models;
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.Reservations
         internal static ReservationResponseData DeserializeReservationResponseData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
-            Optional<ETag> etag = default;
+            Optional<int> etag = default;
             Optional<ReservationsSkuName> sku = default;
             Optional<ReservationsProperties> properties = default;
             Optional<string> kind = default;
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Reservations
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Reservations
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

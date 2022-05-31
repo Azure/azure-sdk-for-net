@@ -36,11 +36,13 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="unit"> The limit units, such as **count** and
         /// **bytes**. Use the unit field provided in the response of the GET
         /// quota operation.</param>
-        /// <param name="provisioningState">The quota request status.</param>
+        /// <param name="provisioningState">The quota request status. Possible
+        /// values include: 'Accepted', 'Invalid', 'Succeeded', 'Failed',
+        /// 'InProgress'</param>
         /// <param name="message">User-friendly status message.</param>
         /// <param name="subRequestId">Sub request ID for individual
         /// request.</param>
-        public SubRequest(int? limit = default(int?), ResourceName name = default(ResourceName), string resourceType = default(string), string unit = default(string), object provisioningState = default(object), string message = default(string), string subRequestId = default(string))
+        public SubRequest(int? limit = default(int?), ResourceName name = default(ResourceName), string resourceType = default(string), string unit = default(string), string provisioningState = default(string), string message = default(string), string subRequestId = default(string))
         {
             Limit = limit;
             Name = name;
@@ -83,10 +85,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string Unit { get; set; }
 
         /// <summary>
-        /// Gets or sets the quota request status.
+        /// Gets or sets the quota request status. Possible values include:
+        /// 'Accepted', 'Invalid', 'Succeeded', 'Failed', 'InProgress'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
-        public object ProvisioningState { get; set; }
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets user-friendly status message.

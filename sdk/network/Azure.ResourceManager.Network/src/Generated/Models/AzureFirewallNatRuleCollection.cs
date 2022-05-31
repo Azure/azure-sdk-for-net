@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NAT rule collection resource. </summary>
-    public partial class AzureFirewallNatRuleCollection : SubResource
+    public partial class AzureFirewallNatRuleCollection : NetworkSubResource
     {
         /// <summary> Initializes a new instance of AzureFirewallNatRuleCollection. </summary>
         public AzureFirewallNatRuleCollection()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="action"> The action type of a NAT rule collection. </param>
         /// <param name="rules"> Collection of rules used by a NAT rule collection. </param>
         /// <param name="provisioningState"> The provisioning state of the NAT rule collection resource. </param>
-        internal AzureFirewallNatRuleCollection(string id, string name, string etag, int? priority, AzureFirewallNatRCAction action, IList<AzureFirewallNatRule> rules, ProvisioningState? provisioningState) : base(id)
+        internal AzureFirewallNatRuleCollection(ResourceIdentifier id, string name, string etag, int? priority, AzureFirewallNatRCAction action, IList<AzureFirewallNatRule> rules, NetworkProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Collection of rules used by a NAT rule collection. </summary>
         public IList<AzureFirewallNatRule> Rules { get; }
         /// <summary> The provisioning state of the NAT rule collection resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

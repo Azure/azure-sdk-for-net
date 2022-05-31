@@ -1,7 +1,6 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30002.166
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{3CC93F1F-AF2A-4CB3-A7FF-5205836C1311}"
 EndProject
@@ -47,6 +46,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ShortCodes", "Azure.Communication.ShortCodes\src\Azure.Communication.ShortCodes.csproj", "{F7C16A81-CCB6-4F86-8815-3CE8B6321258}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ShortCodes.Tests", "Azure.Communication.ShortCodes\tests\Azure.Communication.ShortCodes.Tests.csproj", "{A3D05FF9-848B-483E-A34E-49C50E73F675}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email", "Azure.Communication.Email\src\Azure.Communication.Email.csproj", "{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email.Tests", "Azure.Communication.Email\tests\Azure.Communication.Email.Tests.csproj", "{F564FD34-F010-41FA-A58C-51558FB9FE89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.MediaComposition", "Azure.Communication.MediaComposition\src\Azure.Communication.MediaComposition.csproj", "{D5445861-C735-4A13-900F-3745FBD9566A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Communication.MediaComposition.Tests", "Azure.Communication.MediaComposition\tests\Azure.Communication.MediaComposition.Tests.csproj", "{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -130,6 +137,22 @@ Global
 		{A3D05FF9-848B-483E-A34E-49C50E73F675}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3D05FF9-848B-483E-A34E-49C50E73F675}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3D05FF9-848B-483E-A34E-49C50E73F675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEED2C23-E1AE-45F6-B975-BA06E28C27A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F564FD34-F010-41FA-A58C-51558FB9FE89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5445861-C735-4A13-900F-3745FBD9566A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5445861-C735-4A13-900F-3745FBD9566A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5445861-C735-4A13-900F-3745FBD9566A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5445861-C735-4A13-900F-3745FBD9566A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

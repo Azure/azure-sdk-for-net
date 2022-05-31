@@ -1,5 +1,11 @@
 ## Microsoft.Azure.Management.Reservations release notes
 
+### Changes in 1.16.0-preview
+**Notes**
+
+* Updated Reservations APIs version to 2022-03-01.
+* Support for new reserved resource types: AVS, DataFactory, NetAppStorage, AzureFiles, SqlEdge VirtualMachineSoftware.
+
 ### Changes in 1.15.0-preview
 **Notes**
 

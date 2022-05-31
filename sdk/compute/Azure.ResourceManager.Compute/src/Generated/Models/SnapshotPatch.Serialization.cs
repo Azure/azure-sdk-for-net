@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskSizeGB");
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(EncryptionSettingsCollection))
+            if (Optional.IsDefined(EncryptionSettingGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection");
-                writer.WriteObjectValue(EncryptionSettingsCollection);
+                writer.WriteObjectValue(EncryptionSettingGroup);
             }
             if (Optional.IsDefined(Encryption))
             {

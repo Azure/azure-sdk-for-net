@@ -5,9 +5,43 @@
 
 #nullable disable
 
+using System.Text.Json;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class SecretProperties
+    public partial class SecretProperties : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("type");
+            writer.WriteStringValue(SecretType.ToString());
+            writer.WriteEndObject();
+        }
+
+        internal static SecretProperties DeserializeSecretProperties(JsonElement element)
+        {
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureFirstPartyManagedCertificate": return AzureFirstPartyManagedCertificateProperties.DeserializeAzureFirstPartyManagedCertificateProperties(element);
+                    case "CustomerCertificate": return CustomerCertificateProperties.DeserializeCustomerCertificateProperties(element);
+                    case "ManagedCertificate": return ManagedCertificateProperties.DeserializeManagedCertificateProperties(element);
+                    case "UrlSigningKey": return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element);
+                }
+            }
+            SecretType type = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"))
+                {
+                    type = new SecretType(property.Value.GetString());
+                    continue;
+                }
+            }
+            return new SecretProperties(type);
+        }
     }
 }

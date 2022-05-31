@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Reservations.Models;
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Reservations
     {
         internal static ReservationOrderResponseData DeserializeReservationOrderResponseData(JsonElement element)
         {
-            Optional<ETag> etag = default;
+            Optional<int> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.Reservations
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    etag = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Reservations
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
