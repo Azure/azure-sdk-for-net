@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Workloads.Models
 {
-    public partial class MonitorPatch : IUtf8JsonSerializable
+    public partial class WorkloadMonitorPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

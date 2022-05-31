@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MonitorResource> GetMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WorkloadMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<WorkloadMonitorResource> GetWorkloadMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetMonitorsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetWorkloadMonitorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MonitorResource> GetMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkloadMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<WorkloadMonitorResource> GetWorkloadMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetMonitors(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetWorkloadMonitors(cancellationToken);
         }
 
         /// <summary>
@@ -365,12 +365,12 @@ namespace Azure.ResourceManager.Compute.Workloads
             return resourceGroupResource.GetSapVirtualInstances().Get(sapVirtualInstanceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MonitorResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of WorkloadMonitorResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of MonitorResources and their operations over a MonitorResource. </returns>
-        public static MonitorCollection GetMonitors(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of WorkloadMonitorResources and their operations over a WorkloadMonitorResource. </returns>
+        public static WorkloadMonitorCollection GetWorkloadMonitors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetMonitors();
+            return GetExtensionClient(resourceGroupResource).GetWorkloadMonitors();
         }
 
         /// <summary>
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MonitorResource>> GetMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        public static async Task<Response<WorkloadMonitorResource>> GetWorkloadMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMonitors().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetWorkloadMonitors().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -400,9 +400,9 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MonitorResource> GetMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
+        public static Response<WorkloadMonitorResource> GetWorkloadMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMonitors().Get(monitorName, cancellationToken);
+            return resourceGroupResource.GetWorkloadMonitors().Get(monitorName, cancellationToken);
         }
 
         #region PhpWorkloadResource
@@ -519,20 +519,20 @@ namespace Azure.ResourceManager.Compute.Workloads
         }
         #endregion
 
-        #region MonitorResource
+        #region WorkloadMonitorResource
         /// <summary>
-        /// Gets an object representing a <see cref="MonitorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorResource.CreateResourceIdentifier" /> to create a <see cref="MonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadMonitorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadMonitorResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorResource" /> object. </returns>
-        public static MonitorResource GetMonitorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkloadMonitorResource" /> object. </returns>
+        public static WorkloadMonitorResource GetWorkloadMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MonitorResource.ValidateResourceId(id);
-                return new MonitorResource(client, id);
+                WorkloadMonitorResource.ValidateResourceId(id);
+                return new WorkloadMonitorResource(client, id);
             }
             );
         }

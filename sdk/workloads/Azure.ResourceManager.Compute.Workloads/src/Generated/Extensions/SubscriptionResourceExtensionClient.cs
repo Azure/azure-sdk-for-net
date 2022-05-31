@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Compute.Workloads
         private WorkloadsRestOperations _defaultRestClient;
         private ClientDiagnostics _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics;
         private SAPVirtualInstancesRestOperations _sapVirtualInstanceSAPVirtualInstancesRestClient;
-        private ClientDiagnostics _monitormonitorsClientDiagnostics;
-        private MonitorsRestOperations _monitormonitorsRestClient;
+        private ClientDiagnostics _workloadMonitormonitorsClientDiagnostics;
+        private MonitorsRestOperations _workloadMonitormonitorsRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
         private SkusRestOperations _skusRestClient;
 
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Compute.Workloads
         private WorkloadsRestOperations DefaultRestClient => _defaultRestClient ??= new WorkloadsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SapVirtualInstanceSAPVirtualInstancesClientDiagnostics => _sapVirtualInstanceSAPVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", SapVirtualInstanceResource.ResourceType.Namespace, Diagnostics);
         private SAPVirtualInstancesRestOperations SapVirtualInstanceSAPVirtualInstancesRestClient => _sapVirtualInstanceSAPVirtualInstancesRestClient ??= new SAPVirtualInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapVirtualInstanceResource.ResourceType));
-        private ClientDiagnostics MonitormonitorsClientDiagnostics => _monitormonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", MonitorResource.ResourceType.Namespace, Diagnostics);
-        private MonitorsRestOperations MonitormonitorsRestClient => _monitormonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorResource.ResourceType));
+        private ClientDiagnostics WorkloadMonitormonitorsClientDiagnostics => _workloadMonitormonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", WorkloadMonitorResource.ResourceType.Namespace, Diagnostics);
+        private MonitorsRestOperations WorkloadMonitormonitorsRestClient => _workloadMonitormonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WorkloadMonitorResource.ResourceType));
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -426,17 +426,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// Operation Id: monitors_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorResource> GetMonitorsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WorkloadMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkloadMonitorResource> GetWorkloadMonitorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MonitorResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WorkloadMonitorResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = MonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitors");
+                using var scope = WorkloadMonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkloadMonitors");
                 scope.Start();
                 try
                 {
-                    var response = await MonitormonitorsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await WorkloadMonitormonitorsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -444,14 +444,14 @@ namespace Azure.ResourceManager.Compute.Workloads
                     throw;
                 }
             }
-            async Task<Page<MonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<WorkloadMonitorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = MonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitors");
+                using var scope = WorkloadMonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkloadMonitors");
                 scope.Start();
                 try
                 {
-                    var response = await MonitormonitorsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await WorkloadMonitormonitorsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -468,17 +468,17 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// Operation Id: monitors_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorResource> GetMonitors(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkloadMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkloadMonitorResource> GetWorkloadMonitors(CancellationToken cancellationToken = default)
         {
-            Page<MonitorResource> FirstPageFunc(int? pageSizeHint)
+            Page<WorkloadMonitorResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = MonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitors");
+                using var scope = WorkloadMonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkloadMonitors");
                 scope.Start();
                 try
                 {
-                    var response = MonitormonitorsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = WorkloadMonitormonitorsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -486,14 +486,14 @@ namespace Azure.ResourceManager.Compute.Workloads
                     throw;
                 }
             }
-            Page<MonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<WorkloadMonitorResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = MonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitors");
+                using var scope = WorkloadMonitormonitorsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkloadMonitors");
                 scope.Start();
                 try
                 {
-                    var response = MonitormonitorsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = WorkloadMonitormonitorsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new WorkloadMonitorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

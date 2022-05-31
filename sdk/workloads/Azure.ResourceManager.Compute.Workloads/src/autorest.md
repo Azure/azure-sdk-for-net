@@ -37,4 +37,8 @@ rename-rules:
   URI: Uri
   SAP: Sap
 
+directive:
+  - rename-model:
+      from: Monitor
+      to: WorkloadMonitor
 ```

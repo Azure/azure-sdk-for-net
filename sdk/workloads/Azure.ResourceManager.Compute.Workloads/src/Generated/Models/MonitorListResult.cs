@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Compute.Workloads.Models
         /// <summary> Initializes a new instance of MonitorListResult. </summary>
         internal MonitorListResult()
         {
-            Value = new ChangeTrackingList<MonitorData>();
+            Value = new ChangeTrackingList<WorkloadMonitorData>();
         }
 
         /// <summary> Initializes a new instance of MonitorListResult. </summary>
         /// <param name="value"> The list of SAP monitors. </param>
         /// <param name="nextLink"> The URL to get the next set of SAP monitors. </param>
-        internal MonitorListResult(IReadOnlyList<MonitorData> value, string nextLink)
+        internal MonitorListResult(IReadOnlyList<WorkloadMonitorData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of SAP monitors. </summary>
-        public IReadOnlyList<MonitorData> Value { get; }
+        public IReadOnlyList<WorkloadMonitorData> Value { get; }
         /// <summary> The URL to get the next set of SAP monitors. </summary>
         public string NextLink { get; }
     }

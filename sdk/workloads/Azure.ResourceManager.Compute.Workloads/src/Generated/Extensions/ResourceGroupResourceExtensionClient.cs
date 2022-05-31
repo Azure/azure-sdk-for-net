@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Compute.Workloads
             return GetCachedClient(Client => new SapVirtualInstanceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of MonitorResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MonitorResources and their operations over a MonitorResource. </returns>
-        public virtual MonitorCollection GetMonitors()
+        /// <summary> Gets a collection of WorkloadMonitorResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of WorkloadMonitorResources and their operations over a WorkloadMonitorResource. </returns>
+        public virtual WorkloadMonitorCollection GetWorkloadMonitors()
         {
-            return GetCachedClient(Client => new MonitorCollection(Client, Id));
+            return GetCachedClient(Client => new WorkloadMonitorCollection(Client, Id));
         }
     }
 }

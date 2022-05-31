@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Workloads
 {
-    /// <summary> A class representing the Monitor data model. </summary>
-    public partial class MonitorData : TrackedResourceData
+    /// <summary> A class representing the WorkloadMonitor data model. </summary>
+    public partial class WorkloadMonitorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MonitorData. </summary>
+        /// <summary> Initializes a new instance of WorkloadMonitorData. </summary>
         /// <param name="location"> The location. </param>
-        public MonitorData(AzureLocation location) : base(location)
+        public WorkloadMonitorData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorData. </summary>
+        /// <summary> Initializes a new instance of WorkloadMonitorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="logAnalyticsWorkspaceArmId"> The ARM ID of the Log Analytics Workspace that is used for SAP monitoring. </param>
         /// <param name="monitorSubnet"> The subnet which the SAP monitor will be deployed in. </param>
         /// <param name="msiArmId"> The ARM ID of the MSI used for SAP monitoring. </param>
-        internal MonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, string appLocation, RoutingPreference? routingPreference, ManagedRGConfiguration managedResourceGroupConfiguration, string logAnalyticsWorkspaceArmId, string monitorSubnet, string msiArmId) : base(id, name, resourceType, systemData, tags, location)
+        internal WorkloadMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, string appLocation, RoutingPreference? routingPreference, ManagedRGConfiguration managedResourceGroupConfiguration, string logAnalyticsWorkspaceArmId, string monitorSubnet, string msiArmId) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Errors = errors;

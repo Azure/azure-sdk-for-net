@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Workloads
 {
-    public partial class MonitorData : IUtf8JsonSerializable
+    public partial class WorkloadMonitorData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Workloads
             writer.WriteEndObject();
         }
 
-        internal static MonitorData DeserializeMonitorData(JsonElement element)
+        internal static WorkloadMonitorData DeserializeWorkloadMonitorData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute.Workloads
                     continue;
                 }
             }
-            return new MonitorData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), errors.Value, appLocation.Value, Optional.ToNullable(routingPreference), managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value);
+            return new WorkloadMonitorData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), errors.Value, appLocation.Value, Optional.ToNullable(routingPreference), managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value);
         }
     }
 }

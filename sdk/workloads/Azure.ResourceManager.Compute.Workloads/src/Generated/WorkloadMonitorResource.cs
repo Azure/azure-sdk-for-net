@@ -20,46 +20,46 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute.Workloads
 {
     /// <summary>
-    /// A Class representing a Monitor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMonitor method.
+    /// A Class representing a WorkloadMonitor along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadMonitorResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetWorkloadMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetWorkloadMonitor method.
     /// </summary>
-    public partial class MonitorResource : ArmResource
+    public partial class WorkloadMonitorResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MonitorResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="WorkloadMonitorResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _monitormonitorsClientDiagnostics;
-        private readonly MonitorsRestOperations _monitormonitorsRestClient;
-        private readonly MonitorData _data;
+        private readonly ClientDiagnostics _workloadMonitormonitorsClientDiagnostics;
+        private readonly MonitorsRestOperations _workloadMonitormonitorsRestClient;
+        private readonly WorkloadMonitorData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="MonitorResource"/> class for mocking. </summary>
-        protected MonitorResource()
+        /// <summary> Initializes a new instance of the <see cref="WorkloadMonitorResource"/> class for mocking. </summary>
+        protected WorkloadMonitorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "WorkloadMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MonitorResource(ArmClient client, MonitorData data) : this(client, data.Id)
+        internal WorkloadMonitorResource(ArmClient client, WorkloadMonitorData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MonitorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WorkloadMonitorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _monitormonitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string monitormonitorsApiVersion);
-            _monitormonitorsRestClient = new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, monitormonitorsApiVersion);
+            _workloadMonitormonitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.Workloads", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string workloadMonitormonitorsApiVersion);
+            _workloadMonitormonitorsRestClient = new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workloadMonitormonitorsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Workloads
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MonitorData Data
+        public virtual WorkloadMonitorData Data
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Workloads
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ProviderInstanceResources in the Monitor. </summary>
+        /// <summary> Gets a collection of ProviderInstanceResources in the WorkloadMonitor. </summary>
         /// <returns> An object representing collection of ProviderInstanceResources and their operations over a ProviderInstanceResource. </returns>
         public virtual ProviderInstanceCollection GetProviderInstances()
         {
@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// Operation Id: monitors_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MonitorResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadMonitorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.Get");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.Get");
             scope.Start();
             try
             {
-                var response = await _monitormonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _workloadMonitormonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,16 +156,16 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// Operation Id: monitors_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MonitorResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadMonitorResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.Get");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.Get");
             scope.Start();
             try
             {
-                var response = _monitormonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _workloadMonitormonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MonitorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<OperationStatusResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.Delete");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.Delete");
             scope.Start();
             try
             {
-                var response = await _monitormonitorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _monitormonitorsClientDiagnostics, Pipeline, _monitormonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _workloadMonitormonitorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _workloadMonitormonitorsClientDiagnostics, Pipeline, _workloadMonitormonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<OperationStatusResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.Delete");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.Delete");
             scope.Start();
             try
             {
-                var response = _monitormonitorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _monitormonitorsClientDiagnostics, Pipeline, _monitormonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _workloadMonitormonitorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new WorkloadsArmOperation<OperationStatusResult>(new OperationStatusResultOperationSource(), _workloadMonitormonitorsClientDiagnostics, Pipeline, _workloadMonitormonitorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -234,16 +234,16 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="patch"> Request body that only contains the new Tags field. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<MonitorResource>> UpdateAsync(MonitorPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadMonitorResource>> UpdateAsync(WorkloadMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.Update");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.Update");
             scope.Start();
             try
             {
-                var response = await _monitormonitorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MonitorResource(Client, response.Value), response.GetRawResponse());
+                var response = await _workloadMonitormonitorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new WorkloadMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,16 +260,16 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="patch"> Request body that only contains the new Tags field. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<MonitorResource> Update(MonitorPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadMonitorResource> Update(WorkloadMonitorPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.Update");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.Update");
             scope.Start();
             try
             {
-                var response = _monitormonitorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new MonitorResource(Client, response.Value), response.GetRawResponse());
+                var response = _workloadMonitormonitorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new WorkloadMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,20 +287,20 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<MonitorResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadMonitorResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.AddTag");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _monitormonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _workloadMonitormonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new WorkloadMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -318,20 +318,20 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<MonitorResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadMonitorResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.AddTag");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _monitormonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new MonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _workloadMonitormonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new WorkloadMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -348,11 +348,11 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<MonitorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadMonitorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.SetTags");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.SetTags");
             scope.Start();
             try
             {
@@ -360,8 +360,8 @@ namespace Azure.ResourceManager.Compute.Workloads
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _monitormonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _workloadMonitormonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new WorkloadMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<MonitorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadMonitorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.SetTags");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.SetTags");
             scope.Start();
             try
             {
@@ -390,8 +390,8 @@ namespace Azure.ResourceManager.Compute.Workloads
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _monitormonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new MonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _workloadMonitormonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new WorkloadMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -408,19 +408,19 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<MonitorResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadMonitorResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.RemoveTag");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _monitormonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _workloadMonitormonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new WorkloadMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -437,19 +437,19 @@ namespace Azure.ResourceManager.Compute.Workloads
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<MonitorResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadMonitorResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _monitormonitorsClientDiagnostics.CreateScope("MonitorResource.RemoveTag");
+            using var scope = _workloadMonitormonitorsClientDiagnostics.CreateScope("WorkloadMonitorResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _monitormonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new MonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _workloadMonitormonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new WorkloadMonitorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

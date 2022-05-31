@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Workloads
     /// A Class representing a ProviderInstance along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProviderInstanceResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetProviderInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MonitorResource" /> using the GetProviderInstance method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkloadMonitorResource" /> using the GetProviderInstance method.
     /// </summary>
     public partial class ProviderInstanceResource : ArmResource
     {
