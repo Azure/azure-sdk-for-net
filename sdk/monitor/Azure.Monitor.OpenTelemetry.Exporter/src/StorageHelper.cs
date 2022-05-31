@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"ErrorCreatingDefaultStorageFolder{EventLevelSuffix.Error}", $"{ex.ToInvariantString()}");
+                AzureMonitorExporterEventSource.Log.WriteError("ErrorCreatingDefaultStorageFolder", ex);
                 return null;
             }
         }

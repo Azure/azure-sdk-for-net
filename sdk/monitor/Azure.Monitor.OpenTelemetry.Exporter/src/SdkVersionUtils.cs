@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"SdkVersionCreateFailed{EventLevelSuffix.Warning}", ex);
+                AzureMonitorExporterEventSource.Log.WriteWarning("SdkVersionCreateFailed", ex);
                 return null;
             }
         }
@@ -48,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingPartOfSdkVersion{EventLevelSuffix.Error}", $"{ex.ToInvariantString()}");
+                AzureMonitorExporterEventSource.Log.WriteError("ErrorInitializingPartOfSdkVersion", ex);
                 return null;
             }
         }
