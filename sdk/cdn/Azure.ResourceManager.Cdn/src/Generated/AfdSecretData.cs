@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the secret. </param>
-        /// <param name="parameters"> object which contains secret parameters. </param>
-        internal AfdSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecretDefinition parameters) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> object which contains secret parameters. </param>
+        internal AfdSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecretProperties properties) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
             ProfileName = profileName;
-            Parameters = parameters;
+            Properties = properties;
         }
 
         /// <summary> Provisioning status. </summary>
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The name of the profile which holds the secret. </summary>
         public string ProfileName { get; }
         /// <summary> object which contains secret parameters. </summary>
-        public SecretDefinition Parameters { get; set; }
+        public SecretProperties Properties { get; set; }
     }
 }
