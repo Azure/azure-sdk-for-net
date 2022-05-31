@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> HTTP configuration of the connectivity check. </summary>
     public partial class HttpConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="HttpConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of HttpConfiguration. </summary>
         public HttpConfiguration()
         {
             Headers = new ChangeTrackingList<HttpHeader>();

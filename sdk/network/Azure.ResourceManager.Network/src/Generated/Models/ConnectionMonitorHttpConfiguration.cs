@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the HTTP configuration. </summary>
     public partial class ConnectionMonitorHttpConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorHttpConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>
         public ConnectionMonitorHttpConfiguration()
         {
             RequestHeaders = new ChangeTrackingList<HttpHeader>();
             ValidStatusCodeRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorHttpConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>
         /// <param name="port"> The port to connect to. </param>
         /// <param name="method"> The HTTP method to use. </param>
         /// <param name="path"> The path component of the URI. For instance, &quot;/dir1/dir2&quot;. </param>

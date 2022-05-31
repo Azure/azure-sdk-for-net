@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class TagsObject
     {
-        /// <summary> Initializes a new instance of <see cref="TagsObject"/>. </summary>
+        /// <summary> Initializes a new instance of TagsObject. </summary>
         public TagsObject()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

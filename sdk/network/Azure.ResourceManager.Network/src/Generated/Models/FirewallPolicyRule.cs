@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of a rule. </summary>
     public partial class FirewallPolicyRule
     {
-        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRule"/>. </summary>
+        /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>
         public FirewallPolicyRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRule"/>. </summary>
+        /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>

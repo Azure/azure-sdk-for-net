@@ -5,18 +5,20 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define destination of connection. </summary>
     public partial class ConnectivityDestination
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectivityDestination"/>. </summary>
+        /// <summary> Initializes a new instance of ConnectivityDestination. </summary>
         public ConnectivityDestination()
         {
         }
 
         /// <summary> The ID of the resource to which a connection attempt will be made. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The IP address or URI the resource to which a connection attempt will be made. </summary>
         public string Address { get; set; }
         /// <summary> Port on which check connectivity will be performed. </summary>

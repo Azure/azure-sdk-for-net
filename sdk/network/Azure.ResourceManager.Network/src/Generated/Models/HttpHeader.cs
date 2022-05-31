@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The HTTP header. </summary>
     public partial class HttpHeader
     {
-        /// <summary> Initializes a new instance of <see cref="HttpHeader"/>. </summary>
+        /// <summary> Initializes a new instance of HttpHeader. </summary>
         public HttpHeader()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HttpHeader"/>. </summary>
+        /// <summary> Initializes a new instance of HttpHeader. </summary>
         /// <param name="name"> The name in HTTP header. </param>
         /// <param name="value"> The value in HTTP header. </param>
         internal HttpHeader(string name, string value)

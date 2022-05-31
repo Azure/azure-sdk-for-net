@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Filter that is applied to packet capture request. Multiple filters can be applied. </summary>
     public partial class PacketCaptureFilter
     {
-        /// <summary> Initializes a new instance of <see cref="PacketCaptureFilter"/>. </summary>
+        /// <summary> Initializes a new instance of PacketCaptureFilter. </summary>
         public PacketCaptureFilter()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PacketCaptureFilter"/>. </summary>
+        /// <summary> Initializes a new instance of PacketCaptureFilter. </summary>
         /// <param name="protocol"> Protocol to be filtered on. </param>
         /// <param name="localIPAddress"> Local IP Address to be filtered on. Notation: &quot;127.0.0.1&quot; for single address entry. &quot;127.0.0.1-127.0.0.255&quot; for range. &quot;127.0.0.1;127.0.0.5&quot;? for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
         /// <param name="remoteIPAddress"> Local IP Address to be filtered on. Notation: &quot;127.0.0.1&quot; for single address entry. &quot;127.0.0.1-127.0.0.255&quot; for range. &quot;127.0.0.1;127.0.0.5;&quot; for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>

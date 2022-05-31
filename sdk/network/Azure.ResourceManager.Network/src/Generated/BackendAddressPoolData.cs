@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the BackendAddressPool data model. </summary>
     public partial class BackendAddressPoolData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="BackendAddressPoolData"/>. </summary>
+        /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
         public BackendAddressPoolData()
         {
             TunnelInterfaces = new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>();
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Network
             OutboundRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackendAddressPoolData"/>. </summary>
+        /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRule"> A reference to an outbound rule that uses this backend address pool. </param>
         /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             Location = location;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The location of the backend address pool. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> An array of gateway load balancer tunnel interfaces. </summary>

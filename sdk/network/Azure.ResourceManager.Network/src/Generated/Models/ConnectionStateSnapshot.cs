@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Connection state snapshot. </summary>
     public partial class ConnectionStateSnapshot
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectionStateSnapshot"/>. </summary>
+        /// <summary> Initializes a new instance of ConnectionStateSnapshot. </summary>
         internal ConnectionStateSnapshot()
         {
             Hops = new ChangeTrackingList<ConnectivityHop>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionStateSnapshot"/>. </summary>
+        /// <summary> Initializes a new instance of ConnectionStateSnapshot. </summary>
         /// <param name="connectionState"> The connection state. </param>
         /// <param name="startOn"> The start time of the connection snapshot. </param>
         /// <param name="endOn"> The end time of the connection snapshot. </param>

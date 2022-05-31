@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> BGP peer status details. </summary>
     public partial class BgpPeerStatus
     {
-        /// <summary> Initializes a new instance of <see cref="BgpPeerStatus"/>. </summary>
+        /// <summary> Initializes a new instance of BgpPeerStatus. </summary>
         internal BgpPeerStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BgpPeerStatus"/>. </summary>
+        /// <summary> Initializes a new instance of BgpPeerStatus. </summary>
         /// <param name="localAddress"> The virtual network gateway&apos;s local address. </param>
         /// <param name="neighbor"> The remote BGP peer. </param>
         /// <param name="asn"> The autonomous system number of the remote BGP peer. </param>

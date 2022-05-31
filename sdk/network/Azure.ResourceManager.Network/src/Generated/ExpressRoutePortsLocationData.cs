@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the ExpressRoutePortsLocation data model. </summary>
     public partial class ExpressRoutePortsLocationData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationData"/>. </summary>
+        /// <summary> Initializes a new instance of ExpressRoutePortsLocationData. </summary>
         public ExpressRoutePortsLocationData()
         {
             AvailableBandwidths = new ChangeTrackingList<ExpressRoutePortsLocationBandwidths>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationData"/>. </summary>
+        /// <summary> Initializes a new instance of ExpressRoutePortsLocationData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

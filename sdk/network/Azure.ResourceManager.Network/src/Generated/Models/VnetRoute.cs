@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of routes that control routing from VirtualHub into a virtual network connection. </summary>
     internal partial class VnetRoute
     {
-        /// <summary> Initializes a new instance of <see cref="VnetRoute"/>. </summary>
+        /// <summary> Initializes a new instance of VnetRoute. </summary>
         public VnetRoute()
         {
             StaticRoutes = new ChangeTrackingList<StaticRoute>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VnetRoute"/>. </summary>
+        /// <summary> Initializes a new instance of VnetRoute. </summary>
         /// <param name="staticRoutes"> List of all Static Routes. </param>
         internal VnetRoute(IList<StaticRoute> staticRoutes)
         {

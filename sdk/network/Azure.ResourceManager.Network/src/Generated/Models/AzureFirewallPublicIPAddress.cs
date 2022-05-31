@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Public IP Address associated with azure firewall. </summary>
     public partial class AzureFirewallPublicIPAddress
     {
-        /// <summary> Initializes a new instance of <see cref="AzureFirewallPublicIPAddress"/>. </summary>
+        /// <summary> Initializes a new instance of AzureFirewallPublicIPAddress. </summary>
         public AzureFirewallPublicIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureFirewallPublicIPAddress"/>. </summary>
+        /// <summary> Initializes a new instance of AzureFirewallPublicIPAddress. </summary>
         /// <param name="address"> Public IP Address value. </param>
         internal AzureFirewallPublicIPAddress(string address)
         {

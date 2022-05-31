@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> ExtendedLocation complex type. </summary>
     public partial class ExtendedLocation
     {
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
+        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
         public ExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
+        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
         internal ExtendedLocation(string name, ExtendedLocationTypes? extendedLocationType)

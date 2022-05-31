@@ -13,18 +13,18 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Results of network security group evaluation. </summary>
     public partial class EvaluatedNetworkSecurityGroup
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluatedNetworkSecurityGroup"/>. </summary>
+        /// <summary> Initializes a new instance of EvaluatedNetworkSecurityGroup. </summary>
         internal EvaluatedNetworkSecurityGroup()
         {
             RulesEvaluationResult = new ChangeTrackingList<NetworkSecurityRulesEvaluationResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluatedNetworkSecurityGroup"/>. </summary>
+        /// <summary> Initializes a new instance of EvaluatedNetworkSecurityGroup. </summary>
         /// <param name="networkSecurityGroupId"> Network security group ID. </param>
         /// <param name="appliedTo"> Resource ID of nic or subnet to which network security group is applied. </param>
         /// <param name="matchedRule"> Matched network security rule. </param>
         /// <param name="rulesEvaluationResult"> List of network security rules evaluation results. </param>
-        internal EvaluatedNetworkSecurityGroup(string networkSecurityGroupId, string appliedTo, MatchedRule matchedRule, IReadOnlyList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult)
+        internal EvaluatedNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId, string appliedTo, MatchedRule matchedRule, IReadOnlyList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult)
         {
             NetworkSecurityGroupId = networkSecurityGroupId;
             AppliedTo = appliedTo;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Network security group ID. </summary>
-        public string NetworkSecurityGroupId { get; }
+        public ResourceIdentifier NetworkSecurityGroupId { get; }
         /// <summary> Resource ID of nic or subnet to which network security group is applied. </summary>
         public string AppliedTo { get; }
         /// <summary> Matched network security rule. </summary>

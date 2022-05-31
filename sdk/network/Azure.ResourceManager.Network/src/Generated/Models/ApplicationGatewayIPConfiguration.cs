@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,19 +14,19 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP configuration of an application gateway. Currently 1 public and 1 private IP configuration is allowed. </summary>
     public partial class ApplicationGatewayIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayIPConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of ApplicationGatewayIPConfiguration. </summary>
         public ApplicationGatewayIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayIPConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of ApplicationGatewayIPConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> Reference to the subnet resource. A subnet from where application gateway gets its private address. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway IP configuration resource. </param>
-        internal ApplicationGatewayIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, WritableSubResource subnet, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource subnet, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             Subnet = subnet;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Reference to the subnet resource. A subnet from where application gateway gets its private address. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>

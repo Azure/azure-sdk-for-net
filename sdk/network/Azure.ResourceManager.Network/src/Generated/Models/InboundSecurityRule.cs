@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,20 +14,20 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> NVA Inbound Security Rule resource. </summary>
     public partial class InboundSecurityRule : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="InboundSecurityRule"/>. </summary>
+        /// <summary> Initializes a new instance of InboundSecurityRule. </summary>
         public InboundSecurityRule()
         {
             Rules = new ChangeTrackingList<InboundSecurityRules>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InboundSecurityRule"/>. </summary>
+        /// <summary> Initializes a new instance of InboundSecurityRule. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="rules"> List of allowed rules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal InboundSecurityRule(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, IList<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal InboundSecurityRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             Rules = rules;
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> List of allowed rules. </summary>
         public IList<InboundSecurityRules> Rules { get; }
         /// <summary> The provisioning state of the resource. </summary>

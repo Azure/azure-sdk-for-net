@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The list usages operation response. </summary>
     internal partial class UsagesListResult
     {
-        /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
+        /// <summary> Initializes a new instance of UsagesListResult. </summary>
         internal UsagesListResult()
         {
             Value = new ChangeTrackingList<NetworkUsage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
+        /// <summary> Initializes a new instance of UsagesListResult. </summary>
         /// <param name="value"> The list network resource usages. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal UsagesListResult(IReadOnlyList<NetworkUsage> value, string nextLink)

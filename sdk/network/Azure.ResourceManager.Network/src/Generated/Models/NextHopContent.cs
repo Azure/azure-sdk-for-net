@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the source and destination endpoint. </summary>
     public partial class NextHopContent
     {
-        /// <summary> Initializes a new instance of <see cref="NextHopContent"/>. </summary>
+        /// <summary> Initializes a new instance of NextHopContent. </summary>
         /// <param name="targetResourceId"> The resource identifier of the target resource against which the action is to be performed. </param>
         /// <param name="sourceIPAddress"> The source IP address. </param>
         /// <param name="destinationIPAddress"> The destination IP address. </param>
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The destination IP address. </summary>
         public string DestinationIPAddress { get; }
         /// <summary> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of the nics, then this parameter must be specified. Otherwise optional). </summary>
-        public string TargetNicResourceId { get; set; }
+        public ResourceIdentifier TargetNicResourceId { get; set; }
     }
 }

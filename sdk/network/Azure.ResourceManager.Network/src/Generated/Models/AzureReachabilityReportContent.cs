@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Geographic and time constraints for Azure reachability report. </summary>
     public partial class AzureReachabilityReportContent
     {
-        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportContent"/>. </summary>
+        /// <summary> Initializes a new instance of AzureReachabilityReportContent. </summary>
         /// <param name="providerLocation"> Parameters that define a geographic location. </param>
         /// <param name="startOn"> The start time for the Azure reachability report. </param>
         /// <param name="endOn"> The end time for the Azure reachability report. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
 
             ProviderLocation = providerLocation;
             Providers = new ChangeTrackingList<string>();
-            AzureLocations = new ChangeTrackingList<string>();
+            AzureLocations = new ChangeTrackingList<AzureLocation>();
             StartOn = startOn;
             EndOn = endOn;
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of Internet service providers. </summary>
         public IList<string> Providers { get; }
         /// <summary> Optional Azure regions to scope the query to. </summary>
-        public IList<string> AzureLocations { get; }
+        public IList<AzureLocation> AzureLocations { get; }
         /// <summary> The start time for the Azure reachability report. </summary>
         public DateTimeOffset StartOn { get; }
         /// <summary> The end time for the Azure reachability report. </summary>

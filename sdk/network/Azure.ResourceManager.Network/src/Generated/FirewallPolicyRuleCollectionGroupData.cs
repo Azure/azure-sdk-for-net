@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -14,13 +15,13 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the FirewallPolicyRuleCollectionGroup data model. </summary>
     public partial class FirewallPolicyRuleCollectionGroupData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         public FirewallPolicyRuleCollectionGroupData()
         {
-            RuleCollections = new ChangeTrackingList<FirewallPolicyRuleCollection>();
+            RuleCollections = new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections"> Group of Firewall Policy rule collections. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
-        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, int? priority, IList<FirewallPolicyRuleCollection> ruleCollections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             Priority = priority;
@@ -37,11 +38,11 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Priority of the Firewall Policy Rule Collection Group resource. </summary>
         public int? Priority { get; set; }
         /// <summary> Group of Firewall Policy rule collections. </summary>
-        public IList<FirewallPolicyRuleCollection> RuleCollections { get; }
+        public IList<FirewallPolicyRuleCollectionInfo> RuleCollections { get; }
         /// <summary> The provisioning state of the firewall policy rule collection group resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
     }

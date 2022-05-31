@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The usage names. </summary>
     public partial class UsageName
     {
-        /// <summary> Initializes a new instance of <see cref="UsageName"/>. </summary>
+        /// <summary> Initializes a new instance of UsageName. </summary>
         internal UsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UsageName"/>. </summary>
+        /// <summary> Initializes a new instance of UsageName. </summary>
         /// <param name="value"> A string describing the resource name. </param>
         /// <param name="localizedValue"> A localized string describing the resource name. </param>
         internal UsageName(string value, string localizedValue)

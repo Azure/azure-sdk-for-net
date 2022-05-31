@@ -5,24 +5,26 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the settings for producing output into a log analytics workspace. </summary>
     internal partial class ConnectionMonitorWorkspaceSettings
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorWorkspaceSettings"/>. </summary>
+        /// <summary> Initializes a new instance of ConnectionMonitorWorkspaceSettings. </summary>
         public ConnectionMonitorWorkspaceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorWorkspaceSettings"/>. </summary>
+        /// <summary> Initializes a new instance of ConnectionMonitorWorkspaceSettings. </summary>
         /// <param name="workspaceResourceId"> Log analytics workspace resource ID. </param>
-        internal ConnectionMonitorWorkspaceSettings(string workspaceResourceId)
+        internal ConnectionMonitorWorkspaceSettings(ResourceIdentifier workspaceResourceId)
         {
             WorkspaceResourceId = workspaceResourceId;
         }
 
         /// <summary> Log analytics workspace resource ID. </summary>
-        public string WorkspaceResourceId { get; set; }
+        public ResourceIdentifier WorkspaceResourceId { get; set; }
     }
 }

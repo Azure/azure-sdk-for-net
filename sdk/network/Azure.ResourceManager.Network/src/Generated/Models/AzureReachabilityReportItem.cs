@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Azure reachability report details for a given provider location. </summary>
     public partial class AzureReachabilityReportItem
     {
-        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportItem"/>. </summary>
+        /// <summary> Initializes a new instance of AzureReachabilityReportItem. </summary>
         internal AzureReachabilityReportItem()
         {
             Latencies = new ChangeTrackingList<AzureReachabilityReportLatencyInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportItem"/>. </summary>
+        /// <summary> Initializes a new instance of AzureReachabilityReportItem. </summary>
         /// <param name="provider"> The Internet service provider. </param>
         /// <param name="azureLocation"> The Azure region. </param>
         /// <param name="latencies"> List of latency details for each of the time series. </param>
-        internal AzureReachabilityReportItem(string provider, string azureLocation, IReadOnlyList<AzureReachabilityReportLatencyInfo> latencies)
+        internal AzureReachabilityReportItem(string provider, AzureLocation? azureLocation, IReadOnlyList<AzureReachabilityReportLatencyInfo> latencies)
         {
             Provider = provider;
             AzureLocation = azureLocation;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Internet service provider. </summary>
         public string Provider { get; }
         /// <summary> The Azure region. </summary>
-        public string AzureLocation { get; }
+        public AzureLocation? AzureLocation { get; }
         /// <summary> List of latency details for each of the time series. </summary>
         public IReadOnlyList<AzureReachabilityReportLatencyInfo> Latencies { get; }
     }

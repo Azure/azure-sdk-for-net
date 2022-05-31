@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -13,12 +14,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the Route data model. </summary>
     public partial class RouteData : NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
+        /// <summary> Initializes a new instance of RouteData. </summary>
         public RouteData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
+        /// <summary> Initializes a new instance of RouteData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
         /// <param name="provisioningState"> The provisioning state of the route resource. </param>
         /// <param name="hasBgpOverride"> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </param>
-        internal RouteData(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, NetworkProvisioningState? provisioningState, bool? hasBgpOverride) : base(id, name, resourceType)
+        internal RouteData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string addressPrefix, RouteNextHopType? nextHopType, string nextHopIPAddress, NetworkProvisioningState? provisioningState, bool? hasBgpOverride) : base(id, name, resourceType)
         {
             Etag = etag;
             AddressPrefix = addressPrefix;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The destination CIDR to which the route applies. </summary>
         public string AddressPrefix { get; set; }
         /// <summary> The type of Azure hop the packet should be sent to. </summary>

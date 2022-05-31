@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A web application firewall rule. </summary>
     public partial class ApplicationGatewayFirewallRule
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRule"/>. </summary>
+        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRule. </summary>
         /// <param name="ruleId"> The identifier of the web application firewall rule. </param>
         public ApplicationGatewayFirewallRule(int ruleId)
         {
             RuleId = ruleId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRule"/>. </summary>
+        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRule. </summary>
         /// <param name="ruleId"> The identifier of the web application firewall rule. </param>
         /// <param name="description"> The description of the web application firewall rule. </param>
         internal ApplicationGatewayFirewallRule(int ruleId, string description)

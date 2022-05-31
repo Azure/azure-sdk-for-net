@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of virtual router peer routes. </summary>
     public partial class PeerRouteList
     {
-        /// <summary> Initializes a new instance of <see cref="PeerRouteList"/>. </summary>
+        /// <summary> Initializes a new instance of PeerRouteList. </summary>
         internal PeerRouteList()
         {
             Value = new ChangeTrackingList<PeerRoute>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeerRouteList"/>. </summary>
+        /// <summary> Initializes a new instance of PeerRouteList. </summary>
         /// <param name="value"> List of peer routes. </param>
         internal PeerRouteList(IReadOnlyList<PeerRoute> value)
         {

@@ -5,21 +5,23 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Resources that have an association with the parent resource. </summary>
     public partial class TopologyAssociation
     {
-        /// <summary> Initializes a new instance of <see cref="TopologyAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of TopologyAssociation. </summary>
         internal TopologyAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TopologyAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of TopologyAssociation. </summary>
         /// <param name="name"> The name of the resource that is associated with the parent resource. </param>
         /// <param name="resourceId"> The ID of the resource that is associated with the parent resource. </param>
         /// <param name="associationType"> The association type of the child resource to the parent resource. </param>
-        internal TopologyAssociation(string name, string resourceId, AssociationType? associationType)
+        internal TopologyAssociation(string name, ResourceIdentifier resourceId, AssociationType? associationType)
         {
             Name = name;
             ResourceId = resourceId;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The name of the resource that is associated with the parent resource. </summary>
         public string Name { get; }
         /// <summary> The ID of the resource that is associated with the parent resource. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> The association type of the child resource to the parent resource. </summary>
         public AssociationType? AssociationType { get; }
     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the IPGroup data model. </summary>
     public partial class IPGroupData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="IPGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of IPGroupData. </summary>
         public IPGroupData()
         {
             IPAddresses = new ChangeTrackingList<string>();
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network
             FirewallPolicies = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of IPGroupData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipAddresses"> IpAddresses/IpAddressPrefixes in the IpGroups resource. </param>
         /// <param name="firewalls"> List of references to Firewall resources that this IpGroups is associated with. </param>
         /// <param name="firewallPolicies"> List of references to Firewall Policies resources that this IpGroups is associated with. </param>
-        internal IPGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies) : base(id, name, resourceType, location, tags)
+        internal IPGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The provisioning state of the IpGroups resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> IpAddresses/IpAddressPrefixes in the IpGroups resource. </summary>

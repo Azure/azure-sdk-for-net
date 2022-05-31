@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the NetworkInterface data model. </summary>
     public partial class NetworkInterfaceData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceData"/>. </summary>
+        /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
         public NetworkInterfaceData()
         {
             IPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Network
             HostedWorkloads = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceData"/>. </summary>
+        /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nicType"> Type of Network Interface resource. </param>
         /// <param name="privateLinkService"> Privatelinkservice of the network interface resource. </param>
         /// <param name="migrationPhase"> Migration phase of Network Interface resource. </param>
-        internal NetworkInterfaceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, string etag, WritableSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? enableAcceleratedNetworking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, WritableSubResource dscpConfiguration, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase) : base(id, name, resourceType, location, tags)
+        internal NetworkInterfaceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, Models.ExtendedLocation extendedLocation, ETag? etag, WritableSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? enableAcceleratedNetworking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, WritableSubResource dscpConfiguration, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The extended location of the network interface. </summary>
         public Models.ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The reference to a virtual machine. </summary>
         internal WritableSubResource VirtualMachine { get; }
         /// <summary> Gets or sets Id. </summary>

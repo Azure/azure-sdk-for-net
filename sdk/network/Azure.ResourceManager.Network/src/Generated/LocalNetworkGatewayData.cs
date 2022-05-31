@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -15,12 +16,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the LocalNetworkGateway data model. </summary>
     public partial class LocalNetworkGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayData"/>. </summary>
+        /// <summary> Initializes a new instance of LocalNetworkGatewayData. </summary>
         public LocalNetworkGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayData"/>. </summary>
+        /// <summary> Initializes a new instance of LocalNetworkGatewayData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bgpSettings"> Local network gateway&apos;s BGP speaker settings. </param>
         /// <param name="resourceGuid"> The resource GUID property of the local network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
-        internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, AddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, AddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             LocalNetworkAddressSpace = localNetworkAddressSpace;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Local network site address space. </summary>
         internal AddressSpace LocalNetworkAddressSpace { get; set; }
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>

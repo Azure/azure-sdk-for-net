@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,13 +15,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Container network interface child resource. </summary>
     public partial class ContainerNetworkInterface : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterface"/>. </summary>
+        /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
         public ContainerNetworkInterface()
         {
             IPConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterface"/>. </summary>
+        /// <summary> Initializes a new instance of ContainerNetworkInterface. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="container"> Reference to the container to which this container network interface is attached. </param>
         /// <param name="ipConfigurations"> Reference to the ip configuration on this container nic. </param>
         /// <param name="provisioningState"> The provisioning state of the container network interface resource. </param>
-        internal ContainerNetworkInterface(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, WritableSubResource container, IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ContainerNetworkInterface(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration, WritableSubResource container, IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             ContainerNetworkInterfaceConfiguration = containerNetworkInterfaceConfiguration;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Container network interface configuration from which this container network interface is created. </summary>
         public ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get; }
         /// <summary> Reference to the container to which this container network interface is attached. </summary>
