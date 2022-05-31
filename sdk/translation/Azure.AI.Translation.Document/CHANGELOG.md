@@ -13,6 +13,7 @@
 - Renamed parameter `asc` to `ascending` in `TranslationFilterOrder` constructor.
 
 ### Bugs Fixed
+- In `DocumentTranslationOperation`, `Cancel` calls won't overwrite the response from `GetRawResponse` anymore.
 
 ### Other Changes
 
