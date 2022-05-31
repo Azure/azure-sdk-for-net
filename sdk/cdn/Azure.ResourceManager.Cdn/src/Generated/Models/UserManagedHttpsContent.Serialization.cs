@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UserManagedHttpsContent DeserializeUserManagedHttpsContent(JsonElement element)
         {
-            KeyVaultCertificateSourceDefinition certificateSourceParameters = default;
+            KeyVaultCertificateSource certificateSourceParameters = default;
             CertificateSource certificateSource = default;
             ProtocolType protocolType = default;
             Optional<MinimumTlsVersion> minimumTlsVersion = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("certificateSourceParameters"))
                 {
-                    certificateSourceParameters = KeyVaultCertificateSourceDefinition.DeserializeKeyVaultCertificateSourceDefinition(property.Value);
+                    certificateSourceParameters = KeyVaultCertificateSource.DeserializeKeyVaultCertificateSource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateSource"))

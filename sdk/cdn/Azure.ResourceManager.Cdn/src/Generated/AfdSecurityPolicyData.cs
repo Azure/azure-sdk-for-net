@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the security policy. </param>
-        /// <param name="parameters"> object which contains security policy parameters. </param>
-        internal AfdSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecurityPolicyPropertiesDefinition parameters) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> object which contains security policy parameters. </param>
+        internal AfdSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecurityPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
             ProfileName = profileName;
-            Parameters = parameters;
+            Properties = properties;
         }
 
         /// <summary> Provisioning status. </summary>
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> The name of the profile which holds the security policy. </summary>
         public string ProfileName { get; }
         /// <summary> object which contains security policy parameters. </summary>
-        public SecurityPolicyPropertiesDefinition Parameters { get; set; }
+        public SecurityPolicyProperties Properties { get; set; }
     }
 }

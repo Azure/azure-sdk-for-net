@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> object which contains security policy parameters. </summary>
-        public SecurityPolicyPropertiesDefinition Parameters { get; set; }
+        public SecurityPolicyProperties Properties { get; set; }
     }
 }

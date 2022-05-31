@@ -336,8 +336,8 @@ namespace Azure.ResourceManager.Cdn
     {
         public AfdSecretData() { }
         public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SecretDefinition Parameters { get { throw null; } set { } }
         public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.SecretProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class AfdSecretResource : Azure.ResourceManager.ArmResource
@@ -373,8 +373,8 @@ namespace Azure.ResourceManager.Cdn
     {
         public AfdSecurityPolicyData() { }
         public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesDefinition Parameters { get { throw null; } set { } }
         public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class AfdSecurityPolicyResource : Azure.ResourceManager.ArmResource
@@ -887,8 +887,8 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public enum AfdMinimumTlsVersion
     {
-        Tls10 = 0,
-        Tls12 = 1,
+        Tls1_0 = 0,
+        Tls1_2 = 1,
     }
     public partial class AfdOriginGroupPatch
     {
@@ -996,11 +996,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class AfdSecurityPolicyPatch
     {
         public AfdSecurityPolicyPatch() { }
-        public Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesDefinition Parameters { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties Properties { get { throw null; } set { } }
     }
-    public partial class AzureFirstPartyManagedCertificateDefinition : Azure.ResourceManager.Cdn.Models.SecretDefinition
+    public partial class AzureFirstPartyManagedCertificateProperties : Azure.ResourceManager.Cdn.Models.SecretProperties
     {
-        public AzureFirstPartyManagedCertificateDefinition() { }
+        public AzureFirstPartyManagedCertificateProperties() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CacheBehaviorSettings : System.IEquatable<Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings>
@@ -1030,13 +1030,13 @@ namespace Azure.ResourceManager.Cdn.Models
         public string QueryParameters { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior? QueryStringCachingBehavior { get { throw null; } set { } }
     }
-    public partial class CacheExpirationActionDefinition
+    public partial class CacheExpirationActionProperties
     {
-        public CacheExpirationActionDefinition(Azure.ResourceManager.Cdn.Models.CacheExpirationActionType typeDefinition, Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings cacheBehavior, Azure.ResourceManager.Cdn.Models.CacheLevel cacheType) { }
+        public CacheExpirationActionProperties(Azure.ResourceManager.Cdn.Models.CacheExpirationActionType actionType, Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings cacheBehavior, Azure.ResourceManager.Cdn.Models.CacheLevel cacheType) { }
+        public Azure.ResourceManager.Cdn.Models.CacheExpirationActionType ActionType { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings CacheBehavior { get { throw null; } set { } }
         public System.TimeSpan? CacheDuration { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.CacheLevel CacheType { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.CacheExpirationActionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CacheExpirationActionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.CacheExpirationActionType>
@@ -1055,12 +1055,12 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.CacheExpirationActionType left, Azure.ResourceManager.Cdn.Models.CacheExpirationActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CacheKeyQueryStringActionDefinition
+    public partial class CacheKeyQueryStringActionProperties
     {
-        public CacheKeyQueryStringActionDefinition(Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType typeDefinition, Azure.ResourceManager.Cdn.Models.QueryStringBehavior queryStringBehavior) { }
+        public CacheKeyQueryStringActionProperties(Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType actionType, Azure.ResourceManager.Cdn.Models.QueryStringBehavior queryStringBehavior) { }
+        public Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType ActionType { get { throw null; } set { } }
         public string QueryParameters { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.QueryStringBehavior QueryStringBehavior { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CacheKeyQueryStringActionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionType>
@@ -1096,11 +1096,11 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.CacheLevel left, Azure.ResourceManager.Cdn.Models.CacheLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CdnCertificateSourceDefinition
+    public partial class CdnCertificateSource
     {
-        public CdnCertificateSourceDefinition(Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType typeDefinition, Azure.ResourceManager.Cdn.Models.CdnManagedCertificateType certificateType) { }
+        public CdnCertificateSource(Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType sourceType, Azure.ResourceManager.Cdn.Models.CdnManagedCertificateType certificateType) { }
         public Azure.ResourceManager.Cdn.Models.CdnManagedCertificateType CertificateType { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType TypeDefinition { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType SourceType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CdnCertificateSourceType : System.IEquatable<Azure.ResourceManager.Cdn.Models.CdnCertificateSourceType>
@@ -1163,8 +1163,8 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class CdnManagedHttpsContent : Azure.ResourceManager.Cdn.Models.CustomDomainHttpsContent
     {
-        public CdnManagedHttpsContent(Azure.ResourceManager.Cdn.Models.ProtocolType protocolType, Azure.ResourceManager.Cdn.Models.CdnCertificateSourceDefinition certificateSourceParameters) : base (default(Azure.ResourceManager.Cdn.Models.ProtocolType)) { }
-        public Azure.ResourceManager.Cdn.Models.CdnCertificateSourceDefinition CertificateSourceParameters { get { throw null; } set { } }
+        public CdnManagedHttpsContent(Azure.ResourceManager.Cdn.Models.ProtocolType protocolType, Azure.ResourceManager.Cdn.Models.CdnCertificateSource certificateSourceParameters) : base (default(Azure.ResourceManager.Cdn.Models.ProtocolType)) { }
+        public Azure.ResourceManager.Cdn.Models.CdnCertificateSource CertificateSourceParameters { get { throw null; } set { } }
     }
     public partial class CdnNameAvailabilityContent
     {
@@ -1314,14 +1314,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public string BaseIPAddress { get { throw null; } set { } }
         public int? PrefixLength { get { throw null; } set { } }
     }
-    public partial class ClientPortMatchConditionDefinition
+    public partial class ClientPortMatchCondition
     {
-        public ClientPortMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.ClientPortOperator @operator) { }
+        public ClientPortMatchCondition(Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.ClientPortOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.ClientPortOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClientPortMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionType>
@@ -1402,15 +1402,15 @@ namespace Azure.ResourceManager.Cdn.Models
         public string ContinentId { get { throw null; } }
         public string Id { get { throw null; } }
     }
-    public partial class CookiesMatchConditionDefinition
+    public partial class CookiesMatchCondition
     {
-        public CookiesMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.CookiesMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.CookiesOperator @operator) { }
+        public CookiesMatchCondition(Azure.ResourceManager.Cdn.Models.CookiesMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.CookiesOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.CookiesMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.CookiesOperator Operator { get { throw null; } set { } }
         public string Selector { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.CookiesMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CookiesMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.CookiesMatchConditionType>
@@ -1480,9 +1480,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.CustomDomainResourceState left, Azure.ResourceManager.Cdn.Models.CustomDomainResourceState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CustomerCertificateDefinition : Azure.ResourceManager.Cdn.Models.SecretDefinition
+    public partial class CustomerCertificateProperties : Azure.ResourceManager.Cdn.Models.SecretProperties
     {
-        public CustomerCertificateDefinition(Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) { }
+        public CustomerCertificateProperties(Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) { }
         public string CertificateAuthority { get { throw null; } }
         public string ExpirationDate { get { throw null; } }
         public Azure.Core.ResourceIdentifier SecretSourceId { get { throw null; } set { } }
@@ -1606,18 +1606,18 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class DeliveryRuleCacheExpirationAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction
     {
-        public DeliveryRuleCacheExpirationAction(Azure.ResourceManager.Cdn.Models.CacheExpirationActionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.CacheExpirationActionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleCacheExpirationAction(Azure.ResourceManager.Cdn.Models.CacheExpirationActionProperties properties) { }
+        public Azure.ResourceManager.Cdn.Models.CacheExpirationActionProperties Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleCacheKeyQueryStringAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction
     {
-        public DeliveryRuleCacheKeyQueryStringAction(Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleCacheKeyQueryStringAction(Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionProperties properties) { }
+        public Azure.ResourceManager.Cdn.Models.CacheKeyQueryStringActionProperties Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleClientPortCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleClientPortCondition(Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.ClientPortMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleClientPortCondition(Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleCondition
     {
@@ -1625,108 +1625,108 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class DeliveryRuleCookiesCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleCookiesCondition(Azure.ResourceManager.Cdn.Models.CookiesMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.CookiesMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleCookiesCondition(Azure.ResourceManager.Cdn.Models.CookiesMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.CookiesMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleHostNameCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleHostNameCondition(Azure.ResourceManager.Cdn.Models.HostNameMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.HostNameMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleHostNameCondition(Azure.ResourceManager.Cdn.Models.HostNameMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.HostNameMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleHttpVersionCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleHttpVersionCondition(Azure.ResourceManager.Cdn.Models.HttpVersionMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.HttpVersionMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleHttpVersionCondition(Azure.ResourceManager.Cdn.Models.HttpVersionMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.HttpVersionMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleIsDeviceCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleIsDeviceCondition(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleIsDeviceCondition(Azure.ResourceManager.Cdn.Models.IsDeviceMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.IsDeviceMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRulePostArgsCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRulePostArgsCondition(Azure.ResourceManager.Cdn.Models.PostArgsMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.PostArgsMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRulePostArgsCondition(Azure.ResourceManager.Cdn.Models.PostArgsMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.PostArgsMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleQueryStringCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleQueryStringCondition(Azure.ResourceManager.Cdn.Models.QueryStringMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.QueryStringMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleQueryStringCondition(Azure.ResourceManager.Cdn.Models.QueryStringMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.QueryStringMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleRemoteAddressCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleRemoteAddressCondition(Azure.ResourceManager.Cdn.Models.RemoteAddressMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.RemoteAddressMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleRemoteAddressCondition(Azure.ResourceManager.Cdn.Models.RemoteAddressMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.RemoteAddressMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleRequestBodyCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleRequestBodyCondition(Azure.ResourceManager.Cdn.Models.RequestBodyMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.RequestBodyMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleRequestBodyCondition(Azure.ResourceManager.Cdn.Models.RequestBodyMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.RequestBodyMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleRequestHeaderAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction
     {
-        public DeliveryRuleRequestHeaderAction(Azure.ResourceManager.Cdn.Models.HeaderActionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.HeaderActionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleRequestHeaderAction(Azure.ResourceManager.Cdn.Models.HeaderActionProperties properties) { }
+        public Azure.ResourceManager.Cdn.Models.HeaderActionProperties Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleRequestHeaderCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleRequestHeaderCondition(Azure.ResourceManager.Cdn.Models.RequestHeaderMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.RequestHeaderMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleRequestHeaderCondition(Azure.ResourceManager.Cdn.Models.RequestHeaderMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.RequestHeaderMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleRequestMethodCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleRequestMethodCondition(Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleRequestMethodCondition(Azure.ResourceManager.Cdn.Models.RequestMethodMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.RequestMethodMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleRequestSchemeCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleRequestSchemeCondition(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleRequestSchemeCondition(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.RequestSchemeMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleRequestUriCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleRequestUriCondition(Azure.ResourceManager.Cdn.Models.RequestUriMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.RequestUriMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleRequestUriCondition(Azure.ResourceManager.Cdn.Models.RequestUriMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.RequestUriMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleResponseHeaderAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction
     {
-        public DeliveryRuleResponseHeaderAction(Azure.ResourceManager.Cdn.Models.HeaderActionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.HeaderActionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleResponseHeaderAction(Azure.ResourceManager.Cdn.Models.HeaderActionProperties properties) { }
+        public Azure.ResourceManager.Cdn.Models.HeaderActionProperties Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleRouteConfigurationOverrideAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction
     {
-        public DeliveryRuleRouteConfigurationOverrideAction(Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleRouteConfigurationOverrideAction(Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionProperties properties) { }
+        public Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionProperties Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleServerPortCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleServerPortCondition(Azure.ResourceManager.Cdn.Models.ServerPortMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.ServerPortMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleServerPortCondition(Azure.ResourceManager.Cdn.Models.ServerPortMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.ServerPortMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleSocketAddressCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleSocketAddressCondition(Azure.ResourceManager.Cdn.Models.SocketAddressMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.SocketAddressMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleSocketAddressCondition(Azure.ResourceManager.Cdn.Models.SocketAddressMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.SocketAddressMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleSslProtocolCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleSslProtocolCondition(Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleSslProtocolCondition(Azure.ResourceManager.Cdn.Models.SslProtocolMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.SslProtocolMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleUriFileExtensionCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleUriFileExtensionCondition(Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleUriFileExtensionCondition(Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleUriFileNameCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleUriFileNameCondition(Azure.ResourceManager.Cdn.Models.UriFileNameMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.UriFileNameMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleUriFileNameCondition(Azure.ResourceManager.Cdn.Models.UriFileNameMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.UriFileNameMatchCondition Properties { get { throw null; } set { } }
     }
     public partial class DeliveryRuleUriPathCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
-        public DeliveryRuleUriPathCondition(Azure.ResourceManager.Cdn.Models.UriPathMatchConditionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.UriPathMatchConditionDefinition Parameters { get { throw null; } set { } }
+        public DeliveryRuleUriPathCondition(Azure.ResourceManager.Cdn.Models.UriPathMatchCondition properties) { }
+        public Azure.ResourceManager.Cdn.Models.UriPathMatchCondition Properties { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DestinationProtocol : System.IEquatable<Azure.ResourceManager.Cdn.Models.DestinationProtocol>
@@ -1935,12 +1935,12 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.HeaderAction left, Azure.ResourceManager.Cdn.Models.HeaderAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HeaderActionDefinition
+    public partial class HeaderActionProperties
     {
-        public HeaderActionDefinition(Azure.ResourceManager.Cdn.Models.HeaderActionType typeDefinition, Azure.ResourceManager.Cdn.Models.HeaderAction headerAction, string headerName) { }
+        public HeaderActionProperties(Azure.ResourceManager.Cdn.Models.HeaderActionType actionType, Azure.ResourceManager.Cdn.Models.HeaderAction headerAction, string headerName) { }
+        public Azure.ResourceManager.Cdn.Models.HeaderActionType ActionType { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.HeaderAction HeaderAction { get { throw null; } set { } }
         public string HeaderName { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.HeaderActionType TypeDefinition { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1979,14 +1979,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public HostNameAvailabilityContent(string hostName) { }
         public string HostName { get { throw null; } }
     }
-    public partial class HostNameMatchConditionDefinition
+    public partial class HostNameMatchCondition
     {
-        public HostNameMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.HostNameMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.HostNameOperator @operator) { }
+        public HostNameMatchCondition(Azure.ResourceManager.Cdn.Models.HostNameMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.HostNameOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.HostNameMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.HostNameOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.HostNameMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HostNameMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.HostNameMatchConditionType>
@@ -2055,14 +2055,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.HttpsRedirect left, Azure.ResourceManager.Cdn.Models.HttpsRedirect right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HttpVersionMatchConditionDefinition
+    public partial class HttpVersionMatchCondition
     {
-        public HttpVersionMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.HttpVersionMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.HttpVersionOperator @operator) { }
+        public HttpVersionMatchCondition(Azure.ResourceManager.Cdn.Models.HttpVersionMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.HttpVersionOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.HttpVersionMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.HttpVersionOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.HttpVersionMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpVersionMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.HttpVersionMatchConditionType>
@@ -2105,31 +2105,31 @@ namespace Azure.ResourceManager.Cdn.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CidrIPAddress> IPv4Addresses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.CidrIPAddress> IPv6Addresses { get { throw null; } }
     }
-    public partial class IsDeviceMatchConditionDefinition
+    public partial class IsDeviceMatchCondition
     {
-        public IsDeviceMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.IsDeviceOperator @operator) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinitionMatchValue> MatchValues { get { throw null; } }
+        public IsDeviceMatchCondition(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.IsDeviceOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType ConditionType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.IsDeviceOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IsDeviceMatchConditionDefinitionMatchValue : System.IEquatable<Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinitionMatchValue>
+    public readonly partial struct IsDeviceMatchConditionMatchValue : System.IEquatable<Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public IsDeviceMatchConditionDefinitionMatchValue(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinitionMatchValue Desktop { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinitionMatchValue Mobile { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinitionMatchValue other) { throw null; }
+        public IsDeviceMatchConditionMatchValue(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue Desktop { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue Mobile { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinitionMatchValue left, Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinitionMatchValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinitionMatchValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinitionMatchValue left, Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionDefinitionMatchValue right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue left, Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue left, Azure.ResourceManager.Cdn.Models.IsDeviceMatchConditionMatchValue right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2166,15 +2166,15 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.IsDeviceOperator left, Azure.ResourceManager.Cdn.Models.IsDeviceOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultCertificateSourceDefinition
+    public partial class KeyVaultCertificateSource
     {
-        public KeyVaultCertificateSourceDefinition(Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSourceType typeDefinition, string subscriptionId, string resourceGroupName, string vaultName, string secretName, Azure.ResourceManager.Cdn.Models.CertificateUpdateAction updateRule, Azure.ResourceManager.Cdn.Models.CertificateDeleteAction deleteRule) { }
+        public KeyVaultCertificateSource(Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSourceType sourceType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, Azure.ResourceManager.Cdn.Models.CertificateUpdateAction updateRule, Azure.ResourceManager.Cdn.Models.CertificateDeleteAction deleteRule) { }
         public Azure.ResourceManager.Cdn.Models.CertificateDeleteAction DeleteRule { get { throw null; } set { } }
         public string ResourceGroupName { get { throw null; } set { } }
         public string SecretName { get { throw null; } set { } }
         public string SecretVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSourceType SourceType { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSourceType TypeDefinition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.CertificateUpdateAction UpdateRule { get { throw null; } set { } }
         public string VaultName { get { throw null; } set { } }
     }
@@ -2195,14 +2195,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSourceType left, Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class KeyVaultSigningKeyDefinition
+    public partial class KeyVaultSigningKey
     {
-        public KeyVaultSigningKeyDefinition(Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyType typeDefinition, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion) { }
+        public KeyVaultSigningKey(Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion) { }
+        public Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyType KeyType { get { throw null; } set { } }
         public string ResourceGroupName { get { throw null; } set { } }
         public string SecretName { get { throw null; } set { } }
         public string SecretVersion { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyType TypeDefinition { get { throw null; } set { } }
         public string VaultName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2357,9 +2357,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.LogRankingMetric left, Azure.ResourceManager.Cdn.Models.LogRankingMetric right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedCertificateDefinition : Azure.ResourceManager.Cdn.Models.SecretDefinition
+    public partial class ManagedCertificateProperties : Azure.ResourceManager.Cdn.Models.SecretProperties
     {
-        public ManagedCertificateDefinition() { }
+        public ManagedCertificateProperties() { }
         public string ExpirationDate { get { throw null; } }
         public string Subject { get { throw null; } }
     }
@@ -2544,8 +2544,8 @@ namespace Azure.ResourceManager.Cdn.Models
     public enum MinimumTlsVersion
     {
         None = 0,
-        Tls10 = 1,
-        Tls12 = 2,
+        Tls1_0 = 1,
+        Tls1_2 = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OptimizationType : System.IEquatable<Azure.ResourceManager.Cdn.Models.OptimizationType>
@@ -2576,14 +2576,14 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class OriginGroupOverrideAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction
     {
-        public OriginGroupOverrideAction(Azure.ResourceManager.Cdn.Models.OriginGroupOverrideActionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.OriginGroupOverrideActionDefinition Parameters { get { throw null; } set { } }
+        public OriginGroupOverrideAction(Azure.ResourceManager.Cdn.Models.OriginGroupOverrideActionProperties properties) { }
+        public Azure.ResourceManager.Cdn.Models.OriginGroupOverrideActionProperties Properties { get { throw null; } set { } }
     }
-    public partial class OriginGroupOverrideActionDefinition
+    public partial class OriginGroupOverrideActionProperties
     {
-        public OriginGroupOverrideActionDefinition(Azure.ResourceManager.Cdn.Models.OriginGroupOverrideActionType typeDefinition, Azure.ResourceManager.Resources.Models.WritableSubResource originGroup) { }
+        public OriginGroupOverrideActionProperties(Azure.ResourceManager.Cdn.Models.OriginGroupOverrideActionType actionType, Azure.ResourceManager.Resources.Models.WritableSubResource originGroup) { }
+        public Azure.ResourceManager.Cdn.Models.OriginGroupOverrideActionType ActionType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier OriginGroupId { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.OriginGroupOverrideActionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OriginGroupOverrideActionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.OriginGroupOverrideActionType>
@@ -2788,15 +2788,15 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.PolicySettingsDefaultCustomBlockResponseStatusCode left, Azure.ResourceManager.Cdn.Models.PolicySettingsDefaultCustomBlockResponseStatusCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PostArgsMatchConditionDefinition
+    public partial class PostArgsMatchCondition
     {
-        public PostArgsMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.PostArgsMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.PostArgsOperator @operator) { }
+        public PostArgsMatchCondition(Azure.ResourceManager.Cdn.Models.PostArgsMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.PostArgsOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.PostArgsMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.PostArgsOperator Operator { get { throw null; } set { } }
         public string Selector { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.PostArgsMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PostArgsMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.PostArgsMatchConditionType>
@@ -3006,14 +3006,14 @@ namespace Azure.ResourceManager.Cdn.Models
         BypassCaching = 2,
         UseQueryString = 3,
     }
-    public partial class QueryStringMatchConditionDefinition
+    public partial class QueryStringMatchCondition
     {
-        public QueryStringMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.QueryStringMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.QueryStringOperator @operator) { }
+        public QueryStringMatchCondition(Azure.ResourceManager.Cdn.Models.QueryStringMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.QueryStringOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.QueryStringMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.QueryStringOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.QueryStringMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QueryStringMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.QueryStringMatchConditionType>
@@ -3110,14 +3110,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RedirectType left, Azure.ResourceManager.Cdn.Models.RedirectType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RemoteAddressMatchConditionDefinition
+    public partial class RemoteAddressMatchCondition
     {
-        public RemoteAddressMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.RemoteAddressMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.RemoteAddressOperator @operator) { }
+        public RemoteAddressMatchCondition(Azure.ResourceManager.Cdn.Models.RemoteAddressMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.RemoteAddressOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.RemoteAddressMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.RemoteAddressOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.RemoteAddressMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RemoteAddressMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.RemoteAddressMatchConditionType>
@@ -3155,14 +3155,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RemoteAddressOperator left, Azure.ResourceManager.Cdn.Models.RemoteAddressOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestBodyMatchConditionDefinition
+    public partial class RequestBodyMatchCondition
     {
-        public RequestBodyMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.RequestBodyMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.RequestBodyOperator @operator) { }
+        public RequestBodyMatchCondition(Azure.ResourceManager.Cdn.Models.RequestBodyMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.RequestBodyOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.RequestBodyMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.RequestBodyOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.RequestBodyMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RequestBodyMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.RequestBodyMatchConditionType>
@@ -3207,15 +3207,15 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RequestBodyOperator left, Azure.ResourceManager.Cdn.Models.RequestBodyOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestHeaderMatchConditionDefinition
+    public partial class RequestHeaderMatchCondition
     {
-        public RequestHeaderMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.RequestHeaderMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.RequestHeaderOperator @operator) { }
+        public RequestHeaderMatchCondition(Azure.ResourceManager.Cdn.Models.RequestHeaderMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.RequestHeaderOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.RequestHeaderMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.RequestHeaderOperator Operator { get { throw null; } set { } }
         public string Selector { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.RequestHeaderMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RequestHeaderMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.RequestHeaderMatchConditionType>
@@ -3260,36 +3260,36 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RequestHeaderOperator left, Azure.ResourceManager.Cdn.Models.RequestHeaderOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestMethodMatchConditionDefinition
+    public partial class RequestMethodMatchCondition
     {
-        public RequestMethodMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.RequestMethodOperator @operator) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue> MatchValues { get { throw null; } }
+        public RequestMethodMatchCondition(Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.RequestMethodOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionType ConditionType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.RequestMethodOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RequestMethodMatchConditionDefinitionMatchValue : System.IEquatable<Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue>
+    public readonly partial struct RequestMethodMatchConditionMatchValue : System.IEquatable<Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public RequestMethodMatchConditionDefinitionMatchValue(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue Delete { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue Get { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue Head { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue Options { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue Post { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue Put { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue Trace { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue other) { throw null; }
+        public RequestMethodMatchConditionMatchValue(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue Delete { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue Get { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue Head { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue Options { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue Post { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue Put { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue Trace { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue left, Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue left, Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionDefinitionMatchValue right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue left, Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue left, Azure.ResourceManager.Cdn.Models.RequestMethodMatchConditionMatchValue right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3326,31 +3326,31 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RequestMethodOperator left, Azure.ResourceManager.Cdn.Models.RequestMethodOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestSchemeMatchConditionDefinition
+    public partial class RequestSchemeMatchCondition
     {
-        public RequestSchemeMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.RequestSchemeOperator @operator) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinitionMatchValue> MatchValues { get { throw null; } }
+        public RequestSchemeMatchCondition(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.RequestSchemeOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType ConditionType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionMatchValue> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.RequestSchemeOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RequestSchemeMatchConditionDefinitionMatchValue : System.IEquatable<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinitionMatchValue>
+    public readonly partial struct RequestSchemeMatchConditionMatchValue : System.IEquatable<Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionMatchValue>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public RequestSchemeMatchConditionDefinitionMatchValue(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinitionMatchValue Http { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinitionMatchValue Https { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinitionMatchValue other) { throw null; }
+        public RequestSchemeMatchConditionMatchValue(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionMatchValue Http { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionMatchValue Https { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionMatchValue other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinitionMatchValue left, Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinitionMatchValue right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinitionMatchValue (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinitionMatchValue left, Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionDefinitionMatchValue right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionMatchValue left, Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionMatchValue right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionMatchValue (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionMatchValue left, Azure.ResourceManager.Cdn.Models.RequestSchemeMatchConditionMatchValue right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3387,14 +3387,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RequestSchemeOperator left, Azure.ResourceManager.Cdn.Models.RequestSchemeOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RequestUriMatchConditionDefinition
+    public partial class RequestUriMatchCondition
     {
-        public RequestUriMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.RequestUriMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.RequestUriOperator @operator) { }
+        public RequestUriMatchCondition(Azure.ResourceManager.Cdn.Models.RequestUriMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.RequestUriOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.RequestUriMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.RequestUriOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.RequestUriMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RequestUriMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.RequestUriMatchConditionType>
@@ -3513,12 +3513,12 @@ namespace Azure.ResourceManager.Cdn.Models
         public System.Collections.Generic.IList<string> ContentTypesToCompress { get { throw null; } }
         public bool? IsCompressionEnabled { get { throw null; } set { } }
     }
-    public partial class RouteConfigurationOverrideActionDefinition
+    public partial class RouteConfigurationOverrideActionProperties
     {
-        public RouteConfigurationOverrideActionDefinition(Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionType typeDefinition) { }
+        public RouteConfigurationOverrideActionProperties(Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionType actionType) { }
+        public Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionType ActionType { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.CacheConfiguration CacheConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.OriginGroupOverride OriginGroupOverride { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RouteConfigurationOverrideActionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.RouteConfigurationOverrideActionType>
@@ -3594,13 +3594,19 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior left, Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SecretDefinition
+    public partial class SecretProperties
     {
-        public SecretDefinition() { }
+        public SecretProperties() { }
     }
-    public partial class SecurityPolicyPropertiesDefinition
+    public partial class SecurityPolicyProperties
     {
-        public SecurityPolicyPropertiesDefinition() { }
+        public SecurityPolicyProperties() { }
+    }
+    public partial class SecurityPolicyWebApplicationFirewall : Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties
+    {
+        public SecurityPolicyWebApplicationFirewall() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation> Associations { get { throw null; } }
+        public Azure.Core.ResourceIdentifier WafPolicyId { get { throw null; } set { } }
     }
     public partial class SecurityPolicyWebApplicationFirewallAssociation
     {
@@ -3608,20 +3614,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ActivatedResourceReference> Domains { get { throw null; } }
         public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
     }
-    public partial class SecurityPolicyWebApplicationFirewallDefinition : Azure.ResourceManager.Cdn.Models.SecurityPolicyPropertiesDefinition
+    public partial class ServerPortMatchCondition
     {
-        public SecurityPolicyWebApplicationFirewallDefinition() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.SecurityPolicyWebApplicationFirewallAssociation> Associations { get { throw null; } }
-        public Azure.Core.ResourceIdentifier WafPolicyId { get { throw null; } set { } }
-    }
-    public partial class ServerPortMatchConditionDefinition
-    {
-        public ServerPortMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.ServerPortMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.ServerPortOperator @operator) { }
+        public ServerPortMatchCondition(Azure.ResourceManager.Cdn.Models.ServerPortMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.ServerPortOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.ServerPortMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.ServerPortOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ServerPortMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServerPortMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.ServerPortMatchConditionType>
@@ -3683,14 +3683,14 @@ namespace Azure.ResourceManager.Cdn.Models
         Disconnected = 3,
         Timeout = 4,
     }
-    public partial class SocketAddressMatchConditionDefinition
+    public partial class SocketAddressMatchCondition
     {
-        public SocketAddressMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.SocketAddressMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.SocketAddressOperator @operator) { }
+        public SocketAddressMatchCondition(Azure.ResourceManager.Cdn.Models.SocketAddressMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.SocketAddressOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.SocketAddressMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.SocketAddressOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SocketAddressMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SocketAddressMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.SocketAddressMatchConditionType>
@@ -3733,9 +3733,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SslProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.SslProtocol Tls10 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.SslProtocol Tls11 { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.SslProtocol Tls12 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.SslProtocol Tls1_0 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.SslProtocol Tls1_1 { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.SslProtocol Tls1_2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Cdn.Models.SslProtocol other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -3746,14 +3746,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.SslProtocol left, Azure.ResourceManager.Cdn.Models.SslProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SslProtocolMatchConditionDefinition
+    public partial class SslProtocolMatchCondition
     {
-        public SslProtocolMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.SslProtocolOperator @operator) { }
+        public SslProtocolMatchCondition(Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.SslProtocolOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.SslProtocol> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.SslProtocolOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SslProtocolMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.SslProtocolMatchConditionType>
@@ -3821,14 +3821,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.TransformType left, Azure.ResourceManager.Cdn.Models.TransformType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class UriFileExtensionMatchConditionDefinition
+    public partial class UriFileExtensionMatchCondition
     {
-        public UriFileExtensionMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.UriFileExtensionOperator @operator) { }
+        public UriFileExtensionMatchCondition(Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.UriFileExtensionOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.UriFileExtensionOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UriFileExtensionMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.UriFileExtensionMatchConditionType>
@@ -3873,14 +3873,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.UriFileExtensionOperator left, Azure.ResourceManager.Cdn.Models.UriFileExtensionOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class UriFileNameMatchConditionDefinition
+    public partial class UriFileNameMatchCondition
     {
-        public UriFileNameMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.UriFileNameMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.UriFileNameOperator @operator) { }
+        public UriFileNameMatchCondition(Azure.ResourceManager.Cdn.Models.UriFileNameMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.UriFileNameOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.UriFileNameMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.UriFileNameOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.UriFileNameMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UriFileNameMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.UriFileNameMatchConditionType>
@@ -3925,14 +3925,14 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.UriFileNameOperator left, Azure.ResourceManager.Cdn.Models.UriFileNameOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class UriPathMatchConditionDefinition
+    public partial class UriPathMatchCondition
     {
-        public UriPathMatchConditionDefinition(Azure.ResourceManager.Cdn.Models.UriPathMatchConditionType typeDefinition, Azure.ResourceManager.Cdn.Models.UriPathOperator @operator) { }
+        public UriPathMatchCondition(Azure.ResourceManager.Cdn.Models.UriPathMatchConditionType conditionType, Azure.ResourceManager.Cdn.Models.UriPathOperator @operator) { }
+        public Azure.ResourceManager.Cdn.Models.UriPathMatchConditionType ConditionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MatchValues { get { throw null; } }
         public bool? NegateCondition { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.UriPathOperator Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.PreTransformCategory> Transforms { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.UriPathMatchConditionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UriPathMatchConditionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.UriPathMatchConditionType>
@@ -3980,19 +3980,19 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class UriRedirectAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction
     {
-        public UriRedirectAction(Azure.ResourceManager.Cdn.Models.UriRedirectActionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.UriRedirectActionDefinition Parameters { get { throw null; } set { } }
+        public UriRedirectAction(Azure.ResourceManager.Cdn.Models.UriRedirectActionProperties properties) { }
+        public Azure.ResourceManager.Cdn.Models.UriRedirectActionProperties Properties { get { throw null; } set { } }
     }
-    public partial class UriRedirectActionDefinition
+    public partial class UriRedirectActionProperties
     {
-        public UriRedirectActionDefinition(Azure.ResourceManager.Cdn.Models.UriRedirectActionType typeDefinition, Azure.ResourceManager.Cdn.Models.RedirectType redirectType) { }
+        public UriRedirectActionProperties(Azure.ResourceManager.Cdn.Models.UriRedirectActionType actionType, Azure.ResourceManager.Cdn.Models.RedirectType redirectType) { }
+        public Azure.ResourceManager.Cdn.Models.UriRedirectActionType ActionType { get { throw null; } set { } }
         public string CustomFragment { get { throw null; } set { } }
         public string CustomHostname { get { throw null; } set { } }
         public string CustomPath { get { throw null; } set { } }
         public string CustomQueryString { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.DestinationProtocol? DestinationProtocol { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.RedirectType RedirectType { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.UriRedirectActionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UriRedirectActionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.UriRedirectActionType>
@@ -4013,16 +4013,16 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class UriRewriteAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction
     {
-        public UriRewriteAction(Azure.ResourceManager.Cdn.Models.UriRewriteActionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.UriRewriteActionDefinition Parameters { get { throw null; } set { } }
+        public UriRewriteAction(Azure.ResourceManager.Cdn.Models.UriRewriteActionProperties properties) { }
+        public Azure.ResourceManager.Cdn.Models.UriRewriteActionProperties Properties { get { throw null; } set { } }
     }
-    public partial class UriRewriteActionDefinition
+    public partial class UriRewriteActionProperties
     {
-        public UriRewriteActionDefinition(Azure.ResourceManager.Cdn.Models.UriRewriteActionType typeDefinition, string sourcePattern, string destination) { }
+        public UriRewriteActionProperties(Azure.ResourceManager.Cdn.Models.UriRewriteActionType actionType, string sourcePattern, string destination) { }
+        public Azure.ResourceManager.Cdn.Models.UriRewriteActionType ActionType { get { throw null; } set { } }
         public string Destination { get { throw null; } set { } }
         public bool? PreserveUnmatchedPath { get { throw null; } set { } }
         public string SourcePattern { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.UriRewriteActionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UriRewriteActionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.UriRewriteActionType>
@@ -4043,15 +4043,15 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class UriSigningAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction
     {
-        public UriSigningAction(Azure.ResourceManager.Cdn.Models.UriSigningActionDefinition parameters) { }
-        public Azure.ResourceManager.Cdn.Models.UriSigningActionDefinition Parameters { get { throw null; } set { } }
+        public UriSigningAction(Azure.ResourceManager.Cdn.Models.UriSigningActionProperties properties) { }
+        public Azure.ResourceManager.Cdn.Models.UriSigningActionProperties Properties { get { throw null; } set { } }
     }
-    public partial class UriSigningActionDefinition
+    public partial class UriSigningActionProperties
     {
-        public UriSigningActionDefinition(Azure.ResourceManager.Cdn.Models.UriSigningActionType typeDefinition) { }
+        public UriSigningActionProperties(Azure.ResourceManager.Cdn.Models.UriSigningActionType actionType) { }
+        public Azure.ResourceManager.Cdn.Models.UriSigningActionType ActionType { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.UriSigningAlgorithm? Algorithm { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.UriSigningParamIdentifier> ParameterNameOverride { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.UriSigningActionType TypeDefinition { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UriSigningActionType : System.IEquatable<Azure.ResourceManager.Cdn.Models.UriSigningActionType>
@@ -4089,13 +4089,13 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class UriSigningKey
     {
-        public UriSigningKey(string keyId, Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyDefinition keySourceParameters) { }
+        public UriSigningKey(string keyId, Azure.ResourceManager.Cdn.Models.KeyVaultSigningKey keySourceParameters) { }
         public string KeyId { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.KeyVaultSigningKeyDefinition KeySourceParameters { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.KeyVaultSigningKey KeySourceParameters { get { throw null; } set { } }
     }
-    public partial class UriSigningKeyDefinition : Azure.ResourceManager.Cdn.Models.SecretDefinition
+    public partial class UriSigningKeyProperties : Azure.ResourceManager.Cdn.Models.SecretProperties
     {
-        public UriSigningKeyDefinition(string keyId, Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) { }
+        public UriSigningKeyProperties(string keyId, Azure.ResourceManager.Resources.Models.WritableSubResource secretSource) { }
         public string KeyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SecretSourceId { get { throw null; } set { } }
         public string SecretVersion { get { throw null; } set { } }
@@ -4125,8 +4125,8 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class UserManagedHttpsContent : Azure.ResourceManager.Cdn.Models.CustomDomainHttpsContent
     {
-        public UserManagedHttpsContent(Azure.ResourceManager.Cdn.Models.ProtocolType protocolType, Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSourceDefinition certificateSourceParameters) : base (default(Azure.ResourceManager.Cdn.Models.ProtocolType)) { }
-        public Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSourceDefinition CertificateSourceParameters { get { throw null; } set { } }
+        public UserManagedHttpsContent(Azure.ResourceManager.Cdn.Models.ProtocolType protocolType, Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSource certificateSourceParameters) : base (default(Azure.ResourceManager.Cdn.Models.ProtocolType)) { }
+        public Azure.ResourceManager.Cdn.Models.KeyVaultCertificateSource CertificateSourceParameters { get { throw null; } set { } }
     }
     public partial class ValidateCustomDomainContent
     {

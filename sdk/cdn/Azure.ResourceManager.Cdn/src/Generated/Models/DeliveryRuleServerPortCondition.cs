@@ -13,29 +13,29 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class DeliveryRuleServerPortCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of DeliveryRuleServerPortCondition. </summary>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleServerPortCondition(ServerPortMatchConditionDefinition parameters)
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DeliveryRuleServerPortCondition(ServerPortMatchCondition properties)
         {
-            if (parameters == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            Parameters = parameters;
+            Properties = properties;
             Name = MatchVariable.ServerPort;
         }
 
         /// <summary> Initializes a new instance of DeliveryRuleServerPortCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleServerPortCondition(MatchVariable name, ServerPortMatchConditionDefinition parameters) : base(name)
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        internal DeliveryRuleServerPortCondition(MatchVariable name, ServerPortMatchCondition properties) : base(name)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public ServerPortMatchConditionDefinition Parameters { get; set; }
+        public ServerPortMatchCondition Properties { get; set; }
     }
 }
