@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
+
+using Azure.Core.Shared;
 
 using Xunit;
 
@@ -12,8 +15,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     /// <summary>
     /// These tests depend on the <see cref="AzureMonitorExporterEventListener"/> to subscribe to the <see cref="AzureMonitorExporterEventSource"/> and write events to the <see cref="TelemetryDebugWriter"/>.
     /// </summary>
-    public class AzureMonitorExporterEventSourceTests
+    public class AzureMonitorExporterEventSourceTests : IDisposable
     {
+        private TestListener listener;
+
+        public AzureMonitorExporterEventSourceTests()
+        {
+            this.listener = new TestListener();
+        }
+
+        private string EventSourceName => AzureMonitorExporterEventSource.EventSourceName;
+
+        public void Dispose()
+        {
+            this.listener.Dispose();
+        }
+
         [Fact]
         public void VerifyEventSource_Critical() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteCritical, expectedId: 1, expectedName: "WriteCritical");
 
@@ -45,83 +62,78 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var name = nameof(AzureMonitorExporterEventSourceTests);
 
-            try
-            {
-                // Normally our Listener will write to the Debugger.
-                // Here, we override the behavior of the TelemetryDebugWriter to intercept messages.
-                var writer = new TestWriter();
-                TelemetryDebugWriter.Writer = writer;
+            writeAction(name, "hello world");
 
-                writeAction(name, "hello world");
+            var eventData = this.listener.Events.Single();
+            Assert.Equal(AzureMonitorExporterEventSource.EventSourceName, eventData.EventSource.Name);
+            Assert.Equal(expectedId, eventData.EventId);
+            Assert.Equal(expectedName, eventData.EventName);
 
-                var test = writer.Messages.Single();
-                Assert.Equal($"OpenTelemetry-AzureMonitor-Exporter - EventId: [{expectedId}], EventName: [{expectedName}], Message: [{name} - hello world]", test);
-            }
-            finally
-            {
-                // Reset singleton to not affect other tests.
-                TelemetryDebugWriter.Writer = new TelemetryDebugWriter();
-            }
+            var message = EventSourceEventFormatting.Format(eventData);
+            Assert.Equal($"{name} - hello world", message);
         }
 
         private void TestException(Action<string, Exception> writeAction, int expectedId, string expectedName)
         {
             var name = nameof(AzureMonitorExporterEventSourceTests);
 
-            try
-            {
-                // Normally our Listener will write to the Debugger.
-                // Here, we override the behavior of the TelemetryDebugWriter to intercept messages.
-                var writer = new TestWriter();
-                TelemetryDebugWriter.Writer = writer;
+            writeAction(name, new Exception("hello world"));
 
-                writeAction(name, new Exception("hello world"));
+            var eventData = this.listener.Events.Single();
+            Assert.Equal(AzureMonitorExporterEventSource.EventSourceName, eventData.EventSource.Name);
+            Assert.Equal(expectedId, eventData.EventId);
+            Assert.Equal(expectedName, eventData.EventName);
 
-                var test = writer.Messages.Single();
-                Assert.Equal($"OpenTelemetry-AzureMonitor-Exporter - EventId: [{expectedId}], EventName: [{expectedName}], Message: [{name} - System.Exception: hello world]", test);
-            }
-            finally
-            {
-                // Reset singleton to not affect other tests.
-                TelemetryDebugWriter.Writer = new TelemetryDebugWriter();
-            }
+            var message = EventSourceEventFormatting.Format(eventData);
+            Assert.Equal($"{name} - System.Exception: hello world", message);
         }
 
         private void TestAggregateException(Action<string, Exception> writeAction, int expectedId, string expectedName)
         {
             var name = nameof(AzureMonitorExporterEventSourceTests);
 
-            try
-            {
-                // Normally our Listener will write to the Debugger.
-                // Here, we override the behavior of the TelemetryDebugWriter to intercept messages.
-                var writer = new TestWriter();
-                TelemetryDebugWriter.Writer = writer;
+            writeAction(name, new AggregateException(new Exception("hello world_1"), new Exception("hello world_2)")));
 
-                writeAction(name, new AggregateException(new Exception("hello world_1"), new Exception("hello world_2)")));
+            var eventData = this.listener.Events.Single();
+            Assert.Equal(AzureMonitorExporterEventSource.EventSourceName, eventData.EventSource.Name);
+            Assert.Equal(expectedId, eventData.EventId);
+            Assert.Equal(expectedName, eventData.EventName);
 
-                var test = writer.Messages.Single();
-                Assert.Equal($"OpenTelemetry-AzureMonitor-Exporter - EventId: [{expectedId}], EventName: [{expectedName}], Message: [{name} - System.Exception: hello world_1]", test);
-            }
-            finally
-            {
-                // Reset singleton to not affect other tests.
-                TelemetryDebugWriter.Writer = new TelemetryDebugWriter();
-            }
+            var message = EventSourceEventFormatting.Format(eventData);
+            Assert.Equal($"{name} - System.Exception: hello world_1", message);
         }
 
-        private class TestWriter : IDebugWritter
+        public class TestListener : EventListener
         {
-            public List<string> Messages = new();
+            private readonly List<EventSource> eventSources = new List<EventSource>();
 
-            public void WriteMessage(string message)
+            public List<EventWrittenEventArgs> Events = new();
+
+            public override void Dispose()
             {
-                Messages.Add(message);
+                foreach (EventSource eventSource in this.eventSources)
+                {
+                    this.DisableEvents(eventSource);
+                }
+
+                base.Dispose();
+                GC.SuppressFinalize(this);
             }
 
-            public void WriteTelemetry(NDJsonWriter content)
+            protected override void OnEventSourceCreated(EventSource eventSource)
             {
-                // no-op
+                if (eventSource?.Name == AzureMonitorExporterEventSource.EventSourceName)
+                {
+                    this.eventSources.Add(eventSource);
+                    this.EnableEvents(eventSource, EventLevel.Verbose, (EventKeywords)(-1));
+                }
+
+                base.OnEventSourceCreated(eventSource);
+            }
+
+            protected override void OnEventWritten(EventWrittenEventArgs eventData)
+            {
+                this.Events.Add(eventData);
             }
         }
     }

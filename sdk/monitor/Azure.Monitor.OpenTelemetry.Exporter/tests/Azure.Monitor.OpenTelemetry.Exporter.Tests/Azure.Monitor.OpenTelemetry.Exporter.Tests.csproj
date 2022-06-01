@@ -18,4 +18,5 @@
     <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="6.0.0" />
     <PackageReference Include="OpenTelemetry.Exporter.InMemory" />
   </ItemGroup>
+  
 </Project>
