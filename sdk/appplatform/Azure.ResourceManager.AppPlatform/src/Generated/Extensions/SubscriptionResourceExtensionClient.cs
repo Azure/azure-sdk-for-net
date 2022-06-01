@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> CheckNameAvailabilityServiceAsync(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NameAvailability>> CheckServiceNameAvailabilityAsync(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityService");
+            using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceNameAvailability");
             scope.Start();
             try
             {
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> CheckNameAvailabilityService(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NameAvailability> CheckServiceNameAvailability(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityService");
+            using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceNameAvailability");
             scope.Start();
             try
             {

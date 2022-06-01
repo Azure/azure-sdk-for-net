@@ -35,6 +35,8 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+override-operation-name:
+  Services_CheckNameAvailability: CheckServiceNameAvailability
 
 directive:
   - from: swagger-document
