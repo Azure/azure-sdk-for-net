@@ -11,7 +11,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 {
-    [TestFixture]
     public class DesktopVirtualizationUnitTests : ManagementRecordedTestBase<DesktopVirtualizationManagementTestEnvironment>
     {
         public ArmClient armClient { get; set; }

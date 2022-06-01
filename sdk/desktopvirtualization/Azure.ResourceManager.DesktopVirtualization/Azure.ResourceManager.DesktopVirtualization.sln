@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Deskt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.DesktopVirtualization.Tests", "tests\Azure.ResourceManager.DesktopVirtualization.Tests.csproj", "{E36A8647-6C66-4C6B-81DE-C8D633DBB8B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{5821054B-DD14-438F-BE77-FB6EF8E94462}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,30 +41,6 @@ Global
 		{E36A8647-6C66-4C6B-81DE-C8D633DBB8B0}.Release|x64.Build.0 = Release|Any CPU
 		{E36A8647-6C66-4C6B-81DE-C8D633DBB8B0}.Release|x86.ActiveCfg = Release|Any CPU
 		{E36A8647-6C66-4C6B-81DE-C8D633DBB8B0}.Release|x86.Build.0 = Release|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Debug|x64.Build.0 = Debug|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Debug|x86.Build.0 = Debug|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Release|x64.ActiveCfg = Release|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Release|x64.Build.0 = Release|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Release|x86.ActiveCfg = Release|Any CPU
-		{AE4E1BDC-D26A-415E-B56C-E9B98BCC66CA}.Release|x86.Build.0 = Release|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Debug|x64.Build.0 = Debug|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Debug|x86.Build.0 = Debug|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Release|x64.ActiveCfg = Release|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Release|x64.Build.0 = Release|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Release|x86.ActiveCfg = Release|Any CPU
-		{5821054B-DD14-438F-BE77-FB6EF8E94462}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
