@@ -28,5 +28,5 @@ extends:
     ServiceDirectory: workloads
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.Compute.Workloads
-      safeName: AzureResourceManagerComputeWorkloads
+    - name: Azure.ResourceManager.Workloads
+      safeName: AzureResourceManagerWorkloads
