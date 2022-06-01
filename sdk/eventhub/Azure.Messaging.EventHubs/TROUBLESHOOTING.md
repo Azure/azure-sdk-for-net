@@ -308,7 +308,11 @@ This often occurs in a Function due to creation of a new Event Hubs client type 
 
 Because the Event Hubs connection is effectively abandoned, it remains active until the idle timeout occurs (~60 seconds).   If the incoming request rate for a Function is greater than roughly one per minute, then connections will be opened faster than they're being closed.  This will lead to socket and port exhaustion.
 
-In addition to the network issues, this usage pattern will also perform very poorly because the application is paying the cost to establish a connection/link for every Function invocation.  Applications should prefer treating the Event Hubs clients as a singleton, creating and using a single instance through the lifetime of their application. 
+In addition to the network issues, this usage pattern will also perform very poorly because the application is paying the cost to establish a connection/link for every Function invocation.  Applications should prefer treating the Event Hubs clients as a singleton, creating and using a single instance through the lifetime of their application.  
+
+Further reading:
+  - [Dependency injection with the Azure SDK for .NET][DependencyInjectionAzureSdk]
+  - [Use dependency injection in .NET Azure Functions][DependencyInjectionAzureFunctions]
 
 ## Migrate from legacy to new client library
 
@@ -340,7 +344,7 @@ When filing GitHub issues, the following details are requested for all scenarios
 
 - Verbose logs can be filtered to:
   
-  Event Source Name: "Azure-Messsaging-EventHubs"
+  **_Event Source Name: "Azure-Messsaging-EventHubs"_**
   - All warnings
   - All errors
   - 3 (Publish Start)
@@ -361,7 +365,7 @@ When filing GitHub issues, the following details are requested for all scenarios
 
 - Verbose logs can be filtered to:
   
-  Event Source Name: "Azure-Messsaging-EventHubs"
+  **_Event Source Name: "Azure-Messsaging-EventHubs"_**
   - All warnings
   - All errors
   - 6 (Event Receive Start)
@@ -386,7 +390,7 @@ When filing GitHub issues, the following details are requested for all scenarios
 
 - Verbose logs can be filtered to:
 
-  Event Source Name: "Azure-Messsaging-EventHubs"
+  **_Event Source Name: "Azure-Messsaging-EventHubs"_**
   - All warnings
   - All errors
   - 6 (Event Receive Start)
@@ -415,6 +419,8 @@ For more information on ways to request support, please see: [Support][SUPPORT].
 [AuthorizeSAS]: https://docs.microsoft.com/azure/event-hubs/authorize-access-shared-access-signature
 [AzureSdkNetLogging]: https://docs.microsoft.com/dotnet/azure/sdk/logging#map-to-aspnet-core-logging
 [DebugThreadPoolStarvation]: https://docs.microsoft.com/dotnet/core/diagnostics/debug-threadpool-starvation
+[DependencyInjectionAzureFunctions]: https://docs.microsoft.com/azure/azure-functions/functions-dotnet-dependency-injection
+[DependencyInjectionAzureSdk]: https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection
 [DiagnoseThreadPoolExhaustion]: https://docs.microsoft.com/shows/on-net/diagnosing-thread-pool-exhaustion-issues-in-net-core-apps
 [EventHubsException]: https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsexception
 [EventHubsIPAddresses]: https://docs.microsoft.com/azure/event-hubs/troubleshooting-guide#what-ip-addresses-do-i-need-to-allow
