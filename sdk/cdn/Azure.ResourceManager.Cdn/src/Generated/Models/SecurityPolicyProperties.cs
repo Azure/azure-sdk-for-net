@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The json object containing security policy parameters. </summary>
+    /// <summary>
+    /// The json object containing security policy parameters
+    /// Please note &lt;see cref=&quot;SecurityPolicyProperties&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;SecurityPolicyWebApplicationFirewall&quot;/&gt;.
+    /// </summary>
     public partial class SecurityPolicyProperties
     {
         /// <summary> Initializes a new instance of SecurityPolicyProperties. </summary>

@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for identity configuration. </summary>
+    /// <summary>
+    /// Base definition for identity configuration.
+    /// Please note &lt;see cref=&quot;IdentityConfiguration&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;AmlToken&quot;/&gt;, &lt;see cref=&quot;ManagedIdentity&quot;/&gt;, &lt;see cref=&quot;UserIdentity&quot;/&gt;.
+    /// </summary>
     public partial class IdentityConfiguration
     {
         /// <summary> Initializes a new instance of IdentityConfiguration. </summary>

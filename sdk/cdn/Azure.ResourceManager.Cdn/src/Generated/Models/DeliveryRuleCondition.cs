@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> A condition for the delivery rule. </summary>
+    /// <summary>
+    /// A condition for the delivery rule.
+    /// Please note &lt;see cref=&quot;DeliveryRuleCondition&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;DeliveryRuleRemoteAddressCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleRequestMethodCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleQueryStringCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRulePostArgsCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleRequestUriCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleRequestHeaderCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleRequestBodyCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleRequestSchemeCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleUriPathCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleUriFileExtensionCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleUriFileNameCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleHttpVersionCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleCookiesCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleIsDeviceCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleSocketAddressCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleClientPortCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleServerPortCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleHostNameCondition&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleSslProtocolCondition&quot;/&gt;.
+    /// </summary>
     public partial class DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of DeliveryRuleCondition. </summary>

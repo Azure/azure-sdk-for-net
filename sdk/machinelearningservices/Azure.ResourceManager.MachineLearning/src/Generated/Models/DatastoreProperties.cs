@@ -10,7 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for datastore contents configuration. </summary>
+    /// <summary>
+    /// Base definition for datastore contents configuration.
+    /// Please note &lt;see cref=&quot;DatastoreProperties&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;AzureBlobDatastore&quot;/&gt;, &lt;see cref=&quot;AzureDataLakeGen1Datastore&quot;/&gt;, &lt;see cref=&quot;AzureDataLakeGen2Datastore&quot;/&gt;, &lt;see cref=&quot;AzureFileDatastore&quot;/&gt;, &lt;see cref=&quot;HdfsDatastore&quot;/&gt;.
+    /// </summary>
     public partial class DatastoreProperties : ResourceBase
     {
         /// <summary> Initializes a new instance of DatastoreProperties. </summary>

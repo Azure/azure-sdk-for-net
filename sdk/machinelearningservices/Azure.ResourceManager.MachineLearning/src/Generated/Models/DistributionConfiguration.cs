@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for job distribution configuration. </summary>
+    /// <summary>
+    /// Base definition for job distribution configuration.
+    /// Please note &lt;see cref=&quot;DistributionConfiguration&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;Mpi&quot;/&gt;, &lt;see cref=&quot;PyTorch&quot;/&gt;, &lt;see cref=&quot;TensorFlow&quot;/&gt;.
+    /// </summary>
     public partial class DistributionConfiguration
     {
         /// <summary> Initializes a new instance of DistributionConfiguration. </summary>

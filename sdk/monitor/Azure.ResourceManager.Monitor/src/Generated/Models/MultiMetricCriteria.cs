@@ -11,7 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The types of conditions for a multi resource alert. </summary>
+    /// <summary>
+    /// The types of conditions for a multi resource alert.
+    /// Please note &lt;see cref=&quot;MultiMetricCriteria&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;MetricCriteria&quot;/&gt;, &lt;see cref=&quot;DynamicMetricCriteria&quot;/&gt;.
+    /// </summary>
     public partial class MultiMetricCriteria
     {
         /// <summary> Initializes a new instance of MultiMetricCriteria. </summary>

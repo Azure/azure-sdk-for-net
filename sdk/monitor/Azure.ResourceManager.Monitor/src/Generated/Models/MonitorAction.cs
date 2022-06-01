@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Action descriptor. </summary>
+    /// <summary>
+    /// Action descriptor.
+    /// Please note &lt;see cref=&quot;MonitorAction&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;AlertingAction&quot;/&gt;, &lt;see cref=&quot;LogToMetricAction&quot;/&gt;.
+    /// </summary>
     public partial class MonitorAction
     {
         /// <summary> Initializes a new instance of MonitorAction. </summary>

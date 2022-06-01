@@ -10,6 +10,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// The Sampling Algorithm used to generate hyperparameter values, along with properties to
     /// configure the algorithm
+    /// Please note &lt;see cref=&quot;SamplingAlgorithm&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;BayesianSamplingAlgorithm&quot;/&gt;, &lt;see cref=&quot;GridSamplingAlgorithm&quot;/&gt;, &lt;see cref=&quot;RandomSamplingAlgorithm&quot;/&gt;.
     /// </summary>
     public partial class SamplingAlgorithm
     {

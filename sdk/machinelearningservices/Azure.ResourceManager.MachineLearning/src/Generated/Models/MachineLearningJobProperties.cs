@@ -10,7 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for a job. </summary>
+    /// <summary>
+    /// Base definition for a job.
+    /// Please note &lt;see cref=&quot;MachineLearningJobProperties&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;AutoMLJob&quot;/&gt;, &lt;see cref=&quot;CommandJob&quot;/&gt;, &lt;see cref=&quot;PipelineJob&quot;/&gt;, &lt;see cref=&quot;SweepJob&quot;/&gt;.
+    /// </summary>
     public partial class MachineLearningJobProperties : ResourceBase
     {
         /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>

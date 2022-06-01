@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Command job definition. </summary>
+    /// <summary>
+    /// Command job definition.
+    /// Please note &lt;see cref=&quot;JobInput&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;MLTableJobInput&quot;/&gt;, &lt;see cref=&quot;CustomModelJobInput&quot;/&gt;, &lt;see cref=&quot;LiteralJobInput&quot;/&gt;, &lt;see cref=&quot;MLFlowModelJobInput&quot;/&gt;, &lt;see cref=&quot;TritonModelJobInput&quot;/&gt;, &lt;see cref=&quot;UriFileJobInput&quot;/&gt;, &lt;see cref=&quot;UriFolderJobInput&quot;/&gt;.
+    /// </summary>
     public partial class JobInput
     {
         /// <summary> Initializes a new instance of JobInput. </summary>

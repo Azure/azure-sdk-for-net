@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for datastore secrets. </summary>
+    /// <summary>
+    /// Base definition for datastore secrets.
+    /// Please note &lt;see cref=&quot;DatastoreSecrets&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;AccountKeyDatastoreSecrets&quot;/&gt;, &lt;see cref=&quot;CertificateDatastoreSecrets&quot;/&gt;, &lt;see cref=&quot;KerberosKeytabSecrets&quot;/&gt;, &lt;see cref=&quot;KerberosPasswordSecrets&quot;/&gt;, &lt;see cref=&quot;SasDatastoreSecrets&quot;/&gt;, &lt;see cref=&quot;ServicePrincipalDatastoreSecrets&quot;/&gt;.
+    /// </summary>
     public partial class DatastoreSecrets
     {
         /// <summary> Initializes a new instance of DatastoreSecrets. </summary>

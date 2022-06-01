@@ -9,7 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition of a schedule. </summary>
+    /// <summary>
+    /// Base definition of a schedule
+    /// Please note &lt;see cref=&quot;ScheduleBase&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;CronSchedule&quot;/&gt;, &lt;see cref=&quot;RecurrenceSchedule&quot;/&gt;.
+    /// </summary>
     public partial class ScheduleBase
     {
         /// <summary> Initializes a new instance of ScheduleBase. </summary>

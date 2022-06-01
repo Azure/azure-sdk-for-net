@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The JSON object that contains the properties to secure a custom domain. </summary>
+    /// <summary>
+    /// The JSON object that contains the properties to secure a custom domain.
+    /// Please note &lt;see cref=&quot;CustomDomainHttpsParameters&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;CdnManagedHttpsContent&quot;/&gt;, &lt;see cref=&quot;UserManagedHttpsContent&quot;/&gt;.
+    /// </summary>
     public partial class CustomDomainHttpsContent
     {
         /// <summary> Initializes a new instance of CustomDomainHttpsContent. </summary>

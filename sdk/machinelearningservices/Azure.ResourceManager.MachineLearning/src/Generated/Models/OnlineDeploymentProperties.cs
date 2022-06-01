@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The OnlineDeploymentProperties. </summary>
+    /// <summary>
+    /// Please note &lt;see cref=&quot;OnlineDeploymentProperties&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include &lt;see cref=&quot;KubernetesOnlineDeployment&quot;/&gt;, &lt;see cref=&quot;ManagedOnlineDeployment&quot;/&gt;.
+    /// </summary>
     public partial class OnlineDeploymentProperties : EndpointDeploymentPropertiesBase
     {
         /// <summary> Initializes a new instance of OnlineDeploymentProperties. </summary>
