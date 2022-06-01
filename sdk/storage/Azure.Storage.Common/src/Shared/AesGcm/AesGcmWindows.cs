@@ -6,6 +6,8 @@ using System.Security.Cryptography;
 
 namespace Azure.Storage
 {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+#else
     /// <summary>
     /// Taken from
     /// https://github.com/dotnet/runtime/blob/main/src/libraries/System.Security.Cryptography/src/System/Security/Cryptography/AeadCommon.Windows.cs
@@ -96,14 +98,6 @@ namespace Azure.Storage
 
         private static void ThrowIfNotSupported()
         {
-            // Added to prevent using if framework version can use the provided and supported
-            // AES by System.Security.Cryptography library instead
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                throw Errors.CryptographyAlgorithmNotSupported();
-            }
-#endif
             // Always supported in this implementation.
             //if (!IsSupported)
             //{
@@ -149,4 +143,5 @@ namespace Azure.Storage
             _keyHandle.Dispose();
         }
     }
+#endif
 }

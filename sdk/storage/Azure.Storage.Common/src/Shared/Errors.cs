@@ -118,8 +118,5 @@ namespace Azure.Storage
         /// <exception cref="ArgumentException"></exception>
         public static ArgumentException CryptographyInvalidTagLength()
             => throw new ArgumentException("The specified tag is not a valid size for this algorithm.");
-
-        public static PlatformNotSupportedException CryptographyAlgorithmNotSupported()
-            => throw new PlatformNotSupportedException("For the current platform being used, call the System.Security.Cryptography.AesGcm instead. This version of the algorithm can only be called by versions of NETSTANDARD 2.0 or lower, and versions lower than NETCORE 3.0");
     }
 }

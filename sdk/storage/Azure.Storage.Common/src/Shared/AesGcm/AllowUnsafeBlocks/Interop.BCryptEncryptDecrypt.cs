@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Storage
 {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+#else
     /// <summary>
     /// From
     /// https://github.com/dotnet/runtime/blob/main/src/libraries/Common/src/Interop/Windows/BCrypt/Interop.BCryptEncryptDecrypt.cs
@@ -67,4 +69,5 @@ namespace Azure.Storage
             internal static extern unsafe NTSTATUS BCryptDecrypt(SafeKeyHandle hKey, byte* pbInput, int cbInput, IntPtr paddingInfo, byte[] pbIV, int cbIV, byte* pbOutput, int cbOutput, out int cbResult, int dwFlags);
         }
     }
+#endif
 }

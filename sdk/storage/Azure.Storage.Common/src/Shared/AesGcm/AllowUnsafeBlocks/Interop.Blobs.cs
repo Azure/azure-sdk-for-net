@@ -12,6 +12,8 @@ using System.Text;
 
 namespace Azure.Storage
 {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+#else
     /// <summary>
     /// Taken from
     /// https://github.com/dotnet/runtime/blob/57bfe474518ab5b7cfe6bf7424a79ce3af9d6657/src/libraries/Common/src/Interop/Windows/BCrypt/Interop.Blobs.cs#L302
@@ -53,4 +55,5 @@ namespace Azure.Storage
             }
         }
     }
+#endif
 }

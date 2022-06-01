@@ -10,6 +10,8 @@ using System.Threading;
 
 namespace Azure.Storage
 {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+#else
     /// <summary>
     /// From
     /// https://github.com/dotnet/runtime/blob/57bfe474518ab5b7cfe6bf7424a79ce3af9d6657/src/libraries/Common/src/Interop/Windows/BCrypt/BCryptAeadHandleCache.cs
@@ -38,4 +40,5 @@ namespace Azure.Storage
             }
         }
     }
+#endif
 }

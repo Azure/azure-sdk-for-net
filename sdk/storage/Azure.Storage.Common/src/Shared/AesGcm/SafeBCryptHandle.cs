@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 
 namespace Azure.Storage
 {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+#else
     /// <summary>
     /// From
     /// https://github.com/dotnet/runtime/blob/main/src/libraries/Common/src/Microsoft/Win32/SafeHandles/SafeBCryptHandle.cs
@@ -31,4 +33,5 @@ namespace Azure.Storage
 
         protected abstract override bool ReleaseHandle();
     }
+#endif
 }

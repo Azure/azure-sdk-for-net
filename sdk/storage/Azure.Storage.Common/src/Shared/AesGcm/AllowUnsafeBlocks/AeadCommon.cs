@@ -8,6 +8,8 @@ using System.Security.Cryptography;
 
 namespace Azure.Storage
 {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+#else
     /// <summary>
     /// Taken from
     /// https://github.com/dotnet/runtime/blob/main/src/libraries/System.Security.Cryptography/src/System/Security/Cryptography/AeadCommon.Windows.cs
@@ -127,4 +129,5 @@ namespace Azure.Storage
         private static unsafe ref byte GetNonNullPinnableReference(Span<byte> buffer)
             => ref buffer.Length != 0 ? ref MemoryMarshal.GetReference(buffer) : ref Unsafe.AsRef<byte>((void*)1);
     }
+#endif
 }

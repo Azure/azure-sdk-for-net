@@ -12,6 +12,8 @@ using System.Text;
 
 namespace Azure.Storage
 {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+#else
     internal static partial class Interop
     {
         internal static partial class BCrypt
@@ -98,4 +100,5 @@ namespace Azure.Storage
             private static extern NTSTATUS BCryptSetProperty(SafeAlgorithmHandle hObject, string pszProperty, string pbInput, int cbInput, int dwFlags);
         }
     }
+#endif
 }
