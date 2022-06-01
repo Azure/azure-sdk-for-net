@@ -634,8 +634,6 @@ namespace Azure.Storage
 
             public const string AesCbcNoPadding = "AES/CBC/NoPadding";
 
-            public const string Aes = "AES";
-
             public const string EncryptionDataKey = "encryptiondata";
 
             public const string EncryptionMode = "FullBlob";
@@ -648,9 +646,10 @@ namespace Azure.Storage
 
             internal static class V2
             {
-                public const int EncryptionRegionSize = 4 * MB;
+                public const int EncryptionRegionDataSize = 4 * MB;
                 public const int NonceSize = 12;
                 public const int TagSize = 16;
+                public const int EncryptionRegionTotalSize = NonceSize + EncryptionRegionDataSize + TagSize;
             }
         }
 

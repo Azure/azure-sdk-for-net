@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Security.Cryptography;
 using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Cryptography
@@ -10,8 +11,8 @@ namespace Azure.Storage.Cryptography
     // TODO pull in GCM exposure to fill out this class
     internal class GcmAuthenticatedCryptographicTransform : IAuthenticatedCryptographicTransform
     {
-        //private AesGcm _gcm;
-        private readonly byte[] _key;
+        private AesGcm _gcm;
+        private long _nonceCounter = 1;
 
         public TransformMode TransformMode { get; }
 
@@ -21,33 +22,46 @@ namespace Azure.Storage.Cryptography
 
         public GcmAuthenticatedCryptographicTransform(byte[] key, TransformMode mode)
         {
-            _key = key;
             TransformMode = mode;
+            _gcm = new AesGcm(key);
         }
 
-        // TODO actually encrypt, not this placeholder
+        /// <summary>
+        /// Applies a GCM encryption or decryption to the <paramref name="input"/>, decided by <see cref="TransformMode"/>,
+        /// and writes the result to <paramref name="output"/>.
+        /// <para />
+        /// An encrypted input or output contains the nonce, then ciphertext, then tag, while the unencrypted input or
+        /// output only contains plaintext. Plaintext and ciphertext have equal length when using GCM, though the input
+        /// and output will not, given one has the nonce and tag attached.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if <paramref name="output"/> is not large enough to contain the transformed result of <paramref name="input"/>.
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if this instance's <see cref="TransformMode"/> is invalid.
+        /// </exception>
         public int TransformAuthenticationBlock(ReadOnlySpan<byte> input, Span<byte> output)
         {
             switch (TransformMode)
             {
                 case TransformMode.Encrypt:
-                    if (output.Length < input.Length + NonceLength + TagLength)
-                    {
-                        throw new ArgumentException("Span to small for encrypted contents.", nameof(output));
-                    }
-                    new ReadOnlySpan<byte>(Enumerable.Repeat((byte)'A', NonceLength).ToArray())
-                        .CopyTo(output);
-                    input.CopyTo(output.Slice(NonceLength));
-                    new ReadOnlySpan<byte>(Enumerable.Repeat((byte)'a', TagLength).ToArray())
-                        .CopyTo(output.Slice(NonceLength + input.Length));
+                    ReadOnlySpan<byte> nonce = GetNewNonce();
+                    Span<byte> tag = new Span<byte>(new byte[TagLength]);
+
+                    nonce.CopyTo(output.Slice(0, NonceLength));
+                    _gcm.Encrypt(nonce, input, output.Slice(NonceLength, input.Length), tag);
+                    tag.CopyTo(output.Slice(NonceLength + input.Length, TagLength));
                     return NonceLength + input.Length + TagLength;
 
                 case TransformMode.Decrypt:
-                    if (output.Length < input.Length - NonceLength - TagLength)
-                    {
-                        throw new ArgumentException("Span to small for decrypted contents.", nameof(output));
-                    }
-                    input.Slice(NonceLength, input.Length - NonceLength - TagLength).CopyTo(output);
+                    _gcm.Decrypt(
+                        input.Slice(0, NonceLength),
+                        input.Slice(NonceLength, input.Length - NonceLength - TagLength),
+                        input.Slice(input.Length - TagLength, TagLength),
+                        output);
                     return input.Length - NonceLength - TagLength;
 
                 default: throw new InvalidOperationException("TransformMode invalid for this operation.");
@@ -56,8 +70,22 @@ namespace Azure.Storage.Cryptography
 
         public void Dispose()
         {
-            // TODO
-            throw new NotImplementedException();
+            _gcm.Dispose();
+        }
+
+        private ReadOnlySpan<byte> GetNewNonce()
+        {
+            var result = new Span<byte>(new byte[NonceLength]);
+
+            // long is 8 bytes, nonce is 12. pad the nonce with remaining 4 zeroes.
+            const int bytesInLong = 8;
+            int remainingNonceBytes = NonceLength - bytesInLong;
+            new byte[] { 0, 0, 0, 0 }.CopyTo(result.Slice(0, remainingNonceBytes));
+
+            // write nonce to span and increment counter
+            BitConverter.GetBytes(_nonceCounter++).CopyTo(result.Slice(remainingNonceBytes, bytesInLong));
+
+            return result;
         }
     }
 }

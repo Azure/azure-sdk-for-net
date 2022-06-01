@@ -39,7 +39,7 @@ namespace Azure.Storage.Cryptography
         public AuthenticatedRegionCryptoStream(
             Stream innerStream,
             IAuthenticatedCryptographicTransform transform,
-            int blockSizePlaintext,
+            int regionDataSize,
             CryptoStreamMode streamMode)
         {
             _innerStream = innerStream;
@@ -55,16 +55,16 @@ namespace Azure.Storage.Cryptography
                 // read and decrypt ciphertext from innerStream, then store plaintext results in _buffer to be read by caller
                 (transform.TransformMode == TransformMode.Decrypt && streamMode == CryptoStreamMode.Read))
             {
-                bufferSize = blockSizePlaintext;
-                _tempRefilBufferSize = transform.NonceLength + blockSizePlaintext + transform.TagLength;
+                bufferSize = regionDataSize;
+                _tempRefilBufferSize = transform.NonceLength + regionDataSize + transform.TagLength;
             }
                 // read and encrypt plaintext from innerStream, then store ciphertext results in _buffer to be read by caller
             else if ((transform.TransformMode == TransformMode.Encrypt && streamMode == CryptoStreamMode.Read) ||
                 // write ciphertext to _buffer, then decrypt buffer and push ciphertext to innerStream
                 (transform.TransformMode == TransformMode.Decrypt && streamMode == CryptoStreamMode.Write))
             {
-                bufferSize = transform.NonceLength + blockSizePlaintext + transform.TagLength;
-                _tempRefilBufferSize = blockSizePlaintext;
+                bufferSize = transform.NonceLength + regionDataSize + transform.TagLength;
+                _tempRefilBufferSize = regionDataSize;
             }
             else
             {

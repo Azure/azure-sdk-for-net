@@ -18,8 +18,10 @@ using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using static Azure.Storage.Blobs.Tests.ClientSideEncryptionTestExtensions;
+using static Azure.Storage.Constants.ClientSideEncryption;
 using static Moq.It;
 
 namespace Azure.Storage.Blobs.Test
@@ -33,6 +35,9 @@ namespace Azure.Storage.Blobs.Test
             : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
         }
+
+        private IEnumerable<ClientSideEncryptionVersion> GetEncryptionVersions()
+            => Enum.GetValues(typeof(ClientSideEncryptionVersion)).Cast<ClientSideEncryptionVersion>();
 
         /// <summary>
         /// Provides encryption v2 functionality clone of client logic, letting us validate the client got it right end-to-end.
@@ -56,6 +61,38 @@ namespace Azure.Storage.Blobs.Test
             cryptoStream.Write(data, 0, data.Length);
             cryptoStream.FlushFinalBlock();
             return memStream.ToArray();
+        }
+
+        /// <summary>
+        /// Provides encryption v2 functionality clone of client logic, letting us validate the client got it right end-to-end
+        /// and was not altered.
+        /// </summary>
+        private ReadOnlySpan<byte> EncryptDataV2_0(ReadOnlySpan<byte> data, ReadOnlySpan<byte> key)
+        {
+            int numEncryptionRegions = (data.Length + V2.EncryptionRegionDataSize - (data.Length % V2.EncryptionRegionDataSize)) / V2.EncryptionRegionDataSize;
+            int encryptedDataLength = data.Length + (numEncryptionRegions * (V2.NonceSize + V2.TagSize));
+            var result = new Span<byte>(new byte[encryptedDataLength]);
+
+            int nonceCounter = 1;
+            using var gcm = new AesGcm(key);
+            for (int i = 0; i < numEncryptionRegions; i++)
+            {
+                // get nonce for this block
+                var nonce = new Span<byte>(new byte[V2.NonceSize]);
+                const int bytesInLong = 8;
+                int remainingNonceBytes = V2.NonceSize - bytesInLong;
+                new byte[] { 0, 0, 0, 0 }.CopyTo(nonce.Slice(0, remainingNonceBytes));
+                BitConverter.GetBytes(nonceCounter++).CopyTo(nonce.Slice(remainingNonceBytes, bytesInLong));
+
+                var tag = new Span<byte>(new byte[V2.TagSize]);
+                gcm.Encrypt(
+                    nonce,
+                    data.Slice(i * V2.EncryptionRegionDataSize, Math.Min(V2.EncryptionRegionDataSize, data.Length - (i * V2.EncryptionRegionDataSize))),
+                    result.Slice(i * V2.EncryptionRegionTotalSize, Math.Min(V2.EncryptionRegionTotalSize, result.Length - (i * V2.EncryptionRegionTotalSize))),
+                    tag);
+            }
+
+            return result;
         }
 
         private async Task<IKeyEncryptionKey> GetKeyvaultIKeyEncryptionKey()
@@ -300,18 +337,23 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(options2.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
         }
 
-        [TestCase(16)] // a single cipher block
-        [TestCase(14)] // a single unalligned cipher block
-        [TestCase(Constants.KB)] // multiple blocks
-        [TestCase(Constants.KB - 4)] // multiple unalligned blocks
-        [TestCase(Constants.MB)] // larger test, increasing likelihood to trigger async extension usage bugs
+        [TestCase(ClientSideEncryptionVersion.V1_0, 16)] // a single cipher block
+        [TestCase(ClientSideEncryptionVersion.V1_0, 14)] // a single unalligned cipher block
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB)] // multiple blocks
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4)] // multiple unalligned blocks
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB)] // larger test, increasing likelihood to trigger async extension usage bugs
+        // TODO don't move to recorded tests without making the encryption region size configurable
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize)] // a single cipher block
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1000000)] // a single unalligned cipher block
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize)] // multiple blocks
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize - 1000000)] // multiple unalligned blocks
         [LiveOnly] // cannot seed content encryption key
-        public async Task UploadAsync(long dataSize)
+        public async Task UploadAsync(ClientSideEncryptionVersion version, long dataSize)
         {
             var plaintext = GetRandomBuffer(dataSize);
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey,
                     KeyWrapAlgorithm = s_algorithmName
@@ -362,19 +404,19 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(4)]
-        [TestCase(8)]
+        [Test]
+        [Combinatorial]
         [LiveOnly] // cannot seed content encryption key
-        public async Task UploadAsyncSplit(int concurrency)
+        public async Task UploadAsyncSplit(
+            [Values(1, 2, 4, 8)] int concurrency,
+            [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             int blockSize = Constants.KB;
             int dataSize = 16 * Constants.KB;
             var plaintext = GetRandomBuffer(dataSize);
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey,
                     KeyWrapAlgorithm = s_algorithmName
@@ -405,19 +447,24 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestCase(16, null)] // a single cipher block
-        [TestCase(14, null)] // a single unalligned cipher block
-        [TestCase(Constants.KB, null)] // multiple blocks
-        [TestCase(Constants.KB - 4, null)] // multiple unalligned blocks
-        [TestCase(Constants.MB, 64*Constants.KB)] // make sure we cache unwrapped key for large downloads
+        [TestCase(ClientSideEncryptionVersion.V1_0, 16, null)] // a single cipher block
+        [TestCase(ClientSideEncryptionVersion.V1_0, 14, null)] // a single unalligned cipher block
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, null)] // multiple blocks
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4, null)] // multiple unalligned blocks
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)] // make sure we cache unwrapped key for large downloads
+        // TODO don't move to recorded tests without making the encryption region size configurable
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, null)] // a single cipher block
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1000000, null)] // a single unalligned cipher block
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize, null)] // multiple blocks
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize - 1000000, null)] // multiple unalligned blocks
         [LiveOnly] // cannot seed content encryption key
-        public async Task RoundtripAsync(long dataSize, long? initialDownloadRequestSize)
+        public async Task RoundtripAsync(ClientSideEncryptionVersion version, long dataSize, long? initialDownloadRequestSize)
         {
             var data = GetRandomBuffer(dataSize);
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken);
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, mockKey.Object).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey.Object,
                     KeyResolver = mockKeyResolver,
@@ -445,12 +492,12 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(4)]
-        [TestCase(8)]
+        [Test]
+        [Combinatorial]
         [LiveOnly] // cannot seed content encryption key
-        public async Task RoundtripSplitAsync(int concurrency)
+        public async Task RoundtripSplitAsync(
+            [Values(1, 2, 4, 8)] int concurrency,
+            [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             int blockSize = Constants.KB;
             int dataSize = 16 * Constants.KB;
@@ -465,7 +512,7 @@ namespace Azure.Storage.Blobs.Test
                 MaximumConcurrency = concurrency
             };
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey.Object,
                     KeyResolver = mockKeyResolver,
@@ -493,6 +540,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        // TODO revisit once v2 is implemented for open read
         [TestCase(Constants.MB, 64*Constants.KB)]
         [TestCase(Constants.MB, Constants.MB)]
         [TestCase(Constants.MB, 4*Constants.MB)]
@@ -538,7 +586,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly] // cannot seed content encryption key
-        public async Task RoundtripWithMetadata()
+        public async Task RoundtripWithMetadata([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             // Arrange
 
@@ -551,7 +599,7 @@ namespace Azure.Storage.Blobs.Test
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken);
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, mockKey.Object).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey.Object,
                     KeyResolver = mockKeyResolver,
@@ -581,19 +629,20 @@ namespace Azure.Storage.Blobs.Test
                     Assert.IsTrue(downloadedMetadata.ContainsKey(kvp.Key));
                     Assert.AreEqual(metadata[kvp.Key], downloadedMetadata[kvp.Key]);
                 }
-                Assert.IsTrue(downloadedMetadata.ContainsKey(Constants.ClientSideEncryption.EncryptionDataKey));
+                Assert.IsTrue(downloadedMetadata.ContainsKey(EncryptionDataKey));
+                Assert.AreEqual(version, EncryptionDataSerializer.Deserialize(downloadedMetadata[EncryptionDataKey]).EncryptionAgent.EncryptionVersion);
             }
         }
 
-        [RecordedTest] // multiple unalligned blocks
+        [Test] // multiple unalligned blocks
         [LiveOnly] // cannot seed content encryption key
-        public async Task KeyResolverKicksIn()
+        public async Task KeyResolverKicksIn([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             var data = GetRandomBuffer(Constants.KB);
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, mockKey).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey,
                     KeyWrapAlgorithm = s_algorithmName
@@ -608,7 +657,7 @@ namespace Azure.Storage.Blobs.Test
                 using (var stream = new MemoryStream())
                 {
                     var options = GetOptions();
-                    options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                    options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(version)
                     {
                         KeyResolver = mockKeyResolver
                     };
@@ -621,6 +670,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        // TODO revisit once download range is implemented for v2
         [TestCase(0, 16)]  // first block
         [TestCase(16, 16)] // not first block
         [TestCase(32, 32)] // multiple blocks; IV not at blob start
@@ -781,12 +831,12 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
-        public async Task RoundtripWithKeyvaultProvider()
+        public async Task RoundtripWithKeyvaultProvider([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             var data = GetRandomBuffer(Constants.KB);
             IKeyEncryptionKey key = await GetKeyvaultIKeyEncryptionKey();
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = key,
                     KeyWrapAlgorithm = "RSA-OAEP-256"
@@ -803,6 +853,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        // TODO revisit when openread implemented
         [TestCase(Constants.MB, 64*Constants.KB)]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
         public async Task RoundtripWithKeyvaultProviderOpenRead(long dataSize, int bufferSize)
@@ -878,15 +929,15 @@ namespace Azure.Storage.Blobs.Test
 
         // using 5 to setup offsets to avoid any off-by-one confusion in debugging
         [TestCase(0, null)]
-        [TestCase(0, 2 * Constants.ClientSideEncryption.EncryptionBlockSize)]
-        [TestCase(0, 2 * Constants.ClientSideEncryption.EncryptionBlockSize + 5)]
-        [TestCase(Constants.ClientSideEncryption.EncryptionBlockSize, Constants.ClientSideEncryption.EncryptionBlockSize)]
-        [TestCase(Constants.ClientSideEncryption.EncryptionBlockSize, Constants.ClientSideEncryption.EncryptionBlockSize + 5)]
-        [TestCase(Constants.ClientSideEncryption.EncryptionBlockSize + 5, 2 * Constants.ClientSideEncryption.EncryptionBlockSize)]
+        [TestCase(0, 2 * EncryptionBlockSize)]
+        [TestCase(0, 2 * EncryptionBlockSize + 5)]
+        [TestCase(EncryptionBlockSize, EncryptionBlockSize)]
+        [TestCase(EncryptionBlockSize, EncryptionBlockSize + 5)]
+        [TestCase(EncryptionBlockSize + 5, 2 * EncryptionBlockSize)]
         [LiveOnly]
         public async Task AppropriateRangeDownloadOnPlaintext(int rangeOffset, int? rangeLength)
         {
-            var data = GetRandomBuffer(rangeOffset + (rangeLength ?? Constants.KB) + Constants.ClientSideEncryption.EncryptionBlockSize);
+            var data = GetRandomBuffer(rangeOffset + (rangeLength ?? Constants.KB) + EncryptionBlockSize);
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, this.GetIKeyEncryptionKey(s_cancellationToken).Object).Object;
             await using (var disposable = await GetTestContainerAsync())
             {
@@ -921,7 +972,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         [LiveOnly] // cannot seed content encryption key
         [Ignore("stress test")]
-        public async Task StressManyBlobsAsync()
+        public async Task StressManyBlobsAsync([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             static async Task<byte[]> RoundTripData(BlobClient client, byte[] data)
             {
@@ -941,7 +992,7 @@ namespace Azure.Storage.Blobs.Test
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, mockKey).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey,
                     KeyResolver = mockKeyResolver,
@@ -968,7 +1019,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         [LiveOnly] // cannot seed content encryption key
         [Ignore("stress test")]
-        public async Task StressLargeBlobAsync()
+        public async Task StressLargeBlobAsync([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             const int dataSize = 100 * Constants.MB;
             const int blockSize = 8 * Constants.MB;
@@ -983,7 +1034,7 @@ namespace Azure.Storage.Blobs.Test
                 MaximumConcurrency = 100
             };
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey,
                     KeyResolver = mockKeyResolver,
@@ -1009,14 +1060,14 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly]
-        public async Task EncryptedReuploadSuccess()
+        public async Task EncryptedReuploadSuccess([ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             var originalData = GetRandomBuffer(Constants.KB);
             var editedData = GetRandomBuffer(Constants.KB);
             (string Key, string Value) originalMetadata = ("foo", "bar");
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey,
                     KeyWrapAlgorithm = s_algorithmName
@@ -1060,6 +1111,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [Combinatorial]
         [LiveOnly]
         /// <summary>
         /// Crypto transform streams are unseekable and have no <see cref="Stream.Length"/>.
@@ -1068,14 +1120,16 @@ namespace Azure.Storage.Blobs.Test
         /// This tests if we correctly inform the uploader of an expected stream length so it
         /// can respect the given <see cref="StorageTransferOptions"/>.
         /// </summary>
-        public async Task PutBlobPutBlockSwitch([Values(true, false)] bool oneshot)
+        public async Task PutBlobPutBlockSwitch(
+            [Values(true, false)] bool oneshot,
+            [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             const int dataSize = 1 * Constants.KB;
 
             // Arrange
             byte[] data = GetRandomBuffer(dataSize);
             int transferSize = oneshot
-                    ? 2 * dataSize // big enough for put blob even after AES-CBC PKCS7 padding
+                    ? 2 * dataSize // big enough for put blob even after padding or nonces/tags
                     : dataSize / 2;
             StorageTransferOptions transferOptions = new StorageTransferOptions
             {
@@ -1085,7 +1139,7 @@ namespace Azure.Storage.Blobs.Test
 
             IKeyEncryptionKey key = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
             await using var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = key,
                     KeyWrapAlgorithm = s_algorithmName
@@ -1282,10 +1336,12 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), ex.ErrorCode);
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
+        [Test]
+        [Combinatorial]
         [LiveOnly]
-        public async Task CanRoundtripWithKeyUpdate(bool useOverrides)
+        public async Task CanRoundtripWithKeyUpdate(
+            bool useOverrides,
+            [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             // Arrange
             byte[] data = GetRandomBuffer(Constants.KB);
@@ -1293,7 +1349,7 @@ namespace Azure.Storage.Blobs.Test
             Mock<IKeyEncryptionKey> mockKey2 = this.GetIKeyEncryptionKey(s_cancellationToken);
             IKeyEncryptionKeyResolver mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, mockKey1.Object, mockKey2.Object).Object;
 
-            var initialUploadEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var initialUploadEncryptionOptions = new ClientSideEncryptionOptions(version)
             {
                 KeyEncryptionKey = mockKey1.Object,
                 KeyResolver = mockKeyResolver,
