@@ -101,7 +101,9 @@ namespace Azure.Storage.Cryptography
 
                 if (async)
                 {
-                    await plaintext.CopyToAsync(transformStream).ConfigureAwait(false);
+                    // constant comes from parameter documentation
+                    const int copyToAsyncDefaultBufferSize = 80 * Constants.KB;
+                    await plaintext.CopyToAsync(transformStream, copyToAsyncDefaultBufferSize, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
