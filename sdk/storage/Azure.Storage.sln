@@ -141,7 +141,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{C04D725B-B025-4B41-BAF0-BEE3F8D087AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Tests.AesGcm", "Azure.Storage.Common\tests\AesGcmTests\Azure.Storage.Common.Tests.AesGcm.csproj", "{955CECCE-61B1-4832-9A42-88E95CB9ACBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.AesGcm.Tests", "Azure.Storage.Common\tests\AesGcmTests\Azure.Storage.Common.AesGcm.Tests.csproj", "{955CECCE-61B1-4832-9A42-88E95CB9ACBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
