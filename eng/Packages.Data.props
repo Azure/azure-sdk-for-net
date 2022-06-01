@@ -180,7 +180,7 @@
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.0.0-beta.8" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.10.0" />
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.12.0" />
     <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.8.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.13.1" />
     <PackageReference Update="Castle.Core" Version="4.4.0" />
