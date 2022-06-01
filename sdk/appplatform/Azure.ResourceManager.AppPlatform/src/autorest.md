@@ -56,4 +56,6 @@ directive:
       $.BindingResourceProperties.properties.resourceId['x-ms-format'] = 'arm-id';
       $.NetworkProfile.properties.serviceRuntimeSubnetId['x-ms-format'] = 'arm-id';
       $.NetworkProfile.properties.appSubnetId['x-ms-format'] = 'arm-id';
+      $.NameAvailabilityParameters['x-ms-client-name'] = 'CheckNameAvailabilityContent';
+      $.NameAvailability['x-ms-client-name'] = 'CheckNameAvailabilityResult';
 ```

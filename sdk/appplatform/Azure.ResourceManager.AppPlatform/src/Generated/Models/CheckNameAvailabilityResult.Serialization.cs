@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class NameAvailability
+    public partial class CheckNameAvailabilityResult
     {
-        internal static NameAvailability DeserializeNameAvailability(JsonElement element)
+        internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new NameAvailability(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new CheckNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }

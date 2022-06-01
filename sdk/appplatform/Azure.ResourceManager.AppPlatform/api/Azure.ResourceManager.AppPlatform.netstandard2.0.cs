@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.AppPlatform
     }
     public static partial class AppPlatformExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.AppPlatform.Models.NameAvailability> CheckServiceNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.AppPlatform.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.NameAvailability>> CheckServiceNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.AppPlatform.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.AppPlatform.Models.CheckNameAvailabilityResult> CheckServiceNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.AppPlatform.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.CheckNameAvailabilityResult>> CheckServiceNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.AppPlatform.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppPlatform.ApiPortalCustomDomainResource GetApiPortalCustomDomainResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppPlatform.ApiPortalResource GetApiPortalResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppPlatform.AppResource GetAppResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1257,6 +1257,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string SubjectName { get { throw null; } }
         public string Thumbprint { get { throw null; } }
     }
+    public partial class CheckNameAvailabilityContent
+    {
+        public CheckNameAvailabilityContent(string resourceType, string name) { }
+        public string Name { get { throw null; } }
+        public string ResourceType { get { throw null; } }
+    }
+    public partial class CheckNameAvailabilityResult
+    {
+        internal CheckNameAvailabilityResult() { }
+        public string Message { get { throw null; } }
+        public bool? NameAvailable { get { throw null; } }
+        public string Reason { get { throw null; } }
+    }
     public partial class ClusterResourceProperties
     {
         public ClusterResourceProperties() { }
@@ -1725,19 +1738,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static implicit operator Azure.ResourceManager.AppPlatform.Models.MonitoringSettingState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppPlatform.Models.MonitoringSettingState left, Azure.ResourceManager.AppPlatform.Models.MonitoringSettingState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class NameAvailability
-    {
-        internal NameAvailability() { }
-        public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
-        public string Reason { get { throw null; } }
-    }
-    public partial class NameAvailabilityContent
-    {
-        public NameAvailabilityContent(string resourceType, string name) { }
-        public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
     }
     public partial class NetCoreZipUploadedUserSourceInfo : Azure.ResourceManager.AppPlatform.Models.UploadedUserSourceInfo
     {

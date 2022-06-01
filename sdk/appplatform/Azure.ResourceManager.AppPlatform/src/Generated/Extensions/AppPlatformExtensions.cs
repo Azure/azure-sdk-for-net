@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailability>> CheckServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailability> CheckServiceNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckServiceNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

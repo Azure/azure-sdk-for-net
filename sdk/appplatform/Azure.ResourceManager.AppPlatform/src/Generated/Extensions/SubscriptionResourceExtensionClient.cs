@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> CheckServiceNameAvailabilityAsync(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckServiceNameAvailabilityAsync(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceNameAvailability");
             scope.Start();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> CheckServiceNameAvailability(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckServiceNameAvailability(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceNameAvailability");
             scope.Start();
