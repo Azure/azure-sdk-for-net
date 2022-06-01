@@ -16,8 +16,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Tests
 {
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
-#else
+#if !(NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER)
     /// <summary>
     /// From https://github.com/dotnet/runtime/blob/main/src/libraries/System.Security.Cryptography/tests/AesGcmTests.cs
     ///
