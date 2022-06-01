@@ -18,6 +18,7 @@
     <Compile Remove="Shared\AzuriteFixture.cs" />
     <Compile Remove="Shared\AzuriteNUnitFixture.cs" />
     <Compile Remove="Shared\StorageTestBase.SasVersion.cs" />
+    <Compile Remove="AesGcmTests\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- To test shared resources that aren't included in Azure.Storage.Common itself. -->
