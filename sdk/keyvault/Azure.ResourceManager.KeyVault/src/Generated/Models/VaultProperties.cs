@@ -14,22 +14,6 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the vault. </summary>
     public partial class VaultProperties
     {
-        /// <summary> Initializes a new instance of VaultProperties. </summary>
-        /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
-        /// <param name="sku"> SKU details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public VaultProperties(Guid tenantId, KeyVaultSku sku)
-        {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-
-            TenantId = tenantId;
-            Sku = sku;
-            AccessPolicies = new ChangeTrackingList<AccessPolicyEntry>();
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionItem>();
-        }
 
         /// <summary> Initializes a new instance of VaultProperties. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
@@ -49,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="provisioningState"> Provisioning state of the vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
-        internal VaultProperties(Guid tenantId, KeyVaultSku sku, IList<AccessPolicyEntry> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, CreateMode? createMode, bool? enablePurgeProtection, NetworkRuleSet networkAcls, VaultProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnectionItem> privateEndpointConnections, string publicNetworkAccess)
+        internal VaultProperties(Guid tenantId, KeyVaultSku sku, IList<AccessPolicyEntry> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, VaultCreateMode? createMode, bool? enablePurgeProtection, NetworkRuleSet networkAcls, VaultProvisioningState? provisioningState, IReadOnlyList<PrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess)
         {
             TenantId = tenantId;
             Sku = sku;
@@ -93,7 +77,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Property that controls how data actions are authorized. When true, the key vault will use Role Based Access Control (RBAC) for authorization of data actions, and the access policies specified in vault properties will be  ignored. When false, the key vault will use the access policies specified in vault properties, and any policy stored on Azure Resource Manager will be ignored. If null or not specified, the vault is created with the default value of false. Note that management actions are always authorized with RBAC. </summary>
         public bool? EnableRbacAuthorization { get; set; }
         /// <summary> The vault&apos;s create mode to indicate whether the vault need to be recovered or not. </summary>
-        public CreateMode? CreateMode { get; set; }
+        public VaultCreateMode? CreateMode { get; set; }
         /// <summary> Property specifying whether protection against purge is enabled for this vault. Setting this property to true activates protection against purge for this vault and its content - only the Key Vault service may initiate a hard, irrecoverable deletion. The setting is effective only if soft delete is also enabled. Enabling this functionality is irreversible - that is, the property does not accept false as its value. </summary>
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> Rules governing the accessibility of the key vault from specific network locations. </summary>
@@ -101,7 +85,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Provisioning state of the vault. </summary>
         public VaultProvisioningState? ProvisioningState { get; set; }
         /// <summary> List of private endpoint connections associated with the key vault. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionItem> PrivateEndpointConnections { get; }
+        public IReadOnlyList<PrivateEndpointConnectionItemData> PrivateEndpointConnections { get; }
         /// <summary> Property to specify whether the vault will accept traffic from public internet. If set to &apos;disabled&apos; all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </summary>
         public string PublicNetworkAccess { get; set; }
     }

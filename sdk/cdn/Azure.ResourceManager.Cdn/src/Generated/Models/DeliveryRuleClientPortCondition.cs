@@ -13,29 +13,29 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class DeliveryRuleClientPortCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of DeliveryRuleClientPortCondition. </summary>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleClientPortCondition(ClientPortMatchConditionParameters parameters)
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DeliveryRuleClientPortCondition(ClientPortMatchCondition properties)
         {
-            if (parameters == null)
+            if (properties == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(properties));
             }
 
-            Parameters = parameters;
+            Properties = properties;
             Name = MatchVariable.ClientPort;
         }
 
         /// <summary> Initializes a new instance of DeliveryRuleClientPortCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleClientPortCondition(MatchVariable name, ClientPortMatchConditionParameters parameters) : base(name)
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        internal DeliveryRuleClientPortCondition(MatchVariable name, ClientPortMatchCondition properties) : base(name)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public ClientPortMatchConditionParameters Parameters { get; set; }
+        public ClientPortMatchCondition Properties { get; set; }
     }
 }

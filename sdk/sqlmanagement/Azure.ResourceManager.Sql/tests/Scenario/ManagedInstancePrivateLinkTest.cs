@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        [Ignore("Re-record before GA")]
         public async Task ManagedInstancePrivateLinkApiTests()
         {
             //Create Managed Instance

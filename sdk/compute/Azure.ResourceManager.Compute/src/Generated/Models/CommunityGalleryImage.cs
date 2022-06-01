@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image definition that you want to create or update. </summary>
-    public partial class CommunityGalleryImage : PirCommunityGalleryResource
+    public partial class CommunityGalleryImage : PirCommunityGalleryResourceData
     {
         /// <summary> Initializes a new instance of CommunityGalleryImage. </summary>
         internal CommunityGalleryImage()
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="features"> A list of gallery image features. </param>
         /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
-        internal CommunityGalleryImage(string name, string location, string resourceType, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan) : base(name, location, resourceType, uniqueId)
+        internal CommunityGalleryImage(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan) : base(name, location, resourceType, uniqueId)
         {
             OSType = osType;
             OSState = osState;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of disk types. </summary>
         public IList<string> DisallowedDiskTypes
         {
-            get => Disallowed.DiskTypes;
+            get => Disallowed?.DiskTypes;
         }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>

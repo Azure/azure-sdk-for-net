@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery Application Definition that you want to update. </summary>
-    public partial class GalleryApplicationPatch : UpdateResourceDefinition
+    public partial class GalleryApplicationPatch : GalleryUpdateResourceDefinition
     {
         /// <summary> Initializes a new instance of GalleryApplicationPatch. </summary>
         public GalleryApplicationPatch()

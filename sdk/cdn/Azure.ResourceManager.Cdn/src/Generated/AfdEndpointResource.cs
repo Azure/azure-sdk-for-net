@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Cdn/profiles/afdEndpoints";
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/afdEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -346,17 +346,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of the given AzureFrontDoor endpoint under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/usages
         /// Operation Id: AfdEndpoints_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetResourceUsageAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsage");
+                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsage");
+                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -388,17 +388,17 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of the given AzureFrontDoor endpoint under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/usages
         /// Operation Id: AfdEndpoints_ListResourceUsage
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetResourceUsage(CancellationToken cancellationToken = default)
+        public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
             Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsage");
+                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsage");
+                using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.GetResourceUsages");
                 scope.Start();
                 try
                 {
@@ -430,22 +430,22 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.This api isn&apos;t work for apex domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/validateCustomDomain
         /// Operation Id: AfdEndpoints_ValidateCustomDomain
         /// </summary>
-        /// <param name="input"> Custom domain to be validated. </param>
+        /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual async Task<Response<ValidateCustomDomainOutput>> ValidateCustomDomainAsync(ValidateCustomDomainInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ValidateCustomDomainResult>> ValidateCustomDomainAsync(ValidateCustomDomainContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.ValidateCustomDomain");
             scope.Start();
             try
             {
-                var response = await _afdEndpointRestClient.ValidateCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input, cancellationToken).ConfigureAwait(false);
+                var response = await _afdEndpointRestClient.ValidateCustomDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -456,22 +456,22 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.This api isn&apos;t work for apex domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/afdEndpoints/{endpointName}/validateCustomDomain
         /// Operation Id: AfdEndpoints_ValidateCustomDomain
         /// </summary>
-        /// <param name="input"> Custom domain to be validated. </param>
+        /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public virtual Response<ValidateCustomDomainOutput> ValidateCustomDomain(ValidateCustomDomainInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ValidateCustomDomainResult> ValidateCustomDomain(ValidateCustomDomainContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _afdEndpointClientDiagnostics.CreateScope("AfdEndpointResource.ValidateCustomDomain");
             scope.Start();
             try
             {
-                var response = _afdEndpointRestClient.ValidateCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, input, cancellationToken);
+                var response = _afdEndpointRestClient.ValidateCustomDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkInterfaceIPConfiguration data model. </summary>
-    public partial class NetworkInterfaceIPConfigurationData : Models.SubResource
+    public partial class NetworkInterfaceIPConfigurationData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
         public NetworkInterfaceIPConfigurationData()
@@ -27,9 +28,9 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="gatewayLoadBalancer"> The reference to gateway load balancer frontend IP. </param>
         /// <param name="virtualNetworkTaps"> The reference to Virtual Network Taps. </param>
         /// <param name="applicationGatewayBackendAddressPools"> The reference to ApplicationGatewayBackendAddressPool resource. </param>
@@ -44,11 +45,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroups"> Application security groups in which the IP configuration is included. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface IP configuration. </param>
         /// <param name="privateLinkConnectionProperties"> PrivateLinkConnection properties for the network interface. </param>
-        internal NetworkInterfaceIPConfigurationData(string id, string name, string etag, string resourceType, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id)
+        internal NetworkInterfaceIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource gatewayLoadBalancer, IList<VirtualNetworkTapData> virtualNetworkTaps, IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools, IList<BackendAddressPoolData> loadBalancerBackendAddressPools, IList<InboundNatRuleData> loadBalancerInboundNatRules, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, IPVersion? privateIPAddressVersion, SubnetData subnet, bool? primary, PublicIPAddressData publicIPAddress, IList<ApplicationSecurityGroupData> applicationSecurityGroups, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties) : base(id, name, resourceType)
         {
-            Name = name;
             Etag = etag;
-            ResourceType = resourceType;
             GatewayLoadBalancer = gatewayLoadBalancer;
             VirtualNetworkTaps = virtualNetworkTaps;
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
@@ -65,12 +64,8 @@ namespace Azure.ResourceManager.Network
             PrivateLinkConnectionProperties = privateLinkConnectionProperties;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Resource type. </summary>
-        public string ResourceType { get; set; }
+        public ETag? Etag { get; }
         /// <summary> The reference to gateway load balancer frontend IP. </summary>
         internal WritableSubResource GatewayLoadBalancer { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -108,7 +103,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Application security groups in which the IP configuration is included. </summary>
         public IList<ApplicationSecurityGroupData> ApplicationSecurityGroups { get; }
         /// <summary> The provisioning state of the network interface IP configuration. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> PrivateLinkConnection properties for the network interface. </summary>
         public NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties PrivateLinkConnectionProperties { get; }
     }

@@ -85,11 +85,11 @@
     <PackageReference Update="Azure.Core" Version="1.24.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.2.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.21" />
-    <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.1.0" />
+    <PackageReference Update="Azure.Data.SchemaRegistry" Version="1.2.0" />
     <PackageReference Update="Azure.Data.Tables" Version="12.5.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.6.2" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.7.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.10.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.7.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.8.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.0.0" />
     <PackageReference Update="Azure.Identity" Version="1.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
@@ -126,7 +126,7 @@
     <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.16.1" />
     <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.16.1" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.6.0" />
-    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.32" />
+    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.33" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.30" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
@@ -138,7 +138,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.1.1" />
+    <PackageReference Update="Microsoft.Extensions.Azure" Version="1.2.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
@@ -152,7 +152,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220426.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220529.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20220111.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />

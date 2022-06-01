@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-require: https://github.com/Azure/azure-rest-api-specs/blob/75b53c0708590483bb2166b9e2751f1bdf5adefa/specification/azurestackhci/resource-manager/readme.md
-tag: package-2021-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/324a148497f28ef7588eee7bdb61dcd28b74f505/specification/azurestackhci/resource-manager/readme.md
+tag: package-2022-05
 output-folder: Generated/
 clear-output-folder: true
 
@@ -39,6 +39,9 @@ directive:
   - from: extensions.json
     where: $.definitions.Extension
     transform: $["x-ms-client-name"] = "ArcExtension"
+  - from: extensions.json
+    where: $.definitions.Extension.properties.systemData
+    transform: $["x-ms-client-flatten"] = false
   - from: clusters.json
     where: $.definitions.Cluster
     transform: $["x-ms-client-name"] = "HciCluster"
@@ -51,6 +54,8 @@ directive:
       $.aadClientId.format = "uuid";
       $.aadTenantId.format = "uuid";
       $.cloudId.format = "uuid";
+      $.aadApplicationObjectId.format = "uuid";
+      $.aadServicePrincipalObjectId.format = "uuid";
   - from: clusters.json
     where: $.definitions.ClusterPatchProperties.properties
     transform: >
@@ -60,4 +65,17 @@ directive:
     where: $.definitions.ClusterReportedProperties.properties.clusterId
     transform: >
       $.format = "uuid"
+  - from: clusters.json
+    where: $.definitions.Cluster.properties.systemData
+    transform: $["x-ms-client-flatten"] = false
+  - from: arcSettings.json
+    where: $.definitions.ArcSetting.properties.systemData
+    transform: $["x-ms-client-flatten"] = false
+  - from: arcSettings.json
+    where: $.definitions.ArcSettingProperties.properties
+    transform: >
+      $.arcApplicationClientId.format = "uuid";
+      $.arcApplicationTenantId.format = "uuid";
+      $.arcServicePrincipalObjectId.format = "uuid";
+      $.arcApplicationObjectId.format = "uuid";
 ```

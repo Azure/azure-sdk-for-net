@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             AfdEndpointResource afdEndpointInstance2 = await CreateAfdEndpoint(afdProfile, afdEndpointName2);
             AfdSecurityPolicyPatch updateOptions = new AfdSecurityPolicyPatch
             {
-                Parameters = new SecurityPolicyWebApplicationFirewallParameters
+                Properties = new SecurityPolicyWebApplicationFirewall
                 {
                     WafPolicy = new WritableSubResource
                     {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 Id = afdEndpointInstance2.Id
             });
             securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/*");
-            ((SecurityPolicyWebApplicationFirewallParameters)updateOptions.Parameters).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
+            ((SecurityPolicyWebApplicationFirewall)updateOptions.Properties).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
             var lro = await afdSecurityPolicy.UpdateAsync(WaitUntil.Completed, updateOptions);
             AfdSecurityPolicyResource updatedSecurityPolicy = lro.Value;
             ResourceDataHelper.AssertAfdSecurityPolicyUpdate(updatedSecurityPolicy, updateOptions);

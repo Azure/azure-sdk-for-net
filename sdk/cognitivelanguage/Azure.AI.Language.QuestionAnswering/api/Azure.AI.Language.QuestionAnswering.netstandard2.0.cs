@@ -193,7 +193,8 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
     public partial class QuestionAnsweringProjectsClient
     {
         protected QuestionAnsweringProjectsClient() { }
-        public QuestionAnsweringProjectsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions options = null) { }
+        public QuestionAnsweringProjectsClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public QuestionAnsweringProjectsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.QuestionAnswering.QuestionAnsweringClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AddFeedback(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddFeedbackAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }

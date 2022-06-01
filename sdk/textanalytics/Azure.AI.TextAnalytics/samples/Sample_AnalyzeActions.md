@@ -1,9 +1,18 @@
 # Running multiple actions
-This sample demonstrates how to run multiple actions in one or more documents. Actions include entity recognition, linked entity recognition, key phrase extraction, Personally Identifiable Information (PII) Recognition, sentiment analysis, and extractive text summarization. To get started you will need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to run multiple actions in one or more documents. Actions include:
+
+- Named Entities Recognition
+- PII Entities Recognition
+- Linked Entity Recognition
+- Key Phrase Extraction
+- Sentiment Analysis
+- Extractive Summarization
+- Custom Named Entity Recognition
+- Custom Text Classification
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to run analyze operation for a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to run analyze operation for a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 

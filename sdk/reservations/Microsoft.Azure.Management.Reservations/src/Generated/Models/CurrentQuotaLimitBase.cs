@@ -31,9 +31,16 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <summary>
         /// Initializes a new instance of the CurrentQuotaLimitBase class.
         /// </summary>
+        /// <param name="id">The quota request ID.</param>
+        /// <param name="name">The name of the quota request.</param>
+        /// <param name="type">Type of resource.
+        /// "Microsoft.Capacity/ServiceLimits"</param>
         /// <param name="properties">Quota properties for the resource.</param>
-        public CurrentQuotaLimitBase(QuotaProperties properties = default(QuotaProperties))
+        public CurrentQuotaLimitBase(string id = default(string), string name = default(string), string type = default(string), QuotaProperties properties = default(QuotaProperties))
         {
+            Id = id;
+            Name = name;
+            Type = type;
             Properties = properties;
             CustomInit();
         }
@@ -42,6 +49,24 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the quota request ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the quota request.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets type of resource. "Microsoft.Capacity/ServiceLimits"
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
         /// <summary>
         /// Gets or sets quota properties for the resource.

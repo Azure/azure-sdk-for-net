@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Enable write on ArcInstanceResourceGroup
+- Add patch for arcSettings
+- Created clusterIdentity and arcIdentity which is the identity created/used for cluster registration
+
 ### Breaking Changes
 
 ### Bugs Fixed

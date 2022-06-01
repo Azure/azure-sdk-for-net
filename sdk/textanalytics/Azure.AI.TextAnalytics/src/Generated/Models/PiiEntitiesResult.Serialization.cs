@@ -12,22 +12,49 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    internal partial class PiiEntitiesResult
+    internal partial class PiiEntitiesResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("documents");
+            writer.WriteStartArray();
+            foreach (var item in Documents)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("errors");
+            writer.WriteStartArray();
+            foreach (var item in Errors)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics");
+                writer.WriteObjectValue(Statistics);
+            }
+            writer.WritePropertyName("modelVersion");
+            writer.WriteStringValue(ModelVersion);
+            writer.WriteEndObject();
+        }
+
         internal static PiiEntitiesResult DeserializePiiEntitiesResult(JsonElement element)
         {
-            IReadOnlyList<PiiDocumentEntities> documents = default;
-            IReadOnlyList<DocumentError> errors = default;
+            IList<PiiResultDocumentsItem> documents = default;
+            IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<PiiDocumentEntities> array = new List<PiiDocumentEntities>();
+                    List<PiiResultDocumentsItem> array = new List<PiiResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PiiDocumentEntities.DeserializePiiDocumentEntities(item));
+                        array.Add(PiiResultDocumentsItem.DeserializePiiResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;
@@ -58,7 +85,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new PiiEntitiesResult(documents, errors, statistics.Value, modelVersion);
+            return new PiiEntitiesResult(errors, statistics.Value, modelVersion, documents);
         }
     }
 }

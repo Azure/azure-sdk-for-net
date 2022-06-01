@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the RouteFilter data model. </summary>
-    public partial class RouteFilterData : NetworkResourceData
+    public partial class RouteFilterData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of RouteFilterData. </summary>
         public RouteFilterData()
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="peerings"> A collection of references to express route circuit peerings. </param>
         /// <param name="iPv6Peerings"> A collection of references to express route circuit ipv6 peerings. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter resource. </param>
-        internal RouteFilterData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> iPv6Peerings, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal RouteFilterData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<RouteFilterRuleData> rules, IReadOnlyList<ExpressRouteCircuitPeeringData> peerings, IReadOnlyList<ExpressRouteCircuitPeeringData> iPv6Peerings, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Rules = rules;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Collection of RouteFilterRules contained within a route filter. </summary>
         public IList<RouteFilterRuleData> Rules { get; }
         /// <summary> A collection of references to express route circuit peerings. </summary>
@@ -51,6 +52,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> A collection of references to express route circuit ipv6 peerings. </summary>
         public IReadOnlyList<ExpressRouteCircuitPeeringData> IPv6Peerings { get; }
         /// <summary> The provisioning state of the route filter resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -1,8 +1,20 @@
 # Release History
 
-## 5.2.0-beta.3 (Unreleased)
+## 5.2.0-beta.4 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.0-beta.3 (2022-05-18)
+
+### Features Added
+- Added keyword argument `FhirVersion` to `AnalyzeHealthcareEntitiesOptions`. Use the keyword to indicate the version for the property `AnalyzeHealthcareEntitiesResult.FhirBundle`  that represents a FHIR compatible object for consumption in other Healthcare tools.
+- Added property `FhirBundle` to `AnalyzeHealthcareEntitiesResult`.
 
 ### Breaking Changes
 - Enum `EntityCategory.IPAddress` now uses the underlying string `IPAddress` value instead of `IP` to align with the Text Analytics service behavior.
@@ -13,6 +25,7 @@
 - In `AnalyzeHealthcareEntitiesOperation`, `Cancel` calls won't overwrite the response from `GetRawResponse` anymore. PR [28375](https://github.com/Azure/azure-sdk-for-net/pull/28375)
 
 ### Other Changes
+This is the first version of the client library that targets the Azure Cognitive Service for Language APIs which includes the existing text analysis and natural language processing features found in the Text Analytics client library. In addition, the service API has changed from semantic to date-based versioning. This version of the client library defaults to the latest supported API version, which currently is `2022-04-01-preview`.
 
 ## 5.1.1 (2021-11-19)
 ### Breaking changes

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="storageId"/> is null. </exception>
-        public FlowLogInformation(string targetResourceId, string storageId, bool enabled)
+        public FlowLogInformation(ResourceIdentifier targetResourceId, string storageId, bool enabled)
         {
             if (targetResourceId == null)
             {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
         /// <param name="format"> Parameters that define the flow log format. </param>
-        internal FlowLogInformation(string targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, string storageId, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format)
+        internal FlowLogInformation(ResourceIdentifier targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, string storageId, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format)
         {
             TargetResourceId = targetResourceId;
             FlowAnalyticsConfiguration = flowAnalyticsConfiguration;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the resource to configure for flow log and traffic analytics (optional) . </summary>
-        public string TargetResourceId { get; set; }
+        public ResourceIdentifier TargetResourceId { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>

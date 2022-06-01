@@ -12,7 +12,6 @@ using NUnit.Framework;
 namespace Azure.ResourceManager.KeyVault.Tests
 {
     [NonParallelizable]
-    [RunFrequency(RunTestFrequency.Manually)]
     public class VaultOperationsTests : VaultOperationsTestsBase
     {
         public VaultOperationsTests(bool isAsync)
@@ -30,8 +29,21 @@ namespace Azure.ResourceManager.KeyVault.Tests
         }
 
         [Test]
+        public async Task KeyVaultManagementVaultCreateWithoutAccessPolicies()
+        {
+            IgnoreTestInLiveMode();
+            VaultProperties vaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
+            VaultCreateOrUpdateContent content = new VaultCreateOrUpdateContent(Location, vaultProperties);
+            ArmOperation<VaultResource> rawVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, content);
+            VaultData createdVault = rawVault.Value.Data;
+            Assert.IsNotNull(createdVault);
+            Assert.AreEqual(VaultName, createdVault.Name);
+        }
+
+        [Test]
         public async Task KeyVaultManagementVaultCreateUpdateDelete()
         {
+            IgnoreTestInLiveMode();
             VaultProperties.EnableSoftDelete = null;
 
             VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
@@ -65,7 +77,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
 
             AccessPolicy.Permissions.Storage.Clear();
             AccessPolicy.Permissions.Storage.Add(StoragePermission.Get);
-            AccessPolicy.Permissions.Storage.Add(StoragePermission.Regeneratekey);
+            AccessPolicy.Permissions.Storage.Add(StoragePermission.RegenerateKey);
 
             createdVault.Properties.AccessPolicies.Clear();
             createdVault.Properties.AccessPolicies.Add(AccessPolicy);
@@ -124,6 +136,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [Test]
         public async Task KeyVaultManagementVaultTestCompoundIdentityAccessControlPolicy()
         {
+            IgnoreTestInLiveMode();
             AccessPolicy.ApplicationId = Guid.Parse(TestEnvironment.ClientId);
             VaultProperties.EnableSoftDelete = null;
 
@@ -178,6 +191,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [Test]
         public async Task KeyVaultManagementListVaults()
         {
+            IgnoreTestInLiveMode();
             int n = 3;
             int top = 2;
             VaultProperties.EnableSoftDelete = null;
@@ -220,6 +234,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [Test]
         public async Task KeyVaultManagementRecoverDeletedVault()
         {
+            IgnoreTestInLiveMode();
             VaultCreateOrUpdateContent parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             ArmOperation<VaultResource> createdVault = await VaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
@@ -247,7 +262,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             // Delete
             await getResult.Value.DeleteAsync(WaitUntil.Completed);
 
-            VaultProperties.CreateMode = CreateMode.Recover;
+            VaultProperties.CreateMode = VaultCreateMode.Recover;
             parameters = new VaultCreateOrUpdateContent(Location, VaultProperties);
 
             // Recover in recover mode
@@ -266,6 +281,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         [Test]
         public async Task KeyVaultManagementListDeletedVaults()
         {
+            IgnoreTestInLiveMode();
             int n = 3;
             List<string> resourceIds = new List<string>();
             List<VaultResource> vaultList = new List<VaultResource>();

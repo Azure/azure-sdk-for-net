@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// Initializes a new instance of the CustomPersistentDiskResource
         /// class.
         /// </summary>
-        /// <param name="storageId">The resource id of Azure Spring Cloud
+        /// <param name="storageId">The resource id of Azure Spring Apps
         /// Storage resource.</param>
         /// <param name="customPersistentDiskProperties">Properties of the
         /// custom persistent disk resource payload.</param>
@@ -56,8 +56,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public CustomPersistentDiskProperties CustomPersistentDiskProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource id of Azure Spring Cloud Storage
-        /// resource.
+        /// Gets or sets the resource id of Azure Spring Apps Storage resource.
         /// </summary>
         [JsonProperty(PropertyName = "storageId")]
         public string StorageId { get; set; }

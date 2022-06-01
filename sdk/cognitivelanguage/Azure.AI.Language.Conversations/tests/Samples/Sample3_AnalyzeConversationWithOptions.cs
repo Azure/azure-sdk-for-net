@@ -23,7 +23,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 text: "Send an email to Carol about the tomorrow's demo.");
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
             {
-                IsLoggingEnabled = true,
                 Verbose = true
             };
 
@@ -43,9 +42,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #endif
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+            ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-            Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+            Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
             Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
             Console.WriteLine("Intents:");
@@ -80,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Setup"));
+            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Read"));
         }
 
         [AsyncOnly]
@@ -96,7 +95,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 text: "Send an email to Carol about the tomorrow's demo.");
             AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
             {
-                IsLoggingEnabled = true,
                 Verbose = true
             };
 
@@ -116,9 +114,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 #endif
 
             CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            ConversationPrediction conversationPrediction = customConversationalTaskResult.Results.Prediction as ConversationPrediction;
+            ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-            Console.WriteLine($"Project Kind: {customConversationalTaskResult.Results.Prediction.ProjectKind}");
+            Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
             Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
             Console.WriteLine("Intents:");
@@ -153,7 +151,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Setup"));
+            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Read"));
         }
     }
 }

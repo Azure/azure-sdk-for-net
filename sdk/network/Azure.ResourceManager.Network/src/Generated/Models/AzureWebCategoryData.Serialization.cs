@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Network
     {
         internal static AzureWebCategoryData DeserializeAzureWebCategoryData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -25,7 +26,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -40,7 +46,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -66,7 +72,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new AzureWebCategoryData(id, name, type, systemData, etag.Value, group.Value);
+            return new AzureWebCategoryData(id, name, type, systemData, Optional.ToNullable(etag), group.Value);
         }
     }
 }

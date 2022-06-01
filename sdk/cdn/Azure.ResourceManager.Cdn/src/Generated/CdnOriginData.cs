@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceState"> Resource status of the origin. </param>
         /// <param name="provisioningState"> Provisioning status of the origin. </param>
         /// <param name="privateEndpointStatus"> The approval status for the connection to the Private Link. </param>
-        internal CdnOriginData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, OriginResourceState? resourceState, string provisioningState, PrivateEndpointStatus? privateEndpointStatus) : base(id, name, resourceType, systemData)
+        internal CdnOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, OriginResourceState? resourceState, OriginProvisioningState? provisioningState, PrivateEndpointStatus? privateEndpointStatus) : base(id, name, resourceType, systemData)
         {
             HostName = hostName;
             HttpPort = httpPort;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Resource status of the origin. </summary>
         public OriginResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the origin. </summary>
-        public string ProvisioningState { get; }
+        public OriginProvisioningState? ProvisioningState { get; }
         /// <summary> The approval status for the connection to the Private Link. </summary>
         public PrivateEndpointStatus? PrivateEndpointStatus { get; }
     }
