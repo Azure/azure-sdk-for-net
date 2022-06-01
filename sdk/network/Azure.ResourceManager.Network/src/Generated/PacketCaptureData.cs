@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <param name="filters"> A list of packet capture filters. </param>
         /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
-        internal PacketCaptureData(string name, string id, string etag, string target, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IReadOnlyList<PacketCaptureFilter> filters, NetworkProvisioningState? provisioningState)
+        internal PacketCaptureData(string name, ResourceIdentifier id, ETag? etag, string target, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IReadOnlyList<PacketCaptureFilter> filters, NetworkProvisioningState? provisioningState)
         {
             Name = name;
             Id = id;
@@ -48,9 +49,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Name of the packet capture session. </summary>
         public string Name { get; }
         /// <summary> ID of the packet capture operation. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The ID of the targeted resource, only VM is currently supported. </summary>
         public string Target { get; }
         /// <summary> Number of bytes captured per packet, the remaining bytes are truncated. </summary>

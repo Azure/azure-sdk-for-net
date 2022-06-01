@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     {
                         if (MaxlinksAllowed < links.Count())
                         {
-                            AzureMonitorExporterEventSource.Log.Write($"ActivityLinksIgnored{EventLevelSuffix.Informational}", $"Max count of {MaxlinksAllowed} has reached.");
+                            AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
                         }
                         break;
                     }

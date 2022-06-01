@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
         public ServiceAssociationLink()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of ServiceAssociationLink. </summary>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the service association link resource. </param>
         /// <param name="allowDelete"> If true, the resource can be deleted. </param>
         /// <param name="locations"> A list of locations. </param>
-        internal ServiceAssociationLink(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, string linkedResourceType, string link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<string> locations) : base(id, name, resourceType)
+        internal ServiceAssociationLink(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string linkedResourceType, string link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<AzureLocation> locations) : base(id, name, resourceType)
         {
             Etag = etag;
             LinkedResourceType = linkedResourceType;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Resource type of the linked resource. </summary>
         public string LinkedResourceType { get; set; }
         /// <summary> Link to the external resource. </summary>
@@ -50,6 +51,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> If true, the resource can be deleted. </summary>
         public bool? AllowDelete { get; set; }
         /// <summary> A list of locations. </summary>
-        public IList<string> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
     }
 }
