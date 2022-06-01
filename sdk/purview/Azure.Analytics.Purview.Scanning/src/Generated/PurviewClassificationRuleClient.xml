@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Azure.Analytics.Purview.Scanning</name>
+  </assembly>
+  <members>
+    <member name="M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(Azure.RequestContext)">
+      <remarks>
+            Schema for <c>Response Body</c>:
+        <code>{
+              id: string,
+              name: string,
+              kind: "System" | "Custom"
+            }
+        </code>
+            Schema for <c>Response Error</c>:
+        <code>{
+              error: {
+                code: string,
+                message: string,
+                target: string,
+                details: [
+                  {
+                    code: string,
+                    message: string,
+                    target: string,
+                    details: [ErrorModel]
+                  }
+                ]
+              }
+            }
+        </code>
+
+      </remarks>
+    </member>
+  </members>
+</doc>
