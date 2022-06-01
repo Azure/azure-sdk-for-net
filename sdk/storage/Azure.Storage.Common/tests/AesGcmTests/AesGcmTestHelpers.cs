@@ -4,7 +4,7 @@
 using System.Globalization;
 using Azure.Storage.Test;
 
-namespace Azure.Storage.Tests
+namespace Azure.Storage.Common.AesGcm.Tests
 {
     internal static class AesGcmTestHelpers
     {
