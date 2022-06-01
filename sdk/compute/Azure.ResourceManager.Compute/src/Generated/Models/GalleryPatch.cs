@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the Shared Image Gallery that you want to update. </summary>
-    public partial class GalleryPatch : GalleryUpdateResourceDefinition
+    public partial class GalleryPatch : ResourceData
     {
         /// <summary> Initializes a new instance of GalleryPatch. </summary>
         public GalleryPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The description of this Shared Image Gallery resource. This property is updatable. </summary>
@@ -42,5 +47,8 @@ namespace Azure.ResourceManager.Compute.Models
                 SoftDeletePolicy.IsSoftDeleteEnabled = value;
             }
         }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

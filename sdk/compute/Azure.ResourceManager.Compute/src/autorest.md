@@ -134,9 +134,7 @@ directive:
       $.VirtualMachineExtensionUpdateProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
       $.VirtualMachineScaleSetExtensionProperties.properties.type["x-ms-client-name"] = "ExtensionType";
-      $.VirtualMachineScaleSetExtension.properties.type["x-ms-format"] = "resource-type";
-      $.VirtualMachineScaleSetExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
-      $.VirtualMachineScaleSetVMExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetExtension.properties.name["readOnly"] = true;
       $.VirtualMachineNetworkInterfaceIPConfigurationProperties.properties.privateIPAddressVersion["x-ms-enum"].name = "IPVersion";
       $.VirtualMachinePublicIPAddressConfigurationProperties.properties.publicIPAddressVersion["x-ms-enum"].name = "IPVersion";
       $.SubResource["x-ms-client-name"] = "ComputeWriteableSubResourceData";
@@ -148,7 +146,6 @@ directive:
       $.RestorePointCollectionSourceProperties.properties.location["x-ms-format"] = "azure-location";
       $.RestorePointCollectionProperties.properties.restorePointCollectionId["x-ms-client-name"] = "restorePointGroupId";
       $.RestorePointSourceMetadata.properties.location["x-ms-format"] = "azure-location";
-      $.VirtualMachineScaleSetVMExtension.properties.type["x-ms-format"] = "resource-type";
       $.ImageReference.properties.sharedGalleryImageId["x-ms-client-name"] = "sharedGalleryImageUniqueId";
       $.SshPublicKeyGenerateKeyPairResult.properties.id["x-ms-format"] = "arm-id";
       $.UpgradeOperationHistoricalStatusInfo.properties.location["x-ms-format"] = "azure-location";
