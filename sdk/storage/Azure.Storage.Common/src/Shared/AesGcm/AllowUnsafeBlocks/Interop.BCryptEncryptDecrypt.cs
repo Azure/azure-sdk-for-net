@@ -6,7 +6,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Azure.Storage
+namespace Azure.Storage.Shared.AesGcm
 {
 #if !(NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER)
     /// <summary>
