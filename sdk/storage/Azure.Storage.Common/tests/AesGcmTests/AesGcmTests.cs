@@ -22,6 +22,7 @@ namespace Azure.Storage.Tests
     ///
     /// DO NOT ALTER UNLESS CONSULTING WITH BCL TEAM first
     /// </summary>
+    [TestFixture]
     public class AesGcmTests
     {
         [Test]
@@ -311,7 +312,8 @@ namespace Azure.Storage.Tests
             }
         }
 
-        [Test]public static void InplaceEncryptDecrypt()
+        [Test]
+        public static void InplaceEncryptDecrypt()
         {
             byte[] key = "d5a194ed90cfe08abecd4691997ceb2c".HexToByteArray();
             byte[] nonce = AesGcmTestHelpers.GetRandomBuffer(12);
