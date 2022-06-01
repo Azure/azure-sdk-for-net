@@ -79,7 +79,7 @@ namespace Azure.Storage
         {
             if (keySizeInBytes != (128 / 8) && keySizeInBytes != (192 / 8) && keySizeInBytes != (256 / 8))
             {
-                throw new CryptographicException("SR.Cryptography_InvalidKeySize");
+                throw new CryptographicException("Specified key is not a valid size for this algorithm.");
             }
         }
 
