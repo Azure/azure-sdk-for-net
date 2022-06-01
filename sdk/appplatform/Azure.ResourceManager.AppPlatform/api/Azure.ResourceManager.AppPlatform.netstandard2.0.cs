@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.AppPlatform
     }
     public static partial class AppPlatformExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.AppPlatform.Models.NameAvailability> CheckNameAvailabilityService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.AppPlatform.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.NameAvailability>> CheckNameAvailabilityServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.AppPlatform.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.AppPlatform.Models.NameAvailability> CheckNameAvailabilityService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.AppPlatform.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.NameAvailability>> CheckNameAvailabilityServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.AppPlatform.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppPlatform.ApiPortalCustomDomainResource GetApiPortalCustomDomainResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppPlatform.ApiPortalResource GetApiPortalResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppPlatform.AppResource GetAppResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppPlatform
     {
         public AppResourceData() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public string Location { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.AppPlatform.Models.AppResourceProperties Properties { get { throw null; } set { } }
     }
     public partial class BindingResource : Azure.ResourceManager.ArmResource
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string CreatedAt { get { throw null; } }
         public string GeneratedProperties { get { throw null; } }
         public string Key { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public string ResourceName { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public string UpdatedAt { get { throw null; } }
@@ -1687,9 +1687,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
     }
     public partial class LoadedCertificate
     {
-        public LoadedCertificate(string resourceId) { }
+        public LoadedCertificate(Azure.Core.ResourceIdentifier resourceId) { }
         public bool? LoadTrustStore { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
     }
     public partial class LogFileUrlResponse
     {
@@ -1749,12 +1749,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         public NetworkProfile() { }
         public string AppNetworkResourceGroup { get { throw null; } set { } }
-        public string AppSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AppSubnetId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> OutboundPublicIPs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppPlatform.Models.RequiredTraffic> RequiredTraffics { get { throw null; } }
         public string ServiceCidr { get { throw null; } set { } }
         public string ServiceRuntimeNetworkResourceGroup { get { throw null; } set { } }
-        public string ServiceRuntimeSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ServiceRuntimeSubnetId { get { throw null; } set { } }
     }
     public partial class PersistentDisk
     {
@@ -1848,7 +1848,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     public partial class ResourceSkuLocationInfo
     {
         internal ResourceSkuLocationInfo() { }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppPlatform.Models.ResourceSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
