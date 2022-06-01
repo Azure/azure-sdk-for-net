@@ -13,16 +13,20 @@ namespace Azure.Storage.Files.DataLake
 
         public virtual DataLakeCustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
+        public AzureSasCredential SasCredential { get; internal set; }
+
         public DataLakeClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
             DataLakeClientOptions.ServiceVersion version,
-            DataLakeCustomerProvidedKey? customerProvidedKey)
+            DataLakeCustomerProvidedKey? customerProvidedKey,
+            AzureSasCredential sasCredential = default)
             : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
+            SasCredential = sasCredential;
         }
 
         internal static DataLakeClientConfiguration DeepCopy(DataLakeClientConfiguration originalClientConfiguration)
@@ -31,6 +35,7 @@ namespace Azure.Storage.Files.DataLake
                 sharedKeyCredential: originalClientConfiguration.SharedKeyCredential,
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
                 version: originalClientConfiguration.Version,
-                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey);
+                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
+                sasCredential: originalClientConfiguration.SasCredential);
     }
 }

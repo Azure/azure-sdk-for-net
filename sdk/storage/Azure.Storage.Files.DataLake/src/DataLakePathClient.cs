@@ -2155,11 +2155,17 @@ namespace Azure.Storage.Files.DataLake
 
                     // Build renameSource
                     DataLakeUriBuilder sourceUriBuilder = new DataLakeUriBuilder(_dfsUri);
-                    string renameSource = "/" + sourceUriBuilder.FileSystemName + "/" + sourceUriBuilder.DirectoryOrFilePath.EscapePath();
+                    string renameSource = Constants.PathBackSlashDelimiter + sourceUriBuilder.FileSystemName +
+                        Constants.PathBackSlashDelimiter + sourceUriBuilder.DirectoryOrFilePath.EscapePath();
 
+                    // There's already a check in at the client constructor to prevent both SAS in Uri and AzureSasCredential
                     if (sourceUriBuilder.Sas != null)
                     {
-                        renameSource += "?" + sourceUriBuilder.Sas;
+                        renameSource += Constants.QueryDelimiter + sourceUriBuilder.Sas;
+                    }
+                    if (_clientConfiguration.SasCredential != null)
+                    {
+                        renameSource += Constants.QueryDelimiter + _clientConfiguration.SasCredential.Signature;
                     }
 
                     // Build destination URI

@@ -84,6 +84,8 @@ namespace Azure.Storage
 
         public const string PercentSign = "%";
         public const string EncodedPercentSign = "%25";
+        public const string QueryDelimiter = "?";
+        public const string PathBackSlashDelimiter = "/";
 
         public const string FalseName = "false";
         public const string TrueName = "true";
