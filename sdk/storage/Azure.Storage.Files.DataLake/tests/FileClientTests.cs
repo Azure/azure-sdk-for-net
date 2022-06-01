@@ -354,8 +354,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                Permissions = permissions,
-                Umask = umask
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    Permissions = permissions,
+                    Umask = umask
+                }
             };
 
             // Act
@@ -387,7 +390,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                Owner = owner,
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    Owner = owner,
+                }
             };
 
             // Act
@@ -419,7 +425,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                Group = group,
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    Group = group,
+                }
             };
 
             // Act
@@ -450,7 +459,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                AccessControlList = AccessControlList
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    AccessControlList = AccessControlList
+                }
             };
 
             // Act
@@ -517,7 +529,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                TimeToExpire = new TimeSpan(hours: 1, minutes: 0, seconds: 0)
+                ScheduleDeletionOptions = new DataLakePathScheduleDeletionOptions
+                {
+                    TimeToExpire = new TimeSpan(hours: 1, minutes: 0, seconds: 0)
+                }
             };
 
             // Act
@@ -547,7 +562,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                ExpiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero)
+                ScheduleDeletionOptions = new DataLakePathScheduleDeletionOptions
+                {
+                    ExpiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero)
+                }
             };
 
             // Act
@@ -562,7 +580,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
-            Assert.AreEqual(options.ExpiresOn, propertiesResponse.Value.ExpiresOn);
+            Assert.AreEqual(options.ScheduleDeletionOptions.ExpiresOn, propertiesResponse.Value.ExpiresOn);
         }
 
         [RecordedTest]
