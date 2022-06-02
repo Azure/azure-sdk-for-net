@@ -64,6 +64,7 @@ var response = await smsClient.SendAsync(
     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
         Tag = "marketing", // custom tags
+        ValidityPeriodSeconds = 9870
     });
 foreach (SmsSendResult result in response.Value)
 {
@@ -83,7 +84,7 @@ try
         from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
         to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
         message: "Weekly Promotion!",
-        options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+        options: new SmsSendOptions(enableDeliveryReport: true, validityPeriodSeconds: 1230) // OPTIONAL
         {
             Tag = "marketing", // custom tags
         });
