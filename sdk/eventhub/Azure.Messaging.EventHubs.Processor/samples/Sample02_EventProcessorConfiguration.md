@@ -4,6 +4,20 @@ The `EventProcessorClient` supports a set of options to configure many aspects o
 
 To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Table of contents
+
+- [Influencing load balancing behavior](#influencing-load-balancing-behavior)
+    - [Load balancing strategy](#load-balancing-strategy)
+    - [Load balancing intervals](#load-balancing-intervals)
+- [Using web sockets](#using-web-sockets)
+- [Setting a custom proxy](#setting-a-custom-proxy)
+    - [Using the default system proxy](#using-the-default-system-proxy)
+    - [Specifying a custom endpoint address](#specifying-a-custom-endpoint-address)
+    - [Influencing SSL certificate validation](#influencing-ssl-certificate-validation)
+    - [Configuring the client retry thresholds](#configuring-the-client-retry-thresholds)
+    - [Configuring the timeout used for Event Hubs service operations](#configuring-the-timeout-used-for-event-hubs-service-operations)
+    - [Using a custom retry policy](#using-a-custom-retry-policy)
+
 ## Influencing load balancing behavior
 
 To scale event processing, you can run multiple instances of the `EventProcessorClient` and they will coordinate to balance work between them. The responsibility for processing is distributed among each of the active processors configured to read from the same Event Hub and using the same consumer group.  To balance work, each active `EventProcessorClient` instance will assume responsibility for processing a set of Event Hub partitions, referred to as "owning" the partitions.  The processors collaborate on ownership using storage as a central point of coordination.  
