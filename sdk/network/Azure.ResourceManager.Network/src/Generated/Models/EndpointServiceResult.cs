@@ -5,29 +5,34 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Endpoint service. </summary>
-    public partial class EndpointServiceResult : SubResource
+    public partial class EndpointServiceResult
     {
         /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
-        public EndpointServiceResult()
+        internal EndpointServiceResult()
         {
         }
 
         /// <summary> Initializes a new instance of EndpointServiceResult. </summary>
-        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the endpoint service. </param>
         /// <param name="resourceType"> Type of the endpoint service. </param>
-        internal EndpointServiceResult(string id, string name, string resourceType) : base(id)
+        /// <param name="id"> Resource ID. </param>
+        internal EndpointServiceResult(string name, ResourceType? resourceType, ResourceIdentifier id)
         {
             Name = name;
             ResourceType = resourceType;
+            Id = id;
         }
 
         /// <summary> Name of the endpoint service. </summary>
         public string Name { get; }
         /// <summary> Type of the endpoint service. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier Id { get; }
     }
 }

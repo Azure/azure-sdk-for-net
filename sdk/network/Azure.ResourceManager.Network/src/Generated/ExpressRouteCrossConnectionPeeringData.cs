@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ExpressRouteCrossConnectionPeering data model. </summary>
-    public partial class ExpressRouteCrossConnectionPeeringData : SubResource
+    public partial class ExpressRouteCrossConnectionPeeringData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
         public ExpressRouteCrossConnectionPeeringData()
@@ -19,7 +21,8 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="peeringType"> The peering type. </param>
         /// <param name="state"> The peering state. </param>
@@ -36,9 +39,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="gatewayManagerEtag"> The GatewayManager Etag. </param>
         /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
         /// <param name="iPv6PeeringConfig"> The IPv6 peering configuration. </param>
-        internal ExpressRouteCrossConnectionPeeringData(string id, string name, string etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig) : base(id)
+        internal ExpressRouteCrossConnectionPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, NetworkProvisioningState? provisioningState, string gatewayManagerEtag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig) : base(id, name, resourceType)
         {
-            Name = name;
             Etag = etag;
             PeeringType = peeringType;
             State = state;
@@ -57,10 +59,8 @@ namespace Azure.ResourceManager.Network
             IPv6PeeringConfig = iPv6PeeringConfig;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> The peering type. </summary>
         public ExpressRoutePeeringType? PeeringType { get; set; }
         /// <summary> The peering state. </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The Microsoft peering configuration. </summary>
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
         /// <summary> The provisioning state of the express route cross connection peering resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The GatewayManager Etag. </summary>
         public string GatewayManagerEtag { get; set; }
         /// <summary> Who was the last to modify the peering. </summary>

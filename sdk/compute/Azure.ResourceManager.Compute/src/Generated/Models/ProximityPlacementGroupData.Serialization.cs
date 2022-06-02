@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             SystemData systemData = default;
             Optional<ProximityPlacementGroupType> proximityPlacementGroupType = default;
-            Optional<IReadOnlyList<SubResourceWithColocationStatus>> virtualMachines = default;
-            Optional<IReadOnlyList<SubResourceWithColocationStatus>> virtualMachineScaleSets = default;
-            Optional<IReadOnlyList<SubResourceWithColocationStatus>> availabilitySets = default;
+            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachines = default;
+            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachineScaleSets = default;
+            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> availabilitySets = default;
             Optional<InstanceViewStatus> colocationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
+                            List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResourceWithColocationStatus.DeserializeSubResourceWithColocationStatus(item));
+                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item));
                             }
                             virtualMachines = array;
                             continue;
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
+                            List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResourceWithColocationStatus.DeserializeSubResourceWithColocationStatus(item));
+                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item));
                             }
                             virtualMachineScaleSets = array;
                             continue;
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SubResourceWithColocationStatus> array = new List<SubResourceWithColocationStatus>();
+                            List<ComputeSubResourceDataWithColocationStatus> array = new List<ComputeSubResourceDataWithColocationStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubResourceWithColocationStatus.DeserializeSubResourceWithColocationStatus(item));
+                                array.Add(ComputeSubResourceDataWithColocationStatus.DeserializeComputeSubResourceDataWithColocationStatus(item));
                             }
                             availabilitySets = array;
                             continue;

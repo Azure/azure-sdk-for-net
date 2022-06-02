@@ -1171,8 +1171,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                Permissions = permissions,
-                Umask = umask
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    Permissions = permissions,
+                    Umask = umask
+                }
             };
 
             // Act
@@ -1314,8 +1317,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                Permissions = permissions,
-                Umask = umask
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    Permissions = permissions,
+                    Umask = umask
+                }
             };
 
             // Act

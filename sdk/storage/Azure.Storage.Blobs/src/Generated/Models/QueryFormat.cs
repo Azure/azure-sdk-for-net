@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Models
         public JsonTextConfigurationInternal JsonTextConfiguration { get; set; }
         /// <summary> Groups the settings used for formatting the response if the response should be Arrow formatted. </summary>
         public ArrowTextConfigurationInternal ArrowConfiguration { get; set; }
-        /// <summary> Any object. </summary>
+        /// <summary> parquet configuration. </summary>
         public object ParquetTextConfiguration { get; set; }
     }
 }

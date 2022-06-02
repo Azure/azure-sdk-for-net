@@ -2,7 +2,7 @@ namespace Azure.Storage.Files.DataLake
 {
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
-        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2021_06_08) { }
+        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2021_08_06) { }
         public Azure.Storage.Files.DataLake.Models.DataLakeCustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
@@ -278,7 +278,6 @@ namespace Azure.Storage.Files.DataLake
     }
     public partial class DataLakePathClient
     {
-        public static readonly System.TimeSpan InfiniteLeaseDuration;
         protected DataLakePathClient() { }
         public DataLakePathClient(Azure.Storage.Files.DataLake.DataLakeFileSystemClient fileSystemClient, string path) { }
         public DataLakePathClient(string connectionString, string fileSystemName, string path) { }
@@ -455,6 +454,15 @@ namespace Azure.Storage.Files.DataLake.Models
         Aborted = 2,
         Failed = 3,
     }
+    public partial class DataLakeAccessOptions
+    {
+        public DataLakeAccessOptions() { }
+        public System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> AccessControlList { get { throw null; } set { } }
+        public string Group { get { throw null; } set { } }
+        public string Owner { get { throw null; } set { } }
+        public string Permissions { get { throw null; } set { } }
+        public string Umask { get { throw null; } set { } }
+    }
     public partial class DataLakeAccessPolicy
     {
         public DataLakeAccessPolicy() { }
@@ -616,18 +624,20 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class DataLakePathCreateOptions
     {
         public DataLakePathCreateOptions() { }
-        public System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> AccessControlList { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeAccessOptions AccessOptions { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
-        public string Group { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.PathHttpHeaders HttpHeaders { get { throw null; } set { } }
         public System.TimeSpan? LeaseDuration { get { throw null; } set { } }
         public string LeaseId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public string Owner { get { throw null; } set { } }
-        public string Permissions { get { throw null; } set { } }
-        public System.TimeSpan? TimeToExpire { get { throw null; } set { } }
-        public string Umask { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakePathScheduleDeletionOptions ScheduleDeletionOptions { get { throw null; } set { } }
+    }
+    public partial class DataLakePathScheduleDeletionOptions
+    {
+        public DataLakePathScheduleDeletionOptions(System.DateTimeOffset? expiresOn) { }
+        public DataLakePathScheduleDeletionOptions(System.TimeSpan? timeToExpire) { }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public System.TimeSpan? TimeToExpire { get { throw null; } }
     }
     public partial class DataLakeQueryArrowField
     {

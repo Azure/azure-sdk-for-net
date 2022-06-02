@@ -36,9 +36,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="flowlet">Flowlet Reference</param>
         /// <param name="schemaLinkedService">Schema linked service
         /// reference.</param>
+        /// <param name="rejectedDataLinkedService">Rejected data linked
+        /// service reference.</param>
         /// <param name="script">sink script.</param>
-        public PowerQuerySink(string name, string description = default(string), DatasetReference dataset = default(DatasetReference), LinkedServiceReference linkedService = default(LinkedServiceReference), DataFlowReference flowlet = default(DataFlowReference), LinkedServiceReference schemaLinkedService = default(LinkedServiceReference), string script = default(string))
-            : base(name, description, dataset, linkedService, flowlet, schemaLinkedService)
+        public PowerQuerySink(string name, string description = default(string), DatasetReference dataset = default(DatasetReference), LinkedServiceReference linkedService = default(LinkedServiceReference), DataFlowReference flowlet = default(DataFlowReference), LinkedServiceReference schemaLinkedService = default(LinkedServiceReference), LinkedServiceReference rejectedDataLinkedService = default(LinkedServiceReference), string script = default(string))
+            : base(name, description, dataset, linkedService, flowlet, schemaLinkedService, rejectedDataLinkedService)
         {
             Script = script;
             CustomInit();

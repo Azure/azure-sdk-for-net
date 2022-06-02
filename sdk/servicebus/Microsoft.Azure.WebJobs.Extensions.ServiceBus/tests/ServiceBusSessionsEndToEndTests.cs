@@ -707,7 +707,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual(_drainModeSessionId, msg.SessionId);
                 Assert.AreEqual(msg.SessionId, sessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellation(cancellationToken);
+                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
                 await messageActions.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
@@ -727,7 +727,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     $"DrainModeValidationFunctions.TopicWithSessions: message data {msg.Body} with session id {msg.SessionId}");
                 Assert.AreEqual(_drainModeSessionId, msg.SessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellation(cancellationToken);
+                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
                 await messageSession.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
@@ -749,7 +749,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     $"DrainModeTestJobBatch.QueueWithSessionsBatch: received {array.Length} messages with session id {array[0].SessionId}");
                 Assert.AreEqual(_drainModeSessionId, array[0].SessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellation(cancellationToken);
+                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
                 int index = 0;
                 foreach (ServiceBusReceivedMessage msg in array)
@@ -781,7 +781,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     $"DrainModeTestJobBatch.TopicWithSessionsBatch: received {array.Length} messages with session id {array[0].SessionId}");
                 Assert.AreEqual(_drainModeSessionId, array[0].SessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellation(cancellationToken);
+                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
@@ -789,22 +789,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
 
                 _drainValidationPostDelay.Set();
-            }
-        }
-
-        public class DrainModeHelper
-        {
-            public static async Task WaitForCancellation(CancellationToken cancellationToken)
-            {
-                // Wait until the drain operation begins, signalled by the cancellation token
-                int elapsedTimeMills = 0;
-                while (elapsedTimeMills < DrainWaitTimeoutMills && !cancellationToken.IsCancellationRequested)
-                {
-                    await Task.Delay(elapsedTimeMills += 500);
-                }
-
-                // Allow some time for the Service Bus SDK to start draining before returning
-                await Task.Delay(DrainSleepMills);
             }
         }
 
@@ -905,7 +889,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sessionActions.CompleteMessageAsync(message);
-                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    var sender = client.CreateSender(SecondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage() { SessionId = "sessionId" });
                     ts.Complete();
                 }
@@ -914,7 +898,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Assert.IsNull(receiver1);
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(_secondQueueScope.QueueName);
+                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(SecondQueueScope.QueueName);
                 Assert.IsNotNull(receiver2);
                 _waitHandle1.Set();
             }
@@ -931,7 +915,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sessionActions.CompleteMessageAsync(messages.First());
-                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    var sender = client.CreateSender(SecondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage() { SessionId = "sessionId" });
                     ts.Complete();
                 }
@@ -940,7 +924,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Assert.IsNull(receiver1);
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(_secondQueueScope.QueueName);
+                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(SecondQueueScope.QueueName);
                 Assert.IsNotNull(receiver2);
                 _waitHandle1.Set();
             }
@@ -1025,7 +1009,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // override the options computed from ServiceBusOptions
                 options.SessionIdleTimeout = TimeSpan.FromSeconds(90);
                 options.MaxConcurrentSessions = 1;
-                if (entityPath == _firstQueueScope.QueueName)
+                if (entityPath == FirstQueueScope.QueueName)
                 {
                     processor = client.CreateSessionProcessor(entityPath, options);
                 }

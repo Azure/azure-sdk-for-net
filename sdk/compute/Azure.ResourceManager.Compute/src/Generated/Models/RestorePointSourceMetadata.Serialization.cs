@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> licenseType = default;
             Optional<string> vmId = default;
             Optional<SecurityProfile> securityProfile = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hardwareProfile"))
@@ -86,11 +86,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new RestorePointSourceMetadata(hardwareProfile.Value, storageProfile.Value, osProfile.Value, diagnosticsProfile.Value, licenseType.Value, vmId.Value, securityProfile.Value, location.Value);
+            return new RestorePointSourceMetadata(hardwareProfile.Value, storageProfile.Value, osProfile.Value, diagnosticsProfile.Value, licenseType.Value, vmId.Value, securityProfile.Value, Optional.ToNullable(location));
         }
     }
 }

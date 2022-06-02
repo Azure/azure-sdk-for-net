@@ -85,7 +85,6 @@ namespace Azure.ResourceManager.Reservations
         public Azure.ResourceManager.Reservations.Models.ReservationBillingPlan? BillingPlan { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public Azure.ETag? Etag { get { throw null; } }
         public System.DateTimeOffset? ExpiryOn { get { throw null; } }
         public int? OriginalQuantity { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation PlanInformation { get { throw null; } }
@@ -93,6 +92,7 @@ namespace Azure.ResourceManager.Reservations
         public System.DateTimeOffset? RequestOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.ReservationResponseData> Reservations { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationTerm? Term { get { throw null; } }
+        public int? Version { get { throw null; } }
     }
     public partial class ReservationOrderResponseResource : Azure.ResourceManager.ArmResource
     {
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Reservations
     public partial class ReservationResponseData : Azure.ResourceManager.Models.ResourceData
     {
         internal ReservationResponseData() { }
-        public Azure.ETag? Etag { get { throw null; } }
         public string Kind { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationsProperties Properties { get { throw null; } }
         public string SkuName { get { throw null; } }
+        public int? Version { get { throw null; } }
     }
     public partial class ReservationResponseResource : Azure.ResourceManager.ArmResource
     {
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SkuCapability> Capabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice MsrpP1Y { get { throw null; } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        public string ReservedResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SkuRestriction> Restrictions { get { throw null; } }
         public string Size { get { throw null; } }
         public string SkuName { get { throw null; } }

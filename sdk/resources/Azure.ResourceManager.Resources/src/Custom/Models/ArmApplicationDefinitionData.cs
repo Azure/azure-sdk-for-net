@@ -3,11 +3,13 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the ArmApplicationDefinition data model. </summary>
+    [CodeGenSuppress("DeploymentMode")]
     public partial class ArmApplicationDefinitionData : ArmApplicationResourceData
     {
         /// <summary> The managed application deployment mode. </summary>

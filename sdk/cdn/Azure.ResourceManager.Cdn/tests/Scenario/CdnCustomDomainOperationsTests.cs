@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task EnableAndDisable()
+        public async Task Enable()
         {
             //In this test, the CName mapping from custom domain "customdomaintest5.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
@@ -44,12 +44,28 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
             CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string cdnCustomDomainName = "customdomaintest5-azuretest-net";
-            var lro = await cdnEndpoint.GetCdnCustomDomains().GetAsync(cdnCustomDomainName);
-            CdnCustomDomainResource cdnCustomDomain = lro.Value;
-            Assert.ThrowsAsync<RequestFailedException>(async () => await cdnCustomDomain.DisableCustomHttpsAsync());
-            CdnManagedHttpsContent customDomainHttpsContent = new CdnManagedHttpsContent(ProtocolType.ServerNameIndication, new CdnCertificateSourceDefinition(CdnCertificateSourceType.CdnCertificateSource, CdnManagedCertificateType.Dedicated));
-            CdnCustomDomainResource enabledCdnCustomDomain = await cdnCustomDomain.EnableCustomHttpsAsync(customDomainHttpsContent);
-            Assert.AreEqual(enabledCdnCustomDomain.Data.CustomHttpsProvisioningState, CustomHttpsProvisioningState.Enabling);
+            CdnCustomDomainResource cdnCustomDomain = await cdnEndpoint.GetCdnCustomDomains().GetAsync(cdnCustomDomainName);
+            Assert.ThrowsAsync<RequestFailedException>(async () => await cdnCustomDomain.DisableCustomHttpsAsync(WaitUntil.Completed));
+            CdnManagedHttpsContent customDomainHttpsContent = new CdnManagedHttpsContent(ProtocolType.ServerNameIndication, new CdnCertificateSource(CdnCertificateSourceType.CdnCertificateSource, CdnManagedCertificateType.Dedicated));
+            var lro = await cdnCustomDomain.EnableCustomHttpsAsync(WaitUntil.Completed, customDomainHttpsContent);
+            CdnCustomDomainResource enabledCdnCustomDomain = lro.Value;
+            Assert.AreEqual(enabledCdnCustomDomain.Data.CustomHttpsProvisioningState, CustomHttpsProvisioningState.Enabled);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Disable()
+        {
+            //In this test, the CName mapping from custom domain "customdomaintest5.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ProfileResource cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
+            CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
+            string cdnCustomDomainName = "customdomaintest5-azuretest-net";
+            CdnCustomDomainResource cdnCustomDomain = await cdnEndpoint.GetCdnCustomDomains().GetAsync(cdnCustomDomainName);
+            var lro = await cdnCustomDomain.DisableCustomHttpsAsync(WaitUntil.Completed);
+            CdnCustomDomainResource disabledCdnCustomDomain = lro.Value;
+            Assert.AreEqual(disabledCdnCustomDomain.Data.CustomHttpsProvisioningState, CustomHttpsProvisioningState.Disabled);
         }
     }
 }

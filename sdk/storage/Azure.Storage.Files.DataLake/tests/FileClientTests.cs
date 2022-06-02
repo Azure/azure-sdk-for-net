@@ -354,8 +354,11 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                Permissions = permissions,
-                Umask = umask
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    Permissions = permissions,
+                    Umask = umask
+                }
             };
 
             // Act
@@ -387,7 +390,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                Owner = owner,
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    Owner = owner,
+                }
             };
 
             // Act
@@ -419,7 +425,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                Group = group,
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    Group = group,
+                }
             };
 
             // Act
@@ -450,7 +459,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                AccessControlList = AccessControlList
+                AccessOptions = new DataLakeAccessOptions
+                {
+                    AccessControlList = AccessControlList
+                }
             };
 
             // Act
@@ -507,6 +519,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task CreateAsync_RelativeExpiry(bool createIfNotExists)
         {
             // Arrange
@@ -516,7 +529,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                TimeToExpire = new TimeSpan(hours: 1, minutes: 0, seconds: 0)
+                ScheduleDeletionOptions = new DataLakePathScheduleDeletionOptions(timeToExpire: new TimeSpan(hours: 1, minutes: 0, seconds: 0))
             };
 
             // Act
@@ -546,7 +559,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                ExpiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero)
+                ScheduleDeletionOptions = new DataLakePathScheduleDeletionOptions(expiresOn: new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero))
             };
 
             // Act
@@ -561,7 +574,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
-            Assert.AreEqual(options.ExpiresOn, propertiesResponse.Value.ExpiresOn);
+            Assert.AreEqual(options.ScheduleDeletionOptions.ExpiresOn, propertiesResponse.Value.ExpiresOn);
         }
 
         [RecordedTest]
@@ -4221,16 +4234,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                     }
                 }
             };
-            Response<FileDownloadInfo> response = await file.QueryAsync(
+
+            // Act
+            await file.QueryAsync(
                 query,
                 options: options);
-
-            MemoryStream memoryStream = new MemoryStream();
-            await response.Value.Content.CopyToAsync(memoryStream);
-
-            // Assert
-            Assert.AreEqual("/////4AAAAAQAAAAAAAKAAwABgAFAAgACgAAAAABBAAMAAAACAAIAAAABAAIAAAABAAAAAEAAAAUAAAAEAAUAAgABgAHAAwAAAAQABAAAAAAAAEHEAAAACAAAAAEAAAAAAAAAAQAAABOYW1lAAAAAAgADAAEAAgACAAAAAQAAAACAAAAAAAAAP////9wAAAAEAAAAAAACgAOAAYABQAIAAoAAAAAAwQAEAAAAAAACgAMAAAABAAIAAoAAAAwAAAABAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAP////8AAAAA/////4gAAAAUAAAAAAAAAAwAFgAGAAUACAAMAAwAAAAAAwQAGAAAAAACAAAAAAAAAAAKABgADAAEAAgACgAAADwAAAAQAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAEAAAAgAAAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAACQAQAAAAAAAAAAAAAAAAAAkAEAAAAAAAAAAAAAAAAAAJABAAAAAAAAAAAAAAAAAAA=",
-                Convert.ToBase64String(memoryStream.ToArray()));
         }
 
         [RecordedTest]

@@ -5,14 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the RouteTable data model. </summary>
-    public partial class RouteTableData : NetworkResourceData
+    public partial class RouteTableData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of RouteTableData. </summary>
         public RouteTableData()
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="disableBgpRoutePropagation"> Whether to disable the routes learned by BGP on that route table. True means disable. </param>
         /// <param name="provisioningState"> The provisioning state of the route table resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the route table. </param>
-        internal RouteTableData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IList<RouteData> routes, IReadOnlyList<SubnetData> subnets, bool? disableBgpRoutePropagation, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, location, tags)
+        internal RouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IList<RouteData> routes, IReadOnlyList<SubnetData> subnets, bool? disableBgpRoutePropagation, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Routes = routes;
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Collection of routes contained within a route table. </summary>
         public IList<RouteData> Routes { get; }
         /// <summary> A collection of references to subnets. </summary>
@@ -52,8 +54,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Whether to disable the routes learned by BGP on that route table. True means disable. </summary>
         public bool? DisableBgpRoutePropagation { get; set; }
         /// <summary> The provisioning state of the route table resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The resource GUID property of the route table. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

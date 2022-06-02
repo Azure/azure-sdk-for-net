@@ -4,79 +4,63 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Runtime.CompilerServices;
+
 using Azure.Core.Shared;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    [EventSource(Name = "OpenTelemetry-AzureMonitor-Exporter")]
+    [EventSource(Name = EventSourceName)]
     internal sealed class AzureMonitorExporterEventSource : EventSource
     {
-        public static AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
-        public static AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
+        private const string EventSourceName = "OpenTelemetry-AzureMonitor-Exporter";
 
-        public readonly IReadOnlyDictionary<string, EventLevel> EventLevelMap = new Dictionary<string, EventLevel>
-        {
-            [EventLevelSuffix.Critical] = EventLevel.Critical,
-            [EventLevelSuffix.Error] = EventLevel.Error,
-            [EventLevelSuffix.Warning] = EventLevel.Warning,
-            [EventLevelSuffix.Informational] = EventLevel.Informational,
-            [EventLevelSuffix.Verbose] = EventLevel.Verbose
-        };
+        internal static readonly AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
+        internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
+
+        [Event(1, Message = "{0} - {1}", Level = EventLevel.Critical)]
+        public void WriteCritical(string name, string message) => this.Write(EventLevel.Critical, 1, name, message);
+
+        [Event(2, Message = "{0} - {1}", Level = EventLevel.Error)]
+        public void WriteError(string name, string message) => this.Write(EventLevel.Error, 2, name, message);
 
         [NonEvent]
-        public void Write(string name, object value)
-        {
-            var lastIndex = name.LastIndexOf('.');
-            var eventLevel = EventLevelMap[name.Substring(lastIndex)];
+        public void WriteError(string name, Exception exception) => this.WriteException(EventLevel.Error, 2, name, exception);
 
+        [Event(3, Message = "{0} - {1}", Level = EventLevel.Warning)]
+        public void WriteWarning(string name, string message) => this.Write(EventLevel.Warning, 3, name, message);
+
+        [NonEvent]
+        public void WriteWarning(string name, Exception exception) => this.WriteException(EventLevel.Warning, 3, name, exception);
+
+        [Event(4, Message = "{0} - {1}", Level = EventLevel.Informational)]
+        public void WriteInformational(string name, string message) => this.Write(EventLevel.Informational, 4, name, message);
+
+        [Event(5, Message = "{0} - {1}", Level = EventLevel.Verbose)]
+        public void WriteVerbose(string name, string message) => this.Write(EventLevel.Verbose, 5, name, message);
+
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Write(EventLevel eventLevel, int eventId, string name, string message)
+        {
             if (this.IsEnabled(eventLevel, EventKeywords.All))
             {
-                var message = $"{name.Trim(lastIndex)} - {GetMessage(value)}";
-
-                switch (eventLevel)
-                {
-                    case EventLevel.Critical:
-                        WriteCritical(message);
-                        break;
-                    case EventLevel.Error:
-                        WriteError(message);
-                        break;
-                    case EventLevel.Informational:
-                        WriteInformational(message);
-                        break;
-                    case EventLevel.Verbose:
-                        WriteVerbose(message);
-                        break;
-                    case EventLevel.Warning:
-                        WriteWarning(message);
-                        break;
-                }
+                this.WriteEvent(eventId, name, message);
             }
         }
 
-        [Event(1, Message = "{0}", Level = EventLevel.Critical)]
-        public void WriteCritical(string message) => this.WriteEvent(1, message);
-
-        [Event(2, Message = "{0}", Level = EventLevel.Error)]
-        public void WriteError(string message) => this.WriteEvent(2, message);
-
-        [Event(3, Message = "{0}", Level = EventLevel.Warning)]
-        public void WriteWarning(string message) => this.WriteEvent(3, message);
-
-        [Event(4, Message = "{0}", Level = EventLevel.Informational)]
-        public void WriteInformational(string message) => this.WriteEvent(4, message);
-
-        [Event(5, Message = "{0}", Level = EventLevel.Verbose)]
-        public void WriteVerbose(string message) => this.WriteEvent(5, message);
-
-        private static string GetMessage(object value)
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void WriteException(EventLevel eventLevel, int eventId, string name, Exception exception)
         {
-            return value is Exception exception ? exception.ToInvariantString() : value.ToString();
+            if (this.IsEnabled(eventLevel, EventKeywords.All))
+            {
+                this.WriteEvent(eventId, name, exception.LogAsyncException().ToInvariantString());
+            }
         }
 
         public class AzureMonitorExporterEventListener : EventListener
         {
-            private const string EventSourceName = "OpenTelemetry-AzureMonitor-Exporter";
             private readonly List<EventSource> eventSources = new List<EventSource>();
 
             public override void Dispose()
@@ -104,7 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             protected override void OnEventWritten(EventWrittenEventArgs eventData)
             {
                 string message = EventSourceEventFormatting.Format(eventData);
-                TelemetryDebugWriter.WriteMessage($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
+                TelemetryDebugWriter.Writer.WriteMessage($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
             }
         }
     }

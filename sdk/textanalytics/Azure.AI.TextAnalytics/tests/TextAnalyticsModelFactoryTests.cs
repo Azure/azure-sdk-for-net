@@ -11,7 +11,6 @@ namespace Azure.AI.TextAnalytics.Tests
     /// <summary>
     /// The suite of tests for the <see cref="TextAnalyticsModelFactory"/> class.
     /// </summary>
-    [Ignore("Not yet implemented")]
     public class TextAnalyticsModelFactoryTests
     {
         #region Extract Summary
