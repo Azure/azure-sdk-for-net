@@ -2,11 +2,15 @@
 
 ## 1.0.0-beta.4 (2022-06-02)
 
+### Breaking Changes
+
+- Fix the issue that readonly `systemData` is also serialized by unflattening its properties. 
+
 ### Features Added
 
-- Enable write on ArcInstanceResourceGroup
-- Add patch for arcSettings
-- Created clusterIdentity and arcIdentity which is the identity created/used for cluster registration
+- Enable write on ArcInstanceResourceGroup.
+- Add patch for arcSettings.
+- Created clusterIdentity and arcIdentity which is the identity created/used for cluster registration.
 
 ## 1.0.0-beta.3 (2022-04-08)
 
