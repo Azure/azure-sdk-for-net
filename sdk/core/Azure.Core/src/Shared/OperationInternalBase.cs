@@ -15,11 +15,12 @@ namespace Azure.Core
     internal abstract class OperationInternalBase
     {
         private readonly ClientDiagnostics _diagnostics;
-        private readonly string _updateStatusScopeName;
-        private readonly string _waitForCompletionScopeName;
         private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
         private readonly DelayStrategy? _fallbackStrategy;
         private readonly AsyncLockWithValue<Response> _responseLock;
+
+        protected readonly string _updateStatusScopeName;
+        private readonly string _waitForCompletionScopeName;
 
         protected OperationInternalBase(Response rawResponse)
         {
@@ -191,7 +192,7 @@ namespace Azure.Core
                 return lockOrValue.Value;
             }
 
-            using var scope = CreateScope(false);
+            using var scope = CreateScope(_waitForCompletionScopeName);
             try
             {
                 var poller = new OperationPoller(_fallbackStrategy);
@@ -211,9 +212,14 @@ namespace Azure.Core
 
         protected abstract ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken);
 
-        protected DiagnosticScope CreateScope(bool isUpdateStatus)
+        protected DiagnosticScope CreateScope(string scopeName)
         {
-            DiagnosticScope scope = _diagnostics.CreateScope(isUpdateStatus ? _updateStatusScopeName : _waitForCompletionScopeName);
+            if (scopeName != _updateStatusScopeName && scopeName != _waitForCompletionScopeName)
+            {
+                throw new NotSupportedException($"The scope name is not supported. Allowed value: {_updateStatusScopeName}, {_waitForCompletionScopeName}");
+            }
+
+            DiagnosticScope scope = _diagnostics.CreateScope(scopeName);
 
             if (_scopeAttributes != null)
             {
