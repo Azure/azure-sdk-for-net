@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         private bool _started;
         private bool _disposed;
-        private Lazy<string> _details;
+        private string _details;
 
         // for mock test purposes only
         internal BlobListener(ISharedListener sharedListener)
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         public BlobListener(ISharedListener sharedListener, BlobContainerClient containerClient, IBlobPathSource blobPathSource, ILoggerFactory loggerFactory)
         {
             _sharedListener = sharedListener;
-            _details = new Lazy<string>(() => $"blob container={containerClient.Name}, storage account name={containerClient.AccountName}, blob name pattern={blobPathSource.BlobNamePattern}");
+            _details = $"blob container={containerClient.Name}, storage account name={containerClient.AccountName}, blob name pattern={blobPathSource.BlobNamePattern}";
             _logger = loggerFactory.CreateLogger<BlobListener>();
         }
 
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 throw new InvalidOperationException("The listener has already been started.");
             }
 
-            _logger.LogDebug($"Storage blob listener started ({_details.Value})");
+            _logger.LogDebug($"Storage blob listener started ({_details})");
             return StartAsyncCore(cancellationToken);
         }
 
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     "The listener has not yet been started or has already been stopped.");
             }
 
-            _logger.LogDebug($"Storage blob listener stopped ({_details.Value})");
+            _logger.LogDebug($"Storage blob listener stopped ({_details})");
             return StopAsyncCore(cancellationToken);
         }
 
