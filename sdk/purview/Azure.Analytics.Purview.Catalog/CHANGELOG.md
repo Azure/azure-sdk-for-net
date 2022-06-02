@@ -1,12 +1,16 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.4 (2022-06-02)
 
 ### Features Added
+
+- Support Atlas 2.2
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Add missing query parameters for Glossary Term API
 
 ### Other Changes
 
