@@ -55,6 +55,12 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="DocumentTranslationAudience.AzurePublicCloud" /> will be assumed.</value>
+        public DocumentTranslationAudience? Audience { get; set; }
+
+        /// <summary>
         /// Add headers and query parameters that are considered safe for logging or including in
         /// error messages by default.
         /// </summary>

@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkVirtualApplianceSku data model. </summary>
-    public partial class NetworkVirtualApplianceSkuData : NetworkResourceData
+    public partial class NetworkVirtualApplianceSkuData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>
         public NetworkVirtualApplianceSkuData()
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vendor"> Network Virtual Appliance Sku vendor. </param>
         /// <param name="availableVersions"> Available Network Virtual Appliance versions. </param>
         /// <param name="availableScaleUnits"> The list of scale units available. </param>
-        internal NetworkVirtualApplianceSkuData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, resourceType, location, tags)
+        internal NetworkVirtualApplianceSkuData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Vendor = vendor;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Network Virtual Appliance Sku vendor. </summary>
         public string Vendor { get; }
         /// <summary> Available Network Virtual Appliance versions. </summary>

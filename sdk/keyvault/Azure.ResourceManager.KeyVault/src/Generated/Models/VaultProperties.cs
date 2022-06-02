@@ -14,22 +14,6 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the vault. </summary>
     public partial class VaultProperties
     {
-        /// <summary> Initializes a new instance of VaultProperties. </summary>
-        /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
-        /// <param name="sku"> SKU details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public VaultProperties(Guid tenantId, KeyVaultSku sku)
-        {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-
-            TenantId = tenantId;
-            Sku = sku;
-            AccessPolicies = new ChangeTrackingList<AccessPolicyEntry>();
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionItemData>();
-        }
 
         /// <summary> Initializes a new instance of VaultProperties. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>

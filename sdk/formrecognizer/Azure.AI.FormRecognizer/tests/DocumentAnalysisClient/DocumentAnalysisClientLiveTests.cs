@@ -20,6 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     [ClientTestFixture(
      DocumentAnalysisClientOptions.ServiceVersion.V2022_01_30_preview)]
     public class DocumentAnalysisClientLiveTests : DocumentAnalysisLiveTestBase
