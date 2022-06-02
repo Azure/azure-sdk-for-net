@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CdnManagedHttpsContent DeserializeCdnManagedHttpsContent(JsonElement element)
         {
-            CdnCertificateSourceDefinition certificateSourceParameters = default;
+            CdnCertificateSource certificateSourceParameters = default;
             CertificateSource certificateSource = default;
             ProtocolType protocolType = default;
             Optional<MinimumTlsVersion> minimumTlsVersion = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("certificateSourceParameters"))
                 {
-                    certificateSourceParameters = CdnCertificateSourceDefinition.DeserializeCdnCertificateSourceDefinition(property.Value);
+                    certificateSourceParameters = CdnCertificateSource.DeserializeCdnCertificateSource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("certificateSource"))

@@ -27,5 +27,5 @@ extends:
     ServiceDirectory: dynatrace
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.DynaTrace
-      safeName: AzureResourceManagerDynaTrace
+    - name: Azure.ResourceManager.Dynatrace
+      safeName: AzureResourceManagerDynatrace

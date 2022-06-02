@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // Remove this when we add an option to disable offline storage.
                     // So if someone opts in for storage and we cannot initialize, we can throw.
                     // Change needed on persistent storage side to throw if not able to create storage directory.
-                    AzureMonitorExporterEventSource.Log.Write($"FailedToInitializePersistentStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToInitializePersistentStorage", ex);
                 }
             }
         }
@@ -81,12 +81,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
                 else
                 {
-                    AzureMonitorExporterEventSource.Log.Write($"TransmissionSuccess{EventLevelSuffix.Informational}", "Successfully transmitted a batch of telemetry Items.");
+                    AzureMonitorExporterEventSource.Log.WriteInformational("TransmissionSuccess", "Successfully transmitted a batch of telemetry Items.");
                 }
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.WriteError("FailedToTransmit", ex);
             }
 
             return result;
@@ -123,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         if (result == ExportResult.Success)
                         {
                             blob.Delete();
-                            AzureMonitorExporterEventSource.Log.Write($"TransmitFromStorageSuccess{EventLevelSuffix.Informational}", "Successfully transmitted a blob from storage.");
+                            AzureMonitorExporterEventSource.Log.WriteInformational("TransmitFromStorageSuccess", "Successfully transmitted a blob from storage.");
                         }
                         else
                         {
@@ -133,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToTransmitFromStorage", ex);
                 }
 
                 files--;
@@ -204,11 +204,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             if (result == ExportResult.Success)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", $"Error code is {statusCode}: Telemetry is stored offline for retry");
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is stored offline for retry");
             }
             else
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Warning}", $"Error code is {statusCode}: Telemetry is dropped");
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is dropped");
             }
 
             return result;
@@ -269,11 +269,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             if (shouldRetry)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Warning}", $"Error code is {statusCode}: Telemetry is stored offline for retry");
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is stored offline for retry");
             }
             else
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Warning}", $"Error code is {statusCode}: Telemetry is dropped");
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped");
             }
         }
     }

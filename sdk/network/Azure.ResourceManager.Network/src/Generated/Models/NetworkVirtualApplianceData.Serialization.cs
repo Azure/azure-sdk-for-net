@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Network
         internal static NetworkVirtualApplianceData DeserializeNetworkVirtualApplianceData(JsonElement element)
         {
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -125,7 +126,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -316,7 +322,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), identity, etag.Value, nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), Optional.ToList(virtualApplianceNics), Optional.ToList(virtualApplianceSites), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState));
+            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), Optional.ToList(virtualApplianceNics), Optional.ToList(virtualApplianceSites), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState));
         }
     }
 }

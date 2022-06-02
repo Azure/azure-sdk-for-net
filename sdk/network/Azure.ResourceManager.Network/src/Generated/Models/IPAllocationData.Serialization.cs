@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Network
 
         internal static IPAllocationData DeserializeIPAllocationData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -108,7 +109,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -249,7 +255,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new IPAllocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
+            return new IPAllocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
         }
     }
 }

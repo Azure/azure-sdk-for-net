@@ -14,13 +14,18 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AzureFirewallIPGroups DeserializeAzureFirewallIPGroups(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> changeNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("changeNumber"))

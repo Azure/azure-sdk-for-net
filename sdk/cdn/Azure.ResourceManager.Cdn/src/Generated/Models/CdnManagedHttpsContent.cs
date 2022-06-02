@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
-        public CdnManagedHttpsContent(ProtocolType protocolType, CdnCertificateSourceDefinition certificateSourceParameters) : base(protocolType)
+        public CdnManagedHttpsContent(ProtocolType protocolType, CdnCertificateSource certificateSourceParameters) : base(protocolType)
         {
             if (certificateSourceParameters == null)
             {
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </param>
-        internal CdnManagedHttpsContent(CertificateSource certificateSource, ProtocolType protocolType, MinimumTlsVersion? minimumTlsVersion, CdnCertificateSourceDefinition certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion)
+        internal CdnManagedHttpsContent(CertificateSource certificateSource, ProtocolType protocolType, MinimumTlsVersion? minimumTlsVersion, CdnCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion)
         {
             CertificateSourceParameters = certificateSourceParameters;
             CertificateSource = certificateSource;
         }
 
         /// <summary> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </summary>
-        public CdnCertificateSourceDefinition CertificateSourceParameters { get; set; }
+        public CdnCertificateSource CertificateSourceParameters { get; set; }
     }
 }

@@ -15,6 +15,7 @@ New features:
 - Update DistributedAvailabilityGroups to use "2021-11-01-preview" API version
 - Update ServerTrustCertificates to use "2021-11-01-preview" API version
 - Add EndpointCertificates API ("2021-11-01-preview" version)
+- Update ReplicationLinks to use "2021-11-01-preview" API version
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
