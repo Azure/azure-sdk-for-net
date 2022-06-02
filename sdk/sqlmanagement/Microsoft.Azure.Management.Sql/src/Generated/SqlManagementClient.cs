@@ -103,11 +103,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IElasticPoolsOperations ElasticPools { get; private set; }
 
         /// <summary>
-        /// Gets the IReplicationLinksOperations.
-        /// </summary>
-        public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
-
-        /// <summary>
         /// Gets the IServerCommunicationLinksOperations.
         /// </summary>
         public virtual IServerCommunicationLinksOperations ServerCommunicationLinks { get; private set; }
@@ -643,6 +638,11 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IEndpointCertificatesOperations EndpointCertificates { get; private set; }
 
         /// <summary>
+        /// Gets the IReplicationLinksOperations.
+        /// </summary>
+        public virtual IReplicationLinksOperations ReplicationLinks { get; private set; }
+
+        /// <summary>
         /// Gets the IManagedDatabaseSensitivityLabelsOperations.
         /// </summary>
         public virtual IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; private set; }
@@ -929,7 +929,6 @@ namespace Microsoft.Azure.Management.Sql
             GeoBackupPolicies = new GeoBackupPoliciesOperations(this);
             Databases = new DatabasesOperations(this);
             ElasticPools = new ElasticPoolsOperations(this);
-            ReplicationLinks = new ReplicationLinksOperations(this);
             ServerCommunicationLinks = new ServerCommunicationLinksOperations(this);
             ServiceObjectives = new ServiceObjectivesOperations(this);
             ElasticPoolActivities = new ElasticPoolActivitiesOperations(this);
@@ -1037,6 +1036,7 @@ namespace Microsoft.Azure.Management.Sql
             ServerTrustCertificates = new ServerTrustCertificatesOperations(this);
             IPv6FirewallRules = new IPv6FirewallRulesOperations(this);
             EndpointCertificates = new EndpointCertificatesOperations(this);
+            ReplicationLinks = new ReplicationLinksOperations(this);
             ManagedDatabaseSensitivityLabels = new ManagedDatabaseSensitivityLabelsOperations(this);
             ManagedDatabaseRecommendedSensitivityLabels = new ManagedDatabaseRecommendedSensitivityLabelsOperations(this);
             SensitivityLabels = new SensitivityLabelsOperations(this);
