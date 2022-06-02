@@ -1811,19 +1811,17 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetExtensionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualMachineScaleSetExtensionData : Azure.ResourceManager.Compute.Models.ComputeSubResourceData
+    public partial class VirtualMachineScaleSetExtensionData : Azure.ResourceManager.Models.ResourceData
     {
         public VirtualMachineScaleSetExtensionData() { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ExtensionType { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public System.BinaryData Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
@@ -1987,7 +1985,7 @@ namespace Azure.ResourceManager.Compute
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtensionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineScaleSetVmExtensionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VirtualMachineScaleSetVmExtensionData : Azure.ResourceManager.Compute.Models.ComputeSubResourceData
+    public partial class VirtualMachineScaleSetVmExtensionData : Azure.ResourceManager.Models.ResourceData
     {
         public VirtualMachineScaleSetVmExtensionData() { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
@@ -1995,11 +1993,9 @@ namespace Azure.ResourceManager.Compute
         public string ExtensionType { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineExtensionInstanceView InstanceView { get { throw null; } set { } }
-        public string Name { get { throw null; } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public System.BinaryData Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
@@ -2496,11 +2492,6 @@ namespace Azure.ResourceManager.Compute.Models
         public long? Capacity { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
-    }
-    public partial class ComputeSubResourceData
-    {
-        public ComputeSubResourceData() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
     }
     public partial class ComputeSubResourceDataWithColocationStatus : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData
     {
@@ -3050,7 +3041,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.ExtendedLocationTypes left, Azure.ResourceManager.Compute.Models.ExtendedLocationTypes right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GalleryApplicationPatch : Azure.ResourceManager.Compute.Models.GalleryUpdateResourceDefinition
+    public partial class GalleryApplicationPatch : Azure.ResourceManager.Models.ResourceData
     {
         public GalleryApplicationPatch() { }
         public string Description { get { throw null; } set { } }
@@ -3059,13 +3050,15 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Uri PrivacyStatementUri { get { throw null; } set { } }
         public System.Uri ReleaseNoteUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? SupportedOSType { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class GalleryApplicationVersionPatch : Azure.ResourceManager.Compute.Models.GalleryUpdateResourceDefinition
+    public partial class GalleryApplicationVersionPatch : Azure.ResourceManager.Models.ResourceData
     {
         public GalleryApplicationVersionPatch() { }
         public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryApplicationVersionPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState>
@@ -3138,7 +3131,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
     }
-    public partial class GalleryImagePatch : Azure.ResourceManager.Compute.Models.GalleryUpdateResourceDefinition
+    public partial class GalleryImagePatch : Azure.ResourceManager.Models.ResourceData
     {
         public GalleryImagePatch() { }
         public string Description { get { throw null; } set { } }
@@ -3155,6 +3148,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ImagePurchasePlan PurchasePlan { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.RecommendedMachineConfiguration Recommended { get { throw null; } set { } }
         public System.Uri ReleaseNoteUri { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryImagePropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState>
@@ -3178,13 +3172,14 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState left, Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GalleryImageVersionPatch : Azure.ResourceManager.Compute.Models.GalleryUpdateResourceDefinition
+    public partial class GalleryImageVersionPatch : Azure.ResourceManager.Models.ResourceData
     {
         public GalleryImageVersionPatch() { }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryImageVersionPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryImageVersionPropertiesProvisioningState>
@@ -3223,7 +3218,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public GalleryOSDiskImage() { }
     }
-    public partial class GalleryPatch : Azure.ResourceManager.Compute.Models.GalleryUpdateResourceDefinition
+    public partial class GalleryPatch : Azure.ResourceManager.Models.ResourceData
     {
         public GalleryPatch() { }
         public string Description { get { throw null; } set { } }
@@ -3231,6 +3226,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? IsSoftDeleteEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryPropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SharingProfile SharingProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryPropertiesProvisioningState>
@@ -3271,11 +3267,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static implicit operator Azure.ResourceManager.Compute.Models.GallerySharingPermissionTypes (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Compute.Models.GallerySharingPermissionTypes left, Azure.ResourceManager.Compute.Models.GallerySharingPermissionTypes right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class GalleryUpdateResourceDefinition : Azure.ResourceManager.Models.ResourceData
-    {
-        public GalleryUpdateResourceDefinition() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class GrantAccessData
     {
@@ -5052,19 +5043,17 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } set { } }
         public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
     }
-    public partial class VirtualMachineScaleSetExtensionPatch : Azure.ResourceManager.Compute.Models.ComputeSubResourceData
+    public partial class VirtualMachineScaleSetExtensionPatch : Azure.ResourceManager.Models.ResourceData
     {
         public VirtualMachineScaleSetExtensionPatch() { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ExtensionType { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public string Name { get { throw null; } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ProvisionAfterExtensions { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public System.BinaryData Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
@@ -5312,17 +5301,15 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateStorageProfile StorageProfile { get { throw null; } set { } }
         public string UserData { get { throw null; } set { } }
     }
-    public partial class VirtualMachineScaleSetVmExtensionPatch : Azure.ResourceManager.Compute.Models.ComputeSubResourceData
+    public partial class VirtualMachineScaleSetVmExtensionPatch : Azure.ResourceManager.Models.ResourceData
     {
         public VirtualMachineScaleSetVmExtensionPatch() { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ExtensionType { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
-        public string Name { get { throw null; } }
         public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
-        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public System.BinaryData Settings { get { throw null; } set { } }
         public bool? SuppressFailures { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
