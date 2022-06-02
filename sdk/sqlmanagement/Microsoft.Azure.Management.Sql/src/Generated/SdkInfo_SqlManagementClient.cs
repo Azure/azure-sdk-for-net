@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "DataMaskingPolicies", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DataMaskingRules", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "DataWarehouseUserActivities", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "DatabaseAdvancedThreatProtectionSettings", "2021-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "DatabaseAdvisors", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "DatabaseAutomaticTuning", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "DatabaseBlobAuditingPolicies", "2021-11-01-preview"),
@@ -112,6 +113,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "RestorableDroppedManagedDatabases", "2021-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "RestorePoints", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "SensitivityLabels", "2020-11-01-preview"),
+                new Tuple<string, string, string>("Sql", "ServerAdvancedThreatProtectionSettings", "2021-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerAdvisors", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerAutomaticTuning", "2020-11-01-preview"),
                 new Tuple<string, string, string>("Sql", "ServerAzureADAdministrators", "2020-11-01-preview"),
@@ -149,10 +151,10 @@ namespace Microsoft.Azure.Management.Sql
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "2.0.4421";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/sql/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "324a148497f28ef7588eee7bdb61dcd28b74f505";
+      public static readonly String GithubCommidId = "7932c2df6c8435d6c0e5cbebbca79bce627d5f06";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

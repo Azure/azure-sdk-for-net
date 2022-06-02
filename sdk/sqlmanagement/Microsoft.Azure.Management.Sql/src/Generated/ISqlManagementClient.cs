@@ -677,5 +677,15 @@ namespace Microsoft.Azure.Management.Sql
         /// </summary>
         IExtendedServerBlobAuditingPoliciesOperations ExtendedServerBlobAuditingPolicies { get; }
 
+        /// <summary>
+        /// Gets the IDatabaseAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        IDatabaseAdvancedThreatProtectionSettingsOperations DatabaseAdvancedThreatProtectionSettings { get; }
+
+        /// <summary>
+        /// Gets the IServerAdvancedThreatProtectionSettingsOperations.
+        /// </summary>
+        IServerAdvancedThreatProtectionSettingsOperations ServerAdvancedThreatProtectionSettings { get; }
+
     }
 }
