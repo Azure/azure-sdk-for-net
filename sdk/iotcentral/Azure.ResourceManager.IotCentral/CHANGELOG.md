@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2022-06-02)
 
 - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET
 - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing
