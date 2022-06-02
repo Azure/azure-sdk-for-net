@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 throw new InvalidOperationException("The listener has already been started.");
             }
 
-            await StartAsyncCore(cancellationToken);
+            await StartAsyncCore(cancellationToken).ConfigureAwait(false);
             _logger.LogDebug($"Storage blob listener started ({_details})");
         }
 
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     "The listener has not yet been started or has already been stopped.");
             }
 
-            await StopAsyncCore(cancellationToken);
+            await StopAsyncCore(cancellationToken).ConfigureAwait(false);
             _logger.LogDebug($"Storage blob listener stopped ({_details})");
         }
 
