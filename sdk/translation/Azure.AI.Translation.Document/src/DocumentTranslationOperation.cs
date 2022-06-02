@@ -22,7 +22,6 @@ namespace Azure.AI.Translation.Document
         private readonly ClientDiagnostics _diagnostics;
         private readonly OperationInternal<AsyncPageable<DocumentStatusResult>> _operationInternal;
 
-        private int? _retryAfterHeaderValue;
         private int _documentsTotal;
         private int _documentsFailed;
         private int _documentsSucceeded;
@@ -36,110 +35,47 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// The date time when the translation operation was created.
         /// </summary>
-        public virtual DateTimeOffset CreatedOn
-        {
-            get
-            {
-                ValidateOperationHasResponse();
-                return _createdOn;
-            }
-        }
+        public virtual DateTimeOffset CreatedOn => ValidateOperationHasResponse(_createdOn);
 
         /// <summary>
         /// The date time when the translation operation's status was last updated.
         /// </summary>
-        public virtual DateTimeOffset LastModified
-        {
-            get
-            {
-                ValidateOperationHasResponse();
-                return _lastModified;
-            }
-        }
+        public virtual DateTimeOffset LastModified => ValidateOperationHasResponse(_lastModified);
 
         /// <summary>
         /// The current status of the translation operation.
         /// </summary>
-        public virtual DocumentTranslationStatus Status
-        {
-            get
-            {
-                ValidateOperationHasResponse();
-                return _status;
-            }
-        }
+        public virtual DocumentTranslationStatus Status => ValidateOperationHasResponse(_status);
 
         /// <summary>
         /// Total number of expected translated documents.
         /// </summary>
-        public virtual int DocumentsTotal
-        {
-            get
-            {
-                ValidateOperationHasResponse();
-                return _documentsTotal;
-            }
-        }
+        public virtual int DocumentsTotal => ValidateOperationHasResponse(_documentsTotal);
 
         /// <summary>
         /// Number of documents failed to translate.
         /// </summary>
-        public virtual int DocumentsFailed
-        {
-            get
-            {
-                ValidateOperationHasResponse();
-                return _documentsFailed;
-            }
-        }
+        public virtual int DocumentsFailed => ValidateOperationHasResponse(_documentsFailed);
 
         /// <summary>
         /// Number of documents translated successfully.
         /// </summary>
-        public virtual int DocumentsSucceeded
-        {
-            get
-            {
-                ValidateOperationHasResponse();
-                return _documentsSucceeded;
-            }
-        }
+        public virtual int DocumentsSucceeded => ValidateOperationHasResponse(_documentsSucceeded);
 
         /// <summary>
         /// Number of documents in progress.
         /// </summary>
-        public virtual int DocumentsInProgress
-        {
-            get
-            {
-                ValidateOperationHasResponse();
-                return _documentsInProgress;
-            }
-        }
+        public virtual int DocumentsInProgress => ValidateOperationHasResponse(_documentsInProgress);
 
         /// <summary>
         /// Number of documents in queue for translation.
         /// </summary>
-        public virtual int DocumentsNotStarted
-        {
-            get
-            {
-                ValidateOperationHasResponse();
-                return _documentsNotStarted;
-            }
-        }
+        public virtual int DocumentsNotStarted => ValidateOperationHasResponse(_documentsNotStarted);
 
         /// <summary>
         /// Number of documents canceled.
         /// </summary>
-        public virtual int DocumentsCanceled
-        {
-            get
-            {
-                ValidateOperationHasResponse();
-                return _documentsCanceled;
-            }
-        }
+        public virtual int DocumentsCanceled => ValidateOperationHasResponse(_documentsCanceled);
 
         /// <summary>
         /// Gets an ID representing the translation operation that can be used to poll for the status
@@ -275,7 +211,6 @@ namespace Azure.AI.Translation.Document
                         ? await _serviceClient.GetTranslationStatusAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                         : _serviceClient.GetTranslationStatus(new Guid(Id), cancellationToken);
 
-            _retryAfterHeaderValue = update.Headers.RetryAfter;
             _createdOn = update.Value.CreatedOn;
             _lastModified = update.Value.LastModified;
             _status = update.Value.Status;
@@ -528,10 +463,12 @@ namespace Azure.AI.Translation.Document
             return GetDocumentStatuses(cancellationToken: cancellationToken);
         }
 
-        private void ValidateOperationHasResponse()
+        private T ValidateOperationHasResponse<T>(T value)
         {
             if (_operationInternal.RawResponse == null)
-                throw new InvalidOperationException("The operation has not completed yet.");
+                throw new InvalidOperationException("The operation has not done a request. Make sure to update the operation.");
+
+            return value;
         }
 
         private static IDictionary<string, string> CreateAdditionalInformation(ResponseError error)
