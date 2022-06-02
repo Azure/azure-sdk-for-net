@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteFunctionOverviewARMResource(id, name, type, systemData, kind.Value, functionName.Value, Optional.ToNullable(triggerType));
+            return new StaticSiteFunctionOverviewARMResource(id, name, type, systemData, functionName.Value, Optional.ToNullable(triggerType), kind.Value);
         }
     }
 }

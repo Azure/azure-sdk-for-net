@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ProcessModuleInfoData(id, name, type, systemData, kind.Value, baseAddress.Value, fileName.Value, href.Value, filePath.Value, Optional.ToNullable(moduleMemorySize), fileVersion.Value, fileDescription.Value, product.Value, productVersion.Value, Optional.ToNullable(isDebug), language.Value);
+            return new ProcessModuleInfoData(id, name, type, systemData, baseAddress.Value, fileName.Value, href.Value, filePath.Value, Optional.ToNullable(moduleMemorySize), fileVersion.Value, fileDescription.Value, product.Value, productVersion.Value, Optional.ToNullable(isDebug), language.Value, kind.Value);
         }
     }
 }

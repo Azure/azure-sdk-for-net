@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CertificateEmail(id, name, type, systemData, kind.Value, emailId.Value, Optional.ToNullable(timeStamp));
+            return new CertificateEmail(id, name, type, systemData, emailId.Value, Optional.ToNullable(timeStamp), kind.Value);
         }
     }
 }

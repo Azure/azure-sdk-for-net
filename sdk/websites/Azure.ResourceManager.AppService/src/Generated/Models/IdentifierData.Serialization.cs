@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new IdentifierData(id, name, type, systemData, kind.Value, id0.Value);
+            return new IdentifierData(id, name, type, systemData, id0.Value, kind.Value);
         }
     }
 }

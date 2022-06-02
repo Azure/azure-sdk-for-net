@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ResourceHealthMetadataData(id, name, type, systemData, kind.Value, category.Value, Optional.ToNullable(signalAvailability));
+            return new ResourceHealthMetadataData(id, name, type, systemData, category.Value, Optional.ToNullable(signalAvailability), kind.Value);
         }
     }
 }

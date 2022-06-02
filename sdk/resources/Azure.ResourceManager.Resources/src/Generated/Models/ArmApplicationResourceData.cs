@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Resource information. </summary>
-    public partial class ArmApplicationResourceData : TrackedResourceData
+    internal partial class ArmApplicationResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ArmApplicationResourceData. </summary>
         /// <param name="location"> The location. </param>

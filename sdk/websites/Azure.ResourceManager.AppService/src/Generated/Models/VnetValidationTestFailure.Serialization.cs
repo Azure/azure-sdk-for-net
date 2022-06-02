@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new VnetValidationTestFailure(id, name, type, systemData, kind.Value, testName.Value, details.Value);
+            return new VnetValidationTestFailure(id, name, type, systemData, testName.Value, details.Value, kind.Value);
         }
     }
 }

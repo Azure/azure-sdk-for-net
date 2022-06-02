@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new PrivateLinkConnectionApprovalRequestResource(id, name, type, systemData, kind.Value, privateLinkServiceConnectionState.Value);
+            return new PrivateLinkConnectionApprovalRequestResource(id, name, type, systemData, privateLinkServiceConnectionState.Value, kind.Value);
         }
     }
 }

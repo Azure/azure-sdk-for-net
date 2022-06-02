@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new TriggeredJobHistoryData(id, name, type, systemData, kind.Value, Optional.ToList(runs));
+            return new TriggeredJobHistoryData(id, name, type, systemData, Optional.ToList(runs), kind.Value);
         }
     }
 }

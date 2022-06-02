@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StorageMigrationResponse(id, name, type, systemData, kind.Value, operationId.Value);
+            return new StorageMigrationResponse(id, name, type, systemData, operationId.Value, kind.Value);
         }
     }
 }

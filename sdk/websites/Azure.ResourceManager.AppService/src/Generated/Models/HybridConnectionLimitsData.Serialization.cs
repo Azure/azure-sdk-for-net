@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new HybridConnectionLimitsData(id, name, type, systemData, kind.Value, Optional.ToNullable(current), Optional.ToNullable(maximum));
+            return new HybridConnectionLimitsData(id, name, type, systemData, Optional.ToNullable(current), Optional.ToNullable(maximum), kind.Value);
         }
     }
 }

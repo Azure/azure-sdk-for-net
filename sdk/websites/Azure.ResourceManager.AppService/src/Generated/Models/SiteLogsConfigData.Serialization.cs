@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteLogsConfigData(id, name, type, systemData, kind.Value, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value);
+            return new SiteLogsConfigData(id, name, type, systemData, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value, kind.Value);
         }
     }
 }

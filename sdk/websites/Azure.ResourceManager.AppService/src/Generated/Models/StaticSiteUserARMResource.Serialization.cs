@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteUserARMResource(id, name, type, systemData, kind.Value, provider.Value, userId.Value, displayName.Value, roles.Value);
+            return new StaticSiteUserARMResource(id, name, type, systemData, provider.Value, userId.Value, displayName.Value, roles.Value, kind.Value);
         }
     }
 }

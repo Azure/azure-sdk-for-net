@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new PremierAddOnPatchResource(id, name, type, systemData, kind.Value, sku.Value, product.Value, vendor.Value, marketplacePublisher.Value, marketplaceOffer.Value);
+            return new PremierAddOnPatchResource(id, name, type, systemData, sku.Value, product.Value, vendor.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value);
         }
     }
 }

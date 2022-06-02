@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new LogSearchRuleData(id, name, type, systemData, tags, location, kind.Value, etag.Value, createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action);
+            return new LogSearchRuleData(id, name, type, systemData, tags, location, createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(autoMitigate), Optional.ToNullable(enabled), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), source, schedule.Value, action, kind.Value, etag.Value);
         }
     }
 }

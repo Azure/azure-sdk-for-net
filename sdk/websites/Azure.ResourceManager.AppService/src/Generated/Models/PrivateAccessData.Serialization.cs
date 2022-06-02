@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new PrivateAccessData(id, name, type, systemData, kind.Value, Optional.ToNullable(enabled), Optional.ToList(virtualNetworks));
+            return new PrivateAccessData(id, name, type, systemData, Optional.ToNullable(enabled), Optional.ToList(virtualNetworks), kind.Value);
         }
     }
 }

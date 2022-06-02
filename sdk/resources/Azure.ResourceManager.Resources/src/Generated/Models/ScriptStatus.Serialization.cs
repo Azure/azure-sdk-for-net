@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ScriptStatus
+    internal partial class ScriptStatus
     {
         internal static ScriptStatus DeserializeScriptStatus(JsonElement element)
         {

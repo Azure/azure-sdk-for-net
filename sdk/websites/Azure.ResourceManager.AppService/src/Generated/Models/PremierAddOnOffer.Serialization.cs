@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new PremierAddOnOffer(id, name, type, systemData, kind.Value, sku.Value, product.Value, vendor.Value, Optional.ToNullable(promoCodeRequired), Optional.ToNullable(quota), Optional.ToNullable(webHostingPlanRestrictions), privacyPolicyUrl.Value, legalTermsUrl.Value, marketplacePublisher.Value, marketplaceOffer.Value);
+            return new PremierAddOnOffer(id, name, type, systemData, sku.Value, product.Value, vendor.Value, Optional.ToNullable(promoCodeRequired), Optional.ToNullable(quota), Optional.ToNullable(webHostingPlanRestrictions), privacyPolicyUrl.Value, legalTermsUrl.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value);
         }
     }
 }

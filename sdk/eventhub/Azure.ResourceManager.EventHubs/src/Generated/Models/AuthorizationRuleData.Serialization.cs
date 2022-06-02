@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new AuthorizationRuleData(id, name, type, systemData, location.Value, Optional.ToList(rights));
+            return new AuthorizationRuleData(id, name, type, systemData, Optional.ToList(rights), location.Value);
         }
     }
 }

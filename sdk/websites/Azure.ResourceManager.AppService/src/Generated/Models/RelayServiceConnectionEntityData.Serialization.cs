@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new RelayServiceConnectionEntityData(id, name, type, systemData, kind.Value, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value);
+            return new RelayServiceConnectionEntityData(id, name, type, systemData, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value, kind.Value);
         }
     }
 }

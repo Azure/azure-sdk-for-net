@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </summary>
-    public readonly partial struct ScriptCleanupOptions : IEquatable<ScriptCleanupOptions>
+    internal readonly partial struct ScriptCleanupOptions : IEquatable<ScriptCleanupOptions>
     {
         private readonly string _value;
 

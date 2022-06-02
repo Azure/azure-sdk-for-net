@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteUserProvidedFunctionApp(id, name, type, systemData, kind.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn));
+            return new StaticSiteUserProvidedFunctionApp(id, name, type, systemData, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn), kind.Value);
         }
     }
 }

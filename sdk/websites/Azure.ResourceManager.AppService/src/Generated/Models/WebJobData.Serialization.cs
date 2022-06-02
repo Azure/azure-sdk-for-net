@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WebJobData(id, name, type, systemData, kind.Value, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings));
+            return new WebJobData(id, name, type, systemData, runCommand.Value, url.Value, extraInfoUrl.Value, Optional.ToNullable(webJobType), error.Value, Optional.ToNullable(usingSdk), Optional.ToDictionary(settings), kind.Value);
         }
     }
 }

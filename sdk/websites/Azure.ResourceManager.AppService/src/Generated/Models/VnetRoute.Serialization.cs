@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new VnetRoute(id, name, type, systemData, kind.Value, startAddress.Value, endAddress.Value, Optional.ToNullable(routeType));
+            return new VnetRoute(id, name, type, systemData, startAddress.Value, endAddress.Value, Optional.ToNullable(routeType), kind.Value);
         }
     }
 }

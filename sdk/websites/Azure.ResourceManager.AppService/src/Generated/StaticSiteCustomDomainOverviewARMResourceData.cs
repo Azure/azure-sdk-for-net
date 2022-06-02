@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing the StaticSiteCustomDomainOverviewARMResource data model. </summary>
-    public partial class StaticSiteCustomDomainOverviewARMResourceData : ProxyOnlyResource
+    public partial class StaticSiteCustomDomainOverviewARMResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewARMResourceData. </summary>
         public StaticSiteCustomDomainOverviewARMResourceData()
@@ -25,19 +25,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="domainName"> The domain name for the static site custom domain. </param>
         /// <param name="createdOn"> The date and time on which the custom domain was created for the static site. </param>
         /// <param name="status"> The status of the custom domain. </param>
         /// <param name="validationToken"> The TXT record validation token. </param>
         /// <param name="errorMessage"></param>
-        internal StaticSiteCustomDomainOverviewARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal StaticSiteCustomDomainOverviewARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage, string kind) : base(id, name, resourceType, systemData)
         {
             DomainName = domainName;
             CreatedOn = createdOn;
             Status = status;
             ValidationToken = validationToken;
             ErrorMessage = errorMessage;
+            Kind = kind;
         }
 
         /// <summary> The domain name for the static site custom domain. </summary>
@@ -50,5 +51,7 @@ namespace Azure.ResourceManager.AppService
         public string ValidationToken { get; }
         /// <summary> Gets the error message. </summary>
         public string ErrorMessage { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

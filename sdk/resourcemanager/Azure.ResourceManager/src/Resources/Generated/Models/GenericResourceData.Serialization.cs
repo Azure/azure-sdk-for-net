@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new GenericResourceData(id, name, type, systemData, tags, location, extendedLocation.Value, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value);
+            return new GenericResourceData(id, name, type, systemData, tags, location, plan, properties.Value, kind.Value, managedBy.Value, sku.Value, identity, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), provisioningState.Value, extendedLocation.Value);
         }
     }
 }

@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new ManagedHsmPrivateEndpointConnectionData(id, name, type, systemData, tags, location, sku.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new ManagedHsmPrivateEndpointConnectionData(id, name, type, systemData, tags, location, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), sku.Value);
         }
     }
 }

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new DeletedSiteData(id, name, type, systemData, kind.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value);
+            return new DeletedSiteData(id, name, type, systemData, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value);
         }
     }
 }

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new RemotePrivateEndpointConnectionARMResourceData(id, name, type, systemData, kind.Value, provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(ipAddresses));
+            return new RemotePrivateEndpointConnectionARMResourceData(id, name, type, systemData, provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(ipAddresses), kind.Value);
         }
     }
 }

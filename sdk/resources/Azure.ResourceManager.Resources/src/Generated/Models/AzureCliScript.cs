@@ -9,15 +9,14 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Object model for the Azure CLI script. </summary>
-    public partial class AzureCliScript : ArmDeploymentScriptData
+    internal partial class AzureCliScript : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AzureCliScript. </summary>
-        /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azCliVersion"/> is null. </exception>
@@ -40,10 +39,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
-        /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="kind"> Type of the script. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="containerSettings"> Container settings. </param>
         /// <param name="storageAccountSettings"> Storage Account settings. </param>
         /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </param>
@@ -59,7 +56,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
-        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArmDeploymentScriptManagedIdentity identity, AzureLocation location, IDictionary<string, string> tags, ScriptType kind, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind)
+        /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
+        /// <param name="kind"> Type of the script. </param>
+        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, Uri primaryScriptUri, IList<Uri> supportingScriptUris, string scriptContent, string arguments, IList<ScriptEnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion, ArmDeploymentScriptManagedIdentity identity, ScriptType kind) : base(id, name, resourceType, systemData, tags, location)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -76,6 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
             RetentionInterval = retentionInterval;
             Timeout = timeout;
             AzCliVersion = azCliVersion;
+            Identity = identity;
             Kind = kind;
         }
 
@@ -121,5 +121,9 @@ namespace Azure.ResourceManager.Resources.Models
         public TimeSpan? Timeout { get; set; }
         /// <summary> Azure CLI module version to be used. </summary>
         public string AzCliVersion { get; set; }
+        /// <summary> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </summary>
+        public ArmDeploymentScriptManagedIdentity Identity { get; set; }
+        /// <summary> Type of the script. </summary>
+        internal ScriptType Kind { get; set; }
     }
 }

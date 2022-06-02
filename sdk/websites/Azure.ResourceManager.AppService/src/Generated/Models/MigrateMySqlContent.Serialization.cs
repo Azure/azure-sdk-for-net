@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new MigrateMySqlContent(id, name, type, systemData, kind.Value, connectionString.Value, Optional.ToNullable(migrationType));
+            return new MigrateMySqlContent(id, name, type, systemData, connectionString.Value, Optional.ToNullable(migrationType), kind.Value);
         }
     }
 }

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteResetPropertiesARMResource(id, name, type, systemData, kind.Value, repositoryToken.Value, Optional.ToNullable(shouldUpdateRepository));
+            return new StaticSiteResetPropertiesARMResource(id, name, type, systemData, repositoryToken.Value, Optional.ToNullable(shouldUpdateRepository), kind.Value);
         }
     }
 }

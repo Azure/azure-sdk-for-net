@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new HostNameBindingData(id, name, type, systemData, kind.Value, siteName.Value, domainId.Value, azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), Optional.ToNullable(sslState), thumbprint.Value, virtualIP.Value);
+            return new HostNameBindingData(id, name, type, systemData, siteName.Value, domainId.Value, azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), Optional.ToNullable(sslState), thumbprint.Value, virtualIP.Value, kind.Value);
         }
     }
 }

@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new BillingMeter(id, name, type, systemData, kind.Value, meterId.Value, billingLocation.Value, shortName.Value, friendlyName.Value, osType.Value, Optional.ToNullable(multiplier));
+            return new BillingMeter(id, name, type, systemData, meterId.Value, billingLocation.Value, shortName.Value, friendlyName.Value, osType.Value, Optional.ToNullable(multiplier), kind.Value);
         }
     }
 }

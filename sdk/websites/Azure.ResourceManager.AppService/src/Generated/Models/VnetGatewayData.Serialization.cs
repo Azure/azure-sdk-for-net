@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new VnetGatewayData(id, name, type, systemData, kind.Value, vnetName.Value, vpnPackageUri.Value);
+            return new VnetGatewayData(id, name, type, systemData, vnetName.Value, vpnPackageUri.Value, kind.Value);
         }
     }
 }

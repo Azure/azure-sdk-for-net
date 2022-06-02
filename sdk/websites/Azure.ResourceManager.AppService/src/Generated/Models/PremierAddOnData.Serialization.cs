@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new PremierAddOnData(id, name, type, systemData, tags, location, kind.Value, sku.Value, product.Value, vendor.Value, marketplacePublisher.Value, marketplaceOffer.Value);
+            return new PremierAddOnData(id, name, type, systemData, tags, location, sku.Value, product.Value, vendor.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value);
         }
     }
 }

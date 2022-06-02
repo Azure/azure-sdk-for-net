@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new VnetInfoResourceData(id, name, type, systemData, kind.Value, vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Optional.ToList(routes), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift));
+            return new VnetInfoResourceData(id, name, type, systemData, vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Optional.ToList(routes), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift), kind.Value);
         }
     }
 }

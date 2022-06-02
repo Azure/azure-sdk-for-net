@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteCustomDomainRequestPropertiesARMResource(id, name, type, systemData, kind.Value, validationMethod.Value);
+            return new StaticSiteCustomDomainRequestPropertiesARMResource(id, name, type, systemData, validationMethod.Value, kind.Value);
         }
     }
 }

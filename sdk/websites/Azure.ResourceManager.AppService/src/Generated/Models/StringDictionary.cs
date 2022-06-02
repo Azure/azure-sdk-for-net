@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> String dictionary resource. </summary>
-    public partial class StringDictionary : ProxyOnlyResource
+    public partial class StringDictionary : ResourceData
     {
         /// <summary> Initializes a new instance of StringDictionary. </summary>
         public StringDictionary()
@@ -25,14 +25,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="properties"> Settings. </param>
-        internal StringDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IDictionary<string, string> properties) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal StringDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> properties, string kind) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Kind = kind;
         }
 
         /// <summary> Settings. </summary>
         public IDictionary<string, string> Properties { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

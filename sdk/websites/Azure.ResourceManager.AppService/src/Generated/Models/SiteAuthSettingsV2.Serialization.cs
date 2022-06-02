@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SiteAuthSettingsV2(id, name, type, systemData, kind.Value, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value);
+            return new SiteAuthSettingsV2(id, name, type, systemData, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value, kind.Value);
         }
     }
 }

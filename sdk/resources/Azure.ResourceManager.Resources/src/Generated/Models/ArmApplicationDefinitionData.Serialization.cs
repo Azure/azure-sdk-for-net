@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ArmApplicationDefinitionData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, lockLevel, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToList(authorizations), Optional.ToList(artifacts), description.Value, packageFileUri.Value, mainTemplate.Value, createUiDefinition.Value, notificationPolicy.Value, lockingPolicy.Value, deploymentPolicy.Value, managementPolicy.Value, Optional.ToList(policies));
+            return new ArmApplicationDefinitionData(id, name, type, systemData, tags, location, lockLevel, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToList(authorizations), Optional.ToList(artifacts), description.Value, packageFileUri.Value, mainTemplate.Value, createUiDefinition.Value, notificationPolicy.Value, lockingPolicy.Value, deploymentPolicy.Value, managementPolicy.Value, Optional.ToList(policies), managedBy.Value, sku.Value);
         }
     }
 }

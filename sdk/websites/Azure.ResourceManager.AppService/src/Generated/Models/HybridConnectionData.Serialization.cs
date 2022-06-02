@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new HybridConnectionData(id, name, type, systemData, kind.Value, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value);
+            return new HybridConnectionData(id, name, type, systemData, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value, kind.Value);
         }
     }
 }

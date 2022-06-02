@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DeletedAppRestoreRequest(id, name, type, systemData, kind.Value, deletedSiteId.Value, Optional.ToNullable(recoverConfiguration), snapshotTime.Value, Optional.ToNullable(useDRSecondary));
+            return new DeletedAppRestoreRequest(id, name, type, systemData, deletedSiteId.Value, Optional.ToNullable(recoverConfiguration), snapshotTime.Value, Optional.ToNullable(useDRSecondary), kind.Value);
         }
     }
 }

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSitesWorkflowPreview(id, name, type, systemData, kind.Value, path.Value, contents.Value);
+            return new StaticSitesWorkflowPreview(id, name, type, systemData, path.Value, contents.Value, kind.Value);
         }
     }
 }

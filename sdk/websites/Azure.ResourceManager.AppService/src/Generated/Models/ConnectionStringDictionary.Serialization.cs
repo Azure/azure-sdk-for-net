@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ConnectionStringDictionary(id, name, type, systemData, kind.Value, Optional.ToDictionary(properties));
+            return new ConnectionStringDictionary(id, name, type, systemData, Optional.ToDictionary(properties), kind.Value);
         }
     }
 }

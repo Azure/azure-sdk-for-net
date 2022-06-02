@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceCertificateResourcePatch(id, name, type, systemData, kind.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState));
+            return new AppServiceCertificateResourcePatch(id, name, type, systemData, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), kind.Value);
         }
     }
 }

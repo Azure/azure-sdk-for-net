@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AnalysisDefinitionData(id, name, type, systemData, kind.Value, description.Value);
+            return new AnalysisDefinitionData(id, name, type, systemData, description.Value, kind.Value);
         }
     }
 }

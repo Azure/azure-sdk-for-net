@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSitesWorkflowPreviewContent(id, name, type, systemData, kind.Value, repositoryUrl.Value, branch.Value, buildProperties.Value);
+            return new StaticSitesWorkflowPreviewContent(id, name, type, systemData, repositoryUrl.Value, branch.Value, buildProperties.Value, kind.Value);
         }
     }
 }

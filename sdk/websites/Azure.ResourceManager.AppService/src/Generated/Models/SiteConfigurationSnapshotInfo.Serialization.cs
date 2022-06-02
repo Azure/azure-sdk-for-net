@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SiteConfigurationSnapshotInfo(id, name, type, systemData, kind.Value, Optional.ToNullable(time), Optional.ToNullable(snapshotId));
+            return new SiteConfigurationSnapshotInfo(id, name, type, systemData, Optional.ToNullable(time), Optional.ToNullable(snapshotId), kind.Value);
         }
     }
 }

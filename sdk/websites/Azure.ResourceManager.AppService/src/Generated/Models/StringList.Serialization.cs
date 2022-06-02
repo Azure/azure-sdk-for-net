@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StringList(id, name, type, systemData, kind.Value, Optional.ToList(properties));
+            return new StringList(id, name, type, systemData, Optional.ToList(properties), kind.Value);
         }
     }
 }

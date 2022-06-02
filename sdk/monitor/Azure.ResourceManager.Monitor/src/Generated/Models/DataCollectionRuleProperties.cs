@@ -8,12 +8,11 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Resource properties. </summary>
-    public partial class DataCollectionRuleProperties : DataCollectionRuleData
+    public partial class DataCollectionRuleProperties : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataCollectionRuleProperties. </summary>
         /// <param name="location"> The location. </param>
@@ -31,8 +30,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionRuleProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleProperties properties, KnownDataCollectionRuleResourceKind? kind, string etag) : base(id, name, resourceType, systemData, tags, location, properties, kind, etag)
+        internal DataCollectionRuleProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleProperties properties, KnownDataCollectionRuleResourceKind? kind, string etag) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
+            Kind = kind;
+            Etag = etag;
         }
+
+        /// <summary> Resource properties. </summary>
+        public DataCollectionRuleProperties Properties { get; set; }
+        /// <summary> The kind of the resource. </summary>
+        public KnownDataCollectionRuleResourceKind? Kind { get; set; }
+        /// <summary> Resource entity tag (ETag). </summary>
+        public string Etag { get; }
     }
 }

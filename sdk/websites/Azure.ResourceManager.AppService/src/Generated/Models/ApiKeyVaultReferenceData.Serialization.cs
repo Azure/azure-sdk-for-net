@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ApiKeyVaultReferenceData(id, name, type, systemData, kind.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, source.Value, activeVersion.Value);
+            return new ApiKeyVaultReferenceData(id, name, type, systemData, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, source.Value, activeVersion.Value, kind.Value);
         }
     }
 }

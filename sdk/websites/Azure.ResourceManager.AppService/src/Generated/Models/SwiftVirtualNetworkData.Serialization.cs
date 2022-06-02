@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SwiftVirtualNetworkData(id, name, type, systemData, kind.Value, subnetResourceId.Value, Optional.ToNullable(swiftSupported));
+            return new SwiftVirtualNetworkData(id, name, type, systemData, subnetResourceId.Value, Optional.ToNullable(swiftSupported), kind.Value);
         }
     }
 }

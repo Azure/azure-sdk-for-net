@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new TopLevelDomainData(id, name, type, systemData, kind.Value, Optional.ToNullable(privacy));
+            return new TopLevelDomainData(id, name, type, systemData, Optional.ToNullable(privacy), kind.Value);
         }
     }
 }
