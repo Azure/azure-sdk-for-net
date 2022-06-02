@@ -546,10 +546,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                ScheduleDeletionOptions = new DataLakePathScheduleDeletionOptions
-                {
-                    TimeToExpire = new TimeSpan(5, 5, 5)
-                }
+                ScheduleDeletionOptions = new DataLakePathScheduleDeletionOptions(timeToExpire: new TimeSpan(5, 5, 5))
             };
 
             // Act
@@ -582,10 +579,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakePathCreateOptions options = new DataLakePathCreateOptions
             {
-                ScheduleDeletionOptions = new DataLakePathScheduleDeletionOptions
-                {
-                    ExpiresOn = Recording.UtcNow
-                }
+                ScheduleDeletionOptions = new DataLakePathScheduleDeletionOptions(expiresOn: Recording.UtcNow)
             };
 
             // Act

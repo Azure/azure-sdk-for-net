@@ -634,9 +634,10 @@ namespace Azure.Storage.Files.DataLake.Models
     }
     public partial class DataLakePathScheduleDeletionOptions
     {
-        public DataLakePathScheduleDeletionOptions() { }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
-        public System.TimeSpan? TimeToExpire { get { throw null; } set { } }
+        public DataLakePathScheduleDeletionOptions(System.DateTimeOffset? expiresOn) { }
+        public DataLakePathScheduleDeletionOptions(System.TimeSpan? timeToExpire) { }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public System.TimeSpan? TimeToExpire { get { throw null; } }
     }
     public partial class DataLakeQueryArrowField
     {
