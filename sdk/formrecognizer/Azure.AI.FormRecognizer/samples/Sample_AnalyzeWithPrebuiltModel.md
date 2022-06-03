@@ -1,6 +1,6 @@
 # Analyze a document with a prebuilt model
 
-This sample demonstrates how to analyze data from certain types of common documents with pre-trained models, using an invoice as an example. For a list of the types of documents supported by the Form Recognize service's prebuilt models, please check the [Choosing the prebuilt model ID][choosing-the-prebuilt-model-id] section.
+This sample demonstrates how to analyze data from certain types of common documents with prebuilt models, using an invoice as an example. For a list of the types of documents supported by the Form Recognize service's prebuilt models, please check the [Choosing the prebuilt model ID][choosing-the-prebuilt-model-id] section.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -22,10 +22,12 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
 The model to use for the analyze operation depends on the type of document to be analyzed. These are the IDs of the prebuilt models currently supported by the Form Recognizer service:
 
 - prebuilt-businessCard: extracts text and key information from business cards. [Supported fields][businessCard_fields].
+- prebuilt-healthInsuranceCard.us: extracts text, selection marks, and key information from US health insurance cards.
 - prebuilt-idDocument: extracts text and key information from driver licenses and international passports. [Supported fields][idDocument_fields].
 - prebuilt-invoice: extracts text, selection marks, tables, key-value pairs, and key information from invoices. [Supported fields][invoice_fields].
 - prebuilt-receipt: extracts text and key information from receipts. [Supported fields][receipt_fields].
-- prebuilt-tax.us.w2: extracts text and key information from US W2 tax forms. [Supported fields][w2_fields].
+- prebuilt-tax.us.w2: extracts text, selection marks, and key information from US W2 tax forms. [Supported fields][w2_fields].
+- prebuilt-vaccinationCard: extracts text, selection marks, and key information from vaccination cards.
 
 For more information about prebuilt models and which types of documents are supported, see the [service documentation][formreco_models].
 

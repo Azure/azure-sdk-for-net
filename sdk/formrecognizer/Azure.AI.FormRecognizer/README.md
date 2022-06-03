@@ -2,11 +2,11 @@
 
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
 
-- Layout - Extract text, selection marks, and table structures, along with their bounding region coordinates, from documents.
-- Document - Analyze key-value pairs and entities in addition to general layout from documents.
+- Layout - Extract text, selection marks, table structures, styles, and paragraphs, along with their bounding region coordinates from documents.
+- Document - Analyze key-value pairs in addition to general layout from documents.
 - Read - Read information about textual elements, such as page words and lines in addition to text language information.
-- Prebuilt - Analyze data from certain types of common documents (such as receipts, invoices, business cards, identity documents, or US W2 tax forms) using prebuilt models.
-- Custom - Build custom models to analyze text, field values, selection marks, and tabular data from documents. Custom models are trained with your own data, so they're tailored to your documents.
+- Prebuilt - Analyze data from certain types of common documents using prebuilt models. Supported documents include receipts, invoices, business cards, identity documents, vaccination cards, US W2 tax forms, and US health insurance cards.
+- Custom - Build custom models to analyze text, field values, selection marks, table structures, styles, and paragraphs from documents. Custom models are built with your own data, so they're tailored to your documents.
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
@@ -19,13 +19,13 @@ Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 dotnet add package Azure.AI.FormRecognizer
 ``` 
 
-> Note: This version of the client library defaults to the `2022-01-30-preview` version of the service.
+> Note: This version of the client library defaults to the `2022-06-30-preview` version of the service.
 
 This table shows the relationship between SDK versions and supported API versions of the service:
 
 |SDK version|Supported API version of service
 |-|-
-|4.0.0-beta.3 | 2.0, 2.1, 2022-01-30-preview
+|4.0.0-beta.4 | 2.0, 2.1, 2022-06-30-preview
 |3.1.X        | 2.0, 2.1
 |3.0.X        | 2.0
 
@@ -33,7 +33,7 @@ This table shows the relationship between SDK versions and supported API version
 
 |API version|Supported clients
 |-|-
-|2022-01-30-preview|DocumentAnalysisClient and DocumentModelAdministrationClient
+|2022-06-30-preview|DocumentAnalysisClient and DocumentModelAdministrationClient
 |2.1|FormRecognizerClient and FormTrainingClient
 |2.0|FormRecognizerClient and FormTrainingClient
 
@@ -140,15 +140,17 @@ var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCrede
 
 |Model ID|Features
 |-|-
-|`prebuilt-layout`| Text extraction, selection marks, tables
-|`prebuilt-document`| Text extraction, selection marks, tables, key-value pairs and entities
-|`prebuilt-read`| Text extraction, text languages and styles
-|`prebuilt-invoices`| Text extraction, selection marks, tables, and pre-trained fields and values pertaining to invoices
-|`prebuilt-businessCard`| Text extraction and pre-trained fields and values pertaining to business cards
-|`prebuilt-idDocument`| Text extraction and pre-trained fields and values pertaining to driver licenses and international passports
-|`prebuilt-receipt`| Text extraction and pre-trained fields and values pertaining to sales receipts
-|`prebuilt-tax.us.w2`| Text extraction and pre-trained fields and values pertaining to US W2 tax forms
-|`{custom-model-id}`| Text extraction, selection marks, tables, labeled fields and values from your custom documents
+|`prebuilt-layout`| Text extraction, selection marks, tables, styles, and paragraphs
+|`prebuilt-document`| Text extraction, selection marks, tables, styles, paragraphs, and key-value pairs
+|`prebuilt-read`| Text extraction, styles, paragraphs, and text languages
+|`prebuilt-invoices`| Text extraction, selection marks, tables, styles, paragraphs, key-value pairs, and pre-trained fields and values pertaining to invoices
+|`prebuilt-businessCard`| Text extraction, styles, paragraphs, and pre-trained fields and values pertaining to business cards
+|`prebuilt-healthInsuranceCard.us`| Text extraction, selection marks, styles, paragraphs, and pre-trained fields and values pertaining to US health insurance cards
+|`prebuilt-idDocument`| Text extraction, styles, paragraphs, and pre-trained fields and values pertaining to driver licenses and international passports
+|`prebuilt-receipt`| Text extraction, styles, paragraphs, and pre-trained fields and values pertaining to sales receipts
+|`prebuilt-tax.us.w2`| Text extraction, selection marks, styles, paragraphs, and pre-trained fields and values pertaining to US W2 tax forms
+|`prebuilt-vaccinationCard`| Text extraction, selection marks, styles, paragraphs, and pre-trained fields and values pertaining to vaccination cards
+|`{custom-model-id}`| Text extraction, selection marks, tables, styles, paragraphs, and labeled fields and values from your custom documents
 
 Sample code snippets are provided to illustrate using a DocumentAnalysisClient [here](#examples).
 More information about analyzing documents, including supported features, locales, and document types can be found in the [service documentation][formreco_models].
@@ -157,8 +159,7 @@ More information about analyzing documents, including supported features, locale
 
 `DocumentModelAdministrationClient` provides operations for:
 
-- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type(s) the model can analyze, the fields it can analyze for each document type,
-as well as the estimated confidence for each field. See the [service documentation][formreco_build_model] for a more detailed explanation.
+- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type(s) the model can analyze, the fields it can analyze for each document type, as well as the estimated confidence for each field. See the [service documentation][formreco_build_model] for a more detailed explanation.
 - Creating a composed model from a collection of existing models.
 - Managing models created in your account.
 - Listing document model operations or getting a specific model operation created within the last 24 hours.
@@ -205,7 +206,7 @@ The following section provides several code snippets illustrating common pattern
 > Note that these samples use SDK `V4.0.0-beta.X`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
 
 ### Extract Layout
-Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates from documents.
+Extract text, selection marks, table structures, styles, and paragraphs, along with their bounding region coordinates from documents.
 
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
@@ -248,6 +249,18 @@ foreach (DocumentPage page in result.Pages)
     }
 }
 
+Console.WriteLine("Paragraphs:");
+
+foreach (DocumentParagraph paragraph in result.Paragraphs)
+{
+    Console.WriteLine($"  Paragraph content: {paragraph.Content}");
+
+    if (paragraph.Role != null)
+    {
+        Console.WriteLine($"    Role: {paragraph.Role}");
+    }
+}
+
 foreach (DocumentStyle style in result.Styles)
 {
     // Check the style and style confidence to see if text is handwritten.
@@ -283,7 +296,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 For more information and samples see [here][extract_layout].
 
 ### Use the General Prebuilt Document Model
-Analyze key-value pairs, entities, tables, and selection marks from documents using the general prebuilt document model.
+Analyze text, selection marks, table structures, styles, paragraphs, and key-value pairs from documents using the general prebuilt document model.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
@@ -375,7 +388,7 @@ for (int i = 0; i < result.Tables.Count; i++)
 For more information and samples see [here][analyze_prebuilt_document].
 
 ### Use the Prebuilt Read Model
-Analyze textual elements, such as page words and lines, styles, and text language information from documents using the prebuilt read model.
+Analyze textual elements, such as page words and lines, styles, paragraphs, and text language information from documents using the prebuilt read model.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
@@ -434,7 +447,7 @@ foreach (DocumentStyle style in result.Styles)
 For more information and samples see [here][analyze_prebuilt_read].
 
 ### Use Prebuilt Models
-Analyze data from certain types of common documents using pre-trained models provided by the Form Recognizer service.
+Analyze data from certain types of common documents using prebuilt models provided by the Form Recognizer service.
 
 For example, to analyze fields from an invoice, use the prebuilt Invoice model provided by passing the `prebuilt-invoice` model ID into the `StartAnalyzeDocumentAsync` method:
 
@@ -542,12 +555,14 @@ for (int i = 0; i < result.Documents.Count; i++)
 }
 ```
 
-You are not limited to invoices! There are a few prebuilt models to choose from, each of which has its own set of supported fields:
+You are not limited to invoices! There are a couple of prebuilt models to choose from, each of which has its own set of supported fields:
 - Analyze business cards using the `prebuilt-businessCard` model. [Supported fields][businessCard_fields].
 - Analyze driver licenses and international passports using the `prebuilt-idDocument` model. [Supported fields][idDocument_fields].
+- Analyze US health insurance cards using the `prebuilt-healthInsuranceCard.us` model.
 - Analyze invoices using the `prebuilt-invoice` model. [Supported fields][invoice_fields].
 - Analyze receipts using the `prebuilt-receipt` model. [Supported fields][receipt_fields].
 - Analyze US W2 tax forms using the `prebuilt-tax.us.w2` model. [Supported fields][w2_fields].
+- Analyze vaccination cards using the `prebuilt-vaccinationCard` model.
 
 For more samples and information about which types of documents are supported, see [here][analyze_prebuilt].
 
@@ -592,7 +607,7 @@ foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
 For more information and samples see [here][build_a_custom_model].
 
 ### Analyze Custom Documents
-Analyze text, field values, selection marks, and table data from custom documents, using models you built with your own document types.
+Analyze text, field values, selection marks, and table structures, styles, and paragraphs from custom documents, using models you built with your own document types.
 
 ```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
 string modelId = "<modelId>";
