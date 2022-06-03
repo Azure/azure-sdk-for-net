@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             foreach (DocumentLanguage language in result.Languages)
             {
-                Console.WriteLine($"  Found language '{language.LanguageCode}' with confidence {language.Confidence}.");
+                Console.WriteLine($"  Found language with locale '{language.Locale}' and confidence {language.Confidence}.");
             }
 
             foreach (DocumentPage page in result.Pages)
@@ -51,11 +51,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                     DocumentLine line = page.Lines[i];
                     Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
 
-                    Console.WriteLine($"    Its bounding box is:");
-                    Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
-                    Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
-                    Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
-                    Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+                    Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+                    for (int j = 0; j < line.BoundingPolygon.Points.Length; j++)
+                    {
+                        Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
+                    }
                 }
             }
 

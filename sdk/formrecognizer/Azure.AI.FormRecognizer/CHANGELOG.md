@@ -3,14 +3,23 @@
 ## 4.0.0-beta.4 (Unreleased)
 
 ### Features Added
+- Added `Kind` property to the `DocumentPage` class.
+- Added the `Paragraphs` property to the `AnalyzeResult` class. This property holds information about the paragraphs extracted from the input documents.
+- Added `Caption` and `Footnotes` properties to `DocumentTable`.
 - Added `DocumentAnalysisClient` integration for ASP.NET Core ([#27123](https://github.com/azure/azure-sdk-for-net/issues/27123)).
 
 ### Breaking Changes
-- Renamed `StartCopyModel` methods to `StartCopyModelTo`.
+- In the `DocumentAnalysis` namespace, renamed `BoundingBox` model and properties to `BoundingPolygon`. It will eventually be able to include more points to better fit the borders of a document element.
+- Removed the support for analyzing entities. The `DocumentEntity` class and related properties have been removed from the SDK.
+- Renamed `DocumentModelAdministrationClient.StartCopyModel` methods to `StartCopyModelTo`.
 - Made `DocumentSpan` a `struct` instead of a `class`.
 - In `AccountProperties`, renamed `Count` and `Limit` to `DocumentModelCount` and `DocumentModelLimit`.
+- In `DocumentPage`, properties `Angle`, `Height`, `Unit`, and `Width` were made nullable.
 - In `DocumentTableCell`, properties `Kind`, `RowSpan`, and `ColumnSpan` are not nullable anymore.
-- In the method `StartCreateComposedModel`, renamed parameter `modelIds` to `componentModelIds`.
+- In `DocumentLanguage`, renamed property `LanguageCode` to `Locale`.
+- In the method `DocumentModelAdministrationClient.StartCreateComposedModel`, renamed parameter `modelIds` to `componentModelIds`.
+- The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-06-30-preview`, so they don't support `2020-01-30-preview` anymore.
+- `DocumentAnalysisModelFactory.DocumentPage` has a new `kind` parameter.
 
 ### Bugs Fixed
 

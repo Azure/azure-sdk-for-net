@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("DocumentEntity")]
-    public partial class DocumentEntity
+    [CodeGenModel("DocumentPageKind")]
+    public readonly partial struct DocumentPageKind
     {
     }
 }

@@ -45,6 +45,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         private SelectionMarkState? ValueSelectionMark { get; set; }
 
+        private AddressValue ValueAddress { get; }
+
         [CodeGenMember("ValueSelectionMark")]
         private V3SelectionMarkState? ValueSelectionMarkPrivate
         {
@@ -293,6 +295,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
 
             return ValueCurrency.Value;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as an <see cref="AddressValue"/>.
+        /// </summary>
+        /// <returns>The value of the field converted to an <see cref="AddressValue"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="DocumentFieldType.Address"/>.</exception>
+        public AddressValue AsAddress()
+        {
+            if (ValueType != DocumentFieldType.Address)
+            {
+                throw new InvalidOperationException($"Cannot get field as address.  Field value's type is {ValueType}.");
+            }
+
+            return ValueAddress;
         }
     }
 }

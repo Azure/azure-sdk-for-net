@@ -11,28 +11,15 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class DocumentEntity
+    public partial class DocumentCaption
     {
-        internal static DocumentEntity DeserializeDocumentEntity(JsonElement element)
+        internal static DocumentCaption DeserializeDocumentCaption(JsonElement element)
         {
-            string category = default;
-            Optional<string> subCategory = default;
             string content = default;
             Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("category"))
-                {
-                    category = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("subCategory"))
-                {
-                    subCategory = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("content"))
                 {
                     content = property.Value.GetString();
@@ -63,13 +50,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     spans = array;
                     continue;
                 }
-                if (property.NameEquals("confidence"))
-                {
-                    confidence = property.Value.GetSingle();
-                    continue;
-                }
             }
-            return new DocumentEntity(category, subCategory.Value, content, Optional.ToList(boundingRegions), spans, confidence);
+            return new DocumentCaption(content, Optional.ToList(boundingRegions), spans);
         }
     }
 }
