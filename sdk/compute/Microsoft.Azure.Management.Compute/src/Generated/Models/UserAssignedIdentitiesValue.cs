@@ -13,26 +13,26 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue
+    public partial class UserAssignedIdentitiesValue
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue class.
+        /// Initializes a new instance of the UserAssignedIdentitiesValue
+        /// class.
         /// </summary>
-        public VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue()
+        public UserAssignedIdentitiesValue()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue class.
+        /// Initializes a new instance of the UserAssignedIdentitiesValue
+        /// class.
         /// </summary>
         /// <param name="principalId">The principal id of user assigned
         /// identity.</param>
         /// <param name="clientId">The client id of user assigned
         /// identity.</param>
-        public VirtualMachineScaleSetIdentityUserAssignedIdentitiesValue(string principalId = default(string), string clientId = default(string))
+        public UserAssignedIdentitiesValue(string principalId = default(string), string clientId = default(string))
         {
             PrincipalId = principalId;
             ClientId = clientId;

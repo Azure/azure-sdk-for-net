@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// associated with the Virtual Machine. The user identity dictionary
         /// key references will be ARM resource ids in the form:
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
-        public VirtualMachineIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), IDictionary<string, VirtualMachineIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, VirtualMachineIdentityUserAssignedIdentitiesValue>))
+        public VirtualMachineIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentitiesValue>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentities")]
-        public IDictionary<string, VirtualMachineIdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
+        public IDictionary<string, UserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
 
     }
 }

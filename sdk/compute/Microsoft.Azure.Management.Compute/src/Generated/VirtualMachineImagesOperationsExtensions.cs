@@ -275,5 +275,47 @@ namespace Microsoft.Azure.Management.Compute
                 }
             }
 
+            /// <summary>
+            /// Gets a list of all virtual machine image versions for the specified edge
+            /// zone
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The name of a supported Azure region.
+            /// </param>
+            /// <param name='edgeZone'>
+            /// The name of the edge zone.
+            /// </param>
+            public static VmImagesInEdgeZoneListResult ListByEdgeZone(this IVirtualMachineImagesOperations operations, string location, string edgeZone)
+            {
+                return operations.ListByEdgeZoneAsync(location, edgeZone).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of all virtual machine image versions for the specified edge
+            /// zone
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// The name of a supported Azure region.
+            /// </param>
+            /// <param name='edgeZone'>
+            /// The name of the edge zone.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<VmImagesInEdgeZoneListResult> ListByEdgeZoneAsync(this IVirtualMachineImagesOperations operations, string location, string edgeZone, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByEdgeZoneWithHttpMessagesAsync(location, edgeZone, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }
