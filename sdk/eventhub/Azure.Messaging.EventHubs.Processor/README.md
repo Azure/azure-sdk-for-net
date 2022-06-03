@@ -240,11 +240,13 @@ When using Azure Active Directory with Azure Storage, your principal must be ass
 
 ## Troubleshooting
 
+For detailed troubleshooting information, please refer to the [Event Hubs Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs\TROUBLESHOOTING.md).
+
 ### Exception handling
 
 #### Event Processor client exceptions
 
-The Event Processor client makes every attempt to be resilient in the face of exceptions and will take the necessary actions to continue processing unless it is impossible to do so.  No action from developers is needed for this to take place; it is natively part of the processor's behavior.
+The Event Processor client makes every attempt to be resilient in the face of exceptions and will take the necessary actions to continue processing unless it is impossible to do so.  **_No action from developers is needed_** for this to take place; it is natively part of the processor's behavior.
 
 In order to allow developers the opportunity to inspect and react to exceptions that occur within the Event Processor client operations, they are surfaced via the `ProcessError` event.  The arguments for this event offer details about the exception and the context in which it was observed.  Developers may perform normal operations on the Event Processor client from within this event handler, such as stopping and/or restarting it in response to errors, but may not otherwise influence the processor's exception behavior.  
 
@@ -255,10 +257,6 @@ For a basic example of implementing the error handler, please see the sample: [E
 Because the Event Processor client lacks the appropriate context to understand the severity of exceptions within the event handlers that developers provide, it cannot assume what actions would be a reasonable response to them.  As a result, developers are considered responsible for exceptions that occur within the event handlers they provide using `try/catch` blocks and other standard language constructs.  
 
 The Event Processor client will not attempt to detect exceptions in developer code nor surface them explicitly.  The resulting behavior will depend on the processor's hosting environment and the context in which the event handler was called.  Because this may vary between different scenarios, it is strongly recommended that developers code their event handlers defensively and account for potential exceptions.
-
-#### Exception details
-
-For detailed information about exceptions that may occur, please refer to the Event Hubs client library [README]( https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/README.md#event-hubs-exception) and the service documentation for [Event Hubs messaging exceptions](https://docs.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions). 
 
 ### Logging and diagnostics
 
