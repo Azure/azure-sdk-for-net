@@ -55,7 +55,8 @@ Console.WriteLine($"Sms id: {sendResult.MessageId}");
 ```
 ### Send a 1:N SMS Message
 To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
-You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
+You may also add pass in an options object to specify whether the delivery report should be enabled, 
+the maximum waiting time in seconds for the delivery report (default and maximum value is 18000) and set custom tags.
 ```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptionsAsync
 var response = await smsClient.SendAsync(
     from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
@@ -64,6 +65,7 @@ var response = await smsClient.SendAsync(
     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
         Tag = "marketing", // custom tags
+        ValidityPeriodSeconds = 9870
     });
 foreach (SmsSendResult result in response.Value)
 {
@@ -83,7 +85,7 @@ try
         from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
         to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
         message: "Weekly Promotion!",
-        options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+        options: new SmsSendOptions(enableDeliveryReport: true, validityPeriodSeconds: 1230) // OPTIONAL
         {
             Tag = "marketing", // custom tags
         });

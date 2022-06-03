@@ -10,6 +10,7 @@ namespace Azure.Communication.Sms
     /// <summary> Optional configuration for sending SMS messages. </summary>
     public partial class SmsSendOptions
     {
+        const uint MaxDeliveryReportArrivalTimeInSeconds = 18000;
         /// <summary> Initializes a new instance of SmsSendOptions. </summary>
         /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
         public SmsSendOptions(bool enableDeliveryReport)
@@ -17,9 +18,24 @@ namespace Azure.Communication.Sms
             EnableDeliveryReport = enableDeliveryReport;
         }
 
+        /// <summary> Initializes a new instance of SmsSendOptions. </summary>
+        /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
+        /// <param name="validityPeriodSeconds"> Enable this flag to set expiration time for this delivery report</param>
+        public SmsSendOptions(bool enableDeliveryReport, uint validityPeriodSeconds)
+        {
+            EnableDeliveryReport = enableDeliveryReport;
+            ValidityPeriodSeconds = validityPeriodSeconds;
+        }
+
         /// <summary> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </summary>
         public bool EnableDeliveryReport { get; }
         /// <summary> Use this field to provide metadata that will then be sent back in the corresponding Delivery Report. </summary>
         public string Tag { get; set; }
+
+        /// <summary>
+        /// Delivery report max time: max amount of seconds while sender waits for delivery report.
+        /// Default value is max waiting time of 18000 seconds.
+        /// </summary>
+        public uint ValidityPeriodSeconds { get; set; } = MaxDeliveryReportArrivalTimeInSeconds;
     }
 }
