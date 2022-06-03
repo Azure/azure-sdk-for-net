@@ -1,139 +1,139 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "147362",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-2f8757a470a5a042846473d70390a3c4-66145408f6480a48-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "dffa6de93c045aa99a84ff4a84ea026e",
+        "traceparent": "00-b31586254ffa3b7461bc9ffe0601f50a-6c8608e116420810-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "657952a8139a6dabe4f9eebd1fde78a6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "572c3d5b-867a-4615-8a96-2e7986b452ee",
+        "apim-request-id": "b4bfe3e9-1efc-4f9d-9fd7-a71672278cc9",
         "Content-Length": "0",
-        "Date": "Wed, 26 Jan 2022 00:20:20 GMT",
-        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/572c3d5b-867a-4615-8a96-2e7986b452ee?api-version=2022-01-30-preview",
+        "Date": "Fri, 20 May 2022 22:31:21 GMT",
+        "Operation-Location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/b4bfe3e9-1efc-4f9d-9fd7-a71672278cc9?api-version=2022-06-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "162"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "163"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/572c3d5b-867a-4615-8a96-2e7986b452ee?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/b4bfe3e9-1efc-4f9d-9fd7-a71672278cc9?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "c801165adb5bc58a9261754e753e04df",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "65e2b36fe9c67650126286441758f1f9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "05619075-90c7-46b6-9554-470aa55aa365",
+        "apim-request-id": "fadcde5f-5f57-4cbd-8b8b-23d32598944f",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:20 GMT",
+        "Date": "Fri, 20 May 2022 22:31:21 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "30"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-26T00:20:21Z",
-        "lastUpdatedDateTime": "2022-01-26T00:20:21Z"
+        "createdDateTime": "2022-05-20T22:31:21Z",
+        "lastUpdatedDateTime": "2022-05-20T22:31:21Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/572c3d5b-867a-4615-8a96-2e7986b452ee?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/b4bfe3e9-1efc-4f9d-9fd7-a71672278cc9?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "736a39a5589f5a19a2e014ae3747ba1e",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b3754b11f84c4f9abb780c8499a042d9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "09a8c215-31b9-4bd0-aaca-198fd6f4dc10",
+        "apim-request-id": "e51ca6eb-7c9a-4f96-81db-b988fa313feb",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:21 GMT",
+        "Date": "Fri, 20 May 2022 22:31:22 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-26T00:20:21Z",
-        "lastUpdatedDateTime": "2022-01-26T00:20:21Z"
+        "createdDateTime": "2022-05-20T22:31:21Z",
+        "lastUpdatedDateTime": "2022-05-20T22:31:21Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/572c3d5b-867a-4615-8a96-2e7986b452ee?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/b4bfe3e9-1efc-4f9d-9fd7-a71672278cc9?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "e121b2a076170ea7e2344ca3c75ae45b",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "147311e018efbf9d010252378d67558b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bf2e3ff2-cb70-4699-afeb-a861b0945078",
+        "apim-request-id": "cce078a2-41fd-4ed7-b2a6-5d24f78c71f6",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:22 GMT",
+        "Date": "Fri, 20 May 2022 22:31:24 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "26"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "20"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-26T00:20:21Z",
-        "lastUpdatedDateTime": "2022-01-26T00:20:21Z"
+        "createdDateTime": "2022-05-20T22:31:21Z",
+        "lastUpdatedDateTime": "2022-05-20T22:31:21Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/572c3d5b-867a-4615-8a96-2e7986b452ee?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/b4bfe3e9-1efc-4f9d-9fd7-a71672278cc9?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "4ba4207f8f7f01cefda6267ac7db8e4b",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "d3abf507c568765a1892a94dddccdd72",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "ab12a2d8-73e9-48d1-b0a3-223552716eb1",
+        "apim-request-id": "f4c9719b-a90e-4358-9946-005be9ef9e5c",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:20:24 GMT",
+        "Date": "Fri, 20 May 2022 22:31:25 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "60"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "32"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2022-01-26T00:20:21Z",
-        "lastUpdatedDateTime": "2022-01-26T00:20:24Z",
+        "createdDateTime": "2022-05-20T22:31:21Z",
+        "lastUpdatedDateTime": "2022-05-20T22:31:24Z",
         "analyzeResult": {
-          "apiVersion": "2022-01-30-preview",
+          "apiVersion": "2022-06-30-preview",
           "modelId": "prebuilt-layout",
           "stringIndexType": "utf16CodeUnit",
           "content": "Contoso\nAddress:\n1 Redmond way Suite\n6000 Redmond, WA\n99243\nInvoice For: Microsoft\n1020 Enterprise Way\nSunnayvale, CA 87659\nInvoice Number\nInvoice Date\nInvoice Due Date\nCharges\nVAT ID\n34278587\n6/18/2017\n6/24/2017\n$56,651.49\nPT",
@@ -147,7 +147,7 @@
               "words": [
                 {
                   "content": "Contoso",
-                  "boundingBox": [
+                  "polygon": [
                     0.5384,
                     1.1583,
                     1.4466,
@@ -165,7 +165,7 @@
                 },
                 {
                   "content": "Address:",
-                  "boundingBox": [
+                  "polygon": [
                     0.7994,
                     1.5143,
                     1.3836,
@@ -183,7 +183,7 @@
                 },
                 {
                   "content": "1",
-                  "boundingBox": [
+                  "polygon": [
                     0.8106,
                     1.708,
                     0.8463,
@@ -201,7 +201,7 @@
                 },
                 {
                   "content": "Redmond",
-                  "boundingBox": [
+                  "polygon": [
                     0.923,
                     1.7047,
                     1.5018,
@@ -219,7 +219,7 @@
                 },
                 {
                   "content": "way",
-                  "boundingBox": [
+                  "polygon": [
                     1.5506,
                     1.7309,
                     1.7949,
@@ -237,7 +237,7 @@
                 },
                 {
                   "content": "Suite",
-                  "boundingBox": [
+                  "polygon": [
                     1.8415,
                     1.7033,
                     2.1445,
@@ -255,7 +255,7 @@
                 },
                 {
                   "content": "6000",
-                  "boundingBox": [
+                  "polygon": [
                     0.8019,
                     1.896,
                     1.0991,
@@ -273,7 +273,7 @@
                 },
                 {
                   "content": "Redmond,",
-                  "boundingBox": [
+                  "polygon": [
                     1.1537,
                     1.8964,
                     1.7689,
@@ -291,7 +291,7 @@
                 },
                 {
                   "content": "WA",
-                  "boundingBox": [
+                  "polygon": [
                     1.8196,
                     1.8976,
                     2.0384,
@@ -309,7 +309,7 @@
                 },
                 {
                   "content": "99243",
-                  "boundingBox": [
+                  "polygon": [
                     0.8025,
                     2.0876,
                     1.175,
@@ -327,7 +327,7 @@
                 },
                 {
                   "content": "Invoice",
-                  "boundingBox": [
+                  "polygon": [
                     4.4033,
                     1.5143,
                     4.8234,
@@ -345,7 +345,7 @@
                 },
                 {
                   "content": "For:",
-                  "boundingBox": [
+                  "polygon": [
                     4.8793,
                     1.5143,
                     5.1013,
@@ -363,7 +363,7 @@
                 },
                 {
                   "content": "Microsoft",
-                  "boundingBox": [
+                  "polygon": [
                     5.2045,
                     1.5114,
                     5.8155,
@@ -381,7 +381,7 @@
                 },
                 {
                   "content": "1020",
-                  "boundingBox": [
+                  "polygon": [
                     5.2036,
                     1.716,
                     5.4935,
@@ -399,7 +399,7 @@
                 },
                 {
                   "content": "Enterprise",
-                  "boundingBox": [
+                  "polygon": [
                     5.5488,
                     1.7164,
                     6.2178,
@@ -417,7 +417,7 @@
                 },
                 {
                   "content": "Way",
-                  "boundingBox": [
+                  "polygon": [
                     6.2618,
                     1.7164,
                     6.5436,
@@ -435,7 +435,7 @@
                 },
                 {
                   "content": "Sunnayvale,",
-                  "boundingBox": [
+                  "polygon": [
                     5.196,
                     1.9047,
                     5.9894,
@@ -453,7 +453,7 @@
                 },
                 {
                   "content": "CA",
-                  "boundingBox": [
+                  "polygon": [
                     6.0427,
                     1.9047,
                     6.2354,
@@ -471,7 +471,7 @@
                 },
                 {
                   "content": "87659",
-                  "boundingBox": [
+                  "polygon": [
                     6.2801,
                     1.906,
                     6.6526,
@@ -489,7 +489,7 @@
                 },
                 {
                   "content": "Invoice",
-                  "boundingBox": [
+                  "polygon": [
                     0.5439,
                     2.8733,
                     1.0098,
@@ -507,7 +507,7 @@
                 },
                 {
                   "content": "Number",
-                  "boundingBox": [
+                  "polygon": [
                     1.0611,
                     2.8743,
                     1.5729,
@@ -525,7 +525,7 @@
                 },
                 {
                   "content": "Invoice",
-                  "boundingBox": [
+                  "polygon": [
                     1.9491,
                     2.8733,
                     2.415,
@@ -543,7 +543,7 @@
                 },
                 {
                   "content": "Date",
-                  "boundingBox": [
+                  "polygon": [
                     2.4673,
                     2.8743,
                     2.7527,
@@ -561,7 +561,7 @@
                 },
                 {
                   "content": "Invoice",
-                  "boundingBox": [
+                  "polygon": [
                     3.3495,
                     2.8733,
                     3.8155,
@@ -579,7 +579,7 @@
                 },
                 {
                   "content": "Due",
-                  "boundingBox": [
+                  "polygon": [
                     3.8677,
                     2.8743,
                     4.1149,
@@ -597,7 +597,7 @@
                 },
                 {
                   "content": "Date",
-                  "boundingBox": [
+                  "polygon": [
                     4.1678,
                     2.8743,
                     4.4547,
@@ -615,7 +615,7 @@
                 },
                 {
                   "content": "Charges",
-                  "boundingBox": [
+                  "polygon": [
                     4.7468,
                     2.8717,
                     5.289,
@@ -633,7 +633,7 @@
                 },
                 {
                   "content": "VAT",
-                  "boundingBox": [
+                  "polygon": [
                     6.141,
                     2.873,
                     6.4147,
@@ -651,7 +651,7 @@
                 },
                 {
                   "content": "ID",
-                  "boundingBox": [
+                  "polygon": [
                     6.4655,
                     2.873,
                     6.5875,
@@ -669,7 +669,7 @@
                 },
                 {
                   "content": "34278587",
-                  "boundingBox": [
+                  "polygon": [
                     0.5397,
                     3.411,
                     1.1457,
@@ -687,7 +687,7 @@
                 },
                 {
                   "content": "6/18/2017",
-                  "boundingBox": [
+                  "polygon": [
                     1.9455,
                     3.41,
                     2.551,
@@ -705,7 +705,7 @@
                 },
                 {
                   "content": "6/24/2017",
-                  "boundingBox": [
+                  "polygon": [
                     3.346,
                     3.41,
                     3.9514,
@@ -723,7 +723,7 @@
                 },
                 {
                   "content": "$56,651.49",
-                  "boundingBox": [
+                  "polygon": [
                     5.3871,
                     3.4047,
                     6.0702,
@@ -741,7 +741,7 @@
                 },
                 {
                   "content": "PT",
-                  "boundingBox": [
+                  "polygon": [
                     6.2285,
                     3.4114,
                     6.3919,
@@ -758,11 +758,10 @@
                   }
                 }
               ],
-              "selectionMarks": [],
               "lines": [
                 {
                   "content": "Contoso",
-                  "boundingBox": [
+                  "polygon": [
                     0.5384,
                     1.1583,
                     1.4466,
@@ -781,7 +780,7 @@
                 },
                 {
                   "content": "Address:",
-                  "boundingBox": [
+                  "polygon": [
                     0.7994,
                     1.5143,
                     1.3836,
@@ -800,7 +799,7 @@
                 },
                 {
                   "content": "1 Redmond way Suite",
-                  "boundingBox": [
+                  "polygon": [
                     0.8106,
                     1.7033,
                     2.1445,
@@ -819,7 +818,7 @@
                 },
                 {
                   "content": "6000 Redmond, WA",
-                  "boundingBox": [
+                  "polygon": [
                     0.8019,
                     1.896,
                     2.0384,
@@ -838,7 +837,7 @@
                 },
                 {
                   "content": "99243",
-                  "boundingBox": [
+                  "polygon": [
                     0.8025,
                     2.0876,
                     1.175,
@@ -857,7 +856,7 @@
                 },
                 {
                   "content": "Invoice For: Microsoft",
-                  "boundingBox": [
+                  "polygon": [
                     4.4033,
                     1.5114,
                     5.8155,
@@ -876,7 +875,7 @@
                 },
                 {
                   "content": "1020 Enterprise Way",
-                  "boundingBox": [
+                  "polygon": [
                     5.2036,
                     1.716,
                     6.5436,
@@ -895,7 +894,7 @@
                 },
                 {
                   "content": "Sunnayvale, CA 87659",
-                  "boundingBox": [
+                  "polygon": [
                     5.196,
                     1.9047,
                     6.6526,
@@ -914,7 +913,7 @@
                 },
                 {
                   "content": "Invoice Number",
-                  "boundingBox": [
+                  "polygon": [
                     0.5439,
                     2.8733,
                     1.5729,
@@ -933,7 +932,7 @@
                 },
                 {
                   "content": "Invoice Date",
-                  "boundingBox": [
+                  "polygon": [
                     1.9491,
                     2.8733,
                     2.7527,
@@ -952,7 +951,7 @@
                 },
                 {
                   "content": "Invoice Due Date",
-                  "boundingBox": [
+                  "polygon": [
                     3.3495,
                     2.8733,
                     4.4547,
@@ -971,7 +970,7 @@
                 },
                 {
                   "content": "Charges",
-                  "boundingBox": [
+                  "polygon": [
                     4.7468,
                     2.8717,
                     5.289,
@@ -990,7 +989,7 @@
                 },
                 {
                   "content": "VAT ID",
-                  "boundingBox": [
+                  "polygon": [
                     6.141,
                     2.873,
                     6.5875,
@@ -1009,7 +1008,7 @@
                 },
                 {
                   "content": "34278587",
-                  "boundingBox": [
+                  "polygon": [
                     0.5397,
                     3.411,
                     1.1457,
@@ -1028,7 +1027,7 @@
                 },
                 {
                   "content": "6/18/2017",
-                  "boundingBox": [
+                  "polygon": [
                     1.9455,
                     3.41,
                     2.551,
@@ -1047,7 +1046,7 @@
                 },
                 {
                   "content": "6/24/2017",
-                  "boundingBox": [
+                  "polygon": [
                     3.346,
                     3.41,
                     3.9514,
@@ -1066,7 +1065,7 @@
                 },
                 {
                   "content": "$56,651.49",
-                  "boundingBox": [
+                  "polygon": [
                     5.3871,
                     3.4047,
                     6.0702,
@@ -1085,7 +1084,7 @@
                 },
                 {
                   "content": "PT",
-                  "boundingBox": [
+                  "polygon": [
                     6.2285,
                     3.4114,
                     6.3919,
@@ -1108,7 +1107,8 @@
                   "offset": 0,
                   "length": 226
                 }
-              ]
+              ],
+              "kind": "document"
             }
           ],
           "tables": [
@@ -1120,20 +1120,18 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 0,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Invoice Number",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.5136,
-                        2.7928,
-                        1.8907,
-                        2.7928,
-                        1.8978,
-                        3.3181,
+                      "polygon": [
                         0.5064,
+                        2.7899,
+                        1.8833,
+                        2.7833,
+                        1.8905,
+                        3.3116,
+                        0.4991,
                         3.3181
                       ]
                     }
@@ -1149,21 +1147,19 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 1,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Invoice Date",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        1.8907,
-                        2.7928,
-                        3.2893,
-                        2.7928,
-                        3.2964,
-                        3.3181,
-                        1.8978,
-                        3.3181
+                      "polygon": [
+                        1.8833,
+                        2.7833,
+                        3.3037,
+                        2.7899,
+                        3.3037,
+                        3.3116,
+                        1.8905,
+                        3.3116
                       ]
                     }
                   ],
@@ -1178,21 +1174,19 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 2,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Invoice Due Date",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        3.2893,
-                        2.7928,
-                        4.6878,
-                        2.7928,
-                        4.695,
-                        3.3181,
-                        3.2964,
-                        3.3181
+                      "polygon": [
+                        3.3037,
+                        2.7899,
+                        4.7023,
+                        2.7899,
+                        4.7023,
+                        3.3116,
+                        3.3037,
+                        3.3116
                       ]
                     }
                   ],
@@ -1207,21 +1201,19 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 3,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "Charges",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        4.6878,
-                        2.7928,
-                        6.0864,
-                        2.7928,
-                        6.0936,
+                      "polygon": [
+                        4.7023,
+                        2.7899,
+                        6.101,
+                        2.7833,
+                        6.101,
                         3.3181,
-                        4.695,
-                        3.3181
+                        4.7023,
+                        3.3116
                       ]
                     }
                   ],
@@ -1236,20 +1228,18 @@
                   "kind": "columnHeader",
                   "rowIndex": 0,
                   "columnIndex": 4,
-                  "rowSpan": 1,
-                  "columnSpan": 1,
                   "content": "VAT ID",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        6.0864,
-                        2.7928,
-                        7.485,
-                        2.7928,
-                        7.485,
-                        3.312,
-                        6.0936,
+                      "polygon": [
+                        6.101,
+                        2.7833,
+                        7.4851,
+                        2.7833,
+                        7.4924,
+                        3.3181,
+                        6.101,
                         3.3181
                       ]
                     }
@@ -1265,20 +1255,19 @@
                   "rowIndex": 1,
                   "columnIndex": 0,
                   "rowSpan": 2,
-                  "columnSpan": 1,
                   "content": "34278587",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        0.5064,
+                      "polygon": [
+                        0.4991,
                         3.3181,
-                        1.8978,
-                        3.3181,
-                        1.8978,
-                        3.8497,
-                        0.4992,
-                        3.8497
+                        1.8905,
+                        3.3116,
+                        1.8905,
+                        3.8529,
+                        0.4991,
+                        3.8529
                       ]
                     }
                   ],
@@ -1293,20 +1282,19 @@
                   "rowIndex": 1,
                   "columnIndex": 1,
                   "rowSpan": 2,
-                  "columnSpan": 1,
                   "content": "6/18/2017",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        1.8978,
-                        3.3181,
-                        3.2964,
-                        3.3181,
-                        3.3036,
-                        3.8497,
-                        1.8978,
-                        3.8497
+                      "polygon": [
+                        1.8905,
+                        3.3116,
+                        3.3037,
+                        3.3116,
+                        3.3037,
+                        3.8529,
+                        1.8905,
+                        3.8529
                       ]
                     }
                   ],
@@ -1321,20 +1309,19 @@
                   "rowIndex": 1,
                   "columnIndex": 2,
                   "rowSpan": 2,
-                  "columnSpan": 1,
                   "content": "6/24/2017",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        3.2964,
-                        3.3181,
-                        4.695,
-                        3.3181,
-                        4.7022,
-                        3.8497,
-                        3.3036,
-                        3.8497
+                      "polygon": [
+                        3.3037,
+                        3.3116,
+                        4.7023,
+                        3.3116,
+                        4.7023,
+                        3.8529,
+                        3.3037,
+                        3.8529
                       ]
                     }
                   ],
@@ -1349,20 +1336,19 @@
                   "rowIndex": 1,
                   "columnIndex": 3,
                   "rowSpan": 2,
-                  "columnSpan": 1,
                   "content": "$56,651.49",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        4.695,
+                      "polygon": [
+                        4.7023,
+                        3.3116,
+                        6.101,
                         3.3181,
-                        6.0936,
-                        3.3181,
-                        6.1008,
-                        3.8497,
-                        4.7022,
-                        3.8497
+                        6.101,
+                        3.8529,
+                        4.7023,
+                        3.8529
                       ]
                     }
                   ],
@@ -1377,20 +1363,19 @@
                   "rowIndex": 1,
                   "columnIndex": 4,
                   "rowSpan": 2,
-                  "columnSpan": 1,
                   "content": "PT",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        6.0936,
+                      "polygon": [
+                        6.101,
                         3.3181,
-                        7.485,
-                        3.312,
-                        7.485,
-                        3.8497,
-                        6.1008,
-                        3.8497
+                        7.4924,
+                        3.3181,
+                        7.4924,
+                        3.8529,
+                        6.101,
+                        3.8529
                       ]
                     }
                   ],
@@ -1405,7 +1390,7 @@
               "boundingRegions": [
                 {
                   "pageNumber": 1,
-                  "boundingBox": [
+                  "polygon": [
                     0.4955,
                     2.7804,
                     7.4929,
@@ -1425,6 +1410,440 @@
               ]
             }
           ],
+          "paragraphs": [
+            {
+              "spans": [
+                {
+                  "offset": 0,
+                  "length": 7
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.5384,
+                    1.1583,
+                    1.4466,
+                    1.1583,
+                    1.4466,
+                    1.3534,
+                    0.5384,
+                    1.3534
+                  ]
+                }
+              ],
+              "content": "Contoso"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 8,
+                  "length": 8
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.7994,
+                    1.5143,
+                    1.3836,
+                    1.5143,
+                    1.3836,
+                    1.6154,
+                    0.7994,
+                    1.6154
+                  ]
+                }
+              ],
+              "content": "Address:"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 17,
+                  "length": 19
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8106,
+                    1.7033,
+                    2.1445,
+                    1.7033,
+                    2.1445,
+                    1.8342,
+                    0.8106,
+                    1.8342
+                  ]
+                }
+              ],
+              "content": "1 Redmond way Suite"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 37,
+                  "length": 16
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8019,
+                    1.896,
+                    2.0384,
+                    1.896,
+                    2.0384,
+                    2.0171,
+                    0.8019,
+                    2.0171
+                  ]
+                }
+              ],
+              "content": "6000 Redmond, WA"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 54,
+                  "length": 5
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8025,
+                    2.0876,
+                    1.175,
+                    2.0876,
+                    1.175,
+                    2.1911,
+                    0.8025,
+                    2.1911
+                  ]
+                }
+              ],
+              "content": "99243"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 60,
+                  "length": 22
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    4.4033,
+                    1.5114,
+                    5.8155,
+                    1.5114,
+                    5.8155,
+                    1.6155,
+                    4.4033,
+                    1.6155
+                  ]
+                }
+              ],
+              "content": "Invoice For: Microsoft"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 83,
+                  "length": 19
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    5.2036,
+                    1.716,
+                    6.5436,
+                    1.716,
+                    6.5436,
+                    1.8459,
+                    5.2036,
+                    1.8459
+                  ]
+                }
+              ],
+              "content": "1020 Enterprise Way"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 103,
+                  "length": 20
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    5.196,
+                    1.9047,
+                    6.6526,
+                    1.9047,
+                    6.6526,
+                    2.0359,
+                    5.196,
+                    2.0359
+                  ]
+                }
+              ],
+              "content": "Sunnayvale, CA 87659"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 124,
+                  "length": 14
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.5064,
+                    2.7899,
+                    1.8833,
+                    2.7833,
+                    1.8905,
+                    3.3116,
+                    0.4991,
+                    3.3181
+                  ]
+                }
+              ],
+              "content": "Invoice Number"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 139,
+                  "length": 12
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    1.8833,
+                    2.7833,
+                    3.3037,
+                    2.7899,
+                    3.3037,
+                    3.3116,
+                    1.8905,
+                    3.3116
+                  ]
+                }
+              ],
+              "content": "Invoice Date"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 152,
+                  "length": 16
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    3.3037,
+                    2.7899,
+                    4.7023,
+                    2.7899,
+                    4.7023,
+                    3.3116,
+                    3.3037,
+                    3.3116
+                  ]
+                }
+              ],
+              "content": "Invoice Due Date"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 169,
+                  "length": 7
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    4.7023,
+                    2.7899,
+                    6.101,
+                    2.7833,
+                    6.101,
+                    3.3181,
+                    4.7023,
+                    3.3116
+                  ]
+                }
+              ],
+              "content": "Charges"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 177,
+                  "length": 6
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.101,
+                    2.7833,
+                    7.4851,
+                    2.7833,
+                    7.4924,
+                    3.3181,
+                    6.101,
+                    3.3181
+                  ]
+                }
+              ],
+              "content": "VAT ID"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 184,
+                  "length": 8
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.4991,
+                    3.3181,
+                    1.8905,
+                    3.3116,
+                    1.8905,
+                    3.8529,
+                    0.4991,
+                    3.8529
+                  ]
+                }
+              ],
+              "content": "34278587"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 193,
+                  "length": 9
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    1.8905,
+                    3.3116,
+                    3.3037,
+                    3.3116,
+                    3.3037,
+                    3.8529,
+                    1.8905,
+                    3.8529
+                  ]
+                }
+              ],
+              "content": "6/18/2017"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 203,
+                  "length": 9
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    3.3037,
+                    3.3116,
+                    4.7023,
+                    3.3116,
+                    4.7023,
+                    3.8529,
+                    3.3037,
+                    3.8529
+                  ]
+                }
+              ],
+              "content": "6/24/2017"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 213,
+                  "length": 10
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    4.7023,
+                    3.3116,
+                    6.101,
+                    3.3181,
+                    6.101,
+                    3.8529,
+                    4.7023,
+                    3.8529
+                  ]
+                }
+              ],
+              "content": "$56,651.49"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 224,
+                  "length": 2
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.101,
+                    3.3181,
+                    7.4924,
+                    3.3181,
+                    7.4924,
+                    3.8529,
+                    6.101,
+                    3.8529
+                  ]
+                }
+              ],
+              "content": "PT"
+            }
+          ],
           "styles": []
         }
       }
@@ -1432,7 +1851,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com",
-    "RandomSeed": "1509859074"
+    "FORM_RECOGNIZER_ENDPOINT": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "952047341"
   }
 }
