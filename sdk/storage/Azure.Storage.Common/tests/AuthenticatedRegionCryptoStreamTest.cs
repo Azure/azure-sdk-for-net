@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
+using Iced.Intel;
 using NUnit;
 using NUnit.Framework;
 
@@ -20,8 +22,8 @@ namespace Azure.Storage.Test
     /// </summary>
     public class AuthenticatedRegionCryptoStreamTest
     {
-        private const int _blockSize = Constants.KB;
-        private const int _ciphertextBlockSize = _blockSize + _nonceLength + _tagLength;
+        private const int _authRegionDataLength = Constants.KB;
+        private const int _totalAuthRegionLength = _authRegionDataLength + _nonceLength + _tagLength;
         private const int _nonceLength = 12;
         private const int _tagLength = 16;
         private const byte _nonceByte = 0xC3;
@@ -114,19 +116,19 @@ namespace Azure.Storage.Test
         public void TransformEncryptWrite(
             [Values(true, false)] bool alligned,
             [Values(1, 3)] int numAuthBlocks,
-            [Values(200, _blockSize, null)] int? streamWriteLength,
+            [Values(200, _authRegionDataLength, null)] int? streamWriteLength,
             [Values(true, false)] bool flushEveryWrite)
         {
             // Arrange
-            int plaintextLength = (alligned ? _blockSize : 500) + ((numAuthBlocks - 1) * _blockSize);
+            int plaintextLength = (alligned ? _authRegionDataLength : 500) + ((numAuthBlocks - 1) * _authRegionDataLength);
             byte[] plaintext = GetRandomBytes(plaintextLength);
 
             var destStream = new MemoryStream();
             var writeStream = new AuthenticatedRegionCryptoStream(
                 destStream,
                 new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte),
-                _blockSize,
-                System.Security.Cryptography.CryptoStreamMode.Write);
+                _authRegionDataLength,
+                CryptoStreamMode.Write);
 
             // Act
             if (streamWriteLength.HasValue)
@@ -151,16 +153,16 @@ namespace Azure.Storage.Test
             // Assert
             foreach (int authBlock in Enumerable.Range(0, numAuthBlocks))
             {
-                int plaintextOffset = authBlock * _blockSize;
+                int plaintextOffset = authBlock * _authRegionDataLength;
                 ReadOnlySpan<byte> plaintextAuthBlock = new ReadOnlySpan<byte>(
                     plaintext,
                     plaintextOffset,
-                    Math.Min(_blockSize, plaintext.Length - plaintextOffset));
+                    Math.Min(_authRegionDataLength, plaintext.Length - plaintextOffset));
 
-                int ciphertextOffset = authBlock * _ciphertextBlockSize;
+                int ciphertextOffset = authBlock * _totalAuthRegionLength;
                 ReadOnlySpan<byte> ciphertextAuthBlock = ciphertextResult.Slice(
                     ciphertextOffset,
-                    Math.Min(_ciphertextBlockSize, ciphertextResult.Length - ciphertextOffset));
+                    Math.Min(_totalAuthRegionLength, ciphertextResult.Length - ciphertextOffset));
 
                 CollectionAssert.AreEqual(
                     Enumerable.Repeat(_nonceByte, _nonceLength),
@@ -169,7 +171,7 @@ namespace Azure.Storage.Test
                     plaintextAuthBlock.ToArray(),
                     ciphertextAuthBlock.Slice(
                         _nonceLength,
-                        Math.Min(_blockSize, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
+                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
                 CollectionAssert.AreEqual(
                     Enumerable.Repeat(_tagByte, _tagLength),
                     ciphertextAuthBlock.Slice(ciphertextAuthBlock.Length - _tagLength).ToArray());
@@ -181,19 +183,19 @@ namespace Azure.Storage.Test
         public void TransformDecryptWrite(
             [Values(true, false)] bool alligned,
             [Values(1, 3)] int numAuthBlocks,
-            [Values(200, _ciphertextBlockSize, null)] int? streamWriteLength,
+            [Values(200, _totalAuthRegionLength, null)] int? streamWriteLength,
             [Values(true, false)] bool flushEveryWrite)
         {
             // Arrange
-            int ciphertextLength = (alligned ? _ciphertextBlockSize : 500) + ((numAuthBlocks - 1) * _ciphertextBlockSize);
+            int ciphertextLength = (alligned ? _totalAuthRegionLength : 500) + ((numAuthBlocks - 1) * _totalAuthRegionLength);
             byte[] ciphertext = GetRandomBytes(ciphertextLength);
 
             var destStream = new MemoryStream();
             var writeStream = new AuthenticatedRegionCryptoStream(
                 destStream,
                 new MockDecryptTransform(_nonceLength, _tagLength),
-                _blockSize,
-                System.Security.Cryptography.CryptoStreamMode.Write);
+                _authRegionDataLength,
+                CryptoStreamMode.Write);
 
             // Act
             if (streamWriteLength.HasValue)
@@ -218,22 +220,22 @@ namespace Azure.Storage.Test
             // Assert
             foreach (int authBlock in Enumerable.Range(0, numAuthBlocks))
             {
-                int plaintextOffset = authBlock * _blockSize;
+                int plaintextOffset = authBlock * _authRegionDataLength;
                 ReadOnlySpan<byte> plaintextAuthBlock = plaintextResult.Slice(
                     plaintextOffset,
-                    Math.Min(_blockSize, plaintextResult.Length - plaintextOffset));
+                    Math.Min(_authRegionDataLength, plaintextResult.Length - plaintextOffset));
 
-                int ciphertextOffset = authBlock * _ciphertextBlockSize;
+                int ciphertextOffset = authBlock * _totalAuthRegionLength;
                 ReadOnlySpan<byte> ciphertextAuthBlock = new ReadOnlySpan<byte>(
                     ciphertext,
                     ciphertextOffset,
-                    Math.Min(_ciphertextBlockSize, ciphertext.Length - ciphertextOffset));
+                    Math.Min(_totalAuthRegionLength, ciphertext.Length - ciphertextOffset));
 
                 CollectionAssert.AreEqual(
                     plaintextAuthBlock.ToArray(),
                     ciphertextAuthBlock.Slice(
                         _nonceLength,
-                        Math.Min(_blockSize, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
+                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
             }
         }
 
@@ -242,17 +244,17 @@ namespace Azure.Storage.Test
         public void TransformEncryptRead(
             [Values(true, false)] bool alligned,
             [Values(1, 3)] int numAuthBlocks,
-            [Values(200, _ciphertextBlockSize, null)] int? streamReadLength)
+            [Values(200, _totalAuthRegionLength, null)] int? streamReadLength)
         {
             // Arrange
-            int plaintextLength = (alligned ? _blockSize : 500) + ((numAuthBlocks - 1) * _blockSize);
+            int plaintextLength = (alligned ? _authRegionDataLength : 500) + ((numAuthBlocks - 1) * _authRegionDataLength);
             ReadOnlySpan<byte> plaintext = new ReadOnlySpan<byte>(GetRandomBytes(plaintextLength));
 
             var readStream = new AuthenticatedRegionCryptoStream(
                 new MemoryStream(plaintext.ToArray()),
                 new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte),
-                _blockSize,
-                System.Security.Cryptography.CryptoStreamMode.Read);
+                _authRegionDataLength,
+                CryptoStreamMode.Read);
 
             // Act
             int read;
@@ -270,16 +272,16 @@ namespace Azure.Storage.Test
             Assert.AreEqual(ciphertextResult.Length, totalRead);
             foreach (int authBlock in Enumerable.Range(0, numAuthBlocks))
             {
-                int plaintextOffset = authBlock * _blockSize;
+                int plaintextOffset = authBlock * _authRegionDataLength;
                 ReadOnlySpan<byte> plaintextAuthBlock = plaintext.Slice(
                     plaintextOffset,
-                    Math.Min(_blockSize, plaintext.Length - plaintextOffset));
+                    Math.Min(_authRegionDataLength, plaintext.Length - plaintextOffset));
 
-                int ciphertextOffset = authBlock * _ciphertextBlockSize;
+                int ciphertextOffset = authBlock * _totalAuthRegionLength;
                 ReadOnlySpan<byte> ciphertextAuthBlock = new ReadOnlySpan<byte>(
                     ciphertextResult,
                     ciphertextOffset,
-                    Math.Min(_ciphertextBlockSize, ciphertextResult.Length - ciphertextOffset));
+                    Math.Min(_totalAuthRegionLength, ciphertextResult.Length - ciphertextOffset));
 
                 CollectionAssert.AreEqual(
                     Enumerable.Repeat(_nonceByte, _nonceLength),
@@ -288,7 +290,7 @@ namespace Azure.Storage.Test
                     plaintextAuthBlock.ToArray(),
                     ciphertextAuthBlock.Slice(
                         _nonceLength,
-                        Math.Min(_blockSize, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
+                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
                 CollectionAssert.AreEqual(
                     Enumerable.Repeat(_tagByte, _tagLength),
                     ciphertextAuthBlock.Slice(ciphertextAuthBlock.Length - _tagLength).ToArray());
@@ -300,17 +302,17 @@ namespace Azure.Storage.Test
         public void TransformDecryptRead(
             [Values(true, false)] bool alligned,
             [Values(1, 3)] int numAuthBlocks,
-            [Values(200, _blockSize, null)] int? streamReadLength)
+            [Values(200, _authRegionDataLength, null)] int? streamReadLength)
         {
             // Arrange
-            int ciphertextLength = (alligned ? _ciphertextBlockSize : 500) + ((numAuthBlocks - 1) * _ciphertextBlockSize);
+            int ciphertextLength = (alligned ? _totalAuthRegionLength : 500) + ((numAuthBlocks - 1) * _totalAuthRegionLength);
             ReadOnlySpan<byte> ciphertext = new ReadOnlySpan<byte>(GetRandomBytes(ciphertextLength));
 
             var readStream = new AuthenticatedRegionCryptoStream(
                 new MemoryStream(ciphertext.ToArray()),
                 new MockDecryptTransform(_nonceLength, _tagLength),
-                _blockSize,
-                System.Security.Cryptography.CryptoStreamMode.Read);
+                _authRegionDataLength,
+                CryptoStreamMode.Read);
 
             // Act
             int read;
@@ -328,23 +330,103 @@ namespace Azure.Storage.Test
             Assert.AreEqual(plaintextResult.Length, totalRead);
             foreach (int authBlock in Enumerable.Range(0, numAuthBlocks))
             {
-                int plaintextOffset = authBlock * _blockSize;
+                int plaintextOffset = authBlock * _authRegionDataLength;
                 ReadOnlySpan<byte> plaintextAuthBlock = new ReadOnlySpan<byte>(
                     plaintextResult,
                     plaintextOffset,
-                    Math.Min(_blockSize, plaintextResult.Length - plaintextOffset));
+                    Math.Min(_authRegionDataLength, plaintextResult.Length - plaintextOffset));
 
-                int ciphertextOffset = authBlock * _ciphertextBlockSize;
+                int ciphertextOffset = authBlock * _totalAuthRegionLength;
                 ReadOnlySpan<byte> ciphertextAuthBlock = ciphertext.Slice(
                     ciphertextOffset,
-                    Math.Min(_ciphertextBlockSize, ciphertext.Length - ciphertextOffset));
+                    Math.Min(_totalAuthRegionLength, ciphertext.Length - ciphertextOffset));
 
                 CollectionAssert.AreEqual(
                     plaintextAuthBlock.ToArray(),
                     ciphertextAuthBlock.Slice(
                         _nonceLength,
-                        Math.Min(_blockSize, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
+                        Math.Min(_authRegionDataLength, ciphertextAuthBlock.Length - _nonceLength - _tagLength)).ToArray());
             }
+        }
+
+#if NETCOREAPP3_1
+        [Test]
+        [Combinatorial]
+        public void RoundTrip_Read(
+            [Values(true, false)] bool useRealEncryption,
+            [Values(true, false)] bool alligned,
+            [Values(1, 3)] int numAuthBlocks)
+        {
+            // Arrange
+            int plaintextLength = (alligned ? _authRegionDataLength : 500) + ((numAuthBlocks - 1) * _authRegionDataLength);
+            ReadOnlySpan<byte> plaintext = new ReadOnlySpan<byte>(GetRandomBytes(plaintextLength));
+            byte[] key = GetRandomBytes(Constants.ClientSideEncryption.EncryptionKeySizeBits / 8);
+
+            var encryptingReadStream = new AuthenticatedRegionCryptoStream(
+                new MemoryStream(plaintext.ToArray()),
+                useRealEncryption
+                    ? new GcmAuthenticatedCryptographicTransform(key, TransformMode.Encrypt)
+                    : new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte),
+                _authRegionDataLength,
+                CryptoStreamMode.Read);
+
+            var decryptingReadStream = new AuthenticatedRegionCryptoStream(
+                encryptingReadStream,
+                useRealEncryption
+                    ? new GcmAuthenticatedCryptographicTransform(key, TransformMode.Decrypt)
+                    : new MockDecryptTransform(_nonceLength, _tagLength),
+                _authRegionDataLength,
+                CryptoStreamMode.Read);
+
+            // Act
+            var roundtrippedPlaintext = new byte[plaintext.Length];
+            decryptingReadStream.CopyTo(new MemoryStream(roundtrippedPlaintext));
+
+            // Assert
+            CollectionAssert.AreEqual(plaintext.ToArray(), roundtrippedPlaintext);
+        }
+#endif
+
+        /// <summary>
+        /// A buffer can end up partially filled. Ensure when capping read lengths we cap
+        /// according to known populated length of buffer, not total buffer size.
+        ///
+        /// Test this with data and read size far smaller than auth region size and ensure
+        /// we don't read past the expected length.
+        /// </summary>
+        /// <param name="readSize"></param>
+        [Test]
+        public void VerySmallSourceStreamRead(
+            [Values(Constants.KB/2, Constants.KB - 5, Constants.KB, 2 * Constants.KB)] int readSize)
+        {
+            const int bufferSize = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize;
+            const int dataLength = Constants.KB;
+            const int expectedOutputLength = dataLength + _tagLength + _nonceLength;
+
+            // Arrange
+            ReadOnlySpan<byte> plaintext = new ReadOnlySpan<byte>(GetRandomBytes(dataLength));
+
+            var readStream = new AuthenticatedRegionCryptoStream(
+                new MemoryStream(plaintext.ToArray()),
+                new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte),
+                bufferSize,
+                System.Security.Cryptography.CryptoStreamMode.Read);
+
+            // Act
+            int read;
+            int totalRead = 0;
+            byte[] ciphertextResult = new byte[bufferSize];
+            do
+            {
+                read = readStream.Read(ciphertextResult, totalRead, readSize);
+                totalRead += read;
+
+                if (totalRead > expectedOutputLength)
+                    Assert.Fail("Read past partial buffer.");
+            } while (read != 0);
+
+            // Assert
+            Assert.AreEqual(expectedOutputLength, totalRead);
         }
     }
 }

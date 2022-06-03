@@ -36,16 +36,8 @@ namespace Azure.Storage.Blobs.Test
         {
         }
 
-        private IEnumerable<ClientSideEncryptionVersion> GetEncryptionVersions()
+        private static IEnumerable<ClientSideEncryptionVersion> GetEncryptionVersions()
             => Enum.GetValues(typeof(ClientSideEncryptionVersion)).Cast<ClientSideEncryptionVersion>();
-
-        /// <summary>
-        /// Provides encryption v2 functionality clone of client logic, letting us validate the client got it right end-to-end.
-        /// </summary>
-        private byte[] EncryptDataV2_0(byte[] data, byte[] key, byte[] iv)
-        {
-            throw new NotImplementedException(); // TODO merge in GCM port
-        }
 
         /// <summary>
         /// Provides encryption v1 functionality clone of client logic, letting us validate the client got it right end-to-end.
@@ -69,29 +61,35 @@ namespace Azure.Storage.Blobs.Test
         /// </summary>
         private ReadOnlySpan<byte> EncryptDataV2_0(ReadOnlySpan<byte> data, ReadOnlySpan<byte> key)
         {
-            int numEncryptionRegions = (data.Length + V2.EncryptionRegionDataSize - (data.Length % V2.EncryptionRegionDataSize)) / V2.EncryptionRegionDataSize;
+            int numEncryptionRegions = data.Length % V2.EncryptionRegionDataSize == 0
+                ? data.Length / V2.EncryptionRegionDataSize
+                : (data.Length + (V2.EncryptionRegionDataSize - (data.Length % V2.EncryptionRegionDataSize))) / V2.EncryptionRegionDataSize;
             int encryptedDataLength = data.Length + (numEncryptionRegions * (V2.NonceSize + V2.TagSize));
             var result = new Span<byte>(new byte[encryptedDataLength]);
 
-            int nonceCounter = 1;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+            long nonceCounter = 1;
             using var gcm = new AesGcm(key);
             for (int i = 0; i < numEncryptionRegions; i++)
             {
+                int dataRegionLength = Math.Min(V2.EncryptionRegionDataSize, data.Length - (i * V2.EncryptionRegionDataSize));
+                var dataRegionSlice = data.Slice(i * V2.EncryptionRegionDataSize, dataRegionLength);
+                var resultRegionSlice = result.Slice(i * V2.EncryptionRegionTotalSize, dataRegionLength + V2.NonceSize + V2.TagSize);
+
                 // get nonce for this block
-                var nonce = new Span<byte>(new byte[V2.NonceSize]);
+                var nonce = resultRegionSlice.Slice(0, V2.NonceSize);
                 const int bytesInLong = 8;
                 int remainingNonceBytes = V2.NonceSize - bytesInLong;
-                new byte[] { 0, 0, 0, 0 }.CopyTo(nonce.Slice(0, remainingNonceBytes));
+                Enumerable.Repeat((byte)0, remainingNonceBytes).ToArray().CopyTo(nonce.Slice(0, remainingNonceBytes));
                 BitConverter.GetBytes(nonceCounter++).CopyTo(nonce.Slice(remainingNonceBytes, bytesInLong));
 
-                var tag = new Span<byte>(new byte[V2.TagSize]);
                 gcm.Encrypt(
                     nonce,
-                    data.Slice(i * V2.EncryptionRegionDataSize, Math.Min(V2.EncryptionRegionDataSize, data.Length - (i * V2.EncryptionRegionDataSize))),
-                    result.Slice(i * V2.EncryptionRegionTotalSize, Math.Min(V2.EncryptionRegionTotalSize, result.Length - (i * V2.EncryptionRegionTotalSize))),
-                    tag);
+                    dataRegionSlice, //data.Slice(i * V2.EncryptionRegionDataSize, Math.Min(V2.EncryptionRegionDataSize, data.Length - (i * V2.EncryptionRegionDataSize))),
+                    resultRegionSlice.Slice(V2.NonceSize, dataRegionLength), //result.Slice(i * V2.EncryptionRegionTotalSize, Math.Min(V2.EncryptionRegionTotalSize, result.Length - (i * V2.EncryptionRegionTotalSize))),
+                    resultRegionSlice.Slice(V2.NonceSize + dataRegionLength, V2.TagSize));
             }
-
+#endif
             return result;
         }
 
@@ -245,7 +243,7 @@ namespace Azure.Storage.Blobs.Test
                 case ClientSideEncryptionVersion.V1_0:
                     return await ReplicateEncryptionV1_0(plaintext, encryptionMetadata, keyEncryptionKey);
                 case ClientSideEncryptionVersion.V2_0:
-                    break;
+                    return await ReplicateEncryptionV2_0(plaintext, encryptionMetadata, keyEncryptionKey);
                 default:
                     throw new ArgumentException("Bad version in EncryptionData");
             }
@@ -256,6 +254,7 @@ namespace Azure.Storage.Blobs.Test
         private async Task<byte[]> ReplicateEncryptionV1_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
         {
             Assert.NotNull(encryptionMetadata, "Never encrypted data.");
+            Assert.AreEqual(ClientSideEncryptionVersion.V1_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
 
             var explicitlyUnwrappedKey = IsAsync // can't instrument this
                 ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
@@ -265,6 +264,20 @@ namespace Azure.Storage.Blobs.Test
                 plaintext,
                 explicitlyUnwrappedKey,
                 encryptionMetadata.ContentEncryptionIV);
+        }
+
+        private async Task<byte[]> ReplicateEncryptionV2_0(byte[] plaintext, EncryptionData encryptionMetadata, IKeyEncryptionKey keyEncryptionKey)
+        {
+            Assert.NotNull(encryptionMetadata, "Never encrypted data.");
+            Assert.AreEqual(ClientSideEncryptionVersion.V2_0, encryptionMetadata.EncryptionAgent.EncryptionVersion);
+
+            var explicitlyUnwrappedKey = IsAsync // can't instrument this
+                ? await keyEncryptionKey.UnwrapKeyAsync(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken).ConfigureAwait(false)
+                : keyEncryptionKey.UnwrapKey(s_algorithmName, encryptionMetadata.WrappedContentKey.EncryptedKey, s_cancellationToken);
+
+            return EncryptDataV2_0(
+                plaintext,
+                explicitlyUnwrappedKey).ToArray();
         }
 
         /// <summary>
@@ -671,20 +684,34 @@ namespace Azure.Storage.Blobs.Test
         }
 
         // TODO revisit once download range is implemented for v2
-        [TestCase(0, 16)]  // first block
-        [TestCase(16, 16)] // not first block
-        [TestCase(32, 32)] // multiple blocks; IV not at blob start
-        [TestCase(16, 17)] // overlap end of block
-        [TestCase(32, 17)] // overlap end of block; IV not at blob start
-        [TestCase(15, 17)] // overlap beginning of block
-        [TestCase(31, 17)] // overlap beginning of block; IV not at blob start
-        [TestCase(15, 18)] // overlap both sides
-        [TestCase(31, 18)] // overlap both sides; IV not at blob start
-        [TestCase(16, null)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, 0, 16)]  // first block
+        [TestCase(ClientSideEncryptionVersion.V1_0, 16, 16)] // not first block
+        [TestCase(ClientSideEncryptionVersion.V1_0, 32, 32)] // multiple blocks; IV not at blob start
+        [TestCase(ClientSideEncryptionVersion.V1_0, 16, 17)] // overlap end of block
+        [TestCase(ClientSideEncryptionVersion.V1_0, 32, 17)] // overlap end of block; IV not at blob start
+        [TestCase(ClientSideEncryptionVersion.V1_0, 15, 17)] // overlap beginning of block
+        [TestCase(ClientSideEncryptionVersion.V1_0, 31, 17)] // overlap beginning of block; IV not at blob start
+        [TestCase(ClientSideEncryptionVersion.V1_0, 15, 18)] // overlap both sides
+        [TestCase(ClientSideEncryptionVersion.V1_0, 31, 18)] // overlap both sides; IV not at blob start
+        [TestCase(ClientSideEncryptionVersion.V1_0, 16, null)]
+        // TODO don't move to recorded tests until we can get off 4MB blocks for tests
+        [TestCase(ClientSideEncryptionVersion.V2_0, 0, V2.EncryptionRegionDataSize)]  // first block
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize)] // not first block
+        [TestCase(ClientSideEncryptionVersion.V2_0, 0, 2 * V2.EncryptionRegionDataSize)] // multiple blocks;
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize + 1)] // overlap end of block
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1, V2.EncryptionRegionDataSize + 1)] // overlap beginning of block
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1, V2.EncryptionRegionDataSize + 1)] // overlap both sides
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, null)]
         [LiveOnly] // cannot seed content encryption key
-        public async Task PartialDownloadAsync(int offset, int? count)
+        public async Task PartialDownloadAsync(ClientSideEncryptionVersion version, int offset, int? count)
         {
-            var data = GetRandomBuffer(offset + (count ?? 16) + 32); // ensure we have enough room in original data
+            int countDefault = version switch
+            {
+                ClientSideEncryptionVersion.V1_0 => 16,
+                ClientSideEncryptionVersion.V2_0 => V2.EncryptionRegionDataSize,
+                _ => throw new ArgumentException()
+            };
+            var data = GetRandomBuffer(offset + (count ?? countDefault) + 32); // ensure we have enough room in original data
             var mockKey = this.GetIKeyEncryptionKey(expectedCancellationToken: s_cancellationToken).Object;
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, mockKey).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(

@@ -6,12 +6,16 @@ using System.Linq;
 using System.Security.Cryptography;
 using Azure.Storage.Cryptography.Models;
 
+// TODO compile ifs are temporary until Gcm is merged in
+
 namespace Azure.Storage.Cryptography
 {
     // TODO pull in GCM exposure to fill out this class
     internal class GcmAuthenticatedCryptographicTransform : IAuthenticatedCryptographicTransform
     {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
         private AesGcm _gcm;
+#endif
         private long _nonceCounter = 1;
 
         public TransformMode TransformMode { get; }
@@ -23,7 +27,12 @@ namespace Azure.Storage.Cryptography
         public GcmAuthenticatedCryptographicTransform(byte[] key, TransformMode mode)
         {
             TransformMode = mode;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
             _gcm = new AesGcm(key);
+#else
+            key[0] = 1;
+            throw new NotImplementedException();
+#endif
         }
 
         /// <summary>
@@ -52,16 +61,21 @@ namespace Azure.Storage.Cryptography
                     Span<byte> tag = new Span<byte>(new byte[TagLength]);
 
                     nonce.CopyTo(output.Slice(0, NonceLength));
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
                     _gcm.Encrypt(nonce, input, output.Slice(NonceLength, input.Length), tag);
+#endif
                     tag.CopyTo(output.Slice(NonceLength + input.Length, TagLength));
                     return NonceLength + input.Length + TagLength;
 
                 case TransformMode.Decrypt:
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+                    int dataLength = input.Length - NonceLength - TagLength;
                     _gcm.Decrypt(
                         input.Slice(0, NonceLength),
-                        input.Slice(NonceLength, input.Length - NonceLength - TagLength),
+                        input.Slice(NonceLength, dataLength),
                         input.Slice(input.Length - TagLength, TagLength),
-                        output);
+                        output.Slice(0, dataLength));
+#endif
                     return input.Length - NonceLength - TagLength;
 
                 default: throw new InvalidOperationException("TransformMode invalid for this operation.");
@@ -70,7 +84,9 @@ namespace Azure.Storage.Cryptography
 
         public void Dispose()
         {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
             _gcm.Dispose();
+#endif
         }
 
         private ReadOnlySpan<byte> GetNewNonce()

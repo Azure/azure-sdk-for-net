@@ -97,7 +97,6 @@ namespace Azure.Storage.Cryptography.Models
                 {
                     EncryptedRegionDataLength = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize,
                     NonceLength = Constants.ClientSideEncryption.V2.NonceSize,
-                    Order = new List<string> { "nonce", "ciphertext", "tag" }
                 },
                 KeyWrappingMetadata = new Dictionary<string, string>()
                 {

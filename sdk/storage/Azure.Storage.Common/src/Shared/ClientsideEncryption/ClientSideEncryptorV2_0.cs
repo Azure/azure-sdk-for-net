@@ -6,6 +6,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Storage.Cryptography.Models;
 
@@ -20,6 +21,12 @@ namespace Azure.Storage.Cryptography
 
         public ClientSideEncryptorV2_0(ClientSideEncryptionOptions options)
         {
+            Argument.AssertNotNull(options, nameof(options));
+            if (options.EncryptionVersion != ClientSideEncryptionVersion.V2_0)
+            {
+                Errors.InvalidArgument(nameof(options.EncryptionVersion));
+            }
+
             _keyEncryptionKey = options.KeyEncryptionKey;
             _keyWrapAlgorithm = options.KeyWrapAlgorithm;
         }

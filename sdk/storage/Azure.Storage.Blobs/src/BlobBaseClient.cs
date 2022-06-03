@@ -1428,7 +1428,10 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         // TODO #27253
                         //options = BlobDownloadOptions.CloneOrDefault(options) ?? new BlobDownloadOptions();
-                        range = BlobClientSideDecryptor.GetEncryptedBlobRange(range);
+                        if ((await GetPropertiesInternal(conditions, async, cancellationToken).ConfigureAwait(false)).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
+                        {
+                            range = BlobClientSideDecryptor.GetEncryptedBlobRange(range, rawEncryptiondata);
+                        }
                     }
 
                     // Start downloading the blob

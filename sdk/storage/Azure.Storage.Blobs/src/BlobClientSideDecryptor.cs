@@ -4,6 +4,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
@@ -102,8 +103,17 @@ namespace Azure.Storage.Blobs
 
             EncryptionData encryptionData = EncryptionDataSerializer.Deserialize(encryptedDataString);
 
-            _ = encryptionData.ContentEncryptionIV ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
-                nameof(EncryptionData.ContentEncryptionIV));
+            switch (encryptionData.EncryptionAgent.EncryptionVersion)
+            {
+                case ClientSideEncryptionVersion.V1_0:
+                    _ = encryptionData.ContentEncryptionIV ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
+                        nameof(EncryptionData.ContentEncryptionIV));
+                    break;
+                case ClientSideEncryptionVersion.V2_0:
+                    _ = encryptionData.EncryptedRegionInfo ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
+                        nameof(EncryptionData.EncryptedRegionInfo));
+                    break;
+            }
             _ = encryptionData.WrappedContentKey.EncryptedKey ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
                 nameof(EncryptionData.WrappedContentKey.EncryptedKey));
 
@@ -145,7 +155,55 @@ namespace Azure.Storage.Blobs
             return true;
         }
 
-        internal static HttpRange GetEncryptedBlobRange(HttpRange originalRange)
+        internal static HttpRange GetEncryptedBlobRange(HttpRange originalRange, string rawEncryptionData)
+        {
+            Argument.AssertNotNull(rawEncryptionData, nameof(rawEncryptionData));
+            EncryptionData encryptionData = EncryptionDataSerializer.Deserialize(rawEncryptionData);
+
+            switch (encryptionData.EncryptionAgent.EncryptionVersion)
+            {
+                case ClientSideEncryptionVersion.V1_0:
+                    return GetEncryptedBlobRangeV1_0(originalRange);
+                case ClientSideEncryptionVersion.V2_0:
+                    return GetEncryptedBlobRangeV2_0(originalRange, encryptionData);
+                default:
+                    throw Errors.InvalidArgument(nameof(encryptionData));
+            }
+        }
+
+        private static HttpRange GetEncryptedBlobRangeV2_0(HttpRange originalRange, EncryptionData encryptionData)
+        {
+            int offsetAdjustment = 0;
+            long? adjustedDownloadCount = originalRange.Length;
+            int totalEncryptedRegionSize = encryptionData.EncryptedRegionInfo.NonceLength
+                + encryptionData.EncryptedRegionInfo.EncryptedRegionDataLength
+                + encryptionData.EncryptedRegionInfo.TagLength;
+
+            if (originalRange.Offset != 0)
+            {
+                // Align with region boundary.
+                int diff = (int)(originalRange.Offset % totalEncryptedRegionSize);
+                if (diff != 0)
+                {
+                    offsetAdjustment += diff;
+                    if (adjustedDownloadCount != default)
+                    {
+                        adjustedDownloadCount += diff;
+                    }
+                }
+            }
+
+            if (adjustedDownloadCount != null)
+            {
+                adjustedDownloadCount += (
+                    totalEncryptedRegionSize - (int)(adjustedDownloadCount % totalEncryptedRegionSize)
+                ) % totalEncryptedRegionSize;
+            }
+
+            return new HttpRange(originalRange.Offset - offsetAdjustment, adjustedDownloadCount);
+        }
+
+        private static HttpRange GetEncryptedBlobRangeV1_0(HttpRange originalRange)
         {
             int offsetAdjustment = 0;
             long? adjustedDownloadCount = originalRange.Length;

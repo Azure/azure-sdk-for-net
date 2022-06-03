@@ -24,7 +24,5 @@ namespace Azure.Storage.Cryptography.Models
         /// Length of the tag found in the content stream.
         /// </summary>
         public int TagLength { get; set; }
-
-        public List<string> Order { get; set; }
     }
 }

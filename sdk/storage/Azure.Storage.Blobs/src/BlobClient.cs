@@ -1635,7 +1635,12 @@ namespace Azure.Storage.Blobs
 
                 // if content length was known, we retain that for dividing REST requests appropriately
                 expectedContentLength = content.GetLengthOrDefault();
-                var encryptor = new ClientSideEncryptorV1_0(ClientSideEncryption);
+                IClientSideEncryptor encryptor = ClientSideEncryption.EncryptionVersion switch
+                {
+                    ClientSideEncryptionVersion.V1_0 => new ClientSideEncryptorV1_0(ClientSideEncryption),
+                    ClientSideEncryptionVersion.V2_0 => new ClientSideEncryptorV2_0(ClientSideEncryption),
+                    _ => throw new InvalidOperationException()
+                };
                 if (expectedContentLength.HasValue)
                 {
                     expectedContentLength = encryptor.ExpectedOutputContentLength(expectedContentLength.Value);

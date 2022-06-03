@@ -143,7 +143,7 @@ namespace Azure.Storage.Cryptography
             }
 
             // return buffered content
-            int bytesToRead = Math.Min(count, _buffer.Length - _bufferPos);
+            int bytesToRead = Math.Min(count, _bufferPopulatedLength - _bufferPos);
             Array.Copy(_buffer, _bufferPos, buffer, offset, bytesToRead);
             _bufferPos += bytesToRead;
             return bytesToRead;
