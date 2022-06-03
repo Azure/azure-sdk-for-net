@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
-        public CloudService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CloudServiceProperties properties = default(CloudServiceProperties))
+        public CloudService(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CloudServiceProperties properties = default(CloudServiceProperties), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
@@ -46,6 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Location = location;
             Tags = tags;
             Properties = properties;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -88,6 +89,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public CloudServiceProperties Properties { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; set; }
 
         /// <summary>
         /// Validate the object.

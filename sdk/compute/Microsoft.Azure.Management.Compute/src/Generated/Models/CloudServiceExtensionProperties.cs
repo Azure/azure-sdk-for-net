@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="rolesAppliedTo">Optional list of roles to apply this
         /// extension. If property is not specified or '*' is specified,
         /// extension is applied to all roles in the cloud service.</param>
-        public CloudServiceExtensionProperties(string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), string settings = default(string), string protectedSettings = default(string), CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault = default(CloudServiceVaultAndSecretReference), string forceUpdateTag = default(string), string provisioningState = default(string), IList<string> rolesAppliedTo = default(IList<string>))
+        public CloudServiceExtensionProperties(string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault = default(CloudServiceVaultAndSecretReference), string forceUpdateTag = default(string), string provisioningState = default(string), IList<string> rolesAppliedTo = default(IList<string>))
         {
             Publisher = publisher;
             Type = type;
@@ -132,14 +132,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Extension (like RDP), this is the XML setting for the extension.
         /// </summary>
         [JsonProperty(PropertyName = "settings")]
-        public string Settings { get; set; }
+        public object Settings { get; set; }
 
         /// <summary>
         /// Gets or sets protected settings for the extension which are
         /// encrypted before sent to the role instance.
         /// </summary>
         [JsonProperty(PropertyName = "protectedSettings")]
-        public string ProtectedSettings { get; set; }
+        public object ProtectedSettings { get; set; }
 
         /// <summary>
         /// </summary>

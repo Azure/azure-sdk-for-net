@@ -58,8 +58,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,8 +83,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='expand'>
         /// The expand expression to apply to the operation. 'UserData' is not
@@ -293,8 +297,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -493,8 +499,10 @@ namespace Microsoft.Azure.Management.Compute
         /// till nextLink is null to fetch all the role instances.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='expand'>
         /// The expand expression to apply to the operation. 'UserData' is not
@@ -699,8 +707,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -723,8 +733,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -749,8 +761,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -772,8 +786,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -960,8 +976,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1141,8 +1159,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1322,8 +1342,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1505,8 +1527,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role instance.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

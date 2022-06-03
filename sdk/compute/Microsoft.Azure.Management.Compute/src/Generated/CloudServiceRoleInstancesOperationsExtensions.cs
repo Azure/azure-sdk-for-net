@@ -32,8 +32,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static void Delete(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName)
             {
@@ -50,8 +52,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -71,8 +75,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='expand'>
             /// The expand expression to apply to the operation. 'UserData' is not
@@ -94,8 +100,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='expand'>
             /// The expand expression to apply to the operation. 'UserData' is not
@@ -124,8 +132,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static RoleInstanceInstanceView GetInstanceView(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName)
             {
@@ -143,8 +153,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -166,8 +178,10 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='expand'>
             /// The expand expression to apply to the operation. 'UserData' is not
@@ -188,8 +202,10 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='expand'>
             /// The expand expression to apply to the operation. 'UserData' is not
@@ -218,8 +234,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static void Restart(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName)
             {
@@ -237,8 +255,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -259,8 +279,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static void Reimage(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName)
             {
@@ -278,8 +300,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -302,8 +326,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static void Rebuild(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName)
             {
@@ -323,8 +349,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -344,8 +372,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static Stream GetRemoteDesktopFile(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName)
             {
@@ -362,8 +392,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -385,8 +417,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static void BeginDelete(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName)
             {
@@ -403,8 +437,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -425,8 +461,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static void BeginRestart(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName)
             {
@@ -444,8 +482,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -466,8 +506,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static void BeginReimage(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName)
             {
@@ -485,8 +527,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -509,8 +553,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static void BeginRebuild(this ICloudServiceRoleInstancesOperations operations, string roleInstanceName, string resourceGroupName, string cloudServiceName)
             {
@@ -530,8 +576,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role instance.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

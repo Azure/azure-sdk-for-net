@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Describes the properties of the load balancer configuration.
+    /// </summary>
     public partial class LoadBalancerConfigurationProperties
     {
         /// <summary>
