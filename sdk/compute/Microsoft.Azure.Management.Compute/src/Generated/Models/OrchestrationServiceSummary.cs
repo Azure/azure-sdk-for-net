@@ -32,8 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="serviceName">The name of the service. Possible values
-        /// include: 'AutomaticRepairs',
-        /// 'DummyOrchestrationServiceName'</param>
+        /// include: 'AutomaticRepairs'</param>
         /// <param name="serviceState">The current state of the service.
         /// Possible values include: 'NotRunning', 'Running',
         /// 'Suspended'</param>
