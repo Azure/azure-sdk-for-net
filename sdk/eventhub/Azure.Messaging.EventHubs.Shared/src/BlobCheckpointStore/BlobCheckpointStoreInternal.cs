@@ -242,7 +242,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                         catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
                         {
                             // A blob could have just been created by another Event Processor that claimed ownership of this
-                            // partition.  In this case, there's no point in retrying because we don't have the correct eTag.
+                            // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
 
                             OwnershipNotClaimable(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex.Message);
                             continue;
