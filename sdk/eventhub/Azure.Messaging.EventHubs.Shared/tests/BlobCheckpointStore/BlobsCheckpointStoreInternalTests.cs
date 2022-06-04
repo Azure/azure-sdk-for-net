@@ -272,12 +272,17 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on failure.
+        ///   Verifies functionality of ClaimOwnershipAsync.
         /// </summary>
         ///
         [Test]
-        public void ClaimOwnershipForMissingPartitionThrowsAndLogsClaimOwnershipError()
+        public async Task ClaimOwnershipCompensatesWhenABlobIsDeleted()
         {
+            var ownershipBlobName = $"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/ownership/{PartitionId}";
+            var setMetadataException = new RequestFailedException(404, "No blob here", BlobErrorCode.BlobNotFound.ToString(), null);
+            var setMetadataCalled = false;
+            var uploadBlobCalled = false;
+
             var partitionOwnership = new List<EventProcessorPartitionOwnership>
             {
                 new EventProcessorPartitionOwnership
@@ -288,18 +293,32 @@ namespace Azure.Messaging.EventHubs.Tests
                     OwnerIdentifier = OwnershipIdentifier,
                     PartitionId = PartitionId,
                     LastModifiedTime = DateTime.UtcNow,
-                    Version = MatchingEtag
+                    Version = "FAKE"
                 }
             };
 
-            var mockBlobContainerClient = new MockBlobContainerClient().AddBlobClient($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/ownership/1", _ => { });
+            var mockBlobContainerClient = new MockBlobContainerClient().AddBlobClient(ownershipBlobName, client =>
+            {
+                client.SetMetadataException = setMetadataException;
+
+                client.SetMetadataAsyncCallback = (_, _, _) =>
+                {
+                    setMetadataCalled = true;
+                };
+
+                client.UploadAsyncCallback = (_, _, _, _, _, _, _, _) =>
+                {
+                    uploadBlobCalled = true;
+                };
+            });
+
             var target = new BlobCheckpointStoreInternal(mockBlobContainerClient);
 
-            var mockLog = new Mock<IBlobEventLogger>();
-            target.Logger = mockLog.Object;
+            var result = (await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None)).ToList();
+            CollectionAssert.AreEquivalent(partitionOwnership, result);
 
-            Assert.That(async () => await target.ClaimOwnershipAsync(partitionOwnership, CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
-            mockLog.Verify(m => m.ClaimOwnershipError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier, It.Is<string>(e => e.Contains(BlobErrorCode.BlobNotFound.ToString()))));
+            Assert.That(setMetadataCalled, "SetMetadata should have been called.");
+            Assert.That(uploadBlobCalled, "UploadBlob should have been called.");
         }
 
         /// <summary>

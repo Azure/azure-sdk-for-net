@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- `EventProcessorClient` and `BlobCheckpointStore` will now detect when an ownership blob has been deleted externally while the processor is running and gracefully recover.
+
 ## 5.7.0 (2022-05-10)
 
 ### Acknowledgments
