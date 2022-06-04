@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="generatedProperties"> The generated Spring Boot property file for this binding. The secret will be deducted. </param>
         /// <param name="createdAt"> Creation time of the Binding resource. </param>
         /// <param name="updatedAt"> Update time of the Binding resource. </param>
-        internal BindingResourceProperties(string resourceName, string resourceType, ResourceIdentifier resourceId, string key, IDictionary<string, BinaryData> bindingParameters, string generatedProperties, string createdAt, string updatedAt)
+        internal BindingResourceProperties(string resourceName, ResourceType? resourceType, ResourceIdentifier resourceId, string key, IDictionary<string, BinaryData> bindingParameters, string generatedProperties, string createdAt, string updatedAt)
         {
             ResourceName = resourceName;
             ResourceType = resourceType;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> The name of the bound resource. </summary>
         public string ResourceName { get; }
         /// <summary> The standard Azure resource type of the bound resource. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The Azure resource id of the bound resource. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The key of the bound resource. </summary>

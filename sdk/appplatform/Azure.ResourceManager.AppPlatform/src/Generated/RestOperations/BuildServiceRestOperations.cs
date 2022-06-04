@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.BuildServiceCollection>> ListBuildServicesAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildServiceList>> ListBuildServicesAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildServiceCollection value = default;
+                        AppBuildServiceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.BuildServiceCollection.DeserializeBuildServiceCollection(document.RootElement);
+                        value = AppBuildServiceList.DeserializeAppBuildServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.BuildServiceCollection> ListBuildServices(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<AppBuildServiceList> ListBuildServices(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildServiceCollection value = default;
+                        AppBuildServiceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.BuildServiceCollection.DeserializeBuildServiceCollection(document.RootElement);
+                        value = AppBuildServiceList.DeserializeAppBuildServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BuildServiceData>> GetBuildServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildServiceData>> GetBuildServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        BuildServiceData value = default;
+                        AppBuildServiceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BuildServiceData.DeserializeBuildServiceData(document.RootElement);
+                        value = AppBuildServiceData.DeserializeAppBuildServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BuildServiceData)null, message.Response);
+                    return Response.FromValue((AppBuildServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BuildServiceData> GetBuildService(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public Response<AppBuildServiceData> GetBuildService(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,13 +192,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        BuildServiceData value = default;
+                        AppBuildServiceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BuildServiceData.DeserializeBuildServiceData(document.RootElement);
+                        value = AppBuildServiceData.DeserializeAppBuildServiceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BuildServiceData)null, message.Response);
+                    return Response.FromValue((AppBuildServiceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.BuildCollection>> ListBuildsAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildList>> ListBuildsAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -248,9 +248,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildCollection value = default;
+                        AppBuildList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.BuildCollection.DeserializeBuildCollection(document.RootElement);
+                        value = AppBuildList.DeserializeAppBuildList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.BuildCollection> ListBuilds(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public Response<AppBuildList> ListBuilds(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -279,9 +279,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildCollection value = default;
+                        AppBuildList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.BuildCollection.DeserializeBuildCollection(document.RootElement);
+                        value = AppBuildList.DeserializeAppBuildList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BuildData>> GetBuildAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildData>> GetBuildAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -336,13 +336,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        BuildData value = default;
+                        AppBuildData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BuildData.DeserializeBuildData(document.RootElement);
+                        value = AppBuildData.DeserializeAppBuildData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BuildData)null, message.Response);
+                    return Response.FromValue((AppBuildData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BuildData> GetBuild(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
+        public Response<AppBuildData> GetBuild(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -371,19 +371,19 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        BuildData value = default;
+                        AppBuildData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BuildData.DeserializeBuildData(document.RootElement);
+                        value = AppBuildData.DeserializeAppBuildData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BuildData)null, message.Response);
+                    return Response.FromValue((AppBuildData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateBuildRequest(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, BuildData data)
+        internal HttpMessage CreateCreateOrUpdateBuildRequest(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, AppBuildData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/>, <paramref name="buildName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BuildData>> CreateOrUpdateBuildAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, BuildData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildData>> CreateOrUpdateBuildAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, AppBuildData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -437,9 +437,9 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                 case 201:
                     {
-                        BuildData value = default;
+                        AppBuildData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BuildData.DeserializeBuildData(document.RootElement);
+                        value = AppBuildData.DeserializeAppBuildData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/>, <paramref name="buildName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BuildData> CreateOrUpdateBuild(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, BuildData data, CancellationToken cancellationToken = default)
+        public Response<AppBuildData> CreateOrUpdateBuild(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, AppBuildData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -473,9 +473,9 @@ namespace Azure.ResourceManager.AppPlatform
                 case 200:
                 case 201:
                     {
-                        BuildData value = default;
+                        AppBuildData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BuildData.DeserializeBuildData(document.RootElement);
+                        value = AppBuildData.DeserializeAppBuildData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.BuildResultCollection>> ListBuildResultsAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildResultList>> ListBuildResultsAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -531,9 +531,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildResultCollection value = default;
+                        AppBuildResultList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.BuildResultCollection.DeserializeBuildResultCollection(document.RootElement);
+                        value = AppBuildResultList.DeserializeAppBuildResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.BuildResultCollection> ListBuildResults(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
+        public Response<AppBuildResultList> ListBuildResults(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -564,9 +564,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildResultCollection value = default;
+                        AppBuildResultList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.BuildResultCollection.DeserializeBuildResultCollection(document.RootElement);
+                        value = AppBuildResultList.DeserializeAppBuildResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/>, <paramref name="buildName"/> or <paramref name="buildResultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/>, <paramref name="buildName"/> or <paramref name="buildResultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BuildResultData>> GetBuildResultAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, string buildResultName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildResultData>> GetBuildResultAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, string buildResultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -625,13 +625,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        BuildResultData value = default;
+                        AppBuildResultData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BuildResultData.DeserializeBuildResultData(document.RootElement);
+                        value = AppBuildResultData.DeserializeAppBuildResultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BuildResultData)null, message.Response);
+                    return Response.FromValue((AppBuildResultData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/>, <paramref name="buildName"/> or <paramref name="buildResultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/>, <paramref name="buildName"/> or <paramref name="buildResultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BuildResultData> GetBuildResult(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, string buildResultName, CancellationToken cancellationToken = default)
+        public Response<AppBuildResultData> GetBuildResult(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, string buildResultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -662,13 +662,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        BuildResultData value = default;
+                        AppBuildResultData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BuildResultData.DeserializeBuildResultData(document.RootElement);
+                        value = AppBuildResultData.DeserializeAppBuildResultData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BuildResultData)null, message.Response);
+                    return Response.FromValue((AppBuildResultData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportedBuildpacksCollection>> ListSupportedBuildpacksAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SupportedBuildpacksList>> ListSupportedBuildpacksAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -900,9 +900,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        SupportedBuildpacksCollection value = default;
+                        SupportedBuildpacksList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SupportedBuildpacksCollection.DeserializeSupportedBuildpacksCollection(document.RootElement);
+                        value = SupportedBuildpacksList.DeserializeSupportedBuildpacksList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportedBuildpacksCollection> ListSupportedBuildpacks(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public Response<SupportedBuildpacksList> ListSupportedBuildpacks(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -931,9 +931,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        SupportedBuildpacksCollection value = default;
+                        SupportedBuildpacksList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SupportedBuildpacksCollection.DeserializeSupportedBuildpacksCollection(document.RootElement);
+                        value = SupportedBuildpacksList.DeserializeSupportedBuildpacksList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportedStacksCollection>> ListSupportedStacksAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<SupportedStacksList>> ListSupportedStacksAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1079,9 +1079,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        SupportedStacksCollection value = default;
+                        SupportedStacksList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SupportedStacksCollection.DeserializeSupportedStacksCollection(document.RootElement);
+                        value = SupportedStacksList.DeserializeSupportedStacksList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportedStacksCollection> ListSupportedStacks(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public Response<SupportedStacksList> ListSupportedStacks(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1110,9 +1110,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        SupportedStacksCollection value = default;
+                        SupportedStacksList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SupportedStacksCollection.DeserializeSupportedStacksCollection(document.RootElement);
+                        value = SupportedStacksList.DeserializeSupportedStacksList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.BuildServiceCollection>> ListBuildServicesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildServiceList>> ListBuildServicesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1249,9 +1249,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildServiceCollection value = default;
+                        AppBuildServiceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.BuildServiceCollection.DeserializeBuildServiceCollection(document.RootElement);
+                        value = AppBuildServiceList.DeserializeAppBuildServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1267,7 +1267,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.BuildServiceCollection> ListBuildServicesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<AppBuildServiceList> ListBuildServicesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1280,9 +1280,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildServiceCollection value = default;
+                        AppBuildServiceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.BuildServiceCollection.DeserializeBuildServiceCollection(document.RootElement);
+                        value = AppBuildServiceList.DeserializeAppBuildServiceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1313,7 +1313,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.BuildCollection>> ListBuildsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildList>> ListBuildsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1327,9 +1327,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildCollection value = default;
+                        AppBuildList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.BuildCollection.DeserializeBuildCollection(document.RootElement);
+                        value = AppBuildList.DeserializeAppBuildList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.BuildCollection> ListBuildsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public Response<AppBuildList> ListBuildsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1360,9 +1360,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildCollection value = default;
+                        AppBuildList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.BuildCollection.DeserializeBuildCollection(document.RootElement);
+                        value = AppBuildList.DeserializeAppBuildList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1394,7 +1394,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.BuildResultCollection>> ListBuildResultsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildResultList>> ListBuildResultsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1409,9 +1409,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildResultCollection value = default;
+                        AppBuildResultList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.BuildResultCollection.DeserializeBuildResultCollection(document.RootElement);
+                        value = AppBuildResultList.DeserializeAppBuildResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="buildName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.BuildResultCollection> ListBuildResultsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
+        public Response<AppBuildResultList> ListBuildResultsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1444,9 +1444,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildResultCollection value = default;
+                        AppBuildResultList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.BuildResultCollection.DeserializeBuildResultCollection(document.RootElement);
+                        value = AppBuildResultList.DeserializeAppBuildResultList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform
     /// A Class representing a BuildpackBindingResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BuildpackBindingResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetBuildpackBindingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BuilderResource" /> using the GetBuildpackBindingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppBuilderResource" /> using the GetBuildpackBindingResource method.
     /// </summary>
     public partial class BuildpackBindingResource : ArmResource
     {

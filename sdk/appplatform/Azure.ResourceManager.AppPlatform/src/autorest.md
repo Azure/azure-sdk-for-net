@@ -44,6 +44,10 @@ directive:
     transform: >
       $['x-ms-format'] = 'azure-location';
   - from: swagger-document
+    where: $.definitions..resourceType
+    transform: >
+      $['x-ms-format'] = 'resource-type';
+  - from: swagger-document
     where: $.paths..parameters[?(@.name === 'location')]
     transform: >
       $['x-ms-format'] = 'azure-location';
@@ -52,10 +56,48 @@ directive:
     transform: >
       $.CustomPersistentDiskProperties.properties.type['x-ms-enum']['name'] = 'UnderlyingResourceType';
       $.DiagnosticParameters.properties.duration['x-ms-client-name'] = 'DurationValue';
+      $.DeploymentResource['x-ms-client-name'] = 'AppDeploymentResource';
+      $.Build['x-ms-client-name'] = 'AppBuild';
+      $.BuildProperties['x-ms-client-name'] = 'AppBuildProperties';
+      $.BuildProperties.properties.provisioningState['x-ms-enum']['name'] = 'AppBuildProvisioningState';
+      $.BuildResult['x-ms-client-name'] = 'AppBuildResult';
+      $.BuildService['x-ms-client-name'] = 'AppBuildService';
+      $.BuildServiceAgentPoolResource['x-ms-client-name'] = 'AppBuildBuildServiceAgentPoolResource';
+      $.BuilderResource['x-ms-client-name'] = 'AppBuilderResource';
+      $.BuilderProperties['x-ms-client-name'] = 'AppBuilderProperties';
+      $.BuilderProperties.properties.provisioningState['x-ms-enum']['name'] = 'AppBuilderProvisioningState';
       $.LoadedCertificate.properties.resourceId['x-ms-format'] = 'arm-id';
       $.BindingResourceProperties.properties.resourceId['x-ms-format'] = 'arm-id';
       $.NetworkProfile.properties.serviceRuntimeSubnetId['x-ms-format'] = 'arm-id';
       $.NetworkProfile.properties.appSubnetId['x-ms-format'] = 'arm-id';
       $.NameAvailabilityParameters['x-ms-client-name'] = 'CheckNameAvailabilityContent';
       $.NameAvailability['x-ms-client-name'] = 'CheckNameAvailabilityResult';
+      $.GatewayRouteConfigResourceCollection['x-ms-client-name'] = 'GatewayRouteConfigResourceList';
+      $.GatewayCustomDomainResourceCollection['x-ms-client-name'] = 'GatewayCustomDomainResourceList';
+      $.ApiPortalResourceCollection['x-ms-client-name'] = 'ApiPortalResourceList';
+      $.ApiPortalCustomDomainResourceCollection['x-ms-client-name'] = 'ApiPortalCustomDomainResourceList';
+      $.BuildServiceCollection['x-ms-client-name'] = 'AppBuildServiceList';
+      $.BuildCollection['x-ms-client-name'] = 'AppBuildList';
+      $.BuildResultCollection['x-ms-client-name'] = 'AppBuildResultList';
+      $.BuilderResourceCollection['x-ms-client-name'] = 'AppBuilderResourceList';
+      $.SupportedBuildpacksCollection['x-ms-client-name'] = 'SupportedBuildpacksList';
+      $.SupportedStacksCollection['x-ms-client-name'] = 'SupportedStacksList';
+      $.BuildServiceAgentPoolResourceCollection['x-ms-client-name'] = 'BuildServiceAgentPoolResourceList';
+      $.ConfigurationServiceResourceCollection['x-ms-client-name'] = 'ConfigurationServiceResourceList';
+      $.ServiceRegistryResourceCollection['x-ms-client-name'] = 'ServiceRegistryResourceList';
+      $.LoadedCertificateCollection['x-ms-client-name'] = 'LoadedCertificateList';
+      $.AppResourceCollection['x-ms-client-name'] = 'AppResourceList';
+      $.ActiveDeploymentCollection['x-ms-client-name'] = 'ActiveDeploymentList';
+      $.BindingResourceCollection['x-ms-client-name'] = 'BindingResourceList';
+      $.CertificateResourceCollection['x-ms-client-name'] = 'CertificateResourceList';
+      $.StorageResourceCollection['x-ms-client-name'] = 'StorageResourceList';
+      $.CustomPersistentDiskCollection['x-ms-client-name'] = 'CustomPersistentDiskList';
+      $.CustomDomainResourceCollection['x-ms-client-name'] = 'CustomDomainResourceList';
+      $.DeploymentResourceCollection['x-ms-client-name'] = 'DeploymentResourceList';
+      $.AvailableOperations['x-ms-client-name'] = 'AvailableOperationsInfo';
+      $.ResourceSkuCollection['x-ms-client-name'] = 'ResourceSkuList';
+      $.BuildpackBindingResourceCollection['x-ms-client-name'] = 'BuildpackBindingResourceList';
+      $.GatewayResourceCollection['x-ms-client-name'] = 'GatewayResourceList';
+      $.ResourceSku.properties.locations.items['x-ms-format'] = 'azure-location';
+      
 ```

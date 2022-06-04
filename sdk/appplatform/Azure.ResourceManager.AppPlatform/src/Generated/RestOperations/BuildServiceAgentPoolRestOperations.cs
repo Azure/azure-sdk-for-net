@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.BuildServiceAgentPoolResourceCollection>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<BuildServiceAgentPoolResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildServiceAgentPoolResourceCollection value = default;
+                        BuildServiceAgentPoolResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.BuildServiceAgentPoolResourceCollection.DeserializeBuildServiceAgentPoolResourceCollection(document.RootElement);
+                        value = BuildServiceAgentPoolResourceList.DeserializeBuildServiceAgentPoolResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.BuildServiceAgentPoolResourceCollection> List(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public Response<BuildServiceAgentPoolResourceList> List(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildServiceAgentPoolResourceCollection value = default;
+                        BuildServiceAgentPoolResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.BuildServiceAgentPoolResourceCollection.DeserializeBuildServiceAgentPoolResourceCollection(document.RootElement);
+                        value = BuildServiceAgentPoolResourceList.DeserializeBuildServiceAgentPoolResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="agentPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BuildServiceAgentPoolResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string agentPoolName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppBuildServiceAgentPoolResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -169,13 +169,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        BuildServiceAgentPoolResourceData value = default;
+                        AppBuildServiceAgentPoolResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BuildServiceAgentPoolResourceData.DeserializeBuildServiceAgentPoolResourceData(document.RootElement);
+                        value = AppBuildServiceAgentPoolResourceData.DeserializeAppBuildServiceAgentPoolResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BuildServiceAgentPoolResourceData)null, message.Response);
+                    return Response.FromValue((AppBuildServiceAgentPoolResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="agentPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BuildServiceAgentPoolResourceData> Get(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string agentPoolName, CancellationToken cancellationToken = default)
+        public Response<AppBuildServiceAgentPoolResourceData> Get(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,19 +204,19 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        BuildServiceAgentPoolResourceData value = default;
+                        AppBuildServiceAgentPoolResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BuildServiceAgentPoolResourceData.DeserializeBuildServiceAgentPoolResourceData(document.RootElement);
+                        value = AppBuildServiceAgentPoolResourceData.DeserializeAppBuildServiceAgentPoolResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BuildServiceAgentPoolResourceData)null, message.Response);
+                    return Response.FromValue((AppBuildServiceAgentPoolResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdatePutRequest(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string agentPoolName, BuildServiceAgentPoolResourceData data)
+        internal HttpMessage CreateUpdatePutRequest(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string agentPoolName, AppBuildServiceAgentPoolResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdatePutAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string agentPoolName, BuildServiceAgentPoolResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdatePutAsync(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string agentPoolName, AppBuildServiceAgentPoolResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="buildServiceName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdatePut(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string agentPoolName, BuildServiceAgentPoolResourceData data, CancellationToken cancellationToken = default)
+        public Response UpdatePut(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string agentPoolName, AppBuildServiceAgentPoolResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.BuildServiceAgentPoolResourceCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<BuildServiceAgentPoolResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -343,9 +343,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildServiceAgentPoolResourceCollection value = default;
+                        BuildServiceAgentPoolResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.BuildServiceAgentPoolResourceCollection.DeserializeBuildServiceAgentPoolResourceCollection(document.RootElement);
+                        value = BuildServiceAgentPoolResourceList.DeserializeBuildServiceAgentPoolResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.BuildServiceAgentPoolResourceCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
+        public Response<BuildServiceAgentPoolResourceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -376,9 +376,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.BuildServiceAgentPoolResourceCollection value = default;
+                        BuildServiceAgentPoolResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.BuildServiceAgentPoolResourceCollection.DeserializeBuildServiceAgentPoolResourceCollection(document.RootElement);
+                        value = BuildServiceAgentPoolResourceList.DeserializeBuildServiceAgentPoolResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

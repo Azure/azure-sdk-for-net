@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.AppPlatform
             return GetCustomDomainResources().Get(domainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the AppResource. </summary>
-        /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
-        public virtual DeploymentResourceCollection GetDeploymentResources()
+        /// <summary> Gets a collection of AppDeploymentResources in the AppResource. </summary>
+        /// <returns> An object representing collection of AppDeploymentResources and their operations over a AppDeploymentResource. </returns>
+        public virtual AppDeploymentResourceCollection GetAppDeploymentResources()
         {
-            return GetCachedClient(Client => new DeploymentResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppDeploymentResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -178,9 +178,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DeploymentResource>> GetDeploymentResourceAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppDeploymentResource>> GetAppDeploymentResourceAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
-            return await GetDeploymentResources().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetAppDeploymentResources().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DeploymentResource> GetDeploymentResource(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<AppDeploymentResource> GetAppDeploymentResource(string deploymentName, CancellationToken cancellationToken = default)
         {
-            return GetDeploymentResources().Get(deploymentName, cancellationToken);
+            return GetAppDeploymentResources().Get(deploymentName, cancellationToken);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="activeDeploymentCollection"> A list of Deployment name to be active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activeDeploymentCollection"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppResource>> SetActiveDeploymentsAsync(WaitUntil waitUntil, ActiveDeploymentCollection activeDeploymentCollection, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppResource>> SetActiveDeploymentsAsync(WaitUntil waitUntil, ActiveDeploymentList activeDeploymentCollection, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(activeDeploymentCollection, nameof(activeDeploymentCollection));
 
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="activeDeploymentCollection"> A list of Deployment name to be active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activeDeploymentCollection"/> is null. </exception>
-        public virtual ArmOperation<AppResource> SetActiveDeployments(WaitUntil waitUntil, ActiveDeploymentCollection activeDeploymentCollection, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppResource> SetActiveDeployments(WaitUntil waitUntil, ActiveDeploymentList activeDeploymentCollection, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(activeDeploymentCollection, nameof(activeDeploymentCollection));
 

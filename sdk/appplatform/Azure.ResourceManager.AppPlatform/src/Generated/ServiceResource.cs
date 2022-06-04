@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly ServicesRestOperations _serviceResourceServicesRestClient;
         private readonly ClientDiagnostics _configServerResourceConfigServersClientDiagnostics;
         private readonly ConfigServersRestOperations _configServerResourceConfigServersRestClient;
-        private readonly ClientDiagnostics _deploymentResourceDeploymentsClientDiagnostics;
-        private readonly DeploymentsRestOperations _deploymentResourceDeploymentsRestClient;
+        private readonly ClientDiagnostics _appDeploymentResourceDeploymentsClientDiagnostics;
+        private readonly DeploymentsRestOperations _appDeploymentResourceDeploymentsRestClient;
         private readonly ServiceResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceResource"/> class for mocking. </summary>
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.AppPlatform
             _configServerResourceConfigServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ConfigServerResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ConfigServerResource.ResourceType, out string configServerResourceConfigServersApiVersion);
             _configServerResourceConfigServersRestClient = new ConfigServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configServerResourceConfigServersApiVersion);
-            _deploymentResourceDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", DeploymentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeploymentResource.ResourceType, out string deploymentResourceDeploymentsApiVersion);
-            _deploymentResourceDeploymentsRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentResourceDeploymentsApiVersion);
+            _appDeploymentResourceDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", AppDeploymentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppDeploymentResource.ResourceType, out string appDeploymentResourceDeploymentsApiVersion);
+            _appDeploymentResourceDeploymentsRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appDeploymentResourceDeploymentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.AppPlatform
             return GetServiceRegistryResources().Get(serviceRegistryName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BuildServiceResources in the ServiceResource. </summary>
-        /// <returns> An object representing collection of BuildServiceResources and their operations over a BuildServiceResource. </returns>
-        public virtual BuildServiceCollection GetBuildServices()
+        /// <summary> Gets a collection of AppBuildServiceResources in the ServiceResource. </summary>
+        /// <returns> An object representing collection of AppBuildServiceResources and their operations over a AppBuildServiceResource. </returns>
+        public virtual AppBuildServiceCollection GetAppBuildServices()
         {
-            return GetCachedClient(Client => new BuildServiceCollection(Client, Id));
+            return GetCachedClient(Client => new AppBuildServiceCollection(Client, Id));
         }
 
         /// <summary>
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BuildServiceResource>> GetBuildServiceAsync(string buildServiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppBuildServiceResource>> GetAppBuildServiceAsync(string buildServiceName, CancellationToken cancellationToken = default)
         {
-            return await GetBuildServices().GetAsync(buildServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetAppBuildServices().GetAsync(buildServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -213,9 +213,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildServiceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BuildServiceResource> GetBuildService(string buildServiceName, CancellationToken cancellationToken = default)
+        public virtual Response<AppBuildServiceResource> GetAppBuildService(string buildServiceName, CancellationToken cancellationToken = default)
         {
-            return GetBuildServices().Get(buildServiceName, cancellationToken);
+            return GetAppBuildServices().Get(buildServiceName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a MonitoringSettingResource along with the instance operations that can be performed on it in the ServiceResource. </summary>
@@ -927,17 +927,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeploymentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeploymentResource> GetForClusterDeploymentsAsync(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppDeploymentResource> GetForClusterDeploymentsAsync(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeploymentResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppDeploymentResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _deploymentResourceDeploymentsClientDiagnostics.CreateScope("ServiceResource.GetForClusterDeployments");
+                using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("ServiceResource.GetForClusterDeployments");
                 scope.Start();
                 try
                 {
-                    var response = await _deploymentResourceDeploymentsRestClient.ListForClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appDeploymentResourceDeploymentsRestClient.ListForClusterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -945,14 +945,14 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            async Task<Page<DeploymentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppDeploymentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _deploymentResourceDeploymentsClientDiagnostics.CreateScope("ServiceResource.GetForClusterDeployments");
+                using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("ServiceResource.GetForClusterDeployments");
                 scope.Start();
                 try
                 {
-                    var response = await _deploymentResourceDeploymentsRestClient.ListForClusterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appDeploymentResourceDeploymentsRestClient.ListForClusterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -970,17 +970,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeploymentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeploymentResource> GetForClusterDeployments(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppDeploymentResource> GetForClusterDeployments(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
-            Page<DeploymentResource> FirstPageFunc(int? pageSizeHint)
+            Page<AppDeploymentResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _deploymentResourceDeploymentsClientDiagnostics.CreateScope("ServiceResource.GetForClusterDeployments");
+                using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("ServiceResource.GetForClusterDeployments");
                 scope.Start();
                 try
                 {
-                    var response = _deploymentResourceDeploymentsRestClient.ListForCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appDeploymentResourceDeploymentsRestClient.ListForCluster(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -988,14 +988,14 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            Page<DeploymentResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppDeploymentResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _deploymentResourceDeploymentsClientDiagnostics.CreateScope("ServiceResource.GetForClusterDeployments");
+                using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("ServiceResource.GetForClusterDeployments");
                 scope.Start();
                 try
                 {
-                    var response = _deploymentResourceDeploymentsRestClient.ListForClusterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appDeploymentResourceDeploymentsRestClient.ListForClusterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

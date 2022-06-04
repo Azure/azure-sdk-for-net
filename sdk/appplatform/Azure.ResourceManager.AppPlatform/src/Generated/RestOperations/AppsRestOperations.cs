@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.AppResourceCollection>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -419,9 +419,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.AppResourceCollection value = default;
+                        AppResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AppResourceCollection.DeserializeAppResourceCollection(document.RootElement);
+                        value = AppResourceList.DeserializeAppResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.AppResourceCollection> List(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<AppResourceList> List(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -448,9 +448,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.AppResourceCollection value = default;
+                        AppResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AppResourceCollection.DeserializeAppResourceCollection(document.RootElement);
+                        value = AppResourceList.DeserializeAppResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        internal HttpMessage CreateSetActiveDeploymentsRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, ActiveDeploymentCollection activeDeploymentCollection)
+        internal HttpMessage CreateSetActiveDeploymentsRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, ActiveDeploymentList activeDeploymentCollection)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="activeDeploymentCollection"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SetActiveDeploymentsAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, ActiveDeploymentCollection activeDeploymentCollection, CancellationToken cancellationToken = default)
+        public async Task<Response> SetActiveDeploymentsAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, ActiveDeploymentList activeDeploymentCollection, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="activeDeploymentCollection"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SetActiveDeployments(string subscriptionId, string resourceGroupName, string serviceName, string appName, ActiveDeploymentCollection activeDeploymentCollection, CancellationToken cancellationToken = default)
+        public Response SetActiveDeployments(string subscriptionId, string resourceGroupName, string serviceName, string appName, ActiveDeploymentList activeDeploymentCollection, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.AppResourceCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -756,9 +756,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.AppResourceCollection value = default;
+                        AppResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AppResourceCollection.DeserializeAppResourceCollection(document.RootElement);
+                        value = AppResourceList.DeserializeAppResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.AppResourceCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
+        public Response<AppResourceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -787,9 +787,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.AppResourceCollection value = default;
+                        AppResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AppResourceCollection.DeserializeAppResourceCollection(document.RootElement);
+                        value = AppResourceList.DeserializeAppResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

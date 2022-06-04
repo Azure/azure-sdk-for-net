@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceSkuCollection>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceSkuList>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        ResourceSkuCollection value = default;
+                        ResourceSkuList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceSkuCollection.DeserializeResourceSkuCollection(document.RootElement);
+                        value = ResourceSkuList.DeserializeResourceSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceSkuCollection> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ResourceSkuList> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        ResourceSkuCollection value = default;
+                        ResourceSkuList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceSkuCollection.DeserializeResourceSkuCollection(document.RootElement);
+                        value = ResourceSkuList.DeserializeResourceSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceSkuCollection>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceSkuList>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        ResourceSkuCollection value = default;
+                        ResourceSkuList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ResourceSkuCollection.DeserializeResourceSkuCollection(document.RootElement);
+                        value = ResourceSkuList.DeserializeResourceSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceSkuCollection> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<ResourceSkuList> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        ResourceSkuCollection value = default;
+                        ResourceSkuList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ResourceSkuCollection.DeserializeResourceSkuCollection(document.RootElement);
+                        value = ResourceSkuList.DeserializeResourceSkuList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

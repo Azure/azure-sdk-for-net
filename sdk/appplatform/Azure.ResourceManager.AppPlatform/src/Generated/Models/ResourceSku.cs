@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ResourceSku. </summary>
         internal ResourceSku()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             LocationInfo = new ChangeTrackingList<ResourceSkuLocationInfo>();
             Restrictions = new ChangeTrackingList<ResourceSkuRestrictions>();
         }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// Gets the restrictions because of which SKU cannot be used. This is
         /// empty if there are no restrictions.
         /// </param>
-        internal ResourceSku(string resourceType, string name, string tier, SkuCapacity capacity, IReadOnlyList<string> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<ResourceSkuRestrictions> restrictions)
+        internal ResourceSku(ResourceType? resourceType, string name, string tier, SkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<ResourceSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
             Name = name;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Gets the type of resource the SKU applies to. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> Gets the name of SKU. </summary>
         public string Name { get; }
         /// <summary> Gets the tier of SKU. </summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Gets the capacity of SKU. </summary>
         public SkuCapacity Capacity { get; }
         /// <summary> Gets the set of locations that the SKU is available. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> Gets a list of locations and availability zones in those locations where the SKU is available. </summary>
         public IReadOnlyList<ResourceSkuLocationInfo> LocationInfo { get; }
         /// <summary>

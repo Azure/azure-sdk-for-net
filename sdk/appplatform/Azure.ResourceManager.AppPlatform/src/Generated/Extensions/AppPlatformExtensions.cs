@@ -274,58 +274,58 @@ namespace Azure.ResourceManager.AppPlatform
         }
         #endregion
 
-        #region BuildServiceResource
+        #region AppBuildServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="BuildServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BuildServiceResource.CreateResourceIdentifier" /> to create a <see cref="BuildServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppBuildServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppBuildServiceResource.CreateResourceIdentifier" /> to create an <see cref="AppBuildServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BuildServiceResource" /> object. </returns>
-        public static BuildServiceResource GetBuildServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppBuildServiceResource" /> object. </returns>
+        public static AppBuildServiceResource GetAppBuildServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BuildServiceResource.ValidateResourceId(id);
-                return new BuildServiceResource(client, id);
+                AppBuildServiceResource.ValidateResourceId(id);
+                return new AppBuildServiceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BuildResource
+        #region AppBuildResource
         /// <summary>
-        /// Gets an object representing a <see cref="BuildResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BuildResource.CreateResourceIdentifier" /> to create a <see cref="BuildResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppBuildResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppBuildResource.CreateResourceIdentifier" /> to create an <see cref="AppBuildResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BuildResource" /> object. </returns>
-        public static BuildResource GetBuildResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppBuildResource" /> object. </returns>
+        public static AppBuildResource GetAppBuildResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BuildResource.ValidateResourceId(id);
-                return new BuildResource(client, id);
+                AppBuildResource.ValidateResourceId(id);
+                return new AppBuildResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BuildResultResource
+        #region AppBuildResultResource
         /// <summary>
-        /// Gets an object representing a <see cref="BuildResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BuildResultResource.CreateResourceIdentifier" /> to create a <see cref="BuildResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppBuildResultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppBuildResultResource.CreateResourceIdentifier" /> to create an <see cref="AppBuildResultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BuildResultResource" /> object. </returns>
-        public static BuildResultResource GetBuildResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppBuildResultResource" /> object. </returns>
+        public static AppBuildResultResource GetAppBuildResultResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BuildResultResource.ValidateResourceId(id);
-                return new BuildResultResource(client, id);
+                AppBuildResultResource.ValidateResourceId(id);
+                return new AppBuildResultResource(client, id);
             }
             );
         }
@@ -388,39 +388,39 @@ namespace Azure.ResourceManager.AppPlatform
         }
         #endregion
 
-        #region BuilderResource
+        #region AppBuilderResource
         /// <summary>
-        /// Gets an object representing a <see cref="BuilderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BuilderResource.CreateResourceIdentifier" /> to create a <see cref="BuilderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppBuilderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppBuilderResource.CreateResourceIdentifier" /> to create an <see cref="AppBuilderResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BuilderResource" /> object. </returns>
-        public static BuilderResource GetBuilderResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppBuilderResource" /> object. </returns>
+        public static AppBuilderResource GetAppBuilderResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BuilderResource.ValidateResourceId(id);
-                return new BuilderResource(client, id);
+                AppBuilderResource.ValidateResourceId(id);
+                return new AppBuilderResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BuildServiceAgentPoolResource
+        #region AppBuildServiceAgentPoolResource
         /// <summary>
-        /// Gets an object representing a <see cref="BuildServiceAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BuildServiceAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="BuildServiceAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppBuildServiceAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppBuildServiceAgentPoolResource.CreateResourceIdentifier" /> to create an <see cref="AppBuildServiceAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BuildServiceAgentPoolResource" /> object. </returns>
-        public static BuildServiceAgentPoolResource GetBuildServiceAgentPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppBuildServiceAgentPoolResource" /> object. </returns>
+        public static AppBuildServiceAgentPoolResource GetAppBuildServiceAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BuildServiceAgentPoolResource.ValidateResourceId(id);
-                return new BuildServiceAgentPoolResource(client, id);
+                AppBuildServiceAgentPoolResource.ValidateResourceId(id);
+                return new AppBuildServiceAgentPoolResource(client, id);
             }
             );
         }
@@ -540,20 +540,20 @@ namespace Azure.ResourceManager.AppPlatform
         }
         #endregion
 
-        #region DeploymentResource
+        #region AppDeploymentResource
         /// <summary>
-        /// Gets an object representing a <see cref="DeploymentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeploymentResource.CreateResourceIdentifier" /> to create a <see cref="DeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="AppDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeploymentResource" /> object. </returns>
-        public static DeploymentResource GetDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppDeploymentResource" /> object. </returns>
+        public static AppDeploymentResource GetAppDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DeploymentResource.ValidateResourceId(id);
-                return new DeploymentResource(client, id);
+                AppDeploymentResource.ValidateResourceId(id);
+                return new AppDeploymentResource(client, id);
             }
             );
         }

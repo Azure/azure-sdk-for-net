@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiPortalName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.ApiPortalCustomDomainResourceCollection>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiPortalName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiPortalCustomDomainResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiPortalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -349,9 +349,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.ApiPortalCustomDomainResourceCollection value = default;
+                        ApiPortalCustomDomainResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.ApiPortalCustomDomainResourceCollection.DeserializeApiPortalCustomDomainResourceCollection(document.RootElement);
+                        value = ApiPortalCustomDomainResourceList.DeserializeApiPortalCustomDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiPortalName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.ApiPortalCustomDomainResourceCollection> List(string subscriptionId, string resourceGroupName, string serviceName, string apiPortalName, CancellationToken cancellationToken = default)
+        public Response<ApiPortalCustomDomainResourceList> List(string subscriptionId, string resourceGroupName, string serviceName, string apiPortalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -380,9 +380,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.ApiPortalCustomDomainResourceCollection value = default;
+                        ApiPortalCustomDomainResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.ApiPortalCustomDomainResourceCollection.DeserializeApiPortalCustomDomainResourceCollection(document.RootElement);
+                        value = ApiPortalCustomDomainResourceList.DeserializeApiPortalCustomDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiPortalName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.ApiPortalCustomDomainResourceCollection>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiPortalName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiPortalCustomDomainResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiPortalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.ApiPortalCustomDomainResourceCollection value = default;
+                        ApiPortalCustomDomainResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.ApiPortalCustomDomainResourceCollection.DeserializeApiPortalCustomDomainResourceCollection(document.RootElement);
+                        value = ApiPortalCustomDomainResourceList.DeserializeApiPortalCustomDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiPortalName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.ApiPortalCustomDomainResourceCollection> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiPortalName, CancellationToken cancellationToken = default)
+        public Response<ApiPortalCustomDomainResourceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiPortalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -460,9 +460,9 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        Models.ApiPortalCustomDomainResourceCollection value = default;
+                        ApiPortalCustomDomainResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.ApiPortalCustomDomainResourceCollection.DeserializeApiPortalCustomDomainResourceCollection(document.RootElement);
+                        value = ApiPortalCustomDomainResourceList.DeserializeApiPortalCustomDomainResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

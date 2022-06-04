@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal static BindingResourceProperties DeserializeBindingResourceProperties(JsonElement element)
         {
             Optional<string> resourceName = default;
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> key = default;
             Optional<IDictionary<string, BinaryData>> bindingParameters = default;
@@ -64,7 +64,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("resourceType"))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"))
@@ -113,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new BindingResourceProperties(resourceName.Value, resourceType.Value, resourceId.Value, key.Value, Optional.ToDictionary(bindingParameters), generatedProperties.Value, createdAt.Value, updatedAt.Value);
+            return new BindingResourceProperties(resourceName.Value, Optional.ToNullable(resourceType), resourceId.Value, key.Value, Optional.ToDictionary(bindingParameters), generatedProperties.Value, createdAt.Value, updatedAt.Value);
         }
     }
 }
