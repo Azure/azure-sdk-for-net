@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The CheckNameAvailability operation response. </summary>
-    public partial class CheckNameAvailabilityResult
+    public partial class VaultNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResult. </summary>
-        internal CheckNameAvailabilityResult()
+        /// <summary> Initializes a new instance of VaultNameAvailabilityResult. </summary>
+        internal VaultNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of VaultNameAvailabilityResult. </summary>
         /// <param name="nameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason that a vault name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
-        internal CheckNameAvailabilityResult(bool? nameAvailable, NameAvailabilityReason? reason, string message)
+        internal VaultNameAvailabilityResult(bool? nameAvailable, NameAvailabilityReason? reason, string message)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
