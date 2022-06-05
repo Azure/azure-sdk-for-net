@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the ServiceResource data model. </summary>
-    public partial class ServiceResourceData : TrackedResourceData
+    /// <summary> A class representing the AppPlatformServiceResource data model. </summary>
+    public partial class AppPlatformServiceResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformServiceResourceData. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceResourceData(AzureLocation location) : base(location)
+        public AppPlatformServiceResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformServiceResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the Service resource. </param>
         /// <param name="sku"> Sku of the Service resource. </param>
-        internal ServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterResourceProperties properties, AppPlatformSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal AppPlatformServiceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterResourceProperties properties, AppPlatformSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;

@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Describes an available Azure Spring Cloud SKU. </summary>
-    public partial class ResourceSku
+    public partial class AvailableAppPlatformSku
     {
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
-        internal ResourceSku()
+        /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>
+        internal AvailableAppPlatformSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             LocationInfo = new ChangeTrackingList<ResourceSkuLocationInfo>();
             Restrictions = new ChangeTrackingList<ResourceSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>
         /// <param name="resourceType"> Gets the type of resource the SKU applies to. </param>
         /// <param name="name"> Gets the name of SKU. </param>
         /// <param name="tier"> Gets the tier of SKU. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// Gets the restrictions because of which SKU cannot be used. This is
         /// empty if there are no restrictions.
         /// </param>
-        internal ResourceSku(ResourceType? resourceType, string name, string tier, SkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<ResourceSkuRestrictions> restrictions)
+        internal AvailableAppPlatformSku(ResourceType? resourceType, string name, string tier, SkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ResourceSkuLocationInfo> locationInfo, IReadOnlyList<ResourceSkuRestrictions> restrictions)
         {
             ResourceType = resourceType;
             Name = name;

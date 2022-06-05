@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    public partial class CustomDomainResourceData : IUtf8JsonSerializable
+    public partial class AppPlatformCustomDomainResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppPlatform
             writer.WriteEndObject();
         }
 
-        internal static CustomDomainResourceData DeserializeCustomDomainResourceData(JsonElement element)
+        internal static AppPlatformCustomDomainResourceData DeserializeAppPlatformCustomDomainResourceData(JsonElement element)
         {
             Optional<CustomDomainProperties> properties = default;
             ResourceIdentifier id = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform
                     continue;
                 }
             }
-            return new CustomDomainResourceData(id, name, type, systemData, properties.Value);
+            return new AppPlatformCustomDomainResourceData(id, name, type, systemData, properties.Value);
         }
     }
 }

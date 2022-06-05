@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ResourceSkuList. </summary>
         internal ResourceSkuList()
         {
-            Value = new ChangeTrackingList<ResourceSku>();
+            Value = new ChangeTrackingList<AvailableAppPlatformSku>();
         }
 
         /// <summary> Initializes a new instance of ResourceSkuList. </summary>
@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal ResourceSkuList(IReadOnlyList<ResourceSku> value, string nextLink)
+        internal ResourceSkuList(IReadOnlyList<AvailableAppPlatformSku> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resource SKU. </summary>
-        public IReadOnlyList<ResourceSku> Value { get; }
+        public IReadOnlyList<AvailableAppPlatformSku> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

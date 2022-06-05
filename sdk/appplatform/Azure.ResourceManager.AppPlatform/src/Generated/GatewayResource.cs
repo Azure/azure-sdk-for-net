@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppPlatform
     /// A Class representing a GatewayResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GatewayResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceResource" /> using the GetGatewayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetGatewayResource method.
     /// </summary>
     public partial class GatewayResource : ArmResource
     {

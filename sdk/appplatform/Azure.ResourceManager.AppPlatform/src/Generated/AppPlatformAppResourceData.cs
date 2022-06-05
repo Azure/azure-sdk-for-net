@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppResource data model. </summary>
-    public partial class AppResourceData : ResourceData
+    /// <summary> A class representing the AppPlatformAppResource data model. </summary>
+    public partial class AppPlatformAppResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppResourceData. </summary>
-        public AppResourceData()
+        /// <summary> Initializes a new instance of AppPlatformAppResourceData. </summary>
+        public AppPlatformAppResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformAppResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="properties"> Properties of the App resource. </param>
         /// <param name="identity"> The Managed Identity type of the app resource. </param>
         /// <param name="location"> The GEO location of the application, always the same with its parent resource. </param>
-        internal AppResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppResourceProperties properties, ManagedServiceIdentity identity, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal AppPlatformAppResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppResourceProperties properties, ManagedServiceIdentity identity, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Identity = identity;

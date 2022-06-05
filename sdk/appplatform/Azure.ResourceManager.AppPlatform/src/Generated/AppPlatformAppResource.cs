@@ -18,46 +18,46 @@ using Azure.ResourceManager.AppPlatform.Models;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A Class representing an AppResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceResource" /> using the GetAppResource method.
+    /// A Class representing an AppPlatformAppResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformAppResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformAppResource method.
     /// </summary>
-    public partial class AppResource : ArmResource
+    public partial class AppPlatformAppResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AppResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AppPlatformAppResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string appName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/apps/{appName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _appResourceAppsClientDiagnostics;
-        private readonly AppsRestOperations _appResourceAppsRestClient;
-        private readonly AppResourceData _data;
+        private readonly ClientDiagnostics _appPlatformAppResourceAppsClientDiagnostics;
+        private readonly AppsRestOperations _appPlatformAppResourceAppsRestClient;
+        private readonly AppPlatformAppResourceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AppResource"/> class for mocking. </summary>
-        protected AppResource()
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformAppResource"/> class for mocking. </summary>
+        protected AppPlatformAppResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "AppPlatformAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AppResource(ArmClient client, AppResourceData data) : this(client, data.Id)
+        internal AppPlatformAppResource(ArmClient client, AppPlatformAppResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AppResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppPlatformAppResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appResourceAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string appResourceAppsApiVersion);
-            _appResourceAppsRestClient = new AppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appResourceAppsApiVersion);
+            _appPlatformAppResourceAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string appPlatformAppResourceAppsApiVersion);
+            _appPlatformAppResourceAppsRestClient = new AppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appPlatformAppResourceAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppPlatform
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AppResourceData Data
+        public virtual AppPlatformAppResourceData Data
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppPlatform
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of BindingResources in the AppResource. </summary>
+        /// <summary> Gets a collection of BindingResources in the AppPlatformAppResource. </summary>
         /// <returns> An object representing collection of BindingResources and their operations over a BindingResource. </returns>
         public virtual BindingResourceCollection GetBindingResources()
         {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.AppPlatform
             return GetBindingResources().Get(bindingName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CustomDomainResources in the AppResource. </summary>
-        /// <returns> An object representing collection of CustomDomainResources and their operations over a CustomDomainResource. </returns>
-        public virtual CustomDomainResourceCollection GetCustomDomainResources()
+        /// <summary> Gets a collection of AppPlatformCustomDomainResources in the AppPlatformAppResource. </summary>
+        /// <returns> An object representing collection of AppPlatformCustomDomainResources and their operations over a AppPlatformCustomDomainResource. </returns>
+        public virtual AppPlatformCustomDomainResourceCollection GetAppPlatformCustomDomainResources()
         {
-            return GetCachedClient(Client => new CustomDomainResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformCustomDomainResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomDomainResource>> GetCustomDomainResourceAsync(string domainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformCustomDomainResource>> GetAppPlatformCustomDomainResourceAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            return await GetCustomDomainResources().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformCustomDomainResources().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomDomainResource> GetCustomDomainResource(string domainName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformCustomDomainResource> GetAppPlatformCustomDomainResource(string domainName, CancellationToken cancellationToken = default)
         {
-            return GetCustomDomainResources().Get(domainName, cancellationToken);
+            return GetAppPlatformCustomDomainResources().Get(domainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AppDeploymentResources in the AppResource. </summary>
+        /// <summary> Gets a collection of AppDeploymentResources in the AppPlatformAppResource. </summary>
         /// <returns> An object representing collection of AppDeploymentResources and their operations over a AppDeploymentResource. </returns>
         public virtual AppDeploymentResourceCollection GetAppDeploymentResources()
         {
@@ -205,16 +205,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="syncStatus"> Indicates whether sync status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppResource>> GetAsync(string syncStatus = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformAppResource>> GetAsync(string syncStatus = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.Get");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.Get");
             scope.Start();
             try
             {
-                var response = await _appResourceAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncStatus, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformAppResourceAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncStatus, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -230,16 +230,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="syncStatus"> Indicates whether sync status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppResource> Get(string syncStatus = null, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformAppResource> Get(string syncStatus = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.Get");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.Get");
             scope.Start();
             try
             {
-                var response = _appResourceAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncStatus, cancellationToken);
+                var response = _appPlatformAppResourceAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, syncStatus, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,12 +257,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.Delete");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.Delete");
             scope.Start();
             try
             {
-                var response = await _appResourceAppsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appResourceAppsClientDiagnostics, Pipeline, _appResourceAppsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appPlatformAppResourceAppsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.Delete");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.Delete");
             scope.Start();
             try
             {
-                var response = _appResourceAppsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appResourceAppsClientDiagnostics, Pipeline, _appResourceAppsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appPlatformAppResourceAppsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -309,16 +309,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="data"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppResource>> UpdateAsync(WaitUntil waitUntil, AppResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppPlatformAppResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformAppResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.Update");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.Update");
             scope.Start();
             try
             {
-                var response = await _appResourceAppsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppResource>(new AppResourceOperationSource(Client), _appResourceAppsClientDiagnostics, Pipeline, _appResourceAppsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appPlatformAppResourceAppsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformAppResource>(new AppPlatformAppResourceOperationSource(Client), _appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -339,16 +339,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="data"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AppResource> Update(WaitUntil waitUntil, AppResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppPlatformAppResource> Update(WaitUntil waitUntil, AppPlatformAppResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.Update");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.Update");
             scope.Start();
             try
             {
-                var response = _appResourceAppsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppResource>(new AppResourceOperationSource(Client), _appResourceAppsClientDiagnostics, Pipeline, _appResourceAppsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appPlatformAppResourceAppsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformAppResource>(new AppPlatformAppResourceOperationSource(Client), _appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -366,13 +366,13 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Apps_GetResourceUploadUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceUploadDefinition>> GetResourceUploadUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceUploadDefinition>> GetResourceUploadUriAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.GetResourceUploadUrl");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.GetResourceUploadUri");
             scope.Start();
             try
             {
-                var response = await _appResourceAppsRestClient.GetResourceUploadUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformAppResourceAppsRestClient.GetResourceUploadUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -388,13 +388,13 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Apps_GetResourceUploadUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceUploadDefinition> GetResourceUploadUrl(CancellationToken cancellationToken = default)
+        public virtual Response<ResourceUploadDefinition> GetResourceUploadUri(CancellationToken cancellationToken = default)
         {
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.GetResourceUploadUrl");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.GetResourceUploadUri");
             scope.Start();
             try
             {
-                var response = _appResourceAppsRestClient.GetResourceUploadUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _appPlatformAppResourceAppsRestClient.GetResourceUploadUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -413,16 +413,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="activeDeploymentCollection"> A list of Deployment name to be active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activeDeploymentCollection"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppResource>> SetActiveDeploymentsAsync(WaitUntil waitUntil, ActiveDeploymentList activeDeploymentCollection, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppPlatformAppResource>> SetActiveDeploymentsAsync(WaitUntil waitUntil, ActiveDeploymentList activeDeploymentCollection, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(activeDeploymentCollection, nameof(activeDeploymentCollection));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.SetActiveDeployments");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.SetActiveDeployments");
             scope.Start();
             try
             {
-                var response = await _appResourceAppsRestClient.SetActiveDeploymentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, activeDeploymentCollection, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppResource>(new AppResourceOperationSource(Client), _appResourceAppsClientDiagnostics, Pipeline, _appResourceAppsRestClient.CreateSetActiveDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, activeDeploymentCollection).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appPlatformAppResourceAppsRestClient.SetActiveDeploymentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, activeDeploymentCollection, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformAppResource>(new AppPlatformAppResourceOperationSource(Client), _appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateSetActiveDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, activeDeploymentCollection).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -443,16 +443,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="activeDeploymentCollection"> A list of Deployment name to be active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="activeDeploymentCollection"/> is null. </exception>
-        public virtual ArmOperation<AppResource> SetActiveDeployments(WaitUntil waitUntil, ActiveDeploymentList activeDeploymentCollection, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppPlatformAppResource> SetActiveDeployments(WaitUntil waitUntil, ActiveDeploymentList activeDeploymentCollection, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(activeDeploymentCollection, nameof(activeDeploymentCollection));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.SetActiveDeployments");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.SetActiveDeployments");
             scope.Start();
             try
             {
-                var response = _appResourceAppsRestClient.SetActiveDeployments(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, activeDeploymentCollection, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppResource>(new AppResourceOperationSource(Client), _appResourceAppsClientDiagnostics, Pipeline, _appResourceAppsRestClient.CreateSetActiveDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, activeDeploymentCollection).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appPlatformAppResourceAppsRestClient.SetActiveDeployments(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, activeDeploymentCollection, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformAppResource>(new AppPlatformAppResourceOperationSource(Client), _appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateSetActiveDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, activeDeploymentCollection).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -476,11 +476,11 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNull(validatePayload, nameof(validatePayload));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.ValidateDomain");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.ValidateDomain");
             scope.Start();
             try
             {
-                var response = await _appResourceAppsRestClient.ValidateDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, validatePayload, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformAppResourceAppsRestClient.ValidateDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, validatePayload, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -502,11 +502,11 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNull(validatePayload, nameof(validatePayload));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResource.ValidateDomain");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResource.ValidateDomain");
             scope.Start();
             try
             {
-                var response = _appResourceAppsRestClient.ValidateDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, validatePayload, cancellationToken);
+                var response = _appPlatformAppResourceAppsRestClient.ValidateDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, validatePayload, cancellationToken);
                 return response;
             }
             catch (Exception e)

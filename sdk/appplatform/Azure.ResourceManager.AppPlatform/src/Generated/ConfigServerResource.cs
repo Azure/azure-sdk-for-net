@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform
     /// A Class representing a ConfigServerResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConfigServerResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetConfigServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceResource" /> using the GetConfigServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetConfigServerResource method.
     /// </summary>
     public partial class ConfigServerResource : ArmResource
     {

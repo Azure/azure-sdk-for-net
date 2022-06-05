@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public ApiPortalProperties()
         {
             GatewayIds = new ChangeTrackingList<string>();
-            SourceUrls = new ChangeTrackingList<string>();
+            SourceUris = new ChangeTrackingList<Uri>();
             Instances = new ChangeTrackingList<ApiPortalInstance>();
         }
 
@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="uri"> URL of the API portal, exposed when &apos;public&apos; is true. </param>
         /// <param name="httpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="gatewayIds"> The array of resource Ids of gateway to integrate with API portal. </param>
-        /// <param name="sourceUrls"> Collection of OpenAPI source URL locations. </param>
+        /// <param name="sourceUris"> Collection of OpenAPI source URL locations. </param>
         /// <param name="ssoProperties"> Single sign-on related configuration. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to API portal. </param>
-        internal ApiPortalProperties(ApiPortalProvisioningState? provisioningState, bool? @public, Uri uri, bool? httpsOnly, IList<string> gatewayIds, IList<string> sourceUrls, SsoProperties ssoProperties, ApiPortalResourceRequests resourceRequests, IReadOnlyList<ApiPortalInstance> instances)
+        internal ApiPortalProperties(ApiPortalProvisioningState? provisioningState, bool? @public, Uri uri, bool? httpsOnly, IList<string> gatewayIds, IList<Uri> sourceUris, SsoProperties ssoProperties, ApiPortalResourceRequests resourceRequests, IReadOnlyList<ApiPortalInstance> instances)
         {
             ProvisioningState = provisioningState;
             Public = @public;
             Uri = uri;
             HttpsOnly = httpsOnly;
             GatewayIds = gatewayIds;
-            SourceUrls = sourceUrls;
+            SourceUris = sourceUris;
             SsoProperties = ssoProperties;
             ResourceRequests = resourceRequests;
             Instances = instances;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> The array of resource Ids of gateway to integrate with API portal. </summary>
         public IList<string> GatewayIds { get; }
         /// <summary> Collection of OpenAPI source URL locations. </summary>
-        public IList<string> SourceUrls { get; }
+        public IList<Uri> SourceUris { get; }
         /// <summary> Single sign-on related configuration. </summary>
         public SsoProperties SsoProperties { get; set; }
         /// <summary> The requested resource quantity for required CPU and Memory. </summary>

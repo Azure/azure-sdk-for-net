@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApiPortalResource" /> and their operations.
-    /// Each <see cref="ApiPortalResource" /> in the collection will belong to the same instance of <see cref="ServiceResource" />.
-    /// To get an <see cref="ApiPortalResourceCollection" /> instance call the GetApiPortalResources method from an instance of <see cref="ServiceResource" />.
+    /// Each <see cref="ApiPortalResource" /> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource" />.
+    /// To get an <see cref="ApiPortalResourceCollection" /> instance call the GetApiPortalResources method from an instance of <see cref="AppPlatformServiceResource" />.
     /// </summary>
     public partial class ApiPortalResourceCollection : ArmCollection, IEnumerable<ApiPortalResource>, IAsyncEnumerable<ApiPortalResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppPlatformServiceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppPlatformServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

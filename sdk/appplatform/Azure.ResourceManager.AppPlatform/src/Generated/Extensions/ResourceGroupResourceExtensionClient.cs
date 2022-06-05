@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.AppPlatform
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ServiceResources and their operations over a ServiceResource. </returns>
-        public virtual ServiceResourceCollection GetServiceResources()
+        /// <summary> Gets a collection of AppPlatformServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AppPlatformServiceResources and their operations over a AppPlatformServiceResource. </returns>
+        public virtual AppPlatformServiceResourceCollection GetAppPlatformServiceResources()
         {
-            return GetCachedClient(Client => new ServiceResourceCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformServiceResourceCollection(Client, Id));
         }
     }
 }

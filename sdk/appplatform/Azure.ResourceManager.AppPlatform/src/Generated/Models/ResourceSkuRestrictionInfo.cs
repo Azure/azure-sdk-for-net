@@ -16,21 +16,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ResourceSkuRestrictionInfo. </summary>
         internal ResourceSkuRestrictionInfo()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResourceSkuRestrictionInfo. </summary>
         /// <param name="locations"> Gets locations where the SKU is restricted. </param>
         /// <param name="zones"> Gets list of availability zones where the SKU is restricted. </param>
-        internal ResourceSkuRestrictionInfo(IReadOnlyList<string> locations, IReadOnlyList<string> zones)
+        internal ResourceSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones)
         {
             Locations = locations;
             Zones = zones;
         }
 
         /// <summary> Gets locations where the SKU is restricted. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> Gets list of availability zones where the SKU is restricted. </summary>
         public IReadOnlyList<string> Zones { get; }
     }

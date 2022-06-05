@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A class representing a collection of <see cref="BindingResource" /> and their operations.
-    /// Each <see cref="BindingResource" /> in the collection will belong to the same instance of <see cref="AppResource" />.
-    /// To get a <see cref="BindingResourceCollection" /> instance call the GetBindingResources method from an instance of <see cref="AppResource" />.
+    /// Each <see cref="BindingResource" /> in the collection will belong to the same instance of <see cref="AppPlatformAppResource" />.
+    /// To get a <see cref="BindingResourceCollection" /> instance call the GetBindingResources method from an instance of <see cref="AppPlatformAppResource" />.
     /// </summary>
     public partial class BindingResourceCollection : ArmCollection, IEnumerable<BindingResource>, IAsyncEnumerable<BindingResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AppResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppPlatformAppResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppPlatformAppResource.ResourceType), nameof(id));
         }
 
         /// <summary>

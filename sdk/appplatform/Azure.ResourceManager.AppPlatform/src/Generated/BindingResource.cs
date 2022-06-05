@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform
     /// A Class representing a BindingResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BindingResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetBindingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppResource" /> using the GetBindingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformAppResource" /> using the GetBindingResource method.
     /// </summary>
     public partial class BindingResource : ArmResource
     {

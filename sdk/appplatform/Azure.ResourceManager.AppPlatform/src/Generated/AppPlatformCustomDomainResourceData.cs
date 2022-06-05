@@ -11,21 +11,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the CustomDomainResource data model. </summary>
-    public partial class CustomDomainResourceData : ResourceData
+    /// <summary> A class representing the AppPlatformCustomDomainResource data model. </summary>
+    public partial class AppPlatformCustomDomainResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of CustomDomainResourceData. </summary>
-        public CustomDomainResourceData()
+        /// <summary> Initializes a new instance of AppPlatformCustomDomainResourceData. </summary>
+        public AppPlatformCustomDomainResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformCustomDomainResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the custom domain resource. </param>
-        internal CustomDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomDomainProperties properties) : base(id, name, resourceType, systemData)
+        internal AppPlatformCustomDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomDomainProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

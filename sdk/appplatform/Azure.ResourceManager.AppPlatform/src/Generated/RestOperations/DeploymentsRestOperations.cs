@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        internal HttpMessage CreateGetLogFileUrlRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName)
+        internal HttpMessage CreateGetLogFileUriRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LogFileUrlResponse>> GetLogFileUrlAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, CancellationToken cancellationToken = default)
+        public async Task<Response<LogFileUriResponse>> GetLogFileUriAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -871,19 +871,19 @@ namespace Azure.ResourceManager.AppPlatform
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var message = CreateGetLogFileUrlRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName);
+            using var message = CreateGetLogFileUriRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        LogFileUrlResponse value = default;
+                        LogFileUriResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogFileUrlResponse.DeserializeLogFileUrlResponse(document.RootElement);
+                        value = LogFileUriResponse.DeserializeLogFileUriResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((LogFileUrlResponse)null, message.Response);
+                    return Response.FromValue((LogFileUriResponse)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LogFileUrlResponse> GetLogFileUrl(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, CancellationToken cancellationToken = default)
+        public Response<LogFileUriResponse> GetLogFileUri(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -906,19 +906,19 @@ namespace Azure.ResourceManager.AppPlatform
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var message = CreateGetLogFileUrlRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName);
+            using var message = CreateGetLogFileUriRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        LogFileUrlResponse value = default;
+                        LogFileUriResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogFileUrlResponse.DeserializeLogFileUrlResponse(document.RootElement);
+                        value = LogFileUriResponse.DeserializeLogFileUriResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((LogFileUrlResponse)null, message.Response);
+                    return Response.FromValue((LogFileUriResponse)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        internal HttpMessage CreateStartJFRRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
+        internal HttpMessage CreateStartJfrRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="diagnosticParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StartJFRAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> StartJfrAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1154,7 +1154,7 @@ namespace Azure.ResourceManager.AppPlatform
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
 
-            using var message = CreateStartJFRRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters);
+            using var message = CreateStartJfrRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1176,7 +1176,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="diagnosticParameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response StartJFR(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        public Response StartJfr(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.AppPlatform
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
 
-            using var message = CreateStartJFRRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters);
+            using var message = CreateStartJfrRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

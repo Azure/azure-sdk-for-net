@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="temporaryDisk"> Temporary disk settings. </param>
         /// <param name="persistentDisk"> Persistent disk settings. </param>
         /// <param name="customPersistentDisks"> List of custom persistent disks. </param>
-        /// <param name="enableEndToEndTLS"> Indicate if end to end TLS is enabled. </param>
+        /// <param name="enableEndToEndTls"> Indicate if end to end TLS is enabled. </param>
         /// <param name="loadedCertificates"> Collection of loaded certificates. </param>
-        internal AppResourceProperties(bool? @public, Uri uri, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs, AppResourceProvisioningState? provisioningState, string fqdn, bool? httpsOnly, TemporaryDisk temporaryDisk, PersistentDisk persistentDisk, IList<CustomPersistentDiskResource> customPersistentDisks, bool? enableEndToEndTLS, IList<LoadedCertificate> loadedCertificates)
+        internal AppResourceProperties(bool? @public, Uri uri, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs, AppResourceProvisioningState? provisioningState, string fqdn, bool? httpsOnly, TemporaryDisk temporaryDisk, PersistentDisk persistentDisk, IList<CustomPersistentDiskResource> customPersistentDisks, bool? enableEndToEndTls, IList<LoadedCertificate> loadedCertificates)
         {
             Public = @public;
             Uri = uri;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             TemporaryDisk = temporaryDisk;
             PersistentDisk = persistentDisk;
             CustomPersistentDisks = customPersistentDisks;
-            EnableEndToEndTLS = enableEndToEndTLS;
+            EnableEndToEndTls = enableEndToEndTls;
             LoadedCertificates = loadedCertificates;
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> List of custom persistent disks. </summary>
         public IList<CustomPersistentDiskResource> CustomPersistentDisks { get; }
         /// <summary> Indicate if end to end TLS is enabled. </summary>
-        public bool? EnableEndToEndTLS { get; set; }
+        public bool? EnableEndToEndTls { get; set; }
         /// <summary> Collection of loaded certificates. </summary>
         public IList<LoadedCertificate> LoadedCertificates { get; }
     }

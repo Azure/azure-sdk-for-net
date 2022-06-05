@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Name availability result payload. </summary>
-    public partial class CheckNameAvailabilityResult
+    public partial class ServiceNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResult. </summary>
-        internal CheckNameAvailabilityResult()
+        /// <summary> Initializes a new instance of ServiceNameAvailabilityResult. </summary>
+        internal ServiceNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of ServiceNameAvailabilityResult. </summary>
         /// <param name="nameAvailable"> Indicates whether the name is available. </param>
         /// <param name="reason"> Reason why the name is not available. </param>
         /// <param name="message"> Message why the name is not available. </param>
-        internal CheckNameAvailabilityResult(bool? nameAvailable, string reason, string message)
+        internal ServiceNameAvailabilityResult(bool? nameAvailable, string reason, string message)
         {
             NameAvailable = nameAvailable;
             Reason = reason;

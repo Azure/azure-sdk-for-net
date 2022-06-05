@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static ResourceSkuList DeserializeResourceSkuList(JsonElement element)
         {
-            Optional<IReadOnlyList<ResourceSku>> value = default;
+            Optional<IReadOnlyList<AvailableAppPlatformSku>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSku> array = new List<ResourceSku>();
+                    List<AvailableAppPlatformSku> array = new List<AvailableAppPlatformSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSku.DeserializeResourceSku(item));
+                        array.Add(AvailableAppPlatformSku.DeserializeAvailableAppPlatformSku(item));
                     }
                     value = array;
                     continue;

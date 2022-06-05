@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class CheckNameAvailabilityResult
+    public partial class ServiceNameAvailabilityResult
     {
-        internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element)
+        internal static ServiceNameAvailabilityResult DeserializeServiceNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new CheckNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new ServiceNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }

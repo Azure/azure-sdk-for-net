@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A class representing a collection of <see cref="CertificateResource" /> and their operations.
-    /// Each <see cref="CertificateResource" /> in the collection will belong to the same instance of <see cref="ServiceResource" />.
-    /// To get a <see cref="CertificateResourceCollection" /> instance call the GetCertificateResources method from an instance of <see cref="ServiceResource" />.
+    /// Each <see cref="CertificateResource" /> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource" />.
+    /// To get a <see cref="CertificateResourceCollection" /> instance call the GetCertificateResources method from an instance of <see cref="AppPlatformServiceResource" />.
     /// </summary>
     public partial class CertificateResourceCollection : ArmCollection, IEnumerable<CertificateResource>, IAsyncEnumerable<CertificateResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppPlatformServiceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppPlatformServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

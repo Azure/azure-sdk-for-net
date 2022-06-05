@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         private const string AppDynamicsValue = "AppDynamics";
         private const string DynatraceValue = "Dynatrace";
         private const string NewRelicValue = "NewRelic";
-        private const string ElasticAPMValue = "ElasticAPM";
+        private const string ElasticApmValue = "ElasticAPM";
 
         /// <summary> ApplicationInsights. </summary>
         public static BindingType ApplicationInsights { get; } = new BindingType(ApplicationInsightsValue);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> NewRelic. </summary>
         public static BindingType NewRelic { get; } = new BindingType(NewRelicValue);
         /// <summary> ElasticAPM. </summary>
-        public static BindingType ElasticAPM { get; } = new BindingType(ElasticAPMValue);
+        public static BindingType ElasticApm { get; } = new BindingType(ElasticApmValue);
         /// <summary> Determines if two <see cref="BindingType"/> values are the same. </summary>
         public static bool operator ==(BindingType left, BindingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BindingType"/> values are not the same. </summary>

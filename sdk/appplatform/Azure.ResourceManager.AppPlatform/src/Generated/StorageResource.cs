@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform
     /// A Class representing a StorageResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetStorageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceResource" /> using the GetStorageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetStorageResource method.
     /// </summary>
     public partial class StorageResource : ArmResource
     {

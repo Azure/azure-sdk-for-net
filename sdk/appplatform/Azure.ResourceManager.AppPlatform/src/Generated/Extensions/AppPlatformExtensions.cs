@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceNameAvailabilityResult>> CheckServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckServiceNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<ServiceNameAvailabilityResult> CheckServiceNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, ServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServiceResource> GetServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppPlatformServiceResource> GetAppPlatformServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServiceResourcesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAppPlatformServiceResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServiceResource> GetServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppPlatformServiceResource> GetAppPlatformServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetServiceResources(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetAppPlatformServiceResources(cancellationToken);
         }
 
         /// <summary>
@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceSku> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AvailableAppPlatformSku> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken);
         }
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceSku> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AvailableAppPlatformSku> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSkus(cancellationToken);
         }
@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.AppPlatform
             );
         }
 
-        /// <summary> Gets a collection of ServiceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of AppPlatformServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ServiceResources and their operations over a ServiceResource. </returns>
-        public static ServiceResourceCollection GetServiceResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AppPlatformServiceResources and their operations over a AppPlatformServiceResource. </returns>
+        public static AppPlatformServiceResourceCollection GetAppPlatformServiceResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetServiceResources();
+            return GetExtensionClient(resourceGroupResource).GetAppPlatformServiceResources();
         }
 
         /// <summary>
@@ -177,9 +177,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServiceResource>> GetServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppPlatformServiceResource>> GetAppPlatformServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetServiceResources().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAppPlatformServiceResources().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -193,25 +193,25 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ServiceResource> GetServiceResource(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<AppPlatformServiceResource> GetAppPlatformServiceResource(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetServiceResources().Get(serviceName, cancellationToken);
+            return resourceGroupResource.GetAppPlatformServiceResources().Get(serviceName, cancellationToken);
         }
 
-        #region ServiceResource
+        #region AppPlatformServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppPlatformServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppPlatformServiceResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceResource" /> object. </returns>
-        public static ServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppPlatformServiceResource" /> object. </returns>
+        public static AppPlatformServiceResource GetAppPlatformServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceResource.ValidateResourceId(id);
-                return new ServiceResource(client, id);
+                AppPlatformServiceResource.ValidateResourceId(id);
+                return new AppPlatformServiceResource(client, id);
             }
             );
         }
@@ -445,20 +445,20 @@ namespace Azure.ResourceManager.AppPlatform
         }
         #endregion
 
-        #region AppResource
+        #region AppPlatformAppResource
         /// <summary>
-        /// Gets an object representing an <see cref="AppResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppResource.CreateResourceIdentifier" /> to create an <see cref="AppResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppPlatformAppResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppPlatformAppResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformAppResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppResource" /> object. </returns>
-        public static AppResource GetAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppPlatformAppResource" /> object. </returns>
+        public static AppPlatformAppResource GetAppPlatformAppResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AppResource.ValidateResourceId(id);
-                return new AppResource(client, id);
+                AppPlatformAppResource.ValidateResourceId(id);
+                return new AppPlatformAppResource(client, id);
             }
             );
         }
@@ -521,20 +521,20 @@ namespace Azure.ResourceManager.AppPlatform
         }
         #endregion
 
-        #region CustomDomainResource
+        #region AppPlatformCustomDomainResource
         /// <summary>
-        /// Gets an object representing a <see cref="CustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="CustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppPlatformCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppPlatformCustomDomainResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomDomainResource" /> object. </returns>
-        public static CustomDomainResource GetCustomDomainResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppPlatformCustomDomainResource" /> object. </returns>
+        public static AppPlatformCustomDomainResource GetAppPlatformCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CustomDomainResource.ValidateResourceId(id);
-                return new CustomDomainResource(client, id);
+                AppPlatformCustomDomainResource.ValidateResourceId(id);
+                return new AppPlatformCustomDomainResource(client, id);
             }
             );
         }

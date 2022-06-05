@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceUrls))
+            if (Optional.IsCollectionDefined(SourceUris))
             {
                 writer.WritePropertyName("sourceUrls");
                 writer.WriteStartArray();
-                foreach (var item in SourceUrls)
+                foreach (var item in SourceUris)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<Uri> url = default;
             Optional<bool> httpsOnly = default;
             Optional<IList<string>> gatewayIds = default;
-            Optional<IList<string>> sourceUrls = default;
+            Optional<IList<Uri>> sourceUrls = default;
             Optional<SsoProperties> ssoProperties = default;
             Optional<ApiPortalResourceRequests> resourceRequests = default;
             Optional<IReadOnlyList<ApiPortalInstance>> instances = default;
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<Uri> array = new List<Uri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new Uri(item.GetString()));
                     }
                     sourceUrls = array;
                     continue;

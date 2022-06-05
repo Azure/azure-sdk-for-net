@@ -10,13 +10,13 @@ using System;
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Name availability parameters payload. </summary>
-    public partial class CheckNameAvailabilityContent
+    public partial class ServiceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of ServiceNameAvailabilityContent. </summary>
         /// <param name="resourceType"> Type of the resource to check name availability. </param>
         /// <param name="name"> Name to be checked. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>
-        public CheckNameAvailabilityContent(string resourceType, string name)
+        public ServiceNameAvailabilityContent(string resourceType, string name)
         {
             if (resourceType == null)
             {

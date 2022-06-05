@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppPlatform
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _serviceResourceServicesClientDiagnostics;
-        private ServicesRestOperations _serviceResourceServicesRestClient;
+        private ClientDiagnostics _appPlatformServiceResourceServicesClientDiagnostics;
+        private ServicesRestOperations _appPlatformServiceResourceServicesRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
         private SkusRestOperations _skusRestClient;
 
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.AppPlatform
         {
         }
 
-        private ClientDiagnostics ServiceResourceServicesClientDiagnostics => _serviceResourceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ServiceResource.ResourceType.Namespace, Diagnostics);
-        private ServicesRestOperations ServiceResourceServicesRestClient => _serviceResourceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceResource.ResourceType));
+        private ClientDiagnostics AppPlatformServiceResourceServicesClientDiagnostics => _appPlatformServiceResourceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppPlatform", AppPlatformServiceResource.ResourceType.Namespace, Diagnostics);
+        private ServicesRestOperations AppPlatformServiceResourceServicesRestClient => _appPlatformServiceResourceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppPlatformServiceResource.ResourceType));
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckServiceNameAvailabilityAsync(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceNameAvailabilityResult>> CheckServiceNameAvailabilityAsync(AzureLocation location, ServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceNameAvailability");
+            using var scope = AppPlatformServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = await ServiceResourceServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                var response = await AppPlatformServiceResourceServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckServiceNameAvailability(AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceNameAvailabilityResult> CheckServiceNameAvailability(AzureLocation location, ServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceNameAvailability");
+            using var scope = AppPlatformServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = ServiceResourceServicesRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
+                var response = AppPlatformServiceResourceServicesRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Services_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceResource> GetServiceResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppPlatformServiceResource> GetAppPlatformServiceResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppPlatformServiceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceResources");
+                using var scope = AppPlatformServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppPlatformServiceResources");
                 scope.Start();
                 try
                 {
-                    var response = await ServiceResourceServicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AppPlatformServiceResourceServicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            async Task<Page<ServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppPlatformServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceResources");
+                using var scope = AppPlatformServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppPlatformServiceResources");
                 scope.Start();
                 try
                 {
-                    var response = await ServiceResourceServicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await AppPlatformServiceResourceServicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -144,17 +144,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Services_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceResource> GetServiceResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppPlatformServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppPlatformServiceResource> GetAppPlatformServiceResources(CancellationToken cancellationToken = default)
         {
-            Page<ServiceResource> FirstPageFunc(int? pageSizeHint)
+            Page<AppPlatformServiceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceResources");
+                using var scope = AppPlatformServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppPlatformServiceResources");
                 scope.Start();
                 try
                 {
-                    var response = ServiceResourceServicesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AppPlatformServiceResourceServicesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -162,14 +162,14 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            Page<ServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppPlatformServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceResources");
+                using var scope = AppPlatformServiceResourceServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAppPlatformServiceResources");
                 scope.Start();
                 try
                 {
-                    var response = ServiceResourceServicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = AppPlatformServiceResourceServicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Skus_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceSku> GetSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableAppPlatformSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceSku>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AvailableAppPlatformSku>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
                 scope.Start();
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            async Task<Page<ResourceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AvailableAppPlatformSku>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
                 scope.Start();
@@ -228,10 +228,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Skus_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceSku> GetSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailableAppPlatformSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableAppPlatformSku> GetSkus(CancellationToken cancellationToken = default)
         {
-            Page<ResourceSku> FirstPageFunc(int? pageSizeHint)
+            Page<AvailableAppPlatformSku> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
                 scope.Start();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            Page<ResourceSku> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AvailableAppPlatformSku> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
                 scope.Start();

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform
     /// A Class representing a ServiceRegistryResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceRegistryResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetServiceRegistryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceResource" /> using the GetServiceRegistryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetServiceRegistryResource method.
     /// </summary>
     public partial class ServiceRegistryResource : ArmResource
     {

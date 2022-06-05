@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    public partial class AppResourceData : IUtf8JsonSerializable
+    public partial class AppPlatformAppResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform
             writer.WriteEndObject();
         }
 
-        internal static AppResourceData DeserializeAppResourceData(JsonElement element)
+        internal static AppPlatformAppResourceData DeserializeAppPlatformAppResourceData(JsonElement element)
         {
             Optional<AppResourceProperties> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform
                     continue;
                 }
             }
-            return new AppResourceData(id, name, type, systemData, properties.Value, identity, Optional.ToNullable(location));
+            return new AppPlatformAppResourceData(id, name, type, systemData, properties.Value, identity, Optional.ToNullable(location));
         }
     }
 }

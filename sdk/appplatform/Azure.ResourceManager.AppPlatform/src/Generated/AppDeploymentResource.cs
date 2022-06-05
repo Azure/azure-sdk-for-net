@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppPlatform
     /// A Class representing an AppDeploymentResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppDeploymentResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetAppDeploymentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppResource" /> using the GetAppDeploymentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformAppResource" /> using the GetAppDeploymentResource method.
     /// </summary>
     public partial class AppDeploymentResource : ArmResource
     {
@@ -409,13 +409,13 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Deployments_GetLogFileUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LogFileUrlResponse>> GetLogFileUrlAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogFileUriResponse>> GetLogFileUriAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GetLogFileUrl");
+            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GetLogFileUri");
             scope.Start();
             try
             {
-                var response = await _appDeploymentResourceDeploymentsRestClient.GetLogFileUrlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appDeploymentResourceDeploymentsRestClient.GetLogFileUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -431,13 +431,13 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Deployments_GetLogFileUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogFileUrlResponse> GetLogFileUrl(CancellationToken cancellationToken = default)
+        public virtual Response<LogFileUriResponse> GetLogFileUri(CancellationToken cancellationToken = default)
         {
-            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GetLogFileUrl");
+            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GetLogFileUri");
             scope.Start();
             try
             {
-                var response = _appDeploymentResourceDeploymentsRestClient.GetLogFileUrl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _appDeploymentResourceDeploymentsRestClient.GetLogFileUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -576,16 +576,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation> StartJFRAsync(WaitUntil waitUntil, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StartJfrAsync(WaitUntil waitUntil, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
 
-            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.StartJFR");
+            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.StartJfr");
             scope.Start();
             try
             {
-                var response = await _appDeploymentResourceDeploymentsRestClient.StartJFRAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJFRRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appDeploymentResourceDeploymentsRestClient.StartJfrAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJfrRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -606,16 +606,16 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticParameters"/> is null. </exception>
-        public virtual ArmOperation StartJFR(WaitUntil waitUntil, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation StartJfr(WaitUntil waitUntil, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
 
-            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.StartJFR");
+            using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.StartJfr");
             scope.Start();
             try
             {
-                var response = _appDeploymentResourceDeploymentsRestClient.StartJFR(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJFRRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appDeploymentResourceDeploymentsRestClient.StartJfr(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJfrRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

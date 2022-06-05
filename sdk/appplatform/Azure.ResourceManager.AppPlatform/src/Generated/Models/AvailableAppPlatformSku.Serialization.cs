@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ResourceSku
+    public partial class AvailableAppPlatformSku
     {
-        internal static ResourceSku DeserializeResourceSku(JsonElement element)
+        internal static AvailableAppPlatformSku DeserializeAvailableAppPlatformSku(JsonElement element)
         {
             Optional<ResourceType> resourceType = default;
             Optional<string> name = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ResourceSku(Optional.ToNullable(resourceType), name.Value, tier.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions));
+            return new AvailableAppPlatformSku(Optional.ToNullable(resourceType), name.Value, tier.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions));
         }
     }
 }

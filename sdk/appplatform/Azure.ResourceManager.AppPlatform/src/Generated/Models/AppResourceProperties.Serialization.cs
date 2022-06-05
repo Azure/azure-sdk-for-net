@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableEndToEndTLS))
+            if (Optional.IsDefined(EnableEndToEndTls))
             {
                 writer.WritePropertyName("enableEndToEndTLS");
-                writer.WriteBooleanValue(EnableEndToEndTLS.Value);
+                writer.WriteBooleanValue(EnableEndToEndTls.Value);
             }
             if (Optional.IsCollectionDefined(LoadedCertificates))
             {

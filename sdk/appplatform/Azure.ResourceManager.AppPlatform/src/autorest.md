@@ -35,6 +35,11 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  JFR: Jfr
+  TLS: Tls
+  APM: Apm
+  Url: Uri
+  Urls: Uris
 override-operation-name:
   Services_CheckNameAvailability: CheckServiceNameAvailability
 
@@ -70,8 +75,8 @@ directive:
       $.BindingResourceProperties.properties.resourceId['x-ms-format'] = 'arm-id';
       $.NetworkProfile.properties.serviceRuntimeSubnetId['x-ms-format'] = 'arm-id';
       $.NetworkProfile.properties.appSubnetId['x-ms-format'] = 'arm-id';
-      $.NameAvailabilityParameters['x-ms-client-name'] = 'CheckNameAvailabilityContent';
-      $.NameAvailability['x-ms-client-name'] = 'CheckNameAvailabilityResult';
+      $.NameAvailabilityParameters['x-ms-client-name'] = 'ServiceNameAvailabilityParameters';
+      $.NameAvailability['x-ms-client-name'] = 'ServiceNameAvailabilityResult';
       $.GatewayRouteConfigResourceCollection['x-ms-client-name'] = 'GatewayRouteConfigResourceList';
       $.GatewayCustomDomainResourceCollection['x-ms-client-name'] = 'GatewayCustomDomainResourceList';
       $.ApiPortalResourceCollection['x-ms-client-name'] = 'ApiPortalResourceList';
@@ -99,5 +104,9 @@ directive:
       $.BuildpackBindingResourceCollection['x-ms-client-name'] = 'BuildpackBindingResourceList';
       $.GatewayResourceCollection['x-ms-client-name'] = 'GatewayResourceList';
       $.ResourceSku.properties.locations.items['x-ms-format'] = 'azure-location';
-      
+      $.ResourceSku['x-ms-client-name'] = 'AvailableAppPlatformSku';
+      $.ResourceSkuRestrictionInfo.properties.locations.items['x-ms-format'] = 'azure-location';
+      $.CustomDomainResource['x-ms-client-name'] = 'AppPlatformCustomDomainResource';
+      $.ServiceResource['x-ms-client-name'] = 'AppPlatformServiceResource';
+      $.AppResource['x-ms-client-name'] = 'AppPlatformAppResource';
 ```

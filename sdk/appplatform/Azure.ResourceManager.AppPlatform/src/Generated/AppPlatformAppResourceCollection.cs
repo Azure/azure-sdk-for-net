@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppResource" /> and their operations.
-    /// Each <see cref="AppResource" /> in the collection will belong to the same instance of <see cref="ServiceResource" />.
-    /// To get an <see cref="AppResourceCollection" /> instance call the GetAppResources method from an instance of <see cref="ServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformAppResource" /> and their operations.
+    /// Each <see cref="AppPlatformAppResource" /> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource" />.
+    /// To get an <see cref="AppPlatformAppResourceCollection" /> instance call the GetAppPlatformAppResources method from an instance of <see cref="AppPlatformServiceResource" />.
     /// </summary>
-    public partial class AppResourceCollection : ArmCollection, IEnumerable<AppResource>, IAsyncEnumerable<AppResource>
+    public partial class AppPlatformAppResourceCollection : ArmCollection, IEnumerable<AppPlatformAppResource>, IAsyncEnumerable<AppPlatformAppResource>
     {
-        private readonly ClientDiagnostics _appResourceAppsClientDiagnostics;
-        private readonly AppsRestOperations _appResourceAppsRestClient;
+        private readonly ClientDiagnostics _appPlatformAppResourceAppsClientDiagnostics;
+        private readonly AppsRestOperations _appPlatformAppResourceAppsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AppResourceCollection"/> class for mocking. </summary>
-        protected AppResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformAppResourceCollection"/> class for mocking. </summary>
+        protected AppPlatformAppResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AppResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformAppResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AppResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppPlatformAppResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appResourceAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", AppResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AppResource.ResourceType, out string appResourceAppsApiVersion);
-            _appResourceAppsRestClient = new AppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appResourceAppsApiVersion);
+            _appPlatformAppResourceAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", AppPlatformAppResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppPlatformAppResource.ResourceType, out string appPlatformAppResourceAppsApiVersion);
+            _appPlatformAppResourceAppsRestClient = new AppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appPlatformAppResourceAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppPlatformServiceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppPlatformServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string appName, AppResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppPlatformAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string appName, AppPlatformAppResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResourceCollection.CreateOrUpdate");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _appResourceAppsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppResource>(new AppResourceOperationSource(Client), _appResourceAppsClientDiagnostics, Pipeline, _appResourceAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appPlatformAppResourceAppsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformAppResource>(new AppPlatformAppResourceOperationSource(Client), _appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AppResource> CreateOrUpdate(WaitUntil waitUntil, string appName, AppResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppPlatformAppResource> CreateOrUpdate(WaitUntil waitUntil, string appName, AppPlatformAppResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResourceCollection.CreateOrUpdate");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appResourceAppsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppResource>(new AppResourceOperationSource(Client), _appResourceAppsClientDiagnostics, Pipeline, _appResourceAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appPlatformAppResourceAppsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformAppResource>(new AppPlatformAppResourceOperationSource(Client), _appPlatformAppResourceAppsClientDiagnostics, Pipeline, _appPlatformAppResourceAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,18 +129,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
-        public virtual async Task<Response<AppResource>> GetAsync(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformAppResource>> GetAsync(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResourceCollection.Get");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _appResourceAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformAppResourceAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,18 +159,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
-        public virtual Response<AppResource> Get(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformAppResource> Get(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResourceCollection.Get");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _appResourceAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken);
+                var response = _appPlatformAppResourceAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,17 +185,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Apps_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppPlatformAppResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppPlatformAppResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppPlatformAppResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResourceCollection.GetAll");
+                using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _appResourceAppsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appPlatformAppResourceAppsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            async Task<Page<AppResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppPlatformAppResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResourceCollection.GetAll");
+                using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _appResourceAppsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appPlatformAppResourceAppsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -227,17 +227,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Apps_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppPlatformAppResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppPlatformAppResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppResource> FirstPageFunc(int? pageSizeHint)
+            Page<AppPlatformAppResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResourceCollection.GetAll");
+                using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _appResourceAppsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appPlatformAppResourceAppsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,14 +245,14 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            Page<AppResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppPlatformAppResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResourceCollection.GetAll");
+                using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _appResourceAppsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appPlatformAppResourceAppsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformAppResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResourceCollection.Exists");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _appResourceAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformAppResourceAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,11 +305,11 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
 
-            using var scope = _appResourceAppsClientDiagnostics.CreateScope("AppResourceCollection.Exists");
+            using var scope = _appPlatformAppResourceAppsClientDiagnostics.CreateScope("AppPlatformAppResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _appResourceAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken: cancellationToken);
+                var response = _appPlatformAppResourceAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, appName, syncStatus, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        IEnumerator<AppResource> IEnumerable<AppResource>.GetEnumerator()
+        IEnumerator<AppPlatformAppResource> IEnumerable<AppPlatformAppResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.AppPlatform
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AppResource> IAsyncEnumerable<AppResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AppPlatformAppResource> IAsyncEnumerable<AppPlatformAppResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
