@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="values"> Restriction values. </param>
         /// <param name="restrictionInfo"> The restriction information. </param>
         /// <param name="reasonCode"> The SKU restriction reason code. </param>
-        internal SkuRestriction(SkuRestrictionType? restrictionType, IReadOnlyList<string> values, BinaryData restrictionInfo, SkuRestrictionReasonCode? reasonCode)
+        internal SkuRestriction(SkuRestrictionType? restrictionType, IReadOnlyList<string> values, RestrictionInfo restrictionInfo, SkuRestrictionReasonCode? reasonCode)
         {
             RestrictionType = restrictionType;
             Values = values;
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Restriction values. </summary>
         public IReadOnlyList<string> Values { get; }
         /// <summary> The restriction information. </summary>
-        public BinaryData RestrictionInfo { get; }
+        public RestrictionInfo RestrictionInfo { get; }
         /// <summary> The SKU restriction reason code. </summary>
         public SkuRestrictionReasonCode? ReasonCode { get; }
     }

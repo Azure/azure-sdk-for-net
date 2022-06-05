@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             Name = name;
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             LocationInfo = new ChangeTrackingList<SkuLocationAndZones>();
             Costs = new ChangeTrackingList<SkuCost>();
             Capabilities = new ChangeTrackingList<SkuCapability>();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="costs"> The SKU costs. </param>
         /// <param name="capabilities"> The SKU capabilities. </param>
         /// <param name="restrictions"> The SKU restrictions. </param>
-        internal SkuDefinition(string name, string resourceType, string tier, string size, string family, string kind, IReadOnlyList<string> locations, IReadOnlyList<SkuLocationAndZones> locationInfo, BinaryData capacity, IReadOnlyList<SkuCost> costs, IReadOnlyList<SkuCapability> capabilities, IReadOnlyList<SkuRestriction> restrictions)
+        internal SkuDefinition(string name, string resourceType, string tier, string size, string family, string kind, IReadOnlyList<AzureLocation> locations, IReadOnlyList<SkuLocationAndZones> locationInfo, BinaryData capacity, IReadOnlyList<SkuCost> costs, IReadOnlyList<SkuCapability> capabilities, IReadOnlyList<SkuRestriction> restrictions)
         {
             Name = name;
             ResourceType = resourceType;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> If the service has different kinds of hardware, for the same SKU, then that can be captured here. </summary>
         public string Kind { get; }
         /// <summary> List of locations where this SKU is available. </summary>
-        public IReadOnlyList<string> Locations { get; }
+        public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> List of locations where this SKU is available. </summary>
         public IReadOnlyList<SkuLocationAndZones> LocationInfo { get; }
         /// <summary> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </summary>

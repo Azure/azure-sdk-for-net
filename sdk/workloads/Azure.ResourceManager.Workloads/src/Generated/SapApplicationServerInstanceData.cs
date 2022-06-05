@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads
         /// <summary> Defines the Application Instance errors. </summary>
         internal SapVirtualInstanceError Errors { get; }
         /// <summary> The Virtual Instance for SAP error body. </summary>
-        public ErrorDefinition ErrorsProperties
+        public SapVirtualInstanceErrorDetail ErrorsProperties
         {
             get => Errors?.Properties;
         }

@@ -10,21 +10,21 @@ using System;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the PrometheusHaCluster provider properties. </summary>
-    public partial class PrometheusHaClusterProviderInstanceProperties : ProviderSpecificProperties
+    public partial class PrometheusHAClusterProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of PrometheusHaClusterProviderInstanceProperties. </summary>
-        public PrometheusHaClusterProviderInstanceProperties()
+        /// <summary> Initializes a new instance of PrometheusHAClusterProviderInstanceProperties. </summary>
+        public PrometheusHAClusterProviderInstanceProperties()
         {
             ProviderType = "PrometheusHaCluster";
         }
 
-        /// <summary> Initializes a new instance of PrometheusHaClusterProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of PrometheusHAClusterProviderInstanceProperties. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
         /// <param name="hostname"> Gets or sets the target machine name. </param>
         /// <param name="sid"> Gets or sets the cluster sid. </param>
         /// <param name="clusterName"> Gets or sets the clusterName. </param>
-        internal PrometheusHaClusterProviderInstanceProperties(string providerType, Uri prometheusUri, string hostname, string sid, string clusterName) : base(providerType)
+        internal PrometheusHAClusterProviderInstanceProperties(string providerType, Uri prometheusUri, string hostname, string sid, string clusterName) : base(providerType)
         {
             PrometheusUri = prometheusUri;
             Hostname = hostname;

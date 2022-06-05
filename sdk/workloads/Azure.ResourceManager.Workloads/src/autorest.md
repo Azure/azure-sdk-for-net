@@ -38,11 +38,13 @@ rename-rules:
   SAP: Sap
   PHP: Php
   ERS: Ers
-  DB2: Db2
+  Db: DB
   LRS: Lrs
   GRS: Grs
   ZRS: Zrs
   SSD: Ssd
+  Ha: HA
+  ECC: Ecc
 
 directive:
   - from: swagger-document
@@ -62,6 +64,20 @@ directive:
     where: $.definitions..virtualMachineId
     transform: >
       $['x-ms-format'] = 'arm-id';
+  - from: skus.json
+    where: $.definitions
+    transform: >
+      $.RestrictionInfo.properties.locations.items['x-ms-format'] = 'azure-location';
+      $.SkuDefinition.properties.locations.items['x-ms-format'] = 'azure-location';
+      $.SkuLocationAndZones.properties.location['x-ms-format'] = 'azure-location';
+      $.SkuRestriction.properties.restrictionInfo = {
+            '$ref': '#/definitions/RestrictionInfo',
+            'description': 'The restriction information.'
+          };
+  - from: SAPVirtualInstance.json
+    where: $.definitions
+    transform: >
+      $.ErrorDefinition['x-ms-client-name'] = 'SapVirtualInstanceErrorDetail';
   - from: monitors.json
     where: $.definitions
     transform: >
@@ -84,4 +100,5 @@ directive:
       $.fileshareProfile.properties.storageResourceId['x-ms-format'] = 'arm-id';
       $.cacheProfile.properties.cacheResourceId['x-ms-format'] = 'arm-id';
       $.backupProfile.properties.vaultResourceId['x-ms-format'] = 'arm-id';
+      $.wordpressInstanceResourceProperties.properties.version['x-ms-enum']['name'] = 'WordpressVersion';
 ```

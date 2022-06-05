@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Version = version;
             Sku = sku;
             Tier = tier;
-            HaEnabled = haEnabled;
+            HAEnabled = haEnabled;
             StorageSku = storageSku;
             StorageInGB = storageInGB;
             StorageIops = storageIops;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Tier of the server SKU. </summary>
         public DatabaseTier Tier { get; set; }
         /// <summary> Whether to enable HA for the server. </summary>
-        public HAEnabled? HaEnabled { get; set; }
+        public HAEnabled? HAEnabled { get; set; }
         /// <summary> SKU name for database storage. </summary>
         public string StorageSku { get; set; }
         /// <summary> Database storage size in GB. </summary>

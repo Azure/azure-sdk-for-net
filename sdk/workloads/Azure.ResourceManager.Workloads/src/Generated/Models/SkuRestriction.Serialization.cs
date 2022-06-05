@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             Optional<SkuRestrictionType> type = default;
             Optional<IReadOnlyList<string>> values = default;
-            Optional<BinaryData> restrictionInfo = default;
+            Optional<RestrictionInfo> restrictionInfo = default;
             Optional<SkuRestrictionReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    restrictionInfo = BinaryData.FromString(property.Value.GetRawText());
+                    restrictionInfo = RestrictionInfo.DeserializeRestrictionInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("reasonCode"))

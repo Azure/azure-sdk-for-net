@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SapProduct = sapProduct;
             DatabaseType = databaseType;
             DeploymentType = deploymentType;
-            DbVmSku = dbVmSku;
+            DBVmSku = dbVmSku;
         }
 
         /// <summary> The geo-location where the SAP resources will be created. </summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The deployment type. Eg: SingleServer/ThreeTier. </summary>
         public SapDeploymentType DeploymentType { get; }
         /// <summary> The VM SKU for database instance. </summary>
-        public string DbVmSku { get; }
+        public string DBVmSku { get; }
     }
 }

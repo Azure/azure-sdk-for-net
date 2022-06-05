@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Workloads.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ECCValue = "ECC";
+        private const string EccValue = "ECC";
         private const string S4HanaValue = "S4HANA";
         private const string OtherValue = "Other";
 
         /// <summary> ECC. </summary>
-        public static SapProductType ECC { get; } = new SapProductType(ECCValue);
+        public static SapProductType Ecc { get; } = new SapProductType(EccValue);
         /// <summary> S4HANA. </summary>
         public static SapProductType S4Hana { get; } = new SapProductType(S4HanaValue);
         /// <summary> Other. </summary>

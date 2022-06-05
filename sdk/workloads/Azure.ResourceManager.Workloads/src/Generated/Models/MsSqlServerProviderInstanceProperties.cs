@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Workloads.Models
         internal MsSqlServerProviderInstanceProperties(string providerType, string hostname, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid) : base(providerType)
         {
             Hostname = hostname;
-            DbPort = dbPort;
-            DbUsername = dbUsername;
-            DbPassword = dbPassword;
-            DbPasswordUri = dbPasswordUri;
+            DBPort = dbPort;
+            DBUsername = dbUsername;
+            DBPassword = dbPassword;
+            DBPasswordUri = dbPasswordUri;
             SapSid = sapSid;
             ProviderType = providerType ?? "MsSqlServer";
         }
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the SQL server host name. </summary>
         public string Hostname { get; set; }
         /// <summary> Gets or sets the database sql port. </summary>
-        public string DbPort { get; set; }
+        public string DBPort { get; set; }
         /// <summary> Gets or sets the database user name. </summary>
-        public string DbUsername { get; set; }
+        public string DBUsername { get; set; }
         /// <summary> Gets or sets the database password. </summary>
-        public string DbPassword { get; set; }
+        public string DBPassword { get; set; }
         /// <summary> Gets or sets the key vault URI to secret with the database password. </summary>
-        public Uri DbPasswordUri { get; set; }
+        public Uri DBPasswordUri { get; set; }
         /// <summary> Gets or sets the SAP System Identifier. </summary>
         public string SapSid { get; set; }
     }

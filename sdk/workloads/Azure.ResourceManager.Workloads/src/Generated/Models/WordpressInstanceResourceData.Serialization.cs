@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Workloads
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<WordpressVersions> version = default;
+            Optional<WordpressVersion> version = default;
             Optional<string> databaseName = default;
             Optional<string> databaseUser = default;
             Optional<Uri> siteUrl = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            version = new WordpressVersions(property0.Value.GetString());
+                            version = new WordpressVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("databaseName"))

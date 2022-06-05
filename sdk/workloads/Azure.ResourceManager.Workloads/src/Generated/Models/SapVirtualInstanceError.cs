@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> Initializes a new instance of SapVirtualInstanceError. </summary>
         /// <param name="properties"> The Virtual Instance for SAP error body. </param>
-        internal SapVirtualInstanceError(ErrorDefinition properties)
+        internal SapVirtualInstanceError(SapVirtualInstanceErrorDetail properties)
         {
             Properties = properties;
         }
 
         /// <summary> The Virtual Instance for SAP error body. </summary>
-        public ErrorDefinition Properties { get; }
+        public SapVirtualInstanceErrorDetail Properties { get; }
     }
 }

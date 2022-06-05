@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         private const string HanaValue = "HANA";
-        private const string Db2Value = "DB2";
+        private const string DB2Value = "DB2";
 
         /// <summary> HANA. </summary>
         public static SapDatabaseType Hana { get; } = new SapDatabaseType(HanaValue);
         /// <summary> DB2. </summary>
-        public static SapDatabaseType Db2 { get; } = new SapDatabaseType(Db2Value);
+        public static SapDatabaseType DB2 { get; } = new SapDatabaseType(DB2Value);
         /// <summary> Determines if two <see cref="SapDatabaseType"/> values are the same. </summary>
         public static bool operator ==(SapDatabaseType left, SapDatabaseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapDatabaseType"/> values are not the same. </summary>

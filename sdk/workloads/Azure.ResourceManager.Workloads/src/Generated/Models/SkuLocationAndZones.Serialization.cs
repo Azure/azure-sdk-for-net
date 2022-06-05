@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SkuLocationAndZones DeserializeSkuLocationAndZones(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
             Optional<IReadOnlyList<SkuZoneDetail>> zoneDetails = default;
             Optional<IReadOnlyList<string>> extendedLocations = default;
@@ -24,7 +24,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -83,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SkuLocationAndZones(location.Value, Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type));
+            return new SkuLocationAndZones(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type));
         }
     }
 }

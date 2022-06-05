@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="databaseUser"> User name used by the application to connect to database. </param>
         /// <param name="siteUri"> Site Url to access the WordPress application. </param>
         /// <param name="provisioningState"> WordPress instance provisioning state. </param>
-        internal WordpressInstanceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WordpressVersions? version, string databaseName, string databaseUser, Uri siteUri, ApplicationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal WordpressInstanceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WordpressVersion? version, string databaseName, string databaseUser, Uri siteUri, ApplicationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Version = version;
             DatabaseName = databaseName;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary> Application version. </summary>
-        public WordpressVersions? Version { get; set; }
+        public WordpressVersion? Version { get; set; }
         /// <summary> Database name used by the application. </summary>
         public string DatabaseName { get; set; }
         /// <summary> User name used by the application to connect to database. </summary>

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="zoneDetails"> The availability zone details of the SKU location. </param>
         /// <param name="extendedLocations"> The extended locations of SKU. </param>
         /// <param name="locationType"> Type of the extended location. </param>
-        internal SkuLocationAndZones(string location, IReadOnlyList<string> zones, IReadOnlyList<SkuZoneDetail> zoneDetails, IReadOnlyList<string> extendedLocations, LocationType? locationType)
+        internal SkuLocationAndZones(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<SkuZoneDetail> zoneDetails, IReadOnlyList<string> extendedLocations, LocationType? locationType)
         {
             Location = location;
             Zones = zones;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> The location of the SKU. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The availability zones of SKU location. </summary>
         public IReadOnlyList<string> Zones { get; }
         /// <summary> The availability zone details of the SKU location. </summary>

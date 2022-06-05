@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ErrorDefinition
+    public partial class SapVirtualInstanceErrorDetail
     {
-        internal static ErrorDefinition DeserializeErrorDefinition(JsonElement element)
+        internal static SapVirtualInstanceErrorDetail DeserializeSapVirtualInstanceErrorDetail(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
-            Optional<IReadOnlyList<ErrorDefinition>> details = default;
+            Optional<IReadOnlyList<SapVirtualInstanceErrorDetail>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorDefinition> array = new List<ErrorDefinition>();
+                    List<SapVirtualInstanceErrorDetail> array = new List<SapVirtualInstanceErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeErrorDefinition(item));
+                        array.Add(DeserializeSapVirtualInstanceErrorDetail(item));
                     }
                     details = array;
                     continue;
                 }
             }
-            return new ErrorDefinition(code.Value, message.Value, Optional.ToList(details));
+            return new SapVirtualInstanceErrorDetail(code.Value, message.Value, Optional.ToList(details));
         }
     }
 }

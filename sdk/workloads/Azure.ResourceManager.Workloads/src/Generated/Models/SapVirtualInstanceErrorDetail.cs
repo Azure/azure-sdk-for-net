@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Error definition. </summary>
-    public partial class ErrorDefinition
+    public partial class SapVirtualInstanceErrorDetail
     {
-        /// <summary> Initializes a new instance of ErrorDefinition. </summary>
-        internal ErrorDefinition()
+        /// <summary> Initializes a new instance of SapVirtualInstanceErrorDetail. </summary>
+        internal SapVirtualInstanceErrorDetail()
         {
-            Details = new ChangeTrackingList<ErrorDefinition>();
+            Details = new ChangeTrackingList<SapVirtualInstanceErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of ErrorDefinition. </summary>
+        /// <summary> Initializes a new instance of SapVirtualInstanceErrorDetail. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> Description of the error. </param>
         /// <param name="details"> Internal error details. </param>
-        internal ErrorDefinition(string code, string message, IReadOnlyList<ErrorDefinition> details)
+        internal SapVirtualInstanceErrorDetail(string code, string message, IReadOnlyList<SapVirtualInstanceErrorDetail> details)
         {
             Code = code;
             Message = message;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Description of the error. </summary>
         public string Message { get; }
         /// <summary> Internal error details. </summary>
-        public IReadOnlyList<ErrorDefinition> Details { get; }
+        public IReadOnlyList<SapVirtualInstanceErrorDetail> Details { get; }
     }
 }

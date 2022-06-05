@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SapProduct = sapProduct;
             DeploymentType = deploymentType;
             Saps = saps;
-            DbMemory = dbMemory;
+            DBMemory = dbMemory;
             DatabaseType = databaseType;
         }
 
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> The SAP Application Performance Standard measurement. </summary>
         public long Saps { get; }
         /// <summary> The database memory configuration. </summary>
-        public long DbMemory { get; }
+        public long DBMemory { get; }
         /// <summary> The database type. </summary>
         public SapDatabaseType DatabaseType { get; }
         /// <summary> The DB scale method. </summary>
-        public SapDatabaseScaleMethod? DbScaleMethod { get; set; }
+        public SapDatabaseScaleMethod? DBScaleMethod { get; set; }
         /// <summary> The high availability type. </summary>
         public SapHighAvailabilityType? HighAvailabilityType { get; set; }
     }

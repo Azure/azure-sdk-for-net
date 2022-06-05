@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<string> kind = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<SkuLocationAndZones>> locationInfo = default;
             Optional<BinaryData> capacity = default;
             Optional<IReadOnlyList<SkuCost>> costs = default;
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;

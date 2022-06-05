@@ -10,15 +10,15 @@ using System;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the DB2 provider properties. </summary>
-    public partial class Db2ProviderInstanceProperties : ProviderSpecificProperties
+    public partial class DB2ProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of Db2ProviderInstanceProperties. </summary>
-        public Db2ProviderInstanceProperties()
+        /// <summary> Initializes a new instance of DB2ProviderInstanceProperties. </summary>
+        public DB2ProviderInstanceProperties()
         {
             ProviderType = "Db2";
         }
 
-        /// <summary> Initializes a new instance of Db2ProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of DB2ProviderInstanceProperties. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="hostname"> Gets or sets the target virtual machine name. </param>
         /// <param name="dbName"> Gets or sets the db2 database name. </param>
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="dbPassword"> Gets or sets the db2 database password. </param>
         /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        internal Db2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid) : base(providerType)
+        internal DB2ProviderInstanceProperties(string providerType, string hostname, string dbName, string dbPort, string dbUsername, string dbPassword, Uri dbPasswordUri, string sapSid) : base(providerType)
         {
             Hostname = hostname;
-            DbName = dbName;
-            DbPort = dbPort;
-            DbUsername = dbUsername;
-            DbPassword = dbPassword;
-            DbPasswordUri = dbPasswordUri;
+            DBName = dbName;
+            DBPort = dbPort;
+            DBUsername = dbUsername;
+            DBPassword = dbPassword;
+            DBPasswordUri = dbPasswordUri;
             SapSid = sapSid;
             ProviderType = providerType ?? "Db2";
         }
@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the target virtual machine name. </summary>
         public string Hostname { get; set; }
         /// <summary> Gets or sets the db2 database name. </summary>
-        public string DbName { get; set; }
+        public string DBName { get; set; }
         /// <summary> Gets or sets the db2 database sql port. </summary>
-        public string DbPort { get; set; }
+        public string DBPort { get; set; }
         /// <summary> Gets or sets the db2 database user name. </summary>
-        public string DbUsername { get; set; }
+        public string DBUsername { get; set; }
         /// <summary> Gets or sets the db2 database password. </summary>
-        public string DbPassword { get; set; }
+        public string DBPassword { get; set; }
         /// <summary> Gets or sets the key vault URI to secret with the database password. </summary>
-        public Uri DbPasswordUri { get; set; }
+        public Uri DBPasswordUri { get; set; }
         /// <summary> Gets or sets the SAP System Identifier. </summary>
         public string SapSid { get; set; }
     }

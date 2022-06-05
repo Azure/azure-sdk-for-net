@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapVirtualInstanceError DeserializeSapVirtualInstanceError(JsonElement element)
         {
-            Optional<ErrorDefinition> properties = default;
+            Optional<SapVirtualInstanceErrorDetail> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ErrorDefinition.DeserializeErrorDefinition(property.Value);
+                    properties = SapVirtualInstanceErrorDetail.DeserializeSapVirtualInstanceErrorDetail(property.Value);
                     continue;
                 }
             }

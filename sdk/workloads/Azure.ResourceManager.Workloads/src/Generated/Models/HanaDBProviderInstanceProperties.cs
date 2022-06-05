@@ -10,15 +10,15 @@ using System;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the provider properties. </summary>
-    public partial class HanaDbProviderInstanceProperties : ProviderSpecificProperties
+    public partial class HanaDBProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of HanaDbProviderInstanceProperties. </summary>
-        public HanaDbProviderInstanceProperties()
+        /// <summary> Initializes a new instance of HanaDBProviderInstanceProperties. </summary>
+        public HanaDBProviderInstanceProperties()
         {
             ProviderType = "SapHana";
         }
 
-        /// <summary> Initializes a new instance of HanaDbProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of HanaDBProviderInstanceProperties. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="hostname"> Gets or sets the target virtual machine size. </param>
         /// <param name="dbName"> Gets or sets the hana database name. </param>
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="dbPasswordUri"> Gets or sets the key vault URI to secret with the database password. </param>
         /// <param name="dbSslCertificateUri"> Gets or sets the blob URI to SSL certificate for the DB. </param>
         /// <param name="sslHostNameInCertificate"> Gets or sets the hostname(s) in the SSL certificate. </param>
-        internal HanaDbProviderInstanceProperties(string providerType, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, Uri dbPasswordUri, Uri dbSslCertificateUri, string sslHostNameInCertificate) : base(providerType)
+        internal HanaDBProviderInstanceProperties(string providerType, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, Uri dbPasswordUri, Uri dbSslCertificateUri, string sslHostNameInCertificate) : base(providerType)
         {
             Hostname = hostname;
-            DbName = dbName;
+            DBName = dbName;
             SqlPort = sqlPort;
             InstanceNumber = instanceNumber;
-            DbUsername = dbUsername;
-            DbPassword = dbPassword;
-            DbPasswordUri = dbPasswordUri;
-            DbSslCertificateUri = dbSslCertificateUri;
+            DBUsername = dbUsername;
+            DBPassword = dbPassword;
+            DBPasswordUri = dbPasswordUri;
+            DBSslCertificateUri = dbSslCertificateUri;
             SslHostNameInCertificate = sslHostNameInCertificate;
             ProviderType = providerType ?? "SapHana";
         }
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Gets or sets the target virtual machine size. </summary>
         public string Hostname { get; set; }
         /// <summary> Gets or sets the hana database name. </summary>
-        public string DbName { get; set; }
+        public string DBName { get; set; }
         /// <summary> Gets or sets the database sql port. </summary>
         public string SqlPort { get; set; }
         /// <summary> Gets or sets the database instance number. </summary>
         public string InstanceNumber { get; set; }
         /// <summary> Gets or sets the database user name. </summary>
-        public string DbUsername { get; set; }
+        public string DBUsername { get; set; }
         /// <summary> Gets or sets the database password. </summary>
-        public string DbPassword { get; set; }
+        public string DBPassword { get; set; }
         /// <summary> Gets or sets the key vault URI to secret with the database password. </summary>
-        public Uri DbPasswordUri { get; set; }
+        public Uri DBPasswordUri { get; set; }
         /// <summary> Gets or sets the blob URI to SSL certificate for the DB. </summary>
-        public Uri DbSslCertificateUri { get; set; }
+        public Uri DBSslCertificateUri { get; set; }
         /// <summary> Gets or sets the hostname(s) in the SSL certificate. </summary>
         public string SslHostNameInCertificate { get; set; }
     }

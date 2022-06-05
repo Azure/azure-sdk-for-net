@@ -21,25 +21,25 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("hostname");
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(DbPort))
+            if (Optional.IsDefined(DBPort))
             {
                 writer.WritePropertyName("dbPort");
-                writer.WriteStringValue(DbPort);
+                writer.WriteStringValue(DBPort);
             }
-            if (Optional.IsDefined(DbUsername))
+            if (Optional.IsDefined(DBUsername))
             {
                 writer.WritePropertyName("dbUsername");
-                writer.WriteStringValue(DbUsername);
+                writer.WriteStringValue(DBUsername);
             }
-            if (Optional.IsDefined(DbPassword))
+            if (Optional.IsDefined(DBPassword))
             {
                 writer.WritePropertyName("dbPassword");
-                writer.WriteStringValue(DbPassword);
+                writer.WriteStringValue(DBPassword);
             }
-            if (Optional.IsDefined(DbPasswordUri))
+            if (Optional.IsDefined(DBPasswordUri))
             {
                 writer.WritePropertyName("dbPasswordUri");
-                writer.WriteStringValue(DbPasswordUri.AbsoluteUri);
+                writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SapSid))
             {

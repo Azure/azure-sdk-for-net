@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Workloads
     public partial class SapApplicationServerInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public SapApplicationServerInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Workloads.Models.ErrorDefinition ErrorsProperties { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
         public long? GatewayPort { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string Hostname { get { throw null; } }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Workloads
         public SapCentralServerInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Workloads.Models.EnqueueReplicationServerProperties EnqueueReplicationServerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.EnqueueServerProperties EnqueueServerProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.ErrorDefinition ErrorsProperties { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.GatewayServerProperties GatewayServerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public string InstanceNo { get { throw null; } }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Workloads
         public SapDatabaseInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string DatabaseSid { get { throw null; } }
         public string DatabaseType { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.ErrorDefinition ErrorsProperties { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
         public string IPAddress { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Workloads
         public SapVirtualInstanceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Workloads.Models.SapEnvironmentType environment, Azure.ResourceManager.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Workloads.Models.SapConfiguration configuration) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Workloads.Models.SapConfiguration Configuration { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapEnvironmentType Environment { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.ErrorDefinition ErrorsProperties { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapHealthState? Health { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.UserAssignedServiceIdentity Identity { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Workloads
         public string DatabaseUser { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState? ProvisioningState { get { throw null; } }
         public System.Uri SiteUri { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.WordpressVersions? Version { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.WordpressVersion? Version { get { throw null; } set { } }
     }
     public static partial class WorkloadsExtensions
     {
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public DatabaseProfile(Azure.ResourceManager.Workloads.Models.DatabaseType databaseType, string sku, Azure.ResourceManager.Workloads.Models.DatabaseTier tier) { }
         public int? BackupRetentionDays { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.DatabaseType DatabaseType { get { throw null; } set { } }
-        public Azure.ResourceManager.Workloads.Models.HAEnabled? HaEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.HAEnabled? HAEnabled { get { throw null; } set { } }
         public string ServerName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ServerResourceId { get { throw null; } }
         public string Sku { get { throw null; } set { } }
@@ -571,14 +571,14 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceStatus? Status { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualMachineId { get { throw null; } }
     }
-    public partial class Db2ProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
+    public partial class DB2ProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
-        public Db2ProviderInstanceProperties() { }
-        public string DbName { get { throw null; } set { } }
-        public string DbPassword { get { throw null; } set { } }
-        public System.Uri DbPasswordUri { get { throw null; } set { } }
-        public string DbPort { get { throw null; } set { } }
-        public string DbUsername { get { throw null; } set { } }
+        public DB2ProviderInstanceProperties() { }
+        public string DBName { get { throw null; } set { } }
+        public string DBPassword { get { throw null; } set { } }
+        public System.Uri DBPasswordUri { get { throw null; } set { } }
+        public string DBPort { get { throw null; } set { } }
+        public string DBUsername { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
         public string SapSid { get { throw null; } set { } }
     }
@@ -694,13 +694,6 @@ namespace Azure.ResourceManager.Workloads.Models
         public string IPAddress { get { throw null; } }
         public long? Port { get { throw null; } }
     }
-    public partial class ErrorDefinition
-    {
-        internal ErrorDefinition() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.ErrorDefinition> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
     public partial class FileshareProfile
     {
         public FileshareProfile(Azure.ResourceManager.Workloads.Models.FileShareType shareType, Azure.ResourceManager.Workloads.Models.FileShareStorageType storageType) { }
@@ -772,14 +765,14 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator !=(Azure.ResourceManager.Workloads.Models.HAEnabled left, Azure.ResourceManager.Workloads.Models.HAEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HanaDbProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
+    public partial class HanaDBProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
-        public HanaDbProviderInstanceProperties() { }
-        public string DbName { get { throw null; } set { } }
-        public string DbPassword { get { throw null; } set { } }
-        public System.Uri DbPasswordUri { get { throw null; } set { } }
-        public System.Uri DbSslCertificateUri { get { throw null; } set { } }
-        public string DbUsername { get { throw null; } set { } }
+        public HanaDBProviderInstanceProperties() { }
+        public string DBName { get { throw null; } set { } }
+        public string DBPassword { get { throw null; } set { } }
+        public System.Uri DBPasswordUri { get { throw null; } set { } }
+        public System.Uri DBSslCertificateUri { get { throw null; } set { } }
+        public string DBUsername { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
         public string InstanceNumber { get { throw null; } set { } }
         public string SqlPort { get { throw null; } set { } }
@@ -881,10 +874,10 @@ namespace Azure.ResourceManager.Workloads.Models
     public partial class MsSqlServerProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
         public MsSqlServerProviderInstanceProperties() { }
-        public string DbPassword { get { throw null; } set { } }
-        public System.Uri DbPasswordUri { get { throw null; } set { } }
-        public string DbPort { get { throw null; } set { } }
-        public string DbUsername { get { throw null; } set { } }
+        public string DBPassword { get { throw null; } set { } }
+        public System.Uri DBPasswordUri { get { throw null; } set { } }
+        public string DBPort { get { throw null; } set { } }
+        public string DBUsername { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
         public string SapSid { get { throw null; } set { } }
     }
@@ -1075,9 +1068,9 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.PatchResourceRequestBodyIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class PrometheusHaClusterProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
+    public partial class PrometheusHAClusterProviderInstanceProperties : Azure.ResourceManager.Workloads.Models.ProviderSpecificProperties
     {
-        public PrometheusHaClusterProviderInstanceProperties() { }
+        public PrometheusHAClusterProviderInstanceProperties() { }
         public string ClusterName { get { throw null; } set { } }
         public string Hostname { get { throw null; } set { } }
         public System.Uri PrometheusUri { get { throw null; } set { } }
@@ -1109,6 +1102,12 @@ namespace Azure.ResourceManager.Workloads.Models
         public static implicit operator Azure.ResourceManager.Workloads.Models.RedisCacheFamily (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Workloads.Models.RedisCacheFamily left, Azure.ResourceManager.Workloads.Models.RedisCacheFamily right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class RestrictionInfo
+    {
+        internal RestrictionInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RoutingPreference : System.IEquatable<Azure.ResourceManager.Workloads.Models.RoutingPreference>
@@ -1188,7 +1187,7 @@ namespace Azure.ResourceManager.Workloads.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SapDatabaseType(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.SapDatabaseType Db2 { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapDatabaseType DB2 { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapDatabaseType Hana { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapDatabaseType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1234,7 +1233,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public SapDiskConfigurationsContent(Azure.Core.AzureLocation appLocation, Azure.ResourceManager.Workloads.Models.SapEnvironmentType environment, Azure.ResourceManager.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Workloads.Models.SapDatabaseType databaseType, Azure.ResourceManager.Workloads.Models.SapDeploymentType deploymentType, string dbVmSku) { }
         public Azure.Core.AzureLocation AppLocation { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapDatabaseType DatabaseType { get { throw null; } }
-        public string DbVmSku { get { throw null; } }
+        public string DBVmSku { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapDeploymentType DeploymentType { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapEnvironmentType Environment { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapProductType SapProduct { get { throw null; } }
@@ -1333,7 +1332,7 @@ namespace Azure.ResourceManager.Workloads.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SapProductType(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.SapProductType ECC { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.SapProductType Ecc { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapProductType Other { get { throw null; } }
         public static Azure.ResourceManager.Workloads.Models.SapProductType S4Hana { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.SapProductType other) { throw null; }
@@ -1351,8 +1350,8 @@ namespace Azure.ResourceManager.Workloads.Models
         public SapSizingRecommendationContent(Azure.Core.AzureLocation appLocation, Azure.ResourceManager.Workloads.Models.SapEnvironmentType environment, Azure.ResourceManager.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Workloads.Models.SapDeploymentType deploymentType, long saps, long dbMemory, Azure.ResourceManager.Workloads.Models.SapDatabaseType databaseType) { }
         public Azure.Core.AzureLocation AppLocation { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapDatabaseType DatabaseType { get { throw null; } }
-        public long DbMemory { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.SapDatabaseScaleMethod? DbScaleMethod { get { throw null; } set { } }
+        public long DBMemory { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.SapDatabaseScaleMethod? DBScaleMethod { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapDeploymentType DeploymentType { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapEnvironmentType Environment { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType? HighAvailabilityType { get { throw null; } set { } }
@@ -1384,6 +1383,13 @@ namespace Azure.ResourceManager.Workloads.Models
         public Azure.ResourceManager.Workloads.Models.SapEnvironmentType Environment { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapHighAvailabilityType? HighAvailabilityType { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapProductType SapProduct { get { throw null; } }
+    }
+    public partial class SapVirtualInstanceErrorDetail
+    {
+        internal SapVirtualInstanceErrorDetail() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail> Details { get { throw null; } }
+        public string Message { get { throw null; } }
     }
     public partial class SapVirtualInstancePatch
     {
@@ -1527,7 +1533,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public string Family { get { throw null; } }
         public string Kind { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SkuLocationAndZones> LocationInfo { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SkuRestriction> Restrictions { get { throw null; } }
@@ -1538,7 +1544,7 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal SkuLocationAndZones() { }
         public System.Collections.Generic.IReadOnlyList<string> ExtendedLocations { get { throw null; } }
-        public string Location { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.LocationType? LocationType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Workloads.Models.SkuZoneDetail> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
@@ -1547,7 +1553,7 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal SkuRestriction() { }
         public Azure.ResourceManager.Workloads.Models.SkuRestrictionReasonCode? ReasonCode { get { throw null; } }
-        public System.BinaryData RestrictionInfo { get { throw null; } }
+        public Azure.ResourceManager.Workloads.Models.RestrictionInfo RestrictionInfo { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SkuRestrictionType? RestrictionType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
     }
@@ -1632,7 +1638,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public long? CentralServerInstanceCount { get { throw null; } }
         public string CentralServerVmSku { get { throw null; } }
         public long? DatabaseInstanceCount { get { throw null; } }
-        public string DbVmSku { get { throw null; } }
+        public string DBVmSku { get { throw null; } }
     }
     public partial class UserAssignedServiceIdentity
     {
@@ -1664,23 +1670,23 @@ namespace Azure.ResourceManager.Workloads.Models
         public WindowsConfiguration() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WordpressVersions : System.IEquatable<Azure.ResourceManager.Workloads.Models.WordpressVersions>
+    public readonly partial struct WordpressVersion : System.IEquatable<Azure.ResourceManager.Workloads.Models.WordpressVersion>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public WordpressVersions(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.WordpressVersions Five4 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.WordpressVersions Five41 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.WordpressVersions Five42 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.WordpressVersions Five43 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.WordpressVersions other) { throw null; }
+        public WordpressVersion(string value) { throw null; }
+        public static Azure.ResourceManager.Workloads.Models.WordpressVersion V5_4_0 { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.WordpressVersion V5_4_1 { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.WordpressVersion V5_4_2 { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.WordpressVersion V5_4_3 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Workloads.Models.WordpressVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.WordpressVersions left, Azure.ResourceManager.Workloads.Models.WordpressVersions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.WordpressVersions (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.WordpressVersions left, Azure.ResourceManager.Workloads.Models.WordpressVersions right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Workloads.Models.WordpressVersion left, Azure.ResourceManager.Workloads.Models.WordpressVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Workloads.Models.WordpressVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Workloads.Models.WordpressVersion left, Azure.ResourceManager.Workloads.Models.WordpressVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
