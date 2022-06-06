@@ -30,8 +30,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.Project);
 #endif
 
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            ConversationPrediction conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
 
             Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Read"));
+            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Send"));
         }
 
         [AsyncOnly]
@@ -91,10 +91,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 TestEnvironment.Project);
 #endif
 
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            ConversationPrediction conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
 
-            Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
+            Console.WriteLine($"Project Kind: {conversationalTaskResult.Result.Prediction.ProjectKind}");
             Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
             Console.WriteLine("Intents:");
@@ -129,7 +129,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
 
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Read"));
+            Assert.That(conversationPrediction.TopIntent, Is.EqualTo("Send"));
         }
     }
 }

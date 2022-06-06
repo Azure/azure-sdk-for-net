@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -25,17 +24,17 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Conversation, customConversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Conversation, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("Read", customConversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("Send", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
+            var conversationPrediction = conversationalTaskResult.Result.Prediction as ConversationPrediction;
             Assert.IsNotNull(conversationPrediction);
 
             // assert - not empty
@@ -52,24 +51,24 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Orchestration, customConversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("EmailIntent", customConversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("EmailIntent", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
-            Assert.IsNotNull(orchestratorPrediction);
+            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+            Assert.IsNotEmpty(orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as ConversationTargetIntentResult;
+            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as ConversationTargetIntentResult;
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
@@ -81,6 +80,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29136")]
         public async Task AnalyzeConversation_Orchestration_Luis()
         {
             Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Reserve a table for 2 at the Italian restaurant", TestEnvironment.OrchestrationProject);
@@ -89,24 +89,24 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Orchestration, customConversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("RestaurantIntent", customConversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("RestaurantIntent", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
-            Assert.IsNotNull(orchestratorPrediction);
+            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+            Assert.IsNotEmpty(orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as LuisTargetIntentResult;
+            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as LuisTargetIntentResult;
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
@@ -122,24 +122,24 @@ namespace Azure.AI.Language.Conversations.Tests
             Assert.IsNotNull(response);
 
             // cast
-            CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
-            Assert.IsNotNull(customConversationalTaskResult);
+            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
-            Assert.AreEqual(ProjectKind.Orchestration, customConversationalTaskResult.Result.Prediction.ProjectKind);
+            Assert.AreEqual(ProjectKind.Orchestration, conversationalTaskResult.Result.Prediction.ProjectKind);
 
             // assert - top intent
-            Assert.AreEqual("ChitChat-QnA", customConversationalTaskResult.Result.Prediction.TopIntent);
+            Assert.AreEqual("ChitChat-QnA", conversationalTaskResult.Result.Prediction.TopIntent);
 
             // cast prediction
-            var orchestratorPrediction = customConversationalTaskResult.Result.Prediction as OrchestratorPrediction;
-            Assert.IsNotNull(orchestratorPrediction);
+            var orchestrationPrediction = conversationalTaskResult.Result.Prediction as OrchestrationPrediction;
+            Assert.IsNotNull(orchestrationPrediction);
 
             // assert - not empty
-            Assert.IsNotEmpty(orchestratorPrediction.Intents);
+            Assert.IsNotEmpty(orchestrationPrediction.Intents);
 
             // cast top intent
-            var topIntent = orchestratorPrediction.Intents[orchestratorPrediction.TopIntent] as QuestionAnsweringTargetIntentResult;
+            var topIntent = orchestrationPrediction.Intents[orchestrationPrediction.TopIntent] as QuestionAnsweringTargetIntentResult;
             Assert.IsNotNull(topIntent);
 
             // assert - inent target kind
@@ -171,25 +171,25 @@ namespace Azure.AI.Language.Conversations.Tests
                 conversationSummarizationTask
             };
 
-            var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+            Operation<AnalyzeConversationJobState> analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
             await analyzeConversationOperation.WaitForCompletionAsync();
 
-            var jobResults = analyzeConversationOperation.Value;
+            AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
             Assert.NotNull(jobResults);
 
-            foreach (var result in jobResults.Tasks.Items)
+            foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
             {
                 var analyzeConversationSummarization = result as AnalyzeConversationSummarizationResult;
                 Assert.NotNull(analyzeConversationSummarization);
 
-                var results = analyzeConversationSummarization.Results;
+                SummaryResult results = analyzeConversationSummarization.Results;
                 Assert.NotNull(results);
 
                 Assert.NotNull(results.Conversations);
-                foreach (var conversation in results.Conversations)
+                foreach (SummaryResultConversationsItem conversation in results.Conversations)
                 {
                     Assert.NotNull(conversation.Summaries);
-                    foreach (var summary in conversation.Summaries)
+                    foreach (ConversationsSummaryResultSummariesItem summary in conversation.Summaries)
                     {
                         Assert.NotNull(summary.Text);
                         Assert.NotNull(summary.Aspect);
@@ -221,32 +221,32 @@ namespace Azure.AI.Language.Conversations.Tests
                 piiTask
             };
 
-            var analyzeConversationOperation = await Client.StartAnalyzeConversationAsync(input, tasks);
+            Operation<AnalyzeConversationJobState> analyzeConversationOperation = await Client.StartAnalyzeConversationAsync(input, tasks);
             await analyzeConversationOperation.WaitForCompletionAsync();
 
-            var jobResults = analyzeConversationOperation.Value;
+            AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
             Assert.NotNull(jobResults);
 
-            foreach (var result in jobResults.Tasks.Items)
+            foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
             {
                 var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
                 Assert.NotNull(analyzeConversationPIIResult);
 
-                var results = analyzeConversationPIIResult.Results;
+                ConversationPIIResults results = analyzeConversationPIIResult.Results;
                 Assert.NotNull(results);
 
                 Assert.NotNull(results.Conversations);
-                foreach (var conversation in results.Conversations)
+                foreach (ConversationPIIResultsConversationsItem conversation in results.Conversations)
                 {
                     Assert.NotNull(conversation.ConversationItems);
-                    foreach (var conversationItem in conversation.ConversationItems)
+                    foreach (ConversationPIIItemResult conversationItem in conversation.ConversationItems)
                     {
                         Assert.NotNull(conversationItem.Entities);
-                        foreach (var entity in conversationItem.Entities)
+                        foreach (TextEntity entity in conversationItem.Entities)
                         {
                             Assert.NotNull(entity.Text);
                             Assert.NotNull(entity.Length);
-                            Assert.NotNull(entity.ConfidenceScore);
+                            Assert.NotNull(entity.Confidence);
                             Assert.NotNull(entity.Category);
                             Assert.NotNull(entity.Offset);
                         }
@@ -258,32 +258,32 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task StartAnalyzeConversationAsync_ConversationPII_TranscriptInput()
         {
-            var transciprtConversationItemOne = new TranscriptConversationItem(
-               id: "1",
-               participantId: "speaker",
-               itn: "hi",
-               maskedItn: "hi",
-               text: "Hi",
-               lexical: "hi");
+            var transciprtConversationItemOne = new TranscriptConversationItem(id: "1", participantId: "speaker")
+            {
+                Itn = "hi",
+                MaskedItn = "hi",
+                Text = "Hi",
+                Lexical = "hi",
+            };
             transciprtConversationItemOne.AudioTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
 
-            var transciprtConversationItemTwo = new TranscriptConversationItem(
-               id: "2",
-               participantId: "speaker",
-               itn: "jane doe",
-               maskedItn: "jane doe",
-               text: "Jane doe",
-               lexical: "jane doe");
+            var transciprtConversationItemTwo = new TranscriptConversationItem(id: "2", participantId: "speaker")
+            {
+                Itn = "jane doe",
+                MaskedItn = "jane doe",
+                Text = "Jane doe",
+                Lexical = "jane doe",
+            };
             transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
             transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
 
-            var transciprtConversationItemThree = new TranscriptConversationItem(
-                id: "3",
-                participantId: "agent",
-                itn: "hi jane what's your phone number",
-                maskedItn: "hi jane what's your phone number",
-                text: "Hi Jane, what's your phone number?",
-                lexical: "hi jane what's your phone number");
+            var transciprtConversationItemThree = new TranscriptConversationItem(id: "3", participantId: "agent")
+            {
+                Itn = "hi jane what's your phone number",
+                MaskedItn = "hi jane what's your phone number",
+                Text = "Hi Jane, what's your phone number?",
+                Lexical = "hi jane what's your phone number"
+            };
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
@@ -311,33 +311,33 @@ namespace Azure.AI.Language.Conversations.Tests
                 piiTask
             };
 
-            var analyzeConversationOperation = await Client.StartAnalyzeConversationAsync(input, tasks);
+            Operation<AnalyzeConversationJobState> analyzeConversationOperation = await Client.StartAnalyzeConversationAsync(input, tasks);
 
             await analyzeConversationOperation.WaitForCompletionAsync();
 
-            var jobResults = analyzeConversationOperation.Value;
+            AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
             Assert.NotNull(jobResults);
 
-            foreach (var result in jobResults.Tasks.Items)
+            foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
             {
                 var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
                 Assert.NotNull(analyzeConversationPIIResult);
 
-                var results = analyzeConversationPIIResult.Results;
+                ConversationPIIResults results = analyzeConversationPIIResult.Results;
                 Assert.NotNull(results);
 
                 Assert.NotNull(results.Conversations);
-                foreach (var conversation in results.Conversations)
+                foreach (ConversationPIIResultsConversationsItem conversation in results.Conversations)
                 {
                     Assert.NotNull(conversation.ConversationItems);
-                    foreach (var conversationItem in conversation.ConversationItems)
+                    foreach (ConversationPIIItemResult conversationItem in conversation.ConversationItems)
                     {
                         Assert.NotNull(conversationItem.Entities);
-                        foreach (var entity in conversationItem.Entities)
+                        foreach (TextEntity entity in conversationItem.Entities)
                         {
                             Assert.NotNull(entity.Text);
                             Assert.NotNull(entity.Length);
-                            Assert.NotNull(entity.ConfidenceScore);
+                            Assert.NotNull(entity.Confidence);
                             Assert.NotNull(entity.Category);
                             Assert.NotNull(entity.Offset);
                         }

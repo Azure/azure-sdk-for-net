@@ -81,6 +81,7 @@ namespace Azure.AI.Language.Conversations
     {
         public AnalyzeConversationOptions(Azure.AI.Language.Conversations.ConversationItemBase conversationItem) { }
         public Azure.AI.Language.Conversations.ConversationItemBase ConversationItem { get { throw null; } }
+        public bool? IsLoggingEnabled { get { throw null; } set { } }
         public bool Verbose { get { throw null; } set { } }
     }
     public partial class AnalyzeConversationPIIResult : Azure.AI.Language.Conversations.AnalyzeConversationJobResult
@@ -170,10 +171,42 @@ namespace Azure.AI.Language.Conversations
         public static bool operator !=(Azure.AI.Language.Conversations.AnalyzeConversationTaskResultsKind left, Azure.AI.Language.Conversations.AnalyzeConversationTaskResultsKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AnalyzeError
+    {
+        public AnalyzeError(Azure.AI.Language.Conversations.ErrorCode code, string message) { }
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
+        public Azure.AI.Language.Conversations.ErrorCode Code { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.AnalyzeError> Details { get { throw null; } }
+        public Azure.AI.Language.Conversations.InnerErrorModel Innererror { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+        public string Target { get { throw null; } set { } }
+    }
+    public partial class AnswersOptions
+    {
+        public AnswersOptions() { }
+        public Azure.AI.Language.Conversations.KnowledgeBaseAnswerContext AnswerContext { get { throw null; } set { } }
+        public double? ConfidenceThreshold { get { throw null; } set { } }
+        public Azure.AI.Language.Conversations.QueryFilters Filters { get { throw null; } set { } }
+        public bool? IncludeUnstructuredSources { get { throw null; } set { } }
+        public int? QnaId { get { throw null; } set { } }
+        public string Question { get { throw null; } set { } }
+        public Azure.AI.Language.Conversations.RankerKind? RankerKind { get { throw null; } set { } }
+        public Azure.AI.Language.Conversations.ShortAnswerOptions ShortAnswerOptions { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+        public string UserId { get { throw null; } set { } }
+    }
     public partial class AnswerSpan
     {
-        public AnswerSpan() { }
+        internal AnswerSpan() { }
         public double? Confidence { get { throw null; } }
+        public int? Length { get { throw null; } }
+        public int? Offset { get { throw null; } }
+        public string Text { get { throw null; } }
+    }
+    public partial class AnswersResult
+    {
+        internal AnswersResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.KnowledgeBaseAnswer> Answers { get { throw null; } }
     }
     public partial class AreaResolution : Azure.AI.Language.Conversations.BaseResolution
     {
@@ -235,21 +268,35 @@ namespace Azure.AI.Language.Conversations
         internal BooleanResolution() { }
         public bool Value { get { throw null; } }
     }
+    public partial class ConversationalTask : Azure.AI.Language.Conversations.AnalyzeConversationTask
+    {
+        public ConversationalTask(Azure.AI.Language.Conversations.AnalyzeConversationOptions analysisInput, Azure.AI.Language.Conversations.ConversationTaskParameters parameters) { }
+        public Azure.AI.Language.Conversations.AnalyzeConversationOptions AnalysisInput { get { throw null; } }
+        public Azure.AI.Language.Conversations.ConversationTaskParameters Parameters { get { throw null; } }
+    }
+    public partial class ConversationalTaskResult : Azure.AI.Language.Conversations.AnalyzeConversationTaskResult
+    {
+        internal ConversationalTaskResult() { }
+        public Azure.AI.Language.Conversations.AnalyzeConversationResult Result { get { throw null; } }
+    }
     public partial class ConversationAnalysisClient
     {
         protected ConversationAnalysisClient() { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ConversationAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.ConversationAnalysisClientOptions options) { }
+        public virtual System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AnalyzeConversation(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Language.Conversations.AnalyzeConversationTaskResult> AnalyzeConversation(string utterance, Azure.AI.Language.Conversations.ConversationsProject project, Azure.AI.Language.Conversations.AnalyzeConversationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeConversationAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.Conversations.AnalyzeConversationTaskResult>> AnalyzeConversationAsync(string utterance, Azure.AI.Language.Conversations.ConversationsProject project, Azure.AI.Language.Conversations.AnalyzeConversationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> CancelJob(Azure.WaitUntil waitUntil, System.Guid jobId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> CancelJobAsync(Azure.WaitUntil waitUntil, System.Guid jobId, Azure.RequestContext context = null) { throw null; }
         public static string GetAuthorizationHeader() { throw null; }
         public virtual Azure.Response JobStatus(System.Guid jobId, bool? showStats = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> JobStatusAsync(System.Guid jobId, bool? showStats = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.AI.Language.Conversations.AnalyzeConversationJobState> StartAnalyzeConversation(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.GeneratedConversation> input, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.AnalyzeConversationLROTask> tasks, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.Language.Conversations.AnalyzeConversationJobState>> StartAnalyzeConversationAsync(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.GeneratedConversation> input, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.AnalyzeConversationLROTask> tasks, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.AI.Language.Conversations.AnalyzeConversationJobState> StartAnalyzeConversation(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.ConversationInput> input, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.AnalyzeConversationLROTask> tasks, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.Language.Conversations.AnalyzeConversationJobState>> StartAnalyzeConversationAsync(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.ConversationInput> input, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.AnalyzeConversationLROTask> tasks, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<Azure.AI.Language.Conversations.AnalyzeConversationJobState> SubmitJob(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation<System.BinaryData> SubmitJob(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.Language.Conversations.AnalyzeConversationJobState>> SubmitJobAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -300,6 +347,13 @@ namespace Azure.AI.Language.Conversations
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.BaseResolution> Resolutions { get { throw null; } }
         public string Text { get { throw null; } }
     }
+    public partial class ConversationInput
+    {
+        public ConversationInput(string id, string language) { }
+        public Azure.AI.Language.Conversations.ConversationDomain? Domain { get { throw null; } set { } }
+        public string Id { get { throw null; } }
+        public string Language { get { throw null; } }
+    }
     public partial class ConversationIntent
     {
         internal ConversationIntent() { }
@@ -314,7 +368,7 @@ namespace Azure.AI.Language.Conversations
         public string Language { get { throw null; } set { } }
         public Azure.AI.Language.Conversations.InputModality? Modality { get { throw null; } set { } }
         public string ParticipantId { get { throw null; } }
-        public Azure.AI.Language.Conversations.GeneratedRole? Role { get { throw null; } set { } }
+        public Azure.AI.Language.Conversations.ParticipantRole? Role { get { throw null; } set { } }
     }
     public partial class ConversationParameters : Azure.AI.Language.Conversations.AnalysisParameters
     {
@@ -329,14 +383,12 @@ namespace Azure.AI.Language.Conversations
         public ConversationPIICategory(string value) { throw null; }
         public static Azure.AI.Language.Conversations.ConversationPIICategory Address { get { throw null; } }
         public static Azure.AI.Language.Conversations.ConversationPIICategory All { get { throw null; } }
-        public static Azure.AI.Language.Conversations.ConversationPIICategory CreditCardNumber { get { throw null; } }
+        public static Azure.AI.Language.Conversations.ConversationPIICategory CreditCard { get { throw null; } }
         public static Azure.AI.Language.Conversations.ConversationPIICategory Default { get { throw null; } }
         public static Azure.AI.Language.Conversations.ConversationPIICategory Email { get { throw null; } }
-        public static Azure.AI.Language.Conversations.ConversationPIICategory Miscellaneous { get { throw null; } }
         public static Azure.AI.Language.Conversations.ConversationPIICategory Name { get { throw null; } }
         public static Azure.AI.Language.Conversations.ConversationPIICategory NumericIdentifier { get { throw null; } }
         public static Azure.AI.Language.Conversations.ConversationPIICategory PhoneNumber { get { throw null; } }
-        public static Azure.AI.Language.Conversations.ConversationPIICategory USSocialSecurityNumber { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.ConversationPIICategory other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -349,8 +401,8 @@ namespace Azure.AI.Language.Conversations
     }
     public partial class ConversationPIIItemResult
     {
-        public ConversationPIIItemResult(string id, Azure.AI.Language.Conversations.RedactedTranscriptContent redactedContent, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.GeneratedEntity> entities) { }
-        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Models.GeneratedEntity> Entities { get { throw null; } }
+        public ConversationPIIItemResult(string id, Azure.AI.Language.Conversations.RedactedTranscriptContent redactedContent, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.TextEntity> entities) { }
+        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.TextEntity> Entities { get { throw null; } }
         public string Id { get { throw null; } set { } }
         public Azure.AI.Language.Conversations.RedactedTranscriptContent RedactedContent { get { throw null; } set { } }
     }
@@ -439,6 +491,16 @@ namespace Azure.AI.Language.Conversations
         internal ConversationTargetIntentResult() { }
         public Azure.AI.Language.Conversations.ConversationResult Result { get { throw null; } }
     }
+    public partial class ConversationTaskParameters
+    {
+        public ConversationTaskParameters(string projectName, string deploymentName) { }
+        public string DeploymentName { get { throw null; } }
+        public string DirectTarget { get { throw null; } set { } }
+        public bool? IsLoggingEnabled { get { throw null; } set { } }
+        public string ProjectName { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.AnalysisParameters> TargetProjectParameters { get { throw null; } }
+        public bool? Verbose { get { throw null; } set { } }
+    }
     public partial class ConversationTasksState
     {
         internal ConversationTasksState() { }
@@ -459,28 +521,6 @@ namespace Azure.AI.Language.Conversations
         public string ISO4217 { get { throw null; } }
         public string Unit { get { throw null; } }
         public double Value { get { throw null; } }
-    }
-    public partial class CustomConversationalTask : Azure.AI.Language.Conversations.AnalyzeConversationTask
-    {
-        public CustomConversationalTask(Azure.AI.Language.Conversations.AnalyzeConversationOptions analysisInput, Azure.AI.Language.Conversations.CustomConversationTaskParameters parameters) { }
-        public Azure.AI.Language.Conversations.AnalyzeConversationOptions AnalysisInput { get { throw null; } }
-        public Azure.AI.Language.Conversations.CustomConversationTaskParameters Parameters { get { throw null; } }
-    }
-    public partial class CustomConversationalTaskResult : Azure.AI.Language.Conversations.AnalyzeConversationTaskResult
-    {
-        internal CustomConversationalTaskResult() { }
-        public Azure.AI.Language.Conversations.AnalyzeConversationResult Result { get { throw null; } }
-    }
-    public partial class CustomConversationTaskParameters
-    {
-        public CustomConversationTaskParameters(string projectName, string deploymentName) { }
-        public string DeploymentName { get { throw null; } }
-        public string DirectTarget { get { throw null; } set { } }
-        public bool? IsLoggingEnabled { get { throw null; } set { } }
-        public string ProjectName { get { throw null; } }
-        public Azure.AI.Language.Conversations.StringIndexType? StringIndexType { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Language.Conversations.AnalysisParameters> TargetProjectParameters { get { throw null; } }
-        public bool? Verbose { get { throw null; } set { } }
     }
     public partial class DateTimeResolution : Azure.AI.Language.Conversations.BaseResolution
     {
@@ -526,6 +566,7 @@ namespace Azure.AI.Language.Conversations
         public static Azure.AI.Language.Conversations.ErrorCode AzureCognitiveSearchIndexNotFound { get { throw null; } }
         public static Azure.AI.Language.Conversations.ErrorCode AzureCognitiveSearchNotFound { get { throw null; } }
         public static Azure.AI.Language.Conversations.ErrorCode AzureCognitiveSearchThrottling { get { throw null; } }
+        public static Azure.AI.Language.Conversations.ErrorCode Conflict { get { throw null; } }
         public static Azure.AI.Language.Conversations.ErrorCode Forbidden { get { throw null; } }
         public static Azure.AI.Language.Conversations.ErrorCode InternalServerError { get { throw null; } }
         public static Azure.AI.Language.Conversations.ErrorCode InvalidArgument { get { throw null; } }
@@ -533,9 +574,12 @@ namespace Azure.AI.Language.Conversations
         public static Azure.AI.Language.Conversations.ErrorCode NotFound { get { throw null; } }
         public static Azure.AI.Language.Conversations.ErrorCode OperationNotFound { get { throw null; } }
         public static Azure.AI.Language.Conversations.ErrorCode ProjectNotFound { get { throw null; } }
+        public static Azure.AI.Language.Conversations.ErrorCode QuotaExceeded { get { throw null; } }
         public static Azure.AI.Language.Conversations.ErrorCode ServiceUnavailable { get { throw null; } }
+        public static Azure.AI.Language.Conversations.ErrorCode Timeout { get { throw null; } }
         public static Azure.AI.Language.Conversations.ErrorCode TooManyRequests { get { throw null; } }
         public static Azure.AI.Language.Conversations.ErrorCode Unauthorized { get { throw null; } }
+        public static Azure.AI.Language.Conversations.ErrorCode Warning { get { throw null; } }
         public bool Equals(Azure.AI.Language.Conversations.ErrorCode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -562,25 +606,6 @@ namespace Azure.AI.Language.Conversations
         public static bool operator ==(Azure.AI.Language.Conversations.ExtraInformationKind left, Azure.AI.Language.Conversations.ExtraInformationKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.ExtraInformationKind (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Conversations.ExtraInformationKind left, Azure.AI.Language.Conversations.ExtraInformationKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct GeneratedRole : System.IEquatable<Azure.AI.Language.Conversations.GeneratedRole>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public GeneratedRole(string value) { throw null; }
-        public static Azure.AI.Language.Conversations.GeneratedRole Agent { get { throw null; } }
-        public static Azure.AI.Language.Conversations.GeneratedRole Customer { get { throw null; } }
-        public static Azure.AI.Language.Conversations.GeneratedRole Generic { get { throw null; } }
-        public bool Equals(Azure.AI.Language.Conversations.GeneratedRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Language.Conversations.GeneratedRole left, Azure.AI.Language.Conversations.GeneratedRole right) { throw null; }
-        public static implicit operator Azure.AI.Language.Conversations.GeneratedRole (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Language.Conversations.GeneratedRole left, Azure.AI.Language.Conversations.GeneratedRole right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class InformationResolution : Azure.AI.Language.Conversations.BaseResolution
@@ -659,8 +684,8 @@ namespace Azure.AI.Language.Conversations
     }
     public partial class InputError
     {
-        public InputError(string id, Azure.AI.Language.Conversations.Models.GeneratedError error) { }
-        public Azure.AI.Language.Conversations.Models.GeneratedError Error { get { throw null; } set { } }
+        public InputError(string id, Azure.AI.Language.Conversations.AnalyzeError error) { }
+        public Azure.AI.Language.Conversations.AnalyzeError Error { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -688,32 +713,71 @@ namespace Azure.AI.Language.Conversations
         public string Message { get { throw null; } set { } }
         public string TargetRef { get { throw null; } set { } }
     }
-    public enum JobState
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct JobState : System.IEquatable<Azure.AI.Language.Conversations.JobState>
     {
-        NotStarted = 0,
-        Running = 1,
-        Succeeded = 2,
-        PartiallySucceeded = 3,
-        Failed = 4,
-        Cancelled = 5,
-        Cancelling = 6,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public JobState(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.JobState Cancelled { get { throw null; } }
+        public static Azure.AI.Language.Conversations.JobState Cancelling { get { throw null; } }
+        public static Azure.AI.Language.Conversations.JobState Failed { get { throw null; } }
+        public static Azure.AI.Language.Conversations.JobState NotStarted { get { throw null; } }
+        public static Azure.AI.Language.Conversations.JobState PartiallyCompleted { get { throw null; } }
+        public static Azure.AI.Language.Conversations.JobState Running { get { throw null; } }
+        public static Azure.AI.Language.Conversations.JobState Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.Language.Conversations.JobState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.Conversations.JobState left, Azure.AI.Language.Conversations.JobState right) { throw null; }
+        public static implicit operator Azure.AI.Language.Conversations.JobState (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.Conversations.JobState left, Azure.AI.Language.Conversations.JobState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class JobStateAutoGenerated
     {
         internal JobStateAutoGenerated() { }
         public System.DateTimeOffset CreatedDateTime { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.Models.GeneratedError> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.AnalyzeError> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpirationDateTime { get { throw null; } }
-        public System.Guid JobId { get { throw null; } }
-        public System.DateTimeOffset LastUpdateDateTime { get { throw null; } }
+        public string JobId { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedDateTime { get { throw null; } }
         public string NextLink { get { throw null; } }
         public Azure.AI.Language.Conversations.JobState Status { get { throw null; } }
     }
     public partial class KnowledgeBaseAnswer
     {
-        public KnowledgeBaseAnswer() { }
+        internal KnowledgeBaseAnswer() { }
+        public string Answer { get { throw null; } }
         public double? Confidence { get { throw null; } }
+        public Azure.AI.Language.Conversations.KnowledgeBaseAnswerDialog Dialog { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
+        public int? QnaId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Questions { get { throw null; } }
+        public Azure.AI.Language.Conversations.AnswerSpan ShortAnswer { get { throw null; } }
+        public string Source { get { throw null; } }
+    }
+    public partial class KnowledgeBaseAnswerContext
+    {
+        public KnowledgeBaseAnswerContext(int previousQnaId) { }
+        public int PreviousQnaId { get { throw null; } }
+        public string PreviousQuestion { get { throw null; } set { } }
+    }
+    public partial class KnowledgeBaseAnswerDialog
+    {
+        internal KnowledgeBaseAnswerDialog() { }
+        public bool? IsContextOnly { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Conversations.KnowledgeBaseAnswerPrompt> Prompts { get { throw null; } }
+    }
+    public partial class KnowledgeBaseAnswerPrompt
+    {
+        internal KnowledgeBaseAnswerPrompt() { }
+        public int? DisplayOrder { get { throw null; } }
+        public string DisplayText { get { throw null; } }
+        public int? QnaId { get { throw null; } }
     }
     public partial class LengthResolution : Azure.AI.Language.Conversations.BaseResolution
     {
@@ -759,6 +823,24 @@ namespace Azure.AI.Language.Conversations
         internal ListKey() { }
         public string Key { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogicalOperationKind : System.IEquatable<Azure.AI.Language.Conversations.LogicalOperationKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogicalOperationKind(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.LogicalOperationKind AND { get { throw null; } }
+        public static Azure.AI.Language.Conversations.LogicalOperationKind OR { get { throw null; } }
+        public bool Equals(Azure.AI.Language.Conversations.LogicalOperationKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.Conversations.LogicalOperationKind left, Azure.AI.Language.Conversations.LogicalOperationKind right) { throw null; }
+        public static implicit operator Azure.AI.Language.Conversations.LogicalOperationKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.Conversations.LogicalOperationKind left, Azure.AI.Language.Conversations.LogicalOperationKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class LuisCallingOptions
     {
         public LuisCallingOptions() { }
@@ -781,10 +863,22 @@ namespace Azure.AI.Language.Conversations
         internal LuisTargetIntentResult() { }
         public System.BinaryData Result { get { throw null; } }
     }
+    public partial class MetadataFilter
+    {
+        public MetadataFilter() { }
+        public Azure.AI.Language.Conversations.LogicalOperationKind? LogicalOperation { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.MetadataRecord> Metadata { get { throw null; } }
+    }
+    public partial class MetadataRecord
+    {
+        public MetadataRecord(string key, string value) { }
+        public string Key { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
     public partial class MultiLanguageConversationAnalysisInput
     {
-        public MultiLanguageConversationAnalysisInput(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.GeneratedConversation> conversations) { }
-        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Models.GeneratedConversation> Conversations { get { throw null; } }
+        public MultiLanguageConversationAnalysisInput(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.ConversationInput> conversations) { }
+        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.ConversationInput> Conversations { get { throw null; } }
     }
     public partial class NoneLinkedTargetIntentResult : Azure.AI.Language.Conversations.TargetIntentResult
     {
@@ -826,9 +920,9 @@ namespace Azure.AI.Language.Conversations
         public double Minimum { get { throw null; } }
         public Azure.AI.Language.Conversations.RangeKind RangeKind { get { throw null; } }
     }
-    public partial class OrchestratorPrediction : Azure.AI.Language.Conversations.BasePrediction
+    public partial class OrchestrationPrediction : Azure.AI.Language.Conversations.BasePrediction
     {
-        internal OrchestratorPrediction() { }
+        internal OrchestrationPrediction() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Language.Conversations.TargetIntentResult> Intents { get { throw null; } }
     }
     public partial class OrdinalResolution : Azure.AI.Language.Conversations.BaseResolution
@@ -837,6 +931,25 @@ namespace Azure.AI.Language.Conversations
         public string Offset { get { throw null; } }
         public Azure.AI.Language.Conversations.RelativeTo RelativeTo { get { throw null; } }
         public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ParticipantRole : System.IEquatable<Azure.AI.Language.Conversations.ParticipantRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ParticipantRole(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.ParticipantRole Agent { get { throw null; } }
+        public static Azure.AI.Language.Conversations.ParticipantRole Customer { get { throw null; } }
+        public static Azure.AI.Language.Conversations.ParticipantRole Generic { get { throw null; } }
+        public bool Equals(Azure.AI.Language.Conversations.ParticipantRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.Conversations.ParticipantRole left, Azure.AI.Language.Conversations.ParticipantRole right) { throw null; }
+        public static implicit operator Azure.AI.Language.Conversations.ParticipantRole (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.Conversations.ParticipantRole left, Azure.AI.Language.Conversations.ParticipantRole right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class PreBuiltResult
     {
@@ -873,15 +986,22 @@ namespace Azure.AI.Language.Conversations
         internal QuantityResolution() { }
         public double Value { get { throw null; } }
     }
+    public partial class QueryFilters
+    {
+        public QueryFilters() { }
+        public Azure.AI.Language.Conversations.LogicalOperationKind? LogicalOperation { get { throw null; } set { } }
+        public Azure.AI.Language.Conversations.MetadataFilter MetadataFilter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SourceFilter { get { throw null; } }
+    }
     public partial class QuestionAnsweringParameters : Azure.AI.Language.Conversations.AnalysisParameters
     {
         public QuestionAnsweringParameters() { }
-        public object CallingOptions { get { throw null; } set { } }
+        public Azure.AI.Language.Conversations.AnswersOptions CallingOptions { get { throw null; } set { } }
     }
     public partial class QuestionAnsweringTargetIntentResult : Azure.AI.Language.Conversations.TargetIntentResult
     {
         internal QuestionAnsweringTargetIntentResult() { }
-        public System.BinaryData Result { get { throw null; } }
+        public Azure.AI.Language.Conversations.AnswersResult Result { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RangeKind : System.IEquatable<Azure.AI.Language.Conversations.RangeKind>
@@ -907,6 +1027,24 @@ namespace Azure.AI.Language.Conversations
         public static bool operator ==(Azure.AI.Language.Conversations.RangeKind left, Azure.AI.Language.Conversations.RangeKind right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.RangeKind (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Conversations.RangeKind left, Azure.AI.Language.Conversations.RangeKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RankerKind : System.IEquatable<Azure.AI.Language.Conversations.RankerKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RankerKind(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.RankerKind Default { get { throw null; } }
+        public static Azure.AI.Language.Conversations.RankerKind QuestionOnly { get { throw null; } }
+        public bool Equals(Azure.AI.Language.Conversations.RankerKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.Conversations.RankerKind left, Azure.AI.Language.Conversations.RankerKind right) { throw null; }
+        public static implicit operator Azure.AI.Language.Conversations.RankerKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.Conversations.RankerKind left, Azure.AI.Language.Conversations.RankerKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class RedactedTranscriptContent
@@ -974,6 +1112,13 @@ namespace Azure.AI.Language.Conversations
         public static bool operator !=(Azure.AI.Language.Conversations.ResolutionKind left, Azure.AI.Language.Conversations.ResolutionKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ShortAnswerOptions
+    {
+        public ShortAnswerOptions() { }
+        public double? ConfidenceThreshold { get { throw null; } set { } }
+        public bool Enable { get { throw null; } }
+        public int? Top { get { throw null; } set { } }
+    }
     public partial class SpeedResolution : Azure.AI.Language.Conversations.BaseResolution
     {
         internal SpeedResolution() { }
@@ -1008,25 +1153,6 @@ namespace Azure.AI.Language.Conversations
         public static bool operator ==(Azure.AI.Language.Conversations.SpeedUnit left, Azure.AI.Language.Conversations.SpeedUnit right) { throw null; }
         public static implicit operator Azure.AI.Language.Conversations.SpeedUnit (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Conversations.SpeedUnit left, Azure.AI.Language.Conversations.SpeedUnit right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StringIndexType : System.IEquatable<Azure.AI.Language.Conversations.StringIndexType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StringIndexType(string value) { throw null; }
-        public static Azure.AI.Language.Conversations.StringIndexType TextElementsV8 { get { throw null; } }
-        public static Azure.AI.Language.Conversations.StringIndexType UnicodeCodePoint { get { throw null; } }
-        public static Azure.AI.Language.Conversations.StringIndexType Utf16CodeUnit { get { throw null; } }
-        public bool Equals(Azure.AI.Language.Conversations.StringIndexType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Language.Conversations.StringIndexType left, Azure.AI.Language.Conversations.StringIndexType right) { throw null; }
-        public static implicit operator Azure.AI.Language.Conversations.StringIndexType (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Language.Conversations.StringIndexType left, Azure.AI.Language.Conversations.StringIndexType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1101,14 +1227,27 @@ namespace Azure.AI.Language.Conversations
         public TaskParameters() { }
         public bool? LoggingOptOut { get { throw null; } set { } }
     }
-    public enum TaskState
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TaskState : System.IEquatable<Azure.AI.Language.Conversations.TaskState>
     {
-        NotStarted = 0,
-        Running = 1,
-        Succeeded = 2,
-        Failed = 3,
-        Cancelled = 4,
-        Cancelling = 5,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TaskState(string value) { throw null; }
+        public static Azure.AI.Language.Conversations.TaskState Cancelled { get { throw null; } }
+        public static Azure.AI.Language.Conversations.TaskState Cancelling { get { throw null; } }
+        public static Azure.AI.Language.Conversations.TaskState Failed { get { throw null; } }
+        public static Azure.AI.Language.Conversations.TaskState NotStarted { get { throw null; } }
+        public static Azure.AI.Language.Conversations.TaskState Running { get { throw null; } }
+        public static Azure.AI.Language.Conversations.TaskState Succeeded { get { throw null; } }
+        public bool Equals(Azure.AI.Language.Conversations.TaskState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.Conversations.TaskState left, Azure.AI.Language.Conversations.TaskState right) { throw null; }
+        public static implicit operator Azure.AI.Language.Conversations.TaskState (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.Conversations.TaskState left, Azure.AI.Language.Conversations.TaskState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TaskStateAutoGenerated
     {
@@ -1185,7 +1324,7 @@ namespace Azure.AI.Language.Conversations
         public string End { get { throw null; } }
         public Azure.AI.Language.Conversations.TemporalModifier? Modifier { get { throw null; } }
     }
-    public partial class TextConversation : Azure.AI.Language.Conversations.Models.GeneratedConversation
+    public partial class TextConversation : Azure.AI.Language.Conversations.ConversationInput
     {
         public TextConversation(string id, string language, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.TextConversationItem> conversationItems) : base (default(string), default(string)) { }
         public System.Collections.Generic.IList<Azure.AI.Language.Conversations.TextConversationItem> ConversationItems { get { throw null; } }
@@ -1194,6 +1333,16 @@ namespace Azure.AI.Language.Conversations
     {
         public TextConversationItem(string id, string participantId, string text) : base (default(string), default(string)) { }
         public string Text { get { throw null; } }
+    }
+    public partial class TextEntity
+    {
+        public TextEntity(string text, string category, int offset, int length, double confidenceScore) { }
+        public string Category { get { throw null; } set { } }
+        public double Confidence { get { throw null; } set { } }
+        public int Length { get { throw null; } set { } }
+        public int Offset { get { throw null; } set { } }
+        public string Subcategory { get { throw null; } set { } }
+        public string Text { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TranscriptContentType : System.IEquatable<Azure.AI.Language.Conversations.TranscriptContentType>
@@ -1215,19 +1364,19 @@ namespace Azure.AI.Language.Conversations
         public static bool operator !=(Azure.AI.Language.Conversations.TranscriptContentType left, Azure.AI.Language.Conversations.TranscriptContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TranscriptConversation : Azure.AI.Language.Conversations.Models.GeneratedConversation
+    public partial class TranscriptConversation : Azure.AI.Language.Conversations.ConversationInput
     {
         public TranscriptConversation(string id, string language, System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.TranscriptConversationItem> conversationItems) : base (default(string), default(string)) { }
         public System.Collections.Generic.IList<Azure.AI.Language.Conversations.TranscriptConversationItem> ConversationItems { get { throw null; } }
     }
     public partial class TranscriptConversationItem : Azure.AI.Language.Conversations.ConversationItemBase
     {
-        public TranscriptConversationItem(string id, string participantId, string itn, string maskedItn, string text, string lexical) : base (default(string), default(string)) { }
+        public TranscriptConversationItem(string id, string participantId) : base (default(string), default(string)) { }
         public System.Collections.Generic.IList<Azure.AI.Language.Conversations.WordLevelTiming> AudioTimings { get { throw null; } }
-        public string Itn { get { throw null; } }
-        public string Lexical { get { throw null; } }
-        public string MaskedItn { get { throw null; } }
-        public string Text { get { throw null; } }
+        public string Itn { get { throw null; } set { } }
+        public string Lexical { get { throw null; } set { } }
+        public string MaskedItn { get { throw null; } set { } }
+        public string Text { get { throw null; } set { } }
     }
     public partial class VolumeResolution : Azure.AI.Language.Conversations.BaseResolution
     {
@@ -1321,36 +1470,6 @@ namespace Azure.AI.Language.Conversations
     {
         public WordLevelTiming() { }
         public string Word { get { throw null; } set { } }
-    }
-}
-namespace Azure.AI.Language.Conversations.Models
-{
-    public partial class GeneratedConversation
-    {
-        public GeneratedConversation(string id, string language) { }
-        public Azure.AI.Language.Conversations.ConversationDomain? Domain { get { throw null; } set { } }
-        public string Id { get { throw null; } }
-        public string Language { get { throw null; } }
-    }
-    public partial class GeneratedEntity
-    {
-        public GeneratedEntity(string text, string category, int offset, int length, double confidenceScore) { }
-        public string Category { get { throw null; } set { } }
-        public double ConfidenceScore { get { throw null; } set { } }
-        public int Length { get { throw null; } set { } }
-        public int Offset { get { throw null; } set { } }
-        public string Subcategory { get { throw null; } set { } }
-        public string Text { get { throw null; } set { } }
-    }
-    public partial class GeneratedError
-    {
-        public GeneratedError(Azure.AI.Language.Conversations.ErrorCode code, string message) { }
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
-        public Azure.AI.Language.Conversations.ErrorCode Code { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.AI.Language.Conversations.Models.GeneratedError> Details { get { throw null; } }
-        public Azure.AI.Language.Conversations.InnerErrorModel Innererror { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
-        public string Target { get { throw null; } set { } }
     }
 }
 namespace Microsoft.Extensions.Azure

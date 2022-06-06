@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "228",
+        "Content-Length": "268",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "131595ea3e9439fb34540c5edaf043ed",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220606.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "98276c868b798a762f20622078cf4a36",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -21,68 +21,69 @@
           }
         },
         "parameters": {
-          "projectName": "EmailDomain",
-          "deploymentName": "production"
+          "projectName": "CLUScriptDeployed",
+          "deploymentName": "production",
+          "stringIndexType": "Utf16CodeUnit"
         },
         "kind": "Conversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bef2350a-86c8-4f50-9678-d2f2ecf92d73",
+        "apim-request-id": "9e1322a9-9930-4704-bf3e-6f7f90a1b150",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.ConversationalLanguageUnderstanding.Prediction=1",
-        "Date": "Thu, 19 May 2022 15:14:03 GMT",
+        "Date": "Mon, 06 Jun 2022 21:01:59 GMT",
         "Pragma": "no-cache",
-        "request-id": "bef2350a-86c8-4f50-9678-d2f2ecf92d73",
+        "request-id": "9e1322a9-9930-4704-bf3e-6f7f90a1b150",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "83"
+        "x-envoy-upstream-service-time": "197"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
         "result": {
           "query": "Send an email to Carol about the tomorrow\u0027s demo.",
           "prediction": {
-            "topIntent": "Read",
+            "topIntent": "Send",
             "projectKind": "Conversation",
             "intents": [
               {
-                "category": "Read",
-                "confidenceScore": 0.72393185
+                "category": "Send",
+                "confidenceScore": 0.88839144
               },
               {
-                "category": "Send",
-                "confidenceScore": 0.14929298
+                "category": "Read",
+                "confidenceScore": 0.42096567
               },
               {
                 "category": "Setup",
-                "confidenceScore": 0.076164305
-              },
-              {
-                "category": "Find",
-                "confidenceScore": 0.04118208
-              },
-              {
-                "category": "Set",
-                "confidenceScore": 0.00614006
-              },
-              {
-                "category": "Call",
-                "confidenceScore": 0.0025622917
-              },
-              {
-                "category": "Open",
-                "confidenceScore": 0.000411571
+                "confidenceScore": 0.40674323
               },
               {
                 "category": "None",
-                "confidenceScore": 0.00028198693
+                "confidenceScore": 0.23741776
+              },
+              {
+                "category": "Set",
+                "confidenceScore": 0.21623757
+              },
+              {
+                "category": "Find",
+                "confidenceScore": 0.21160963
+              },
+              {
+                "category": "Call",
+                "confidenceScore": 0.17545219
               },
               {
                 "category": "Play",
-                "confidenceScore": 3.289273E-05
+                "confidenceScore": 0.15643774
+              },
+              {
+                "category": "Open",
+                "confidenceScore": 0.14740488
               }
             ],
             "entities": [
@@ -109,8 +110,8 @@
                   {
                     "resolutionKind": "DateTimeResolution",
                     "dateTimeSubKind": "Date",
-                    "timex": "2022-05-20",
-                    "value": "2022-05-20"
+                    "timex": "2022-06-07",
+                    "value": "2022-06-07"
                   }
                 ],
                 "extraInformation": [
@@ -119,13 +120,6 @@
                     "value": "datetime.date"
                   }
                 ]
-              },
-              {
-                "category": "Location",
-                "text": "demo",
-                "offset": 44,
-                "length": 4,
-                "confidenceScore": 1
               }
             ]
           }
@@ -134,10 +128,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_DEPLOYMENT_NAME": "production",
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_PROJECT_NAME": "EmailDomain",
-    "RandomSeed": "923099991"
+    "CONVERSATIONS_DEPLOYMENT_NAME": "production",
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_PROJECT_NAME": "CLUScriptDeployed",
+    "RandomSeed": "389307201"
   }
 }

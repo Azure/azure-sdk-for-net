@@ -39,45 +39,45 @@ then you can start analyzing by calling the `AnalyzeConversation`, and because t
 ## Synchronous
 
 ```C# Snippet:StartAnalyzeConversation_StartAnalayzing
-var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
+Operation<AnalyzeConversationJobState> analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
 ```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
-var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+Operation<AnalyzeConversationJobState> analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
 You can finally print the results:
 
 ```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Results
-var jobResults = analyzeConversationOperation.Value;
-foreach (var result in jobResults.Tasks.Items)
+AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
+foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
 {
     var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
 
-    var results = analyzeConversationPIIResult.Results;
+    ConversationPIIResults results = analyzeConversationPIIResult.Results;
 
     Console.WriteLine("Conversations:");
-    foreach (var conversation in results.Conversations)
+    foreach (ConversationPIIResultsConversationsItem conversation in results.Conversations)
     {
         Console.WriteLine($"Conversation #:{conversation.Id}");
         Console.WriteLine("Conversation Items: ");
-        foreach (var conversationItem in conversation.ConversationItems)
+        foreach (ConversationPIIItemResult conversationItem in conversation.ConversationItems)
         {
             Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
 
             Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
 
             Console.WriteLine("Entities:");
-            foreach (var entity in conversationItem.Entities)
+            foreach (TextEntity entity in conversationItem.Entities)
             {
                 Console.WriteLine($"Text: {entity.Text}");
                 Console.WriteLine($"Offset: {entity.Offset}");
                 Console.WriteLine($"Category: {entity.Category}");
-                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                Console.WriteLine($"Confidence Score: {entity.Confidence}");
                 Console.WriteLine($"Length: {entity.Length}");
                 Console.WriteLine();
             }

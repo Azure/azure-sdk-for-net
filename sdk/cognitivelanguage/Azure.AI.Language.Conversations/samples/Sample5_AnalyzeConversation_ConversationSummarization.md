@@ -39,33 +39,33 @@ then you can start analyzing by calling the `StartAnalyzeConversation`, and beca
 ## Synchronous
 
 ```C# Snippet:StartAnalyzeConversation_StartAnalayzing
-var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
+Operation<AnalyzeConversationJobState> analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
 ```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
-var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+Operation<AnalyzeConversationJobState> analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
 You can finally print the results:
 
 ```C# Snippet:StartAnalyzeConversation_ConversationSummarization_Results
-var jobResults = analyzeConversationOperation.Value;
-foreach (var result in jobResults.Tasks.Items)
+AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
+foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
 {
     var analyzeConversationSummarization = result as AnalyzeConversationSummarizationResult;
 
-    var results = analyzeConversationSummarization.Results;
+    SummaryResult results = analyzeConversationSummarization.Results;
 
     Console.WriteLine("Conversations:");
-    foreach (var conversation in results.Conversations)
+    foreach (SummaryResultConversationsItem conversation in results.Conversations)
     {
         Console.WriteLine($"Conversation #:{conversation.Id}");
         Console.WriteLine("Summaries:");
-        foreach (var summary in conversation.Summaries)
+        foreach (ConversationsSummaryResultSummariesItem summary in conversation.Summaries)
         {
             Console.WriteLine($"Text: {summary.Text}");
             Console.WriteLine($"Aspect: {summary.Aspect}");

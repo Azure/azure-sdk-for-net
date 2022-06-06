@@ -3,12 +3,22 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-* Added Conversation issue summarization task (Long-running operation)
-* Added Conversation PII extraction task (Long-running operation)
+
+* Added conversation issue summarization as a long-running operation.
+* Added conversation personally identifiable information (PII) extraction as a long-running operation.
 
 ### Breaking Changes
-- Client now uses python dictionaries for method parameters and results instead of classes.
-- Many input and result parameter name changes in `analyze_conversation()` method
+
+- Removed `StringIndexType` and hardcoded it to `Utf16CodeUnit`.
+- Renamed `Conversation` to `ConversationInput`.
+- Renamed "CustomConversation" to just "Conversation", including `AnalyzeConversationTaskKind.Conversation`, `ConversationResult`, `ConversationTaskParameters`, etc.
+- Renamed `Entity` to `TextEntity`.
+- Renamed `Error` to `AnalyzeError`.
+- Renamed `KnowledgeBaseAnswers` to `AnswersResult`.
+- Renamed "Orchestrator" to "Orchestration" including `OrchestrationPrediction`, etc.
+- Renamed `Role` to `ParticipantRole`.
+- Renamed `TargetKind` to `TargetProjectKind`.
+- Renamed "Workflow" to "Orchestration" including `ProjectKind.Workflow`, etc.
 
 ### Bugs Fixed
 

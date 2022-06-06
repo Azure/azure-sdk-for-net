@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
@@ -18,32 +17,32 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Input
-            var transciprtConversationItemOne = new TranscriptConversationItem(
-               id: "1",
-               participantId: "speaker",
-               itn: "hi",
-               maskedItn: "hi",
-               text: "Hi",
-               lexical: "hi");
+            var transciprtConversationItemOne = new TranscriptConversationItem(id: "1", participantId: "speaker")
+            {
+                Itn = "hi",
+                MaskedItn = "hi",
+                Text = "Hi",
+                Lexical = "hi",
+            };
             transciprtConversationItemOne.AudioTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
 
-            var transciprtConversationItemTwo = new TranscriptConversationItem(
-               id: "2",
-               participantId: "speaker",
-               itn: "jane doe",
-               maskedItn: "jane doe",
-               text: "Jane doe",
-               lexical: "jane doe");
+            var transciprtConversationItemTwo = new TranscriptConversationItem(id: "2", participantId: "speaker")
+            {
+                Itn = "jane doe",
+                MaskedItn = "jane doe",
+                Text = "Jane doe",
+                Lexical = "jane doe",
+            };
             transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
             transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
 
-            var transciprtConversationItemThree = new TranscriptConversationItem(
-                id: "3",
-                participantId: "agent",
-                itn: "hi jane what's your phone number",
-                maskedItn: "hi jane what's your phone number",
-                text: "Hi Jane, what's your phone number?",
-                lexical: "hi jane what's your phone number");
+            var transciprtConversationItemThree = new TranscriptConversationItem(id: "3", participantId: "agent")
+            {
+                Itn = "hi jane what's your phone number",
+                MaskedItn = "hi jane what's your phone number",
+                Text = "Hi Jane, what's your phone number?",
+                Lexical = "hi jane what's your phone number",
+            };
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
@@ -71,23 +70,23 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             };
             #endregion
 
-            var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
+            Operation<AnalyzeConversationJobState> analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
             analyzeConversationOperation.WaitForCompletion();
 
             #region Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Results
-            var jobResults = analyzeConversationOperation.Value;
-            foreach (var result in jobResults.Tasks.Items)
+            AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
+            foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
             {
                 var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
 
-                var results = analyzeConversationPIIResult.Results;
+                ConversationPIIResults results = analyzeConversationPIIResult.Results;
 
                 Console.WriteLine("Conversations:");
-                foreach (var conversation in results.Conversations)
+                foreach (ConversationPIIResultsConversationsItem conversation in results.Conversations)
                 {
                     Console.WriteLine($"Conversation #:{conversation.Id}");
                     Console.WriteLine("Conversation Items: ");
-                    foreach (var conversationItem in conversation.ConversationItems)
+                    foreach (ConversationPIIItemResult conversationItem in conversation.ConversationItems)
                     {
                         Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
 
@@ -97,12 +96,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Console.WriteLine($"Redacted MaskedItn: {conversationItem.RedactedContent.MaskedItn}");
 
                         Console.WriteLine("Entities:");
-                        foreach (var entity in conversationItem.Entities)
+                        foreach (TextEntity entity in conversationItem.Entities)
                         {
                             Console.WriteLine($"Text: {entity.Text}");
                             Console.WriteLine($"Offset: {entity.Offset}");
                             Console.WriteLine($"Category: {entity.Category}");
-                            Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                            Console.WriteLine($"Confidence Score: {entity.Confidence}");
                             Console.WriteLine($"Length: {entity.Length}");
                             Console.WriteLine();
                         }
@@ -119,32 +118,32 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         {
             ConversationAnalysisClient client = Client;
 
-            var transciprtConversationItemOne = new TranscriptConversationItem(
-               id: "1",
-               participantId: "speaker",
-               itn: "hi",
-               maskedItn: "hi",
-               text: "Hi",
-               lexical: "hi");
+            var transciprtConversationItemOne = new TranscriptConversationItem(id: "1", participantId: "speaker")
+            {
+                Itn = "hi",
+                MaskedItn = "hi",
+                Text = "Hi",
+                Lexical = "hi",
+            };
             transciprtConversationItemOne.AudioTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
 
-            var transciprtConversationItemTwo = new TranscriptConversationItem(
-               id: "2",
-               participantId: "speaker",
-               itn: "jane doe",
-               maskedItn: "jane doe",
-               text: "Jane doe",
-               lexical: "jane doe");
+            var transciprtConversationItemTwo = new TranscriptConversationItem(id: "2", participantId: "speaker")
+            {
+                Itn = "jane doe",
+                MaskedItn = "jane doe",
+                Text = "Jane doe",
+                Lexical = "jane doe",
+            };
             transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
             transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
 
-            var transciprtConversationItemThree = new TranscriptConversationItem(
-                id: "3",
-                participantId: "agent",
-                itn: "hi jane what's your phone number",
-                maskedItn: "hi jane what's your phone number",
-                text: "Hi Jane, what's your phone number?",
-                lexical: "hi jane what's your phone number");
+            var transciprtConversationItemThree = new TranscriptConversationItem(id: "3", participantId: "agent")
+            {
+                Itn = "hi jane what's your phone number",
+                MaskedItn = "hi jane what's your phone number",
+                Text = "Hi Jane, what's your phone number?",
+                Lexical = "hi jane what's your phone number",
+            };
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
             transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
@@ -171,22 +170,22 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters),
             };
 
-            var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+            Operation<AnalyzeConversationJobState> analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
             await analyzeConversationOperation.WaitForCompletionAsync();
 
-            var jobResults = analyzeConversationOperation.Value;
-            foreach (var result in jobResults.Tasks.Items)
+            AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
+            foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
             {
                 var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
 
-                var results = analyzeConversationPIIResult.Results;
+                ConversationPIIResults results = analyzeConversationPIIResult.Results;
 
                 Console.WriteLine("Conversations:");
-                foreach (var conversation in results.Conversations)
+                foreach (ConversationPIIResultsConversationsItem conversation in results.Conversations)
                 {
                     Console.WriteLine($"Conversation #:{conversation.Id}");
                     Console.WriteLine("Conversation Items: ");
-                    foreach (var conversationItem in conversation.ConversationItems)
+                    foreach (ConversationPIIItemResult conversationItem in conversation.ConversationItems)
                     {
                         Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
 
@@ -196,12 +195,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         Console.WriteLine($"Redacted MaskedItn: {conversationItem.RedactedContent.MaskedItn}");
 
                         Console.WriteLine("Entities:");
-                        foreach (var entity in conversationItem.Entities)
+                        foreach (TextEntity entity in conversationItem.Entities)
                         {
                             Console.WriteLine($"Text: {entity.Text}");
                             Console.WriteLine($"Offset: {entity.Offset}");
                             Console.WriteLine($"Category: {entity.Category}");
-                            Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                            Console.WriteLine($"Confidence Score: {entity.Confidence}");
                             Console.WriteLine($"Length: {entity.Length}");
                             Console.WriteLine();
                         }
