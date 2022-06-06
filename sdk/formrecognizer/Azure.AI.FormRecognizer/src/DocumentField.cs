@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     [CodeGenModel("DocumentField")]
+    [DebuggerTypeProxy(typeof(DocumentFieldDebugView))]
     public partial class DocumentField
     {
         /// <summary>
@@ -310,6 +312,47 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
 
             return ValueAddress;
+        }
+
+        /// <summary>
+        /// Debugger Proxy class for <see cref="DocumentField"/>.
+        /// </summary>
+        private class DocumentFieldDebugView
+        {
+            private DocumentField BaseObject { get; }
+
+            public DocumentFieldDebugView(DocumentField baseObject)
+            {
+                BaseObject = baseObject;
+            }
+
+            public DocumentFieldType ValueType => BaseObject.ValueType;
+
+            public string Content => BaseObject.Content;
+
+            public IReadOnlyList<BoundingRegion> BoundingRegions => BaseObject.BoundingRegions;
+
+            public IReadOnlyList<DocumentSpan> Spans => BaseObject.Spans;
+
+            public float? Confidence => BaseObject.Confidence;
+
+            public object InternalValue => ValueType switch
+            {
+                DocumentFieldType.Address => BaseObject.AsAddress(),
+                DocumentFieldType.CountryRegion => BaseObject.AsCountryRegion(),
+                DocumentFieldType.Currency => BaseObject.AsCurrency(),
+                DocumentFieldType.Date => BaseObject.AsDate(),
+                DocumentFieldType.Dictionary => BaseObject.AsDictionary(),
+                DocumentFieldType.Double => BaseObject.AsDouble(),
+                DocumentFieldType.Int64 => BaseObject.AsInt64(),
+                DocumentFieldType.List => BaseObject.AsList(),
+                DocumentFieldType.PhoneNumber => BaseObject.AsPhoneNumber(),
+                DocumentFieldType.SelectionMark => BaseObject.AsSelectionMarkState(),
+                DocumentFieldType.Signature => BaseObject.AsSignatureType(),
+                DocumentFieldType.String => BaseObject.AsString(),
+                DocumentFieldType.Time => BaseObject.AsTime(),
+                _ => null
+            };
         }
     }
 }
