@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
         /// Please note <see cref="RuleCondition"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="ThresholdRuleCondition"/>, <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>.
+        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>, <see cref="ThresholdRuleCondition"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namePropertiesName"/> or <paramref name="condition"/> is null. </exception>
         public AlertRuleData(AzureLocation location, string namePropertiesName, bool isEnabled, RuleCondition condition) : base(location)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
         /// Please note <see cref="RuleCondition"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="ThresholdRuleCondition"/>, <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>.
+        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>, <see cref="ThresholdRuleCondition"/>.
         /// </param>
         /// <param name="action">
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary>
         /// the condition that results in the alert rule being activated.
         /// Please note <see cref="RuleCondition"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="ThresholdRuleCondition"/>, <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>.
+        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>, <see cref="ThresholdRuleCondition"/>.
         /// </summary>
         public RuleCondition Condition { get; set; }
         /// <summary>

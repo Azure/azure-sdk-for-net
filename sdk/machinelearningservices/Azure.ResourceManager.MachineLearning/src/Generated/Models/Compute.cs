@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// Machine Learning compute object.
     /// Please note <see cref="Compute"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="AksCompute"/>, <see cref="KubernetesCompute"/>, <see cref="AmlCompute"/>, <see cref="ComputeInstance"/>, <see cref="VirtualMachineCompute"/>, <see cref="HDInsightCompute"/>, <see cref="DataFactoryCompute"/>, <see cref="DatabricksCompute"/>, <see cref="DataLakeAnalyticsCompute"/>, <see cref="SynapseSparkCompute"/>.
+    /// The available derived classes include <see cref="AksCompute"/>, <see cref="AmlCompute"/>, <see cref="ComputeInstance"/>, <see cref="DataFactoryCompute"/>, <see cref="DataLakeAnalyticsCompute"/>, <see cref="DatabricksCompute"/>, <see cref="HDInsightCompute"/>, <see cref="KubernetesCompute"/>, <see cref="SynapseSparkCompute"/>, <see cref="VirtualMachineCompute"/>.
     /// </summary>
     public partial class Compute
     {

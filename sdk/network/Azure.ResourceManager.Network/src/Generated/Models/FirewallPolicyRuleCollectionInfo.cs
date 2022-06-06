@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary>
     /// Properties of the rule collection.
     /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="FirewallPolicyNatRuleCollectionInfo"/>, <see cref="FirewallPolicyFilterRuleCollectionInfo"/>.
+    /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/>, <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
     /// </summary>
     public partial class FirewallPolicyRuleCollectionInfo
     {

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// the condition that results in the alert rule being activated.
         /// Please note <see cref="RuleCondition"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="ThresholdRuleCondition"/>, <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>.
+        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>, <see cref="ThresholdRuleCondition"/>.
         /// </summary>
         public RuleCondition Condition { get; set; }
         /// <summary>

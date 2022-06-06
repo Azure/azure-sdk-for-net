@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary>
     /// The condition that results in the alert rule being activated.
     /// Please note <see cref="RuleCondition"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="ThresholdRuleCondition"/>, <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>.
+    /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>, <see cref="ThresholdRuleCondition"/>.
     /// </summary>
     public partial class RuleCondition
     {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="dataSource">
         /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.
         /// Please note <see cref="RuleDataSource"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="RuleMetricDataSource"/>, <see cref="RuleManagementEventDataSource"/>.
+        /// The available derived classes include <see cref="RuleManagementEventDataSource"/>, <see cref="RuleMetricDataSource"/>.
         /// </param>
         internal RuleCondition(string odataType, RuleDataSource dataSource)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.
         /// Please note <see cref="RuleDataSource"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="RuleMetricDataSource"/>, <see cref="RuleManagementEventDataSource"/>.
+        /// The available derived classes include <see cref="RuleManagementEventDataSource"/>, <see cref="RuleMetricDataSource"/>.
         /// </summary>
         public RuleDataSource DataSource { get; set; }
     }

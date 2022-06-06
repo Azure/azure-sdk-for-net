@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="dataSource">
         /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.
         /// Please note <see cref="RuleDataSource"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="RuleMetricDataSource"/>, <see cref="RuleManagementEventDataSource"/>.
+        /// The available derived classes include <see cref="RuleManagementEventDataSource"/>, <see cref="RuleMetricDataSource"/>.
         /// </param>
         /// <param name="aggregation"> How the data that is collected should be combined over time and when the alert is activated. Note that for management event alerts aggregation is optional – if it is not provided then any event will cause the alert to activate. </param>
         internal ManagementEventRuleCondition(string odataType, RuleDataSource dataSource, ManagementEventAggregationCondition aggregation) : base(odataType, dataSource)

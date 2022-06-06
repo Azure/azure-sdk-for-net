@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="dataSource">
         /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.
         /// Please note <see cref="RuleDataSource"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="RuleMetricDataSource"/>, <see cref="RuleManagementEventDataSource"/>.
+        /// The available derived classes include <see cref="RuleManagementEventDataSource"/>, <see cref="RuleMetricDataSource"/>.
         /// </param>
         /// <param name="operator"> the operator used to compare the data and the threshold. </param>
         /// <param name="threshold"> the threshold value that activates the alert. </param>

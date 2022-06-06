@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="allOf">
         /// the list of multiple metric criteria for this &apos;all of&apos; operation. 
         /// Please note <see cref="MultiMetricCriteria"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="MetricCriteria"/>, <see cref="DynamicMetricCriteria"/>.
+        /// The available derived classes include <see cref="DynamicMetricCriteria"/>, <see cref="MetricCriteria"/>.
         /// </param>
         internal MetricAlertMultipleResourceMultipleMetricCriteria(Odatatype odataType, IDictionary<string, BinaryData> additionalProperties, IList<MultiMetricCriteria> allOf) : base(odataType, additionalProperties)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// the list of multiple metric criteria for this &apos;all of&apos; operation. 
         /// Please note <see cref="MultiMetricCriteria"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="MetricCriteria"/>, <see cref="DynamicMetricCriteria"/>.
+        /// The available derived classes include <see cref="DynamicMetricCriteria"/>, <see cref="MetricCriteria"/>.
         /// </summary>
         public IList<MultiMetricCriteria> AllOf { get; }
     }

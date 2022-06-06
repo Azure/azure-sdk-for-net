@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="dataSource">
         /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.
         /// Please note <see cref="RuleDataSource"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="RuleMetricDataSource"/>, <see cref="RuleManagementEventDataSource"/>.
+        /// The available derived classes include <see cref="RuleManagementEventDataSource"/>, <see cref="RuleMetricDataSource"/>.
         /// </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </param>
         /// <param name="failedLocationCount"> the number of locations that must fail to activate the alert. </param>

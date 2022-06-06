@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="authInfo">
         /// The authentication type.
         /// Please note <see cref="AuthInfoBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="UserAssignedIdentityAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <summary>
         /// The authentication type.
         /// Please note <see cref="AuthInfoBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="UserAssignedIdentityAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </summary>
         public AuthInfoBase AuthInfo { get; set; }
         /// <summary> The application client type. </summary>

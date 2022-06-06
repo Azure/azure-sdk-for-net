@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary>
     /// The resource from which the rule collects its data.
     /// Please note <see cref="RuleDataSource"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="RuleMetricDataSource"/>, <see cref="RuleManagementEventDataSource"/>.
+    /// The available derived classes include <see cref="RuleManagementEventDataSource"/>, <see cref="RuleMetricDataSource"/>.
     /// </summary>
     public partial class RuleDataSource
     {

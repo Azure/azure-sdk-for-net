@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary>
     /// An action for the delivery rule.
     /// Please note <see cref="DeliveryRuleAction"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="UriRedirectAction"/>, <see cref="UriSigningAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="UriRewriteAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>.
+    /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/>, <see cref="UriSigningAction"/>.
     /// </summary>
     public partial class DeliveryRuleAction
     {

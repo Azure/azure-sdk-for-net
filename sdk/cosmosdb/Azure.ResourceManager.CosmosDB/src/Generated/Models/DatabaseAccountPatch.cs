@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary>
         /// The object representing the policy for taking backups on an account.
         /// Please note <see cref="BackupPolicy"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="PeriodicModeBackupPolicy"/>, <see cref="ContinuousModeBackupPolicy"/>.
+        /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/>, <see cref="PeriodicModeBackupPolicy"/>.
         /// </summary>
         public BackupPolicy BackupPolicy { get; set; }
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>

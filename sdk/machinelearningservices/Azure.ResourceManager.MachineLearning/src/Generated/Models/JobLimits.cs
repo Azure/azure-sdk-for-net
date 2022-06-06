@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// The JobLimits.
     /// Please note <see cref="JobLimits"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="CommandJobLimits"/>, <see cref="SweepJobLimits"/>.
+    /// The available derived classes include <see cref="SweepJobLimits"/>, <see cref="CommandJobLimits"/>.
     /// </summary>
     public partial class JobLimits
     {

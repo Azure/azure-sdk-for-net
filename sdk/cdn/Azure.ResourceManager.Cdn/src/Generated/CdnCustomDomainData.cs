@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainHttpsContent">
         /// Certificate parameters for securing custom HTTPS
         /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="CdnManagedHttpsContent"/>, <see cref="UserManagedHttpsContent"/>.
+        /// The available derived classes include <see cref="UserManagedHttpsContent"/>, <see cref="CdnManagedHttpsContent"/>.
         /// </param>
         /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
         /// <param name="provisioningState"> Provisioning status of Custom Https of the custom domain. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// Certificate parameters for securing custom HTTPS
         /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="CdnManagedHttpsContent"/>, <see cref="UserManagedHttpsContent"/>.
+        /// The available derived classes include <see cref="UserManagedHttpsContent"/>, <see cref="CdnManagedHttpsContent"/>.
         /// </summary>
         public CustomDomainHttpsContent CustomDomainHttpsContent { get; set; }
         /// <summary> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </summary>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// Secrets related to a Machine Learning compute. Might differ for every type of compute.
     /// Please note <see cref="ComputeSecrets"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="AksComputeSecrets"/>, <see cref="VirtualMachineSecrets"/>, <see cref="DatabricksComputeSecrets"/>.
+    /// The available derived classes include <see cref="AksComputeSecrets"/>, <see cref="DatabricksComputeSecrets"/>, <see cref="VirtualMachineSecrets"/>.
     /// </summary>
     public partial class ComputeSecrets
     {

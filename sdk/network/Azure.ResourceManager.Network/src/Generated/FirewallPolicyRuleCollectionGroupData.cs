@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
         /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="FirewallPolicyNatRuleCollectionInfo"/>, <see cref="FirewallPolicyFilterRuleCollectionInfo"/>.
+        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/>, <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
         internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <summary>
         /// Group of Firewall Policy rule collections.
         /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="FirewallPolicyNatRuleCollectionInfo"/>, <see cref="FirewallPolicyFilterRuleCollectionInfo"/>.
+        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/>, <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
         /// </summary>
         public IList<FirewallPolicyRuleCollectionInfo> RuleCollections { get; }
         /// <summary> The provisioning state of the firewall policy rule collection group resource. </summary>

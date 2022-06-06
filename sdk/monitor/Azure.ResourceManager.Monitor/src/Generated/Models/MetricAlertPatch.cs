@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary>
         /// defines the specific alert criteria information.
         /// Please note <see cref="MetricAlertCriteria"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="WebtestLocationAvailabilityCriteria"/>, <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="WebtestLocationAvailabilityCriteria"/>.
         /// </summary>
         public MetricAlertCriteria Criteria { get; set; }
         /// <summary> the flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>

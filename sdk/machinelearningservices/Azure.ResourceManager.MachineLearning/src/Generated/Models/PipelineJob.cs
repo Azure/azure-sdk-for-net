@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputs">
         /// Inputs for the pipeline job.
         /// Please note <see cref="JobInput"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="MLTableJobInput"/>, <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/>, <see cref="UriFolderJobInput"/>.
+        /// The available derived classes include <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="MLTableJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/>, <see cref="UriFolderJobInput"/>.
         /// </param>
         /// <param name="jobs"> Jobs construct the Pipeline Job. </param>
         /// <param name="outputs">
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Inputs for the pipeline job.
         /// Please note <see cref="JobInput"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="MLTableJobInput"/>, <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/>, <see cref="UriFolderJobInput"/>.
+        /// The available derived classes include <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="MLTableJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/>, <see cref="UriFolderJobInput"/>.
         /// </summary>
         public IDictionary<string, JobInput> Inputs { get; set; }
         /// <summary> Jobs construct the Pipeline Job. </summary>

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="properties">
         /// object which contains secret parameters
         /// Please note <see cref="SecretProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="UriSigningKeyProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="AzureFirstPartyManagedCertificateProperties"/>.
+        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="UriSigningKeyProperties"/>.
         /// </param>
         internal AfdSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecretProperties properties) : base(id, name, resourceType, systemData)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary>
         /// object which contains secret parameters
         /// Please note <see cref="SecretProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="UriSigningKeyProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="AzureFirstPartyManagedCertificateProperties"/>.
+        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="UriSigningKeyProperties"/>.
         /// </summary>
         public SecretProperties Properties { get; set; }
     }

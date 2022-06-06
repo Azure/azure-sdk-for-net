@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary>
     /// The secret info
     /// Please note <see cref="SecretInfoBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="ValueSecretInfo"/>, <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/>.
+    /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/>, <see cref="ValueSecretInfo"/>.
     /// </summary>
     public partial class SecretInfoBase
     {

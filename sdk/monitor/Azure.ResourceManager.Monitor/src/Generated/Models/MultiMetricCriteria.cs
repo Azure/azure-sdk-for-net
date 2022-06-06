@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary>
     /// The types of conditions for a multi resource alert.
     /// Please note <see cref="MultiMetricCriteria"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="MetricCriteria"/>, <see cref="DynamicMetricCriteria"/>.
+    /// The available derived classes include <see cref="DynamicMetricCriteria"/>, <see cref="MetricCriteria"/>.
     /// </summary>
     public partial class MultiMetricCriteria
     {
