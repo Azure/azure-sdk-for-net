@@ -225,34 +225,32 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Get all rules associated with the subscription.
+        /// Get rules associated with the subscription.
         /// </summary>
-        ///
+        /// <param name="skip">The number of rules to skip when retrieving the next set of rules.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>Returns a list of rules description</returns>
-        public override async Task<List<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken) =>
+        public override async Task<List<RuleProperties>> GetRulesAsync(int skip, CancellationToken cancellationToken) =>
             await _retryPolicy.RunOperation(
-                static async (manager, timeout, token) => await manager.GetRulesInternalAsync(timeout).ConfigureAwait(false),
+                async (manager, timeout, token) => await manager.GetRulesInternalAsync(timeout, skip).ConfigureAwait(false),
                 this,
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Get all rules associated with the subscription.
+        /// Get rules associated with the subscription.
         /// </summary>
-        ///
         /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
-        ///
+        /// <param name="skip">The number of rules to skip when retrieving the next set of rules.</param>
         /// <returns>Returns a list of rules description</returns>
-        private async Task<List<RuleProperties>> GetRulesInternalAsync(TimeSpan timeout)
+        private async Task<List<RuleProperties>> GetRulesInternalAsync(TimeSpan timeout, int skip)
         {
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.EnumerateRulesOperation,
                     timeout,
                     null);
-            amqpRequestMessage.Map[ManagementConstants.Properties.Top] = int.MaxValue;
-            amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = 0;
+            amqpRequestMessage.Map[ManagementConstants.Properties.Top] = 100;
+            amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = skip;
 
             var response = await ManagementUtilities.ExecuteRequestResponseAsync(
                 _connectionScope,
