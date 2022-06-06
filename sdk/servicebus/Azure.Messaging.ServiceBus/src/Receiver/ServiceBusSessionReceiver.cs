@@ -45,11 +45,6 @@ namespace Azure.Messaging.ServiceBus
         public override bool IsClosed => IsDisposed || InnerReceiver.IsSessionLinkClosed;
 
         /// <summary>
-        /// Indicates whether or not the user has called CloseAsync or DisposeAsync on the receiver.
-        /// </summary>
-        internal bool IsDisposed => base.IsClosed;
-
-        /// <summary>
         /// Gets the <see cref="DateTimeOffset"/> that the receiver's session is locked until.
         /// </summary>
         public virtual DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
