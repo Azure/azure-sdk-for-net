@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0 (2022-06-07)
 
 ### Features Added
 - Added optional parameter `categoryId` to the `DocumentTranslationInput.AddTarget`.
