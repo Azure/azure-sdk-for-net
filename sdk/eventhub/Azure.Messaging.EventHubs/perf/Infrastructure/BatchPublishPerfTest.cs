@@ -55,29 +55,6 @@ namespace Azure.Messaging.EventHubs.Perf
         }
 
         /// <summary>
-        ///   Performs the tasks needed to initialize and set up the environment for the test scenario.
-        ///   This setup will take place once for each instance, running after the global setup has
-        ///   completed.
-        /// </summary>
-        ///
-        public override async Task SetupAsync()
-        {
-            await base.SetupAsync();
-
-            _batchOptions = await CreateBatchOptions(s_producer).ConfigureAwait(false);
-
-            // Publish an empty event to force the connection and link to be established.
-            using var batch = await s_producer.CreateBatchAsync(_batchOptions).ConfigureAwait(false);
-
-            if (!batch.TryAdd(new EventData(Array.Empty<byte>())))
-            {
-                throw new InvalidOperationException("The empty event could not be added to the batch during global setup.");
-            }
-
-            await s_producer.SendAsync(batch).ConfigureAwait(false);
-        }
-
-        /// <summary>
         ///   Performs the tasks needed to clean up the environment for the test scenario.
         ///   When multiple instances are run in parallel, the cleanup will take place once,
         ///   after the execution of all test instances.
