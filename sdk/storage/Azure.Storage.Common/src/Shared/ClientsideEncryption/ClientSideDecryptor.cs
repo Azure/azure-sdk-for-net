@@ -74,7 +74,7 @@ namespace Azure.Storage.Cryptography
             switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
                 case ClientSideEncryptionVersion.V1_0:
-                    return await DecryptInternalV1_0(
+                    return await DecryptReadInternalV1_0(
                         ciphertext,
                         encryptionData,
                         ivInStream,
@@ -122,7 +122,11 @@ namespace Azure.Storage.Cryptography
             switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
                 case ClientSideEncryptionVersion.V1_0:
-                    throw new NotImplementedException();
+                    return await DecryptWholeContentWriteInternalV1_0(
+                        plaintextDestination,
+                        encryptionData,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
                 case ClientSideEncryptionVersion.V2_0:
                     return await DecryptInternalV2_0(
                         plaintextDestination,
@@ -200,7 +204,7 @@ namespace Azure.Storage.Cryptography
         /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
         /// <see cref="IKeyEncryptionKeyResolver"/>.
         /// </exception>
-        private async Task<Stream> DecryptInternalV1_0(
+        private async Task<Stream> DecryptReadInternalV1_0(
             Stream ciphertext,
             EncryptionData encryptionData,
             bool ivInStream,
@@ -241,7 +245,8 @@ namespace Azure.Storage.Cryptography
                     contentEncryptionKey.ToArray(),
                     encryptionData,
                     IV,
-                    noPadding);
+                    noPadding,
+                    CryptoStreamMode.Read);
             }
             else
             {
@@ -252,20 +257,57 @@ namespace Azure.Storage.Cryptography
         }
 
         /// <summary>
-        /// Wraps a stream of ciphertext to stream plaintext.
+        /// Decrypts the given stream if decryption information is provided.
+        /// Does not shave off unwanted start/end bytes, but will shave off padding.
         /// </summary>
-        /// <param name="contentStream"></param>
-        /// <param name="contentEncryptionKey"></param>
-        /// <param name="encryptionData"></param>
-        /// <param name="iv"></param>
-        /// <param name="noPadding"></param>
-        /// <returns></returns>
+        /// <param name="plaintextDestination">Stream to decrypt.</param>
+        /// <param name="encryptionData">
+        /// Encryption metadata and wrapped content encryption key.
+        /// </param>
+        /// <param name="async">Whether to perform this function asynchronously.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// Decrypted plaintext.
+        /// </returns>
+        /// <exception cref="Exception">
+        /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
+        /// <see cref="IKeyEncryptionKeyResolver"/>.
+        /// </exception>
+        private async Task<Stream> DecryptWholeContentWriteInternalV1_0(
+            Stream plaintextDestination,
+            EncryptionData encryptionData,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            if (encryptionData != default)
+            {
+                var contentEncryptionKey = await GetContentEncryptionKeyAsync(
+                    encryptionData,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
+
+                plaintextDestination = WrapStreamV1_0(
+                    plaintextDestination,
+                    contentEncryptionKey.ToArray(),
+                    encryptionData,
+                    encryptionData.ContentEncryptionIV,
+                    noPadding: false,
+                    CryptoStreamMode.Write);
+            }
+
+            return plaintextDestination;
+        }
+
+        /// <summary>
+        /// Wraps a stream to decrypt on reads or writes.
+        /// </summary>
         private static Stream WrapStreamV1_0(
             Stream contentStream,
             byte[] contentEncryptionKey,
             EncryptionData encryptionData,
             byte[] iv,
-            bool noPadding)
+            bool noPadding,
+            CryptoStreamMode mode)
         {
             if (encryptionData.EncryptionAgent.EncryptionAlgorithm == ClientSideEncryptionAlgorithm.AesCbc256)
             {
@@ -283,7 +325,7 @@ namespace Azure.Storage.Cryptography
                     // By default buffer is 4KB.
                     var bufferedContentStream = new BufferedStream(contentStream);
 
-                    return new CryptoStream(bufferedContentStream, aesProvider.CreateDecryptor(), CryptoStreamMode.Read);
+                    return new CryptoStream(bufferedContentStream, aesProvider.CreateDecryptor(), mode);
                 }
             }
 

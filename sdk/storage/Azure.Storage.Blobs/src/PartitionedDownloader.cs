@@ -183,6 +183,12 @@ namespace Azure.Storage.Blobs
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
+                    await CopyToAsync(
+                        initialResponse,
+                        destination,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+
                     // Writing to a crypto stream requires a "flush final" invocation
                     if (_client.UsingClientSideEncryption)
                     {
@@ -195,11 +201,7 @@ namespace Azure.Storage.Blobs
                             await authRegionCryptoStream.FlushFinalInternal(async: true, cancellationToken).ConfigureAwait(false);
                         }
                     }
-                    await CopyToAsync(
-                        initialResponse,
-                        destination,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+
                     return initialResponse.GetRawResponse();
                 }
 
