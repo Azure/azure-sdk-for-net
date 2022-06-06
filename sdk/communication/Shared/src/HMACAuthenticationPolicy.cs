@@ -17,8 +17,8 @@ namespace Azure.Communication.Pipeline
         private readonly String DATE_HEADER_NAME = "x-ms-date";
         private readonly AzureKeyCredential _keyCredential;
 
-		public HMACAuthenticationPolicy(AzureKeyCredential keyCredential)
-			=> _keyCredential = keyCredential;
+        public HMACAuthenticationPolicy(AzureKeyCredential keyCredential)
+            => _keyCredential = keyCredential;
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -76,6 +76,7 @@ namespace Azure.Communication.Pipeline
                 authorization = GetAuthorizationHeader(message.Request.Method, message.Request.Uri.ToUri(), contentHash, utcNowString);
             }
 
+            message.Request.Headers.SetValue("X-FORWARDED-HOST", "minwoolee-comm2.communication.azure.com");
             message.Request.Headers.SetValue("x-ms-content-sha256", contentHash);
             message.Request.Headers.SetValue(DATE_HEADER_NAME, utcNowString);
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, authorization);
@@ -86,7 +87,8 @@ namespace Azure.Communication.Pipeline
             var host = uri.Authority;
             var pathAndQuery = uri.PathAndQuery;
 
-            var stringToSign = $"{method.Method}\n{pathAndQuery}\n{date};{host};{contentHash}";
+            //var stringToSign = $"{method.Method}\n{pathAndQuery}\n{date};{host};{contentHash}";
+            var stringToSign = $"{method.Method}\n{pathAndQuery}\n{date};minwoolee-comm2.communication.azure.com;{contentHash}";
             var signature = ComputeHMAC(stringToSign);
 
             string signedHeaders = $"{DATE_HEADER_NAME};host;x-ms-content-sha256";
