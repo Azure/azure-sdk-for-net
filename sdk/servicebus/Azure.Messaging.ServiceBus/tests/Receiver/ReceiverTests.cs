@@ -295,16 +295,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
             var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             mockConnection.Setup(
-                    connection => connection.CreateTransportReceiver(
-                        It.IsAny<string>(),
-                        It.IsAny<ServiceBusRetryPolicy>(),
-                        It.IsAny<ServiceBusReceiveMode>(),
-                        It.IsAny<uint>(),
-                        It.IsAny<string>(),
-                        It.IsAny<string>(),
-                        It.IsAny<bool>(),
-                        It.IsAny<bool>(),
-                        It.IsAny<CancellationToken>()))
+                connection => connection.CreateTransportReceiver(
+                    It.IsAny<string>(),
+                    It.IsAny<ServiceBusRetryPolicy>(),
+                    It.IsAny<ServiceBusReceiveMode>(),
+                    It.IsAny<uint>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);
 
             var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", default, new ServiceBusReceiverOptions());
