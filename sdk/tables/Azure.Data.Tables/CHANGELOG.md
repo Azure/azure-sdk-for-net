@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue that caused `TableEntity.GetBinaryData` to return incorrectly formatted data for binary entity properties. ([#29029](https://github.com/Azure/azure-sdk-for-net/issues/29029))
 
 ### Other Changes
 
