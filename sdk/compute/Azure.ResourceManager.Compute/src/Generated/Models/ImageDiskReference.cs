@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ImageDiskReference. </summary>
         /// <param name="id"> A relative uri containing either a Platform Image Repository or user image reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ImageDiskReference(string id)
+        public ImageDiskReference(ResourceIdentifier id)
         {
             if (id == null)
             {
@@ -28,14 +29,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ImageDiskReference. </summary>
         /// <param name="id"> A relative uri containing either a Platform Image Repository or user image reference. </param>
         /// <param name="lun"> If the disk is created from an image&apos;s data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null. </param>
-        internal ImageDiskReference(string id, int? lun)
+        internal ImageDiskReference(ResourceIdentifier id, int? lun)
         {
             Id = id;
             Lun = lun;
         }
 
         /// <summary> A relative uri containing either a Platform Image Repository or user image reference. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> If the disk is created from an image&apos;s data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null. </summary>
         public int? Lun { get; set; }
     }

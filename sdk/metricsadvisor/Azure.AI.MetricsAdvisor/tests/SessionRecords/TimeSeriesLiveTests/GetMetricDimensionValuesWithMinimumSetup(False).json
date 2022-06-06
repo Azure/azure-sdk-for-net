@@ -1,49 +1,38 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/390d1139-98fb-45af-b831-8d5ad61b150a/dimension/query",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/b6c0649c-0c51-4aa6-82b6-3c3b0aa55066/dimension/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "26",
+        "Content-Length": "24",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-e7bde5dce18a2a4badb8bf6d06fc8f2d-617c9c37565e5d4b-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-6fce50931322747844c283fd684a758a-392c9b9d390d15bc-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "ca39378b4c1cd740910c07685081278a",
+        "x-ms-client-request-id": "b631cd279b52f61298d6b53ea463b209",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "dimensionName": "region"
+        "dimensionName": "Dim1"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "59cb0e59-1ce0-4162-87b8-2037181521e4",
-        "Content-Length": "114",
+        "apim-request-id": "ee4b5d70-116c-4605-922a-f2d014ef4649",
+        "Content-Length": "33",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 17:48:50 GMT",
+        "Date": "Tue, 19 Apr 2022 04:03:32 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "136",
-        "X-Request-ID": "59cb0e59-1ce0-4162-87b8-2037181521e4"
+        "x-envoy-upstream-service-time": "150",
+        "X-Request-ID": "ee4b5d70-116c-4605-922a-f2d014ef4649"
       },
       "ResponseBody": {
         "value": [
           "__SUM__",
-          "Beijing",
-          "Cairo",
-          "Delhi",
-          "Istanbul",
-          "Karachi",
-          "Miami",
-          "Mumbai",
-          "New York",
-          "Seoul",
-          "Tianjin"
+          "JPN",
+          "USD"
         ]
       }
     }
@@ -53,6 +42,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "1023732116"
+    "RandomSeed": "1360769484"
   }
 }

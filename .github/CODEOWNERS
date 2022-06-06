@@ -205,7 +205,7 @@
 /sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
 
 # PRLabel: %Communication - Network Traversal
-/sdk/communication/Azure.Communication.NetworkTraversal/ @AriZavala2
+/sdk/communication/Azure.Communication.NetworkTraversal/ @ajpeacock0 @nathpete-msft
 
 # PRLabel: %Communication - Phone Numbers
 /sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @lucasrsant @RoyHerrod @danielav7
@@ -257,7 +257,7 @@
 /sdk/containerinstance/Microsoft.Azure.Management.ContainerInstance/            @dkkapur
 
 # ServiceLabel: %Container Registry
-/sdk/containerregistry/    @annelo-msft
+/sdk/containerregistry/   @pallavit @annelo-msft
 
 # ServiceLabel: %Container Registry %Service Attention
 /sdk/containerregistry/Microsoft.*/ @toddysm @yugangw-MSFT
@@ -572,10 +572,10 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @chlahav
 
 # PRLabel: %Search
-/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft
+/sdk/search/                                    @ShivangiReja @brjohnstmsft @arv100kri @bleroy @tg-msft
 
 # ServiceLabel: %Search %Service Attention
-/sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy @tjacobhi @markheff @miwelsh
+/sdk/search/Microsoft.*/                        @arv100kri @bleroy @tjacobhi
 
 # Client
 # PRLabel: %Service Bus

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image definition that you want to update. </summary>
-    public partial class GalleryImagePatch : UpdateResourceDefinition
+    public partial class GalleryImagePatch : GalleryUpdateResourceDefinition
     {
         /// <summary> Initializes a new instance of GalleryImagePatch. </summary>
         public GalleryImagePatch()

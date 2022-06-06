@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineScaleSetExtensionPatch DeserializeVirtualMachineScaleSetExtensionPatch(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> type = default;
+            Optional<ResourceType> type = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
@@ -111,7 +111,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -227,7 +232,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetExtensionPatch(id.Value, name.Value, type.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, Optional.ToList(provisionAfterExtensions), Optional.ToNullable(suppressFailures));
+            return new VirtualMachineScaleSetExtensionPatch(id.Value, name.Value, Optional.ToNullable(type), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, Optional.ToList(provisionAfterExtensions), Optional.ToNullable(suppressFailures));
         }
     }
 }

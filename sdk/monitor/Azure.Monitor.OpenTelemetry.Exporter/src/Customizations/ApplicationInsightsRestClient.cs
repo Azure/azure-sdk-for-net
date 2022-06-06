@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.WriteError("FailedToSend", ex);
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToSend{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.WriteError("FailedToSend", ex);
                 if (ex.InnerException?.Source != "System.Net.Http")
                 {
                     message?.Dispose();
@@ -90,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 content.WriteNewLine();
             }
             request.Content = RequestContent.Create(content.ToBytes());
-            TelemetryDebugWriter.WriteTelemetry(content);
+            TelemetryDebugWriter.Writer.WriteTelemetry(content);
             return message;
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             request.Headers.Add("Accept", "application/json");
             using var content = new NDJsonWriter();
             request.Content = RequestContent.Create(body);
-            TelemetryDebugWriter.WriteTelemetry(content);
+            TelemetryDebugWriter.Writer.WriteTelemetry(content);
             return message;
         }
     }

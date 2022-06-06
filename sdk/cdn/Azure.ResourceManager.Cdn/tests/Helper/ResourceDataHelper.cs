@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             HostName = hostName,
             TlsSettings = new AfdCustomDomainHttpsContent(AfdCertificateType.ManagedCertificate)
             {
-                MinimumTlsVersion = AfdMinimumTlsVersion.Tls12
+                MinimumTlsVersion = AfdMinimumTlsVersion.Tls1_2
             },
             DnsZone = new WritableSubResource
             {
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Order = 1
         };
 
-        public static DeliveryRuleCondition CreateDeliveryRuleCondition() => new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionDefinition(RequestUriMatchConditionType.RequestUriCondition, RequestUriOperator.Any));
+        public static DeliveryRuleCondition CreateDeliveryRuleCondition() => new DeliveryRuleRequestUriCondition(new RequestUriMatchCondition(RequestUriMatchConditionType.RequestUriCondition, RequestUriOperator.Any));
 
-        public static DeliveryRuleAction CreateDeliveryRuleOperation() => new DeliveryRuleRouteConfigurationOverrideAction(new RouteConfigurationOverrideActionDefinition(RouteConfigurationOverrideActionType.RouteConfigurationOverrideAction)
+        public static DeliveryRuleAction CreateDeliveryRuleOperation() => new DeliveryRuleRouteConfigurationOverrideAction(new RouteConfigurationOverrideActionProperties(RouteConfigurationOverrideActionType.RouteConfigurationOverrideAction)
         {
             CacheConfiguration = new CacheConfiguration()
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static AfdSecurityPolicyData CreateAfdSecurityPolicyData(AfdEndpointResource endpoint) => new AfdSecurityPolicyData
         {
-            Parameters = new SecurityPolicyWebApplicationFirewallDefinition
+            Properties = new SecurityPolicyWebApplicationFirewall
             {
                 WafPolicy = new WritableSubResource
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static AfdSecretData CreateAfdSecretData() => new AfdSecretData
         {
-            Parameters = new CustomerCertificateDefinition(new WritableSubResource
+            Properties = new CustomerCertificateProperties(new WritableSubResource
             {
                 Id = new ResourceIdentifier("/subscriptions/f3d94233-a9aa-4241-ac82-2dfb63ce637a/resourceGroups/CdnTest/providers/Microsoft.KeyVault/vaults/testKV4AFDTest/certificates/testCertificate")
             })
@@ -488,13 +488,13 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
-            Assert.AreEqual(model.Data.Parameters.PolicyType, getResult.Data.Parameters.PolicyType);
+            Assert.AreEqual(model.Data.Properties.PolicyType, getResult.Data.Properties.PolicyType);
         }
 
         public static void AssertAfdSecurityPolicyUpdate(AfdSecurityPolicyResource updatedSecurityPolicy, AfdSecurityPolicyPatch updateOptions)
         {
-            Assert.AreEqual(((SecurityPolicyWebApplicationFirewallDefinition)updatedSecurityPolicy.Data.Parameters).Associations.Count, 1);
-            Assert.AreEqual(((SecurityPolicyWebApplicationFirewallDefinition)updatedSecurityPolicy.Data.Parameters).Associations[0].Domains.Count, 2);
+            Assert.AreEqual(((SecurityPolicyWebApplicationFirewall)updatedSecurityPolicy.Data.Properties).Associations.Count, 1);
+            Assert.AreEqual(((SecurityPolicyWebApplicationFirewall)updatedSecurityPolicy.Data.Properties).Associations[0].Domains.Count, 2);
         }
 
         public static void AssertValidPolicy(CdnWebApplicationFirewallPolicyResource model, CdnWebApplicationFirewallPolicyResource getResult)
@@ -523,12 +523,12 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
-            Assert.AreEqual(model.Data.Parameters.SecretType, getResult.Data.Parameters.SecretType);
-            Assert.AreEqual(((CustomerCertificateDefinition)model.Data.Parameters).SecretVersion, ((CustomerCertificateDefinition)getResult.Data.Parameters).SecretVersion);
-            Assert.AreEqual(((CustomerCertificateDefinition)model.Data.Parameters).CertificateAuthority, ((CustomerCertificateDefinition)getResult.Data.Parameters).CertificateAuthority);
-            Assert.AreEqual(((CustomerCertificateDefinition)model.Data.Parameters).UseLatestVersion, ((CustomerCertificateDefinition)getResult.Data.Parameters).UseLatestVersion);
-            Assert.AreEqual(((CustomerCertificateDefinition)model.Data.Parameters).SecretSource.Id.Name.ToString().ToLower(), ((CustomerCertificateDefinition)getResult.Data.Parameters).SecretSource.Id.Name.ToString().ToLower());
-            Assert.True(((CustomerCertificateDefinition)model.Data.Parameters).SubjectAlternativeNames.SequenceEqual(((CustomerCertificateDefinition)getResult.Data.Parameters).SubjectAlternativeNames));
+            Assert.AreEqual(model.Data.Properties.SecretType, getResult.Data.Properties.SecretType);
+            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).SecretVersion, ((CustomerCertificateProperties)getResult.Data.Properties).SecretVersion);
+            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).CertificateAuthority, ((CustomerCertificateProperties)getResult.Data.Properties).CertificateAuthority);
+            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).UseLatestVersion, ((CustomerCertificateProperties)getResult.Data.Properties).UseLatestVersion);
+            Assert.AreEqual(((CustomerCertificateProperties)model.Data.Properties).SecretSource.Id.Name.ToString().ToLower(), ((CustomerCertificateProperties)getResult.Data.Properties).SecretSource.Id.Name.ToString().ToLower());
+            Assert.True(((CustomerCertificateProperties)model.Data.Properties).SubjectAlternativeNames.SequenceEqual(((CustomerCertificateProperties)getResult.Data.Properties).SubjectAlternativeNames));
         }
     }
 }

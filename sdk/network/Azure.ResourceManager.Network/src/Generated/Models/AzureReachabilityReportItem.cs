@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provider"> The Internet service provider. </param>
         /// <param name="azureLocation"> The Azure region. </param>
         /// <param name="latencies"> List of latency details for each of the time series. </param>
-        internal AzureReachabilityReportItem(string provider, string azureLocation, IReadOnlyList<AzureReachabilityReportLatencyInfo> latencies)
+        internal AzureReachabilityReportItem(string provider, AzureLocation? azureLocation, IReadOnlyList<AzureReachabilityReportLatencyInfo> latencies)
         {
             Provider = provider;
             AzureLocation = azureLocation;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Internet service provider. </summary>
         public string Provider { get; }
         /// <summary> The Azure region. </summary>
-        public string AzureLocation { get; }
+        public AzureLocation? AzureLocation { get; }
         /// <summary> List of latency details for each of the time series. </summary>
         public IReadOnlyList<AzureReachabilityReportLatencyInfo> Latencies { get; }
     }

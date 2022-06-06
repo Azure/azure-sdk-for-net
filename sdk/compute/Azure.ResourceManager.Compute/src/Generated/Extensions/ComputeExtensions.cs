@@ -32,12 +32,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         /// <returns> An object representing collection of VirtualMachineExtensionImageResources and their operations over a VirtualMachineExtensionImageResource. </returns>
-        public static VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(this SubscriptionResource subscriptionResource, string location, string publisherName)
+        public static VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
             return GetExtensionClient(subscriptionResource).GetVirtualMachineExtensionImages(location, publisherName);
@@ -54,10 +53,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="type"> The String to use. </param>
         /// <param name="version"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VirtualMachineExtensionImageResource>> GetVirtualMachineExtensionImageAsync(this SubscriptionResource subscriptionResource, string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualMachineExtensionImageResource>> GetVirtualMachineExtensionImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetVirtualMachineExtensionImages(location, publisherName).GetAsync(type, version, cancellationToken).ConfigureAwait(false);
         }
@@ -73,10 +72,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="type"> The String to use. </param>
         /// <param name="version"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VirtualMachineExtensionImageResource> GetVirtualMachineExtensionImage(this SubscriptionResource subscriptionResource, string location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
+        public static Response<VirtualMachineExtensionImageResource> GetVirtualMachineExtensionImage(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetVirtualMachineExtensionImages(location, publisherName).Get(type, version, cancellationToken);
         }
@@ -84,13 +83,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a collection of SharedGalleryResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Resource location. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An object representing collection of SharedGalleryResources and their operations over a SharedGalleryResource. </returns>
-        public static SharedGalleryCollection GetSharedGalleries(this SubscriptionResource subscriptionResource, string location)
+        public static SharedGalleryCollection GetSharedGalleries(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetSharedGalleries(location);
         }
 
@@ -103,10 +98,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SharedGalleryResource>> GetSharedGalleryAsync(this SubscriptionResource subscriptionResource, string location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SharedGalleryResource>> GetSharedGalleryAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             return await subscriptionResource.GetSharedGalleries(location).GetAsync(galleryUniqueName, cancellationToken).ConfigureAwait(false);
         }
@@ -120,25 +115,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="galleryUniqueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SharedGalleryResource> GetSharedGallery(this SubscriptionResource subscriptionResource, string location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public static Response<SharedGalleryResource> GetSharedGallery(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             return subscriptionResource.GetSharedGalleries(location).Get(galleryUniqueName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OSVersionResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of CloudServiceOSVersionResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> An object representing collection of OSVersionResources and their operations over a OSVersionResource. </returns>
-        public static OSVersionCollection GetOSVersions(this SubscriptionResource subscriptionResource, string location)
+        /// <returns> An object representing collection of CloudServiceOSVersionResources and their operations over a CloudServiceOSVersionResource. </returns>
+        public static CloudServiceOSVersionCollection GetCloudServiceOSVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            return GetExtensionClient(subscriptionResource).GetOSVersions(location);
+            return GetExtensionClient(subscriptionResource).GetCloudServiceOSVersions(location);
         }
 
         /// <summary>
@@ -150,12 +141,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OSVersionResource>> GetOSVersionAsync(this SubscriptionResource subscriptionResource, string location, string osVersionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CloudServiceOSVersionResource>> GetCloudServiceOSVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetOSVersions(location).GetAsync(osVersionName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetCloudServiceOSVersions(location).GetAsync(osVersionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -167,25 +158,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<OSVersionResource> GetOSVersion(this SubscriptionResource subscriptionResource, string location, string osVersionName, CancellationToken cancellationToken = default)
+        public static Response<CloudServiceOSVersionResource> GetCloudServiceOSVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetOSVersions(location).Get(osVersionName, cancellationToken);
+            return subscriptionResource.GetCloudServiceOSVersions(location).Get(osVersionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OSFamilyResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of CloudServiceOSFamilyResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> An object representing collection of OSFamilyResources and their operations over a OSFamilyResource. </returns>
-        public static OSFamilyCollection GetOSFamilies(this SubscriptionResource subscriptionResource, string location)
+        /// <returns> An object representing collection of CloudServiceOSFamilyResources and their operations over a CloudServiceOSFamilyResource. </returns>
+        public static CloudServiceOSFamilyCollection GetCloudServiceOSFamilies(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            return GetExtensionClient(subscriptionResource).GetOSFamilies(location);
+            return GetExtensionClient(subscriptionResource).GetCloudServiceOSFamilies(location);
         }
 
         /// <summary>
@@ -197,12 +184,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<OSFamilyResource>> GetOSFamilyAsync(this SubscriptionResource subscriptionResource, string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CloudServiceOSFamilyResource>> GetCloudServiceOSFamilyAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetOSFamilies(location).GetAsync(osFamilyName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetCloudServiceOSFamilies(location).GetAsync(osFamilyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,12 +201,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <param name="osFamilyName"> Name of the OS family. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="osFamilyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osFamilyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osFamilyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<OSFamilyResource> GetOSFamily(this SubscriptionResource subscriptionResource, string location, string osFamilyName, CancellationToken cancellationToken = default)
+        public static Response<CloudServiceOSFamilyResource> GetCloudServiceOSFamily(this SubscriptionResource subscriptionResource, AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetOSFamilies(location).Get(osFamilyName, cancellationToken);
+            return subscriptionResource.GetCloudServiceOSFamilies(location).Get(osFamilyName, cancellationToken);
         }
 
         /// <summary>
@@ -340,11 +327,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
-        public static async Task<Response<VirtualMachineImage>> GetVirtualMachineImageAsync(this SubscriptionResource subscriptionResource, string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
+        public static async Task<Response<VirtualMachineImage>> GetVirtualMachineImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
@@ -365,11 +351,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
-        public static Response<VirtualMachineImage> GetVirtualMachineImage(this SubscriptionResource subscriptionResource, string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
+        public static Response<VirtualMachineImage> GetVirtualMachineImage(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
@@ -392,12 +377,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
@@ -419,12 +403,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> The Integer to use. </param>
         /// <param name="orderby"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetVirtualMachineImages(this SubscriptionResource subscriptionResource, string location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
@@ -441,15 +424,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, string location, string publisherName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageOffersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            return GetExtensionClient(subscriptionResource).GetOffersVirtualMachineImagesAsync(location, publisherName, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImageOffersAsync(location, publisherName, cancellationToken);
         }
 
         /// <summary>
@@ -461,15 +443,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetOffersVirtualMachineImages(this SubscriptionResource subscriptionResource, string location, string publisherName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImageOffers(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            return GetExtensionClient(subscriptionResource).GetOffersVirtualMachineImages(location, publisherName, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImageOffers(location, publisherName, cancellationToken);
         }
 
         /// <summary>
@@ -480,14 +461,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            return GetExtensionClient(subscriptionResource).GetPublishersVirtualMachineImagesAsync(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImagePublishersAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -498,14 +475,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetPublishersVirtualMachineImages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            return GetExtensionClient(subscriptionResource).GetPublishersVirtualMachineImages(location, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetVirtualMachineImagePublishers(location, cancellationToken);
         }
 
         /// <summary>
@@ -518,12 +491,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImageSkusAsync(this SubscriptionResource subscriptionResource, string location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
@@ -540,12 +512,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetVirtualMachineImageSkus(this SubscriptionResource subscriptionResource, string location, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImageSkus(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
 
@@ -565,11 +536,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
-        public static async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(this SubscriptionResource subscriptionResource, string location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
+        public static async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
@@ -592,11 +562,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="skus"> A valid image SKU. </param>
         /// <param name="version"> A valid image SKU version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
-        public static Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(this SubscriptionResource subscriptionResource, string location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
+        public static Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
@@ -621,12 +590,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
         /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, string location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
@@ -650,12 +618,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="top"> An integer value specifying the number of images to return that matches supplied values. </param>
         /// <param name="orderby"> Specifies the order of the results returned. Formatted as an OData query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, string location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
@@ -674,12 +641,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, string location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
@@ -696,12 +662,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetOffersVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, string location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> or <paramref name="publisherName"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
@@ -717,12 +682,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, string location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             return GetExtensionClient(subscriptionResource).GetPublishersVirtualMachineImagesEdgeZonesAsync(location, edgeZone, cancellationToken);
@@ -737,12 +701,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="edgeZone"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetPublishersVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, string location, string edgeZone, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
 
             return GetExtensionClient(subscriptionResource).GetPublishersVirtualMachineImagesEdgeZones(location, edgeZone, cancellationToken);
@@ -759,12 +722,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineImageResource> GetVirtualMachineImageEdgeZoneSkusAsync(this SubscriptionResource subscriptionResource, string location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
@@ -783,12 +745,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineImageResource> GetVirtualMachineImageEdgeZoneSkus(this SubscriptionResource subscriptionResource, string location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/> or <paramref name="offer"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkus(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
@@ -804,13 +765,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ComputeUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ComputeUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
@@ -822,13 +779,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ComputeUsage> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<ComputeUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
         }
 
@@ -840,13 +793,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetVirtualMachinesByLocationAsync(location, cancellationToken);
         }
 
@@ -858,13 +807,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetVirtualMachinesByLocation(location, cancellationToken);
         }
 
@@ -904,13 +849,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetVirtualMachineScaleSetsByLocationAsync(location, cancellationToken);
         }
 
@@ -922,13 +863,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetVirtualMachineScaleSetsByLocation(location, cancellationToken);
         }
 
@@ -966,13 +903,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetVirtualMachineSizesAsync(location, cancellationToken);
         }
 
@@ -984,13 +917,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineSize> GetVirtualMachineSizes(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<VirtualMachineSize> GetVirtualMachineSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetVirtualMachineSizes(location, cancellationToken);
         }
 
@@ -1084,11 +1013,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsRequestRateByIntervalAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsRequestRateByIntervalAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return await GetExtensionClient(subscriptionResource).ExportLogAnalyticsRequestRateByIntervalAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
@@ -1104,11 +1031,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getRequestRateByInterval Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<LogAnalytics> ExportLogAnalyticsRequestRateByInterval(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static ArmOperation<LogAnalytics> ExportLogAnalyticsRequestRateByInterval(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(subscriptionResource).ExportLogAnalyticsRequestRateByInterval(waitUntil, location, content, cancellationToken);
@@ -1124,11 +1049,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsThrottledRequestsAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsThrottledRequestsAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return await GetExtensionClient(subscriptionResource).ExportLogAnalyticsThrottledRequestsAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
@@ -1144,11 +1067,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
         /// <param name="content"> Parameters supplied to the LogAnalytics getThrottledRequests Api. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<LogAnalytics> ExportLogAnalyticsThrottledRequests(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, string location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static ArmOperation<LogAnalytics> ExportLogAnalyticsThrottledRequests(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(subscriptionResource).ExportLogAnalyticsThrottledRequests(waitUntil, location, content, cancellationToken);
@@ -1162,13 +1083,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RunCommandDocumentBase> GetVirtualMachineRunCommandsAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<RunCommandDocumentBase> GetVirtualMachineRunCommandsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetVirtualMachineRunCommandsAsync(location, cancellationToken);
         }
 
@@ -1180,13 +1097,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RunCommandDocumentBase> GetVirtualMachineRunCommands(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<RunCommandDocumentBase> GetVirtualMachineRunCommands(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetExtensionClient(subscriptionResource).GetVirtualMachineRunCommands(location, cancellationToken);
         }
 
@@ -1199,11 +1112,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="commandId"/> is null. </exception>
-        public static async Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(this SubscriptionResource subscriptionResource, string location, string commandId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
+        public static async Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
 
             return await GetExtensionClient(subscriptionResource).GetVirtualMachineRunCommandAsync(location, commandId, cancellationToken).ConfigureAwait(false);
@@ -1218,11 +1130,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location upon which run commands is queried. </param>
         /// <param name="commandId"> The command id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="commandId"/> is null. </exception>
-        public static Response<RunCommandDocument> GetVirtualMachineRunCommand(this SubscriptionResource subscriptionResource, string location, string commandId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="commandId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
+        public static Response<RunCommandDocument> GetVirtualMachineRunCommand(this SubscriptionResource subscriptionResource, AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
 
             return GetExtensionClient(subscriptionResource).GetVirtualMachineRunCommand(location, commandId, cancellationToken);
@@ -1397,11 +1308,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publicGalleryName"/> is null. </exception>
-        public static async Task<Response<CommunityGallery>> GetCommunityGalleryAsync(this SubscriptionResource subscriptionResource, string location, string publicGalleryName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        public static async Task<Response<CommunityGallery>> GetCommunityGalleryAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
             return await GetExtensionClient(subscriptionResource).GetCommunityGalleryAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
@@ -1416,11 +1326,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="publicGalleryName"/> is null. </exception>
-        public static Response<CommunityGallery> GetCommunityGallery(this SubscriptionResource subscriptionResource, string location, string publicGalleryName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
+        public static Response<CommunityGallery> GetCommunityGallery(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
             return GetExtensionClient(subscriptionResource).GetCommunityGallery(location, publicGalleryName, cancellationToken);
@@ -1436,11 +1345,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
-        public static async Task<Response<CommunityGalleryImage>> GetCommunityGalleryImageAsync(this SubscriptionResource subscriptionResource, string location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public static async Task<Response<CommunityGalleryImage>> GetCommunityGalleryImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
@@ -1457,11 +1365,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
-        public static Response<CommunityGalleryImage> GetCommunityGalleryImage(this SubscriptionResource subscriptionResource, string location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        public static Response<CommunityGalleryImage> GetCommunityGalleryImage(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
@@ -1479,11 +1386,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
-        public static async Task<Response<CommunityGalleryImageVersion>> GetCommunityGalleryImageVersionAsync(this SubscriptionResource subscriptionResource, string location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public static async Task<Response<CommunityGalleryImageVersion>> GetCommunityGalleryImageVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
@@ -1502,11 +1408,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
-        public static Response<CommunityGalleryImageVersion> GetCommunityGalleryImageVersion(this SubscriptionResource subscriptionResource, string location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        public static Response<CommunityGalleryImageVersion> GetCommunityGalleryImageVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
@@ -2526,20 +2431,20 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region VirtualMachineScaleSetVirtualMachineRunCommandResource
+        #region VirtualMachineScaleSetVmRunCommandResource
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineScaleSetVirtualMachineRunCommandResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineScaleSetVirtualMachineRunCommandResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVirtualMachineRunCommandResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmRunCommandResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVmRunCommandResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmRunCommandResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineScaleSetVirtualMachineRunCommandResource" /> object. </returns>
-        public static VirtualMachineScaleSetVirtualMachineRunCommandResource GetVirtualMachineScaleSetVirtualMachineRunCommandResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVmRunCommandResource" /> object. </returns>
+        public static VirtualMachineScaleSetVmRunCommandResource GetVirtualMachineScaleSetVmRunCommandResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualMachineScaleSetVirtualMachineRunCommandResource.ValidateResourceId(id);
-                return new VirtualMachineScaleSetVirtualMachineRunCommandResource(client, id);
+                VirtualMachineScaleSetVmRunCommandResource.ValidateResourceId(id);
+                return new VirtualMachineScaleSetVmRunCommandResource(client, id);
             }
             );
         }
@@ -2811,20 +2716,20 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region RoleInstanceResource
+        #region CloudServiceRoleInstanceResource
         /// <summary>
-        /// Gets an object representing a <see cref="RoleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CloudServiceRoleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceRoleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceRoleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleInstanceResource" /> object. </returns>
-        public static RoleInstanceResource GetRoleInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudServiceRoleInstanceResource" /> object. </returns>
+        public static CloudServiceRoleInstanceResource GetCloudServiceRoleInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RoleInstanceResource.ValidateResourceId(id);
-                return new RoleInstanceResource(client, id);
+                CloudServiceRoleInstanceResource.ValidateResourceId(id);
+                return new CloudServiceRoleInstanceResource(client, id);
             }
             );
         }
@@ -2868,39 +2773,39 @@ namespace Azure.ResourceManager.Compute
         }
         #endregion
 
-        #region OSVersionResource
+        #region CloudServiceOSVersionResource
         /// <summary>
-        /// Gets an object representing an <see cref="OSVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OSVersionResource.CreateResourceIdentifier" /> to create an <see cref="OSVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CloudServiceOSVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceOSVersionResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceOSVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OSVersionResource" /> object. </returns>
-        public static OSVersionResource GetOSVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudServiceOSVersionResource" /> object. </returns>
+        public static CloudServiceOSVersionResource GetCloudServiceOSVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OSVersionResource.ValidateResourceId(id);
-                return new OSVersionResource(client, id);
+                CloudServiceOSVersionResource.ValidateResourceId(id);
+                return new CloudServiceOSVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region OSFamilyResource
+        #region CloudServiceOSFamilyResource
         /// <summary>
-        /// Gets an object representing an <see cref="OSFamilyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OSFamilyResource.CreateResourceIdentifier" /> to create an <see cref="OSFamilyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CloudServiceOSFamilyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceOSFamilyResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceOSFamilyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OSFamilyResource" /> object. </returns>
-        public static OSFamilyResource GetOSFamilyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CloudServiceOSFamilyResource" /> object. </returns>
+        public static CloudServiceOSFamilyResource GetCloudServiceOSFamilyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OSFamilyResource.ValidateResourceId(id);
-                return new OSFamilyResource(client, id);
+                CloudServiceOSFamilyResource.ValidateResourceId(id);
+                return new CloudServiceOSFamilyResource(client, id);
             }
             );
         }

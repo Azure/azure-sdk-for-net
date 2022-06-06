@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("version");
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(SharedGalleryImageId))
+            if (Optional.IsDefined(SharedGalleryImageUniqueId))
             {
                 writer.WritePropertyName("sharedGalleryImageId");
-                writer.WriteStringValue(SharedGalleryImageId);
+                writer.WriteStringValue(SharedGalleryImageUniqueId);
             }
             if (Optional.IsDefined(Id))
             {

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -284,7 +285,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ApplicationGatewayData DeserializeApplicationGatewayData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ResourceIdentifier> id = default;
@@ -326,7 +327,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -812,7 +818,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), etag.Value, Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation));
+            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation));
         }
     }
 }

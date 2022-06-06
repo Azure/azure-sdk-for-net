@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnets"> A collection of references to subnets. </param>
         /// <param name="resourceGuid"> The resource GUID property of the service endpoint policy resource. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy resource. </param>
-        internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, string etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Kind = kind;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Kind of service endpoint policy. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> A collection of service endpoint policy definitions of the service endpoint policy. </summary>
