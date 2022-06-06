@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -196,26 +197,38 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>Returns a list of <see cref="RuleProperties"/></returns>
-        public virtual async Task<IReadOnlyList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken = default)
+        public virtual async IAsyncEnumerable<RuleProperties> GetRulesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleStart(Identifier);
-            List<RuleProperties> rulePropertiesList;
+            List<RuleProperties> ruleProperties;
+            int skip = 0;
 
-            try
+            while (!cancellationToken.IsCancellationRequested)
             {
-                rulePropertiesList = await InnerRuleManager.GetRulesAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                ServiceBusEventSource.Log.GetRuleException(Identifier, exception.ToString());
-                throw;
+                try
+                {
+                    ruleProperties = await InnerRuleManager.GetRulesAsync(skip, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception exception)
+                {
+                    ServiceBusEventSource.Log.GetRuleException(Identifier, exception.ToString());
+                    throw;
+                }
+                skip += ruleProperties.Count;
+                if (ruleProperties.Count == 0)
+                {
+                    break;
+                }
+
+                foreach (var rule in ruleProperties)
+                {
+                    yield return rule;
+                }
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleComplete(Identifier);
-            return rulePropertiesList;
         }
 
         /// <summary>
