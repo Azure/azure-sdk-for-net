@@ -960,6 +960,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash,
                 progressHandler: default,
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
+                bypassClientSideEncryption: false,
                 async,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1207,6 +1208,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash,
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
+                bypassClientSideEncryption: false,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1298,6 +1300,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash,
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
+                bypassClientSideEncryption: false,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1398,12 +1401,43 @@ namespace Azure.Storage.Blobs.Specialized
         //        cancellationToken).ConfigureAwait(false);
         //}
 
-        private async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
+        /// <summary>
+        /// Impl for a ranged download. Issues a single, smart-retriable request for a specified
+        /// range of this blob.
+        /// </summary>
+        /// <param name="range">
+        /// Optionally specified range.
+        /// </param>
+        /// <param name="conditions">
+        /// Access conditions.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// Whether to request an MD5 on download.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Progress handler.
+        /// </param>
+        /// <param name="operationName">
+        /// operation name of the calling API.
+        /// </param>
+        /// <param name="bypassClientSideEncryption">
+        /// Whether to bypass client-side encryption, letting the caller handle
+        /// all necessary steps.
+        /// </param>
+        /// <param name="async">
+        /// Whether to operate asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token.
+        /// </param>
+        /// <returns></returns>
+        internal async Task<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
             BlobRequestConditions conditions,
             bool rangeGetContentHash,
             IProgress<long> progressHandler,
             string operationName,
+            bool bypassClientSideEncryption,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1424,7 +1458,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
-                    if (UsingClientSideEncryption)
+                    if (UsingClientSideEncryption && !bypassClientSideEncryption)
                     {
                         // TODO #27253
                         //options = BlobDownloadOptions.CloneOrDefault(options) ?? new BlobDownloadOptions();
@@ -1514,7 +1548,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     // if using clientside encryption, wrap the auto-retry stream in a decryptor
                     // we already return a nonseekable stream; returning a crypto stream is fine
-                    if (UsingClientSideEncryption)
+                    if (UsingClientSideEncryption && !bypassClientSideEncryption)
                     {
                         stream = await new BlobClientSideDecryptor(
                             new ClientSideDecryptor(ClientSideEncryption)).DecryptInternal(
@@ -2064,6 +2098,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash: default,
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
+                bypassClientSideEncryption: false,
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -3008,6 +3043,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 rangeGetContentHash: default,
                                 progressHandler: default,
                                 operationName,
+                bypassClientSideEncryption: false,
                                 async,
                                 cancellationToken).ConfigureAwait(false);
 

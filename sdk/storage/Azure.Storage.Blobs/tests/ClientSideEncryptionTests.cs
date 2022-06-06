@@ -695,13 +695,15 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0, 31, 18)] // overlap both sides; IV not at blob start
         [TestCase(ClientSideEncryptionVersion.V1_0, 16, null)]
         // TODO don't move to recorded tests until we can get off 4MB blocks for tests
-        [TestCase(ClientSideEncryptionVersion.V2_0, 0, V2.EncryptionRegionDataSize)]  // first block
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize)] // not first block
-        [TestCase(ClientSideEncryptionVersion.V2_0, 0, 2 * V2.EncryptionRegionDataSize)] // multiple blocks;
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize + 1)] // overlap end of block
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1, V2.EncryptionRegionDataSize + 1)] // overlap beginning of block
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1, V2.EncryptionRegionDataSize + 1)] // overlap both sides
-        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, null)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, 0, V2.EncryptionRegionDataSize)]  // first region
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize)] // not first region
+        [TestCase(ClientSideEncryptionVersion.V2_0, 0, 2 * V2.EncryptionRegionDataSize)] // multiple regions
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize + 1)] // overlap end of region
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1, V2.EncryptionRegionDataSize + 1)] // overlap beginning of region
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1, V2.EncryptionRegionDataSize + 2)] // overlap both sides
+        [TestCase(ClientSideEncryptionVersion.V2_0, 1024, 30)] // small range inside region
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize + 1024, 30)] // small range inside non-first region
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, null)] // second region to end
         [LiveOnly] // cannot seed content encryption key
         public async Task PartialDownloadAsync(ClientSideEncryptionVersion version, int offset, int? count)
         {
@@ -715,7 +717,7 @@ namespace Azure.Storage.Blobs.Test
             var mockKey = this.GetIKeyEncryptionKey(expectedCancellationToken: s_cancellationToken).Object;
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, mockKey).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey,
                     KeyResolver = mockKeyResolver,

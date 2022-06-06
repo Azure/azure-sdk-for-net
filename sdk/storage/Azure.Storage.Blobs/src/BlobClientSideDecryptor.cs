@@ -11,6 +11,8 @@ using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
+#pragma warning disable SA1402 // File may only contain a single type
+
 namespace Azure.Storage.Blobs
 {
     internal class BlobClientSideDecryptor
@@ -37,13 +39,13 @@ namespace Azure.Storage.Blobs
             EncryptionData encryptionData = GetAndValidateEncryptionDataOrDefault(metadata);
             if (encryptionData == default)
             {
-                return await TrimStreamInternal(content, originalRange, contentRange, pulledOutIV: false, async, cancellationToken).ConfigureAwait(false);
+                return await TrimStreamInternal(content, originalRange, contentRange, alreadyTrimmedOffsetAmount: 0, async, cancellationToken).ConfigureAwait(false);
             }
 
             bool ivInStream = originalRange.Offset >= Constants.ClientSideEncryption.EncryptionBlockSize;
 
             // this method throws when key cannot be resolved. Blobs is intended to throw on this failure.
-            var plaintext = await _decryptor.DecryptInternal(
+            var plaintext = await _decryptor.DecryptReadInternal(
                 content,
                 encryptionData,
                 ivInStream,
@@ -51,21 +53,50 @@ namespace Azure.Storage.Blobs
                 async,
                 cancellationToken).ConfigureAwait(false);
 
-            return await TrimStreamInternal(plaintext, originalRange, contentRange, ivInStream, async, cancellationToken).ConfigureAwait(false);
+            int v2StartRegion0Indexed = (int)((contentRange?.Start / encryptionData.EncryptedRegionInfo?.GetTotalRegionLength()) ?? 0);
+            int alreadyTrimmedOffset = encryptionData.EncryptionAgent.EncryptionVersion switch
+            {
+                ClientSideEncryptionVersion.V1_0 => ivInStream ? Constants.ClientSideEncryption.EncryptionBlockSize : 0,
+                // first block is special case where we don't want to communicate a trim. Otherwise communicate nonce length * 1-indexed start region + tag length * 0-indexed region
+                ClientSideEncryptionVersion.V2_0 => contentRange?.Start > 0
+                    ? (-encryptionData.EncryptedRegionInfo.NonceLength * (v2StartRegion0Indexed)) - (encryptionData.EncryptedRegionInfo.TagLength * v2StartRegion0Indexed)
+                    : 0,
+                _ => throw Errors.InvalidArgument(nameof(encryptionData.EncryptionAgent.EncryptionVersion))
+            };
+            return await TrimStreamInternal(plaintext, originalRange, contentRange, alreadyTrimmedOffset, async, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<Stream> DecryptWholeBlobWriteInternal(
+            Stream plaintextDestination,
+            Metadata metadata,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            EncryptionData encryptionData = GetAndValidateEncryptionDataOrDefault(metadata);
+            if (encryptionData == default)
+            {
+                return plaintextDestination;
+            }
+
+            return await _decryptor.DecryptWholeContentWriteInternal(
+                plaintextDestination,
+                encryptionData,
+                async,
+                cancellationToken).ConfigureAwait(false);
         }
 
         private static async Task<Stream> TrimStreamInternal(
             Stream stream,
             HttpRange originalRange,
             ContentRange? receivedRange,
-            bool pulledOutIV,
+            // iv or nonce in stream could have already been trimmed during decryption
+            int alreadyTrimmedOffsetAmount,
             bool async,
             CancellationToken cancellationToken)
         {
             // retrim start of stream to original requested location
-            // keeping in mind whether we already pulled the IV out of the stream as well
-            int gap = (int)(originalRange.Offset - (receivedRange?.Start ?? 0))
-                - (pulledOutIV ? Constants.ClientSideEncryption.EncryptionBlockSize : 0);
+            // keeping in mind whether we already trimmed due to an IV or nonce
+            int gap = (int)(originalRange.Offset - (receivedRange?.Start ?? 0)) - alreadyTrimmedOffsetAmount;
 
             int read = 0;
             while (gap > read)
@@ -173,34 +204,29 @@ namespace Azure.Storage.Blobs
 
         private static HttpRange GetEncryptedBlobRangeV2_0(HttpRange originalRange, EncryptionData encryptionData)
         {
-            int offsetAdjustment = 0;
-            long? adjustedDownloadCount = originalRange.Length;
+            int encryptedRegionDataSize = encryptionData.EncryptedRegionInfo.EncryptedRegionDataLength;
             int totalEncryptedRegionSize = encryptionData.EncryptedRegionInfo.NonceLength
                 + encryptionData.EncryptedRegionInfo.EncryptedRegionDataLength
                 + encryptionData.EncryptedRegionInfo.TagLength;
 
+            long newOffset = 0;
+            long? newCount = null;
+
             if (originalRange.Offset != 0)
             {
-                // Align with region boundary.
-                int diff = (int)(originalRange.Offset % totalEncryptedRegionSize);
-                if (diff != 0)
-                {
-                    offsetAdjustment += diff;
-                    if (adjustedDownloadCount != default)
-                    {
-                        adjustedDownloadCount += diff;
-                    }
-                }
+                // determine region number range start resides in, set offset to start of that total region
+                long regionNum = originalRange.Offset / encryptedRegionDataSize;
+                newOffset = regionNum * totalEncryptedRegionSize;
             }
 
-            if (adjustedDownloadCount != null)
+            if (originalRange.Length != null)
             {
-                adjustedDownloadCount += (
-                    totalEncryptedRegionSize - (int)(adjustedDownloadCount % totalEncryptedRegionSize)
-                ) % totalEncryptedRegionSize;
+                // determine region number range end resides in, set count to finish at end of that total region
+                long regionNum = (originalRange.Offset + originalRange.Length.Value - 1) / encryptedRegionDataSize;
+                newCount = (regionNum + 1) * totalEncryptedRegionSize - newOffset;
             }
 
-            return new HttpRange(originalRange.Offset - offsetAdjustment, adjustedDownloadCount);
+            return new HttpRange(newOffset, newCount);
         }
 
         private static HttpRange GetEncryptedBlobRangeV1_0(HttpRange originalRange)
@@ -245,6 +271,14 @@ namespace Azure.Storage.Blobs
             }
 
             return new HttpRange(originalRange.Offset - offsetAdjustment, adjustedDownloadCount);
+        }
+    }
+
+    internal static class EncryptionRangeExtensions
+    {
+        public static int GetTotalRegionLength(this AuthenticationBlockInfo info)
+        {
+            return info.NonceLength + info.EncryptedRegionDataLength + info.TagLength;
         }
     }
 }

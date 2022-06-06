@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
+using Azure.Core.Pipeline;
 using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Cryptography
@@ -51,7 +52,7 @@ namespace Azure.Storage.Cryptography
         /// </param>
         /// <param name="noPadding">
         /// Whether to ignore padding. Generally for partial blob downloads where the end of
-        /// the blob (where the padding occurs) was not downloaded.
+        /// the blob (where the padding occurs) was not downloaded. V1 only.
         /// </param>
         /// <param name="async">Whether to perform this function asynchronously.</param>
         /// <param name="cancellationToken"></param>
@@ -62,7 +63,7 @@ namespace Azure.Storage.Cryptography
         /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
         /// <see cref="IKeyEncryptionKeyResolver"/>.
         /// </exception>
-        public async Task<Stream> DecryptInternal(
+        public async Task<Stream> DecryptReadInternal(
             Stream ciphertext,
             EncryptionData encryptionData,
             bool ivInStream,
@@ -84,6 +85,49 @@ namespace Azure.Storage.Cryptography
                     return await DecryptInternalV2_0(
                         ciphertext,
                         encryptionData,
+                        CryptoStreamMode.Read,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+                default:
+                    throw Errors.ClientSideEncryption.BadEncryptionAgent(encryptionData.EncryptionAgent.EncryptionVersion.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Wraps a write stream in a decryption stream.
+        /// </summary>
+        /// <param name="plaintextDestination">Stream to wrap.</param>
+        /// <param name="encryptionData">
+        /// Encryption metadata and wrapped content encryption key.
+        /// </param>
+        /// <param name="async">Whether to perform this function asynchronously.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>
+        /// Decryption stream.
+        /// </returns>
+        /// <exception cref="Exception">
+        /// Exceptions thrown based on implementations of <see cref="IKeyEncryptionKey"/> and
+        /// <see cref="IKeyEncryptionKeyResolver"/>.
+        /// </exception>
+        /// <remarks>
+        /// This method does not accept parameters situational to a ranged read. This library does not
+        /// use a write paradigm for ranged reads, and so this extra support is being skipped.
+        /// </remarks>
+        public async Task<Stream> DecryptWholeContentWriteInternal(
+            Stream plaintextDestination,
+            EncryptionData encryptionData,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            switch (encryptionData.EncryptionAgent.EncryptionVersion)
+            {
+                case ClientSideEncryptionVersion.V1_0:
+                    throw new NotImplementedException();
+                case ClientSideEncryptionVersion.V2_0:
+                    return await DecryptInternalV2_0(
+                        plaintextDestination,
+                        encryptionData,
+                        CryptoStreamMode.Write,
                         async,
                         cancellationToken).ConfigureAwait(false);
                 default:
@@ -95,6 +139,7 @@ namespace Azure.Storage.Cryptography
         private async Task<Stream> DecryptInternalV2_0(
             Stream ciphertext,
             EncryptionData encryptionData,
+            CryptoStreamMode mode,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -109,11 +154,12 @@ namespace Azure.Storage.Cryptography
                 cancellationToken).ConfigureAwait(false);
             var authRegionDataLength = encryptionData.EncryptedRegionInfo.EncryptedRegionDataLength;
 
-            return WrapStreamV2_0(ciphertext, contentEncryptionKey.ToArray(), authRegionDataLength);
+            return WrapStreamV2_0(ciphertext, mode, contentEncryptionKey.ToArray(), authRegionDataLength);
         }
 
         private static Stream WrapStreamV2_0(
             Stream contentStream,
+            CryptoStreamMode mode,
             byte[] contentEncryptionKey,
             int authRegionPlaintextSize)
         {
@@ -123,7 +169,7 @@ namespace Azure.Storage.Cryptography
                 contentStream,
                 gcm,
                 authRegionPlaintextSize,
-                CryptoStreamMode.Read);
+                mode);
         }
         #endregion
 
