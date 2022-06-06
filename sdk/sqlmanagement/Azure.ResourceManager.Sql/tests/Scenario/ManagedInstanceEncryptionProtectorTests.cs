@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Re-record before GA")]
         public async Task ManagedInstanceEncryptionProtectorApiTests()
         {
             // Create Managed Instance
