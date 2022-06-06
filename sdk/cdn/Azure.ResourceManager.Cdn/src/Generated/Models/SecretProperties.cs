@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The json object containing secret parameters
-    /// Please note <see cref="SecretProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="UriSigningKeyProperties"/>.
+    /// Please note <see cref="SecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
     /// </summary>
     public partial class SecretProperties
     {

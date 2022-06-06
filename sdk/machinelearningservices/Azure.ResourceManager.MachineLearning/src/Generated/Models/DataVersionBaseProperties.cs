@@ -12,8 +12,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Data version base definition
-    /// Please note <see cref="DataVersionBaseProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/>, <see cref="UriFolderDataVersion"/>.
+    /// Please note <see cref="DataVersionBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/> and <see cref="UriFolderDataVersion"/>.
     /// </summary>
     public partial class DataVersionBaseProperties : AssetBase
     {

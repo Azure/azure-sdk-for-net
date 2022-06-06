@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The desired maximum forecast horizon in units of time-series frequency.
-    /// Please note <see cref="ForecastHorizon"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="AutoForecastHorizon"/>, <see cref="CustomForecastHorizon"/>.
+    /// Please note <see cref="ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AutoForecastHorizon"/> and <see cref="CustomForecastHorizon"/>.
     /// </summary>
     public partial class ForecastHorizon
     {

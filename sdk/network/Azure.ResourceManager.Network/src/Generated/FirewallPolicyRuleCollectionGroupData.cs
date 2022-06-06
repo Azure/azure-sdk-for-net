@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
-        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/>, <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
+        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
         internal FirewallPolicyRuleCollectionGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, int? priority, IList<FirewallPolicyRuleCollectionInfo> ruleCollections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Network
         public int? Priority { get; set; }
         /// <summary>
         /// Group of Firewall Policy rule collections.
-        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/>, <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
+        /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
         /// </summary>
         public IList<FirewallPolicyRuleCollectionInfo> RuleCollections { get; }
         /// <summary> The provisioning state of the firewall policy rule collection group resource. </summary>

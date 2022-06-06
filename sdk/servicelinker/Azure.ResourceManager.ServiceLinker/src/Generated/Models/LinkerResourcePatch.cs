@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary>
         /// The target service properties
-        /// Please note <see cref="TargetServiceBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="AzureResource"/>, <see cref="ConfluentBootstrapServer"/>, <see cref="ConfluentSchemaRegistry"/>.
+        /// Please note <see cref="TargetServiceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureResource"/>, <see cref="ConfluentBootstrapServer"/> and <see cref="ConfluentSchemaRegistry"/>.
         /// </summary>
         public TargetServiceBase TargetService { get; set; }
         /// <summary>
         /// The authentication type.
-        /// Please note <see cref="AuthInfoBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// Please note <see cref="AuthInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
         /// </summary>
         public AuthInfoBase AuthInfo { get; set; }
         /// <summary> The application client type. </summary>

@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
-        /// Please note <see cref="RuleCondition"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>, <see cref="ThresholdRuleCondition"/>.
+        /// Please note <see cref="RuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namePropertiesName"/> or <paramref name="condition"/> is null. </exception>
         public AlertRuleData(AzureLocation location, string namePropertiesName, bool isEnabled, RuleCondition condition) : base(location)
@@ -56,18 +56,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
         /// <param name="condition">
         /// the condition that results in the alert rule being activated.
-        /// Please note <see cref="RuleCondition"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>, <see cref="ThresholdRuleCondition"/>.
+        /// Please note <see cref="RuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </param>
         /// <param name="action">
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Please note <see cref="RuleAction"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="RuleEmailAction"/>, <see cref="RuleWebhookAction"/>.
+        /// Please note <see cref="RuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </param>
         /// <param name="actions">
         /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Please note <see cref="RuleAction"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="RuleEmailAction"/>, <see cref="RuleWebhookAction"/>.
+        /// Please note <see cref="RuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
         internal AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namePropertiesName, string description, string provisioningState, bool isEnabled, RuleCondition condition, RuleAction action, IList<RuleAction> actions, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData, tags, location)
@@ -92,20 +92,20 @@ namespace Azure.ResourceManager.Monitor
         public bool IsEnabled { get; set; }
         /// <summary>
         /// the condition that results in the alert rule being activated.
-        /// Please note <see cref="RuleCondition"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/>, <see cref="ThresholdRuleCondition"/>.
+        /// Please note <see cref="RuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="LocationThresholdRuleCondition"/>, <see cref="ManagementEventRuleCondition"/> and <see cref="ThresholdRuleCondition"/>.
         /// </summary>
         public RuleCondition Condition { get; set; }
         /// <summary>
         /// action that is performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Please note <see cref="RuleAction"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="RuleEmailAction"/>, <see cref="RuleWebhookAction"/>.
+        /// Please note <see cref="RuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </summary>
         public RuleAction Action { get; set; }
         /// <summary>
         /// the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved.
-        /// Please note <see cref="RuleAction"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="RuleEmailAction"/>, <see cref="RuleWebhookAction"/>.
+        /// Please note <see cref="RuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </summary>
         public IList<RuleAction> Actions { get; }
         /// <summary> Last time the rule was updated in ISO8601 format. </summary>

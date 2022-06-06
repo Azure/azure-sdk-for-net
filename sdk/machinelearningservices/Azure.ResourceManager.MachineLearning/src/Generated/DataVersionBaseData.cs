@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of DataVersionBaseData. </summary>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="DataVersionBaseProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/>, <see cref="UriFolderDataVersion"/>.
+        /// Please note <see cref="DataVersionBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/> and <see cref="UriFolderDataVersion"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataVersionBaseData(DataVersionBaseProperties properties)
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="DataVersionBaseProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/>, <see cref="UriFolderDataVersion"/>.
+        /// Please note <see cref="DataVersionBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/> and <see cref="UriFolderDataVersion"/>.
         /// </param>
         internal DataVersionBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataVersionBaseProperties properties) : base(id, name, resourceType, systemData)
         {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="DataVersionBaseProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/>, <see cref="UriFolderDataVersion"/>.
+        /// Please note <see cref="DataVersionBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/> and <see cref="UriFolderDataVersion"/>.
         /// </summary>
         public DataVersionBaseProperties Properties { get; set; }
     }

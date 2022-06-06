@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="name"> Username or account name for secret auth. </param>
         /// <param name="secretInfo">
         /// Password or key vault secret for secret auth.
-        /// Please note <see cref="SecretInfoBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/>, <see cref="ValueSecretInfo"/>.
+        /// Please note <see cref="SecretInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="ValueSecretInfo"/>.
         /// </param>
         internal SecretAuthInfo(AuthType authType, string name, SecretInfoBase secretInfo) : base(authType)
         {
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string Name { get; set; }
         /// <summary>
         /// Password or key vault secret for secret auth.
-        /// Please note <see cref="SecretInfoBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/>, <see cref="ValueSecretInfo"/>.
+        /// Please note <see cref="SecretInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="ValueSecretInfo"/>.
         /// </summary>
         public SecretInfoBase SecretInfo { get; set; }
     }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="id"> The Id of azure resource. </param>
         /// <param name="resourceProperties">
         /// The azure resource connection related properties.
-        /// Please note <see cref="AzureResourcePropertiesBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// Please note <see cref="AzureResourcePropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
         /// </param>
         internal AzureResource(TargetServiceType serviceType, string id, AzureResourcePropertiesBase resourceProperties) : base(serviceType)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public string Id { get; set; }
         /// <summary>
         /// The azure resource connection related properties.
-        /// Please note <see cref="AzureResourcePropertiesBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// Please note <see cref="AzureResourcePropertiesBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultProperties"/>.
         /// </summary>
         public AzureResourcePropertiesBase ResourceProperties { get; set; }

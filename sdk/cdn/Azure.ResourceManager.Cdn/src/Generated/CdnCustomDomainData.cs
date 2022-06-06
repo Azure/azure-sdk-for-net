@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customHttpsAvailabilityState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
         /// <param name="customDomainHttpsContent">
         /// Certificate parameters for securing custom HTTPS
-        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="UserManagedHttpsContent"/>, <see cref="CdnManagedHttpsContent"/>.
+        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
         /// </param>
         /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
         /// <param name="provisioningState"> Provisioning status of Custom Https of the custom domain. </param>
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Cdn
         public CustomHttpsAvailabilityState? CustomHttpsAvailabilityState { get; }
         /// <summary>
         /// Certificate parameters for securing custom HTTPS
-        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="UserManagedHttpsContent"/>, <see cref="CdnManagedHttpsContent"/>.
+        /// Please note <see cref="CustomDomainHttpsContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="UserManagedHttpsContent"/> and <see cref="CdnManagedHttpsContent"/>.
         /// </summary>
         public CustomDomainHttpsContent CustomDomainHttpsContent { get; set; }
         /// <summary> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </summary>

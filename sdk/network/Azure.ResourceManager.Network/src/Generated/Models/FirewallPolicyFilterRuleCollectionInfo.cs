@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="action"> The action type of a Filter rule collection. </param>
         /// <param name="rules">
         /// List of rules included in a rule collection.
-        /// Please note <see cref="FirewallPolicyRule"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/>, <see cref="NetworkRule"/>.
+        /// Please note <see cref="FirewallPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/> and <see cref="NetworkRule"/>.
         /// </param>
         internal FirewallPolicyFilterRuleCollectionInfo(FirewallPolicyRuleCollectionType ruleCollectionType, string name, int? priority, FirewallPolicyFilterRuleCollectionAction action, IList<FirewallPolicyRule> rules) : base(ruleCollectionType, name, priority)
         {
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary>
         /// List of rules included in a rule collection.
-        /// Please note <see cref="FirewallPolicyRule"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/>, <see cref="NetworkRule"/>.
+        /// Please note <see cref="FirewallPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/> and <see cref="NetworkRule"/>.
         /// </summary>
         public IList<FirewallPolicyRule> Rules { get; }
     }

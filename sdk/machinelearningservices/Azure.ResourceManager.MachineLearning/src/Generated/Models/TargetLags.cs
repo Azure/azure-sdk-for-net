@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The number of past periods to lag from the target column.
-    /// Please note <see cref="TargetLags"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include <see cref="AutoTargetLags"/>, <see cref="CustomTargetLags"/>.
+    /// Please note <see cref="TargetLags"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AutoTargetLags"/> and <see cref="CustomTargetLags"/>.
     /// </summary>
     public partial class TargetLags
     {

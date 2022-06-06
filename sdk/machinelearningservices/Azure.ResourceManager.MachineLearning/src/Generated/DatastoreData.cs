@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of DatastoreData. </summary>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="DatastoreProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/>, <see cref="AzureFileDatastore"/>, <see cref="HdfsDatastore"/>.
+        /// Please note <see cref="DatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/>, <see cref="AzureFileDatastore"/> and <see cref="HdfsDatastore"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DatastoreData(DatastoreProperties properties)
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="DatastoreProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/>, <see cref="AzureFileDatastore"/>, <see cref="HdfsDatastore"/>.
+        /// Please note <see cref="DatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/>, <see cref="AzureFileDatastore"/> and <see cref="HdfsDatastore"/>.
         /// </param>
         internal DatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatastoreProperties properties) : base(id, name, resourceType, systemData)
         {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary>
         /// [Required] Additional attributes of the entity.
-        /// Please note <see cref="DatastoreProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/>, <see cref="AzureFileDatastore"/>, <see cref="HdfsDatastore"/>.
+        /// Please note <see cref="DatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/>, <see cref="AzureFileDatastore"/> and <see cref="HdfsDatastore"/>.
         /// </summary>
         public DatastoreProperties Properties { get; set; }
     }

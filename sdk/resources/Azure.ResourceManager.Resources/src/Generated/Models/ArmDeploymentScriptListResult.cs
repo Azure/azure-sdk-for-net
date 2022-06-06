@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmDeploymentScriptListResult. </summary>
         /// <param name="value">
         /// An array of deployment scripts.
-        /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="AzureCliScript"/>, <see cref="AzurePowerShellScript"/>.
+        /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureCliScript"/> and <see cref="AzurePowerShellScript"/>.
         /// </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ArmDeploymentScriptListResult(IReadOnlyList<ArmDeploymentScriptData> value, string nextLink)
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary>
         /// An array of deployment scripts.
-        /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="AzureCliScript"/>, <see cref="AzurePowerShellScript"/>.
+        /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureCliScript"/> and <see cref="AzurePowerShellScript"/>.
         /// </summary>
         public IReadOnlyList<ArmDeploymentScriptData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>

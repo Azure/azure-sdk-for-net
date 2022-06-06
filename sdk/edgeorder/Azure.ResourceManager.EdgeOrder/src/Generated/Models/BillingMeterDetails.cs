@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="name"> Represents Billing type name. </param>
         /// <param name="meterDetails">
         /// Represents MeterDetails
-        /// Please note <see cref="MeterDetails"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="Pav2MeterDetails"/>, <see cref="PurchaseMeterDetails"/>.
+        /// Please note <see cref="MeterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Pav2MeterDetails"/> and <see cref="PurchaseMeterDetails"/>.
         /// </param>
         /// <param name="meteringType"> Represents Metering type (eg one-time or recurrent). </param>
         /// <param name="frequency"> Frequency of recurrence. </param>
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string Name { get; }
         /// <summary>
         /// Represents MeterDetails
-        /// Please note <see cref="MeterDetails"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-        /// The available derived classes include <see cref="Pav2MeterDetails"/>, <see cref="PurchaseMeterDetails"/>.
+        /// Please note <see cref="MeterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Pav2MeterDetails"/> and <see cref="PurchaseMeterDetails"/>.
         /// </summary>
         public MeterDetails MeterDetails { get; }
         /// <summary> Represents Metering type (eg one-time or recurrent). </summary>
