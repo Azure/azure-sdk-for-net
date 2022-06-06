@@ -25,8 +25,6 @@
 ### Bugs Fixed
 - In `DocumentTranslationOperation`, `Cancel` calls won't overwrite the response from `GetRawResponse` anymore.
 
-### Other Changes
-
 ## 1.0.0-beta.6 (2021-11-09)
 
 ### Breaking Changes
