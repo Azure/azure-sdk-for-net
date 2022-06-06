@@ -56,11 +56,11 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <param name='resourceGroupName'>
         /// The resource group name.
         /// </param>
-        /// <param name='name'>
-        /// The guest configuration assignment name.
-        /// </param>
         /// <param name='vmssName'>
         /// The name of the virtual machine scale set.
+        /// </param>
+        /// <param name='name'>
+        /// The guest configuration assignment name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,8 +83,12 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<GuestConfigurationAssignment>> GetWithHttpMessagesAsync(string resourceGroupName, string name, string vmssName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GuestConfigurationAssignment>> GetWithHttpMessagesAsync(string resourceGroupName, string vmssName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -96,17 +100,13 @@ namespace Microsoft.Azure.Management.GuestConfiguration
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (vmssName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vmssName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
             if (Client.ApiVersion == null)
             {
@@ -120,18 +120,18 @@ namespace Microsoft.Azure.Management.GuestConfiguration
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
                 tracingParameters.Add("vmssName", vmssName);
+                tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{vmssName}", System.Uri.EscapeDataString(vmssName));
+            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -263,11 +263,11 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <param name='resourceGroupName'>
         /// The resource group name.
         /// </param>
-        /// <param name='name'>
-        /// The guest configuration assignment name.
-        /// </param>
         /// <param name='vmssName'>
         /// The name of the virtual machine scale set.
+        /// </param>
+        /// <param name='name'>
+        /// The guest configuration assignment name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -290,8 +290,12 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<GuestConfigurationAssignment>> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, string vmssName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GuestConfigurationAssignment>> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmssName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -303,17 +307,13 @@ namespace Microsoft.Azure.Management.GuestConfiguration
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._]+$");
                 }
             }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (vmssName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vmssName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
             if (Client.ApiVersion == null)
             {
@@ -327,18 +327,18 @@ namespace Microsoft.Azure.Management.GuestConfiguration
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
                 tracingParameters.Add("vmssName", vmssName);
+                tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{vmssName}", System.Uri.EscapeDataString(vmssName));
+            _url = _url.Replace("{name}", System.Uri.EscapeDataString(name));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

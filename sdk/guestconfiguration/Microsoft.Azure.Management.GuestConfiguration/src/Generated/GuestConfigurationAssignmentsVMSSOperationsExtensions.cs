@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
-            /// <param name='name'>
-            /// The guest configuration assignment name.
-            /// </param>
             /// <param name='vmssName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            public static GuestConfigurationAssignment Get(this IGuestConfigurationAssignmentsVMSSOperations operations, string resourceGroupName, string name, string vmssName)
+            /// <param name='name'>
+            /// The guest configuration assignment name.
+            /// </param>
+            public static GuestConfigurationAssignment Get(this IGuestConfigurationAssignmentsVMSSOperations operations, string resourceGroupName, string vmssName, string name)
             {
-                return operations.GetAsync(resourceGroupName, name, vmssName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, vmssName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -52,18 +52,18 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
-            /// <param name='name'>
-            /// The guest configuration assignment name.
-            /// </param>
             /// <param name='vmssName'>
             /// The name of the virtual machine scale set.
+            /// </param>
+            /// <param name='name'>
+            /// The guest configuration assignment name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GuestConfigurationAssignment> GetAsync(this IGuestConfigurationAssignmentsVMSSOperations operations, string resourceGroupName, string name, string vmssName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GuestConfigurationAssignment> GetAsync(this IGuestConfigurationAssignmentsVMSSOperations operations, string resourceGroupName, string vmssName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, name, vmssName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, vmssName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -78,15 +78,15 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
-            /// <param name='name'>
-            /// The guest configuration assignment name.
-            /// </param>
             /// <param name='vmssName'>
             /// The name of the virtual machine scale set.
             /// </param>
-            public static GuestConfigurationAssignment Delete(this IGuestConfigurationAssignmentsVMSSOperations operations, string resourceGroupName, string name, string vmssName)
+            /// <param name='name'>
+            /// The guest configuration assignment name.
+            /// </param>
+            public static GuestConfigurationAssignment Delete(this IGuestConfigurationAssignmentsVMSSOperations operations, string resourceGroupName, string vmssName, string name)
             {
-                return operations.DeleteAsync(resourceGroupName, name, vmssName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, vmssName, name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -98,18 +98,18 @@ namespace Microsoft.Azure.Management.GuestConfiguration
             /// <param name='resourceGroupName'>
             /// The resource group name.
             /// </param>
-            /// <param name='name'>
-            /// The guest configuration assignment name.
-            /// </param>
             /// <param name='vmssName'>
             /// The name of the virtual machine scale set.
+            /// </param>
+            /// <param name='name'>
+            /// The guest configuration assignment name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GuestConfigurationAssignment> DeleteAsync(this IGuestConfigurationAssignmentsVMSSOperations operations, string resourceGroupName, string name, string vmssName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GuestConfigurationAssignment> DeleteAsync(this IGuestConfigurationAssignmentsVMSSOperations operations, string resourceGroupName, string vmssName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, vmssName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vmssName, name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
