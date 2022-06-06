@@ -475,6 +475,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusSessionReceiver : Azure.Messaging.ServiceBus.ServiceBusReceiver
     {
         protected ServiceBusSessionReceiver() { }
+        public override bool IsClosed { get { throw null; } }
         public virtual string SessionId { get { throw null; } }
         public virtual System.DateTimeOffset SessionLockedUntil { get { throw null; } }
         public virtual System.Threading.Tasks.Task<System.BinaryData> GetSessionStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
