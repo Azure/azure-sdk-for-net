@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.Sql.Tests
             : base(isAsync)
         {
         }
-
+        public SqlManagementClientBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        {
+        }
         [SetUp]
         public virtual void TestSetup()
         {
