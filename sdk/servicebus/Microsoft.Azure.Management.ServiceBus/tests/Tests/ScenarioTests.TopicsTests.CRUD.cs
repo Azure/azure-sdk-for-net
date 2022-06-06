@@ -84,7 +84,28 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotEqual(updateTopicsResponse.UpdatedAt, getTopicResponse.UpdatedAt);
 
                 // Delete Created Topics 
-                ServiceBusManagementClient.Topics.Delete(resourceGroup, namespaceName, topicName);                
+                ServiceBusManagementClient.Topics.Delete(resourceGroup, namespaceName, topicName);
+                
+                var secondTopicName = TestUtilities.GenerateName(ServiceBusManagementHelper.TopicPrefix);
+
+                var secondTopicResponse = ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, secondTopicName, new SBTopic()
+                {
+                    DefaultMessageTimeToLive = new TimeSpan(365, 0, 0, 0),
+                    AutoDeleteOnIdle = new TimeSpan(428, 3, 11, 2),
+                    DuplicateDetectionHistoryTimeWindow = new TimeSpan(1, 0, 3, 4),
+                    EnableBatchedOperations = true,
+                    EnablePartitioning = true,
+                    RequiresDuplicateDetection = true,
+                    SupportOrdering = true
+                });
+
+                Assert.Equal(new TimeSpan(365, 0, 0, 0), secondTopicResponse.DefaultMessageTimeToLive);
+                Assert.Equal(new TimeSpan(428, 3, 11, 2), secondTopicResponse.AutoDeleteOnIdle);
+                Assert.Equal(new TimeSpan(1, 0, 3, 4), secondTopicResponse.DuplicateDetectionHistoryTimeWindow);
+                Assert.True(secondTopicResponse.EnableBatchedOperations);
+                Assert.True(secondTopicResponse.EnablePartitioning);
+                Assert.True(secondTopicResponse.RequiresDuplicateDetection);
+                Assert.True(secondTopicResponse.SupportOrdering);
 
                 // Delete namespace                                   
                 ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName, null, new CancellationToken()).ConfigureAwait(false);

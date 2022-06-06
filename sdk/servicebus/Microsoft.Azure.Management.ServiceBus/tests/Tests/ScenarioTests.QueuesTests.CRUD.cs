@@ -97,12 +97,62 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(updateQueueResponse.ForwardTo, queueName1);
                 Assert.Equal(updateQueueResponse.ForwardDeadLetteredMessagesTo, queueName1);
 
+                var secondQueueName = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
+
+                var secondQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, secondQueueName, new SBQueue()
+                {
+                    LockDuration = new TimeSpan(0, 3, 0),
+                    DefaultMessageTimeToLive = new TimeSpan(428, 3, 28, 0),
+                    MaxSizeInMegabytes = 4096,
+                    DuplicateDetectionHistoryTimeWindow = new TimeSpan(0, 10, 0),
+                    DeadLetteringOnMessageExpiration = true,
+                    RequiresDuplicateDetection = true,
+                    MaxDeliveryCount = 8,
+                    Status = EntityStatus.Active,
+                    EnableBatchedOperations = false,
+                    ForwardTo = queueName,
+                    ForwardDeadLetteredMessagesTo = queueName
+                });
+
+                Assert.Equal(new TimeSpan(428, 3, 28, 0), secondQueueResponse.DefaultMessageTimeToLive);
+                Assert.Equal(new TimeSpan(0, 3, 0), secondQueueResponse.LockDuration);
+                Assert.False(secondQueueResponse.EnableBatchedOperations);
+                Assert.Equal(8, secondQueueResponse.MaxDeliveryCount);
+                Assert.Equal(new TimeSpan(0, 10, 0), secondQueueResponse.DuplicateDetectionHistoryTimeWindow);
+                Assert.True(secondQueueResponse.RequiresDuplicateDetection);
+                Assert.False(secondQueueResponse.RequiresSession);
+                Assert.Equal(EntityStatus.Active, secondQueueResponse.Status);
+                Assert.Equal(queueName, secondQueueResponse.ForwardDeadLetteredMessagesTo);
+                Assert.Equal(queueName, secondQueueResponse.ForwardTo);
+
+                var temp = secondQueueResponse;
+
+                secondQueueResponse = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, secondQueueName);
+
+                CompareQueues(temp, secondQueueResponse);
+
                 // Delete Created Queue 
                 ServiceBusManagementClient.Queues.Delete(resourceGroup, namespaceName, queueName);
 
                 //Delete Namespace Async
                 ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName, null, new CancellationToken()).ConfigureAwait(false);
             }
+        }
+
+        internal static void CompareQueues(SBQueue expected, SBQueue actual)
+        {
+            Assert.Equal(expected.DefaultMessageTimeToLive, actual.DefaultMessageTimeToLive);
+            Assert.Equal(expected.LockDuration, actual.LockDuration);
+            Assert.Equal(expected.EnableBatchedOperations, actual.EnableBatchedOperations);
+            Assert.Equal(expected.MaxDeliveryCount, actual.MaxDeliveryCount);
+            Assert.Equal(expected.DuplicateDetectionHistoryTimeWindow, actual.DuplicateDetectionHistoryTimeWindow);
+            Assert.Equal(expected.RequiresDuplicateDetection, actual.RequiresDuplicateDetection);
+            Assert.Equal(expected.RequiresSession, actual.RequiresSession);
+            Assert.Equal(expected.Status, actual.Status);
+            Assert.Equal(expected.ForwardDeadLetteredMessagesTo, actual.ForwardDeadLetteredMessagesTo);
+            Assert.Equal(expected.ForwardTo, actual.ForwardTo);
+            Assert.Equal(expected.EnablePartitioning, actual.EnablePartitioning);
+            Assert.Equal(expected.AutoDeleteOnIdle, actual.AutoDeleteOnIdle);
         }
     }
 }

@@ -69,7 +69,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 var topicName = TestUtilities.GenerateName(ServiceBusManagementHelper.TopicPrefix);
 
                 var createTopicResponse = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName,
-                new SBTopic());
+                    new SBTopic());
                 Assert.NotNull(createTopicResponse);
                 Assert.Equal(createTopicResponse.Name, topicName);
 
