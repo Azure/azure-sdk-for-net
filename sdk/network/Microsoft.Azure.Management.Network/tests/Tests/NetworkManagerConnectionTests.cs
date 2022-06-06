@@ -17,7 +17,6 @@ namespace Networks.Tests
 {
     public class NetworkManagerConnectionTests
     {
-        /*
         [Fact]
         public void NetworkManagerConnectionManagementGroup()
         {
@@ -35,17 +34,23 @@ namespace Networks.Tests
                 };
 
                 string networkManagerConnectionName = TestUtilities.GenerateName("NetworkManagerConnectionMG");
-                var managementGroupName = "jaredgorthy";
+                var managementGroupName = "SDKTestMG";
 
                 var putNetworkManagerConnectionResponse = networkManagementClient.ManagementGroupNetworkManagerConnections.CreateOrUpdate(networkManagerConnection, managementGroupName, networkManagerConnectionName);
                 Assert.Equal(networkManagerConnectionName, putNetworkManagerConnectionResponse.Name);
 
+                // Get NetworkManagerConnection
+                var getNetworkManagerConnectionResponse = networkManagementClient.ManagementGroupNetworkManagerConnections.Get(managementGroupName, networkManagerConnectionName);
+                Assert.Equal(getNetworkManagerConnectionResponse.Name, networkManagerConnectionName);
+                Assert.Equal(getNetworkManagerConnectionResponse.NetworkManagerId, networkManagerId);
+
+                // List NetworkManagerConnection
                 var listNetworkManagerConnectionResponse = networkManagementClient.ManagementGroupNetworkManagerConnections.List(managementGroupName);
                 Assert.Single(listNetworkManagerConnectionResponse);
                 Assert.Equal(listNetworkManagerConnectionResponse.First().Name, networkManagerConnectionName);
                 Assert.Equal(listNetworkManagerConnectionResponse.First().NetworkManagerId, networkManagerId);
 
-                // Delete ScopeConnections
+                // Delete NetworkManagerConnections
                 networkManagementClient.ManagementGroupNetworkManagerConnections.Delete(managementGroupName, networkManagerConnectionName);
 
                 // Confirm Delete
@@ -53,7 +58,6 @@ namespace Networks.Tests
                 Assert.Empty(listNetworkManagerConnectionResponse);
             }
         }
-        */
 
         //[Fact(Skip = "Disable tests")]
         [Fact]

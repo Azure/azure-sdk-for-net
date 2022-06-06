@@ -1,0 +1,330 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/SDKTestMG/providers/Microsoft.Network/networkManagerConnections/NetworkManagerConnectionMG8580?api-version=2022-04-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL1NES1Rlc3RNRy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya01hbmFnZXJDb25uZWN0aW9ucy9OZXR3b3JrTWFuYWdlckNvbm5lY3Rpb25NRzg1ODA/YXBpLXZlcnNpb249MjAyMi0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"networkManagerId\": \"/subscriptions/f0dc2b34-dfad-40e4-83e0-2309fed8d00b/resourceGroups/TeamMembers/providers/Microsoft.Network/networkManagers/jaredgorthy\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "90cd60a1-0bea-4535-88ff-778391eb75b5"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19044",
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/21.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "190"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-writes": [
+          "1199"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "a76972ce-6ef6-490c-987c-182cddeb8117"
+        ],
+        "x-ms-correlation-request-id": [
+          "a76972ce-6ef6-490c-987c-182cddeb8117"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20220606T212710Z:a76972ce-6ef6-490c-987c-182cddeb8117"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jun 2022 21:27:09 GMT"
+        ],
+        "Content-Length": [
+          "476"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/SDKTestMG/providers/Microsoft.Network/networkManagerConnections/NetworkManagerConnectionMG8580\",\r\n  \"name\": \"NetworkManagerConnectionMG8580\",\r\n  \"type\": \"Microsoft.Network/networkManagerConnections\",\r\n  \"location\": \"\",\r\n  \"properties\": {\r\n    \"networkManagerId\": \"/subscriptions/f0dc2b34-dfad-40e4-83e0-2309fed8d00b/resourceGroups/TeamMembers/providers/Microsoft.Network/networkManagers/jaredgorthy\",\r\n    \"connectionState\": \"Conflict\",\r\n    \"description\": \"\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/SDKTestMG/providers/Microsoft.Network/networkManagerConnections/NetworkManagerConnectionMG8580?api-version=2022-04-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL1NES1Rlc3RNRy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya01hbmFnZXJDb25uZWN0aW9ucy9OZXR3b3JrTWFuYWdlckNvbm5lY3Rpb25NRzg1ODA/YXBpLXZlcnNpb249MjAyMi0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "346426ef-144d-4727-8214-8cd195e06fcc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19044",
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/21.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11998"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "c375d32e-9b53-402f-8844-155153167f8b"
+        ],
+        "x-ms-correlation-request-id": [
+          "c375d32e-9b53-402f-8844-155153167f8b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20220606T212710Z:c375d32e-9b53-402f-8844-155153167f8b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jun 2022 21:27:10 GMT"
+        ],
+        "Content-Length": [
+          "476"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/SDKTestMG/providers/Microsoft.Network/networkManagerConnections/NetworkManagerConnectionMG8580\",\r\n  \"name\": \"NetworkManagerConnectionMG8580\",\r\n  \"type\": \"Microsoft.Network/networkManagerConnections\",\r\n  \"location\": \"\",\r\n  \"properties\": {\r\n    \"networkManagerId\": \"/subscriptions/f0dc2b34-dfad-40e4-83e0-2309fed8d00b/resourceGroups/TeamMembers/providers/Microsoft.Network/networkManagers/jaredgorthy\",\r\n    \"connectionState\": \"Conflict\",\r\n    \"description\": \"\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/SDKTestMG/providers/Microsoft.Network/networkManagerConnections?api-version=2022-04-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL1NES1Rlc3RNRy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya01hbmFnZXJDb25uZWN0aW9ucz9hcGktdmVyc2lvbj0yMDIyLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6bef3c19-73a7-487c-b55e-fc3fc8252643"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19044",
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/21.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11997"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "68b90af6-4980-48b1-8486-9a2bd36c477f"
+        ],
+        "x-ms-correlation-request-id": [
+          "68b90af6-4980-48b1-8486-9a2bd36c477f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20220606T212710Z:68b90af6-4980-48b1-8486-9a2bd36c477f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jun 2022 21:27:10 GMT"
+        ],
+        "Content-Length": [
+          "502"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/SDKTestMG/providers/Microsoft.Network/networkManagerConnections/NetworkManagerConnectionMG8580\",\r\n      \"name\": \"NetworkManagerConnectionMG8580\",\r\n      \"type\": \"Microsoft.Network/networkManagerConnections\",\r\n      \"location\": \"\",\r\n      \"properties\": {\r\n        \"networkManagerId\": \"/subscriptions/f0dc2b34-dfad-40e4-83e0-2309fed8d00b/resourceGroups/TeamMembers/providers/Microsoft.Network/networkManagers/jaredgorthy\",\r\n        \"connectionState\": \"Conflict\",\r\n        \"description\": \"\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/SDKTestMG/providers/Microsoft.Network/networkManagerConnections?api-version=2022-04-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL1NES1Rlc3RNRy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya01hbmFnZXJDb25uZWN0aW9ucz9hcGktdmVyc2lvbj0yMDIyLTA0LTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "18197c85-0afb-45f4-9615-47cefaeb7cbd"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19044",
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/21.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11996"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "b792bdac-57b5-40bc-8811-95e5b732062b"
+        ],
+        "x-ms-correlation-request-id": [
+          "b792bdac-57b5-40bc-8811-95e5b732062b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20220606T212712Z:b792bdac-57b5-40bc-8811-95e5b732062b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jun 2022 21:27:12 GMT"
+        ],
+        "Content-Length": [
+          "26"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/SDKTestMG/providers/Microsoft.Network/networkManagerConnections/NetworkManagerConnectionMG8580?api-version=2022-04-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL1NES1Rlc3RNRy9wcm92aWRlcnMvTWljcm9zb2Z0Lk5ldHdvcmsvbmV0d29ya01hbmFnZXJDb25uZWN0aW9ucy9OZXR3b3JrTWFuYWdlckNvbm5lY3Rpb25NRzg1ODA/YXBpLXZlcnNpb249MjAyMi0wNC0wMS1wcmV2aWV3",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cea30a6b-1e31-4705-ad16-36d71c7c938a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19044",
+          "Microsoft.Azure.Management.Network.NetworkManagementClient/21.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-tenant-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "7123c5c0-9c8b-4e80-a94d-1657320e3db3"
+        ],
+        "x-ms-correlation-request-id": [
+          "7123c5c0-9c8b-4e80-a94d-1657320e3db3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTCENTRALUS:20220606T212712Z:7123c5c0-9c8b-4e80-a94d-1657320e3db3"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 06 Jun 2022 21:27:11 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "NetworkManagerConnectionManagementGroup": [
+      "NetworkManagerConnectionMG8580"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "08615b4b-bc9c-4a70-be1b-2ea10bc97b52"
+  }
+}
