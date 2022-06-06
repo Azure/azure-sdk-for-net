@@ -4730,7 +4730,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         internal HttpMessage CreateGetSampleBusinessMetadataTemplateRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200400);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -4744,7 +4744,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         internal HttpMessage CreateImportBusinessMetadataRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200400409);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -4876,9 +4876,5 @@ namespace Azure.Analytics.Purview.Catalog
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
-        private static ResponseClassifier _responseClassifier200400;
-        private static ResponseClassifier ResponseClassifier200400 => _responseClassifier200400 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 400 });
-        private static ResponseClassifier _responseClassifier200400409;
-        private static ResponseClassifier ResponseClassifier200400409 => _responseClassifier200400409 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 400, 409 });
     }
 }

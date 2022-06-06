@@ -6824,7 +6824,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         internal HttpMessage CreateGetBusinessMetadataDefByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6839,7 +6839,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         internal HttpMessage CreateGetBusinessMetadataDefByNameRequest(string name, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200404);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7171,8 +7171,6 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        private static ResponseClassifier _responseClassifier200404;
-        private static ResponseClassifier ResponseClassifier200404 => _responseClassifier200404 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 404 });
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier204;

@@ -502,7 +502,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         internal HttpMessage CreateGetLineageByUniqueAttributeRequest(string typeName, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200400404);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -534,7 +534,5 @@ namespace Azure.Analytics.Purview.Catalog
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier200400404;
-        private static ResponseClassifier ResponseClassifier200400404 => _responseClassifier200400404 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 400, 404 });
     }
 }
