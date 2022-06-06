@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.Communication.Tests
             var emailService = await CreateDefaultEmailServices(emailServiceName, _resourceGroup);
             Assert.IsNotNull(emailService);
             Assert.AreEqual(emailServiceName, emailService.Data.Name);
-            Assert.AreEqual(_location, emailService.Data.Location);
-            Assert.AreEqual(_dataLocation, emailService.Data.DataLocation);
+            Assert.AreEqual(_location.ToString(), emailService.Data.Location.ToString());
+            Assert.AreEqual(_dataLocation.ToString(), emailService.Data.DataLocation.ToString());
         }
 
         [Test]
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Communication.Tests
             var emailService = await collection.GetAsync(emailServiceName);
             Assert.IsNotNull(emailService);
             Assert.AreEqual(emailServiceName, emailService.Value.Data.Name);
-            Assert.AreEqual(_location, emailService.Value.Data.Location);
-            Assert.AreEqual(_dataLocation, emailService.Value.Data.DataLocation);
+            Assert.AreEqual(_location.ToString(), emailService.Value.Data.Location.ToString());
+            Assert.AreEqual(_dataLocation.ToString(), emailService.Value.Data.DataLocation.ToString());
         }
 
         [Test]
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.Communication.Tests
             var list = await _resourceGroup.GetEmailServiceResources().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(emailServiceName, list.FirstOrDefault().Data.Name);
-            Assert.AreEqual(_location, list.FirstOrDefault().Data.Location);
-            Assert.AreEqual(_dataLocation, list.FirstOrDefault().Data.DataLocation);
+            Assert.AreEqual(_location.ToString(), list.FirstOrDefault().Data.Location.ToString());
+            Assert.AreEqual(_dataLocation.ToString(), list.FirstOrDefault().Data.DataLocation.ToString());
         }
     }
 }

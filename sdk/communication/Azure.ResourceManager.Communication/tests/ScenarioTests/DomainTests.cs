@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Communication.Tests
         [Test]
         public async Task AddTag()
         {
-            string domainName = Recording.GenerateAssetName("domain-");
+            string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
             await domain.AddTagAsync("testkey", "testvalue");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Communication.Tests
         [Test]
         public async Task RemoveTag()
         {
-            string domainName = Recording.GenerateAssetName("domain-");
+            string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
             await domain.AddTagAsync("testkey", "testvalue");
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Communication.Tests
         [Test]
         public async Task SetTags()
         {
-            string domainName = Recording.GenerateAssetName("domain-");
+            string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
             await domain.AddTagAsync("testkey", "testvalue");
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Communication.Tests
         [Test]
         public async Task Exists()
         {
-            string domainName = Recording.GenerateAssetName("domain-");
+            string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetDomainResources();
             await CreateDefaultDomain(domainName, _emailService);
             bool exists = await collection.ExistsAsync(domainName);
@@ -119,33 +119,32 @@ namespace Azure.ResourceManager.Communication.Tests
         [Test]
         public async Task CreateOrUpdate()
         {
-            string domainName = Recording.GenerateAssetName("domain-");
+            string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var domain = await CreateDefaultDomain(domainName, _emailService);
             Assert.IsNotNull(domain);
             Assert.AreEqual(domainName, domain.Data.Name);
-            Assert.AreEqual(_location, domain.Data.Location);
-            Assert.AreEqual(_dataLocation, domain.Data.DataLocation);
+            Assert.AreEqual(_location.ToString().ToLower(), domain.Data.Location.ToString().ToLower());
+            Assert.AreEqual(_dataLocation.ToString().ToLower(), domain.Data.DataLocation.ToString().ToLower());
         }
 
         [Test]
         public async Task Update()
         {
-            string domainName = Recording.GenerateAssetName("domain-");
+            string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var domain1 = await CreateDefaultDomain(domainName, _emailService);
             var patch = new DomainResourcePatch()
             {
-                ValidSenderUsernames = { { "username2", "displayname2" } }
+                UserEngagementTracking = UserEngagementTracking.Enabled
             };
             var domain2 = (await domain1.UpdateAsync(WaitUntil.Completed, patch)).Value;
             Assert.IsNotNull(domain2);
-            Assert.AreEqual("username2", domain2.Data.ValidSenderUsernames.FirstOrDefault().Key);
             Assert.AreEqual(domain1.Data.Name, domain2.Data.Name);
         }
 
         [Test]
         public async Task Delete()
         {
-            string domainName = Recording.GenerateAssetName("domain-");
+            string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
             await domain.DeleteAsync(WaitUntil.Completed);
@@ -156,32 +155,32 @@ namespace Azure.ResourceManager.Communication.Tests
         [Test]
         public async Task Get()
         {
-            string domainName = Recording.GenerateAssetName("domain-");
+            string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetDomainResources();
             await CreateDefaultDomain(domainName, _emailService);
             var domain = await collection.GetAsync(domainName);
             Assert.IsNotNull(domain);
             Assert.AreEqual(domainName, domain.Value.Data.Name);
-            Assert.AreEqual(_location, domain.Value.Data.Location);
-            Assert.AreEqual(_dataLocation, domain.Value.Data.DataLocation);
+            Assert.AreEqual(_location.ToString().ToLower(), domain.Value.Data.Location.ToString().ToLower());
+            Assert.AreEqual(_dataLocation.ToString().ToLower(), domain.Value.Data.DataLocation.ToString().ToLower());
         }
 
         [Test]
         public async Task GetAll()
         {
-            string domainName = Recording.GenerateAssetName("domain-");
+            string domainName = Recording.GenerateAssetName("domain-") + ".com";
             await CreateDefaultDomain(domainName, _emailService);
             var list = await _emailService.GetDomainResources().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(domainName, list.FirstOrDefault().Data.Name);
-            Assert.AreEqual(_location, list.FirstOrDefault().Data.Location);
-            Assert.AreEqual(_dataLocation, list.FirstOrDefault().Data.DataLocation);
+            Assert.AreEqual(_location.ToString().ToLower(), list.FirstOrDefault().Data.Location.ToString().ToLower());
+            Assert.AreEqual(_dataLocation.ToString().ToLower(), list.FirstOrDefault().Data.DataLocation.ToString().ToLower());
         }
 
         [Test]
         public async Task VerificationOperation()
         {
-            string domainName = Recording.GenerateAssetName("domain-");
+            string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
             var data = new VerificationParameter(VerificationType.SPF);

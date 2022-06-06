@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             DomainResourceData data = new DomainResourceData(ResourceLocation)
             {
+                DomainManagement = DomainManagement.CustomerManaged,
                 ValidSenderUsernames = { {"username", "displayName" } }
             };
             var domainLro = await emailService.GetDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, domainName, data);

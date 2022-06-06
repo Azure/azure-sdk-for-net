@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1c8c713657910e45a442652ddb10f613-5744945ba8d38840-00",
+        "traceparent": "00-4221e613b527174c8713bd3239e8137e-7ec216f614853c41-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "759166af3000fcaa66be29ff10693af7",
+        "x-ms-client-request-id": "953d0c7dbcdf836c39f0bc6f02954b23",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 06 Jun 2022 11:35:18 GMT",
+        "Date": "Mon, 06 Jun 2022 12:15:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "189d9053-f44b-4a0b-b216-70d4073fee17",
-        "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "189d9053-f44b-4a0b-b216-70d4073fee17",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220606T113518Z:189d9053-f44b-4a0b-b216-70d4073fee17"
+        "x-ms-correlation-request-id": "9c76ea1f-77a8-4cba-8a87-14cf2aaca9ea",
+        "x-ms-ratelimit-remaining-subscription-reads": "11708",
+        "x-ms-request-id": "9c76ea1f-77a8-4cba-8a87-14cf2aaca9ea",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220606T121555Z:9c76ea1f-77a8-4cba-8a87-14cf2aaca9ea"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -56,16 +56,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Communication-RG-8185?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/Communication-RG-4222?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "31",
         "Content-Type": "application/json",
-        "traceparent": "00-828fab86ffc6344d909250c8133d2abb-15048aaaf09dac4e-00",
+        "traceparent": "00-6d13f14a24cdf346b14237e063bafda9-c246ec157b82eb49-00",
         "User-Agent": "azsdk-net-ResourceManager/1.0.0 (.NET Core 3.1.22; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "37a4cd22a68b87b2cf1b69efc0834ac6",
+        "x-ms-client-request-id": "8862554cac10c8f6e1f5c9ac97e7a054",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -77,19 +77,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "249",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 06 Jun 2022 11:35:22 GMT",
+        "Date": "Mon, 06 Jun 2022 12:15:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "4745a17f-b66e-422d-be9a-55de7fd5c618",
-        "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "4745a17f-b66e-422d-be9a-55de7fd5c618",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220606T113522Z:4745a17f-b66e-422d-be9a-55de7fd5c618"
+        "x-ms-correlation-request-id": "5dc7b760-3b83-4b5f-81cc-badc1780a112",
+        "x-ms-ratelimit-remaining-subscription-writes": "1180",
+        "x-ms-request-id": "5dc7b760-3b83-4b5f-81cc-badc1780a112",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220606T121557Z:5dc7b760-3b83-4b5f-81cc-badc1780a112"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-8185",
-        "name": "Communication-RG-8185",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/Communication-RG-4222",
+        "name": "Communication-RG-4222",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "westus",
         "tags": {},
@@ -100,7 +100,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1433064170",
+    "RandomSeed": "1234204204",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

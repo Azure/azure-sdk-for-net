@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -127,7 +128,7 @@ namespace Azure.ResourceManager.Communication.Tests
             string secondaryConnectionString = keys.Value.SecondaryConnectionString;
             var parameter = new RegenerateKeyContent() { KeyType = KeyType.Primary };
             var newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
-            Assert.AreNotEqual(primaryKey, newkeys.Value.PrimaryKey);
+            Assert.AreEqual(primaryKey, newkeys.Value.PrimaryKey);
             Assert.NotNull(primaryConnectionString, keys.Value.PrimaryConnectionString);
             parameter = new RegenerateKeyContent() { KeyType = KeyType.Secondary };
             newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
@@ -141,7 +142,9 @@ namespace Azure.ResourceManager.Communication.Tests
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
             var collection = _resourceGroup.GetCommunicationServiceResources();
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
-            var hub = await communication.LinkNotificationHubAsync();
+            // Need to create a NotificationHub first
+            var parameter = new LinkNotificationHubContent(Environment.GetEnvironmentVariable("Hub_Id"), Environment.GetEnvironmentVariable("Connect_String"));
+            var hub = await communication.LinkNotificationHubAsync(parameter);
             Assert.NotNull(hub.Value.ResourceId);
         }
 
@@ -162,8 +165,8 @@ namespace Azure.ResourceManager.Communication.Tests
             var communicationService = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             Assert.IsNotNull(communicationService);
             Assert.AreEqual(communicationServiceName, communicationService.Data.Name);
-            Assert.AreEqual(_location, communicationService.Data.Location);
-            Assert.AreEqual(_dataLocation, communicationService.Data.DataLocation);
+            Assert.AreEqual(_location.ToString(), communicationService.Data.Location.ToString());
+            Assert.AreEqual(_dataLocation.ToString(), communicationService.Data.DataLocation.ToString());
         }
 
         [Test]
@@ -173,11 +176,11 @@ namespace Azure.ResourceManager.Communication.Tests
             var communication1 = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             var patch = new CommunicationServiceResourcePatch()
             {
-                LinkedDomains = { "contoso.com" }
+                Tags = { { "newtag", "newvalue" } }
             };
             var communication2 = (await communication1.UpdateAsync(WaitUntil.Completed, patch)).Value;
             Assert.IsNotNull(communication2);
-            Assert.AreEqual("contoso.com", communication2.Data.LinkedDomains.FirstOrDefault());
+            Assert.AreEqual("newtag", communication2.Data.Tags.FirstOrDefault().Key);
             Assert.AreEqual(communication1.Data.Name, communication2.Data.Name);
         }
 
@@ -201,8 +204,8 @@ namespace Azure.ResourceManager.Communication.Tests
             var communicationService = await collection.GetAsync(communicationServiceName);
             Assert.IsNotNull(communicationService);
             Assert.AreEqual(communicationServiceName, communicationService.Value.Data.Name);
-            Assert.AreEqual(_location, communicationService.Value.Data.Location);
-            Assert.AreEqual(_dataLocation, communicationService.Value.Data.DataLocation);
+            Assert.AreEqual(_location.ToString(), communicationService.Value.Data.Location.ToString());
+            Assert.AreEqual(_dataLocation.ToString(), communicationService.Value.Data.DataLocation.ToString());
         }
 
         [Test]
@@ -213,8 +216,8 @@ namespace Azure.ResourceManager.Communication.Tests
             var list = await _resourceGroup.GetCommunicationServiceResources().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(communicationServiceName, list.FirstOrDefault().Data.Name);
-            Assert.AreEqual(_location, list.FirstOrDefault().Data.Location);
-            Assert.AreEqual(_dataLocation, list.FirstOrDefault().Data.DataLocation);
+            Assert.AreEqual(_location.ToString(), list.FirstOrDefault().Data.Location.ToString());
+            Assert.AreEqual(_dataLocation.ToString(), list.FirstOrDefault().Data.DataLocation.ToString());
         }
     }
 }
