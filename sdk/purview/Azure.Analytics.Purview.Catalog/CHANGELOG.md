@@ -6,13 +6,9 @@
 
 - Support Atlas 2.2
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Add missing query parameters for Glossary Term API
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2022-03-17)
 
