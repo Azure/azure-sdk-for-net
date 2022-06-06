@@ -28,7 +28,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
-        /// <param name="earlyTermination"> Type of early termination policy. </param>
+        /// <param name="earlyTermination">
+        /// Type of early termination policy.
+        /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/>, <see cref="TruncationSelectionPolicy"/>.
+        /// </param>
         /// <param name="limits"> [Required] Limit settings for model sweeping and hyperparameter sweeping. </param>
         /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
         internal ImageSweepSettings(EarlyTerminationPolicy earlyTermination, ImageSweepLimitSettings limits, SamplingAlgorithmType samplingAlgorithm)
@@ -38,7 +42,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SamplingAlgorithm = samplingAlgorithm;
         }
 
-        /// <summary> Type of early termination policy. </summary>
+        /// <summary>
+        /// Type of early termination policy.
+        /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/>, <see cref="TruncationSelectionPolicy"/>.
+        /// </summary>
         public EarlyTerminationPolicy EarlyTermination { get; set; }
         /// <summary> [Required] Limit settings for model sweeping and hyperparameter sweeping. </summary>
         public ImageSweepLimitSettings Limits { get; set; }

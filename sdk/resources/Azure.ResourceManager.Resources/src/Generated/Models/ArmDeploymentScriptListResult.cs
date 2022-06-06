@@ -21,7 +21,11 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of ArmDeploymentScriptListResult. </summary>
-        /// <param name="value"> An array of deployment scripts. </param>
+        /// <param name="value">
+        /// An array of deployment scripts.
+        /// Please note <see cref="ArmDeploymentScript"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="AzurePowerShellScript"/>, <see cref="AzureCliScript"/>.
+        /// </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ArmDeploymentScriptListResult(IReadOnlyList<ArmDeploymentScriptData> value, string nextLink)
         {
@@ -29,7 +33,11 @@ namespace Azure.ResourceManager.Resources.Models
             NextLink = nextLink;
         }
 
-        /// <summary> An array of deployment scripts. </summary>
+        /// <summary>
+        /// An array of deployment scripts.
+        /// Please note <see cref="ArmDeploymentScript"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="AzurePowerShellScript"/>, <see cref="AzureCliScript"/>.
+        /// </summary>
         public IReadOnlyList<ArmDeploymentScriptData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }

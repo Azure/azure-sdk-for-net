@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Forecasting target rolling window size.
-    /// Please note &lt;see cref=&quot;TargetRollingWindowSize&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;AutoTargetRollingWindowSize&quot;/&gt;, &lt;see cref=&quot;CustomTargetRollingWindowSize&quot;/&gt;.
+    /// Please note <see cref="TargetRollingWindowSize"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="AutoTargetRollingWindowSize"/>, <see cref="CustomTargetRollingWindowSize"/>.
     /// </summary>
     public partial class TargetRollingWindowSize
     {

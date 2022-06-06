@@ -19,7 +19,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of SecretAuthInfo. </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="name"> Username or account name for secret auth. </param>
-        /// <param name="secretInfo"> Password or key vault secret for secret auth. </param>
+        /// <param name="secretInfo">
+        /// Password or key vault secret for secret auth.
+        /// Please note <see cref="SecretInfoBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="ValueSecretInfo"/>, <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/>.
+        /// </param>
         internal SecretAuthInfo(AuthType authType, string name, SecretInfoBase secretInfo) : base(authType)
         {
             Name = name;
@@ -29,7 +33,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Username or account name for secret auth. </summary>
         public string Name { get; set; }
-        /// <summary> Password or key vault secret for secret auth. </summary>
+        /// <summary>
+        /// Password or key vault secret for secret auth.
+        /// Please note <see cref="SecretInfoBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="ValueSecretInfo"/>, <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/>.
+        /// </summary>
         public SecretInfoBase SecretInfo { get; set; }
     }
 }

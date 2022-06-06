@@ -10,8 +10,9 @@ using System;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
-    /// Please note &lt;see cref=&quot;JobLimits&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;CommandJobLimits&quot;/&gt;, &lt;see cref=&quot;SweepJobLimits&quot;/&gt;.
+    /// The JobLimits.
+    /// Please note <see cref="JobLimits"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="CommandJobLimits"/>, <see cref="SweepJobLimits"/>.
     /// </summary>
     public partial class JobLimits
     {

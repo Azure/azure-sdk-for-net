@@ -10,8 +10,9 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
-    /// Please note &lt;see cref=&quot;OnlineDeploymentProperties&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;KubernetesOnlineDeployment&quot;/&gt;, &lt;see cref=&quot;ManagedOnlineDeployment&quot;/&gt;.
+    /// The OnlineDeploymentProperties.
+    /// Please note <see cref="OnlineDeploymentProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="KubernetesOnlineDeployment"/>, <see cref="ManagedOnlineDeployment"/>.
     /// </summary>
     public partial class OnlineDeploymentProperties : EndpointDeploymentPropertiesBase
     {
@@ -45,6 +46,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
+        /// Please note <see cref="OnlineScaleSettings"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="DefaultScaleSettings"/>, <see cref="TargetUtilizationScaleSettings"/>.
         /// </param>
         internal OnlineDeploymentProperties(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, bool? appInsightsEnabled, EgressPublicNetworkAccessType? egressPublicNetworkAccess, EndpointComputeType endpointComputeType, string instanceType, ProbeSettings livenessProbe, string model, string modelMountPath, bool? privateNetworkConnection, DeploymentProvisioningState? provisioningState, ProbeSettings readinessProbe, OnlineRequestSettings requestSettings, OnlineScaleSettings scaleSettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
         {
@@ -92,6 +95,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
+        /// Please note <see cref="OnlineScaleSettings"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="DefaultScaleSettings"/>, <see cref="TargetUtilizationScaleSettings"/>.
         /// </summary>
         public OnlineScaleSettings ScaleSettings { get; set; }
     }

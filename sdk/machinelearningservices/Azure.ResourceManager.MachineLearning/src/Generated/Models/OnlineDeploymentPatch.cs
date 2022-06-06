@@ -25,7 +25,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string Kind { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; set; }
-        /// <summary> Additional attributes of the entity. </summary>
+        /// <summary>
+        /// Additional attributes of the entity.
+        /// Please note <see cref="PartialOnlineDeployment"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="PartialKubernetesOnlineDeployment"/>, <see cref="PartialManagedOnlineDeployment"/>.
+        /// </summary>
         public PartialOnlineDeployment Properties { get; set; }
         /// <summary> Sku details required for ARM contract for Autoscaling. </summary>
         public PartialSku Sku { get; set; }

@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for datastore credentials.
-    /// Please note &lt;see cref=&quot;DatastoreCredentials&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;AccountKeyDatastoreCredentials&quot;/&gt;, &lt;see cref=&quot;CertificateDatastoreCredentials&quot;/&gt;, &lt;see cref=&quot;KerberosKeytabCredentials&quot;/&gt;, &lt;see cref=&quot;KerberosPasswordCredentials&quot;/&gt;, &lt;see cref=&quot;NoneDatastoreCredentials&quot;/&gt;, &lt;see cref=&quot;SasDatastoreCredentials&quot;/&gt;, &lt;see cref=&quot;ServicePrincipalDatastoreCredentials&quot;/&gt;.
+    /// Please note <see cref="DatastoreCredentials"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/>, <see cref="ServicePrincipalDatastoreCredentials"/>.
     /// </summary>
     public partial class DatastoreCredentials
     {

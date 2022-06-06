@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
     /// The object representing the policy for taking backups on an account.
-    /// Please note &lt;see cref=&quot;BackupPolicy&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;PeriodicModeBackupPolicy&quot;/&gt;, &lt;see cref=&quot;ContinuousModeBackupPolicy&quot;/&gt;.
+    /// Please note <see cref="BackupPolicy"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="PeriodicModeBackupPolicy"/>, <see cref="ContinuousModeBackupPolicy"/>.
     /// </summary>
     public partial class BackupPolicy
     {

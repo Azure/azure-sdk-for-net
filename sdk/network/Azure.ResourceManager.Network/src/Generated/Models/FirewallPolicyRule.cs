@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network.Models
 {
     /// <summary>
     /// Properties of a rule.
-    /// Please note &lt;see cref=&quot;FirewallPolicyRule&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;ApplicationRule&quot;/&gt;, &lt;see cref=&quot;NatRule&quot;/&gt;, &lt;see cref=&quot;NetworkRule&quot;/&gt;.
+    /// Please note <see cref="FirewallPolicyRule"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="ApplicationRule"/>, <see cref="NatRule"/>, <see cref="NetworkRule"/>.
     /// </summary>
     public partial class FirewallPolicyRule
     {

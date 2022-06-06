@@ -40,7 +40,11 @@ namespace Azure.ResourceManager.Monitor.Models
         public string TargetResourceType { get; set; }
         /// <summary> the region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
         public string TargetResourceRegion { get; set; }
-        /// <summary> defines the specific alert criteria information. </summary>
+        /// <summary>
+        /// defines the specific alert criteria information.
+        /// Please note <see cref="MetricAlertCriteria"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="WebtestLocationAvailabilityCriteria"/>, <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>.
+        /// </summary>
         public MetricAlertCriteria Criteria { get; set; }
         /// <summary> the flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
         public bool? AutoMitigate { get; set; }

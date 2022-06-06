@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Forecasting seasonality.
-    /// Please note &lt;see cref=&quot;Seasonality&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;AutoSeasonality&quot;/&gt;, &lt;see cref=&quot;CustomSeasonality&quot;/&gt;.
+    /// Please note <see cref="Seasonality"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="AutoSeasonality"/>, <see cref="CustomSeasonality"/>.
     /// </summary>
     public partial class Seasonality
     {

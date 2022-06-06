@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Online deployment scaling configuration.
-    /// Please note &lt;see cref=&quot;OnlineScaleSettings&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;DefaultScaleSettings&quot;/&gt;, &lt;see cref=&quot;TargetUtilizationScaleSettings&quot;/&gt;.
+    /// Please note <see cref="OnlineScaleSettings"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="DefaultScaleSettings"/>, <see cref="TargetUtilizationScaleSettings"/>.
     /// </summary>
     public partial class OnlineScaleSettings
     {

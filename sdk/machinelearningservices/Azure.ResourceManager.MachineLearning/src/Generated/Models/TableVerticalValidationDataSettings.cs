@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nCrossValidations">
         /// Number of cross validation folds to be applied on training dataset
         /// when validation dataset is not provided.
+        /// Please note <see cref="NCrossValidations"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="AutoNCrossValidations"/>, <see cref="CustomNCrossValidations"/>.
         /// </param>
         internal TableVerticalValidationDataSettings(MLTableJobInput data, double? validationDataSize, IList<string> cvSplitColumnNames, NCrossValidations nCrossValidations) : base(data, validationDataSize)
         {
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Number of cross validation folds to be applied on training dataset
         /// when validation dataset is not provided.
+        /// Please note <see cref="NCrossValidations"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="AutoNCrossValidations"/>, <see cref="CustomNCrossValidations"/>.
         /// </summary>
         public NCrossValidations NCrossValidations { get; set; }
     }

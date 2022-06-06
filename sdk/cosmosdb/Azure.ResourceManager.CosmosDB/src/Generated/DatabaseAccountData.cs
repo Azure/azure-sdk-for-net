@@ -70,7 +70,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="instanceId"> A unique identifier assigned to the database account. </param>
         /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="backupPolicy"> The object representing the policy for taking backups on an account. </param>
+        /// <param name="backupPolicy">
+        /// The object representing the policy for taking backups on an account.
+        /// Please note <see cref="BackupPolicy"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="PeriodicModeBackupPolicy"/>, <see cref="ContinuousModeBackupPolicy"/>.
+        /// </param>
         /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
         /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
@@ -200,7 +204,11 @@ namespace Azure.ResourceManager.CosmosDB
         public CreateMode? CreateMode { get; set; }
         /// <summary> Parameters to indicate the information about the restore. </summary>
         public RestoreParameters RestoreParameters { get; set; }
-        /// <summary> The object representing the policy for taking backups on an account. </summary>
+        /// <summary>
+        /// The object representing the policy for taking backups on an account.
+        /// Please note <see cref="BackupPolicy"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="PeriodicModeBackupPolicy"/>, <see cref="ContinuousModeBackupPolicy"/>.
+        /// </summary>
         public BackupPolicy BackupPolicy { get; set; }
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
         public IList<CorsPolicy> Cors { get; }

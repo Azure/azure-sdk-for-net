@@ -10,8 +10,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary>
     /// AutoML vertical class.
     /// Base class for AutoML verticals - TableVertical/ImageVertical/NLPVertical
-    /// Please note &lt;see cref=&quot;AutoMLVertical&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;Classification&quot;/&gt;, &lt;see cref=&quot;Forecasting&quot;/&gt;, &lt;see cref=&quot;ImageClassification&quot;/&gt;, &lt;see cref=&quot;ImageClassificationMultilabel&quot;/&gt;, &lt;see cref=&quot;ImageInstanceSegmentation&quot;/&gt;, &lt;see cref=&quot;ImageObjectDetection&quot;/&gt;, &lt;see cref=&quot;Regression&quot;/&gt;, &lt;see cref=&quot;TextClassification&quot;/&gt;, &lt;see cref=&quot;TextClassificationMultilabel&quot;/&gt;, &lt;see cref=&quot;TextNer&quot;/&gt;.
+    /// Please note <see cref="AutoMLVertical"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="Classification"/>, <see cref="Forecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="Regression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/>, <see cref="TextNer"/>.
     /// </summary>
     public partial class AutoMLVertical
     {

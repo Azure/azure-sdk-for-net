@@ -24,14 +24,22 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricAlertMultipleResourceMultipleMetricCriteria. </summary>
         /// <param name="odataType"> specifies the type of the alert criteria. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="allOf"> the list of multiple metric criteria for this &apos;all of&apos; operation. </param>
+        /// <param name="allOf">
+        /// the list of multiple metric criteria for this &apos;all of&apos; operation. 
+        /// Please note <see cref="MultiMetricCriteria"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="MetricCriteria"/>, <see cref="DynamicMetricCriteria"/>.
+        /// </param>
         internal MetricAlertMultipleResourceMultipleMetricCriteria(Odatatype odataType, IDictionary<string, BinaryData> additionalProperties, IList<MultiMetricCriteria> allOf) : base(odataType, additionalProperties)
         {
             AllOf = allOf;
             OdataType = odataType;
         }
 
-        /// <summary> the list of multiple metric criteria for this &apos;all of&apos; operation. </summary>
+        /// <summary>
+        /// the list of multiple metric criteria for this &apos;all of&apos; operation. 
+        /// Please note <see cref="MultiMetricCriteria"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="MetricCriteria"/>, <see cref="DynamicMetricCriteria"/>.
+        /// </summary>
         public IList<MultiMetricCriteria> AllOf { get; }
     }
 }

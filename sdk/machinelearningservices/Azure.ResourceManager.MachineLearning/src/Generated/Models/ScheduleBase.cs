@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition of a schedule
-    /// Please note &lt;see cref=&quot;ScheduleBase&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;CronSchedule&quot;/&gt;, &lt;see cref=&quot;RecurrenceSchedule&quot;/&gt;.
+    /// Please note <see cref="ScheduleBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="CronSchedule"/>, <see cref="RecurrenceSchedule"/>.
     /// </summary>
     public partial class ScheduleBase
     {

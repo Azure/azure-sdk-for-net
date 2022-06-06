@@ -12,13 +12,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for datastore contents configuration.
-    /// Please note &lt;see cref=&quot;DatastoreProperties&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;AzureBlobDatastore&quot;/&gt;, &lt;see cref=&quot;AzureDataLakeGen1Datastore&quot;/&gt;, &lt;see cref=&quot;AzureDataLakeGen2Datastore&quot;/&gt;, &lt;see cref=&quot;AzureFileDatastore&quot;/&gt;, &lt;see cref=&quot;HdfsDatastore&quot;/&gt;.
+    /// Please note <see cref="DatastoreProperties"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="AzureBlobDatastore"/>, <see cref="AzureDataLakeGen1Datastore"/>, <see cref="AzureDataLakeGen2Datastore"/>, <see cref="AzureFileDatastore"/>, <see cref="HdfsDatastore"/>.
     /// </summary>
     public partial class DatastoreProperties : ResourceBase
     {
         /// <summary> Initializes a new instance of DatastoreProperties. </summary>
-        /// <param name="credentials"> [Required] Account credentials. </param>
+        /// <param name="credentials">
+        /// [Required] Account credentials.
+        /// Please note <see cref="DatastoreCredentials"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/>, <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> is null. </exception>
         public DatastoreProperties(DatastoreCredentials credentials)
         {
@@ -34,7 +38,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="credentials"> [Required] Account credentials. </param>
+        /// <param name="credentials">
+        /// [Required] Account credentials.
+        /// Please note <see cref="DatastoreCredentials"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/>, <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// </param>
         /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         internal DatastoreProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, DatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault) : base(description, properties, tags)
@@ -44,7 +52,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IsDefault = isDefault;
         }
 
-        /// <summary> [Required] Account credentials. </summary>
+        /// <summary>
+        /// [Required] Account credentials.
+        /// Please note <see cref="DatastoreCredentials"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="AccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="NoneDatastoreCredentials"/>, <see cref="SasDatastoreCredentials"/>, <see cref="ServicePrincipalDatastoreCredentials"/>.
+        /// </summary>
         public DatastoreCredentials Credentials { get; set; }
         /// <summary> [Required] Storage type backing the datastore. </summary>
         internal DatastoreType DatastoreType { get; set; }

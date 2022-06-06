@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
     /// The action that is performed when the alert rule becomes active, and when an alert condition is resolved.
-    /// Please note &lt;see cref=&quot;RuleAction&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;RuleEmailAction&quot;/&gt;, &lt;see cref=&quot;RuleWebhookAction&quot;/&gt;.
+    /// Please note <see cref="RuleAction"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="RuleEmailAction"/>, <see cref="RuleWebhookAction"/>.
     /// </summary>
     public partial class RuleAction
     {

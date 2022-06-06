@@ -17,7 +17,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Initializes a new instance of BillingMeterDetails. </summary>
         /// <param name="name"> Represents Billing type name. </param>
-        /// <param name="meterDetails"> Represents MeterDetails. </param>
+        /// <param name="meterDetails">
+        /// Represents MeterDetails
+        /// Please note <see cref="MeterDetails"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="Pav2MeterDetails"/>, <see cref="PurchaseMeterDetails"/>.
+        /// </param>
         /// <param name="meteringType"> Represents Metering type (eg one-time or recurrent). </param>
         /// <param name="frequency"> Frequency of recurrence. </param>
         internal BillingMeterDetails(string name, MeterDetails meterDetails, MeteringType? meteringType, string frequency)
@@ -30,7 +34,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Represents Billing type name. </summary>
         public string Name { get; }
-        /// <summary> Represents MeterDetails. </summary>
+        /// <summary>
+        /// Represents MeterDetails
+        /// Please note <see cref="MeterDetails"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="Pav2MeterDetails"/>, <see cref="PurchaseMeterDetails"/>.
+        /// </summary>
         public MeterDetails MeterDetails { get; }
         /// <summary> Represents Metering type (eg one-time or recurrent). </summary>
         public MeteringType? MeteringType { get; }

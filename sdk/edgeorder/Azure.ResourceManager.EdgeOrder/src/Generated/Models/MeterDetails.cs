@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary>
     /// Holds details about billing type and its meter guids
-    /// Please note &lt;see cref=&quot;MeterDetails&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;Pav2MeterDetails&quot;/&gt;, &lt;see cref=&quot;PurchaseMeterDetails&quot;/&gt;.
+    /// Please note <see cref="MeterDetails"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="Pav2MeterDetails"/>, <see cref="PurchaseMeterDetails"/>.
     /// </summary>
     public partial class MeterDetails
     {

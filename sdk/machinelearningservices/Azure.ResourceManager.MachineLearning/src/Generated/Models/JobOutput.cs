@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Job output definition container information on where to find job output/logs.
-    /// Please note &lt;see cref=&quot;JobOutput&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;CustomModelJobOutput&quot;/&gt;, &lt;see cref=&quot;MLFlowModelJobOutput&quot;/&gt;, &lt;see cref=&quot;MLTableJobOutput&quot;/&gt;, &lt;see cref=&quot;TritonModelJobOutput&quot;/&gt;, &lt;see cref=&quot;UriFileJobOutput&quot;/&gt;, &lt;see cref=&quot;UriFolderJobOutput&quot;/&gt;.
+    /// Please note <see cref="JobOutput"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="CustomModelJobOutput"/>, <see cref="MLFlowModelJobOutput"/>, <see cref="MLTableJobOutput"/>, <see cref="TritonModelJobOutput"/>, <see cref="UriFileJobOutput"/>, <see cref="UriFolderJobOutput"/>.
     /// </summary>
     public partial class JobOutput
     {

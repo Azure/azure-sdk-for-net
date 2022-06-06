@@ -48,7 +48,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// For TabularDataset, this is the size of the records in bytes, per mini-batch.
         /// </summary>
         public long? MiniBatchSize { get; set; }
-        /// <summary> Reference to the model asset for the endpoint deployment. </summary>
+        /// <summary>
+        /// Reference to the model asset for the endpoint deployment.
+        /// Please note <see cref="PartialAssetReferenceBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="PartialDataPathAssetReference"/>, <see cref="PartialIdAssetReference"/>, <see cref="PartialOutputPathAssetReference"/>.
+        /// </summary>
         public PartialAssetReferenceBase Model { get; set; }
         /// <summary> Indicates how the output will be organized. </summary>
         public BatchOutputAction? OutputAction { get; set; }

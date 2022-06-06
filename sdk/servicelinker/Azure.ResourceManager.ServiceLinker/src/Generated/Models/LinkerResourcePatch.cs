@@ -15,9 +15,17 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
         }
 
-        /// <summary> The target service properties. </summary>
+        /// <summary>
+        /// The target service properties
+        /// Please note <see cref="TargetServiceBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="AzureResource"/>, <see cref="ConfluentBootstrapServer"/>, <see cref="ConfluentSchemaRegistry"/>.
+        /// </summary>
         public TargetServiceBase TargetService { get; set; }
-        /// <summary> The authentication type. </summary>
+        /// <summary>
+        /// The authentication type.
+        /// Please note <see cref="AuthInfoBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="UserAssignedIdentityAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>.
+        /// </summary>
         public AuthInfoBase AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
         public ClientType? ClientType { get; set; }

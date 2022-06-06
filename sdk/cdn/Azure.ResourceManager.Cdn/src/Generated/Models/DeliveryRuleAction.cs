@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// An action for the delivery rule.
-    /// Please note &lt;see cref=&quot;DeliveryRuleAction&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;UriRedirectAction&quot;/&gt;, &lt;see cref=&quot;UriSigningAction&quot;/&gt;, &lt;see cref=&quot;OriginGroupOverrideAction&quot;/&gt;, &lt;see cref=&quot;UriRewriteAction&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleRequestHeaderAction&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleResponseHeaderAction&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleCacheExpirationAction&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleCacheKeyQueryStringAction&quot;/&gt;, &lt;see cref=&quot;DeliveryRuleRouteConfigurationOverrideAction&quot;/&gt;.
+    /// Please note <see cref="DeliveryRuleAction"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="UriRedirectAction"/>, <see cref="UriSigningAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="UriRewriteAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>.
     /// </summary>
     public partial class DeliveryRuleAction
     {

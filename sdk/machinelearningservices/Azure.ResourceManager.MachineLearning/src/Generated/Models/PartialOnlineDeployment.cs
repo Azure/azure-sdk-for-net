@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Mutable online deployment configuration
-    /// Please note &lt;see cref=&quot;PartialOnlineDeployment&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;PartialKubernetesOnlineDeployment&quot;/&gt;, &lt;see cref=&quot;PartialManagedOnlineDeployment&quot;/&gt;.
+    /// Please note <see cref="PartialOnlineDeployment"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="PartialKubernetesOnlineDeployment"/>, <see cref="PartialManagedOnlineDeployment"/>.
     /// </summary>
     public partial class PartialOnlineDeployment
     {

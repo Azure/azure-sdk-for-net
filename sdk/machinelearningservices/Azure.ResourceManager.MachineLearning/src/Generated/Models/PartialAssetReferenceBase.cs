@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for asset references.
-    /// Please note &lt;see cref=&quot;PartialAssetReferenceBase&quot;/&gt; is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
-    /// The available derived classes include &lt;see cref=&quot;PartialDataPathAssetReference&quot;/&gt;, &lt;see cref=&quot;PartialIdAssetReference&quot;/&gt;, &lt;see cref=&quot;PartialOutputPathAssetReference&quot;/&gt;.
+    /// Please note <see cref="PartialAssetReferenceBase"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="PartialDataPathAssetReference"/>, <see cref="PartialIdAssetReference"/>, <see cref="PartialOutputPathAssetReference"/>.
     /// </summary>
     public partial class PartialAssetReferenceBase
     {

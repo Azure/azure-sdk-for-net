@@ -30,7 +30,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="properties"> Compute properties. </param>
+        /// <param name="properties">
+        /// Compute properties
+        /// Please note <see cref="Compute"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="AksCompute"/>, <see cref="KubernetesCompute"/>, <see cref="AmlCompute"/>, <see cref="ComputeInstance"/>, <see cref="VirtualMachineCompute"/>, <see cref="HDInsightCompute"/>, <see cref="DataFactoryCompute"/>, <see cref="DatabricksCompute"/>, <see cref="DataLakeAnalyticsCompute"/>, <see cref="SynapseSparkCompute"/>.
+        /// </param>
         internal MachineLearningComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, Compute properties) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
@@ -48,7 +52,11 @@ namespace Azure.ResourceManager.MachineLearning
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
         public MachineLearningSku Sku { get; set; }
-        /// <summary> Compute properties. </summary>
+        /// <summary>
+        /// Compute properties
+        /// Please note <see cref="Compute"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+        /// The available derived classes include <see cref="AksCompute"/>, <see cref="KubernetesCompute"/>, <see cref="AmlCompute"/>, <see cref="ComputeInstance"/>, <see cref="VirtualMachineCompute"/>, <see cref="HDInsightCompute"/>, <see cref="DataFactoryCompute"/>, <see cref="DatabricksCompute"/>, <see cref="DataLakeAnalyticsCompute"/>, <see cref="SynapseSparkCompute"/>.
+        /// </summary>
         public Compute Properties { get; set; }
     }
 }
