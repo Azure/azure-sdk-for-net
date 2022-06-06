@@ -13,7 +13,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 override-operation-name:
-  Vaults_CheckNameAvailability: CheckKeyVaultNameAvailability
+  Vaults_CheckNameAvailability: CheckVaultNameAvailability
   MHSMPrivateLinkResources_ListByMhsmResource: GetMhsmPrivateLinkResources
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedVaults/{vaultName}
@@ -83,6 +83,7 @@ directive:
     where: '$.definitions'
     transform: >
       $.CheckNameAvailabilityResult.properties.reason['x-ms-enum']['name'] = 'NameAvailabilityReason';
+      $.CheckNameAvailabilityResult['x-ms-client-name'] = 'VaultNameAvailabilityResult';
       $.Permissions.properties.keys.items['x-ms-enum']['name'] = 'KeyPermission';
       $.Permissions.properties.secrets.items['x-ms-enum']['name'] = 'SecretPermission';
       $.Permissions.properties.certificates.items['x-ms-enum']['name'] = 'CertificatePermission';
@@ -101,6 +102,7 @@ directive:
       $.PrivateEndpointConnection.properties.etag['x-ms-format'] = 'etag';
       $.PrivateLinkServiceConnectionState.properties.actionsRequired['x-ms-enum']['name'] = 'ActionsRequiredMessage';
       $.VaultCheckNameAvailabilityParameters.properties.type['x-ms-format'] = 'resource-type';
+      $.VaultCheckNameAvailabilityParameters['x-ms-client-name'] = 'VaultNameAvailabilityParameters';
   - rename-model:
       from: MHSMIPRule
       to: MhsmIPRule

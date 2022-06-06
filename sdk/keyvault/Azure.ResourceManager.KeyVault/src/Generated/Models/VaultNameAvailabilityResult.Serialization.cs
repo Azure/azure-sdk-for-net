@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class CheckNameAvailabilityResult
+    public partial class VaultNameAvailabilityResult
     {
-        internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element)
+        internal static VaultNameAvailabilityResult DeserializeVaultNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<NameAvailabilityReason> reason = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new CheckNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new VaultNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }
