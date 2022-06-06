@@ -12,7 +12,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the ArmDeploymentScript data model. </summary>
+    /// <summary>
+    /// A class representing the ArmDeploymentScript data model.
+    /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. In order to more specifically assign or retrieve the value of this property, the derived class is needed.
+    /// The available derived classes include <see cref="AzureCliScript"/>, <see cref="AzurePowerShellScript"/>.
+    /// </summary>
     public partial class ArmDeploymentScriptData : ResourceData
     {
         /// <summary> Initializes a new instance of ArmDeploymentScriptData. </summary>
