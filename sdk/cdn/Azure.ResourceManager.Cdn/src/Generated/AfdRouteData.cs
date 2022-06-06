@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn
         {
             CustomDomains = new ChangeTrackingList<ActivatedResourceReference>();
             RuleSets = new ChangeTrackingList<WritableSubResource>();
-            SupportedProtocols = new ChangeTrackingList<AfdEndpointProtocols>();
+            SupportedProtocols = new ChangeTrackingList<AfdEndpointProtocol>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal AfdRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IList<ActivatedResourceReference> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocols> supportedProtocols, IList<string> patternsToMatch, AfdRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
+        internal AfdRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IList<ActivatedResourceReference> customDomains, WritableSubResource originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<AfdEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, AfdRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
         {
             EndpointName = endpointName;
             CustomDomains = customDomains;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> rule sets referenced by this endpoint. </summary>
         public IList<WritableSubResource> RuleSets { get; }
         /// <summary> List of supported protocols for this route. </summary>
-        public IList<AfdEndpointProtocols> SupportedProtocols { get; }
+        public IList<AfdEndpointProtocol> SupportedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>
         public IList<string> PatternsToMatch { get; }
         /// <summary> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </summary>
