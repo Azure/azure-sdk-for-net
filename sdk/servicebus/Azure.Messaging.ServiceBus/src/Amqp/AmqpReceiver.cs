@@ -53,9 +53,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <value>
         /// <c>true</c> if the receiver link was closed; otherwise, <c>false</c>.
         /// </value>
-        public override bool IsSessionLinkClosed => _sessionLinkClosed;
-
-        private volatile bool _sessionLinkClosed;
+        public override bool IsSessionLinkClosed => _isSessionReceiver && LinkException != null;
 
         /// <summary>
         /// The name of the Service Bus entity to which the receiver is bound.
@@ -1339,10 +1337,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 LinkException = exception;
             }
 
-            if (_isSessionReceiver)
-            {
-                _sessionLinkClosed = true;
-            }
             ServiceBusEventSource.Log.ReceiveLinkClosed(
                 _identifier,
                 SessionId,
@@ -1388,7 +1382,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private void ThrowIfSessionLockLost()
         {
-            if (_isSessionReceiver && LinkException != null)
+            if (IsSessionLinkClosed)
             {
                 throw LinkException;
             }
