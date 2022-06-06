@@ -1,14 +1,9 @@
 # Release History
 
-## 12.6.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.6.0 (2022-06-07)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed an issue that caused `TableEntity.GetBinaryData` to return incorrectly formatted data for binary entity properties. ([#29029](https://github.com/Azure/azure-sdk-for-net/issues/29029))
 
 ## 12.6.0-beta.1 (2022-05-10)
 
