@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Cdn
         public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RuleSets { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols> SupportedProtocols { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol> SupportedProtocols { get { throw null; } }
     }
     public partial class AfdRouteResource : Azure.ResourceManager.ArmResource
     {
@@ -868,21 +868,21 @@ namespace Azure.ResourceManager.Cdn.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AfdEndpointProtocols : System.IEquatable<Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols>
+    public readonly partial struct AfdEndpointProtocol : System.IEquatable<Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AfdEndpointProtocols(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols Http { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols Https { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols other) { throw null; }
+        public AfdEndpointProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol Http { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol Https { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols left, Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols left, Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol left, Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol left, Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
     public enum AfdMinimumTlsVersion
@@ -982,7 +982,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public string OriginPath { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RuleSets { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.AfdEndpointProtocols> SupportedProtocols { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol> SupportedProtocols { get { throw null; } }
     }
     public partial class AfdRulePatch
     {
@@ -1003,22 +1003,22 @@ namespace Azure.ResourceManager.Cdn.Models
         public AzureFirstPartyManagedCertificateProperties() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CacheBehaviorSettings : System.IEquatable<Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings>
+    public readonly partial struct CacheBehaviorSetting : System.IEquatable<Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CacheBehaviorSettings(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings BypassCache { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings Override { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings SetIfMissing { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings other) { throw null; }
+        public CacheBehaviorSetting(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting BypassCache { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting Override { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting SetIfMissing { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings left, Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings left, Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting left, Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting left, Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CacheConfiguration
@@ -1032,9 +1032,9 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class CacheExpirationActionProperties
     {
-        public CacheExpirationActionProperties(Azure.ResourceManager.Cdn.Models.CacheExpirationActionType actionType, Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings cacheBehavior, Azure.ResourceManager.Cdn.Models.CacheLevel cacheType) { }
+        public CacheExpirationActionProperties(Azure.ResourceManager.Cdn.Models.CacheExpirationActionType actionType, Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting cacheBehavior, Azure.ResourceManager.Cdn.Models.CacheLevel cacheType) { }
         public Azure.ResourceManager.Cdn.Models.CacheExpirationActionType ActionType { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.CacheBehaviorSettings CacheBehavior { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.CacheBehaviorSetting CacheBehavior { get { throw null; } set { } }
         public System.TimeSpan? CacheDuration { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.CacheLevel CacheType { get { throw null; } set { } }
     }
