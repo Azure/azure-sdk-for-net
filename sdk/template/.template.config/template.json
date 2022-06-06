@@ -200,8 +200,6 @@
         "separator": "" 
       },
       "description": "Renames files containing 'TemplateClient'",
-      "valueSource": "Cl",
-      "valueTransform": "ServiceShortNameForm",
       "fileRename": "TemplateClient",
       "replaces": "TemplateClient"
     },
@@ -438,6 +436,14 @@
           }
         ]
       }
+    },
+    "ciFileName": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "defaultValue": "ci",
+      "description": "ci file name.",
+      "fileRename": "ci-template"
     }
   },
   "forms": {
