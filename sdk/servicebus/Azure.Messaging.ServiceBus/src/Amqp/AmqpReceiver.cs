@@ -40,9 +40,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <value>
         /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
         /// </value>
-        public override bool IsReceiverClosedByUser => _receiverClosedByUserByUser;
+        public override bool WasClosedExplicitly => _receiverClosedExplicitlyExplicitly;
 
-        private volatile bool _receiverClosedByUserByUser;
+        private volatile bool _receiverClosedExplicitlyExplicitly;
 
         /// <summary>
         /// Indicates whether or not the session link has been closed.
@@ -1297,12 +1297,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task CloseAsync(CancellationToken cancellationToken)
         {
-            if (_receiverClosedByUserByUser)
+            if (_receiverClosedExplicitlyExplicitly)
             {
                 return;
             }
 
-            _receiverClosedByUserByUser = true;
+            _receiverClosedExplicitlyExplicitly = true;
 
             await CloseCoreAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -1390,7 +1390,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         private bool HasLinkCommunicationError(ReceivingAmqpLink link) =>
-            !_receiverClosedByUserByUser && (link?.IsClosing() ?? false);
+            !_receiverClosedExplicitlyExplicitly && (link?.IsClosing() ?? false);
 
         private void ThrowIfSessionLockLost()
         {
