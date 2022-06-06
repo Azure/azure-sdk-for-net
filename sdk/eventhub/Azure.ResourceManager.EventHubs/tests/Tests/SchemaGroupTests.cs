@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         public SchemaGroupTests(bool isAsync): base(isAsync)
         {
         }
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private SchemaGroupCollection _schemaGroupCollection;
         [SetUp]
         public async Task CreateNamespaceAndGetEventhubCollection()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespace eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
             _schemaGroupCollection = eHNamespace.GetSchemaGroups();
         }
         [TearDown]
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
             if (_resourceGroup != null)
             {
                 EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-                List<EventHubNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (EventHubNamespace eventHubNamespace in namespaceList)
+                List<EventHubNamespaceResource> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
+                foreach (EventHubNamespaceResource eventHubNamespace in namespaceList)
                 {
-                    await eventHubNamespace.DeleteAsync(true);
+                    await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
                 }
                 _resourceGroup = null;
             }
@@ -55,21 +55,20 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 SchemaType = SchemaType.Avro
             };
-            SchemaGroup schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(true, schemaGroupName, parameters)).Value;
+            SchemaGroupResource schemaGroup = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName, parameters)).Value;
             Assert.NotNull(schemaGroup);
             Assert.AreEqual(schemaGroupName, schemaGroup.Id.Name);
 
             //validate if created successfully
-            schemaGroup = await _schemaGroupCollection.GetIfExistsAsync(schemaGroupName);
-            Assert.NotNull(schemaGroup);
             Assert.IsTrue(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
+            schemaGroup = await _schemaGroupCollection.GetAsync(schemaGroupName);
 
             //delete eventhub
-            await schemaGroup.DeleteAsync(true);
+            await schemaGroup.DeleteAsync(WaitUntil.Completed);
 
             //validate
-            schemaGroup = await _schemaGroupCollection.GetIfExistsAsync(schemaGroupName);
-            Assert.Null(schemaGroup);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _schemaGroupCollection.GetAsync(schemaGroupName); });
+            Assert.AreEqual(404, exception.Status);
             Assert.IsFalse(await _schemaGroupCollection.ExistsAsync(schemaGroupName));
         }
 
@@ -84,12 +83,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 SchemaType = SchemaType.Avro
             };
-            _ = (await _schemaGroupCollection.CreateOrUpdateAsync(true, schemaGroupName1, parameters)).Value;
+            _ = (await _schemaGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName1, parameters)).Value;
 
             //validate
             int count = 0;
-            SchemaGroup schemaGroup1 = null;
-            await foreach (SchemaGroup schemaGroup in _schemaGroupCollection.GetAllAsync())
+            SchemaGroupResource schemaGroup1 = null;
+            await foreach (SchemaGroupResource schemaGroup in _schemaGroupCollection.GetAllAsync())
             {
                 count++;
                 if (schemaGroup.Id.Name == schemaGroupName1)

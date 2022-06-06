@@ -12,38 +12,32 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
     internal partial class MhsmPrivateLinkResourcesRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of MhsmPrivateLinkResourcesRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public MhsmPrivateLinkResourcesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public MhsmPrivateLinkResourcesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-10-01";
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListByMhsmResourceRequest(string subscriptionId, string resourceGroupName, string name)
+        internal HttpMessage CreateListByManagedHsmResourceRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -60,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -70,34 +64,26 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public async Task<Response<MhsmPrivateLinkResourceListResult>> ListByMhsmResourceAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagedHsmPrivateLinkResourceListResult>> ListByManagedHsmResourceAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListByMhsmResourceRequest(subscriptionId, resourceGroupName, name);
+            using var message = CreateListByManagedHsmResourceRequest(subscriptionId, resourceGroupName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MhsmPrivateLinkResourceListResult value = default;
+                        ManagedHsmPrivateLinkResourceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MhsmPrivateLinkResourceListResult.DeserializeMhsmPrivateLinkResourceListResult(document.RootElement);
+                        value = ManagedHsmPrivateLinkResourceListResult.DeserializeManagedHsmPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -107,34 +93,26 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="name"> Name of the managed HSM Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public Response<MhsmPrivateLinkResourceListResult> ListByMhsmResource(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagedHsmPrivateLinkResourceListResult> ListByManagedHsmResource(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListByMhsmResourceRequest(subscriptionId, resourceGroupName, name);
+            using var message = CreateListByManagedHsmResourceRequest(subscriptionId, resourceGroupName, name);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MhsmPrivateLinkResourceListResult value = default;
+                        ManagedHsmPrivateLinkResourceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MhsmPrivateLinkResourceListResult.DeserializeMhsmPrivateLinkResourceListResult(document.RootElement);
+                        value = ManagedHsmPrivateLinkResourceListResult.DeserializeManagedHsmPrivateLinkResourceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

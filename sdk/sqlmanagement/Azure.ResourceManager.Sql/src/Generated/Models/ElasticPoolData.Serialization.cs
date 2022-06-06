@@ -61,13 +61,18 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("maintenanceConfigurationId");
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
+            {
+                writer.WritePropertyName("highAvailabilityReplicaCount");
+                writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ElasticPoolData DeserializeElasticPoolData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<SqlSku> sku = default;
             Optional<string> kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -82,6 +87,7 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> zoneRedundant = default;
             Optional<ElasticPoolLicenseType> licenseType = default;
             Optional<string> maintenanceConfigurationId = default;
+            Optional<int> highAvailabilityReplicaCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -91,7 +97,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -208,11 +214,21 @@ namespace Azure.ResourceManager.Sql
                             maintenanceConfigurationId = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("highAvailabilityReplicaCount"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            highAvailabilityReplicaCount = property0.Value.GetInt32();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ElasticPoolData(id, name, type, systemData, tags, location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value);
+            return new ElasticPoolData(id, name, type, systemData, tags, location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount));
         }
     }
 }

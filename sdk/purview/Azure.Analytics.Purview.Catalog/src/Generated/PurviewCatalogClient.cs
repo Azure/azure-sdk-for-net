@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -36,15 +37,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Initializes a new instance of PurviewCatalogClient. </summary>
         /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PurviewCatalogClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewCatalogClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of PurviewCatalogClient. </summary>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewCatalogClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
+        public PurviewCatalogClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewCatalogClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -461,9 +470,52 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
+        private PurviewEntities _cachedPurviewEntities;
+        private PurviewGlossaries _cachedPurviewGlossaries;
+        private PurviewLineages _cachedPurviewLineages;
+        private PurviewRelationships _cachedPurviewRelationships;
+        private PurviewTypes _cachedPurviewTypes;
+        private PurviewCollections _cachedPurviewCollections;
+
+        /// <summary> Initializes a new instance of PurviewEntities. </summary>
+        public virtual PurviewEntities GetPurviewEntitiesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewEntities) ?? Interlocked.CompareExchange(ref _cachedPurviewEntities, new PurviewEntities(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedPurviewEntities;
+        }
+
+        /// <summary> Initializes a new instance of PurviewGlossaries. </summary>
+        public virtual PurviewGlossaries GetPurviewGlossariesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewGlossaries) ?? Interlocked.CompareExchange(ref _cachedPurviewGlossaries, new PurviewGlossaries(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewGlossaries;
+        }
+
+        /// <summary> Initializes a new instance of PurviewLineages. </summary>
+        public virtual PurviewLineages GetPurviewLineagesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewLineages) ?? Interlocked.CompareExchange(ref _cachedPurviewLineages, new PurviewLineages(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewLineages;
+        }
+
+        /// <summary> Initializes a new instance of PurviewRelationships. </summary>
+        public virtual PurviewRelationships GetPurviewRelationshipsClient()
+        {
+            return Volatile.Read(ref _cachedPurviewRelationships) ?? Interlocked.CompareExchange(ref _cachedPurviewRelationships, new PurviewRelationships(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedPurviewRelationships;
+        }
+
+        /// <summary> Initializes a new instance of PurviewTypes. </summary>
+        public virtual PurviewTypes GetPurviewTypesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewTypes) ?? Interlocked.CompareExchange(ref _cachedPurviewTypes, new PurviewTypes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewTypes;
+        }
+
+        /// <summary> Initializes a new instance of PurviewCollections. </summary>
+        public virtual PurviewCollections GetPurviewCollectionsClient()
+        {
+            return Volatile.Read(ref _cachedPurviewCollections) ?? Interlocked.CompareExchange(ref _cachedPurviewCollections, new PurviewCollections(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewCollections;
+        }
+
         internal HttpMessage CreateSearchRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -475,13 +527,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateSuggestRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -493,13 +544,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateBrowseRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -511,13 +561,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateAutoCompleteRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -529,22 +578,10 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

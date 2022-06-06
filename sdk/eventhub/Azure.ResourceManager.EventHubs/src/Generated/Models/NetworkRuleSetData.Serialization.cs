@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules");
                 writer.WriteStartArray();
-                foreach (var item in IpRules)
+                foreach (var item in IPRules)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<bool> trustedServiceAccessEnabled = default;
             Optional<DefaultAction> defaultAction = default;
             Optional<IList<NetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
-            Optional<IList<NetworkRuleSetIpRules>> ipRules = default;
+            Optional<IList<NetworkRuleSetIPRules>> ipRules = default;
             Optional<PublicNetworkAccessFlag> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NetworkRuleSetIpRules> array = new List<NetworkRuleSetIpRules>();
+                            List<NetworkRuleSetIPRules> array = new List<NetworkRuleSetIPRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkRuleSetIpRules.DeserializeNetworkRuleSetIpRules(item));
+                                array.Add(NetworkRuleSetIPRules.DeserializeNetworkRuleSetIPRules(item));
                             }
                             ipRules = array;
                             continue;

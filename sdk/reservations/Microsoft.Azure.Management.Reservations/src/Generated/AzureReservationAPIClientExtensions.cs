@@ -40,9 +40,18 @@ namespace Microsoft.Azure.Management.Reservations
             /// Filters the skus based on the location specified in this parameter. This
             /// can be an azure region or global
             /// </param>
-            public static IList<Catalog> GetCatalog(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType, string location = default(string))
+            /// <param name='publisherId'>
+            /// Publisher id used to get the third party products
+            /// </param>
+            /// <param name='offerId'>
+            /// Offer id used to get the third party products
+            /// </param>
+            /// <param name='planId'>
+            /// Plan id used to get the third party products
+            /// </param>
+            public static IList<Catalog> GetCatalog(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType = default(string), string location = default(string), string publisherId = default(string), string offerId = default(string), string planId = default(string))
             {
-                return operations.GetCatalogAsync(subscriptionId, reservedResourceType, location).GetAwaiter().GetResult();
+                return operations.GetCatalogAsync(subscriptionId, reservedResourceType, location, publisherId, offerId, planId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -62,12 +71,21 @@ namespace Microsoft.Azure.Management.Reservations
             /// Filters the skus based on the location specified in this parameter. This
             /// can be an azure region or global
             /// </param>
+            /// <param name='publisherId'>
+            /// Publisher id used to get the third party products
+            /// </param>
+            /// <param name='offerId'>
+            /// Offer id used to get the third party products
+            /// </param>
+            /// <param name='planId'>
+            /// Plan id used to get the third party products
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Catalog>> GetCatalogAsync(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType, string location = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<Catalog>> GetCatalogAsync(this IAzureReservationAPIClient operations, string subscriptionId, string reservedResourceType = default(string), string location = default(string), string publisherId = default(string), string offerId = default(string), string planId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCatalogWithHttpMessagesAsync(subscriptionId, reservedResourceType, location, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCatalogWithHttpMessagesAsync(subscriptionId, reservedResourceType, location, publisherId, offerId, planId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

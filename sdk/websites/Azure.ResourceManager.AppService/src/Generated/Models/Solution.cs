@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="displayName"> Display Name of the solution. </param>
         /// <param name="order"> Order of the solution. </param>
         /// <param name="description"> Description of the solution. </param>
-        /// <param name="type"> Type of Solution. </param>
+        /// <param name="solutionType"> Type of Solution. </param>
         /// <param name="data"> Solution Data. </param>
         /// <param name="metadata"> Solution Metadata. </param>
-        internal Solution(double? id, string displayName, double? order, string description, SolutionType? type, IList<IList<NameValuePair>> data, IList<IList<NameValuePair>> metadata)
+        internal Solution(double? id, string displayName, double? order, string description, SolutionType? solutionType, IList<IList<NameValuePair>> data, IList<IList<NameValuePair>> metadata)
         {
             Id = id;
             DisplayName = displayName;
             Order = order;
             Description = description;
-            Type = type;
+            SolutionType = solutionType;
             Data = data;
             Metadata = metadata;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Description of the solution. </summary>
         public string Description { get; set; }
         /// <summary> Type of Solution. </summary>
-        public SolutionType? Type { get; set; }
+        public SolutionType? SolutionType { get; set; }
         /// <summary> Solution Data. </summary>
         public IList<IList<NameValuePair>> Data { get; }
         /// <summary> Solution Metadata. </summary>

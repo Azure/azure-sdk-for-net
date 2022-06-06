@@ -1,84 +1,88 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/text/analytics/v3.2-preview.2/entities/recognition/general?model-version=2020-04-01\u0026showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-04-01-preview\u0026showStats=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": [
-          "application/json",
-          "text/json"
-        ],
-        "Content-Length": "96",
+        "Accept": "application/json",
+        "Content-Length": "218",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-92639668362e9a40aebf7124ae24526c-492feaa06f2fab47-00",
-        "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20211025.1",
-          "(.NET Core 3.1.20; Microsoft Windows 10.0.19043)"
-        ],
-        "x-ms-client-request-id": "c580665e455e125e80a821d61e9c3c18",
+        "traceparent": "00-29649c43c448cc4cbed458e16d8f3b29-0cbc2715aa5a6a4c-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220429.1 (.NET Framework 4.8.4470.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "5b8ba7fc04ffcdcc62bd51c9919ad1aa",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "documents": [
-          {
-            "id": "0",
-            "text": "I had a wonderful trip to Seattle last week.",
-            "language": "en"
-          }
-        ]
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "I had a wonderful trip to Seattle last week.",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "stringIndexType": "Utf16CodeUnit",
+          "modelVersion": "2020-04-01"
+        },
+        "kind": "EntityRecognition"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "fd7523b9-cbe0-462d-a402-1dc353df91a5",
+        "apim-request-id": "3b048b15-cda6-4315-aba3-8d280efc05b1",
+        "Content-Length": "441",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1,CognitiveServices.TextAnalytics.TextRecords=1",
-        "Date": "Mon, 25 Oct 2021 21:20:26 GMT",
+        "Date": "Fri, 29 Apr 2022 23:10:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "87"
+        "x-envoy-upstream-service-time": "88"
       },
       "ResponseBody": {
-        "documents": [
-          {
-            "id": "0",
-            "entities": [
-              {
-                "text": "trip",
-                "category": "Event",
-                "offset": 18,
-                "length": 4,
-                "confidenceScore": 0.61
-              },
-              {
-                "text": "Seattle",
-                "category": "Location",
-                "subcategory": "GPE",
-                "offset": 26,
-                "length": 7,
-                "confidenceScore": 0.82
-              },
-              {
-                "text": "last week",
-                "category": "DateTime",
-                "subcategory": "DateRange",
-                "offset": 34,
-                "length": 9,
-                "confidenceScore": 0.8
-              }
-            ],
-            "warnings": []
-          }
-        ],
-        "errors": [],
-        "modelVersion": "2020-04-01"
+        "kind": "EntityRecognitionResults",
+        "results": {
+          "documents": [
+            {
+              "id": "0",
+              "entities": [
+                {
+                  "text": "trip",
+                  "category": "Event",
+                  "offset": 18,
+                  "length": 4,
+                  "confidenceScore": 0.61
+                },
+                {
+                  "text": "Seattle",
+                  "category": "Location",
+                  "subcategory": "GPE",
+                  "offset": 26,
+                  "length": 7,
+                  "confidenceScore": 0.82
+                },
+                {
+                  "text": "last week",
+                  "category": "DateTime",
+                  "subcategory": "DateRange",
+                  "offset": 34,
+                  "length": 9,
+                  "confidenceScore": 0.8
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2020-04-01"
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "1531566714",
+    "RandomSeed": "3171152",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
   }
 }

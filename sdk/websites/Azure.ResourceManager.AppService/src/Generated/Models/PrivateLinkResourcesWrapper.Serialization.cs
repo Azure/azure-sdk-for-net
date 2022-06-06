@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class PrivateLinkResourcesWrapper
+    internal partial class PrivateLinkResourcesWrapper
     {
         internal static PrivateLinkResourcesWrapper DeserializePrivateLinkResourcesWrapper(JsonElement element)
         {
-            IReadOnlyList<PrivateLinkResource> value = default;
+            IReadOnlyList<AppServicePrivateLinkResource> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<PrivateLinkResource> array = new List<PrivateLinkResource>();
+                    List<AppServicePrivateLinkResource> array = new List<AppServicePrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkResource.DeserializePrivateLinkResource(item));
+                        array.Add(AppServicePrivateLinkResource.DeserializeAppServicePrivateLinkResource(item));
                     }
                     value = array;
                     continue;

@@ -12,38 +12,32 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
     internal partial class ManagementLocksRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of ManagementLocksRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public ManagementLocksRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public ManagementLocksRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2016-09-01";
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string lockName, ManagementLockData parameters)
+        internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string lockName, ManagementLockData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,34 +53,26 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Create or update a management lock by scope. </summary>
         /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
         /// <param name="lockName"> The name of lock. </param>
-        /// <param name="parameters"> Create or update management lock parameters. </param>
+        /// <param name="data"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<ManagementLockData>> CreateOrUpdateByScopeAsync(string scope, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ManagementLockData>> CreateOrUpdateByScopeAsync(string scope, string lockName, ManagementLockData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (lockName == null)
-            {
-                throw new ArgumentNullException(nameof(lockName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateByScopeRequest(scope, lockName, parameters);
+            using var message = CreateCreateOrUpdateByScopeRequest(scope, lockName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -99,32 +85,24 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Create or update a management lock by scope. </summary>
         /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
         /// <param name="lockName"> The name of lock. </param>
-        /// <param name="parameters"> Create or update management lock parameters. </param>
+        /// <param name="data"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<ManagementLockData> CreateOrUpdateByScope(string scope, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="lockName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ManagementLockData> CreateOrUpdateByScope(string scope, string lockName, ManagementLockData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (lockName == null)
-            {
-                throw new ArgumentNullException(nameof(lockName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateByScopeRequest(scope, lockName, parameters);
+            using var message = CreateCreateOrUpdateByScopeRequest(scope, lockName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -137,7 +115,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -154,7 +132,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendPath(lockName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -163,16 +141,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="lockName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteByScopeAsync(string scope, string lockName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (lockName == null)
-            {
-                throw new ArgumentNullException(nameof(lockName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
 
             using var message = CreateDeleteByScopeRequest(scope, lockName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -182,7 +155,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -191,16 +164,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="lockName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DeleteByScope(string scope, string lockName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (lockName == null)
-            {
-                throw new ArgumentNullException(nameof(lockName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
 
             using var message = CreateDeleteByScopeRequest(scope, lockName);
             _pipeline.Send(message, cancellationToken);
@@ -210,7 +178,7 @@ namespace Azure.ResourceManager.Resources
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -228,7 +196,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -237,16 +205,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="lockName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagementLockData>> GetByScopeAsync(string scope, string lockName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (lockName == null)
-            {
-                throw new ArgumentNullException(nameof(lockName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
 
             using var message = CreateGetByScopeRequest(scope, lockName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -262,7 +225,7 @@ namespace Azure.ResourceManager.Resources
                 case 404:
                     return Response.FromValue((ManagementLockData)null, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -271,16 +234,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="lockName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagementLockData> GetByScope(string scope, string lockName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (lockName == null)
-            {
-                throw new ArgumentNullException(nameof(lockName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
 
             using var message = CreateGetByScopeRequest(scope, lockName);
             _pipeline.Send(message, cancellationToken);
@@ -296,7 +254,7 @@ namespace Azure.ResourceManager.Resources
                 case 404:
                     return Response.FromValue((ManagementLockData)null, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -317,7 +275,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -328,10 +286,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<ManagementLockListResult>> ListByScopeAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListByScopeRequest(scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -345,7 +300,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -356,10 +311,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<ManagementLockListResult> ListByScope(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListByScopeRequest(scope, filter);
             _pipeline.Send(message, cancellationToken);
@@ -373,7 +325,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -387,7 +339,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -399,14 +351,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<ManagementLockListResult>> ListByScopeNextPageAsync(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListByScopeNextPageRequest(nextLink, scope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -420,7 +366,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -432,14 +378,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<ManagementLockListResult> ListByScopeNextPage(string nextLink, string scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListByScopeNextPageRequest(nextLink, scope, filter);
             _pipeline.Send(message, cancellationToken);
@@ -453,7 +393,7 @@ namespace Azure.ResourceManager.Resources
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

@@ -10,12 +10,12 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Resources" (https://www.nuget.org/packages/Azure.ResourceManager.Resources/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
-		<Version>3.17.2-preview</Version>
+		<Version>3.17.4-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;Azure Policy</PackageTags>
 		<PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Resource Manager SDK. This release has below changes:
-          - Added Private Link Management for ARM operations
+          - Added ForceDeletionType parameter for group deletion
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>

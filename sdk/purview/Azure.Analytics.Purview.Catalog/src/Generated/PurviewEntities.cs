@@ -33,6 +33,19 @@ namespace Azure.Analytics.Purview.Catalog
         {
         }
 
+        /// <summary> Initializes a new instance of PurviewEntities. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        internal PurviewEntities(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+        }
+
         /// <summary>
         /// Create or update an entity in Atlas.
         /// Existing entity is matched using its unique guid if supplied or by its unique attributes eg: qualifiedName.
@@ -322,7 +335,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
-        /// <param name="guids"> An array of GUIDs of entities to create. </param>
+        /// <param name="guids"> An array of GUIDs of entities to list. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
@@ -416,7 +429,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
-        /// <param name="guids"> An array of GUIDs of entities to create. </param>
+        /// <param name="guids"> An array of GUIDs of entities to list. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
@@ -3521,7 +3534,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         internal HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3532,13 +3545,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetByGuidsRequest(IEnumerable<string> guids, bool? minExtInfo, bool? ignoreRelationships, IEnumerable<string> excludeRelationshipTypes, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3547,7 +3559,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             foreach (var param in guids)
             {
-                uri.AppendQuery("guids", param, true);
+                uri.AppendQuery("guid", param, true);
             }
             if (minExtInfo != null)
             {
@@ -3566,13 +3578,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateOrUpdateEntitiesRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3583,13 +3594,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteByGuidsRequest(IEnumerable<string> guids, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -3598,17 +3608,16 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             foreach (var param in guids)
             {
-                uri.AppendQuery("guids", param, true);
+                uri.AppendQuery("guid", param, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateAddClassificationRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3619,13 +3628,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetByGuidRequest(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3643,13 +3651,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreatePartialUpdateEntityAttributeByGuidRequest(string guid, string name, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3662,13 +3669,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteByGuidRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -3678,13 +3684,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(guid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetClassificationRequest(string guid, string classificationName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3696,13 +3701,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(classificationName, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteClassificationRequest(string guid, string classificationName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -3714,13 +3718,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(classificationName, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetClassificationsRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3731,13 +3734,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateAddClassificationsRequest(string guid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3750,13 +3752,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateUpdateClassificationsRequest(string guid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3769,13 +3770,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetByUniqueAttributesRequest(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrQualifiedName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3797,13 +3797,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreatePartialUpdateEntityByUniqueAttributesRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3819,13 +3818,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteByUniqueAttributeRequest(string typeName, string attrQualifiedName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -3839,13 +3837,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteClassificationByUniqueAttributeRequest(string typeName, string classificationName, string attrQualifiedName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -3861,13 +3858,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateAddClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3884,13 +3880,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateUpdateClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -3907,13 +3902,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateSetClassificationsRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -3924,13 +3918,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetEntitiesByUniqueAttributesRequest(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3952,13 +3945,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetHeaderRequest(string guid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -3969,35 +3961,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/header", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

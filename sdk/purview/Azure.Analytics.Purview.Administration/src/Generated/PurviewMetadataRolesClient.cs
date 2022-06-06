@@ -72,7 +72,12 @@ namespace Azure.Analytics.Purview.Administration
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetMetadataRolesAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewMetadataRolesClient.GetMetadataRoles");
+            return GetMetadataRolesImplementationAsync("PurviewMetadataRolesClient.GetMetadataRoles", context);
+        }
+
+        private AsyncPageable<BinaryData> GetMetadataRolesImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -125,7 +130,12 @@ namespace Azure.Analytics.Purview.Administration
         /// </remarks>
         public virtual Pageable<BinaryData> GetMetadataRoles(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewMetadataRolesClient.GetMetadataRoles");
+            return GetMetadataRolesImplementation("PurviewMetadataRolesClient.GetMetadataRoles", context);
+        }
+
+        private Pageable<BinaryData> GetMetadataRolesImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -142,7 +152,7 @@ namespace Azure.Analytics.Purview.Administration
 
         internal HttpMessage CreateGetMetadataRolesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -152,13 +162,12 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendQuery("api-version", "2021-07-01", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetMetadataRolesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -167,22 +176,10 @@ namespace Azure.Analytics.Purview.Administration
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

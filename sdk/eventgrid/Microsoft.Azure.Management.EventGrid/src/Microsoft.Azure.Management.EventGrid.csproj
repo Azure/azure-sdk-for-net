@@ -6,18 +6,18 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.EventGrid</PackageId>
     <Description>Provides developers with a library to create and manage all Azure EventGrid resources. </Description>
-    <Version>7.0.0</Version>
+    <Version>8.0.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
     <PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This release corresponds to api-version 2021-06-01-preview which includes the following new features:
-    * Support of AAD authentication for user topics, domains, and partner namespaces.
-    * Private link support for partner namespaces.
-    * IP Filtering for partner namespaces.
-    * System Identity for partner topics.
-    * User Identity for user topics and domains.
-       
+        This release fixes a bug involving missing list operations and corresponds to api-version 2021-10-15-preview which includes the following new features:
+    * Introduce channel as a new partner-related resource.
+    * Adding new routing mode for partner namespace to support the new channel-based routing in addition to existing source-based routing.
+    * Adding new property for partner registration for partner registration immutable Id.
+    * Introducing partner authorization feature with two new resources, namely partner configuration and verified partners.
+    * Adding new event type info for channels and partner topics.
+    * Adding nested event subscriptions for both topics and domains.
        For a complete list of changes for all various release versions, please refer to: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Microsoft.Azure.Management.EventGrid/CHANGELOG.md
       ]]>
     </PackageReleaseNotes>

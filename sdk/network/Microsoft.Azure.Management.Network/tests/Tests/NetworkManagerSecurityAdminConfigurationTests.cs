@@ -232,7 +232,7 @@ namespace Networks.Tests
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
                 // var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkSecurityGroups");
-                var location = "centraluseuap";
+                var location = "eastus2euap";
 
                 string resourceGroupName = TestUtilities.GenerateName("ANMSCRG");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,

@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.Storage
 
         internal static StorageAccountData DeserializeStorageAccountData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
-            Optional<Kind> kind = default;
+            Optional<StorageSku> sku = default;
+            Optional<StorageKind> kind = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ExtendedLocation> extendedLocation = default;
             IDictionary<string, string> tags = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Storage
             Optional<GeoReplicationStats> geoReplicationStats = default;
             Optional<bool> failoverInProgress = default;
             Optional<LargeFileSharesState> largeFileSharesState = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<StoragePrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<RoutingPreference> routingPreference = default;
             Optional<BlobRestoreStatus> blobRestoreStatus = default;
             Optional<bool> allowBlobPublicAccess = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Storage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = StorageSku.DeserializeStorageSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new Kind(property.Value.GetString());
+                    kind = new StorageKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -498,10 +498,10 @@ namespace Azure.ResourceManager.Storage
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<StoragePrivateEndpointConnectionData> array = new List<StoragePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

@@ -59,11 +59,11 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                             }
                         }
                 });
-            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(false, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
             await updateSourcesOperation.WaitForCompletionAsync();
 
             string testDeploymentName = "production";
-            Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(false, testProjectName, testDeploymentName);
+            Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Started, testProjectName, testDeploymentName);
 
             await deploymentOperation.WaitForCompletionAsync();
             AsyncPageable<BinaryData> deployments = Client.GetDeploymentsAsync(testProjectName);
@@ -97,7 +97,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(true, testProjectName, updateQnasRequestContent);
+            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
             AsyncPageable<BinaryData> sources = Client.GetQnasAsync(testProjectName);
 
@@ -132,7 +132,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(false, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
 
             await updateSourcesOperation.WaitForCompletionAsync();
 
@@ -191,7 +191,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             await CreateProjectAsync(testProjectName);
 
             string exportFormat = "json";
-            Operation<BinaryData> exportOperation = await Client.ExportAsync(true, testProjectName, exportFormat);
+            Operation<BinaryData> exportOperation = await Client.ExportAsync(WaitUntil.Completed, testProjectName, exportFormat);
 
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
             string exportedFileUrl = operationValueJson.RootElement.GetProperty("resultUrl").ToString();
@@ -226,7 +226,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                 }
             });
 
-            Operation<BinaryData> importOperation = await Client.ImportAsync(true, testProjectName, importRequestContent, importFormat);
+            Operation<BinaryData> importOperation = await Client.ImportAsync(WaitUntil.Completed, testProjectName, importRequestContent, importFormat);
 
             Response projectDetails = await Client.GetProjectDetailsAsync(testProjectName);
 

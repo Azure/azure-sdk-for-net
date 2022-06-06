@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string LowercaseValue = "Lowercase";
         private const string UppercaseValue = "Uppercase";
         private const string TrimValue = "Trim";
-        private const string UrlDecodeValue = "UrlDecode";
-        private const string UrlEncodeValue = "UrlEncode";
+        private const string UriDecodeValue = "UrlDecode";
+        private const string UriEncodeValue = "UrlEncode";
         private const string RemoveNullsValue = "RemoveNulls";
 
         /// <summary> Lowercase. </summary>
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Trim. </summary>
         public static TransformType Trim { get; } = new TransformType(TrimValue);
         /// <summary> UrlDecode. </summary>
-        public static TransformType UrlDecode { get; } = new TransformType(UrlDecodeValue);
+        public static TransformType UriDecode { get; } = new TransformType(UriDecodeValue);
         /// <summary> UrlEncode. </summary>
-        public static TransformType UrlEncode { get; } = new TransformType(UrlEncodeValue);
+        public static TransformType UriEncode { get; } = new TransformType(UriEncodeValue);
         /// <summary> RemoveNulls. </summary>
         public static TransformType RemoveNulls { get; } = new TransformType(RemoveNullsValue);
         /// <summary> Determines if two <see cref="TransformType"/> values are the same. </summary>

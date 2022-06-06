@@ -149,7 +149,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
 
-            // TODO: This will change to pageable with next LLC Generator update
+            // TODO: This will change to pageable with next (Data Plane) client generator update
             Response listReponse = await definitionsClient.GetRoleDefinitionsAsync(new());
             var listContent = listReponse.Content;
             using var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());

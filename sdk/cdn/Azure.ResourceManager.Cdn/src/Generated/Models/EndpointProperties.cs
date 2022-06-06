@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             Origins = origins.ToList();
             OriginGroups = new ChangeTrackingList<DeepCreatedOriginGroup>();
+            CustomDomains = new ChangeTrackingList<CdnCustomDomainData>();
         }
 
         /// <summary> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </summary>
@@ -35,6 +37,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public IReadOnlyList<DeepCreatedOrigin> Origins { get; }
         /// <summary> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </summary>
         public IReadOnlyList<DeepCreatedOriginGroup> OriginGroups { get; }
+        /// <summary> The custom domains under the endpoint. </summary>
+        public IReadOnlyList<CdnCustomDomainData> CustomDomains { get; }
         /// <summary> Resource status of the endpoint. </summary>
         public EndpointResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the endpoint. </summary>

@@ -29,7 +29,7 @@ namespace Networks.Tests
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
                 // var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkManagers");
-                var location = "centraluseuap";
+                var location = "eastus2euap";
 
                 string resourceGroupName = TestUtilities.GenerateName("ANMCCRG");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,

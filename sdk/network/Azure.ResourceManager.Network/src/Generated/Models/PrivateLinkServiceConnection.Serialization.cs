@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("requestMessage");
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState");
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue(ConnectionState);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> privateLinkServiceId = default;
             Optional<IList<string>> groupIds = default;
             Optional<string> requestMessage = default;
-            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<NetworkPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = PrivateLinkServiceConnectionState.DeserializePrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                     }

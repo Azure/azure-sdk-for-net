@@ -33,8 +33,17 @@ namespace Azure.Identity
         private const int UsernamePasswordCredentialAcquireTokenSilentFailedEvent = 16;
         private const int TenantIdDiscoveredAndNotUsedEvent = 17;
         private const int TenantIdDiscoveredAndUsedEvent = 18;
+        internal const int AuthenticatedAccountDetailsEvent = 19;
+        internal const int UnableToParseAccountDetailsFromTokenEvent = 20;
+        private const int UserAssignedManagedIdentityNotSupportedEvent = 21;
+        private const int ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedEvent = 22;
         internal const string TenantIdDiscoveredAndNotUsedEventMessage = "A token was request for a different tenant than was configured on the credential, but the configured value was used since multi tenant authentication has been disabled. Configured TenantId: {0}, Requested TenantId {1}";
         internal const string TenantIdDiscoveredAndUsedEventMessage = "A token was requested for a different tenant than was configured on the credential, and the requested tenant id was used to authenticate. Configured TenantId: {0}, Requested TenantId {1}";
+        internal const string AuthenticatedAccountDetailsMessage = "Client ID: {0}. Tenant ID: {1}. User Principal Name: {2} Object ID: {3}";
+        internal const string Unavailable = "<not available>";
+        internal const string UnableToParseAccountDetailsFromTokenMessage = "Unable to parse account details from the Access Token";
+        internal const string UserAssignedManagedIdentityNotSupportedMessage = "User assigned managed identities are not supported in the {0} environment.";
+        internal const string ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedMessage = "Service Fabric user assigned managed identity ClientId or ResourceId is not configurable at runtime.";
 
         private AzureIdentityEventSource() : base(EventSourceName) { }
 
@@ -296,6 +305,42 @@ namespace Azure.Identity
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
                 WriteEvent(TenantIdDiscoveredAndUsedEvent, explicitTenantId, contextTenantId);
+            }
+        }
+
+        [Event(AuthenticatedAccountDetailsEvent, Level = EventLevel.Informational, Message = AuthenticatedAccountDetailsMessage)]
+        public void AuthenticatedAccountDetails(string clientId, string tenantId, string upn, string objectId)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                WriteEvent(AuthenticatedAccountDetailsEvent, clientId ?? Unavailable, tenantId ?? Unavailable, upn ?? Unavailable, objectId ?? Unavailable);
+            }
+        }
+
+        [Event(UnableToParseAccountDetailsFromTokenEvent, Level = EventLevel.Informational, Message = UnableToParseAccountDetailsFromTokenMessage)]
+        internal void UnableToParseAccountDetailsFromToken()
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                WriteEvent(UnableToParseAccountDetailsFromTokenEvent);
+            }
+        }
+
+        [Event(UserAssignedManagedIdentityNotSupportedEvent, Level = EventLevel.Warning, Message = UserAssignedManagedIdentityNotSupportedMessage)]
+        public void UserAssignedManagedIdentityNotSupported(string environment)
+        {
+            if (IsEnabled(EventLevel.Warning, EventKeywords.All))
+            {
+                WriteEvent(UserAssignedManagedIdentityNotSupportedEvent, environment);
+            }
+        }
+
+        [Event(ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedEvent, Level = EventLevel.Warning, Message =ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedMessage)]
+        public void ServiceFabricManagedIdentityRuntimeConfigurationNotSupported()
+        {
+            if (IsEnabled(EventLevel.Warning, EventKeywords.All))
+            {
+                WriteEvent(ServiceFabricManagedIdentityRuntimeConfigurationNotSupportedEvent);
             }
         }
     }

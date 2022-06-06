@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CommunityGalleryImageVersion. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        /// <param name="publishedDate"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="endOfLifeDate"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        internal CommunityGalleryImageVersion(string name, string location, string type, string uniqueId, DateTimeOffset? publishedDate, DateTimeOffset? endOfLifeDate) : base(name, location, type, uniqueId)
+        /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        internal CommunityGalleryImageVersion(string name, string location, string resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn) : base(name, location, resourceType, uniqueId)
         {
-            PublishedDate = publishedDate;
-            EndOfLifeDate = endOfLifeDate;
+            PublishedOn = publishedOn;
+            EndOfLifeOn = endOfLifeOn;
         }
 
         /// <summary> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? PublishedDate { get; }
+        public DateTimeOffset? PublishedOn { get; }
         /// <summary> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeDate { get; }
+        public DateTimeOffset? EndOfLifeOn { get; }
     }
 }

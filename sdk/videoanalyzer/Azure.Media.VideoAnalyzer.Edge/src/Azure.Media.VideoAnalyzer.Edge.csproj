@@ -10,7 +10,7 @@
 
     </Description>
     <AssemblyTitle>Azure Video Analyzer Edge SDK</AssemblyTitle>
-    <Version>1.0.0-beta.6</Version>
+    <Version>1.0.0-beta.7</Version>
     <PackageTags>Azure Video Analyzer Edge</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
@@ -21,14 +21,6 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
-  <!-- Shared source from Azure.Core -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Generated\Models\" />
   </ItemGroup>

@@ -1,5 +1,18 @@
 # Release History
 
+## 5.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.0.1 (2022-05-02)
+- Fixed queue message is not removed from the queue after stopping QueueListener. (#28156)
+
 ## 5.0.0 (2021-10-26)
 - General availability of Microsoft.Azure.WebJobs.Extensions.Storage.Queues 5.0.0.
 - Change `QueueProcessor.MessageAddedToPoisonQueue` to async event and rename to `QueueProcessor.MessageAddedToPoisonQueueAsync`.

@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of VirtualApplication and their operations over its parent. </summary>
-    public partial class VirtualApplicationCollection : ArmCollection, IEnumerable<VirtualApplication>, IAsyncEnumerable<VirtualApplication>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualApplicationResource" /> and their operations.
+    /// Each <see cref="VirtualApplicationResource" /> in the collection will belong to the same instance of <see cref="VirtualApplicationGroupResource" />.
+    /// To get a <see cref="VirtualApplicationCollection" /> instance call the GetVirtualApplications method from an instance of <see cref="VirtualApplicationGroupResource" />.
+    /// </summary>
+    public partial class VirtualApplicationCollection : ArmCollection, IEnumerable<VirtualApplicationResource>, IAsyncEnumerable<VirtualApplicationResource>
     {
         private readonly ClientDiagnostics _virtualApplicationApplicationsClientDiagnostics;
         private readonly ApplicationsRestOperations _virtualApplicationApplicationsRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualApplicationApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplication.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(VirtualApplication.ResourceType, out string virtualApplicationApplicationsApiVersion);
-            _virtualApplicationApplicationsRestClient = new ApplicationsRestOperations(_virtualApplicationApplicationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualApplicationApplicationsApiVersion);
+            _virtualApplicationApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualApplicationResource.ResourceType, out string virtualApplicationApplicationsApiVersion);
+            _virtualApplicationApplicationsRestClient = new ApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplicationApplicationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VirtualApplicationGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualApplicationGroup.ResourceType), nameof(id));
+            if (id.ResourceType != VirtualApplicationGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualApplicationGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -55,24 +58,24 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}
         /// Operation Id: Applications_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
-        /// <param name="application"> Object containing Application definitions. </param>
+        /// <param name="data"> Object containing Application definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="application"/> is null. </exception>
-        public async virtual Task<ArmOperation<VirtualApplication>> CreateOrUpdateAsync(bool waitForCompletion, string applicationName, VirtualApplicationData application, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationName, VirtualApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(application, nameof(application));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualApplicationApplicationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, application, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<VirtualApplication>(Response.FromValue(new VirtualApplication(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                var response = await _virtualApplicationApplicationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DesktopVirtualizationArmOperation<VirtualApplicationResource>(Response.FromValue(new VirtualApplicationResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,24 +91,24 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}
         /// Operation Id: Applications_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="applicationName"> The name of the application within the specified application group. </param>
-        /// <param name="application"> Object containing Application definitions. </param>
+        /// <param name="data"> Object containing Application definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="application"/> is null. </exception>
-        public virtual ArmOperation<VirtualApplication> CreateOrUpdate(bool waitForCompletion, string applicationName, VirtualApplicationData application, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VirtualApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationName, VirtualApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-            Argument.AssertNotNull(application, nameof(application));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualApplicationApplicationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, application, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<VirtualApplication>(Response.FromValue(new VirtualApplication(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                var response = _virtualApplicationApplicationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, data, cancellationToken);
+                var operation = new DesktopVirtualizationArmOperation<VirtualApplicationResource>(Response.FromValue(new VirtualApplicationResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public async virtual Task<Response<VirtualApplication>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualApplicationResource>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
@@ -135,8 +138,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _virtualApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualApplicationApplicationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualApplication(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public virtual Response<VirtualApplication> Get(string applicationName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualApplicationResource> Get(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _virtualApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualApplicationApplicationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualApplication(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,17 +183,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: Applications_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualApplication" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualApplication> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualApplication>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualApplicationResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _virtualApplicationApplicationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -198,14 +201,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<VirtualApplication>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualApplicationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _virtualApplicationApplicationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,17 +225,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: Applications_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualApplication" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualApplication> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VirtualApplication> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualApplicationResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _virtualApplicationApplicationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,14 +243,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<VirtualApplication> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualApplicationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _virtualApplicationApplicationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -267,7 +270,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string applicationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
@@ -275,7 +278,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,7 +305,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             scope.Start();
             try
             {
-                var response = GetIfExists(applicationName, cancellationToken: cancellationToken);
+                var response = _virtualApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,65 +315,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}
-        /// Operation Id: Applications_Get
-        /// </summary>
-        /// <param name="applicationName"> The name of the application within the specified application group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public async virtual Task<Response<VirtualApplication>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _virtualApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualApplication>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualApplication(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/applications/{applicationName}
-        /// Operation Id: Applications_Get
-        /// </summary>
-        /// <param name="applicationName"> The name of the application within the specified application group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public virtual Response<VirtualApplication> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
-
-            using var scope = _virtualApplicationApplicationsClientDiagnostics.CreateScope("VirtualApplicationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _virtualApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualApplication>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualApplication(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<VirtualApplication> IEnumerable<VirtualApplication>.GetEnumerator()
+        IEnumerator<VirtualApplicationResource> IEnumerable<VirtualApplicationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,7 +325,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VirtualApplication> IAsyncEnumerable<VirtualApplication>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VirtualApplicationResource> IAsyncEnumerable<VirtualApplicationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

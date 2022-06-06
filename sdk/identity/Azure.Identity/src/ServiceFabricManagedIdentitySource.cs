@@ -63,6 +63,10 @@ namespace Azure.Identity
             _identityHeaderValue = identityHeaderValue;
             _clientId = options.ClientId;
             _resourceId = options.ResourceIdentifier?.ToString();
+            if (!string.IsNullOrEmpty(options.ClientId) || null != options.ResourceIdentifier)
+            {
+                AzureIdentityEventSource.Singleton.ServiceFabricManagedIdentityRuntimeConfigurationNotSupported();
+            }
         }
 
         protected override Request CreateRequest(string[] scopes)

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the IPAllocation data model. </summary>
-    public partial class IPAllocationData : Resource
+    public partial class IPAllocationData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of IPAllocationData. </summary>
         public IPAllocationData()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of IPAllocationData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="prefixType"> The address prefix Type for the IpAllocation. </param>
         /// <param name="ipamAllocationId"> The IPAM allocation ID. </param>
         /// <param name="allocationTags"> IpAllocation tags. </param>
-        internal IPAllocationData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource subnet, WritableSubResource virtualNetwork, IPAllocationType? typePropertiesType, string prefix, int? prefixLength, IPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags) : base(id, name, type, location, tags)
+        internal IPAllocationData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, WritableSubResource subnet, WritableSubResource virtualNetwork, IPAllocationType? typePropertiesType, string prefix, int? prefixLength, IPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Subnet = subnet;
@@ -56,8 +56,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId
         {
-            get => Subnet.Id;
-            set => Subnet.Id = value;
+            get => Subnet?.Id;
         }
 
         /// <summary> The VirtualNetwork that using the prefix of this IpAllocation resource. </summary>
@@ -65,8 +64,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier VirtualNetworkId
         {
-            get => VirtualNetwork.Id;
-            set => VirtualNetwork.Id = value;
+            get => VirtualNetwork?.Id;
         }
 
         /// <summary> The type for the IpAllocation. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class VMwareDatastoreOperationSource : IOperationSource<VMwareDatastore>
+    internal class VMwareDatastoreOperationSource : IOperationSource<VMwareDatastoreResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _client = client;
         }
 
-        VMwareDatastore IOperationSource<VMwareDatastore>.CreateResult(Response response, CancellationToken cancellationToken)
+        VMwareDatastoreResource IOperationSource<VMwareDatastoreResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VMwareDatastoreData.DeserializeVMwareDatastoreData(document.RootElement);
-            return new VMwareDatastore(_client, data);
+            return new VMwareDatastoreResource(_client, data);
         }
 
-        async ValueTask<VMwareDatastore> IOperationSource<VMwareDatastore>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VMwareDatastoreResource> IOperationSource<VMwareDatastoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VMwareDatastoreData.DeserializeVMwareDatastoreData(document.RootElement);
-            return new VMwareDatastore(_client, data);
+            return new VMwareDatastoreResource(_client, data);
         }
     }
 }

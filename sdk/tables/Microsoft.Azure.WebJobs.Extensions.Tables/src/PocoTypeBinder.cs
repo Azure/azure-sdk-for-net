@@ -4,8 +4,8 @@
 using System;
 using System.Globalization;
 using Azure;
+using Azure.Core;
 using Azure.Data.Tables;
-using Azure.Monitor.Query;
 using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables

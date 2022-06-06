@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfileResource, afdEndpointName);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
-            AfdOriginGroup afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfile, afdOriginGroupName);
+            AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             string afdOriginName = Recording.GenerateAssetName("AFDOrigin-");
             _ = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
+            AfdRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
             string afdRouteName = Recording.GenerateAssetName("AFDRoute");
-            AfdRoute afdRoute = await CreateAfdRoute(afdEndpointInstance, afdRouteName, afdOriginGroupInstance, afdRuleSet);
+            AfdRouteResource afdRoute = await CreateAfdRoute(afdEndpointInstance, afdRouteName, afdOriginGroupInstance, afdRuleSet);
             Assert.AreEqual(afdRouteName, afdRoute.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetAfdRoutes().CreateOrUpdateAsync(true, null, afdRoute.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetAfdRoutes().CreateOrUpdateAsync(true, afdRouteName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetAfdRoutes().CreateOrUpdateAsync(WaitUntil.Completed, null, afdRoute.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetAfdRoutes().CreateOrUpdateAsync(WaitUntil.Completed, afdRouteName, null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task List()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfileResource, afdEndpointName);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
-            AfdOriginGroup afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfile, afdOriginGroupName);
+            AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             string afdOriginName = Recording.GenerateAssetName("AFDOrigin-");
             _ = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
+            AfdRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
             string afdRouteName = Recording.GenerateAssetName("AFDRoute");
             _ = await CreateAfdRoute(afdEndpointInstance, afdRouteName, afdOriginGroupInstance, afdRuleSet);
             int count = 0;
@@ -71,21 +71,21 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpoint afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfileResource, afdEndpointName);
             string afdOriginGroupName = Recording.GenerateAssetName("AFDOriginGroup-");
-            AfdOriginGroup afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfile, afdOriginGroupName);
+            AfdOriginGroupResource afdOriginGroupInstance = await CreateAfdOriginGroup(afdProfileResource, afdOriginGroupName);
             string afdOriginName = Recording.GenerateAssetName("AFDOrigin-");
-            AfdOrigin afdOriginInstance = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
+            AfdOriginResource afdOriginInstance = await CreateAfdOrigin(afdOriginGroupInstance, afdOriginName);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
-            AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
+            AfdRuleSetResource afdRuleSet = await CreateAfdRuleSet(afdProfileResource, afdRuleSetName);
             string afdRouteName = Recording.GenerateAssetName("AFDRoute");
-            AfdRoute afdRoute = await CreateAfdRoute(afdEndpointInstance, afdRouteName, afdOriginGroupInstance, afdRuleSet);
-            AfdRoute getAfdRoute = await afdEndpointInstance.GetAfdRoutes().GetAsync(afdRouteName);
+            AfdRouteResource afdRoute = await CreateAfdRoute(afdEndpointInstance, afdRouteName, afdOriginGroupInstance, afdRuleSet);
+            AfdRouteResource getAfdRoute = await afdEndpointInstance.GetAfdRoutes().GetAsync(afdRouteName);
             ResourceDataHelper.AssertValidAfdRoute(afdRoute, getAfdRoute);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdEndpointInstance.GetAfdRoutes().GetAsync(null));
         }

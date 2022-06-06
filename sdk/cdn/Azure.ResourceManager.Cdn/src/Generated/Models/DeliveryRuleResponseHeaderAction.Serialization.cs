@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleResponseHeaderAction DeserializeDeliveryRuleResponseHeaderAction(JsonElement element)
         {
-            HeaderActionParameters parameters = default;
-            DeliveryRuleAction name = default;
+            HeaderActionDefinition parameters = default;
+            DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = HeaderActionParameters.DeserializeHeaderActionParameters(property.Value);
+                    parameters = HeaderActionDefinition.DeserializeHeaderActionDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    name = new DeliveryRuleAction(property.Value.GetString());
+                    name = new DeliveryRuleActionType(property.Value.GetString());
                     continue;
                 }
             }

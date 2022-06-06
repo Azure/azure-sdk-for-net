@@ -33,6 +33,21 @@ namespace Azure.Analytics.Purview.Catalog
         {
         }
 
+        /// <summary> Initializes a new instance of PurviewLineages. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        internal PurviewLineages(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _apiVersion = apiVersion;
+        }
+
         /// <summary> Get lineage info of the entity specified by GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="direction"> The direction of the lineage, which could be INPUT, OUTPUT or BOTH. Allowed values: &quot;BOTH&quot; | &quot;INPUT&quot; | &quot;OUTPUT&quot;. </param>
@@ -293,7 +308,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         internal HttpMessage CreateGetLineageGraphRequest(string guid, string direction, int? depth, int? width, bool? includeParent, bool? getDerivedLineage, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -320,13 +335,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateNextPageLineageRequest(string guid, string direction, bool? getDerivedLineage, int? offset, int? limit, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -351,22 +365,10 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

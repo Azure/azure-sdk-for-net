@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task BGPCommunityApiTest()
         {
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             AsyncPageable<BgpServiceCommunity> communitiesAsync = subscription.GetBgpServiceCommunitiesAsync();
             List<BgpServiceCommunity> communities = await communitiesAsync.ToEnumerableAsync();
             Assert.IsNotEmpty(communities);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             string circuitName = "circuit";
 
-            ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
+            ExpressRouteCircuitResource circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
             Assert.AreEqual(circuit.Data.Name, circuitName);
             Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             string circuitName = "circuit";
 
-            ExpressRouteCircuit circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
+            ExpressRouteCircuitResource circuit = await CreateDefaultExpressRouteCircuit(resourceGroup, circuitName, location);
 
             Assert.AreEqual(circuit.Data.Name, circuitName);
             Assert.AreEqual(circuit.Data.ServiceProviderProperties.BandwidthInMbps, Convert.ToInt32(Circuit_BW));

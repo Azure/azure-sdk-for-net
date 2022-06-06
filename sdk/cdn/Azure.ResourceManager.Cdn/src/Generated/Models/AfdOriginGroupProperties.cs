@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the origin group. </summary>
-    public partial class AfdOriginGroupProperties : AfdOriginGroupUpdatePropertiesParameters
+    internal partial class AfdOriginGroupProperties : AfdOriginGroupUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AfdOriginGroupProperties. </summary>
-        public AfdOriginGroupProperties()
+        internal AfdOriginGroupProperties()
         {
         }
 
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
     }
 }

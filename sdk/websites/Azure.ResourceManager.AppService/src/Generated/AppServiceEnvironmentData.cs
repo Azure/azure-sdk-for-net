@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.AppService
         public AppServiceEnvironmentData(AzureLocation location) : base(location)
         {
             ClusterSettings = new ChangeTrackingList<NameValuePair>();
-            UserWhitelistedIpRanges = new ChangeTrackingList<string>();
+            UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.AppService
         ///  (most likely because NSG blocked the incoming traffic).
         /// </param>
         /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
-        /// <param name="userWhitelistedIpRanges"> User added ip ranges to whitelist on ASE db. </param>
+        /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="zoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
-        internal AppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIpRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, type, systemData, tags, location, kind)
+        internal AppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, resourceType, systemData, tags, location, kind)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
             FrontEndScaleFactor = frontEndScaleFactor;
             Suspended = suspended;
             ClusterSettings = clusterSettings;
-            UserWhitelistedIpRanges = userWhitelistedIpRanges;
+            UserWhitelistedIPRanges = userWhitelistedIPRanges;
             HasLinuxWorkers = hasLinuxWorkers;
             DedicatedHostCount = dedicatedHostCount;
             ZoneRedundant = zoneRedundant;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Custom settings for changing the behavior of the App Service Environment. </summary>
         public IList<NameValuePair> ClusterSettings { get; }
         /// <summary> User added ip ranges to whitelist on ASE db. </summary>
-        public IList<string> UserWhitelistedIpRanges { get; }
+        public IList<string> UserWhitelistedIPRanges { get; }
         /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
         public bool? HasLinuxWorkers { get; }
         /// <summary> Dedicated Host Count. </summary>

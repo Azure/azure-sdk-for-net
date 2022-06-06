@@ -17,34 +17,34 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AddressResponse. </summary>
         public AddressResponse()
         {
-            OutboundIpAddresses = new ChangeTrackingList<string>();
+            OutboundIPAddresses = new ChangeTrackingList<string>();
             VipMappings = new ChangeTrackingList<VirtualIPMapping>();
         }
 
         /// <summary> Initializes a new instance of AddressResponse. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serviceIpAddress"> Main public virtual IP. </param>
-        /// <param name="internalIpAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
-        /// <param name="outboundIpAddresses"> IP addresses appearing on outbound connections. </param>
+        /// <param name="serviceIPAddress"> Main public virtual IP. </param>
+        /// <param name="internalIPAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
+        /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="vipMappings"> Additional virtual IPs. </param>
-        internal AddressResponse(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string serviceIpAddress, string internalIpAddress, IList<string> outboundIpAddresses, IList<VirtualIPMapping> vipMappings) : base(id, name, type, systemData, kind)
+        internal AddressResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serviceIPAddress, string internalIPAddress, IList<string> outboundIPAddresses, IList<VirtualIPMapping> vipMappings) : base(id, name, resourceType, systemData, kind)
         {
-            ServiceIpAddress = serviceIpAddress;
-            InternalIpAddress = internalIpAddress;
-            OutboundIpAddresses = outboundIpAddresses;
+            ServiceIPAddress = serviceIPAddress;
+            InternalIPAddress = internalIPAddress;
+            OutboundIPAddresses = outboundIPAddresses;
             VipMappings = vipMappings;
         }
 
         /// <summary> Main public virtual IP. </summary>
-        public string ServiceIpAddress { get; set; }
+        public string ServiceIPAddress { get; set; }
         /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
-        public string InternalIpAddress { get; set; }
+        public string InternalIPAddress { get; set; }
         /// <summary> IP addresses appearing on outbound connections. </summary>
-        public IList<string> OutboundIpAddresses { get; }
+        public IList<string> OutboundIPAddresses { get; }
         /// <summary> Additional virtual IPs. </summary>
         public IList<VirtualIPMapping> VipMappings { get; }
     }

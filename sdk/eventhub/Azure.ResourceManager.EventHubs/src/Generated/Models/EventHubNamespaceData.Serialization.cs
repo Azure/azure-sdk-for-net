@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubNamespaceData DeserializeEventHubNamespaceData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<EventHubsSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<bool> kafkaEnabled = default;
             Optional<bool> zoneRedundant = default;
             Optional<EventHubEncryption> encryption = default;
-            Optional<IList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IList<EventHubsPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.EventHubs
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = EventHubsSku.DeserializeEventHubsSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -288,10 +288,10 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<EventHubsPrivateEndpointConnectionData> array = new List<EventHubsPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;

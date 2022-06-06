@@ -10,7 +10,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
     public class ServiceBusTriggerStrategyTests
     {
-        private const int BindingContractCount = 22;
+        private const int BindingContractCount = 24;
 
         [Test]
         public void GetStaticBindingContract_ReturnsExpectedValue()
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             userProps.Add(new KeyValuePair<string, object>("prop2", "value2"));
             var message = CreateMessageWithSystemProperties(applicationProperties: userProps);
 
-            var input = ServiceBusTriggerInput.CreateSingle(message, null, null);
+            var input = ServiceBusTriggerInput.CreateSingle(message, null, null, null);
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
                 CreateMessageWithSystemProperties("Event 3"),
             };
 
-             var input = ServiceBusTriggerInput.CreateBatch(messages, null, null);
+            var input = ServiceBusTriggerInput.CreateBatch(messages, null, null, null);
             var strategy = new ServiceBusTriggerBindingStrategy();
             var bindingData = strategy.GetBindingData(input);
 

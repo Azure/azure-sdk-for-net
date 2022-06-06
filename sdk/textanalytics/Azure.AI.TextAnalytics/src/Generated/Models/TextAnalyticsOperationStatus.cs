@@ -25,8 +25,8 @@ namespace Azure.AI.TextAnalytics
         private const string NotStartedValue = "notStarted";
         private const string RunningValue = "running";
         private const string SucceededValue = "succeeded";
+        private const string PartiallySucceededValue = "partiallySucceeded";
         private const string FailedValue = "failed";
-        private const string RejectedValue = "rejected";
         private const string CancelledValue = "cancelled";
         private const string CancellingValue = "cancelling";
 
@@ -36,10 +36,10 @@ namespace Azure.AI.TextAnalytics
         public static TextAnalyticsOperationStatus Running { get; } = new TextAnalyticsOperationStatus(RunningValue);
         /// <summary> succeeded. </summary>
         public static TextAnalyticsOperationStatus Succeeded { get; } = new TextAnalyticsOperationStatus(SucceededValue);
+        /// <summary> partiallySucceeded. </summary>
+        public static TextAnalyticsOperationStatus PartiallySucceeded { get; } = new TextAnalyticsOperationStatus(PartiallySucceededValue);
         /// <summary> failed. </summary>
         public static TextAnalyticsOperationStatus Failed { get; } = new TextAnalyticsOperationStatus(FailedValue);
-        /// <summary> rejected. </summary>
-        public static TextAnalyticsOperationStatus Rejected { get; } = new TextAnalyticsOperationStatus(RejectedValue);
         /// <summary> cancelled. </summary>
         public static TextAnalyticsOperationStatus Cancelled { get; } = new TextAnalyticsOperationStatus(CancelledValue);
         /// <summary> cancelling. </summary>

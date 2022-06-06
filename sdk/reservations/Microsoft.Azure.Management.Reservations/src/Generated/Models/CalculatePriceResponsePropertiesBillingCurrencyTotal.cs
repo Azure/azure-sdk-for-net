@@ -32,6 +32,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the
         /// CalculatePriceResponsePropertiesBillingCurrencyTotal class.
         /// </summary>
+        /// <param name="currencyCode">The ISO 4217 3-letter currency code for
+        /// the currency used by this purchase record.</param>
+        /// <param name="amount">Amount in pricing currency. Tax is not
+        /// included.</param>
         public CalculatePriceResponsePropertiesBillingCurrencyTotal(string currencyCode = default(string), double? amount = default(double?))
         {
             CurrencyCode = currencyCode;
@@ -45,11 +49,14 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the ISO 4217 3-letter currency code for the currency
+        /// used by this purchase record.
         /// </summary>
         [JsonProperty(PropertyName = "currencyCode")]
         public string CurrencyCode { get; set; }
 
         /// <summary>
+        /// Gets or sets amount in pricing currency. Tax is not included.
         /// </summary>
         [JsonProperty(PropertyName = "amount")]
         public double? Amount { get; set; }

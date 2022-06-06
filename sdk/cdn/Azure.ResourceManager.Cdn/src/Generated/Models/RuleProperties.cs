@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the Rules to create. </summary>
-    public partial class RuleProperties : RuleUpdatePropertiesParameters
+    internal partial class RuleProperties : RuleUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of RuleProperties. </summary>
-        public RuleProperties()
+        internal RuleProperties()
         {
         }
 
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
     }
 }

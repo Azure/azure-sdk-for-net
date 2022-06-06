@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnEndpointOperationSource : IOperationSource<CdnEndpoint>
+    internal class CdnEndpointOperationSource : IOperationSource<CdnEndpointResource>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -31,26 +31,26 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        CdnEndpoint IOperationSource<CdnEndpoint>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnEndpointResource IOperationSource<CdnEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(CdnEndpointData.DeserializeCdnEndpointData(document.RootElement));
-            return new CdnEndpoint(_client, data);
+            return new CdnEndpointResource(_client, data);
         }
 
-        async ValueTask<CdnEndpoint> IOperationSource<CdnEndpoint>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnEndpointResource> IOperationSource<CdnEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(CdnEndpointData.DeserializeCdnEndpointData(document.RootElement));
-            return new CdnEndpoint(_client, data);
+            return new CdnEndpointResource(_client, data);
         }
 
         private CdnEndpointData ScrubId(CdnEndpointData data)
         {
-            if (data.Id.ResourceType == CdnEndpoint.ResourceType)
+            if (data.Id.ResourceType == CdnEndpointResource.ResourceType)
                 return data;
 
-            var newId = CdnEndpoint.CreateResourceIdentifier(
+            var newId = CdnEndpointResource.CreateResourceIdentifier(
                 GetName("subscriptionId", data.Id),
                 GetName("resourceGroupName", data.Id),
                 GetName("profileName", data.Id),
@@ -74,12 +74,13 @@ namespace Azure.ResourceManager.Cdn
                 data.ProbePath,
                 data.GeoFilters,
                 data.DefaultOriginGroup,
-                data.UrlSigningKeys,
+                data.UriSigningKeys,
                 data.DeliveryPolicy,
                 data.WebApplicationFirewallPolicyLink,
                 data.HostName,
                 data.Origins,
                 data.OriginGroups,
+                data.CustomDomains,
                 data.ResourceState,
                 data.ProvisioningState);
         }

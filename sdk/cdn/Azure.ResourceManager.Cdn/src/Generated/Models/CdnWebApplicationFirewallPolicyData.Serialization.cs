@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag");
-                writer.WriteStringValue(Etag);
+                writer.WriteStringValue(Etag.Value.ToString());
             }
             writer.WritePropertyName("sku");
             writer.WriteObjectValue(Sku);
@@ -64,8 +65,8 @@ namespace Azure.ResourceManager.Cdn
 
         internal static CdnWebApplicationFirewallPolicyData DeserializeCdnWebApplicationFirewallPolicyData(JsonElement element)
         {
-            Optional<string> etag = default;
-            Models.Sku sku = default;
+            Optional<ETag> etag = default;
+            CdnSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -83,12 +84,17 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
                 {
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = CdnSku.DeserializeCdnSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -214,7 +220,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData, tags, location, etag.Value, sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState));
+            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData, tags, location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState));
         }
     }
 }

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionApp. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="functionAppResourceId"> The resource id of the function app registered with the static site. </param>
         /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
         /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
-        internal StaticSiteUserProvidedFunctionApp(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn) : base(id, name, type, systemData, kind)
+        internal StaticSiteUserProvidedFunctionApp(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData, kind)
         {
             FunctionAppResourceId = functionAppResourceId;
             FunctionAppRegion = functionAppRegion;

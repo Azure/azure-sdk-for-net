@@ -875,17 +875,12 @@ namespace Azure.Storage.Blobs.Test
                     lease: true,
                     appendPosAndMaxSize: true);
 
-                AppendBlobAppendBlockOptions options = new AppendBlobAppendBlockOptions
-                {
-                    Conditions = accessConditions,
-                };
-
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
                     Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
                         content: stream,
-                        options: options);
+                        conditions: accessConditions);
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -922,18 +917,13 @@ namespace Azure.Storage.Blobs.Test
                     lease: true,
                     appendPosAndMaxSize: true);
 
-                AppendBlobAppendBlockOptions options = new AppendBlobAppendBlockOptions
-                {
-                    Conditions = accessConditions,
-                };
-
                 // Act
                 using (var stream = new MemoryStream(data))
                 {
                     await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                         blob.AppendBlockAsync(
                             content: stream,
-                            options: options),
+                            conditions: accessConditions),
                         e => { });
                 }
             }
@@ -962,15 +952,10 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            AppendBlobAppendBlockOptions options = new AppendBlobAppendBlockOptions
-            {
-                Conditions = conditions
-            };
-
             // Act
             Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
                 content: stream,
-                options: options);
+                conditions: conditions);
         }
 
         [RecordedTest]
@@ -991,16 +976,11 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            AppendBlobAppendBlockOptions options = new AppendBlobAppendBlockOptions
-            {
-                Conditions = conditions
-            };
-
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.AppendBlockAsync(
                     content: stream,
-                    options: options),
+                    conditions: conditions),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -1030,11 +1010,6 @@ namespace Azure.Storage.Blobs.Test
             var progressHandler = new Progress<long>(progress => progressBag.Add(progress));
             var timesFaulted = 0;
 
-            AppendBlobAppendBlockOptions options = new AppendBlobAppendBlockOptions
-            {
-                ProgressHandler = progressHandler
-            };
-
             // Act
             using (var stream = new FaultyStream(
                 new MemoryStream(data),
@@ -1045,7 +1020,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 await blobFaulty.AppendBlockAsync(
                     content: stream,
-                    options: options);
+                    progressHandler: progressHandler);
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
@@ -1078,17 +1053,12 @@ namespace Azure.Storage.Blobs.Test
             var data = GetRandomBuffer(blobSize);
             TestProgress progress = new TestProgress();
 
-            AppendBlobAppendBlockOptions options = new AppendBlobAppendBlockOptions
-            {
-                ProgressHandler = progress
-            };
-
             // Act
             using (var stream = new MemoryStream(data))
             {
                 await blob.AppendBlockAsync(
                     content: stream,
-                    options: options);
+                    progressHandler: progress);
             }
 
             // Assert

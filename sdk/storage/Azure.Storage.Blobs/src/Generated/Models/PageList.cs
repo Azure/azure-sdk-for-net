@@ -23,15 +23,19 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of PageList. </summary>
         /// <param name="pageRange"></param>
         /// <param name="clearRange"></param>
-        internal PageList(IReadOnlyList<PageRange> pageRange, IReadOnlyList<ClearRange> clearRange)
+        /// <param name="nextMarker"></param>
+        internal PageList(IReadOnlyList<PageRange> pageRange, IReadOnlyList<ClearRange> clearRange, string nextMarker)
         {
             PageRange = pageRange;
             ClearRange = clearRange;
+            NextMarker = nextMarker;
         }
 
         /// <summary> Gets the page range. </summary>
         public IReadOnlyList<PageRange> PageRange { get; }
         /// <summary> Gets the clear range. </summary>
         public IReadOnlyList<ClearRange> ClearRange { get; }
+        /// <summary> Gets the next marker. </summary>
+        public string NextMarker { get; }
     }
 }

@@ -72,10 +72,6 @@ namespace Azure.Core.TestFramework
                     await AddProxySanitizersAsync();
 
                     // temporary until Azure.Core fix is shipped that makes HttpWebRequestTransport consistent with HttpClientTransport
-                    // if (!_matcher.CompareBodies)
-                    // {
-                    //     _proxy.Client.AddBodilessMatcher(RecordingId);
-                    // }
                     var excludedHeaders = new List<string>(_recordedTestBase.LegacyExcludedHeaders)
                     {
                         "Content-Type",
@@ -133,6 +129,11 @@ namespace Azure.Core.TestFramework
             foreach (string path in _recordedTestBase.JsonPathSanitizers)
             {
                 await _proxy.Client.AddBodyKeySanitizerAsync(new BodyKeySanitizer(Sanitized) { JsonPath = path }, RecordingId);
+            }
+
+            foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
+            {
+                await _proxy.Client.AddBodyKeySanitizerAsync(sanitizer, RecordingId);
             }
 
             foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
@@ -236,12 +237,17 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public DateTimeOffset UtcNow => Now.ToUniversalTime();
 
-        public async ValueTask DisposeAsync()
+        public async ValueTask DisposeAsync(bool save)
         {
             if (Mode == RecordedTestMode.Record)
             {
-                await _proxy.Client.StopRecordAsync(RecordingId, Variables);
+                await _proxy.Client.StopRecordAsync(RecordingId, Variables, save ? null : "request-response");
             }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await DisposeAsync(true);
         }
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)

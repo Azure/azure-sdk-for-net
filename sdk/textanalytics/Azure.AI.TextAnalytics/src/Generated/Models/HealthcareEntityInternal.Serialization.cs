@@ -12,51 +12,62 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareEntityInternal
+    internal partial class HealthcareEntityInternal : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("text");
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("category");
+            writer.WriteStringValue(Category.ToString());
+            if (Optional.IsDefined(Subcategory))
+            {
+                writer.WritePropertyName("subcategory");
+                writer.WriteStringValue(Subcategory);
+            }
+            writer.WritePropertyName("offset");
+            writer.WriteNumberValue(Offset);
+            writer.WritePropertyName("length");
+            writer.WriteNumberValue(Length);
+            writer.WritePropertyName("confidenceScore");
+            writer.WriteNumberValue(ConfidenceScore);
+            if (Optional.IsDefined(Assertion))
+            {
+                writer.WritePropertyName("assertion");
+                writer.WriteObjectValue(Assertion);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsCollectionDefined(Links))
+            {
+                writer.WritePropertyName("links");
+                writer.WriteStartArray();
+                foreach (var item in Links)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
         internal static HealthcareEntityInternal DeserializeHealthcareEntityInternal(JsonElement element)
         {
-            Optional<HealthcareEntityAssertion> assertion = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<EntityDataSource>> links = default;
             string text = default;
             HealthcareEntityCategory category = default;
             Optional<string> subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
+            Optional<HealthcareEntityAssertion> assertion = default;
+            Optional<string> name = default;
+            Optional<IList<EntityDataSource>> links = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assertion"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    assertion = HealthcareEntityAssertion.DeserializeHealthcareEntityAssertion(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("links"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<EntityDataSource> array = new List<EntityDataSource>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(EntityDataSource.DeserializeEntityDataSource(item));
-                    }
-                    links = array;
-                    continue;
-                }
                 if (property.NameEquals("text"))
                 {
                     text = property.Value.GetString();
@@ -85,6 +96,36 @@ namespace Azure.AI.TextAnalytics.Models
                 if (property.NameEquals("confidenceScore"))
                 {
                     confidenceScore = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("assertion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    assertion = HealthcareEntityAssertion.DeserializeHealthcareEntityAssertion(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("links"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<EntityDataSource> array = new List<EntityDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EntityDataSource.DeserializeEntityDataSource(item));
+                    }
+                    links = array;
                     continue;
                 }
             }

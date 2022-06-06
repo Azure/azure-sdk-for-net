@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class PrivateLinkResourcesListResult
+    internal partial class PrivateLinkResourcesListResult
     {
         internal static PrivateLinkResourcesListResult DeserializePrivateLinkResourcesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<ServiceBusPrivateLinkResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkResource> array = new List<PrivateLinkResource>();
+                    List<ServiceBusPrivateLinkResource> array = new List<ServiceBusPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkResource.DeserializePrivateLinkResource(item));
+                        array.Add(ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource(item));
                     }
                     value = array;
                     continue;

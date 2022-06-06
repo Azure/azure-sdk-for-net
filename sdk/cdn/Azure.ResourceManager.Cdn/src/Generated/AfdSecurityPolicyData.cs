@@ -22,34 +22,27 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of AfdSecurityPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
+        /// <param name="profileName"> The name of the profile which holds the security policy. </param>
         /// <param name="parameters"> object which contains security policy parameters. </param>
-        internal AfdSecurityPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, AfdProvisioningState? provisioningState, DeploymentStatus? deploymentStatus, SecurityPolicyParameters parameters) : base(id, name, type, systemData)
+        internal AfdSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecurityPolicyPropertiesDefinition parameters) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
+            ProfileName = profileName;
             Parameters = parameters;
         }
 
         /// <summary> Provisioning status. </summary>
         public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public DeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
+        /// <summary> The name of the profile which holds the security policy. </summary>
+        public string ProfileName { get; }
         /// <summary> object which contains security policy parameters. </summary>
-        internal SecurityPolicyParameters Parameters { get; set; }
-        /// <summary> The type of the Security policy to create. </summary>
-        internal SecurityPolicyType ParametersType
-        {
-            get => Parameters is null ? default : Parameters.Type;
-            set
-            {
-                if (Parameters is null)
-                    Parameters = new SecurityPolicyParameters();
-                Parameters.Type = value;
-            }
-        }
+        public SecurityPolicyPropertiesDefinition Parameters { get; set; }
     }
 }

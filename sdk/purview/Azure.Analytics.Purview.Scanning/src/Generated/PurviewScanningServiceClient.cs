@@ -39,15 +39,23 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Initializes a new instance of PurviewScanningServiceClient. </summary>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PurviewScanningServiceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewScanningServiceClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of PurviewScanningServiceClient. </summary>
+        /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewScanningServiceClient(Uri endpoint, TokenCredential credential, PurviewScanningServiceClientOptions options = null)
+        public PurviewScanningServiceClient(Uri endpoint, TokenCredential credential, PurviewScanningServiceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewScanningServiceClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -1080,7 +1088,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetKeyVaultReferencesAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetKeyVaultReferences");
+            return GetKeyVaultReferencesImplementationAsync("PurviewScanningServiceClient.GetKeyVaultReferences", context);
+        }
+
+        private AsyncPageable<BinaryData> GetKeyVaultReferencesImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1135,7 +1148,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetKeyVaultReferences(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetKeyVaultReferences");
+            return GetKeyVaultReferencesImplementation("PurviewScanningServiceClient.GetKeyVaultReferences", context);
+        }
+
+        private Pageable<BinaryData> GetKeyVaultReferencesImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1187,7 +1205,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetClassificationRulesAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetClassificationRules");
+            return GetClassificationRulesImplementationAsync("PurviewScanningServiceClient.GetClassificationRules", context);
+        }
+
+        private AsyncPageable<BinaryData> GetClassificationRulesImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1239,7 +1262,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetClassificationRules(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetClassificationRules");
+            return GetClassificationRulesImplementation("PurviewScanningServiceClient.GetClassificationRules", context);
+        }
+
+        private Pageable<BinaryData> GetClassificationRulesImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1340,7 +1368,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetDataSourcesAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetDataSources");
+            return GetDataSourcesImplementationAsync("PurviewScanningServiceClient.GetDataSources", context);
+        }
+
+        private AsyncPageable<BinaryData> GetDataSourcesImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1441,7 +1474,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetDataSources(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetDataSources");
+            return GetDataSourcesImplementation("PurviewScanningServiceClient.GetDataSources", context);
+        }
+
+        private Pageable<BinaryData> GetDataSourcesImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1496,7 +1534,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetScanRulesetsAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetScanRulesets");
+            return GetScanRulesetsImplementationAsync("PurviewScanningServiceClient.GetScanRulesets", context);
+        }
+
+        private AsyncPageable<BinaryData> GetScanRulesetsImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1551,7 +1594,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetScanRulesets(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetScanRulesets");
+            return GetScanRulesetsImplementation("PurviewScanningServiceClient.GetScanRulesets", context);
+        }
+
+        private Pageable<BinaryData> GetScanRulesetsImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1606,7 +1654,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetSystemRulesetsAsync(RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesets");
+            return GetSystemRulesetsImplementationAsync("PurviewScanningServiceClient.GetSystemRulesets", context);
+        }
+
+        private AsyncPageable<BinaryData> GetSystemRulesetsImplementationAsync(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1661,7 +1714,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetSystemRulesets(RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesets");
+            return GetSystemRulesetsImplementation("PurviewScanningServiceClient.GetSystemRulesets", context);
+        }
+
+        private Pageable<BinaryData> GetSystemRulesetsImplementation(string diagnosticsScopeName, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1717,7 +1775,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetSystemRulesetsVersionsAsync(string dataSourceType = null, RequestContext context = null)
         {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesetsVersions");
+            return GetSystemRulesetsVersionsImplementationAsync("PurviewScanningServiceClient.GetSystemRulesetsVersions", dataSourceType, context);
+        }
+
+        private AsyncPageable<BinaryData> GetSystemRulesetsVersionsImplementationAsync(string diagnosticsScopeName, string dataSourceType, RequestContext context)
+        {
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
                 do
@@ -1773,7 +1836,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </remarks>
         public virtual Pageable<BinaryData> GetSystemRulesetsVersions(string dataSourceType = null, RequestContext context = null)
         {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "PurviewScanningServiceClient.GetSystemRulesetsVersions");
+            return GetSystemRulesetsVersionsImplementation("PurviewScanningServiceClient.GetSystemRulesetsVersions", dataSourceType, context);
+        }
+
+        private Pageable<BinaryData> GetSystemRulesetsVersionsImplementation(string diagnosticsScopeName, string dataSourceType, RequestContext context)
+        {
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
                 do
@@ -1790,7 +1858,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         internal HttpMessage CreateGetKeyVaultReferenceRequest(string keyVaultName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1800,13 +1868,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateOrUpdateKeyVaultReferenceRequest(string keyVaultName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1818,13 +1885,12 @@ namespace Azure.Analytics.Purview.Scanning
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteKeyVaultReferenceRequest(string keyVaultName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1834,13 +1900,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetKeyVaultReferencesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1849,13 +1914,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetClassificationRulesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1864,13 +1928,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetDataSourcesRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1879,13 +1942,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetScanRulesetRequest(string scanRulesetName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1895,13 +1957,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateOrUpdateScanRulesetRequest(string scanRulesetName, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -1913,13 +1974,12 @@ namespace Azure.Analytics.Purview.Scanning
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200201.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteScanRulesetRequest(string scanRulesetName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1929,13 +1989,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetScanRulesetsRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1944,13 +2003,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1959,13 +2017,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsForDataSourceRequest(string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1975,13 +2032,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsForVersionRequest(int version, string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1995,13 +2051,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetLatestSystemRulesetsRequest(string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2014,13 +2069,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsVersionsRequest(string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2033,13 +2087,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetKeyVaultReferencesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2047,13 +2100,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetClassificationRulesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2061,13 +2113,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetDataSourcesNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2075,13 +2126,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetScanRulesetsNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2089,13 +2139,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsNextPageRequest(string nextLink, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2103,13 +2152,12 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetSystemRulesetsVersionsNextPageRequest(string nextLink, string dataSourceType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -2117,50 +2165,14 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200201 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200201();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    201 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200204;
+        private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
+        private static ResponseClassifier _responseClassifier200201;
+        private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
     }
 }

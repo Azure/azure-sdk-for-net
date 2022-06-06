@@ -19,7 +19,9 @@ namespace Microsoft.Azure.Management.Network
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Compute", "NetworkInterfaces", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "NetworkInterfaces", "2021-08-01"),
+                new Tuple<string, string, string>("Compute", "PublicIPAddresses", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "PublicIPAddresses", "2021-08-01"),
                 new Tuple<string, string, string>("Management", "ManagementGroupNetworkManagerConnections", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "AdminRuleCollections", "2022-04-01-preview"),

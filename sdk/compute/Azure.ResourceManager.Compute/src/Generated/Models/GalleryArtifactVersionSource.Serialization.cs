@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        uri = null;
                         continue;
                     }
                     uri = new Uri(property.Value.GetString());
