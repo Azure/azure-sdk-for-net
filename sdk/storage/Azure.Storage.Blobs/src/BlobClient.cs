@@ -1810,8 +1810,13 @@ namespace Azure.Storage.Blobs
                 //{
                 //    throw Errors.TransactionalHashingNotSupportedWithClientSideEncryption();
                 //}
-
-                return await new BlobClientSideEncryptor(new ClientSideEncryptorV1_0(ClientSideEncryption))
+                IClientSideEncryptor encryptor = ClientSideEncryption.EncryptionVersion switch
+                {
+                    ClientSideEncryptionVersion.V1_0 => new ClientSideEncryptorV1_0(ClientSideEncryption),
+                    ClientSideEncryptionVersion.V2_0 => new ClientSideEncryptorV2_0(ClientSideEncryption),
+                    _ => throw new InvalidOperationException()
+                };
+                return await new BlobClientSideEncryptor(encryptor)
                     .ClientSideEncryptionOpenWriteInternal(
                         BlockBlobClient,
                         overwrite,
