@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(options, nameof(options));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             EntityNameFormatter.CheckValidRuleName(options.Name);
-            ServiceBusEventSource.Log.AddRuleStart(Identifier, options.Name);
+            ServiceBusEventSource.Log.CreateRuleStart(Identifier, options.Name);
 
             try
             {
@@ -150,12 +150,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.AddRuleException(Identifier, exception.ToString());
+                ServiceBusEventSource.Log.CreateRuleException(Identifier, exception.ToString(), options.Name);
                 throw;
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.AddRuleComplete(Identifier);
+            ServiceBusEventSource.Log.CreateRuleComplete(Identifier, options.Name);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusRuleManager));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RemoveRuleStart(Identifier, ruleName);
+            ServiceBusEventSource.Log.DeleteRuleStart(Identifier, ruleName);
 
             try
             {
@@ -183,11 +183,11 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.RemoveRuleException(Identifier, exception.ToString());
+                ServiceBusEventSource.Log.DeleteRuleException(Identifier, exception.ToString(), ruleName);
                 throw;
             }
 
-            ServiceBusEventSource.Log.RemoveRuleComplete(Identifier);
+            ServiceBusEventSource.Log.DeleteRuleComplete(Identifier, ruleName);
         }
 
         /// <summary>
@@ -200,19 +200,19 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.GetRuleStart(Identifier);
-            List<RuleProperties> ruleProperties;
+            ServiceBusEventSource.Log.GetRulesStart(Identifier);
             int skip = 0;
 
             while (!cancellationToken.IsCancellationRequested)
             {
+                List<RuleProperties> ruleProperties;
                 try
                 {
                     ruleProperties = await InnerRuleManager.GetRulesAsync(skip, cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception exception)
                 {
-                    ServiceBusEventSource.Log.GetRuleException(Identifier, exception.ToString());
+                    ServiceBusEventSource.Log.GetRulesException(Identifier, exception.ToString());
                     throw;
                 }
                 skip += ruleProperties.Count;
@@ -227,7 +227,7 @@ namespace Azure.Messaging.ServiceBus
                 }
             }
 
-            ServiceBusEventSource.Log.GetRuleComplete(Identifier);
+            ServiceBusEventSource.Log.GetRulesComplete(Identifier);
         }
 
         /// <summary>
