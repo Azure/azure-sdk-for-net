@@ -54,6 +54,17 @@ namespace Azure.Communication.CallingServer
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CallingServerClientOptions())
         { }
+
+        /// <summary> Initializes a new instance of <see cref="CallingServerClient"/>.</summary>
+        /// <param name="endpoint">Endpoint</param>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallingServerClient(Uri endpoint, string connectionString, CallingServerClientOptions options = default)
+        : this(
+            endpoint,
+            options ?? new CallingServerClientOptions(),
+            ConnectionString.Parse(connectionString))
+        { }
         #endregion
 
         #region private constructors
