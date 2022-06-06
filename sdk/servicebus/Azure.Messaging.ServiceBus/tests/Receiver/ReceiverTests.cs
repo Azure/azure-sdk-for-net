@@ -293,23 +293,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             // mutate the cancellation token to distinguish it from CancellationToken.None
             cts.CancelAfter(100);
 
-            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
-            mockConnection.Setup(
-                connection => connection.CreateTransportReceiver(
-                    It.IsAny<string>(),
-                    It.IsAny<ServiceBusRetryPolicy>(),
-                    It.IsAny<ServiceBusReceiveMode>(),
-                    It.IsAny<uint>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<bool>(),
-                    It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
-                .Returns(mockTransportReceiver.Object);
+            var mockConnection = ServiceBusTestUtilities.GetMockedReceiverConnection();
 
-            var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", default, new ServiceBusReceiverOptions());
+            var receiver = new ServiceBusReceiver(mockConnection, "fake", default, new ServiceBusReceiverOptions());
             await receiver.CloseAsync(cts.Token);
             mockTransportReceiver.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
+        }
+
+        [Test]
+        public async Task CallingCloseAsyncUpdatesIsClosed()
+        {
+            var mockConnection = ServiceBusTestUtilities.GetMockedReceiverConnection();
+            var receiver = new ServiceBusReceiver(mockConnection, "fake", default, new ServiceBusReceiverOptions());
+            await receiver.CloseAsync();
+            Assert.IsTrue(receiver.IsClosed);
         }
     }
 }
