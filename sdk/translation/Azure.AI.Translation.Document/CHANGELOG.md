@@ -11,8 +11,19 @@
 - Renamed type `StorageInputType` to `StorageInputUriKind`.
 - Renamed property `StorageType` to `StorageUriKind` in `DocumentTranslationInput`.
 - Renamed parameter `asc` to `ascending` in `TranslationFilterOrder` constructor.
+- The following properties inside of the `DocumentTranslationOperation` class will throw an `InvalidOperationException` if they are accessed and the LRO hasn't made a request to the service:
+  - `CreatedOn`
+  - `DocumentsCanceled`
+  - `DocumentsFailed`
+  - `DocumentsInProgress`
+  - `DocumentsNotStarted`
+  - `DocumentsSucceeded`
+  - `DocumentsTotal`
+  - `LastModified`
+  - `Status`
 
 ### Bugs Fixed
+- In `DocumentTranslationOperation`, `Cancel` calls won't overwrite the response from `GetRawResponse` anymore.
 
 ### Other Changes
 

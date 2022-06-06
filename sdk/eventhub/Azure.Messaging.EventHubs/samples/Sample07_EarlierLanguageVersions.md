@@ -6,11 +6,16 @@ The Azure Event Hubs client library makes use of new features that were introduc
 
   You can still use the Event Hubs client library with previous C# language versions, by managing asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version that can consume a `netstandard2.0` package, including earlier versions of .NET Core or the .NET framework.  For more information, see the [.NET Standard](https://docs.microsoft.com/dotnet/standard/net-standard) documentation and [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
   
-  ## Publish a batch of events using C# 7
+  ## Table of contents
+
+- [Publish a batch of events using C# 7](#publish-a-batch-of-events-using-c-7)
+- [Read events from all partitions using C# 7](#read-events-from-all-partitions-using-c-7)
+
+## Publish a batch of events using C# 7
   
-  This example illustrates publishing a batch with a single event, allowing the Event Hubs service to assign the partition to which it will be published.  For more information on publishing, see:  [Sample04_PublishingEvents](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_PublishingEvents.md).
+This example illustrates publishing a batch with a single event, allowing the Event Hubs service to assign the partition to which it will be published. For more information on publishing, see: [Sample04_PublishingEvents](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_PublishingEvents.md).
   
-  ```C# Snippet:EventHubs_Sample07_Publish
+```C# Snippet:EventHubs_Sample07_Publish
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
@@ -34,7 +39,7 @@ finally
     await producer.CloseAsync();
 }
 ```
-  
+
 ## Read events from all partitions using C# 7
 
 The `ReadEventsAsync` method of the `EventHubConsumerClient` allows events to be read from each partition for prototyping and exploring, but is not a recommended approach for production scenarios.  For reading events from all partitions in a production scenario, we strongly recommend using the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) from the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor) package.
