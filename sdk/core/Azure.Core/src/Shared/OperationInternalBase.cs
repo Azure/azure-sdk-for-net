@@ -19,14 +19,12 @@ namespace Azure.Core
         private readonly DelayStrategy? _fallbackStrategy;
         private readonly AsyncLockWithValue<Response> _responseLock;
 
-        protected readonly string _updateStatusScopeName;
-        private readonly string _waitForCompletionScopeName;
+        protected readonly string _operationTypeName;
 
         protected OperationInternalBase(Response rawResponse)
         {
             _diagnostics = new ClientDiagnostics(ClientOptions.Default);
-            _updateStatusScopeName = string.Empty;
-            _waitForCompletionScopeName = string.Empty;
+            _operationTypeName = string.Empty;
             _scopeAttributes = default;
             _fallbackStrategy = default;
             _responseLock = new AsyncLockWithValue<Response>(rawResponse);
@@ -35,8 +33,7 @@ namespace Azure.Core
         protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)
         {
             _diagnostics = clientDiagnostics;
-            _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
-            _waitForCompletionScopeName = $"{operationTypeName}.WaitForCompletion";
+            _operationTypeName = operationTypeName;
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             _fallbackStrategy = fallbackStrategy;
             _responseLock = new AsyncLockWithValue<Response>();
@@ -192,7 +189,7 @@ namespace Azure.Core
                 return lockOrValue.Value;
             }
 
-            using var scope = CreateScope(_waitForCompletionScopeName);
+            using var scope = CreateScope($"{_operationTypeName}.WaitForCompletionResponse");
             try
             {
                 var poller = new OperationPoller(_fallbackStrategy);
@@ -214,11 +211,6 @@ namespace Azure.Core
 
         protected DiagnosticScope CreateScope(string scopeName)
         {
-            if (scopeName != _updateStatusScopeName && scopeName != _waitForCompletionScopeName)
-            {
-                throw new NotSupportedException($"The scope name is not supported. Allowed value: {_updateStatusScopeName}, {_waitForCompletionScopeName}");
-            }
-
             DiagnosticScope scope = _diagnostics.CreateScope(scopeName);
 
             if (_scopeAttributes != null)
