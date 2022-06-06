@@ -191,12 +191,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Get all rules associated with the subscription.
+        /// Iterates over the rules associated with the subscription.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>Returns a list of <see cref="RuleProperties"/></returns>
+        /// <returns>Returns each rule on the associated subscription.</returns>
         public virtual async IAsyncEnumerable<RuleProperties> GetRulesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusRuleManager));
