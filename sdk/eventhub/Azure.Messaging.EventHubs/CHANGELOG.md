@@ -16,7 +16,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Other Changes
 
-- Samples now each havee a table of contents to help discover and navigate to the topics discussed for a scenario.
+- Samples now each havee a table of contents to help discover and navigate to the topics discussed for a scenario. _(A community contribution, courtesy of [danielmarbach](https://github.com/chadvidovcich))_
 
 ## 5.7.0 (2022-05-10)
 
