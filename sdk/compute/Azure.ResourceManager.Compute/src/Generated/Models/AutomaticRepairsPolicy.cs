@@ -17,16 +17,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of AutomaticRepairsPolicy. </summary>
         /// <param name="enabled"> Specifies whether automatic repairs should be enabled on the virtual machine scale set. The default value is false. </param>
-        /// <param name="gracePeriod"> The amount of time for which automatic repairs are suspended due to a state change on VM. The grace time starts after the state change has completed. This helps avoid premature or accidental repairs. The time duration should be specified in ISO 8601 format. The minimum allowed grace period is 30 minutes (PT30M), which is also the default value. The maximum allowed grace period is 90 minutes (PT90M). </param>
-        internal AutomaticRepairsPolicy(bool? enabled, string gracePeriod)
+        /// <param name="gracePeriod"> The amount of time for which automatic repairs are suspended due to a state change on VM. The grace time starts after the state change has completed. This helps avoid premature or accidental repairs. The time duration should be specified in ISO 8601 format. The minimum allowed grace period is 10 minutes (PT10M), which is also the default value. The maximum allowed grace period is 90 minutes (PT90M). </param>
+        /// <param name="repairAction"> Type of repair action (replace, restart, reimage) that will be used for repairing unhealthy virtual machines in the scale set. Default value is replace. </param>
+        internal AutomaticRepairsPolicy(bool? enabled, string gracePeriod, RepairAction? repairAction)
         {
             Enabled = enabled;
             GracePeriod = gracePeriod;
+            RepairAction = repairAction;
         }
 
         /// <summary> Specifies whether automatic repairs should be enabled on the virtual machine scale set. The default value is false. </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The amount of time for which automatic repairs are suspended due to a state change on VM. The grace time starts after the state change has completed. This helps avoid premature or accidental repairs. The time duration should be specified in ISO 8601 format. The minimum allowed grace period is 30 minutes (PT30M), which is also the default value. The maximum allowed grace period is 90 minutes (PT90M). </summary>
+        /// <summary> The amount of time for which automatic repairs are suspended due to a state change on VM. The grace time starts after the state change has completed. This helps avoid premature or accidental repairs. The time duration should be specified in ISO 8601 format. The minimum allowed grace period is 10 minutes (PT10M), which is also the default value. The maximum allowed grace period is 90 minutes (PT90M). </summary>
         public string GracePeriod { get; set; }
+        /// <summary> Type of repair action (replace, restart, reimage) that will be used for repairing unhealthy virtual machines in the scale set. Default value is replace. </summary>
+        public RepairAction? RepairAction { get; set; }
     }
 }
