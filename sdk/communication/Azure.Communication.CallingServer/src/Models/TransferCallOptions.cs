@@ -17,15 +17,25 @@ namespace Azure.Communication.CallingServer
         /// <summary> The UserToUserInformation. </summary>
         public string UserToUserInformation { get; set; }
 
+        /// <summary> The operationContext for this transfer call. </summary>
+        public string OperationContext { get; set; }
+
+        /// <summary> The participantId of the transferee. </summary>
+        public string TransfereeParticipantId { get; set; }
+
         /// <summary>
         /// Transfer Call Options.
         /// </summary>
         /// <param name="alternateCallerId">The alternate caller id of the source</param>
         /// <param name="userToUserInformation">The userToUserInformation.</param>
-        public TransferCallOptions(PhoneNumberIdentifier alternateCallerId, string userToUserInformation)
+        /// <param name="operationContext">The operationContext for this transfer call.</param>
+        /// <param name="transfereeParticipantId">The participantId of the transferee.</param>
+        public TransferCallOptions(PhoneNumberIdentifier alternateCallerId, string userToUserInformation, string operationContext, string transfereeParticipantId)
         {
             AlternateCallerId = alternateCallerId;
             UserToUserInformation = userToUserInformation;
+            OperationContext = operationContext;
+            TransfereeParticipantId = transfereeParticipantId;
         }
     }
 }

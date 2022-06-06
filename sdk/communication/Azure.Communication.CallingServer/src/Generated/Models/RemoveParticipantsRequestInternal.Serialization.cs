@@ -10,27 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class AddParticipantRequestInternal : IUtf8JsonSerializable
+    internal partial class RemoveParticipantsRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlternateCallerId))
+            writer.WritePropertyName("participantsToRemove");
+            writer.WriteStartArray();
+            foreach (var item in ParticipantsToRemove)
             {
-                writer.WritePropertyName("alternateCallerId");
-                writer.WriteObjectValue(AlternateCallerId);
+                writer.WriteObjectValue(item);
             }
-            writer.WritePropertyName("participant");
-            writer.WriteObjectValue(Participant);
+            writer.WriteEndArray();
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext");
                 writer.WriteStringValue(OperationContext);
-            }
-            if (Optional.IsDefined(CallbackUri))
-            {
-                writer.WritePropertyName("callbackUri");
-                writer.WriteStringValue(CallbackUri);
             }
             writer.WriteEndObject();
         }

@@ -7,7 +7,7 @@
 
 namespace Azure.Communication
 {
-    /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+    /// <summary> The CommunicationIdentifierModel. </summary>
     internal partial class CommunicationIdentifierModel
     {
         /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
@@ -16,7 +16,7 @@ namespace Azure.Communication
         }
 
         /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
-        /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
+        /// <param name="rawId"> Full ID of the identifier. </param>
         /// <param name="communicationUser"> The communication user. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
@@ -28,7 +28,7 @@ namespace Azure.Communication
             MicrosoftTeamsUser = microsoftTeamsUser;
         }
 
-        /// <summary> Raw Id of the identifier. Optional in requests, required in responses. </summary>
+        /// <summary> Full ID of the identifier. </summary>
         public string RawId { get; set; }
         /// <summary> The communication user. </summary>
         public CommunicationUserIdentifierModel CommunicationUser { get; set; }

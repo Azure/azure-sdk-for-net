@@ -10,25 +10,17 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class TransferCallRequestInternal : IUtf8JsonSerializable
+    internal partial class TransferToParticipantRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetParticipant))
+            writer.WritePropertyName("targetParticipant");
+            writer.WriteObjectValue(TargetParticipant);
+            if (Optional.IsDefined(TransfereeCallerId))
             {
-                writer.WritePropertyName("targetParticipant");
-                writer.WriteObjectValue(TargetParticipant);
-            }
-            if (Optional.IsDefined(TargetCallLegId))
-            {
-                writer.WritePropertyName("targetCallLegId");
-                writer.WriteStringValue(TargetCallLegId);
-            }
-            if (Optional.IsDefined(AlternateCallerId))
-            {
-                writer.WritePropertyName("alternateCallerId");
-                writer.WriteObjectValue(AlternateCallerId);
+                writer.WritePropertyName("transfereeCallerId");
+                writer.WriteObjectValue(TransfereeCallerId);
             }
             if (Optional.IsDefined(UserToUserInformation))
             {
@@ -40,10 +32,10 @@ namespace Azure.Communication.CallingServer
                 writer.WritePropertyName("operationContext");
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(CallbackUri))
+            if (Optional.IsDefined(TransfereeParticipantId))
             {
-                writer.WritePropertyName("callbackUri");
-                writer.WriteStringValue(CallbackUri);
+                writer.WritePropertyName("transfereeParticipantId");
+                writer.WriteStringValue(TransfereeParticipantId);
             }
             writer.WriteEndObject();
         }

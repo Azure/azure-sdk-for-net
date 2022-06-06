@@ -17,11 +17,6 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("incomingCallContext");
             writer.WriteStringValue(IncomingCallContext);
-            if (Optional.IsDefined(CallbackUri))
-            {
-                writer.WritePropertyName("callbackUri");
-                writer.WriteStringValue(CallbackUri);
-            }
             writer.WritePropertyName("target");
             writer.WriteObjectValue(Target);
             writer.WriteEndObject();

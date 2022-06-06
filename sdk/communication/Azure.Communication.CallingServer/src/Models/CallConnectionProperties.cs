@@ -12,6 +12,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionPropertiesInternal">The call connection properties internal.</param>
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesInternal)
         {
+            /*
             CallLegId = callConnectionPropertiesInternal.CallLegId;
             Source = CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesInternal.Source);
             Target = CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesInternal.Target);
@@ -19,6 +20,8 @@ namespace Azure.Communication.CallingServer
             CallConnectionState = callConnectionPropertiesInternal.CallConnectionState;
             Subject = callConnectionPropertiesInternal.Subject;
             CallbackUri = new Uri(callConnectionPropertiesInternal.CallbackUri);
+            */
+            var TODO = callConnectionPropertiesInternal;
         }
 
         /// <summary> The call connection id. </summary>
@@ -29,8 +32,12 @@ namespace Azure.Communication.CallingServer
         public PhoneNumberIdentifier AlternateCallerId { get; }
         /// <summary> The targets of the call. </summary>
         public CommunicationIdentifier Target { get; }
+
+        /*
         /// <summary> The state of the call connection. </summary>
-        public CallConnectionState? CallConnectionState { get; }
+        public Callconnection? CallConnectionState { get; }
+        */
+
         /// <summary> The subject. </summary>
         public string Subject { get; }
         /// <summary> The callback URI. </summary>

@@ -17,16 +17,16 @@ namespace Azure.Communication.CallingServer
     public class CallConnection
     {
         private readonly ClientDiagnostics _clientDiagnostics;
-        internal CallConnectionRestClient RestClient { get; }
+        internal CallConnectionsRestClient RestClient { get; }
 
         /// <summary>
         /// The call connection id.
         /// </summary>
-        public virtual string CallLegId { get; internal set; }
+        public virtual string CallConnectionId { get; internal set; }
 
-        internal CallConnection(string callLegId, CallConnectionRestClient callConnectionRestClient, ClientDiagnostics clientDiagnostics)
+        internal CallConnection(string CallConnectionId, CallConnectionsRestClient callConnectionRestClient, ClientDiagnostics clientDiagnostics)
         {
-            this.CallLegId = callLegId;
+            this.CallConnectionId = CallConnectionId;
             this.RestClient = callConnectionRestClient;
             this._clientDiagnostics = clientDiagnostics;
         }
@@ -36,55 +36,7 @@ namespace Azure.Communication.CallingServer
         {
             _clientDiagnostics = null;
             RestClient = null;
-            CallLegId = null;
-        }
-
-        /// <summary> Get call details. </summary>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="CallConnectionProperties"/>.</returns>
-        public virtual async Task<Response<CallConnectionProperties>> GetCallAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCall)}");
-            scope.Start();
-            try
-            {
-                Response<CallConnectionPropertiesInternal> callConnectionPropertiesInternal = await RestClient.GetCallAsync(
-                                        callLegId: CallLegId,
-                                        cancellationToken: cancellationToken
-                                        ).ConfigureAwait(false);
-
-                return Response.FromValue(new CallConnectionProperties(callConnectionPropertiesInternal.Value), callConnectionPropertiesInternal.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Get call details. </summary>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="CallConnectionProperties"/>.</returns>
-        public virtual Response<CallConnectionProperties> GetCall(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetCall)}");
-            scope.Start();
-            try
-            {
-                Response<CallConnectionPropertiesInternal> callConnectionPropertiesInternal = RestClient.GetCall(
-                        callLegId: CallLegId,
-                        cancellationToken: cancellationToken
-                        );
-
-                return Response.FromValue(new CallConnectionProperties(callConnectionPropertiesInternal.Value), callConnectionPropertiesInternal.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            CallConnectionId = null;
         }
 
         /// <summary> Disconnect the current caller in a group-call or end a p2p-call.</summary>
@@ -96,8 +48,8 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                return await RestClient.HangUpCallAsync(
-                    callLegId: CallLegId,
+                return await RestClient.HangupCallAsync(
+                    callConnectionId: CallConnectionId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -117,8 +69,8 @@ namespace Azure.Communication.CallingServer
             scope.Start();
             try
             {
-                return RestClient.HangUpCall(
-                    callLegId: CallLegId,
+                return RestClient.HangupCall(
+                    callConnectionId: CallConnectionId,
                     cancellationToken: cancellationToken
                     );
             }
@@ -130,23 +82,16 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Terminates the conversation for all participants in the call. </summary>
-        /// <param name="reason"> The reason of the terminate. </param>
-        /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> TerminateCallAsync(string reason, Uri callbackUri, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> TerminateCallAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TerminateCall)}");
             scope.Start();
             try
             {
-                TerminateCallRequest request = new TerminateCallRequest();
-                request.Reason = reason;
-                request.CallbackUri = callbackUri?.AbsoluteUri;
-
                 return await RestClient.TerminateCallAsync(
-                    callLegId: CallLegId,
-                    terminateCallRequest: request,
+                    callConnectionId: CallConnectionId,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
             }
@@ -158,23 +103,16 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Terminates the conversation for all participants in the call. </summary>
-        /// <param name="reason"> The reason of the terminate. </param>
-        /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response TerminateCall(string reason, Uri callbackUri, CancellationToken cancellationToken = default)
+        public virtual Response TerminateCall(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TerminateCall)}");
             scope.Start();
             try
             {
-                TerminateCallRequest request = new TerminateCallRequest();
-                request.Reason = reason;
-                request.CallbackUri = callbackUri?.AbsoluteUri;
-
                 return RestClient.TerminateCall(
-                    callLegId: CallLegId,
-                    terminateCallRequest: request,
+                    callConnectionId: CallConnectionId,
                     cancellationToken: cancellationToken
                     );
             }
@@ -185,28 +123,29 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Transfer the call. </summary>
-        /// <param name="targetParticipant"> The target participant. </param>
-        /// <param name="targetCallLegId"> The target call leg id to transfer to. </param>
+        /// <summary> Transfer this call to a participant. </summary>
+        /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
         /// <param name="options">The transfer options. </param>
-        /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> TransferCallAsync(CommunicationIdentifier targetParticipant, string targetCallLegId, Uri callbackUri, TransferCallOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<TransferCallResponse> TransferCallToParticipantAsync(CommunicationIdentifier targetParticipant, TransferCallOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCallToParticipant)}");
             scope.Start();
             try
             {
-                TransferCallRequestInternal request = new TransferCallRequestInternal();
-                request.TargetParticipant = CommunicationIdentifierSerializer.Serialize(targetParticipant);
-                request.TargetCallLegId = targetCallLegId;
-                request.CallbackUri = callbackUri?.AbsoluteUri;
-                request.UserToUserInformation = options.UserToUserInformation;
-                request.AlternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
-                return await RestClient.TransferCallAsync(
-                    callLegId: CallLegId,
+                if (options != null)
+                {
+                    request.TransfereeCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                    request.UserToUserInformation = options.UserToUserInformation;
+                    request.OperationContext = options.OperationContext;
+                    request.TransfereeParticipantId = options.TransfereeParticipantId;
+                }
+
+                return await RestClient.TransferToParticipantAsync(
+                    callConnectionId: CallConnectionId,
                     request,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -220,26 +159,27 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Transfer the call. </summary>
         /// <param name="targetParticipant"> The target participant. </param>
-        /// <param name="targetCallLegId"> The target call leg id to transfer to. </param>
         /// <param name="options">The transfer options. </param>
-        /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response TransferCall(CommunicationIdentifier targetParticipant, string targetCallLegId, Uri callbackUri, TransferCallOptions options = default, CancellationToken cancellationToken = default)
+        public virtual TransferCallResponse TransferCallToParticipant(CommunicationIdentifier targetParticipant, TransferCallOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCall)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCallToParticipant)}");
             scope.Start();
             try
             {
-                TransferCallRequestInternal request = new TransferCallRequestInternal();
-                request.TargetParticipant = CommunicationIdentifierSerializer.Serialize(targetParticipant);
-                request.TargetCallLegId = targetCallLegId;
-                request.CallbackUri = callbackUri?.AbsoluteUri;
-                request.UserToUserInformation = options.UserToUserInformation;
-                request.AlternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                TransferToParticipantRequestInternal request = new TransferToParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(targetParticipant));
 
-                return RestClient.TransferCall(
-                    callLegId: CallLegId,
+                if (options != null)
+                {
+                    request.TransfereeCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                    request.UserToUserInformation = options.UserToUserInformation;
+                    request.OperationContext = options.OperationContext;
+                    request.TransfereeParticipantId = options.TransfereeParticipantId;
+                }
+
+                return RestClient.TransferToParticipant(
+                    callConnectionId: CallConnectionId,
                     request,
                     cancellationToken: cancellationToken
                     );
@@ -251,24 +191,31 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get participant from the call using <see cref="CommunicationIdentifier"/>. </summary>
-        /// <param name="participantId"> The identity of participant. </param>
+        /// <summary> Transfer this call to another call. </summary>
+        /// <param name="targetCallConnectionId"> The target where call's CallConnectionId. </param>
+        /// <param name="options">The transfer options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual async Task<Response<CallParticipant>> GetParticipantAsync(string participantId, CancellationToken cancellationToken = default)
+        public virtual async Task<TransferCallResponse> TransferCallToCallAsync(string targetCallConnectionId, TransferCallOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCallToParticipant)}");
             scope.Start();
             try
             {
-                var callParticipantsInternal = await RestClient.GetParticipantAsync(
-                                        callLegId: CallLegId,
-                                        participantId: participantId,
-                                        cancellationToken: cancellationToken
-                                        ).ConfigureAwait(false);
+                TransferToCallRequestInternal request = new TransferToCallRequestInternal(targetCallConnectionId);
 
-                return Response.FromValue(new CallParticipant(callParticipantsInternal.Value), callParticipantsInternal.GetRawResponse());
+                if (options != null)
+                {
+                    request.UserToUserInformation = options.UserToUserInformation;
+                    request.OperationContext = options.OperationContext;
+                    request.TransfereeParticipantId = options.TransfereeParticipantId;
+                }
+
+                return await RestClient.TransferToCallAsync(
+                    callConnectionId: CallConnectionId,
+                    request,
+                    cancellationToken: cancellationToken
+                    ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -277,24 +224,31 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get participant from the call using <see cref="CommunicationIdentifier"/>. </summary>
-        /// <param name="participantId"> The identity of participant. </param>
+        /// <summary> Transfer this call to another call. </summary>
+        /// <param name="targetCallConnectionId"> The target where call's CallConnectionId. </param>
+        /// <param name="options">The transfer options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="CallParticipant"/>.</returns>
-        public virtual Response<CallParticipant> GetParticipant(string participantId, CancellationToken cancellationToken = default)
+        public virtual TransferCallResponse TransferCallToCall(string targetCallConnectionId, TransferCallOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(TransferCallToParticipant)}");
             scope.Start();
             try
             {
-                var callParticipantsInternal = RestClient.GetParticipant(
-                                        callLegId: CallLegId,
-                                        participantId: participantId,
-                                        cancellationToken: cancellationToken
-                                        );
+                TransferToCallRequestInternal request = new TransferToCallRequestInternal(targetCallConnectionId);
 
-                return Response.FromValue(new CallParticipant(callParticipantsInternal.Value), callParticipantsInternal.GetRawResponse());
+                if (options != null)
+                {
+                    request.UserToUserInformation = options.UserToUserInformation;
+                    request.OperationContext = options.OperationContext;
+                    request.TransfereeParticipantId = options.TransfereeParticipantId;
+                }
+
+                return RestClient.TransferToCall(
+                    callConnectionId: CallConnectionId,
+                    request,
+                    cancellationToken: cancellationToken
+                    );
             }
             catch (Exception ex)
             {
@@ -304,25 +258,29 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Add a participant to the call. </summary>
-        /// <param name="participant"> The identity of participant to be added to the call. </param>
-        /// <param name="callbackUri">The callback Uri.</param>
+        /// <param name="participantsToAdd"> The list of identity of participants to be added to the call. </param>
         /// <param name="options">The options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
-        public virtual async Task<Response> AddParticipantAsync(CommunicationIdentifier participant, Uri callbackUri, AddParticipantOptions options = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
+        public virtual async Task<AddParticipantsResponse> AddParticipantsAsync(IEnumerable<CommunicationIdentifier> participantsToAdd, AddParticipantsOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipants)}");
             scope.Start();
             try
             {
-                AddParticipantRequestInternal request = new AddParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(participant));
-                request.AlternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
-                request.OperationContext = options.OperationContext;
-                request.CallbackUri = callbackUri?.AbsoluteUri;
+                AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(participantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
+
+                if (options != null)
+                {
+                    request.SourceCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                    request.OperationContext = options.OperationContext;
+                    request.InvitationTimeoutInSeconds = options.invitationTimeoutInSeconds;
+                    request.ReplacementCallConnectionId = options.replacementCallConnectionId;
+                }
 
                 return await RestClient.AddParticipantAsync(
-                    callLegId: CallLegId,
+                    callConnectionId: CallConnectionId,
                     request,
                     cancellationToken: cancellationToken
                     ).ConfigureAwait(false);
@@ -335,171 +293,30 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Add a participant to the call. </summary>
-        /// <param name="participant"> The identity of participant to be added to the call. </param>
-        /// <param name="callbackUri">The callback Uri.</param>
+        /// <param name="participantsToAdd"> The list of identity of participants to be added to the call. </param>
         /// <param name="options">The options. </param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
-        public virtual Response AddParticipant(CommunicationIdentifier participant, Uri callbackUri, AddParticipantOptions options = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="participantsToAdd"/> is null. </exception>
+        public virtual AddParticipantsResponse AddParticipants(IEnumerable<CommunicationIdentifier> participantsToAdd, AddParticipantsOptions options = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipant)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(AddParticipants)}");
             scope.Start();
             try
             {
-                AddParticipantRequestInternal request = new AddParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(participant));
-                request.AlternateCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
-                request.OperationContext = options.OperationContext;
-                request.CallbackUri = callbackUri?.AbsoluteUri;
+                AddParticipantsRequestInternal request = new AddParticipantsRequestInternal(participantsToAdd.Select(t => CommunicationIdentifierSerializer.Serialize(t)));
+
+                if (options != null)
+                {
+                    request.SourceCallerId = options.AlternateCallerId == null ? null : new PhoneNumberIdentifierModel(options.AlternateCallerId.PhoneNumber);
+                    request.OperationContext = options.OperationContext;
+                    request.InvitationTimeoutInSeconds = options.invitationTimeoutInSeconds;
+                    request.ReplacementCallConnectionId = options.replacementCallConnectionId;
+                }
 
                 return RestClient.AddParticipant(
-                    callLegId: CallLegId,
+                    callConnectionId: CallConnectionId,
                     request,
-                    cancellationToken: cancellationToken
-                    );
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Get participants of the call. </summary>
-        /// <param name="continuationToken"> The continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
-        public virtual AsyncPageable<CallParticipant> GetParticipantsAsync(string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<CallParticipant>> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipants)}");
-                scope.Start();
-                try
-                {
-                    Response<CallParticipantCollectionInternal> response = await RestClient
-                        .ListParticipantAsync(CallLegId, maxPageSize, continuationToken, cancellationToken)
-                        .ConfigureAwait(false);
-
-                    return Page.FromValues(response.Value.Value.Select(x => new CallParticipant(x)),
-                        response.Value.NextLink,
-                        response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            async Task<Page<CallParticipant>> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipants)}");
-                scope.Start();
-                try
-                {
-                    Response<CallParticipantCollectionInternal> response = await RestClient
-                        .ListParticipantNextPageAsync(nextLink, CallLegId, maxPageSize, continuationToken, cancellationToken)
-                        .ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(x => new CallParticipant(x)),
-                        response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Get participants of the call. </summary>
-        /// <param name="continuationToken"> The continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>The <see cref="IEnumerable{CallParticipant}"/>.</returns>
-        public virtual Pageable<CallParticipant> GetParticipants(string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            Page<CallParticipant> FirstPageFunc(int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipants)}");
-                scope.Start();
-                try
-                {
-                    var response =  RestClient
-                        .ListParticipant(CallLegId, maxPageSize, continuationToken, cancellationToken);
-
-                    return Page.FromValues(response.Value.Value.Select(x => new CallParticipant(x)),
-                        response.Value.NextLink,
-                        response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            Page<CallParticipant> NextPageFunc(string nextLink, int? maxPageSize)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(GetParticipants)}");
-                scope.Start();
-                try
-                {
-                    var response = RestClient
-                        .ListParticipantNextPage(nextLink, CallLegId, maxPageSize, continuationToken, cancellationToken);
-
-                    return Page.FromValues(response.Value.Value.Select(x => new CallParticipant(x)),
-                        response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Remove a participant from the call. </summary>
-        /// <param name="participantId"> The identity of participant to be removed from the call. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> RemoveParticipantAsync(string participantId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipant)}");
-            scope.Start();
-            try
-            {
-                return await RestClient.RemoveParticipantAsync(
-                    callLegId: CallLegId,
-                    participantId: participantId,
-                    cancellationToken: cancellationToken
-                    ).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Remove a participant from the call. </summary>
-        /// <param name="participantId"> The identity of participant to be removed from the call. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response RemoveParticipant(string participantId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(RemoveParticipant)}");
-            scope.Start();
-            try
-            {
-                return RestClient.RemoveParticipant(
-                    callLegId: CallLegId,
-                    participantId: participantId,
                     cancellationToken: cancellationToken
                     );
             }

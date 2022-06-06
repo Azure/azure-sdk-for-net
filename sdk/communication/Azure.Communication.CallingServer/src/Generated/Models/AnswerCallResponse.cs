@@ -16,13 +16,17 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of AnswerCallResponse. </summary>
-        /// <param name="callLegId"> The call leg id. </param>
-        internal AnswerCallResponse(string callLegId)
+        /// <param name="serverCallId"> The server call id. </param>
+        /// <param name="callConnectionId"> The subscription id. </param>
+        internal AnswerCallResponse(string serverCallId, string callConnectionId)
         {
-            CallLegId = callLegId;
+            ServerCallId = serverCallId;
+            CallConnectionId = callConnectionId;
         }
 
-        /// <summary> The call leg id. </summary>
-        public string CallLegId { get; }
+        /// <summary> The server call id. </summary>
+        public string ServerCallId { get; }
+        /// <summary> The subscription id. </summary>
+        public string CallConnectionId { get; }
     }
 }

@@ -21,9 +21,12 @@ namespace Azure.Communication.CallingServer
         /// <param name="callParticipantInternal"> The internal call participant. </param>
         internal CallParticipant(CallParticipantInternal callParticipantInternal)
         {
+            /*
             Identifier = CommunicationIdentifierSerializer.Deserialize(callParticipantInternal.Identifier);
             ParticipantId = callParticipantInternal.ParticipantId;
             IsMuted = callParticipantInternal.IsMuted;
+            */
+            var TODO = callParticipantInternal;
         }
 
         /// <summary> The communication identifier. </summary>

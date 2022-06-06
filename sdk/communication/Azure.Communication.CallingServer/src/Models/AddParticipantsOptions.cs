@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The options for adding participant to a call. </summary>
-    public class AddParticipantOptions
+    public class AddParticipantsOptions
     {
         /// <summary> The alternate caller id of the source. </summary>
         public PhoneNumberIdentifier AlternateCallerId { get; set; }
@@ -17,15 +17,25 @@ namespace Azure.Communication.CallingServer
         /// <summary> The Operation Context. </summary>
         public string OperationContext { get; set; }
 
+        /// <summary> Timeout before invitation timesout. </summary>
+        public int invitationTimeoutInSeconds { get; set; }
+
+        /// <summary> The replacement CallConnectionId </summary>
+        public string replacementCallConnectionId { get; set; }
+
         /// <summary>
-        /// Transfer Call Options.
+        /// Add Participants Options.
         /// </summary>
         /// <param name="alternateCallerId">The alternate caller id of the source</param>
         /// <param name="operationContext">The operationContext.</param>
-        public AddParticipantOptions(PhoneNumberIdentifier alternateCallerId, string operationContext)
+        /// <param name="invitationTimeoutInSeconds"> Timeout before invitation timesout.</param>
+        /// <param name="replacementCallConnectionId">replacementCallConnectionId.</param>
+        public AddParticipantsOptions(PhoneNumberIdentifier alternateCallerId, string operationContext, int invitationTimeoutInSeconds, string replacementCallConnectionId)
         {
             AlternateCallerId = alternateCallerId;
             OperationContext = operationContext;
+            this.invitationTimeoutInSeconds = invitationTimeoutInSeconds;
+            this.replacementCallConnectionId = replacementCallConnectionId;
         }
     }
 }

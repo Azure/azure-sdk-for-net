@@ -34,8 +34,6 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
-        /// <summary> The callback uri. </summary>
-        public string CallbackUri { get; set; }
         /// <summary> The target identity to redirect the call to. </summary>
         public CommunicationIdentifierModel Target { get; }
     }
