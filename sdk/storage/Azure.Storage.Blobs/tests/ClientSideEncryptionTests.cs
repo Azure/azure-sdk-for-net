@@ -67,9 +67,12 @@ namespace Azure.Storage.Blobs.Test
             int encryptedDataLength = data.Length + (numEncryptionRegions * (V2.NonceSize + V2.TagSize));
             var result = new Span<byte>(new byte[encryptedDataLength]);
 
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
             long nonceCounter = 1;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
             using var gcm = new AesGcm(key);
+#else
+            using var gcm = new Azure.Storage.Shared.AesGcm.AesGcmWindows(key);
+#endif
             for (int i = 0; i < numEncryptionRegions; i++)
             {
                 int dataRegionLength = Math.Min(V2.EncryptionRegionDataSize, data.Length - (i * V2.EncryptionRegionDataSize));
@@ -89,7 +92,7 @@ namespace Azure.Storage.Blobs.Test
                     resultRegionSlice.Slice(V2.NonceSize, dataRegionLength), //result.Slice(i * V2.EncryptionRegionTotalSize, Math.Min(V2.EncryptionRegionTotalSize, result.Length - (i * V2.EncryptionRegionTotalSize))),
                     resultRegionSlice.Slice(V2.NonceSize + dataRegionLength, V2.TagSize));
             }
-#endif
+
             return result;
         }
 
