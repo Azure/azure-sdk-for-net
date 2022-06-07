@@ -133,6 +133,7 @@ directive:
       $.VirtualMachineScaleSetVMExtensionUpdate.properties.type["x-ms-format"] = "resource-type";
       $.UpgradeOperationHistoricalStatusInfo.properties.location["x-ms-format"] = "azure-location";
       $.RollingUpgradeStatusInfo["x-ms-client-name"] = "VirtualMachineScaleSetRollingUpgrade";
+      $.VirtualMachineScaleSetSku.properties.resourceType["x-ms-format"] = "resource-type";
   - from: retorePoint.json
     where: $.definitions
     transform: >
