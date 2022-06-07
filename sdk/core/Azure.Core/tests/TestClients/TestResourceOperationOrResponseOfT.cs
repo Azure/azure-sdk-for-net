@@ -12,7 +12,7 @@ namespace Azure.Core.Tests
     {
         private TestResource _value;
         private bool _exceptionOnWait;
-        private OperationOrResponseInternals<TestResource> _operationHelper;
+        private OperationInternal<TestResource> _operationHelper;
         private int _delaySteps = 0;
 
         protected TestResourceOperationOrResponseOfT()
@@ -23,7 +23,7 @@ namespace Azure.Core.Tests
         {
             _value = value;
             _exceptionOnWait = exceptionOnWait;
-            _operationHelper = new OperationOrResponseInternals<TestResource>(Response.FromValue(value, new MockResponse(200)));
+            _operationHelper = OperationInternal<TestResource>.Succeeded(new MockResponse(200), value);
             _delaySteps = delaySteps;
         }
 
@@ -35,7 +35,7 @@ namespace Azure.Core.Tests
 
         public override bool HasValue => _operationHelper.HasValue;
 
-        public override Response GetRawResponse() => _operationHelper.GetRawResponse();
+        public override Response GetRawResponse() => _operationHelper.RawResponse;
 
         public override Response<TestResource> WaitForCompletion(CancellationToken cancellationToken = default)
         {
