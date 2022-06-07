@@ -123,6 +123,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
                 throw new InvalidOperationException("The listener has already been started.");
             }
+            Started = true;
 
             if (_singleDispatch)
             {
@@ -143,7 +144,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
                 _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource.Token);
             }
-            Started = true;
 
             _logger.LogDebug($"ServiceBus listener started ({_details.Value})");
         }
