@@ -233,7 +233,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_portal]: https://portal.azure.com
-[azure_identity]: https://docs.microsoft.com/en-us/dotnet/api/azure.identity?view=azure-dotnet
+[azure_identity]: https://docs.microsoft.com/dotnet/api/azure.identity?view=azure-dotnet
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.PhoneNumbers/src
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/samples
 [cla]: https://cla.microsoft.com
