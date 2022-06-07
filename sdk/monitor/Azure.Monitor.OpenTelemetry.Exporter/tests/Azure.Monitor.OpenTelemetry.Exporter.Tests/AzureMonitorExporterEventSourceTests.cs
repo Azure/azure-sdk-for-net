@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.Linq;
 
 using Azure.Core.Shared;
 
@@ -15,22 +14,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     /// <summary>
     /// These tests depend on the <see cref="AzureMonitorExporterEventListener"/> to subscribe to the <see cref="AzureMonitorExporterEventSource"/> and write events to the <see cref="TelemetryDebugWriter"/>.
     /// </summary>
-    public class AzureMonitorExporterEventSourceTests : IDisposable
+    public class AzureMonitorExporterEventSourceTests
     {
-        private TestListener listener;
-
-        public AzureMonitorExporterEventSourceTests()
-        {
-            this.listener = new TestListener();
-        }
-
-        private string EventSourceName => AzureMonitorExporterEventSource.EventSourceName;
-
-        public void Dispose()
-        {
-            this.listener.Dispose();
-        }
-
         [Fact]
         public void VerifyEventSource_Critical() => Test(writeAction: AzureMonitorExporterEventSource.Log.WriteCritical, expectedId: 1, expectedName: "WriteCritical");
 
@@ -60,11 +45,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private void Test(Action<string, string> writeAction, int expectedId, string expectedName)
         {
-            var name = nameof(AzureMonitorExporterEventSourceTests);
+            using var listener = new TestListener();
+
+            // When running tests parallel, it's possible for one test to collect the messages from another test.
+            // We use a guid here to be able to find the specific message created by this test.
+            var name = $"{nameof(AzureMonitorExporterEventSourceTests)}.{Guid.NewGuid()}";
 
             writeAction(name, "hello world");
 
-            var eventData = this.listener.Events.Single();
+            var eventData = FindEvent(listener.Events, name);
             Assert.Equal(AzureMonitorExporterEventSource.EventSourceName, eventData.EventSource.Name);
             Assert.Equal(expectedId, eventData.EventId);
             Assert.Equal(expectedName, eventData.EventName);
@@ -75,11 +64,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private void TestException(Action<string, Exception> writeAction, int expectedId, string expectedName)
         {
-            var name = nameof(AzureMonitorExporterEventSourceTests);
+            using var listener = new TestListener();
+
+            // When running tests parallel, it's possible for one test to collect the messages from another test.
+            // We use a guid here to be able to find the specific message created by this test.
+            var name = $"{nameof(AzureMonitorExporterEventSourceTests)}.{Guid.NewGuid()}";
 
             writeAction(name, new Exception("hello world"));
 
-            var eventData = this.listener.Events.Single();
+            var eventData = FindEvent(listener.Events, name);
             Assert.Equal(AzureMonitorExporterEventSource.EventSourceName, eventData.EventSource.Name);
             Assert.Equal(expectedId, eventData.EventId);
             Assert.Equal(expectedName, eventData.EventName);
@@ -90,11 +83,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private void TestAggregateException(Action<string, Exception> writeAction, int expectedId, string expectedName)
         {
-            var name = nameof(AzureMonitorExporterEventSourceTests);
+            using var listener = new TestListener();
+
+            // When running tests parallel, it's possible for one test to collect the messages from another test.
+            // We use a guid here to be able to find the specific message created by this test.
+            var name = $"{nameof(AzureMonitorExporterEventSourceTests)}.{Guid.NewGuid()}";
 
             writeAction(name, new AggregateException(new Exception("hello world_1"), new Exception("hello world_2)")));
 
-            var eventData = this.listener.Events.Single();
+            var eventData = FindEvent(listener.Events, name);
             Assert.Equal(AzureMonitorExporterEventSource.EventSourceName, eventData.EventSource.Name);
             Assert.Equal(expectedId, eventData.EventId);
             Assert.Equal(expectedName, eventData.EventName);
@@ -103,9 +100,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal($"{name} - System.Exception: hello world_1", message);
         }
 
+        private static EventWrittenEventArgs FindEvent(List<EventWrittenEventArgs> list, string name)
+        {
+            // Note: cannot use Linq here. If the listener grabs another event, Linq will throw InvalidOperationException.
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Payload.Contains(name))
+                {
+                    return list[i];
+                }
+            }
+
+            throw new Exception("not found");
+        }
+
         public class TestListener : EventListener
         {
-            private readonly List<EventSource> eventSources = new List<EventSource>();
+            private readonly List<EventSource> eventSources = new();
 
             public List<EventWrittenEventArgs> Events = new();
 
