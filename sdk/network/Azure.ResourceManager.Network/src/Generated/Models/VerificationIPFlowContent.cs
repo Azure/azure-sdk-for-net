@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="localIPAddress"> The local IP address. Acceptable values are valid IPv4 addresses. </param>
         /// <param name="remoteIPAddress"> The remote IP address. Acceptable values are valid IPv4 addresses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="localPort"/>, <paramref name="remotePort"/>, <paramref name="localIPAddress"/> or <paramref name="remoteIPAddress"/> is null. </exception>
-        public VerificationIPFlowContent(string targetResourceId, Direction direction, IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress)
+        public VerificationIPFlowContent(ResourceIdentifier targetResourceId, Direction direction, IPFlowProtocol protocol, string localPort, string remotePort, string localIPAddress, string remoteIPAddress)
         {
             if (targetResourceId == null)
             {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the target resource to perform next-hop on. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary> The direction of the packet represented as a 5-tuple. </summary>
         public Direction Direction { get; }
         /// <summary> Protocol to be verified on. </summary>
@@ -68,6 +69,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The remote IP address. Acceptable values are valid IPv4 addresses. </summary>
         public string RemoteIPAddress { get; }
         /// <summary> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of them, then this parameter must be specified. Otherwise optional). </summary>
-        public string TargetNicResourceId { get; set; }
+        public ResourceIdentifier TargetNicResourceId { get; set; }
     }
 }

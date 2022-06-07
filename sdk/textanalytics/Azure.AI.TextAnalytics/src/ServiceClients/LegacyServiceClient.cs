@@ -1171,7 +1171,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatusAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatus)}");
             scope.Start();
 
             try
@@ -1197,7 +1197,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
                 throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatusAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatus)}");
             scope.Start();
 
             try
@@ -1218,7 +1218,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatusNextPage)}");
             scope.Start();
 
             try
@@ -1239,7 +1239,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeStatusNextPage)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(HealthStatusNextPage)}");
             scope.Start();
 
             try
@@ -1253,6 +1253,54 @@ namespace Azure.AI.TextAnalytics.ServiceClients
             {
                 scope.Failed(e);
                 throw;
+            }
+        }
+
+        public override async Task CancelHealthcareJobAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(jobId, nameof(jobId));
+
+            if (!Guid.TryParse(jobId, out var id))
+            {
+                throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+            }
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(CancelHealthcareJob)}");
+            scope.Start();
+
+            try
+            {
+                await _serviceRestClient.CancelHealthJobAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public override void CancelHealthcareJob(string jobId, CancellationToken cancellationToken = default)
+        {
+            {
+                Argument.AssertNotNull(jobId, nameof(jobId));
+
+                if (!Guid.TryParse(jobId, out var id))
+                {
+                    throw new FormatException($"{nameof(jobId)} is not a valid GUID.");
+                }
+
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(CancelHealthcareJob)}");
+                scope.Start();
+
+                try
+                {
+                    _serviceRestClient.CancelHealthJob(id, cancellationToken);
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
         }
 

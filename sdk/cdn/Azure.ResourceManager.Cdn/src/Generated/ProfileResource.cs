@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of AzureFrontDoor endpoints under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages
         /// Operation Id: AfdProfiles_ListResourceUsage
         /// </summary>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Checks the quota and actual usage of endpoints under the given CDN profile.
+        /// Checks the quota and actual usage of AzureFrontDoor endpoints under the given CDN profile.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/usages
         /// Operation Id: AfdProfiles_ListResourceUsage
         /// </summary>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+        /// Check the name availability of a host name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkHostNameAvailability
         /// Operation Id: AfdProfiles_CheckHostNameAvailability
         /// </summary>
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary>
-        /// Validates the custom domain mapping to ensure it maps to the correct CDN endpoint in DNS.
+        /// Check the name availability of a host name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/checkHostNameAvailability
         /// Operation Id: AfdProfiles_CheckHostNameAvailability
         /// </summary>

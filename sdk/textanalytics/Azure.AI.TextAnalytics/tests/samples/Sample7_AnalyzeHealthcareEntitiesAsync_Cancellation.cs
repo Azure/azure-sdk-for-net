@@ -11,7 +11,6 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        [Ignore("LRO not implemented")]
         public async Task AnalyzeHealthcareEntitiesAsync_Cancellation()
         {
             string endpoint = TestEnvironment.Endpoint;

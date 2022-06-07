@@ -121,9 +121,7 @@ namespace Azure.AI.TextAnalytics
             _showStats = showStats;
             _operationInternal = new(_diagnostics, this, rawResponse: null);
 
-            // TODO: Add validation here
-            // https://github.com/Azure/azure-sdk-for-net/issues/11505
-            _jobId = operationLocation.Split('/').Last();
+            _jobId = operationLocation.Split('/').Last().Split('?')[0];
 
             Id = OperationContinuationToken.Serialize(_jobId, idToIndexMap, showStats);
         }
@@ -199,44 +197,16 @@ namespace Azure.AI.TextAnalytics
         /// Cancels a pending or running <see cref="AnalyzeHealthcareEntitiesOperation"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual void Cancel(CancellationToken cancellationToken = default)
-        {
-            //using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Cancel)}");
-            //scope.Start();
-            //try
-            //{
-            //    _serviceClient.CancelHealthJob(new Guid(_jobId), cancellationToken);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
-            throw new NotImplementedException();
-        }
+        public virtual void Cancel(CancellationToken cancellationToken = default) =>
+            _serviceClient.CancelHealthcareJob(_jobId, cancellationToken);
 
         /// <summary>
         /// Cancels a pending or running <see cref="AnalyzeHealthcareEntitiesOperation"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Task"/> to track the service request.</returns>
-        public virtual async Task CancelAsync(CancellationToken cancellationToken = default)
-        {
-            //using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Cancel)}");
-            //scope.Start();
-
-            //try
-            //{
-            //    await _serviceClient.CancelHealthJobAsync(new Guid(_jobId), cancellationToken).ConfigureAwait(false);
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
-            await Task.Yield();
-            throw new NotImplementedException();
-        }
+        public virtual async Task CancelAsync(CancellationToken cancellationToken = default) =>
+            await _serviceClient.CancelHealthcareJobAsync(_jobId, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Gets the final result of the long-running operation asynchronously.
@@ -285,8 +255,8 @@ namespace Azure.AI.TextAnalytics
         async ValueTask<OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>> IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response<HealthcareJobStatusResult> response = async
-                ? await _serviceClient.HealthStatusAsync(Id, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.HealthStatus(Id, _showStats, null, null, _idToIndexMap, cancellationToken);
+                ? await _serviceClient.HealthStatusAsync(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.HealthStatus(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken);
 
             _createdOn = response.Value.CreatedOn;
             _expiresOn = response.Value.ExpiresOn;

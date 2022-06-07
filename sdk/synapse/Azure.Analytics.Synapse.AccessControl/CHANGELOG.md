@@ -1,14 +1,9 @@
 # Release History
 
-## 1.0.0-preview.6 (Unreleased)
+## 1.0.0-preview.6 (2022-06-07)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+### Changed
+- Added `contentType` to requests with multiple media types.
 
 ## 1.0.0-preview.5 (2021-08-10)
 

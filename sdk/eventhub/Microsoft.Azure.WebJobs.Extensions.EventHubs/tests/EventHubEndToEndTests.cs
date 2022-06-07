@@ -628,7 +628,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 string input,
                 [EventHub(TestHubName, Connection = TestHubName)] EventHubProducerClient client)
             {
-                List<EventData> list = new List<EventData>();
                 EventData evt = new EventData(Encoding.UTF8.GetBytes(input));
 
                 // Send event without PK

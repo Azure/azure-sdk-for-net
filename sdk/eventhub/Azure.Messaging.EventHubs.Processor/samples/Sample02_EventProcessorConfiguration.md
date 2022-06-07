@@ -4,6 +4,20 @@ The `EventProcessorClient` supports a set of options to configure many aspects o
 
 To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Table of contents
+
+- [Influencing load balancing behavior](#influencing-load-balancing-behavior)
+    - [Load balancing strategy](#load-balancing-strategy)
+    - [Load balancing intervals](#load-balancing-intervals)
+- [Using web sockets](#using-web-sockets)
+- [Setting a custom proxy](#setting-a-custom-proxy)
+- [Using the default system proxy](#using-the-default-system-proxy)
+- [Specifying a custom endpoint address](#specifying-a-custom-endpoint-address)
+- [Influencing SSL certificate validation](#influencing-ssl-certificate-validation)
+- [Configuring the client retry thresholds](#configuring-the-client-retry-thresholds)
+- [Configuring the timeout used for Event Hubs service operations](#configuring-the-timeout-used-for-event-hubs-service-operations)
+- [Using a custom retry policy](#using-a-custom-retry-policy)
+
 ## Influencing load balancing behavior
 
 To scale event processing, you can run multiple instances of the `EventProcessorClient` and they will coordinate to balance work between them. The responsibility for processing is distributed among each of the active processors configured to read from the same Event Hub and using the same consumer group.  To balance work, each active `EventProcessorClient` instance will assume responsibility for processing a set of Event Hub partitions, referred to as "owning" the partitions.  The processors collaborate on ownership using storage as a central point of coordination.  
@@ -186,7 +200,7 @@ var processor = new EventProcessorClient(
     processorOptions);
 ```
 
-### Using the default system proxy
+## Using the default system proxy
 
 To use the default proxy for your environment, the recommended approach is to make use of [HttpClient.DefaultProxy](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient.defaultproxy?view=netcore-3.1), which will attempt to detect proxy settings from the ambient environment in a manner consistent with expectations for the target platform.  
 
@@ -200,7 +214,7 @@ var options = new EventHubConnectionOptions
 };
 ```
 
-### Specifying a custom endpoint address
+## Specifying a custom endpoint address
 
 Connections to the Azure Event Hubs service are made using the fully qualified namespace assigned to the Event Hubs namespace as the connection endpoint address. Because the Event Hubs service uses the endpoint address to locate the corresponding resources, it isn't possible to specify a custom address in the connection string or as the fully qualified namespace.
 
@@ -229,7 +243,7 @@ var processor = new EventProcessorClient(
     processorOptions);
 ```
 
-### Influencing SSL certificate validation
+## Influencing SSL certificate validation
 
 For some environments using a proxy or custom gateway for routing traffic to Event Hubs, a certificate not trusted by the root certificate authorities may be issued.  This can often be a self-signed certificate from the gateway or one issued by a company's internal certificate authority.  
 
@@ -275,7 +289,7 @@ var processor = new EventProcessorClient(
     processorOptions);
 ```
 
-### Configuring the client retry thresholds
+## Configuring the client retry thresholds
 
 The built-in retry policy offers an implementation for an exponential back-off strategy by default, as this provides a good balance between making forward progress and allowing for transient issues that may take some time to resolve.  The built-in policy also offers a fixed strategy for those cases where your application requires that you have a deterministic understanding of how long an operation may take.
 
@@ -338,7 +352,7 @@ var processor = new EventProcessorClient(
     processorOptions);
 ```
 
-### Configuring the timeout used for Event Hubs service operations
+## Configuring the timeout used for Event Hubs service operations
 
 The `EventHubsRetryOptions` also control the timeout that is used for operations, including those which involve communicating with the Event Hubs service.  The default timeout of 60 seconds can be changed by adjusting the `TryTimeout` value.
 
@@ -351,7 +365,7 @@ var options = new EventHubsRetryOptions
 };
 ```
 
-### Using a custom retry policy
+## Using a custom retry policy
 
 For those scenarios where your application requires more control over retries, you can provide a custom retry policy.
 

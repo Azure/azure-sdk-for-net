@@ -39,8 +39,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorAdministrationClient adminClient = GetMetricsAdvisorAdministrationClient(useTokenCredential);
 
-            var startTime = DateTimeOffset.Parse("2020-09-01T00:00:00Z");
-            var endTime = DateTimeOffset.Parse("2020-09-02T00:00:00Z");
+            var startTime = DateTimeOffset.Parse("2022-03-01T00:00:00Z");
+            var endTime = DateTimeOffset.Parse("2022-03-03T00:00:00Z");
 
             Response response = await adminClient.RefreshDataFeedIngestionAsync(DataFeedId, startTime, endTime);
 
