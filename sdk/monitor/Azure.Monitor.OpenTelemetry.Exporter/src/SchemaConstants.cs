@@ -42,7 +42,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int ExceptionData_Properties_MaxValueLength = 8192;
         public const int ExceptionData_Measurements_MaxKeyLength = 150;
 
-        // TODO: Apply these rules
         public const int ExceptionDetails_TypeName_MaxLength = 1024;
         public const int ExceptionDetails_Message_MaxLength = 32768;
         public const int ExceptionDetails_Stack_MaxLength = 32768;
@@ -100,7 +99,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int RequestData_Measurements_MaxKeyLength = 150;
         public const int RequestData_Duration_LessThanDays = 1000;
 
-        // TODO: Apply these rules
         public const int StackFrame_Method_MaxLength = 1024;
         public const int StackFrame_Assembly_MaxLength = 1024;
         public const int StackFrame_FileName_MaxLength = 1024;
