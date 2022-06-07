@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 int totalLength = 0;
                 for (int counter = 0; counter < frames.Length; counter++)
                 {
-                    // 1) Check that we don't exceeded MaxFrames.
+                    // 1) Check if we have exceeded MaxFrames.
                     if (orderedStackTrace.Count == SchemaConstants.ExceptionDetails_Stack_MaxFrames)
                     {
                         hasFullStack = false;
