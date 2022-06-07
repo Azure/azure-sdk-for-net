@@ -22,16 +22,9 @@ namespace Azure.ResourceManager.Workloads.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string Seven2Value = "7.2";
-        private const string Seven3Value = "7.3";
-        private const string Seven4Value = "7.4";
-
-        /// <summary> 7.2. </summary>
-        public static PhpVersion Seven2 { get; } = new PhpVersion(Seven2Value);
-        /// <summary> 7.3. </summary>
-        public static PhpVersion Seven3 { get; } = new PhpVersion(Seven3Value);
-        /// <summary> 7.4. </summary>
-        public static PhpVersion Seven4 { get; } = new PhpVersion(Seven4Value);
+        private const string V7_2Value = "7.2";
+        private const string V7_3Value = "7.3";
+        private const string V7_4Value = "7.4";
         /// <summary> Determines if two <see cref="PhpVersion"/> values are the same. </summary>
         public static bool operator ==(PhpVersion left, PhpVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhpVersion"/> values are not the same. </summary>

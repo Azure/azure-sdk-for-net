@@ -969,8 +969,8 @@ namespace Azure.ResourceManager.Workloads.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public OSImageSku(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.OSImageSku Eighteen04LTS { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.OSImageSku Sixteen04LTS { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.OSImageSku Ubuntu16_04Lts { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.OSImageSku Ubuntu18_04Lts { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.OSImageSku other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1021,9 +1021,9 @@ namespace Azure.ResourceManager.Workloads.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public PhpVersion(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.PhpVersion Seven2 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpVersion Seven3 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.PhpVersion Seven4 { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.PhpVersion V7_2 { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.PhpVersion V7_3 { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.PhpVersion V7_4 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Workloads.Models.PhpVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

@@ -22,13 +22,8 @@ namespace Azure.ResourceManager.Workloads.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string Eighteen04LTSValue = "18.04-LTS";
-        private const string Sixteen04LTSValue = "16.04-LTS";
-
-        /// <summary> 18.04-LTS. </summary>
-        public static OSImageSku Eighteen04LTS { get; } = new OSImageSku(Eighteen04LTSValue);
-        /// <summary> 16.04-LTS. </summary>
-        public static OSImageSku Sixteen04LTS { get; } = new OSImageSku(Sixteen04LTSValue);
+        private const string Ubuntu18_04LtsValue = "18.04-LTS";
+        private const string Ubuntu16_04LtsValue = "16.04-LTS";
         /// <summary> Determines if two <see cref="OSImageSku"/> values are the same. </summary>
         public static bool operator ==(OSImageSku left, OSImageSku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OSImageSku"/> values are not the same. </summary>
