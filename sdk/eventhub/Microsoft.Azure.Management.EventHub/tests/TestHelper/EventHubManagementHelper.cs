@@ -22,7 +22,8 @@ namespace EventHub.Tests.TestHelper
 
     public static class EventHubManagementHelper
     {
-        internal const string ResourceGroupPrefix = "Default-EventHub-";
+        internal const string ResourceGroupPrefix = "Default-ResourceGroup-";
+        internal const string ClusterPrefix = "Default-ClusterName-Can-Be-Deleted";
         internal const string IdentityPrefix = "Default-Identity-";
         internal const string ApplicationGroupPrefix = "Dfault-ApplicationGroup-";
         internal const string SASKeyPrefix = "Dfault-SASKey-";

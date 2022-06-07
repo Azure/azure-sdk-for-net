@@ -225,8 +225,6 @@ namespace EventHub.Tests.ScenarioTests
                             }
                         });
 
-                    TestUtilities.Wait(40000);
-
                     Assert.Equal(ManagedServiceIdentityType.UserAssigned, createNamespaceResponse.Identity.Type);
                     Assert.Equal(2, createNamespaceResponse.Encryption.KeyVaultProperties.Count);
                     Assert.Equal(KeyName2, createNamespaceResponse.Encryption.KeyVaultProperties[0].KeyName);

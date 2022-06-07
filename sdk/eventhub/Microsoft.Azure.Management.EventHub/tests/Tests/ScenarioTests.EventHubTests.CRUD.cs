@@ -38,20 +38,20 @@ namespace EventHub.Tests.ScenarioTests
                 try
                 {
                     var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new EHNamespace()
-                    {
-                        Location = location,
-                        Sku = new Sku
+                        new EHNamespace()
                         {
-                            Name = SkuName.Standard,
-                            Tier = SkuTier.Standard
-                        },
-                        Tags = new Dictionary<string, string>()
-                        {
-                            {"tag1", "value1"},
-                            {"tag2", "value2"}
-                        }
-                    });
+                            Location = location,
+                            Sku = new Sku
+                            {
+                                Name = SkuName.Standard,
+                                Tier = SkuTier.Standard
+                            },
+                            Tags = new Dictionary<string, string>()
+                            {
+                                {"tag1", "value1"},
+                                {"tag2", "value2"}
+                            }
+                        });
 
                     Assert.NotNull(createNamespaceResponse);
                     Assert.Equal(createNamespaceResponse.Name, namespaceName);
@@ -60,6 +60,10 @@ namespace EventHub.Tests.ScenarioTests
                     // Create a EventHub
                     var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);
 
+                    //Test Creation of eventhub with capture enabled
+                    
+                    // -------------------------------------------------------------------------------------------------------------
+                    
                     var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
                     new Eventhub()
                     {
@@ -85,7 +89,38 @@ namespace EventHub.Tests.ScenarioTests
 
                     Assert.NotNull(createEventHubResponse);
                     Assert.Equal(createEventHubResponse.Name, eventhubName);
+                    Assert.Equal(4, createEventHubResponse.MessageRetentionInDays);
+                    Assert.Equal(4, createEventHubResponse.PartitionCount);
+                    Assert.Equal(EntityStatus.Active, createEventHubResponse.Status);
+                    Assert.Equal(120, createEventHubResponse.CaptureDescription.IntervalInSeconds);
+                    Assert.Equal(10485763, createEventHubResponse.CaptureDescription.SizeLimitInBytes);
+                    Assert.Equal(EncodingCaptureDescription.Avro, createEventHubResponse.CaptureDescription.Encoding);
                     Assert.True(createEventHubResponse.CaptureDescription.SkipEmptyArchives);
+                    Assert.True(createEventHubResponse.CaptureDescription.Enabled);
+                    Assert.Equal("EventHubArchive.AzureBlockBlob", createEventHubResponse.CaptureDescription.Destination.Name);
+                    Assert.Equal("container", createEventHubResponse.CaptureDescription.Destination.BlobContainer);
+                    Assert.Equal("{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}", createEventHubResponse.CaptureDescription.Destination.ArchiveNameFormat);
+                    Assert.Equal("/subscriptions/" + ResourceManagementClient.SubscriptionId.ToString() + "/resourcegroups/v-ajnavtest/providers/Microsoft.Storage/storageAccounts/testingsdkeventhubnew", createEventHubResponse.CaptureDescription.Destination.StorageAccountResourceId);
+
+                    createEventHubResponse.Status = EntityStatus.Disabled;
+
+                    createEventHubResponse = EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, createEventHubResponse);
+                    Assert.Equal(EntityStatus.Disabled, createEventHubResponse.Status);
+
+                    createEventHubResponse.Status = EntityStatus.SendDisabled;
+
+                    createEventHubResponse = EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, createEventHubResponse);
+                    Assert.Equal(EntityStatus.SendDisabled, createEventHubResponse.Status);
+
+                    createEventHubResponse.CaptureDescription.Enabled = false;
+                    createEventHubResponse.Status = EntityStatus.Active;
+
+                    createEventHubResponse = EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, createEventHubResponse);
+                    Assert.Equal(EntityStatus.Active, createEventHubResponse.Status);
+                    Assert.False(createEventHubResponse.CaptureDescription.Enabled);
+
+
+                    // ------------------------------------------------------------------------------------------------------------------------
 
                     // Get the created EventHub
                     var getEventResponse = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
@@ -95,7 +130,7 @@ namespace EventHub.Tests.ScenarioTests
                     // Get all Event Hubs for a given NameSpace
                     var getListEventHubResponse = EventHubManagementClient.EventHubs.ListByNamespace(resourceGroup, namespaceName);
                     Assert.NotNull(getListEventHubResponse);
-                    Assert.True(getListEventHubResponse.Count<Eventhub>() >= 1);
+                    Assert.True(getListEventHubResponse.Count<Eventhub>() == 1);
 
                     // Update the EventHub
                     getEventResponse.CaptureDescription.IntervalInSeconds = 130;

@@ -15,6 +15,8 @@ namespace EventHub.Tests.ScenarioTests
     using TestHelper;
     using Xunit;
     using System.Threading;
+    using Microsoft.Azure.Test.HttpRecorder;
+
     public partial class ScenarioTests
     {
         [Fact]
@@ -141,7 +143,11 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Equal(getAuthoRuleAliasResponse.Name, getNamespaceAuthorizationRulesResponse.Name);
 
                     var getAuthoruleListKeysResponse = EventHubManagementClient.DisasterRecoveryConfigs.ListKeys(resourceGroup, namespaceName, namespaceName, authorizationRuleName);
+                    Assert.Equal(getNamespaceAuthorizationRulesListKeysResponse.PrimaryKey, getAuthoruleListKeysResponse.PrimaryKey);
+                    Assert.Equal(getNamespaceAuthorizationRulesListKeysResponse.SecondaryKey, getAuthoruleListKeysResponse.SecondaryKey);
 
+                    var listOfAuthRules = EventHubManagementClient.DisasterRecoveryConfigs.ListAuthorizationRules(resourceGroup, namespaceName, namespaceName);
+                    Assert.True(listOfAuthRules.Count() == 2);
 
                     var disasterRecoveryGetResponse_Accepted = EventHubManagementClient.DisasterRecoveryConfigs.Get(resourceGroup, namespaceName, namespaceName);
 

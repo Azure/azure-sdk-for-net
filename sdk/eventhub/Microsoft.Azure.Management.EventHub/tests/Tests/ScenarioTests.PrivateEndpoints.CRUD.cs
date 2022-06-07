@@ -86,6 +86,7 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.NotNull(listOfPrivateLinks);
 
                     var privateEndpointForNamespace1 = EventHubManagementClient.PrivateEndpointConnections.List(resourceGroup, namespaceName);
+                    Assert.Single(privateEndpointForNamespace1);
 
                     var requiredName = "";
 
@@ -134,6 +135,13 @@ namespace EventHub.Tests.ScenarioTests
                         TestUtilities.Wait(10000);
                     }
 
+
+                    //Test PrivateEndpoint Connections in EHNamespace
+                    var namespacePrivateEndpointConnections = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
+
+                    Assert.Single(namespacePrivateEndpointConnections.PrivateEndpointConnections);
+                    Assert.Equal(requiredName, namespacePrivateEndpointConnections.PrivateEndpointConnections[0].Name);
+
                     privateEndpointForNamespace.PrivateLinkServiceConnectionState.Status = "Disconnected";
 
                     Assert.Throws<ErrorResponseException>(() => EventHubManagementClient.PrivateEndpointConnections.CreateOrUpdate(resourceGroup, namespaceName, requiredName,
@@ -144,8 +152,6 @@ namespace EventHub.Tests.ScenarioTests
                     TestUtilities.Wait(60000);
 
                     Assert.Throws<ErrorResponseException>(() => EventHubManagementClient.PrivateEndpointConnections.Get(resourceGroup, namespaceName, requiredName));
-
-
 
                 }
                 finally
