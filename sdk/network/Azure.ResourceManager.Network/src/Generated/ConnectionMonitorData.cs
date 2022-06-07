@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="startOn"> The date and time when the connection monitor was started. </param>
         /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
         /// <param name="connectionMonitorType"> Type of connection monitor. </param>
-        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, string location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, ProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType) : base(id, name, resourceType, systemData)
+        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, AzureLocation? location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             Location = location;
@@ -68,9 +69,9 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Connection monitor location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Connection monitor tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> Describes the source of connection monitor. </summary>
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Optional notes to be associated with the connection monitor. </summary>
         public string Notes { get; }
         /// <summary> The provisioning state of the connection monitor. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The date and time when the connection monitor was started. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The monitoring status of the connection monitor. </summary>

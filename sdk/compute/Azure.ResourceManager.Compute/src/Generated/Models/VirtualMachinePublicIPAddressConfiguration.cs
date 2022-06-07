@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
-        internal VirtualMachinePublicIPAddressConfiguration(string name, PublicIPAddressSku sku, int? idleTimeoutInMinutes, DeleteOptions? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersions? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod)
+        internal VirtualMachinePublicIPAddressConfiguration(string name, PublicIPAddressSku sku, int? idleTimeoutInMinutes, DeleteOptions? deleteOption, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings, IList<VirtualMachineIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, PublicIPAllocationMethod? publicIPAllocationMethod)
         {
             Name = name;
             Sku = sku;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
-        public IPVersions? PublicIPAddressVersion { get; set; }
+        public IPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> Specify the public IP allocation type. </summary>
         public PublicIPAllocationMethod? PublicIPAllocationMethod { get; set; }
     }

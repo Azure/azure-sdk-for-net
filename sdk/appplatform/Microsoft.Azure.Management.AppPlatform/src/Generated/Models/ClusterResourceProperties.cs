@@ -30,10 +30,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// Initializes a new instance of the ClusterResourceProperties class.
         /// </summary>
         /// <param name="provisioningState">Provisioning state of the Service.
-        /// Possible values include: 'Creating', 'Updating', 'Deleting',
-        /// 'Deleted', 'Succeeded', 'Failed', 'Moving', 'Moved',
-        /// 'MoveFailed'</param>
+        /// Possible values include: 'Creating', 'Updating', 'Starting',
+        /// 'Stopping', 'Deleting', 'Deleted', 'Succeeded', 'Failed', 'Moving',
+        /// 'Moved', 'MoveFailed'</param>
         /// <param name="networkProfile">Network profile of the Service</param>
+        /// <param name="vnetAddons">Additional Service settings in vnet
+        /// injection instance</param>
         /// <param name="version">Version of the Service</param>
         /// <param name="serviceId">ServiceInstanceEntity GUID which uniquely
         /// identifies a created resource</param>
@@ -41,15 +43,19 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// values include: 'Running', 'Stopped'</param>
         /// <param name="fqdn">Fully qualified dns name of the service
         /// instance</param>
-        public ClusterResourceProperties(string provisioningState = default(string), NetworkProfile networkProfile = default(NetworkProfile), int? version = default(int?), string serviceId = default(string), string powerState = default(string), bool? zoneRedundant = default(bool?), string fqdn = default(string))
+        /// <param name="marketplaceResource">Purchasing 3rd party product of
+        /// the Service resource.</param>
+        public ClusterResourceProperties(string provisioningState = default(string), NetworkProfile networkProfile = default(NetworkProfile), ServiceVNetAddons vnetAddons = default(ServiceVNetAddons), int? version = default(int?), string serviceId = default(string), string powerState = default(string), bool? zoneRedundant = default(bool?), string fqdn = default(string), MarketplaceResource marketplaceResource = default(MarketplaceResource))
         {
             ProvisioningState = provisioningState;
             NetworkProfile = networkProfile;
+            VnetAddons = vnetAddons;
             Version = version;
             ServiceId = serviceId;
             PowerState = powerState;
             ZoneRedundant = zoneRedundant;
             Fqdn = fqdn;
+            MarketplaceResource = marketplaceResource;
             CustomInit();
         }
 
@@ -60,8 +66,8 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
 
         /// <summary>
         /// Gets provisioning state of the Service. Possible values include:
-        /// 'Creating', 'Updating', 'Deleting', 'Deleted', 'Succeeded',
-        /// 'Failed', 'Moving', 'Moved', 'MoveFailed'
+        /// 'Creating', 'Updating', 'Starting', 'Stopping', 'Deleting',
+        /// 'Deleted', 'Succeeded', 'Failed', 'Moving', 'Moved', 'MoveFailed'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -71,6 +77,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "networkProfile")]
         public NetworkProfile NetworkProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional Service settings in vnet injection instance
+        /// </summary>
+        [JsonProperty(PropertyName = "vnetAddons")]
+        public ServiceVNetAddons VnetAddons { get; set; }
 
         /// <summary>
         /// Gets version of the Service
@@ -102,6 +114,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; private set; }
+
+        /// <summary>
+        /// Gets or sets purchasing 3rd party product of the Service resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "marketplaceResource")]
+        public MarketplaceResource MarketplaceResource { get; set; }
 
     }
 }

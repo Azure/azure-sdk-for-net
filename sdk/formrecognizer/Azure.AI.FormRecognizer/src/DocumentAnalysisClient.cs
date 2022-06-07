@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// documents with models built on custom document types.
     /// </summary>
     /// <remarks>
-    /// Client is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_01_30_preview"/> and higher.
+    /// Client is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_06_30_preview"/> and higher.
     /// If you want to use a lower version, please use the <see cref="FormRecognizer.FormRecognizerClient"/>.
     /// </remarks>
     public class DocumentAnalysisClient

@@ -6,9 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 csharp: true
-library-name: containerapp
-namespace: Azure.ResourceManager.containerapp
-require: https://github.com/Azure/azure-rest-api-specs/blob/228f16c8871629ffe1fcdebfca9a3e8b4d2ce4aa/specification/app/resource-manager/readme.md
+library-name: ContainerApps
+namespace: Azure.ResourceManager.Applications.Containers
+require: https://github.com/Azure/azure-rest-api-specs/blob/792db17291c758b2bfdbbc0d35d0e2f5b5a1bd05/specification/app/resource-manager/readme.md
 tag: package-2022-03
 output-folder: Generated/
 clear-output-folder: true

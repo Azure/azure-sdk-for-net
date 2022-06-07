@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters");
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<AfdProvisioningState> provisioningState = default;
             Optional<AfdDeploymentStatus> deploymentStatus = default;
             Optional<string> profileName = default;
-            Optional<SecretDefinition> parameters = default;
+            Optional<SecretProperties> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parameters = SecretDefinition.DeserializeSecretDefinition(property0.Value);
+                            parameters = SecretProperties.DeserializeSecretProperties(property0.Value);
                             continue;
                         }
                     }

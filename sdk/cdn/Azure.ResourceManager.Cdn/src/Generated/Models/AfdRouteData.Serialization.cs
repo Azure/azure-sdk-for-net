@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn
             Optional<WritableSubResource> originGroup = default;
             Optional<string> originPath = default;
             Optional<IList<WritableSubResource>> ruleSets = default;
-            Optional<IList<AfdEndpointProtocols>> supportedProtocols = default;
+            Optional<IList<AfdEndpointProtocol>> supportedProtocols = default;
             Optional<IList<string>> patternsToMatch = default;
             Optional<AfdRouteCacheConfiguration> cacheConfiguration = default;
             Optional<ForwardingProtocol> forwardingProtocol = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.Cdn
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AfdEndpointProtocols> array = new List<AfdEndpointProtocols>();
+                            List<AfdEndpointProtocol> array = new List<AfdEndpointProtocol>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AfdEndpointProtocols(item.GetString()));
+                                array.Add(new AfdEndpointProtocol(item.GetString()));
                             }
                             supportedProtocols = array;
                             continue;

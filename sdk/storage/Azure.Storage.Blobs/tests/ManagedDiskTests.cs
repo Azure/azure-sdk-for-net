@@ -12,6 +12,7 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Test;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Tests.ManagedDisk
@@ -37,6 +38,7 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         }
 
         [Test]
+        [RetryOnException(5, typeof(AssertionException))]
         public async Task CanDiffPagesBetweenSnapshots()
         {
             // Arrange

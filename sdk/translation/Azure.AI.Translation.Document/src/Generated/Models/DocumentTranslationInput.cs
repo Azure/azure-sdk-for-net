@@ -37,7 +37,5 @@ namespace Azure.AI.Translation.Document
         public TranslationSource Source { get; }
         /// <summary> Location of the destination for the output. </summary>
         public IList<TranslationTarget> Targets { get; }
-        /// <summary> Storage type of the input documents source string. </summary>
-        public StorageInputType? StorageType { get; set; }
     }
 }

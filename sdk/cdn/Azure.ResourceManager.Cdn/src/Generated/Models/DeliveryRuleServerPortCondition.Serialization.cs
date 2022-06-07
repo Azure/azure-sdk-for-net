@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters");
-            writer.WriteObjectValue(Parameters);
+            writer.WriteObjectValue(Properties);
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleServerPortCondition DeserializeDeliveryRuleServerPortCondition(JsonElement element)
         {
-            ServerPortMatchConditionDefinition parameters = default;
+            ServerPortMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"))
                 {
-                    parameters = ServerPortMatchConditionDefinition.DeserializeServerPortMatchConditionDefinition(property.Value);
+                    parameters = ServerPortMatchCondition.DeserializeServerPortMatchCondition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"))

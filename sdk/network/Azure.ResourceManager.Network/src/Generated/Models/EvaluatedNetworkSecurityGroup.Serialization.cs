@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EvaluatedNetworkSecurityGroup DeserializeEvaluatedNetworkSecurityGroup(JsonElement element)
         {
-            Optional<string> networkSecurityGroupId = default;
+            Optional<ResourceIdentifier> networkSecurityGroupId = default;
             Optional<string> appliedTo = default;
             Optional<MatchedRule> matchedRule = default;
             Optional<IReadOnlyList<NetworkSecurityRulesEvaluationResult>> rulesEvaluationResult = default;
@@ -23,7 +23,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("networkSecurityGroupId"))
                 {
-                    networkSecurityGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    networkSecurityGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appliedTo"))

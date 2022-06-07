@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState");
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+            writer.WriteObjectValue(ConnectionState);
             if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds");
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

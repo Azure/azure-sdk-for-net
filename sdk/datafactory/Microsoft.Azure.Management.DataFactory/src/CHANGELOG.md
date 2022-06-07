@@ -1,5 +1,12 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 6.2.0
+###  Feature Additions
+- Added globalParameters apis into ADF
+- Added support for running staging on multiple sources in parallel
+- Added purview configuration into ADF
+- Added support rejected data linked service in dataflow sink
+
 ## Version 6.1.0
 ###  Feature Additions
 - Added Dataworld, AppFigures, Asana, Twilio connectors in ADF

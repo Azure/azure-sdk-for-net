@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         protected internal override bool IsManagedHSM => true;
 
-        [Test]
+        [RecordedTest]
         public async Task CreateRsaWithPublicExponent()
         {
             CreateRsaKeyOptions options = new CreateRsaKeyOptions(Recording.GenerateId())
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(3, publicExponent);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateOctHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -65,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(ecHsmkey, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateOctKey()
         {
             string keyName = Recording.GenerateId();
@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(count, rand.Length);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
         public async Task ReleaseImportedKey()
         {

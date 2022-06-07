@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             {
                 Order = 1
             };
-            input3.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionDefinition(RequestUriMatchConditionType.RequestUriCondition, RequestUriOperator.Any)));
-            input3.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionDefinition(CacheExpirationActionType.CacheExpirationAction, CacheBehaviorSettings.Override, CacheLevel.All)
+            input3.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchCondition(RequestUriMatchConditionType.RequestUriCondition, RequestUriOperator.Any)));
+            input3.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionProperties(CacheExpirationActionType.CacheExpirationAction, CacheBehaviorSetting.Override, CacheLevel.All)
             {
                 CacheDuration = new TimeSpan(0, 0, 20)
             }));
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             {
                 Order = 2
             };
-            input.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchConditionDefinition(RequestUriMatchConditionType.RequestUriCondition, RequestUriOperator.Any)));
-            input.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionDefinition(CacheExpirationActionType.CacheExpirationAction, CacheBehaviorSettings.Override, CacheLevel.All)
+            input.Conditions.Add(new DeliveryRuleRequestUriCondition(new RequestUriMatchCondition(RequestUriMatchConditionType.RequestUriCondition, RequestUriOperator.Any)));
+            input.Actions.Add(new DeliveryRuleCacheExpirationAction(new CacheExpirationActionProperties(CacheExpirationActionType.CacheExpirationAction, CacheBehaviorSetting.Override, CacheLevel.All)
             {
                 CacheDuration = new TimeSpan(0, 0, 30)
             }));
