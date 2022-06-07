@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
@@ -26,7 +27,7 @@ namespace Azure.DigitalTwins.Core
         /// The date and time the component was last updated.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)]
-        public string LastUpdatedOn { get; set; }
+        public DateTimeOffset? LastUpdatedOn { get; set; }
 
         /// <summary>
         /// This field will contain metadata about changes on properties on the component.

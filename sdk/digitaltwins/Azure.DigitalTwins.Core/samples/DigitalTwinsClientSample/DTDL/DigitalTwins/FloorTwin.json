@@ -1,6 +1,9 @@
 ﻿{
     "$metadata": {
-        "$model": "dtmi:com:samples:Floor;1"
+        "$model": "dtmi:com:samples:Floor;1",
+        "AverageTemperature": {
+            "sourceTime": "2022-05-31T19:01:32.000000Z"
+        }
     },
     "AverageTemperature": 75
 }

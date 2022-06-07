@@ -20,17 +20,12 @@ namespace Azure.DigitalTwins.Core
     public class BasicDigitalTwinComponent
     {
         /// <summary>
-        /// The component property metadata.
+        /// The component metadata.
         /// </summary>
         [JsonPropertyName(DigitalTwinsJsonPropertyNames.DigitalTwinMetadata)]
 #pragma warning disable CA2227 // Collection properties should be readonly
         public IDictionary<string, DigitalTwinPropertyMetadata> Metadata { get; set; } = new DigitalTwinComponentMetadata();
 #pragma warning restore CA2227 // Collection properties should be readonly
-
-        /// <summary>
-        /// The component metadata.
-        /// </summary>
-        public DigitalTwinComponentMetadata ComponentMetadata => Metadata as DigitalTwinComponentMetadata;
 
         /// <summary>
         /// This field will contain properties and components as defined in the contents section of the DTDL definition of the twin.
