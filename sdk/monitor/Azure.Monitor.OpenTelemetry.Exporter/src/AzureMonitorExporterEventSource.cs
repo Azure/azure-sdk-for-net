@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     [EventSource(Name = EventSourceName)]
     internal sealed class AzureMonitorExporterEventSource : EventSource
     {
-        private const string EventSourceName = "OpenTelemetry-AzureMonitor-Exporter";
+        internal const string EventSourceName = "OpenTelemetry-AzureMonitor-Exporter";
 
         internal static readonly AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
         internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
@@ -88,7 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             protected override void OnEventWritten(EventWrittenEventArgs eventData)
             {
                 string message = EventSourceEventFormatting.Format(eventData);
-                TelemetryDebugWriter.Writer.WriteMessage($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
+                TelemetryDebugWriter.WriteMessage($"{eventData.EventSource.Name} - EventId: [{eventData.EventId}], EventName: [{eventData.EventName}], Message: [{message}]");
             }
         }
     }

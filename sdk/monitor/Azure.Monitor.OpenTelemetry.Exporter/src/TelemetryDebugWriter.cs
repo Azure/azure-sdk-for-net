@@ -5,11 +5,9 @@ using System.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class TelemetryDebugWriter : IDebugWritter
+    internal static class TelemetryDebugWriter
     {
-        public static IDebugWritter Writer = new TelemetryDebugWriter();
-
-        public void WriteMessage(string message)
+        public static void WriteMessage(string message)
         {
             if (message == null)
             {
@@ -22,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
         }
 
-        public void WriteTelemetry(NDJsonWriter content)
+        public static void WriteTelemetry(NDJsonWriter content)
         {
             if (content == null)
             {
@@ -34,12 +32,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 Debugger.Log(0, null, content.ToString());
             }
         }
-    }
-
-    internal interface IDebugWritter
-    {
-        void WriteMessage(string message);
-
-        void WriteTelemetry(NDJsonWriter content);
     }
 }
