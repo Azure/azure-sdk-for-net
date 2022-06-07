@@ -64,6 +64,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
                 }
             }
 
+            Console.WriteLine("Paragraphs:");
+
+            foreach (DocumentParagraph paragraph in result.Paragraphs)
+            {
+                Console.WriteLine($"  Paragraph content: {paragraph.Content}");
+
+                if (paragraph.Role != null)
+                {
+                    Console.WriteLine($"    Role: {paragraph.Role}");
+                }
+            }
+
             foreach (DocumentStyle style in result.Styles)
             {
                 // Check the style and style confidence to see if text is handwritten.
