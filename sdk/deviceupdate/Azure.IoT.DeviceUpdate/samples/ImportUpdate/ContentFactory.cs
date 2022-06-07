@@ -56,47 +56,47 @@ namespace Samples
         {
             var aduContent = new
             {
-                UpdateId = new
+                updateId = new
                 {
-                    Provider = manufacturer,
-                    Name = name,
-                    Version = version
+                    provider = manufacturer,
+                    name = name,
+                    version = version
                 },
-                Compatibility = new[]
+                compatibility = new[]
                 {
                     new
                     {
-                        DeviceManufacturer = manufacturer,
-                        DeviceModel = name
+                        deviceManufacturer = manufacturer,
+                        deviceModel = name
                     }
                 },
-                Instructions = new
+                instructions = new
                 {
-                    Steps = new[]
+                    steps = new[]
                     {
                         new
                         {
-                            type = "Inline",
-                            Handler = "microsoft/apt:1",
-                            Files = new [] { fileName },
-                            HandlerProperties = new
+                            type = "inline",
+                            handler = "microsoft/apt:1",
+                            files = new [] { fileName },
+                            handlerProperties = new
                             {
-                                InstalledCriteria = $"apt-update-test-{version}",
+                                installedCriteria = $"apt-update-test-{version}",
                             }
                         }
                     }
                 },
-                Files = new[]
+                files = new[]
                 {
                     new
                     {
-                        FileName = fileName,
-                        SizeInBytes = fileSize,
-                        Hashes = new { SHA256 = fileHash },
+                        fileName = fileName,
+                        sizeInBytes = fileSize,
+                        hashes = new { SHA256 = fileHash },
                     }
                 },
-                CreatedDateTime = DateTime.UtcNow.ToString("O"),
-                ManifestVersion = "5.0",
+                createdDateTime = DateTime.UtcNow.ToString("O"),
+                manifestVersion = "5.0",
             };
 
             var filePath = Path.GetTempFileName();
@@ -122,21 +122,21 @@ namespace Samples
             {
                 new
                 {
-                    ImportManifest = new
+                    importManifest = new
                     {
-                        Url = importManifestUrl,
-                        SizeInBytes = importManifestFileSize,
-                        Hashes = new
+                        url = importManifestUrl,
+                        sizeInBytes = importManifestFileSize,
+                        hashes = new
                         {
                             SHA256 = importManifestFileHash
                         }
                     },
-                    Files = new[]
+                    files = new[]
                     {
                         new
                         {
-                            FileName = fileName,
-                            Url = payloadUrl
+                            fileName = fileName,
+                            url = payloadUrl
                         }
                     },
                 }
