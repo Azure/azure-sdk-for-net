@@ -320,17 +320,18 @@ namespace Azure.Storage.Blobs.Test
             };
         }
 
-        [Test]
+        [TestCase(ClientSideEncryptionVersion.V1_0)]
+        [TestCase(ClientSideEncryptionVersion.V2_0)]
         [LiveOnly]
-        public void CanSwapKey()
+        public void CanSwapKey(ClientSideEncryptionVersion version)
         {
-            var options1 = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var options1 = new ClientSideEncryptionOptions(version)
             {
                 KeyEncryptionKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object,
                 KeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, default).Object,
                 KeyWrapAlgorithm = "foo"
             };
-            var options2 = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            var options2 = new ClientSideEncryptionOptions(version)
             {
                 KeyEncryptionKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object,
                 KeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, default).Object,
@@ -389,14 +390,15 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [TestCase(ClientSideEncryptionVersion.V1_0)]
+        [TestCase(ClientSideEncryptionVersion.V2_0)]
         [LiveOnly] // cannot seed content encryption key
-        public async Task UploadAsync_OverwritesDeliberately_BinaryData()
+        public async Task UploadAsync_OverwritesDeliberately_BinaryData(ClientSideEncryptionVersion version)
         {
             var plaintext = GetRandomBuffer(Constants.KB);
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey,
                     KeyWrapAlgorithm = s_algorithmName
@@ -557,17 +559,20 @@ namespace Azure.Storage.Blobs.Test
         }
 
         // TODO revisit once v2 is implemented for open read
-        [TestCase(Constants.MB, 64*Constants.KB)]
-        [TestCase(Constants.MB, Constants.MB)]
-        [TestCase(Constants.MB, 4*Constants.MB)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, Constants.MB)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 4*Constants.MB)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, Constants.MB, 128 * Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize, Constants.MB)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize + 1000, Constants.MB + 15)]
         [LiveOnly] // cannot seed content encryption key
-        public async Task RoundtripAsyncWithOpenRead(long dataSize, int bufferSize)
+        public async Task RoundtripAsyncWithOpenRead(ClientSideEncryptionVersion version, long dataSize, int bufferSize)
         {
             var data = GetRandomBuffer(dataSize);
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken);
             var mockKeyResolver = this.GetIKeyEncryptionKeyResolver(s_cancellationToken, mockKey.Object).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey.Object,
                     KeyResolver = mockKeyResolver,
@@ -886,14 +891,15 @@ namespace Azure.Storage.Blobs.Test
         }
 
         // TODO revisit when openread implemented
-        [TestCase(Constants.MB, 64*Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V2_0,  Constants.MB, 64 * Constants.KB)]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
-        public async Task RoundtripWithKeyvaultProviderOpenRead(long dataSize, int bufferSize)
+        public async Task RoundtripWithKeyvaultProviderOpenRead(ClientSideEncryptionVersion version, long dataSize, int bufferSize)
         {
             var data = GetRandomBuffer(dataSize);
             IKeyEncryptionKey key = await GetKeyvaultIKeyEncryptionKey();
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = key,
                     KeyWrapAlgorithm = "RSA-OAEP-256"
@@ -911,15 +917,17 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
+        [Test]
+        [Combinatorial]
         [LiveOnly]
-        public async Task CannotFindKeyAsync(bool resolverThrows)
+        public async Task CannotFindKeyAsync(
+            [Values(true, false)] bool resolverThrows,
+            [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
         {
             var data = GetRandomBuffer(Constants.KB);
             var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
             await using (var disposable = await GetTestContainerEncryptionAsync(
-                new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                new ClientSideEncryptionOptions(version)
                 {
                     KeyEncryptionKey = mockKey,
                     KeyWrapAlgorithm = s_algorithmName
@@ -934,7 +942,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     // download but can't find key
                     var options = GetOptions();
-                    options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+                    options._clientSideEncryptionOptions = new ClientSideEncryptionOptions(version)
                     {
                         KeyResolver = resolver.Object,
                         KeyWrapAlgorithm = "test"
