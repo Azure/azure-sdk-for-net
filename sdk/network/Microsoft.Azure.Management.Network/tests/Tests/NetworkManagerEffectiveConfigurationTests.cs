@@ -27,8 +27,7 @@ namespace Networks.Tests
             return client;
         }
 
-        //[Fact(Skip = "Disable tests")]
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerEffectiveSecurityAdminConfigurationTest()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -154,8 +153,7 @@ namespace Networks.Tests
             Assert.Equal("Outbound", effectiveSecurityDefaultAdminRule.Direction);
         }
 
-        //[Fact(Skip = "Disable tests")]
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerEffectiveConnectivityConfigurationTest()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)

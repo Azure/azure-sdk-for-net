@@ -17,7 +17,7 @@ namespace Networks.Tests
 {
     public class NetworkManagerConnectionTests
     {
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerConnectionManagementGroup()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -59,8 +59,7 @@ namespace Networks.Tests
             }
         }
 
-        //[Fact(Skip = "Disable tests")]
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerConnectionSubscriptionTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

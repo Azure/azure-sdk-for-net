@@ -17,8 +17,7 @@ namespace Networks.Tests
 {
     public class NetworkManagerSecurityAdminConfigurationTests
     {
-        // [Fact(Skip = "Disable tests")]
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerSecurityAdminConfigurationTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -96,8 +95,7 @@ namespace Networks.Tests
             }
         }
 
-        //[Fact(Skip = "Disable tests")]
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerSecuirtyAdminRuleCollectionsTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -219,8 +217,7 @@ namespace Networks.Tests
             }
         }
 
-        //[Fact(Skip = "Disable tests")]
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerSecuirtyAdminRulesTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

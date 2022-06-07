@@ -17,8 +17,7 @@ namespace Networks.Tests
 {
     public class NetworkManagerGroupTests
     {
-        //[Fact(Skip = "Disable tests")]
-        [Fact]
+        [Fact(Skip = "Disable tests")]
         public void NetworkManagerGroupTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -177,11 +176,10 @@ namespace Networks.Tests
                 // Delete NetworkManagerStaticMember
                 networkManagementClient.StaticMembers.Delete(resourceGroupName, networkManagerName, groupName, staticMemberName);
 
-                Thread.Sleep(10000);
 
                 // List NetworkManagerStaticMember
                 listStaticMemberResponse = networkManagementClient.StaticMembers.List(resourceGroupName, networkManagerName, groupName);
-                Assert.Empty(listStaticMemberResponse);
+                Assert.Equal("Deleting", listStaticMemberResponse.First().ProvisioningState);
 
                 // Delete NetworkManagerGroup
                 networkManagementClient.NetworkGroups.Delete(resourceGroupName, networkManagerName, groupName);
