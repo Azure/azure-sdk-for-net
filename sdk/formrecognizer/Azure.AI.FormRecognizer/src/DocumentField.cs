@@ -329,19 +329,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         private object InternalValue => ValueType switch
         {
-            DocumentFieldType.Address => AsAddress(),
-            DocumentFieldType.CountryRegion => AsCountryRegion(),
-            DocumentFieldType.Currency => AsCurrency(),
-            DocumentFieldType.Date => AsDate(),
-            DocumentFieldType.Dictionary => AsDictionary(),
-            DocumentFieldType.Double => AsDouble(),
-            DocumentFieldType.Int64 => AsInt64(),
-            DocumentFieldType.List => AsList(),
-            DocumentFieldType.PhoneNumber => AsPhoneNumber(),
-            DocumentFieldType.SelectionMark => AsSelectionMarkState(),
-            DocumentFieldType.Signature => AsSignatureType(),
-            DocumentFieldType.String => AsString(),
-            DocumentFieldType.Time => AsTime(),
+            DocumentFieldType.Address => ValueAddress,
+            DocumentFieldType.CountryRegion => ValueCountryRegion,
+            DocumentFieldType.Currency => ValueCurrency,
+            DocumentFieldType.Date => ValueDate,
+            DocumentFieldType.Dictionary => ValueObject,
+            DocumentFieldType.Double => ValueNumber,
+            DocumentFieldType.Int64 => ValueInteger,
+            DocumentFieldType.List => ValueArray,
+            DocumentFieldType.PhoneNumber => ValuePhoneNumber,
+            DocumentFieldType.SelectionMark => ValueSelectionMark,
+            DocumentFieldType.Signature => ValueSignature,
+            DocumentFieldType.String => ValueString,
+            DocumentFieldType.Time => ValueTime,
             _ => null
         };
     }
