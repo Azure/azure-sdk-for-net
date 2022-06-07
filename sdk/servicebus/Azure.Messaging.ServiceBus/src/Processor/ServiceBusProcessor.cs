@@ -723,9 +723,11 @@ namespace Azure.Messaging.ServiceBus
         /// Signals the processor to stop processing messaging. Should this method be
         /// called while the processor is not running, no action is taken. This method
         /// will not close the underlying receivers, but will cause the receivers to stop
-        /// receiving. To close the underlying receivers, <see cref="CloseAsync"/> should be called.
-        /// Any in-flight message handlers will be awaited, and this method will not return
-        /// until all in-flight message handlers have returned.
+        /// receiving. Any in-flight message handlers will be awaited, and this method will not return
+        /// until all in-flight message handlers have returned. To close the underlying receivers, <see cref="CloseAsync"/>
+        /// should be called. If <see cref="CloseAsync"/> is called, the processor cannot be restarted.
+        /// If you wish to resume processing at some point after calling this method, you can call
+        /// <see cref="StartProcessingAsync"/>.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to
