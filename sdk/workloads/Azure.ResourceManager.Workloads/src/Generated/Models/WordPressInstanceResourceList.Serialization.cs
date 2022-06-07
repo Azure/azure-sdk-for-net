@@ -12,11 +12,11 @@ using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class WordpressInstanceResourceList
+    internal partial class WordPressInstanceResourceList
     {
-        internal static WordpressInstanceResourceList DeserializeWordpressInstanceResourceList(JsonElement element)
+        internal static WordPressInstanceResourceList DeserializeWordPressInstanceResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<WordpressInstanceResourceData>> value = default;
+            Optional<IReadOnlyList<WordPressInstanceResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Workloads.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WordpressInstanceResourceData> array = new List<WordpressInstanceResourceData>();
+                    List<WordPressInstanceResourceData> array = new List<WordPressInstanceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WordpressInstanceResourceData.DeserializeWordpressInstanceResourceData(item));
+                        array.Add(WordPressInstanceResourceData.DeserializeWordPressInstanceResourceData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new WordpressInstanceResourceList(Optional.ToList(value), nextLink.Value);
+            return new WordPressInstanceResourceList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

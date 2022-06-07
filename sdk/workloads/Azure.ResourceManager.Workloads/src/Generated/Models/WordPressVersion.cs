@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Application version. </summary>
-    public readonly partial struct WordpressVersion : IEquatable<WordpressVersion>
+    public readonly partial struct WordPressVersion : IEquatable<WordPressVersion>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="WordpressVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WordPressVersion"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WordpressVersion(string value)
+        public WordPressVersion(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.Workloads.Models
         private const string V5_4_2Value = "5.4.2";
         private const string V5_4_1Value = "5.4.1";
         private const string V5_4_0Value = "5.4";
-        /// <summary> Determines if two <see cref="WordpressVersion"/> values are the same. </summary>
-        public static bool operator ==(WordpressVersion left, WordpressVersion right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="WordpressVersion"/> values are not the same. </summary>
-        public static bool operator !=(WordpressVersion left, WordpressVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WordpressVersion"/>. </summary>
-        public static implicit operator WordpressVersion(string value) => new WordpressVersion(value);
+        /// <summary> Determines if two <see cref="WordPressVersion"/> values are the same. </summary>
+        public static bool operator ==(WordPressVersion left, WordPressVersion right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="WordPressVersion"/> values are not the same. </summary>
+        public static bool operator !=(WordPressVersion left, WordPressVersion right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="WordPressVersion"/>. </summary>
+        public static implicit operator WordPressVersion(string value) => new WordPressVersion(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is WordpressVersion other && Equals(other);
+        public override bool Equals(object obj) => obj is WordPressVersion other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(WordpressVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(WordPressVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

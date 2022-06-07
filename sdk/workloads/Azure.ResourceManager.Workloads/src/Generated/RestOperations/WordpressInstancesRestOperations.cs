@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WordpressInstanceResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
+        public async Task<Response<WordPressInstanceResourceList>> ListAsync(string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Workloads
             {
                 case 200:
                     {
-                        WordpressInstanceResourceList value = default;
+                        WordPressInstanceResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WordpressInstanceResourceList.DeserializeWordpressInstanceResourceList(document.RootElement);
+                        value = WordPressInstanceResourceList.DeserializeWordPressInstanceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WordpressInstanceResourceList> List(string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
+        public Response<WordPressInstanceResourceList> List(string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Workloads
             {
                 case 200:
                     {
-                        WordpressInstanceResourceList value = default;
+                        WordPressInstanceResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WordpressInstanceResourceList.DeserializeWordpressInstanceResourceList(document.RootElement);
+                        value = WordPressInstanceResourceList.DeserializeWordPressInstanceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WordpressInstanceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
+        public async Task<Response<WordPressInstanceResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.Workloads
             {
                 case 200:
                     {
-                        WordpressInstanceResourceData value = default;
+                        WordPressInstanceResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WordpressInstanceResourceData.DeserializeWordpressInstanceResourceData(document.RootElement);
+                        value = WordPressInstanceResourceData.DeserializeWordPressInstanceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WordpressInstanceResourceData)null, message.Response);
+                    return Response.FromValue((WordPressInstanceResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WordpressInstanceResourceData> Get(string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
+        public Response<WordPressInstanceResourceData> Get(string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -187,19 +187,19 @@ namespace Azure.ResourceManager.Workloads
             {
                 case 200:
                     {
-                        WordpressInstanceResourceData value = default;
+                        WordPressInstanceResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WordpressInstanceResourceData.DeserializeWordpressInstanceResourceData(document.RootElement);
+                        value = WordPressInstanceResourceData.DeserializeWordPressInstanceResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WordpressInstanceResourceData)null, message.Response);
+                    return Response.FromValue((WordPressInstanceResourceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string phpWorkloadName, WordpressInstanceResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string phpWorkloadName, WordPressInstanceResourceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="phpWorkloadName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string phpWorkloadName, WordpressInstanceResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string phpWorkloadName, WordPressInstanceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="phpWorkloadName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string phpWorkloadName, WordpressInstanceResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string phpWorkloadName, WordPressInstanceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WordpressInstanceResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
+        public async Task<Response<WordPressInstanceResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.Workloads
             {
                 case 200:
                     {
-                        WordpressInstanceResourceList value = default;
+                        WordPressInstanceResourceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WordpressInstanceResourceList.DeserializeWordpressInstanceResourceList(document.RootElement);
+                        value = WordPressInstanceResourceList.DeserializeWordPressInstanceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="phpWorkloadName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WordpressInstanceResourceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
+        public Response<WordPressInstanceResourceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string phpWorkloadName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -415,9 +415,9 @@ namespace Azure.ResourceManager.Workloads
             {
                 case 200:
                     {
-                        WordpressInstanceResourceList value = default;
+                        WordPressInstanceResourceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WordpressInstanceResourceList.DeserializeWordpressInstanceResourceList(document.RootElement);
+                        value = WordPressInstanceResourceList.DeserializeWordPressInstanceResourceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, string deleteInfra = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Workloads.WordpressInstanceResource GetWordpressInstanceResource() { throw null; }
+        public virtual Azure.ResourceManager.Workloads.WordPressInstanceResource GetWordPressInstanceResource() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.PhpWorkloadResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -357,28 +357,28 @@ namespace Azure.ResourceManager.Workloads
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource> Update(Azure.ResourceManager.Workloads.Models.SapVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource>> UpdateAsync(Azure.ResourceManager.Workloads.Models.SapVirtualInstancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WordpressInstanceResource : Azure.ResourceManager.ArmResource
+    public partial class WordPressInstanceResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected WordpressInstanceResource() { }
-        public virtual Azure.ResourceManager.Workloads.WordpressInstanceResourceData Data { get { throw null; } }
+        protected WordPressInstanceResource() { }
+        public virtual Azure.ResourceManager.Workloads.WordPressInstanceResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.WordpressInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.WordpressInstanceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.WordpressInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.WordpressInstanceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.WordPressInstanceResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.WordPressInstanceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Workloads.WordPressInstanceResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Workloads.WordPressInstanceResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string phpWorkloadName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Workloads.WordpressInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.WordpressInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Workloads.WordPressInstanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.WordPressInstanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WordpressInstanceResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class WordPressInstanceResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        public WordpressInstanceResourceData() { }
+        public WordPressInstanceResourceData() { }
         public string DatabaseName { get { throw null; } set { } }
         public string DatabaseUser { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.ApplicationProvisioningState? ProvisioningState { get { throw null; } }
         public System.Uri SiteUri { get { throw null; } }
-        public Azure.ResourceManager.Workloads.Models.WordpressVersion? Version { get { throw null; } set { } }
+        public Azure.ResourceManager.Workloads.Models.WordPressVersion? Version { get { throw null; } set { } }
     }
     public static partial class WorkloadsExtensions
     {
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Workloads
         public static Azure.AsyncPageable<Azure.ResourceManager.Workloads.SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Workloads.Models.SkuDefinition> GetSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Workloads.Models.SkuDefinition> GetSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Workloads.WordpressInstanceResource GetWordpressInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Workloads.WordPressInstanceResource GetWordPressInstanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Workloads.Models.SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Workloads.Models.SapAvailabilityZoneDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.Models.SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Workloads.Models.SapAvailabilityZoneDetailsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Workloads.Models.SapDiskConfigurationsResult> SapDiskConfigurations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.Workloads.Models.SapDiskConfigurationsContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1670,23 +1670,23 @@ namespace Azure.ResourceManager.Workloads.Models
         public WindowsConfiguration() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WordpressVersion : System.IEquatable<Azure.ResourceManager.Workloads.Models.WordpressVersion>
+    public readonly partial struct WordPressVersion : System.IEquatable<Azure.ResourceManager.Workloads.Models.WordPressVersion>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public WordpressVersion(string value) { throw null; }
-        public static Azure.ResourceManager.Workloads.Models.WordpressVersion V5_4_0 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.WordpressVersion V5_4_1 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.WordpressVersion V5_4_2 { get { throw null; } }
-        public static Azure.ResourceManager.Workloads.Models.WordpressVersion V5_4_3 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Workloads.Models.WordpressVersion other) { throw null; }
+        public WordPressVersion(string value) { throw null; }
+        public static Azure.ResourceManager.Workloads.Models.WordPressVersion V5_4_0 { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.WordPressVersion V5_4_1 { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.WordPressVersion V5_4_2 { get { throw null; } }
+        public static Azure.ResourceManager.Workloads.Models.WordPressVersion V5_4_3 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Workloads.Models.WordPressVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Workloads.Models.WordpressVersion left, Azure.ResourceManager.Workloads.Models.WordpressVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Workloads.Models.WordpressVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Workloads.Models.WordpressVersion left, Azure.ResourceManager.Workloads.Models.WordpressVersion right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Workloads.Models.WordPressVersion left, Azure.ResourceManager.Workloads.Models.WordPressVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Workloads.Models.WordPressVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Workloads.Models.WordPressVersion left, Azure.ResourceManager.Workloads.Models.WordPressVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

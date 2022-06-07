@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Workloads
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a WordpressInstanceResource along with the instance operations that can be performed on it in the PhpWorkloadResource. </summary>
-        /// <returns> Returns a <see cref="WordpressInstanceResource" /> object. </returns>
-        public virtual WordpressInstanceResource GetWordpressInstanceResource()
+        /// <summary> Gets an object representing a WordPressInstanceResource along with the instance operations that can be performed on it in the PhpWorkloadResource. </summary>
+        /// <returns> Returns a <see cref="WordPressInstanceResource" /> object. </returns>
+        public virtual WordPressInstanceResource GetWordPressInstanceResource()
         {
-            return new WordpressInstanceResource(Client, new ResourceIdentifier(Id.ToString() + "/wordpressInstances/default"));
+            return new WordPressInstanceResource(Client, new ResourceIdentifier(Id.ToString() + "/wordpressInstances/default"));
         }
 
         /// <summary>

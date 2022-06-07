@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
-    /// A Class representing a WordpressInstanceResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WordpressInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWordpressInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PhpWorkloadResource" /> using the GetWordpressInstanceResource method.
+    /// A Class representing a WordPressInstanceResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WordPressInstanceResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetWordPressInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PhpWorkloadResource" /> using the GetWordPressInstanceResource method.
     /// </summary>
-    public partial class WordpressInstanceResource : ArmResource
+    public partial class WordPressInstanceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WordpressInstanceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="WordPressInstanceResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string phpWorkloadName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/phpWorkloads/{phpWorkloadName}/wordpressInstances/default";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _wordpressInstanceResourceWordpressInstancesClientDiagnostics;
-        private readonly WordpressInstancesRestOperations _wordpressInstanceResourceWordpressInstancesRestClient;
-        private readonly WordpressInstanceResourceData _data;
+        private readonly ClientDiagnostics _wordPressInstanceResourceWordpressInstancesClientDiagnostics;
+        private readonly WordpressInstancesRestOperations _wordPressInstanceResourceWordpressInstancesRestClient;
+        private readonly WordPressInstanceResourceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="WordpressInstanceResource"/> class for mocking. </summary>
-        protected WordpressInstanceResource()
+        /// <summary> Initializes a new instance of the <see cref="WordPressInstanceResource"/> class for mocking. </summary>
+        protected WordPressInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WordpressInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "WordPressInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WordpressInstanceResource(ArmClient client, WordpressInstanceResourceData data) : this(client, data.Id)
+        internal WordPressInstanceResource(ArmClient client, WordPressInstanceResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WordpressInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WordPressInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WordpressInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WordPressInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _wordpressInstanceResourceWordpressInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Workloads", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string wordpressInstanceResourceWordpressInstancesApiVersion);
-            _wordpressInstanceResourceWordpressInstancesRestClient = new WordpressInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, wordpressInstanceResourceWordpressInstancesApiVersion);
+            _wordPressInstanceResourceWordpressInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Workloads", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string wordPressInstanceResourceWordpressInstancesApiVersion);
+            _wordPressInstanceResourceWordpressInstancesRestClient = new WordpressInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, wordPressInstanceResourceWordpressInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Workloads
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WordpressInstanceResourceData Data
+        public virtual WordPressInstanceResourceData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.Workloads
         /// Operation Id: WordpressInstances_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WordpressInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WordPressInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _wordpressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordpressInstanceResource.Get");
+            using var scope = _wordPressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordPressInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = await _wordpressInstanceResourceWordpressInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _wordPressInstanceResourceWordpressInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WordpressInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WordPressInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.Workloads
         /// Operation Id: WordpressInstances_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WordpressInstanceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WordPressInstanceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _wordpressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordpressInstanceResource.Get");
+            using var scope = _wordPressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordPressInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = _wordpressInstanceResourceWordpressInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _wordPressInstanceResourceWordpressInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WordpressInstanceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WordPressInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _wordpressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordpressInstanceResource.Delete");
+            using var scope = _wordPressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordPressInstanceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _wordpressInstanceResourceWordpressInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _wordPressInstanceResourceWordpressInstancesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new WorkloadsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _wordpressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordpressInstanceResource.Delete");
+            using var scope = _wordPressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordPressInstanceResource.Delete");
             scope.Start();
             try
             {
-                var response = _wordpressInstanceResourceWordpressInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _wordPressInstanceResourceWordpressInstancesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 var operation = new WorkloadsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="data"> Resource create or update request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WordpressInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, WordpressInstanceResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WordPressInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, WordPressInstanceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _wordpressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordpressInstanceResource.CreateOrUpdate");
+            using var scope = _wordPressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordPressInstanceResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _wordpressInstanceResourceWordpressInstancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<WordpressInstanceResource>(new WordpressInstanceResourceOperationSource(Client), _wordpressInstanceResourceWordpressInstancesClientDiagnostics, Pipeline, _wordpressInstanceResourceWordpressInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _wordPressInstanceResourceWordpressInstancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadsArmOperation<WordPressInstanceResource>(new WordPressInstanceResourceOperationSource(Client), _wordPressInstanceResourceWordpressInstancesClientDiagnostics, Pipeline, _wordPressInstanceResourceWordpressInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="data"> Resource create or update request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WordpressInstanceResource> CreateOrUpdate(WaitUntil waitUntil, WordpressInstanceResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WordPressInstanceResource> CreateOrUpdate(WaitUntil waitUntil, WordPressInstanceResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _wordpressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordpressInstanceResource.CreateOrUpdate");
+            using var scope = _wordPressInstanceResourceWordpressInstancesClientDiagnostics.CreateScope("WordPressInstanceResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _wordpressInstanceResourceWordpressInstancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<WordpressInstanceResource>(new WordpressInstanceResourceOperationSource(Client), _wordpressInstanceResourceWordpressInstancesClientDiagnostics, Pipeline, _wordpressInstanceResourceWordpressInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _wordPressInstanceResourceWordpressInstancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
+                var operation = new WorkloadsArmOperation<WordPressInstanceResource>(new WordPressInstanceResourceOperationSource(Client), _wordPressInstanceResourceWordpressInstancesClientDiagnostics, Pipeline, _wordPressInstanceResourceWordpressInstancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class WordpressInstanceResourceData : IUtf8JsonSerializable
+    public partial class WordPressInstanceResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.Workloads
             writer.WriteEndObject();
         }
 
-        internal static WordpressInstanceResourceData DeserializeWordpressInstanceResourceData(JsonElement element)
+        internal static WordPressInstanceResourceData DeserializeWordPressInstanceResourceData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<WordpressVersion> version = default;
+            Optional<WordPressVersion> version = default;
             Optional<string> databaseName = default;
             Optional<string> databaseUser = default;
             Optional<Uri> siteUrl = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            version = new WordpressVersion(property0.Value.GetString());
+                            version = new WordPressVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("databaseName"))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new WordpressInstanceResourceData(id, name, type, systemData, Optional.ToNullable(version), databaseName.Value, databaseUser.Value, siteUrl.Value, Optional.ToNullable(provisioningState));
+            return new WordPressInstanceResourceData(id, name, type, systemData, Optional.ToNullable(version), databaseName.Value, databaseUser.Value, siteUrl.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

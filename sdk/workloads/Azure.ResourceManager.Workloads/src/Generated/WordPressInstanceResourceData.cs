@@ -12,15 +12,15 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the WordpressInstanceResource data model. </summary>
-    public partial class WordpressInstanceResourceData : ResourceData
+    /// <summary> A class representing the WordPressInstanceResource data model. </summary>
+    public partial class WordPressInstanceResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of WordpressInstanceResourceData. </summary>
-        public WordpressInstanceResourceData()
+        /// <summary> Initializes a new instance of WordPressInstanceResourceData. </summary>
+        public WordPressInstanceResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of WordpressInstanceResourceData. </summary>
+        /// <summary> Initializes a new instance of WordPressInstanceResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="databaseUser"> User name used by the application to connect to database. </param>
         /// <param name="siteUri"> Site Url to access the WordPress application. </param>
         /// <param name="provisioningState"> WordPress instance provisioning state. </param>
-        internal WordpressInstanceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WordpressVersion? version, string databaseName, string databaseUser, Uri siteUri, ApplicationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal WordPressInstanceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WordPressVersion? version, string databaseName, string databaseUser, Uri siteUri, ApplicationProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Version = version;
             DatabaseName = databaseName;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Workloads
         }
 
         /// <summary> Application version. </summary>
-        public WordpressVersion? Version { get; set; }
+        public WordPressVersion? Version { get; set; }
         /// <summary> Database name used by the application. </summary>
         public string DatabaseName { get; set; }
         /// <summary> User name used by the application to connect to database. </summary>

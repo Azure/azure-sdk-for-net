@@ -424,20 +424,20 @@ namespace Azure.ResourceManager.Workloads
         }
         #endregion
 
-        #region WordpressInstanceResource
+        #region WordPressInstanceResource
         /// <summary>
-        /// Gets an object representing a <see cref="WordpressInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WordpressInstanceResource.CreateResourceIdentifier" /> to create a <see cref="WordpressInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WordPressInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WordPressInstanceResource.CreateResourceIdentifier" /> to create a <see cref="WordPressInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WordpressInstanceResource" /> object. </returns>
-        public static WordpressInstanceResource GetWordpressInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WordPressInstanceResource" /> object. </returns>
+        public static WordPressInstanceResource GetWordPressInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                WordpressInstanceResource.ValidateResourceId(id);
-                return new WordpressInstanceResource(client, id);
+                WordPressInstanceResource.ValidateResourceId(id);
+                return new WordPressInstanceResource(client, id);
             }
             );
         }

@@ -12,25 +12,25 @@ using Azure.ResourceManager.Workloads;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> WordPress instance resource list. </summary>
-    internal partial class WordpressInstanceResourceList
+    internal partial class WordPressInstanceResourceList
     {
-        /// <summary> Initializes a new instance of WordpressInstanceResourceList. </summary>
-        internal WordpressInstanceResourceList()
+        /// <summary> Initializes a new instance of WordPressInstanceResourceList. </summary>
+        internal WordPressInstanceResourceList()
         {
-            Value = new ChangeTrackingList<WordpressInstanceResourceData>();
+            Value = new ChangeTrackingList<WordPressInstanceResourceData>();
         }
 
-        /// <summary> Initializes a new instance of WordpressInstanceResourceList. </summary>
+        /// <summary> Initializes a new instance of WordPressInstanceResourceList. </summary>
         /// <param name="value"> List of resources in current page. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal WordpressInstanceResourceList(IReadOnlyList<WordpressInstanceResourceData> value, string nextLink)
+        internal WordPressInstanceResourceList(IReadOnlyList<WordPressInstanceResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of resources in current page. </summary>
-        public IReadOnlyList<WordpressInstanceResourceData> Value { get; }
+        public IReadOnlyList<WordPressInstanceResourceData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

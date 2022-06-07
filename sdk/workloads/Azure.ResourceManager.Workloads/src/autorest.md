@@ -45,6 +45,7 @@ rename-rules:
   SSD: Ssd
   Ha: HA
   ECC: Ecc
+  Wordpress: WordPress
 
 directive:
   - from: swagger-document

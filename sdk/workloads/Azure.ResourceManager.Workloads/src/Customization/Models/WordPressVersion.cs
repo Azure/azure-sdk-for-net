@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Application version. </summary>
-    public readonly partial struct WordpressVersion : IEquatable<WordpressVersion>
+    public readonly partial struct WordPressVersion : IEquatable<WordPressVersion>
     {
 #pragma warning disable CA1707
         /// <summary> 5.4.3. </summary>
         [CodeGenMember("Five43")]
-        public static WordpressVersion V5_4_3 { get; } = new WordpressVersion(V5_4_3Value);
+        public static WordPressVersion V5_4_3 { get; } = new WordPressVersion(V5_4_3Value);
         /// <summary> 5.4.2. </summary>
         [CodeGenMember("Five42")]
-        public static WordpressVersion V5_4_2 { get; } = new WordpressVersion(V5_4_2Value);
+        public static WordPressVersion V5_4_2 { get; } = new WordPressVersion(V5_4_2Value);
         /// <summary> 5.4.1. </summary>
         [CodeGenMember("Five41")]
-        public static WordpressVersion V5_4_1 { get; } = new WordpressVersion(V5_4_1Value);
+        public static WordPressVersion V5_4_1 { get; } = new WordPressVersion(V5_4_1Value);
         /// <summary> 5.4. </summary>
         [CodeGenMember("Five4")]
-        public static WordpressVersion V5_4_0 { get; } = new WordpressVersion(V5_4_0Value);
+        public static WordPressVersion V5_4_0 { get; } = new WordPressVersion(V5_4_0Value);
 #pragma warning restore CA1707
     }
 }
