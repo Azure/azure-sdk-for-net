@@ -42,7 +42,7 @@ namespace Azure.DigitalTwins.Core
                 }
                 else if (propertyName == DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime)
                 {
-                    metadata.LastUpdatedOn = JsonSerializer.Deserialize<string>(ref reader, options);
+                    metadata.LastUpdatedOn = JsonSerializer.Deserialize<DateTimeOffset?>(ref reader, options);
                 }
                 else if (reader.TokenType == JsonTokenType.StartObject)
                 {
@@ -68,7 +68,7 @@ namespace Azure.DigitalTwins.Core
 
             if (value.LastUpdatedOn != null)
             {
-                writer.WriteString(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime, value.LastUpdatedOn);
+                writer.WriteString(DigitalTwinsJsonPropertyNames.MetadataLastUpdateTime, value.LastUpdatedOn?.ToString("o"));
             }
 
             foreach (KeyValuePair<string, DigitalTwinPropertyMetadata> p in value.PropertyMetadata)
