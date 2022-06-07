@@ -71,7 +71,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <include file='PurviewClassificationRuleClient.xml' path="doc/members/member[@name='M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(Azure.RequestContext)']/*" />
+        /// <include file='Docs/PurviewClassificationRuleClient.xml' path="doc/members/member[@name='M:Azure.Analytics.Purview.Scanning.PurviewClassificationRuleClient.GetPropertiesAsync(Azure.RequestContext)']/*" />
         public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
