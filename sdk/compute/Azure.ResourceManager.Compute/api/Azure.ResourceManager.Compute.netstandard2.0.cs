@@ -5597,7 +5597,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal VirtualMachineScaleSetSku() { }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSkuCapacity Capacity { get { throw null; } }
-        public string ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetSkuCapacity
