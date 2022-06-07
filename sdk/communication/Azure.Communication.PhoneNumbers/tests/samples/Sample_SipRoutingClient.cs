@@ -47,7 +47,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var newRoutes = new List<SipTrunkRoute> { TestData.RuleNavigateToNewTrunk };
 
             #region Snippet:Replace
-            // Cannot delete trunks that are used in any of the routes, therefore first set the routes as empty list, and then update routes.
+            // The service will not allow trunks that are used in any of the routes to be deleted, therefore first set the routes as empty list, and then update the routes.
             //@@var newTrunks = "<new_trunks_list>";
             //@@var newRoutes = "<new_routes_list>";
             client.SetRoutes(new List<SipTrunkRoute>());
@@ -111,7 +111,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var newRoutes = new List<SipTrunkRoute> { TestData.RuleNavigateToNewTrunk };
 
             #region Snippet:ReplaceAsync
-            // Cannot delete trunks that are used in any of the routes, therefore first set the routes as empty list, and then update routes.
+            // The service will not allow trunks that are used in any of the routes to be deleted, therefore first set the routes as empty list, and then update the routes.
             //@@var newTrunks = "<new_trunks_list>";
             //@@var newRoutes = "<new_routes_list>";
             await client.SetRoutesAsync(new List<SipTrunkRoute>());

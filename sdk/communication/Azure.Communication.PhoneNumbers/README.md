@@ -54,8 +54,7 @@ var connectionString = "<connection_string>";
 var client = new SipRoutingClient(connectionString);
 ```
 
-Clients also have the option to authenticate with Azure Active Directory Authentication. With this option,
-`AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication.
+Clients also have the option to authenticate with Azure Active Directory Authentication. For more on this topic, see [Azure Identity][azure_identity].
 
 ```C# Snippet:CreatePhoneNumbersClientWithTokenCredential
 // Get an endpoint to our Azure Communication resource.
@@ -180,7 +179,7 @@ var routesResponse = await client.GetRoutesAsync();
 Replace the list of currently configured trunks or routes.
 
 ```C# Snippet:ReplaceAsync
-// Cannot delete trunks that are used in any of the routes, therefore first set the routes as empty list, and then update routes.
+// The service will not allow trunks that are used in any of the routes to be deleted, therefore first set the routes as empty list, and then update the routes.
 var newTrunks = "<new_trunks_list>";
 var newRoutes = "<new_routes_list>";
 await client.SetRoutesAsync(new List<SipTrunkRoute>());
@@ -190,7 +189,7 @@ await client.SetRoutesAsync(newRoutes);
 
 #### Manage single trunk
 
-SIP trunks can be managed separately. User can retrieve, set or delete a single trunk.
+SIP trunks can be managed separately by using the `SipRoutingClient` to retrieve, set or delete a single trunk.
 
 #### Retrieve single trunk
 
@@ -234,6 +233,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_portal]: https://portal.azure.com
+[azure_identity]: https://docs.microsoft.com/en-us/dotnet/api/azure.identity?view=azure-dotnet
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.PhoneNumbers/src
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/samples
 [cla]: https://cla.microsoft.com

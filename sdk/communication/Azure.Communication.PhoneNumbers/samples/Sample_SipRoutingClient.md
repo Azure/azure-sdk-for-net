@@ -22,7 +22,7 @@ To retrieve or replace current Trunk or Route configuration, SDK provides severa
 Set SIP trunks and routes in bulk.
 
 ```C# Snippet:Replace
-// Cannot delete trunks that are used in any of the routes, therefore first set the routes as empty list, and then update routes.
+// The service will not allow trunks that are used in any of the routes to be deleted, therefore first set the routes as empty list, and then update the routes.
 var newTrunks = "<new_trunks_list>";
 var newRoutes = "<new_routes_list>";
 client.SetRoutes(new List<SipTrunkRoute>());
