@@ -1,14 +1,10 @@
 # Release History
 
-## 5.6.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.5.1 (2022-06-07)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed race condition when starting up function app.
 
 ## 5.5.0 (2022-05-16)
 
