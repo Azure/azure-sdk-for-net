@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
@@ -13,6 +14,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29140")]
         public void StartAnalyzeConversation_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
