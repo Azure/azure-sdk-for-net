@@ -1500,6 +1500,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ServiceBusReceivedMessage message,
                 ServiceBusMessageActions messageActions)
             {
+                Assert.AreEqual("DLQ", message.DeadLetterReason);
                 await messageActions.CompleteMessageAsync(message);
                 _waitHandle1.Set();
             }

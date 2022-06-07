@@ -125,24 +125,32 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             }
             Started = true;
 
-            if (_singleDispatch)
+            try
             {
-                if (_isSessionsEnabled)
+                if (_singleDispatch)
                 {
-                    _sessionMessageProcessor.Value.Processor.ProcessMessageAsync += ProcessSessionMessageAsync;
-                    await _sessionMessageProcessor.Value.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                    if (_isSessionsEnabled)
+                    {
+                        _sessionMessageProcessor.Value.Processor.ProcessMessageAsync += ProcessSessionMessageAsync;
+                        await _sessionMessageProcessor.Value.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        _messageProcessor.Value.Processor.ProcessMessageAsync += ProcessMessageAsync;
+                        await _messageProcessor.Value.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                    }
+
+                    _concurrencyUpdateManager?.Start();
                 }
                 else
                 {
-                    _messageProcessor.Value.Processor.ProcessMessageAsync += ProcessMessageAsync;
-                    await _messageProcessor.Value.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                    _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource.Token);
                 }
-
-                _concurrencyUpdateManager?.Start();
             }
-            else
+            catch
             {
-                _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource.Token);
+                Started = false;
+                throw;
             }
 
             _logger.LogDebug($"ServiceBus listener started ({_details.Value})");
