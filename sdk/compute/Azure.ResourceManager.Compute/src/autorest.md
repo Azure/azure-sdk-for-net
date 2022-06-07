@@ -134,7 +134,7 @@ directive:
       $.UpgradeOperationHistoricalStatusInfo.properties.location["x-ms-format"] = "azure-location";
       $.RollingUpgradeStatusInfo["x-ms-client-name"] = "VirtualMachineScaleSetRollingUpgrade";
       $.VirtualMachineScaleSetSku.properties.resourceType["x-ms-format"] = "resource-type";
-  - from: retorePoint.json
+  - from: restorePoint.json
     where: $.definitions
     transform: >
       $.RestorePointCollectionSourceProperties["x-ms-client-name"] = "RestorePointCollectionSource";
