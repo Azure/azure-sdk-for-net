@@ -28,7 +28,9 @@ namespace Samples
                 throw new ArgumentException("You have to provider a valid device identifier.");
             }
 
-            var credentials = new InteractiveBrowserCredential(Constant.TenantId, Constant.ClientId);
+            var credentials = new DefaultAzureCredential();
+            // for interactive logon use the following instead:
+            // var credentials = new InteractiveBrowserCredential(Constant.TenantId, Constant.ClientId);
             var client = new DeviceManagementClient(Constant.AccountEndpoint, Constant.Instance, credentials);
 
             Console.WriteLine("Retrieve device information:");

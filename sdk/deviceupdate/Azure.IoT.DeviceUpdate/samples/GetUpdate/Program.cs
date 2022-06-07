@@ -29,7 +29,9 @@ namespace Samples
                 throw new ArgumentException("You have to provider a valid update version.");
             }
 
-            var credentials = new InteractiveBrowserCredential(Constant.TenantId, Constant.ClientId);
+            var credentials = new DefaultAzureCredential();
+            // for interactive logon use the following instead:
+            // var credentials = new InteractiveBrowserCredential(Constant.TenantId, Constant.ClientId);
             var client = new DeviceUpdateClient(Constant.AccountEndpoint, Constant.Instance, credentials);
 
             Console.WriteLine("Retrieve update:");

@@ -241,13 +241,28 @@ namespace Azure.IoT.DeviceUpdate
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   fileId: string,
         ///   fileName: string,
         ///   sizeInBytes: number,
         ///   hashes: Dictionary&lt;string, string&gt;,
         ///   mimeType: string,
         ///   scanResult: string,
         ///   scanDetails: string,
+        ///   properties: Dictionary&lt;string, string&gt;,
+        ///   fileId: string,
+        ///   relatedFiles: [
+        ///     {
+        ///       fileName: string,
+        ///       sizeInBytes: number,
+        ///       hashes: Dictionary&lt;string, string&gt;,
+        ///       mimeType: string,
+        ///       scanResult: string,
+        ///       scanDetails: string,
+        ///       properties: Dictionary&lt;string, string&gt;
+        ///     }
+        ///   ],
+        ///   downloadHandler: {
+        ///     id: string
+        ///   },
         ///   etag: string
         /// }
         /// </code>
@@ -303,13 +318,28 @@ namespace Azure.IoT.DeviceUpdate
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   fileId: string,
         ///   fileName: string,
         ///   sizeInBytes: number,
         ///   hashes: Dictionary&lt;string, string&gt;,
         ///   mimeType: string,
         ///   scanResult: string,
         ///   scanDetails: string,
+        ///   properties: Dictionary&lt;string, string&gt;,
+        ///   fileId: string,
+        ///   relatedFiles: [
+        ///     {
+        ///       fileName: string,
+        ///       sizeInBytes: number,
+        ///       hashes: Dictionary&lt;string, string&gt;,
+        ///       mimeType: string,
+        ///       scanResult: string,
+        ///       scanDetails: string,
+        ///       properties: Dictionary&lt;string, string&gt;
+        ///     }
+        ///   ],
+        ///   downloadHandler: {
+        ///     id: string
+        ///   },
         ///   etag: string
         /// }
         /// </code>
@@ -363,11 +393,15 @@ namespace Azure.IoT.DeviceUpdate
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   operationId: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
-        ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
+        ///   status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///   update: {
+        ///     updateId: {
+        ///       provider: string,
+        ///       name: string,
+        ///       version: string
+        ///     },
+        ///     description: string,
+        ///     friendlyName: string
         ///   },
         ///   resourceLocation: string,
         ///   error: {
@@ -436,11 +470,15 @@ namespace Azure.IoT.DeviceUpdate
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   operationId: string,
-        ///   status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
-        ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
+        ///   status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///   update: {
+        ///     updateId: {
+        ///       provider: string,
+        ///       name: string,
+        ///       version: string
+        ///     },
+        ///     description: string,
+        ///     friendlyName: string
         ///   },
         ///   resourceLocation: string,
         ///   error: {
@@ -1121,11 +1159,15 @@ namespace Azure.IoT.DeviceUpdate
         ///   value: [
         ///     {
         ///       operationId: string,
-        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
-        ///       updateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
+        ///       status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///       update: {
+        ///         updateId: {
+        ///           provider: string,
+        ///           name: string,
+        ///           version: string
+        ///         },
+        ///         description: string,
+        ///         friendlyName: string
         ///       },
         ///       resourceLocation: string,
         ///       error: {
@@ -1201,11 +1243,15 @@ namespace Azure.IoT.DeviceUpdate
         ///   value: [
         ///     {
         ///       operationId: string,
-        ///       status: &quot;Undefined&quot; | &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
-        ///       updateId: {
-        ///         provider: string,
-        ///         name: string,
-        ///         version: string
+        ///       status: &quot;NotStarted&quot; | &quot;Running&quot; | &quot;Succeeded&quot; | &quot;Failed&quot;,
+        ///       update: {
+        ///         updateId: {
+        ///           provider: string,
+        ///           name: string,
+        ///           version: string
+        ///         },
+        ///         description: string,
+        ///         friendlyName: string
         ///       },
         ///       resourceLocation: string,
         ///       error: {
@@ -1271,12 +1317,11 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Import new update version. </summary>
+        /// <summary> Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="action"> Import update action. Allowed values: &quot;import&quot;. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1292,39 +1337,6 @@ namespace Azure.IoT.DeviceUpdate
         ///       url: string (required)
         ///     }
         ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   isDeployable: boolean,
-        ///   updateType: string,
-        ///   installedCriteria: string,
-        ///   compatibility: [Dictionary&lt;string, string&gt;],
-        ///   instructions: {
-        ///     steps: [
-        ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;,
-        ///         description: string,
-        ///         handler: string,
-        ///         handlerProperties: AnyObject,
-        ///         files: [string],
-        ///         updateId: UpdateId
-        ///       }
-        ///     ]
-        ///   },
-        ///   referencedBy: [UpdateId],
-        ///   scanResult: string,
-        ///   manifestVersion: string,
-        ///   importedDateTime: string (ISO 8601 Format),
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   etag: string
         /// }
         /// </code>
         /// Schema for <c>Response Error</c>:
@@ -1346,16 +1358,15 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ImportUpdateAsync(WaitUntil waitUntil, string action, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ImportUpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(action, nameof(action));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportUpdateRequest(action, content, context);
+                using HttpMessage message = CreateImportUpdateRequest(content, context);
                 return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1365,12 +1376,11 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Import new update version. </summary>
+        /// <summary> Import new update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="action"> Import update action. Allowed values: &quot;import&quot;. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1386,39 +1396,6 @@ namespace Azure.IoT.DeviceUpdate
         ///       url: string (required)
         ///     }
         ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   updateId: {
-        ///     provider: string,
-        ///     name: string,
-        ///     version: string
-        ///   },
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   isDeployable: boolean,
-        ///   updateType: string,
-        ///   installedCriteria: string,
-        ///   compatibility: [Dictionary&lt;string, string&gt;],
-        ///   instructions: {
-        ///     steps: [
-        ///       {
-        ///         type: &quot;Inline&quot; | &quot;Reference&quot;,
-        ///         description: string,
-        ///         handler: string,
-        ///         handlerProperties: AnyObject,
-        ///         files: [string],
-        ///         updateId: UpdateId
-        ///       }
-        ///     ]
-        ///   },
-        ///   referencedBy: [UpdateId],
-        ///   scanResult: string,
-        ///   manifestVersion: string,
-        ///   importedDateTime: string (ISO 8601 Format),
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   etag: string
         /// }
         /// </code>
         /// Schema for <c>Response Error</c>:
@@ -1440,16 +1417,15 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> ImportUpdate(WaitUntil waitUntil, string action, RequestContent content, RequestContext context = null)
+        public virtual Operation<BinaryData> ImportUpdate(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(action, nameof(action));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("DeviceUpdateClient.ImportUpdate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportUpdateRequest(action, content, context);
+                using HttpMessage message = CreateImportUpdateRequest(content, context);
                 return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DeviceUpdateClient.ImportUpdate", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -1459,7 +1435,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Delete a specific update version. </summary>
+        /// <summary> Delete a specific update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
@@ -1507,7 +1483,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        /// <summary> Delete a specific update version. </summary>
+        /// <summary> Delete a specific update version. This is a long-running-operation; use Operation-Location response header value to check for operation status. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="provider"> Update provider. </param>
         /// <param name="name"> Update name. </param>
@@ -1555,26 +1531,6 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        internal HttpMessage CreateImportUpdateRequest(string action, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
-            uri.AppendPath(_instanceId, false);
-            uri.AppendPath("/updates", false);
-            uri.AppendQuery("action", action, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateGetUpdatesRequest(string search, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1583,20 +1539,39 @@ namespace Azure.IoT.DeviceUpdate
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (search != null)
             {
-                uri.AppendQuery("$search", search, true);
+                uri.AppendQuery("search", search, true);
             }
             if (filter != null)
             {
-                uri.AppendQuery("$filter", filter, true);
+                uri.AppendQuery("filter", filter, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateImportUpdateRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates:import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 
@@ -1608,7 +1583,7 @@ namespace Azure.IoT.DeviceUpdate
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
             uri.AppendPath(provider, true);
@@ -1634,7 +1609,7 @@ namespace Azure.IoT.DeviceUpdate
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
             uri.AppendPath(provider, true);
@@ -1656,7 +1631,7 @@ namespace Azure.IoT.DeviceUpdate
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers", false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1673,7 +1648,7 @@ namespace Azure.IoT.DeviceUpdate
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
             uri.AppendPath(provider, true);
@@ -1692,7 +1667,7 @@ namespace Azure.IoT.DeviceUpdate
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
             uri.AppendPath(provider, true);
@@ -1702,7 +1677,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
-                uri.AppendQuery("$filter", filter, true);
+                uri.AppendQuery("filter", filter, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1717,7 +1692,7 @@ namespace Azure.IoT.DeviceUpdate
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
             uri.AppendPath(provider, true);
@@ -1740,7 +1715,7 @@ namespace Azure.IoT.DeviceUpdate
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/providers/", false);
             uri.AppendPath(provider, true);
@@ -1768,16 +1743,16 @@ namespace Azure.IoT.DeviceUpdate
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/operations", false);
             if (filter != null)
             {
-                uri.AppendQuery("$filter", filter, true);
+                uri.AppendQuery("filter", filter, true);
             }
             if (top != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("top", top.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1793,7 +1768,7 @@ namespace Azure.IoT.DeviceUpdate
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw("https://", false);
             uri.AppendRaw(_endpoint, false);
-            uri.AppendPath("/deviceupdate/", false);
+            uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/updates/operations/", false);
             uri.AppendPath(operationId, true);
@@ -1891,10 +1866,10 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        private static ResponseClassifier _responseClassifier202;
-        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
         private static ResponseClassifier _responseClassifier200304;
         private static ResponseClassifier ResponseClassifier200304 => _responseClassifier200304 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 304 });
     }

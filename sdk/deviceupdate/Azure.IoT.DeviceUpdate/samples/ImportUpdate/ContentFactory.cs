@@ -70,8 +70,22 @@ namespace Samples
                         DeviceModel = name
                     }
                 },
-                UpdateType = "microsoft/apt:1",
-                InstalledCriteria = $"apt-update-test-{version}",
+                Instructions = new
+                {
+                    Steps = new[]
+                    {
+                        new
+                        {
+                            type = "Inline",
+                            Handler = "microsoft/apt:1",
+                            Files = new [] { fileName },
+                            HandlerProperties = new
+                            {
+                                InstalledCriteria = $"apt-update-test-{version}",
+                            }
+                        }
+                    }
+                },
                 Files = new[]
                 {
                     new
@@ -79,11 +93,10 @@ namespace Samples
                         FileName = fileName,
                         SizeInBytes = fileSize,
                         Hashes = new { SHA256 = fileHash },
-                        MimeType = "application/octet-stream",
                     }
                 },
                 CreatedDateTime = DateTime.UtcNow.ToString("O"),
-                ManifestVersion = "3.0",
+                ManifestVersion = "5.0",
             };
 
             var filePath = Path.GetTempFileName();

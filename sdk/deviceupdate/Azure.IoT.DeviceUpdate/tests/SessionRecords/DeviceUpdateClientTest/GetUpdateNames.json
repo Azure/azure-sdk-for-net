@@ -1,0 +1,32 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/updates/providers/fabrikam/names?api-version=2022-07-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-375c63d617bac642b3508da6e561678b-ce4f77274774a44e-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220607.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "7d8e6681a2d5b46d08e2ec4bcb35010d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "20",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 07 Jun 2022 17:13:08 GMT",
+        "traceparent": "00-375c63d617bac642b3508da6e561678b-ce4f77274774a44e-00"
+      },
+      "ResponseBody": {
+        "value": [
+          "vacuum"
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2097823111"
+  }
+}

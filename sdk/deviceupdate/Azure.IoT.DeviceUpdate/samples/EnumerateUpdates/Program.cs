@@ -23,7 +23,9 @@ namespace Samples
             Console.WriteLine("Device Update for IoT Hub Sample: Enumerate updates");
             Console.WriteLine();
 
-            var credentials = new InteractiveBrowserCredential(Constant.TenantId, Constant.ClientId);
+            var credentials = new DefaultAzureCredential();
+            // for interactive logon use the following instead:
+            // var credentials = new InteractiveBrowserCredential(Constant.TenantId, Constant.ClientId);
             var client = new DeviceUpdateClient(Constant.AccountEndpoint, Constant.Instance, credentials);
 
             Console.WriteLine($"Provider: {Constant.Provider}");

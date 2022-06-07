@@ -41,7 +41,9 @@ namespace Samples
                 throw new ArgumentException("You have to provider a valid Azure Blob Container name.");
             }
 
-            var credentials = new InteractiveBrowserCredential(Constant.TenantId, Constant.ClientId);
+            var credentials = new DefaultAzureCredential();
+            // for interactive logon use the following instead:
+            // var credentials = new InteractiveBrowserCredential(Constant.TenantId, Constant.ClientId);
             var client = new DeviceUpdateClient(Constant.AccountEndpoint, Constant.Instance, credentials);
 
             var updateVersion = DateTime.Now.ToString("yyyy.Mdd.hmm.s");

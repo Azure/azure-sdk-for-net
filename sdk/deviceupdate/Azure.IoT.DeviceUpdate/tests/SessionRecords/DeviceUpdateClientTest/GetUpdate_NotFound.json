@@ -1,0 +1,34 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/updates/providers/foo/names/bar/versions/1.2?api-version=2022-07-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dbc9c445ba64ee458dadf61de6f53020-d426bcf25a68b045-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220607.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "767401eaf90a0db0c05ee123397d3e74",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "max-age=60, private",
+        "Content-Length": "161",
+        "Content-Type": "application/problem\u002Bjson; charset=utf-8",
+        "Date": "Tue, 07 Jun 2022 17:13:07 GMT",
+        "traceparent": "00-dbc9c445ba64ee458dadf61de6f53020-d426bcf25a68b045-00"
+      },
+      "ResponseBody": {
+        "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+        "title": "Not Found",
+        "status": 404,
+        "traceId": "00-dbc9c445ba64ee458dadf61de6f53020-a3e9e654c028f34e-00"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2022779919"
+  }
+}
