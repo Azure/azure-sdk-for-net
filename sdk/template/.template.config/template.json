@@ -54,7 +54,10 @@
     {
       "source": "./.content/testResource",
       "target": "./",
-      "condition": "(includeCI)"
+      "condition": "(includeCI)",
+      "rename": {
+        "ci-template.yml": "ci.yml"
+      }
     },
     {
       "source": "./.content/packageResource",
@@ -436,14 +439,6 @@
           }
         ]
       }
-    },
-    "ciFileName": {
-      "type": "parameter",
-      "datatype":"text",
-      "isRequired": false,
-      "defaultValue": "ci",
-      "description": "ci file name.",
-      "fileRename": "ci-template"
     }
   },
   "forms": {
