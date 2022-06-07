@@ -149,6 +149,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             }
             catch
             {
+                // If we get an exception while attempting to start, reset the Started flag to false so that the host can attempt to
+                // start the listener again.
                 Started = false;
                 throw;
             }
