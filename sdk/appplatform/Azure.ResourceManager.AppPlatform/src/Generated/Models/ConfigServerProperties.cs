@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="provisioningState"> State of the config server. </param>
         /// <param name="error"> Error when apply config server settings. </param>
         /// <param name="configServer"> Settings of config server. </param>
-        internal ConfigServerProperties(ConfigServerState? provisioningState, Error error, ConfigServerSettings configServer)
+        internal ConfigServerProperties(ConfigServerState? provisioningState, AppPlatformErrorInfo error, ConfigServerSettings configServer)
         {
             ProvisioningState = provisioningState;
             Error = error;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> State of the config server. </summary>
         public ConfigServerState? ProvisioningState { get; }
         /// <summary> Error when apply config server settings. </summary>
-        public Error Error { get; set; }
+        public AppPlatformErrorInfo Error { get; set; }
         /// <summary> Settings of config server. </summary>
         internal ConfigServerSettings ConfigServer { get; set; }
         /// <summary> Property of git environment. </summary>

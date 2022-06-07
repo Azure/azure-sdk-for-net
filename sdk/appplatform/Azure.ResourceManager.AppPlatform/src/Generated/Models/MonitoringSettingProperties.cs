@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="appInsightsInstrumentationKey"> Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings. </param>
         /// <param name="appInsightsSamplingRate"> Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]. </param>
         /// <param name="appInsightsAgentVersions"> Indicates the versions of application insight agent. </param>
-        internal MonitoringSettingProperties(MonitoringSettingState? provisioningState, Error error, bool? traceEnabled, string appInsightsInstrumentationKey, double? appInsightsSamplingRate, ApplicationInsightsAgentVersions appInsightsAgentVersions)
+        internal MonitoringSettingProperties(MonitoringSettingState? provisioningState, AppPlatformErrorInfo error, bool? traceEnabled, string appInsightsInstrumentationKey, double? appInsightsSamplingRate, ApplicationInsightsAgentVersions appInsightsAgentVersions)
         {
             ProvisioningState = provisioningState;
             Error = error;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> State of the Monitoring Setting. </summary>
         public MonitoringSettingState? ProvisioningState { get; }
         /// <summary> Error when apply Monitoring Setting changes. </summary>
-        public Error Error { get; set; }
+        public AppPlatformErrorInfo Error { get; set; }
         /// <summary> Indicates whether enable the trace functionality, which will be deprecated since api version 2020-11-01-preview. Please leverage appInsightsInstrumentationKey to indicate if monitoringSettings enabled or not. </summary>
         public bool? TraceEnabled { get; set; }
         /// <summary> Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings. </summary>

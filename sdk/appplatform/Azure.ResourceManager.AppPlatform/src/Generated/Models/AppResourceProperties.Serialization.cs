@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<bool> httpsOnly = default;
             Optional<TemporaryDisk> temporaryDisk = default;
             Optional<PersistentDisk> persistentDisk = default;
-            Optional<IList<CustomPersistentDiskResource>> customPersistentDisks = default;
+            Optional<IList<CustomPersistentDiskData>> customPersistentDisks = default;
             Optional<bool> enableEndToEndTLS = default;
             Optional<IList<LoadedCertificate>> loadedCertificates = default;
             foreach (var property in element.EnumerateObject())
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CustomPersistentDiskResource> array = new List<CustomPersistentDiskResource>();
+                    List<CustomPersistentDiskData> array = new List<CustomPersistentDiskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomPersistentDiskResource.DeserializeCustomPersistentDiskResource(item));
+                        array.Add(CustomPersistentDiskData.DeserializeCustomPersistentDiskData(item));
                     }
                     customPersistentDisks = array;
                     continue;

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         private const string JavaValue = "Java";
-        private const string NETCoreValue = ".NET Core";
+        private const string NetCoreValue = ".NET Core";
 
         /// <summary> Java. </summary>
         public static SupportedRuntimePlatform Java { get; } = new SupportedRuntimePlatform(JavaValue);
         /// <summary> .NET Core. </summary>
-        public static SupportedRuntimePlatform NETCore { get; } = new SupportedRuntimePlatform(NETCoreValue);
+        public static SupportedRuntimePlatform NetCore { get; } = new SupportedRuntimePlatform(NetCoreValue);
         /// <summary> Determines if two <see cref="SupportedRuntimePlatform"/> values are the same. </summary>
         public static bool operator ==(SupportedRuntimePlatform left, SupportedRuntimePlatform right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportedRuntimePlatform"/> values are not the same. </summary>

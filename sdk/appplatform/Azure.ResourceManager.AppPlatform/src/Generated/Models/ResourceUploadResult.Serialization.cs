@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ResourceUploadDefinition
+    public partial class ResourceUploadResult
     {
-        internal static ResourceUploadDefinition DeserializeResourceUploadDefinition(JsonElement element)
+        internal static ResourceUploadResult DeserializeResourceUploadResult(JsonElement element)
         {
             Optional<string> relativePath = default;
             Optional<Uri> uploadUrl = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ResourceUploadDefinition(relativePath.Value, uploadUrl.Value);
+            return new ResourceUploadResult(relativePath.Value, uploadUrl.Value);
         }
     }
 }

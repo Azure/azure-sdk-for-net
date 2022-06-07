@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Log file URL payload. </summary>
-    public partial class LogFileUriResponse
+    public partial class LogFileUriResult
     {
-        /// <summary> Initializes a new instance of LogFileUriResponse. </summary>
+        /// <summary> Initializes a new instance of LogFileUriResult. </summary>
         /// <param name="uri"> URL of the log file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        internal LogFileUriResponse(Uri uri)
+        internal LogFileUriResult(Uri uri)
         {
             if (uri == null)
             {

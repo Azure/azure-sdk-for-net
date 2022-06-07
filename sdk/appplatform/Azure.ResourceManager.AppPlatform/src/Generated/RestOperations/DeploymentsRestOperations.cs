@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LogFileUriResponse>> GetLogFileUriAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, CancellationToken cancellationToken = default)
+        public async Task<Response<LogFileUriResult>> GetLogFileUriAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -877,13 +877,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        LogFileUriResponse value = default;
+                        LogFileUriResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogFileUriResponse.DeserializeLogFileUriResponse(document.RootElement);
+                        value = LogFileUriResult.DeserializeLogFileUriResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((LogFileUriResponse)null, message.Response);
+                    return Response.FromValue((LogFileUriResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LogFileUriResponse> GetLogFileUri(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, CancellationToken cancellationToken = default)
+        public Response<LogFileUriResult> GetLogFileUri(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -912,19 +912,19 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        LogFileUriResponse value = default;
+                        LogFileUriResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogFileUriResponse.DeserializeLogFileUriResponse(document.RootElement);
+                        value = LogFileUriResult.DeserializeLogFileUriResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((LogFileUriResponse)null, message.Response);
+                    return Response.FromValue((LogFileUriResult)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGenerateHeapDumpRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
+        internal HttpMessage CreateGenerateHeapDumpRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -946,9 +946,9 @@ namespace Azure.ResourceManager.AppPlatform
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(diagnosticParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -959,20 +959,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="appName"> The name of the App resource. </param>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="diagnosticParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GenerateHeapDumpAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> GenerateHeapDumpAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGenerateHeapDumpRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters);
+            using var message = CreateGenerateHeapDumpRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -990,20 +990,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="appName"> The name of the App resource. </param>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="diagnosticParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GenerateHeapDump(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        public Response GenerateHeapDump(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGenerateHeapDumpRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters);
+            using var message = CreateGenerateHeapDumpRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        internal HttpMessage CreateGenerateThreadDumpRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
+        internal HttpMessage CreateGenerateThreadDumpRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1037,9 +1037,9 @@ namespace Azure.ResourceManager.AppPlatform
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(diagnosticParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1050,20 +1050,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="appName"> The name of the App resource. </param>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="diagnosticParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GenerateThreadDumpAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> GenerateThreadDumpAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGenerateThreadDumpRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters);
+            using var message = CreateGenerateThreadDumpRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1081,20 +1081,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="appName"> The name of the App resource. </param>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="diagnosticParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GenerateThreadDump(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        public Response GenerateThreadDump(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateGenerateThreadDumpRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters);
+            using var message = CreateGenerateThreadDumpRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        internal HttpMessage CreateStartJfrRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters)
+        internal HttpMessage CreateStartJfrRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1128,9 +1128,9 @@ namespace Azure.ResourceManager.AppPlatform
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(diagnosticParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -1141,20 +1141,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="appName"> The name of the App resource. </param>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="diagnosticParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StartJfrAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> StartJfrAsync(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateStartJfrRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters);
+            using var message = CreateStartJfrRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1172,20 +1172,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="serviceName"> The name of the Service resource. </param>
         /// <param name="appName"> The name of the App resource. </param>
         /// <param name="deploymentName"> The name of the Deployment resource. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="diagnosticParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="appName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response StartJfr(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        public Response StartJfr(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(appName, nameof(appName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateStartJfrRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, diagnosticParameters);
+            using var message = CreateStartJfrRequest(subscriptionId, resourceGroupName, serviceName, appName, deploymentName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

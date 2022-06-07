@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Deployments_GetLogFileUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LogFileUriResponse>> GetLogFileUriAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogFileUriResult>> GetLogFileUriAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GetLogFileUri");
             scope.Start();
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Deployments_GetLogFileUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogFileUriResponse> GetLogFileUri(CancellationToken cancellationToken = default)
+        public virtual Response<LogFileUriResult> GetLogFileUri(CancellationToken cancellationToken = default)
         {
             using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GetLogFileUri");
             scope.Start();
@@ -453,19 +453,19 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Deployments_GenerateHeapDump
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation> GenerateHeapDumpAsync(WaitUntil waitUntil, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> GenerateHeapDumpAsync(WaitUntil waitUntil, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GenerateHeapDump");
             scope.Start();
             try
             {
-                var response = await _appDeploymentResourceDeploymentsRestClient.GenerateHeapDumpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateHeapDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appDeploymentResourceDeploymentsRestClient.GenerateHeapDumpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateHeapDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -483,19 +483,19 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Deployments_GenerateHeapDump
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticParameters"/> is null. </exception>
-        public virtual ArmOperation GenerateHeapDump(WaitUntil waitUntil, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation GenerateHeapDump(WaitUntil waitUntil, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GenerateHeapDump");
             scope.Start();
             try
             {
-                var response = _appDeploymentResourceDeploymentsRestClient.GenerateHeapDump(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateHeapDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appDeploymentResourceDeploymentsRestClient.GenerateHeapDump(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateHeapDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -513,19 +513,19 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Deployments_GenerateThreadDump
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation> GenerateThreadDumpAsync(WaitUntil waitUntil, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> GenerateThreadDumpAsync(WaitUntil waitUntil, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GenerateThreadDump");
             scope.Start();
             try
             {
-                var response = await _appDeploymentResourceDeploymentsRestClient.GenerateThreadDumpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateThreadDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appDeploymentResourceDeploymentsRestClient.GenerateThreadDumpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateThreadDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -543,19 +543,19 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Deployments_GenerateThreadDump
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticParameters"/> is null. </exception>
-        public virtual ArmOperation GenerateThreadDump(WaitUntil waitUntil, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation GenerateThreadDump(WaitUntil waitUntil, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.GenerateThreadDump");
             scope.Start();
             try
             {
-                var response = _appDeploymentResourceDeploymentsRestClient.GenerateThreadDump(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateThreadDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appDeploymentResourceDeploymentsRestClient.GenerateThreadDump(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateGenerateThreadDumpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -573,19 +573,19 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Deployments_StartJFR
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation> StartJfrAsync(WaitUntil waitUntil, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> StartJfrAsync(WaitUntil waitUntil, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.StartJfr");
             scope.Start();
             try
             {
-                var response = await _appDeploymentResourceDeploymentsRestClient.StartJfrAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJfrRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appDeploymentResourceDeploymentsRestClient.StartJfrAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJfrRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -603,19 +603,19 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: Deployments_StartJFR
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diagnosticParameters"> Parameters for the diagnostic operation. </param>
+        /// <param name="content"> Parameters for the diagnostic operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticParameters"/> is null. </exception>
-        public virtual ArmOperation StartJfr(WaitUntil waitUntil, DiagnosticParameters diagnosticParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation StartJfr(WaitUntil waitUntil, DiagnosticContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(diagnosticParameters, nameof(diagnosticParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appDeploymentResourceDeploymentsClientDiagnostics.CreateScope("AppDeploymentResource.StartJfr");
             scope.Start();
             try
             {
-                var response = _appDeploymentResourceDeploymentsRestClient.StartJfr(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters, cancellationToken);
-                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJfrRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, diagnosticParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appDeploymentResourceDeploymentsRestClient.StartJfr(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new AppPlatformArmOperation(_appDeploymentResourceDeploymentsClientDiagnostics, Pipeline, _appDeploymentResourceDeploymentsRestClient.CreateStartJfrRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

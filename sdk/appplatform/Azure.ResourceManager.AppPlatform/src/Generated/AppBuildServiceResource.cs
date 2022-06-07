@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: BuildService_GetResourceUploadUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceUploadDefinition>> GetResourceUploadUriAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceUploadResult>> GetResourceUploadUriAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appBuildServiceBuildServiceClientDiagnostics.CreateScope("AppBuildServiceResource.GetResourceUploadUri");
             scope.Start();
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: BuildService_GetResourceUploadUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceUploadDefinition> GetResourceUploadUri(CancellationToken cancellationToken = default)
+        public virtual Response<ResourceUploadResult> GetResourceUploadUri(CancellationToken cancellationToken = default)
         {
             using var scope = _appBuildServiceBuildServiceClientDiagnostics.CreateScope("AppBuildServiceResource.GetResourceUploadUri");
             scope.Start();

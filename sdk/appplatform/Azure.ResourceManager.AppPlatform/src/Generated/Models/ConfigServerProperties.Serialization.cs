@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal static ConfigServerProperties DeserializeConfigServerProperties(JsonElement element)
         {
             Optional<ConfigServerState> provisioningState = default;
-            Optional<Error> error = default;
+            Optional<AppPlatformErrorInfo> error = default;
             Optional<ConfigServerSettings> configServer = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = Error.DeserializeError(property.Value);
+                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("configServer"))

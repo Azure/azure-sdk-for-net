@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         internal static MonitoringSettingProperties DeserializeMonitoringSettingProperties(JsonElement element)
         {
             Optional<MonitoringSettingState> provisioningState = default;
-            Optional<Error> error = default;
+            Optional<AppPlatformErrorInfo> error = default;
             Optional<bool> traceEnabled = default;
             Optional<string> appInsightsInstrumentationKey = default;
             Optional<double> appInsightsSamplingRate = default;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = Error.DeserializeError(property.Value);
+                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("traceEnabled"))

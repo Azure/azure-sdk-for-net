@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class LogFileUriResponse
+    public partial class LogFileUriResult
     {
-        internal static LogFileUriResponse DeserializeLogFileUriResponse(JsonElement element)
+        internal static LogFileUriResult DeserializeLogFileUriResult(JsonElement element)
         {
             Uri url = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new LogFileUriResponse(url);
+            return new LogFileUriResult(url);
         }
     }
 }

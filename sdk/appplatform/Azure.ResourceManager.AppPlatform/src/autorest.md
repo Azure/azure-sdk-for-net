@@ -38,6 +38,7 @@ rename-rules:
   JFR: Jfr
   TLS: Tls
   APM: Apm
+  NETCore: NetCore
   Url: Uri
   Urls: Uris
 override-operation-name:
@@ -109,4 +110,9 @@ directive:
       $.CustomDomainResource['x-ms-client-name'] = 'AppPlatformCustomDomainResource';
       $.ServiceResource['x-ms-client-name'] = 'AppPlatformServiceResource';
       $.AppResource['x-ms-client-name'] = 'AppPlatformAppResource';
+      $.ResourceUploadDefinition['x-ms-client-name'] = 'ResourceUploadResult';
+      $.DiagnosticParameters['x-ms-client-name'] = 'DiagnosticContent';
+      $.LogFileUrlResponse['x-ms-client-name'] = 'LogFileUriResult';
+      $.CustomPersistentDiskResource['x-ms-client-name'] = 'CustomPersistentDiskData';
+      $.Error['x-ms-client-name'] = 'AppPlatformErrorInfo';
 ```

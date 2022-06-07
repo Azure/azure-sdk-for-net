@@ -244,8 +244,8 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.AppBuildServiceAgentPoolResource>> GetAppBuildServiceAgentPoolResourceAsync(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppPlatform.AppBuildServiceAgentPoolResourceCollection GetAppBuildServiceAgentPoolResources() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.AppBuildServiceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppPlatform.Models.ResourceUploadDefinition> GetResourceUploadUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.ResourceUploadDefinition>> GetResourceUploadUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppPlatform.Models.ResourceUploadResult> GetResourceUploadUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.ResourceUploadResult>> GetResourceUploadUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppPlatform.SupportedBuildpackResource> GetSupportedBuildpackResource(string buildpackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.SupportedBuildpackResource>> GetSupportedBuildpackResourceAsync(string buildpackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppPlatform.SupportedBuildpackResourceCollection GetSupportedBuildpackResources() { throw null; }
@@ -262,20 +262,20 @@ namespace Azure.ResourceManager.AppPlatform
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string appName, string deploymentName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation GenerateHeapDump(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticParameters diagnosticParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> GenerateHeapDumpAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticParameters diagnosticParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation GenerateThreadDump(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticParameters diagnosticParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> GenerateThreadDumpAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticParameters diagnosticParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation GenerateHeapDump(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> GenerateHeapDumpAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation GenerateThreadDump(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> GenerateThreadDumpAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppPlatform.AppDeploymentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.AppDeploymentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppPlatform.Models.LogFileUriResponse> GetLogFileUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.LogFileUriResponse>> GetLogFileUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppPlatform.Models.LogFileUriResult> GetLogFileUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.LogFileUriResult>> GetLogFileUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restart(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation StartJfr(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticParameters diagnosticParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartJfrAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticParameters diagnosticParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation StartJfr(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartJfrAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.DiagnosticContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppPlatform.AppDeploymentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.AppDeploymentResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -322,8 +322,8 @@ namespace Azure.ResourceManager.AppPlatform
         public virtual Azure.Response<Azure.ResourceManager.AppPlatform.BindingResource> GetBindingResource(string bindingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.BindingResource>> GetBindingResourceAsync(string bindingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppPlatform.BindingResourceCollection GetBindingResources() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppPlatform.Models.ResourceUploadDefinition> GetResourceUploadUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.ResourceUploadDefinition>> GetResourceUploadUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppPlatform.Models.ResourceUploadResult> GetResourceUploadUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppPlatform.Models.ResourceUploadResult>> GetResourceUploadUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppPlatform.AppPlatformAppResource> SetActiveDeployments(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.ActiveDeploymentList activeDeploymentCollection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppPlatform.AppPlatformAppResource>> SetActiveDeploymentsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.Models.ActiveDeploymentList activeDeploymentCollection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppPlatform.AppPlatformAppResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppPlatform.AppPlatformAppResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1032,6 +1032,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator !=(Azure.ResourceManager.AppPlatform.Models.AppBuildProvisioningState left, Azure.ResourceManager.AppPlatform.Models.AppBuildProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AppPlatformErrorInfo
+    {
+        public AppPlatformErrorInfo() { }
+        public string Code { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+    }
     public partial class AppPlatformSku
     {
         public AppPlatformSku() { }
@@ -1043,7 +1049,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         public AppResourceProperties() { }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.BinaryData>> AddonConfigs { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppPlatform.Models.CustomPersistentDiskResource> CustomPersistentDisks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppPlatform.Models.CustomPersistentDiskData> CustomPersistentDisks { get { throw null; } }
         public bool? EnableEndToEndTls { get { throw null; } set { } }
         public string Fqdn { get { throw null; } set { } }
         public bool? HttpsOnly { get { throw null; } set { } }
@@ -1297,7 +1303,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         public ConfigServerProperties() { }
         public Azure.ResourceManager.AppPlatform.Models.ConfigServerGitProperty ConfigServerGitProperty { get { throw null; } set { } }
-        public Azure.ResourceManager.AppPlatform.Models.Error Error { get { throw null; } set { } }
+        public Azure.ResourceManager.AppPlatform.Models.AppPlatformErrorInfo Error { get { throw null; } set { } }
         public Azure.ResourceManager.AppPlatform.Models.ConfigServerState? ProvisioningState { get { throw null; } }
     }
     public partial class ConfigServerSettings
@@ -1450,18 +1456,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public bool? IsValid { get { throw null; } }
         public string Message { get { throw null; } }
     }
+    public partial class CustomPersistentDiskData
+    {
+        public CustomPersistentDiskData(string storageId) { }
+        public Azure.ResourceManager.AppPlatform.Models.CustomPersistentDiskProperties CustomPersistentDiskProperties { get { throw null; } set { } }
+        public string StorageId { get { throw null; } set { } }
+    }
     public partial class CustomPersistentDiskProperties
     {
         public CustomPersistentDiskProperties(string mountPath) { }
         public System.Collections.Generic.IList<string> MountOptions { get { throw null; } }
         public string MountPath { get { throw null; } set { } }
         public bool? ReadOnly { get { throw null; } set { } }
-    }
-    public partial class CustomPersistentDiskResource
-    {
-        public CustomPersistentDiskResource(string storageId) { }
-        public Azure.ResourceManager.AppPlatform.Models.CustomPersistentDiskProperties CustomPersistentDiskProperties { get { throw null; } set { } }
-        public string StorageId { get { throw null; } set { } }
     }
     public partial class DeploymentInstance
     {
@@ -1529,18 +1535,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public System.Collections.Generic.IDictionary<string, string> EnvironmentVariables { get { throw null; } }
         public Azure.ResourceManager.AppPlatform.Models.ResourceRequests ResourceRequests { get { throw null; } set { } }
     }
-    public partial class DiagnosticParameters
+    public partial class DiagnosticContent
     {
-        public DiagnosticParameters() { }
+        public DiagnosticContent() { }
         public string AppInstance { get { throw null; } set { } }
         public string DurationValue { get { throw null; } set { } }
         public string FilePath { get { throw null; } set { } }
-    }
-    public partial class Error
-    {
-        public Error() { }
-        public string Code { get { throw null; } set { } }
-        public string Message { get { throw null; } set { } }
     }
     public partial class GatewayApiMetadataProperties
     {
@@ -1702,9 +1702,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public bool? LoadTrustStore { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
     }
-    public partial class LogFileUriResponse
+    public partial class LogFileUriResult
     {
-        internal LogFileUriResponse() { }
+        internal LogFileUriResult() { }
         public System.Uri Uri { get { throw null; } }
     }
     public partial class MonitoringSettingProperties
@@ -1713,7 +1713,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string AppInsightsAgentVersionsJava { get { throw null; } }
         public string AppInsightsInstrumentationKey { get { throw null; } set { } }
         public double? AppInsightsSamplingRate { get { throw null; } set { } }
-        public Azure.ResourceManager.AppPlatform.Models.Error Error { get { throw null; } set { } }
+        public Azure.ResourceManager.AppPlatform.Models.AppPlatformErrorInfo Error { get { throw null; } set { } }
         public Azure.ResourceManager.AppPlatform.Models.MonitoringSettingState? ProvisioningState { get { throw null; } }
         public bool? TraceEnabled { get { throw null; } set { } }
     }
@@ -1895,9 +1895,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppPlatform.Models.ResourceSkuCapabilities> Capabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Name { get { throw null; } }
     }
-    public partial class ResourceUploadDefinition
+    public partial class ResourceUploadResult
     {
-        internal ResourceUploadDefinition() { }
+        internal ResourceUploadResult() { }
         public string RelativePath { get { throw null; } }
         public System.Uri UploadUri { get { throw null; } }
     }
@@ -2019,7 +2019,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         private readonly int _dummyPrimitive;
         public SupportedRuntimePlatform(string value) { throw null; }
         public static Azure.ResourceManager.AppPlatform.Models.SupportedRuntimePlatform Java { get { throw null; } }
-        public static Azure.ResourceManager.AppPlatform.Models.SupportedRuntimePlatform NETCore { get { throw null; } }
+        public static Azure.ResourceManager.AppPlatform.Models.SupportedRuntimePlatform NetCore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppPlatform.Models.SupportedRuntimePlatform other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

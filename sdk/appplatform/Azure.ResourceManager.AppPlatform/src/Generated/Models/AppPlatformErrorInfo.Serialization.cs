@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class Error : IUtf8JsonSerializable
+    public partial class AppPlatformErrorInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteEndObject();
         }
 
-        internal static Error DeserializeError(JsonElement element)
+        internal static AppPlatformErrorInfo DeserializeAppPlatformErrorInfo(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new Error(code.Value, message.Value);
+            return new AppPlatformErrorInfo(code.Value, message.Value);
         }
     }
 }

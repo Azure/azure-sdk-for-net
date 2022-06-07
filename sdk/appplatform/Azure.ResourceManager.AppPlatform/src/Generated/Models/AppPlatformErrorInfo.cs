@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The error code compose of code and message. </summary>
-    public partial class Error
+    public partial class AppPlatformErrorInfo
     {
-        /// <summary> Initializes a new instance of Error. </summary>
-        public Error()
+        /// <summary> Initializes a new instance of AppPlatformErrorInfo. </summary>
+        public AppPlatformErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Initializes a new instance of AppPlatformErrorInfo. </summary>
         /// <param name="code"> The code of error. </param>
         /// <param name="message"> The message of error. </param>
-        internal Error(string code, string message)
+        internal AppPlatformErrorInfo(string code, string message)
         {
             Code = code;
             Message = message;

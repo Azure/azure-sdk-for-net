@@ -10,17 +10,17 @@ using System;
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Resource upload definition payload. </summary>
-    public partial class ResourceUploadDefinition
+    public partial class ResourceUploadResult
     {
-        /// <summary> Initializes a new instance of ResourceUploadDefinition. </summary>
-        internal ResourceUploadDefinition()
+        /// <summary> Initializes a new instance of ResourceUploadResult. </summary>
+        internal ResourceUploadResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceUploadDefinition. </summary>
+        /// <summary> Initializes a new instance of ResourceUploadResult. </summary>
         /// <param name="relativePath"> Source relative path. </param>
         /// <param name="uploadUri"> Upload URL. </param>
-        internal ResourceUploadDefinition(string relativePath, Uri uploadUri)
+        internal ResourceUploadResult(string relativePath, Uri uploadUri)
         {
             RelativePath = relativePath;
             UploadUri = uploadUri;
