@@ -383,6 +383,7 @@ namespace Azure.Storage.Queues.Test
                 }
 
                 // compare data
+                Assert.AreEqual(version, parsedEncryptedMessage.EncryptionData.EncryptionAgent.EncryptionVersion);
                 Assert.AreEqual(expectedEncryptedMessage, parsedEncryptedMessage.EncryptedMessageText);
             }
         }
