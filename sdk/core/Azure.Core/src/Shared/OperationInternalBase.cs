@@ -189,7 +189,7 @@ namespace Azure.Core
                 return lockOrValue.Value;
             }
 
-            using var scope = CreateScope($"{_operationTypeName}.WaitForCompletionResponse");
+            using var scope = CreateScope(string.IsNullOrEmpty(_operationTypeName) ? string.Empty : $"{_operationTypeName}.WaitForCompletionResponse");
             try
             {
                 var poller = new OperationPoller(_fallbackStrategy);

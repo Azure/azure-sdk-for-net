@@ -149,6 +149,19 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task UpdateStatusNotCreateDiagnosticScope([Values(true, false)] bool async)
+        {
+            using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
+
+            var operationInternal = OperationInternal<int>.Succeeded(InitialResponse, 1);
+            _ = async
+                ? await operationInternal.UpdateStatusAsync(CancellationToken.None)
+                : operationInternal.UpdateStatus(CancellationToken.None);
+
+            CollectionAssert.IsEmpty(testListener.Scopes);
+        }
+
+        [Test]
         public async Task UpdateStatusSetsFailedScopeWhenOperationFails([Values(true, false)] bool async)
         {
             using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
@@ -203,6 +216,35 @@ namespace Azure.Core.Tests
                 : operationInternal.UpdateStatus(originalToken);
 
             Assert.AreEqual(originalToken, passedToken);
+        }
+
+        [Test]
+        public async Task WaitForCompletionResponseCreatesDiagnosticScope([Values(true, false)] bool async, [Values(null, "CustomTypeName")] string operationTypeName)
+        {
+            using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
+
+            string expectedTypeName = operationTypeName ?? nameof(TestOperation);
+            KeyValuePair<string, string>[] expectedAttributes = { new("key1", "value1"), new("key2", "value2") };
+            var operationInternal = new OperationInternal<int>(ClientDiagnostics, TestOperation.Succeeded(1), InitialResponse, operationTypeName, expectedAttributes);
+
+            _ = async
+                ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
+                : operationInternal.WaitForCompletionResponse(CancellationToken.None);
+
+            testListener.AssertScope($"{expectedTypeName}.WaitForCompletionResponse", expectedAttributes);
+        }
+
+        [Test]
+        public async Task WaitForCompletionResponseNotCreateDiagnosticScope([Values(true, false)] bool async)
+        {
+            using ClientDiagnosticListener testListener = new(DiagnosticNamespace);
+
+            var operationInternal = OperationInternal<int>.Succeeded(InitialResponse, 1);
+            _ = async
+                ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
+                : operationInternal.WaitForCompletionResponse(CancellationToken.None);
+
+            CollectionAssert.IsEmpty(testListener.Scopes);
         }
 
         [Test]
