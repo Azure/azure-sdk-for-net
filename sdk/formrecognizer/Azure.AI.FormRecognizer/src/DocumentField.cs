@@ -9,7 +9,6 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     [CodeGenModel("DocumentField")]
-    [DebuggerTypeProxy(typeof(DocumentFieldDebugView))]
     public partial class DocumentField
     {
         /// <summary>
@@ -33,23 +32,32 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         [CodeGenMember("Type")]
         public DocumentFieldType ValueType { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string ValueString { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DateTimeOffset? ValueDate { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private TimeSpan? ValueTime { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string ValuePhoneNumber { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private double? ValueNumber { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private int? ValueInteger { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private SelectionMarkState? ValueSelectionMark { get; set; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private AddressValue ValueAddress { get; }
 
         [CodeGenMember("ValueSelectionMark")]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private V3SelectionMarkState? ValueSelectionMarkPrivate
         {
             get => throw new InvalidOperationException();
@@ -74,14 +82,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DocumentSignatureType? ValueSignature { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string ValueCountryRegion { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private CurrencyValue? ValueCurrency { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IReadOnlyList<DocumentField> ValueArray { get; }
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private IReadOnlyDictionary<string, DocumentField> ValueObject { get; }
 
         /// <summary>
@@ -314,45 +327,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return ValueAddress;
         }
 
-        /// <summary>
-        /// Debugger Proxy class for <see cref="DocumentField"/>.
-        /// </summary>
-        private class DocumentFieldDebugView
+        private object InternalValue => ValueType switch
         {
-            private DocumentField BaseObject { get; }
-
-            public DocumentFieldDebugView(DocumentField baseObject)
-            {
-                BaseObject = baseObject;
-            }
-
-            public DocumentFieldType ValueType => BaseObject.ValueType;
-
-            public string Content => BaseObject.Content;
-
-            public IReadOnlyList<BoundingRegion> BoundingRegions => BaseObject.BoundingRegions;
-
-            public IReadOnlyList<DocumentSpan> Spans => BaseObject.Spans;
-
-            public float? Confidence => BaseObject.Confidence;
-
-            public object InternalValue => ValueType switch
-            {
-                DocumentFieldType.Address => BaseObject.AsAddress(),
-                DocumentFieldType.CountryRegion => BaseObject.AsCountryRegion(),
-                DocumentFieldType.Currency => BaseObject.AsCurrency(),
-                DocumentFieldType.Date => BaseObject.AsDate(),
-                DocumentFieldType.Dictionary => BaseObject.AsDictionary(),
-                DocumentFieldType.Double => BaseObject.AsDouble(),
-                DocumentFieldType.Int64 => BaseObject.AsInt64(),
-                DocumentFieldType.List => BaseObject.AsList(),
-                DocumentFieldType.PhoneNumber => BaseObject.AsPhoneNumber(),
-                DocumentFieldType.SelectionMark => BaseObject.AsSelectionMarkState(),
-                DocumentFieldType.Signature => BaseObject.AsSignatureType(),
-                DocumentFieldType.String => BaseObject.AsString(),
-                DocumentFieldType.Time => BaseObject.AsTime(),
-                _ => null
-            };
-        }
+            DocumentFieldType.Address => AsAddress(),
+            DocumentFieldType.CountryRegion => AsCountryRegion(),
+            DocumentFieldType.Currency => AsCurrency(),
+            DocumentFieldType.Date => AsDate(),
+            DocumentFieldType.Dictionary => AsDictionary(),
+            DocumentFieldType.Double => AsDouble(),
+            DocumentFieldType.Int64 => AsInt64(),
+            DocumentFieldType.List => AsList(),
+            DocumentFieldType.PhoneNumber => AsPhoneNumber(),
+            DocumentFieldType.SelectionMark => AsSelectionMarkState(),
+            DocumentFieldType.Signature => AsSignatureType(),
+            DocumentFieldType.String => AsString(),
+            DocumentFieldType.Time => AsTime(),
+            _ => null
+        };
     }
 }
