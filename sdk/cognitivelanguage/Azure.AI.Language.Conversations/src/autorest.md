@@ -73,4 +73,23 @@ directive:
   where: $["info"]
   transform: >
     $["version"] = "2022_05_15_Preview";
+
+# Work around https://github.com/Azure/azure-sdk-for-net/issues/29141
+- from: swagger-document
+  where: $.definitions.AnalyzeConversationResultsKind
+  transform: >
+    $["enum"] = [
+      "conversationalPIIResults",
+      "conversationalSummarizationResults"
+    ];
+
+- from: swagger-document
+  where: $.definitions.AnalyzeConversationConversationPIIResult
+  transform: >
+    $["x-ms-discriminator-value"] = "conversationalPIIResults";
+
+- from: swagger-document
+  where: $.definitions.AnalyzeConversationSummarizationResult
+  transform: >
+    $["x-ms-discriminator-value"] = "conversationalSummarizationResults";
 ```

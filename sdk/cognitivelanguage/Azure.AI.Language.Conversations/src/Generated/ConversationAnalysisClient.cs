@@ -171,7 +171,7 @@ namespace Azure.AI.Language.Conversations
         ///         lastUpdateDateTime: string (ISO 8601 Format),
         ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;,
         ///         taskName: string,
-        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;
+        ///         kind: &quot;conversationalPIIResults&quot; | &quot;conversationalSummarizationResults&quot;
         ///       }
         ///     ]
         ///   },
@@ -257,7 +257,7 @@ namespace Azure.AI.Language.Conversations
         ///         lastUpdateDateTime: string (ISO 8601 Format),
         ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;,
         ///         taskName: string,
-        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;
+        ///         kind: &quot;conversationalPIIResults&quot; | &quot;conversationalSummarizationResults&quot;
         ///       }
         ///     ]
         ///   },

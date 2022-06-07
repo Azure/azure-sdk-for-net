@@ -17,9 +17,9 @@ namespace Azure.AI.Language.Conversations
         /// <param name="category"> Entity type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
-        /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
+        /// <param name="confidence"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
-        public TextEntity(string text, string category, int offset, int length, double confidenceScore)
+        public TextEntity(string text, string category, int offset, int length, double confidence)
         {
             if (text == null)
             {
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations
             Category = category;
             Offset = offset;
             Length = length;
-            Confidence = confidenceScore;
+            Confidence = confidence;
         }
 
         /// <summary> Initializes a new instance of TextEntity. </summary>
@@ -43,15 +43,15 @@ namespace Azure.AI.Language.Conversations
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different &apos;stringIndexType&apos; values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different &apos;stringIndexType&apos; values can affect the length returned. </param>
-        /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
-        internal TextEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore)
+        /// <param name="confidence"> Confidence score between 0 and 1 of the extracted entity. </param>
+        internal TextEntity(string text, string category, string subcategory, int offset, int length, double confidence)
         {
             Text = text;
             Category = category;
             Subcategory = subcategory;
             Offset = offset;
             Length = length;
-            Confidence = confidenceScore;
+            Confidence = confidence;
         }
 
         /// <summary> Entity text as appears in the request. </summary>
