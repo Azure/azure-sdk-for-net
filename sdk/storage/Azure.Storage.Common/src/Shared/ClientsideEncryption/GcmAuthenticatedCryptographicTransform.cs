@@ -11,11 +11,8 @@ using System.Security.Cryptography;
 using Azure.Storage.Shared.AesGcm;
 #endif
 
-// TODO compile ifs are temporary until Gcm is merged in
-
 namespace Azure.Storage.Cryptography
 {
-    // TODO pull in GCM exposure to fill out this class
     internal class GcmAuthenticatedCryptographicTransform : IAuthenticatedCryptographicTransform
     {
         // except for class name, these classes have the same API surface, as they are the same source code
