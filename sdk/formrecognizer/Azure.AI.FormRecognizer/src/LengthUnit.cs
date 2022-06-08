@@ -4,7 +4,7 @@
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary>
-    /// The unit used by the width, height and bounding boxes of a <see cref="DocumentPage"/>. For images, the unit is
+    /// The unit used by the width, height and bounding polygons of a <see cref="DocumentPage"/>. For images, the unit is
     /// pixel. For PDF, the unit is inch.
     /// </summary>
     public enum LengthUnit

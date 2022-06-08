@@ -403,7 +403,7 @@ Describe "Platform Matrix Replace" -Tag "replace" {
         { $parsed = ParseReplacement $query } | Should -Throw
         { $parsed = ParseReplacement $query } | Should -Throw
     }
-    
+
     It "Should replace values in a matrix" {
         $matrixJson = @'
 {
@@ -542,4 +542,31 @@ Describe "Platform Matrix Replace" -Tag "replace" {
         $matrix[1].parameters.Foo | Should -Be "foo2"
         $matrix[1].parameters.Bar | Should -Be "bar1"
     }
+
+    It "Should parse replacement syntax and source imported display name lookups" {
+        $matrixJson = @'
+{
+  "displayNames": {
+    "replaceme": ""
+  },
+  "matrix": {
+    "$IMPORT": "./test-import-matrix.json",
+    "replaceme": "replaceme"
+  }
+}
+'@
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $replace = 'Foo=(foo)1/$1ReplacedFoo1', 'B.*=(.*)2/$1ReplacedBar2'
+        $matrix = GenerateMatrix $importConfig "sparse" -replace $replace
+
+        $matrix.Length | Should -Be 3
+        $matrix[0].name | Should -Be "fooReplacedFoo1_bar1"
+        $matrix[0].parameters.Foo | Should -Be "fooReplacedFoo1"
+        $matrix[1].name | Should -Be "foo2_barReplacedBar2"
+        $matrix[1].parameters.Bar | Should -Be "barReplacedBar2"
+        $matrix[2].name | Should -Be "importedBazName"
+        $matrix[2].parameters.Baz | Should -Be "importedBaz"
+        $matrix[2].parameters.replaceme | Should -Be "replaceme"
+    }
+
 }

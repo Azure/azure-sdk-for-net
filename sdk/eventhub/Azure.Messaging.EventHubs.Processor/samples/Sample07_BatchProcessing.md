@@ -2,6 +2,12 @@
 
 This sample demonstrates how events can be processed in batches rather than individually.  To begin, please ensure that you're familiar with the items discussed in the [Processing Events ](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample04_ProcessingEvents.md) sample.  You'll also need to have the prerequisites and connection string information available, as discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README.
 
+## Table of contents
+
+- [Extending `PluggableCheckpointStoreEventProcessor<TPartition>`](#extending-pluggablecheckpointstoreeventprocessortpartition)
+- [Useful customizations](#useful-customizations)
+- [Extending EventProcessor&lt;TPartition&gt;](#extending-eventprocessortpartition)
+
 ## Extending `PluggableCheckpointStoreEventProcessor<TPartition>`
 
 The approach used by the `EventProcessorClient` of emitting events to the "ProcessEvents" handler is optimized for scenarios where an application wants to eagerly process each event individually as they are available, rather than treating them as a group.  For scenarios where it is more efficient to process events as a batch, it is often advantageous to extend the `PluggableCheckpointStoreEventProcessor<TPartition>` and override the `OnProcessingEventBatchAsync` method for batch support.  

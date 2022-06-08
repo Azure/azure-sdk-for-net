@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal static DocumentLine DeserializeDocumentLine(JsonElement element)
         {
             string content = default;
-            Optional<IReadOnlyList<float>> boundingBox = default;
+            Optional<IReadOnlyList<float>> polygon = default;
             IReadOnlyList<DocumentSpan> spans = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     content = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("boundingBox"))
+                if (property.NameEquals("polygon"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         array.Add(item.GetSingle());
                     }
-                    boundingBox = array;
+                    polygon = array;
                     continue;
                 }
                 if (property.NameEquals("spans"))
@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentLine(content, Optional.ToList(boundingBox), spans);
+            return new DocumentLine(content, Optional.ToList(polygon), spans);
         }
     }
 }

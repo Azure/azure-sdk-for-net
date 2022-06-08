@@ -26,7 +26,7 @@ pr:
     - sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SDKType: client
     ServiceDirectory: signalr

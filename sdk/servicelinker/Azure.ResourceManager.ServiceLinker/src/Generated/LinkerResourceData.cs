@@ -24,8 +24,16 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetService"> The target service properties. </param>
-        /// <param name="authInfo"> The authentication type. </param>
+        /// <param name="targetService">
+        /// The target service properties
+        /// Please note <see cref="TargetServiceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureResource"/>, <see cref="ConfluentBootstrapServer"/> and <see cref="ConfluentSchemaRegistry"/>.
+        /// </param>
+        /// <param name="authInfo">
+        /// The authentication type.
+        /// Please note <see cref="AuthInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// </param>
         /// <param name="clientType"> The application client type. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="vnetSolution"> The VNet solution. </param>
@@ -42,9 +50,17 @@ namespace Azure.ResourceManager.ServiceLinker
             Scope = scope;
         }
 
-        /// <summary> The target service properties. </summary>
+        /// <summary>
+        /// The target service properties
+        /// Please note <see cref="TargetServiceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureResource"/>, <see cref="ConfluentBootstrapServer"/> and <see cref="ConfluentSchemaRegistry"/>.
+        /// </summary>
         public TargetServiceBase TargetService { get; set; }
-        /// <summary> The authentication type. </summary>
+        /// <summary>
+        /// The authentication type.
+        /// Please note <see cref="AuthInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// </summary>
         public AuthInfoBase AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
         public ClientType? ClientType { get; set; }
