@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Early termination policies enable canceling poor-performing runs before they complete. </summary>
+    /// <summary>
+    /// Early termination policies enable canceling poor-performing runs before they complete
+    /// Please note <see cref="EarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
+    /// </summary>
     public partial class EarlyTerminationPolicy
     {
         /// <summary> Initializes a new instance of EarlyTerminationPolicy. </summary>
