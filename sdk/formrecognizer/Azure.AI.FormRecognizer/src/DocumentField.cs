@@ -327,6 +327,35 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return ValueAddress;
         }
 
+        /// <summary>
+        /// Returns a string that represents the <see cref="DocumentField"/> object.
+        /// </summary>
+        /// <returns>A string that represents the <see cref="DocumentField"/> object.</returns>
+        public override string ToString()
+        {
+            string conversionMethod = ValueType switch
+            {
+                DocumentFieldType.Address => nameof(AsAddress),
+                DocumentFieldType.CountryRegion => nameof(AsCountryRegion),
+                DocumentFieldType.Currency => nameof(AsCurrency),
+                DocumentFieldType.Date => nameof(AsDate),
+                DocumentFieldType.Dictionary => nameof(AsDictionary),
+                DocumentFieldType.Double => nameof(AsDouble),
+                DocumentFieldType.Int64 => nameof(AsInt64),
+                DocumentFieldType.List => nameof(AsList),
+                DocumentFieldType.PhoneNumber => nameof(AsPhoneNumber),
+                DocumentFieldType.SelectionMark => nameof(AsSelectionMarkState),
+                DocumentFieldType.Signature => nameof(AsSignatureType),
+                DocumentFieldType.String => nameof(AsString),
+                DocumentFieldType.Time => nameof(AsTime),
+                _ => null
+            };
+
+            return conversionMethod == null
+                ? $"{nameof(DocumentField)}: {nameof(ValueType)}={ValueType}"
+                : $"{nameof(DocumentField)}: {nameof(ValueType)}={ValueType}, {conversionMethod}()=>Value";
+        }
+
         private object InternalValue => ValueType switch
         {
             DocumentFieldType.Address => AsAddress(),
