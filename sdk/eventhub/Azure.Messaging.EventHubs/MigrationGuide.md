@@ -761,7 +761,7 @@ private class MigrationCheckpoint
 {
     public string PartitionId { get; set; }
     public string Offset { get; set; }
-    public long SequenceNumber { get; set; }
+    public long? SequenceNumber { get; set; }
 }
 ```
 
@@ -818,9 +818,13 @@ foreach (var checkpoint in legacyCheckpoints)
 {
     var metadata = new Dictionary<string, string>()
     {
-        { offsetKey, checkpoint.Offset.ToString(CultureInfo.InvariantCulture) },
-        { sequenceKey, checkpoint.SequenceNumber.ToString(CultureInfo.InvariantCulture) }
+        { offsetKey, checkpoint.Offset.ToString(CultureInfo.InvariantCulture) }
     };
+
+    if (checkpoint.SequenceNumber.HasValue)
+    {
+        metadata[sequenceKey] = checkpoint.SequenceNumber.Value.ToString(CultureInfo.InvariantCulture);
+    }
 
     BlobClient blobClient = storageClient.GetBlobClient($"{ prefix }{ checkpoint.PartitionId }");
 
@@ -857,7 +861,11 @@ private async Task<List<MigrationCheckpoint>> ReadLegacyCheckpoints(
         await (storageClient.GetBlobClient(blobItem.Name)).DownloadToAsync(blobContentStream);
 
         var checkpoint = JsonSerializer.Deserialize<MigrationCheckpoint>(Encoding.UTF8.GetString(blobContentStream.ToArray()));
-        checkpoints.Add(checkpoint);
+
+        if (!string.IsNullOrEmpty(checkpoint.Offset))
+        {
+            checkpoints.Add(checkpoint);
+        }
     }
 
     return checkpoints;

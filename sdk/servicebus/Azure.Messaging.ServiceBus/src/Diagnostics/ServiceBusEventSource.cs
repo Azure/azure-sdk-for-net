@@ -136,17 +136,17 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int SetSessionStateCompleteEvent = 66;
         internal const int SetSessionStateExceptionEvent = 67;
 
-        internal const int AddRuleStartEvent = 68;
-        internal const int AddRuleCompleteEvent = 69;
-        internal const int AddRuleExceptionEvent = 70;
+        internal const int CreateRuleStartEvent = 68;
+        internal const int CreateRuleCompleteEvent = 69;
+        internal const int CreateRuleExceptionEvent = 70;
 
-        internal const int RemoveRuleStartEvent = 71;
-        internal const int RemoveRuleCompleteEvent = 72;
-        internal const int RemoveRuleExceptionEvent = 73;
+        internal const int DeleteRuleStartEvent = 71;
+        internal const int DeleteRuleCompleteEvent = 72;
+        internal const int DeleteRuleExceptionEvent = 73;
 
-        internal const int GetRuleStartEvent = 74;
-        internal const int GetRuleCompleteEvent = 75;
-        internal const int GetRuleExceptionEvent = 76;
+        internal const int GetRulesStartEvent = 74;
+        internal const int GetRulesCompleteEvent = 75;
+        internal const int GetRulesExceptionEvent = 76;
 
         internal const int ClientCreateStartEvent = 77;
         internal const int ClientCreateCompleteEvent = 78;
@@ -1025,84 +1025,84 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         #endregion region
 
         #region Rule management
-        [Event(AddRuleStartEvent, Level = EventLevel.Informational, Message = "{0}: Add rule start. RuleName = {1}")]
-        public virtual void AddRuleStart(string identifiers, string ruleName)
+        [Event(CreateRuleStartEvent, Level = EventLevel.Informational, Message = "{0}: CreateRule start. RuleName = {1}")]
+        public virtual void CreateRuleStart(string identifiers, string ruleName)
         {
             if (IsEnabled())
             {
-                WriteEvent(AddRuleStartEvent, identifiers, ruleName);
+                WriteEvent(CreateRuleStartEvent, identifiers, ruleName);
             }
         }
 
-        [Event(AddRuleCompleteEvent, Level = EventLevel.Informational, Message = "{0}: Add rule done.")]
-        public virtual void AddRuleComplete(string identifier)
+        [Event(CreateRuleCompleteEvent, Level = EventLevel.Informational, Message = "{0}: CreateRule done. RuleName = {1}")]
+        public virtual void CreateRuleComplete(string identifier, string ruleName)
         {
             if (IsEnabled())
             {
-                WriteEvent(AddRuleCompleteEvent, identifier);
+                WriteEvent(CreateRuleCompleteEvent, identifier, ruleName);
             }
         }
 
-        [Event(AddRuleExceptionEvent, Level = EventLevel.Error, Message = "{0}: Add rule Exception: {1}.")]
-        public virtual void AddRuleException(string identifier, string exception)
+        [Event(CreateRuleExceptionEvent, Level = EventLevel.Error, Message = "{0}: CreateRule Exception: {1}. RuleName = {2}")]
+        public virtual void CreateRuleException(string identifier, string exception, string ruleName)
         {
             if (IsEnabled())
             {
-                WriteEvent(AddRuleExceptionEvent, identifier, exception);
+                WriteEvent(CreateRuleExceptionEvent, identifier, exception, ruleName);
             }
         }
 
-        [Event(RemoveRuleStartEvent, Level = EventLevel.Informational, Message = "{0}: Remove rule start. RuleName = {1}")]
-        public virtual void RemoveRuleStart(string identifiers, string ruleName)
+        [Event(DeleteRuleStartEvent, Level = EventLevel.Informational, Message = "{0}: Delete rule start. RuleName = {1}")]
+        public virtual void DeleteRuleStart(string identifiers, string ruleName)
         {
             if (IsEnabled())
             {
-                WriteEvent(RemoveRuleStartEvent, identifiers, ruleName);
+                WriteEvent(DeleteRuleStartEvent, identifiers, ruleName);
             }
         }
 
-        [Event(RemoveRuleCompleteEvent, Level = EventLevel.Informational, Message = "{0}: Remove rule done.")]
-        public virtual void RemoveRuleComplete(string identifier)
+        [Event(DeleteRuleCompleteEvent, Level = EventLevel.Informational, Message = "{0}: Delete rule done. RuleName = {1}")]
+        public virtual void DeleteRuleComplete(string identifier, string ruleName)
         {
             if (IsEnabled())
             {
-                WriteEvent(RemoveRuleCompleteEvent, identifier);
+                WriteEvent(DeleteRuleCompleteEvent, identifier, ruleName);
             }
         }
 
-        [Event(RemoveRuleExceptionEvent, Level = EventLevel.Error, Message = "{0}: Remove rule Exception: {1}.")]
-        public virtual void RemoveRuleException(string identifier, string exception)
+        [Event(DeleteRuleExceptionEvent, Level = EventLevel.Error, Message = "{0}: Delete rule Exception: {1}. RuleName = {2}")]
+        public virtual void DeleteRuleException(string identifier, string exception, string ruleName)
         {
             if (IsEnabled())
             {
-                WriteEvent(RemoveRuleExceptionEvent, identifier, exception);
+                WriteEvent(DeleteRuleExceptionEvent, identifier, exception, ruleName);
             }
         }
 
-        [Event(GetRuleStartEvent, Level = EventLevel.Informational, Message = "{0}: Get rule start.")]
-        public virtual void GetRuleStart(string identifiers)
+        [Event(GetRulesStartEvent, Level = EventLevel.Informational, Message = "{0}: GetRules start.")]
+        public virtual void GetRulesStart(string identifiers)
         {
             if (IsEnabled())
             {
-                WriteEvent(GetRuleStartEvent, identifiers);
+                WriteEvent(GetRulesStartEvent, identifiers);
             }
         }
 
-        [Event(GetRuleCompleteEvent, Level = EventLevel.Informational, Message = "{0}: Get rule done.")]
-        public virtual void GetRuleComplete(string identifier)
+        [Event(GetRulesCompleteEvent, Level = EventLevel.Informational, Message = "{0}: GetRules done.")]
+        public virtual void GetRulesComplete(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(GetRuleCompleteEvent, identifier);
+                WriteEvent(GetRulesCompleteEvent, identifier);
             }
         }
 
-        [Event(GetRuleExceptionEvent, Level = EventLevel.Error, Message = "{0}: Get rule Exception: {1}.")]
-        public virtual void GetRuleException(string identifier, string exception)
+        [Event(GetRulesExceptionEvent, Level = EventLevel.Error, Message = "{0}: GetRules Exception: {1}.")]
+        public virtual void GetRulesException(string identifier, string exception)
         {
             if (IsEnabled())
             {
-                WriteEvent(GetRuleExceptionEvent, identifier, exception);
+                WriteEvent(GetRulesExceptionEvent, identifier, exception);
             }
         }
         #endregion
