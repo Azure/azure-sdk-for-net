@@ -21,8 +21,16 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of DeploymentConfiguration. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         /// <param name="appLocation"> The geo-location where the SAP system is to be created. </param>
-        /// <param name="infrastructureConfiguration"> The infrastructure configuration. </param>
-        /// <param name="softwareConfiguration"> The software configuration. </param>
+        /// <param name="infrastructureConfiguration">
+        /// The infrastructure configuration.
+        /// Please note <see cref="InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
+        /// </param>
+        /// <param name="softwareConfiguration">
+        /// The software configuration.
+        /// Please note <see cref="SoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
+        /// </param>
         internal DeploymentConfiguration(SapConfigurationType configurationType, AzureLocation? appLocation, InfrastructureConfiguration infrastructureConfiguration, SoftwareConfiguration softwareConfiguration) : base(configurationType)
         {
             AppLocation = appLocation;
@@ -33,9 +41,17 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <summary> The geo-location where the SAP system is to be created. </summary>
         public AzureLocation? AppLocation { get; set; }
-        /// <summary> The infrastructure configuration. </summary>
+        /// <summary>
+        /// The infrastructure configuration.
+        /// Please note <see cref="InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
+        /// </summary>
         public InfrastructureConfiguration InfrastructureConfiguration { get; set; }
-        /// <summary> The software configuration. </summary>
+        /// <summary>
+        /// The software configuration.
+        /// Please note <see cref="SoftwareConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
+        /// </summary>
         public SoftwareConfiguration SoftwareConfiguration { get; set; }
     }
 }

@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The SAP sizing recommendation result. </summary>
+    /// <summary>
+    /// The SAP sizing recommendation result.
+    /// Please note <see cref="SapSizingRecommendationResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SingleServerRecommendationResult"/> and <see cref="ThreeTierRecommendationResult"/>.
+    /// </summary>
     public partial class SapSizingRecommendationResult
     {
         /// <summary> Initializes a new instance of SapSizingRecommendationResult. </summary>

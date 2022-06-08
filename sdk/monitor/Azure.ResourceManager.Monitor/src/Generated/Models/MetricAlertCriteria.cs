@@ -11,7 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The rule criteria that defines the conditions of the alert rule. </summary>
+    /// <summary>
+    /// The rule criteria that defines the conditions of the alert rule.
+    /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+    /// </summary>
     public partial class MetricAlertCriteria
     {
         /// <summary> Initializes a new instance of MetricAlertCriteria. </summary>
