@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A list of application security groups. </summary>
     internal partial class ApplicationSecurityGroupListResult
     {
-        /// <summary> Initializes a new instance of ApplicationSecurityGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationSecurityGroupListResult"/>. </summary>
         internal ApplicationSecurityGroupListResult()
         {
             Value = new ChangeTrackingList<ApplicationSecurityGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationSecurityGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationSecurityGroupListResult"/>. </summary>
         /// <param name="value"> A list of application security groups. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ApplicationSecurityGroupListResult(IReadOnlyList<ApplicationSecurityGroupData> value, string nextLink)

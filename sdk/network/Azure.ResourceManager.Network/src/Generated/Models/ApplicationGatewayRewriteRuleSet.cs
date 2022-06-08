@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Rewrite rule set of an application gateway. </summary>
     public partial class ApplicationGatewayRewriteRuleSet : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleSet"/>. </summary>
         public ApplicationGatewayRewriteRuleSet()
         {
             RewriteRules = new ChangeTrackingList<ApplicationGatewayRewriteRule>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleSet"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

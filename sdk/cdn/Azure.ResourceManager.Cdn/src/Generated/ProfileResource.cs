@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="granularity"> The LogMetricsGranularity to use. </param>
+        /// <param name="granularity"> The <see cref="LogMetricsGranularity"/> to use. </param>
         /// <param name="customDomains"> The ArrayOfGet11ItemsItem to use. </param>
         /// <param name="protocols"> The ArrayOfGet12ItemsItem to use. </param>
         /// <param name="groupBy"> The ArrayOfLogMetricsGroupBy to use. </param>
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="granularity"> The LogMetricsGranularity to use. </param>
+        /// <param name="granularity"> The <see cref="LogMetricsGranularity"/> to use. </param>
         /// <param name="customDomains"> The ArrayOfGet11ItemsItem to use. </param>
         /// <param name="protocols"> The ArrayOfGet12ItemsItem to use. </param>
         /// <param name="groupBy"> The ArrayOfLogMetricsGroupBy to use. </param>
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="granularity"> The WafGranularity to use. </param>
+        /// <param name="granularity"> The <see cref="WafGranularity"/> to use. </param>
         /// <param name="actions"> The ArrayOfWafAction to use. </param>
         /// <param name="groupBy"> The ArrayOfWafRankingGroupBy to use. </param>
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
         /// <param name="dateTimeBegin"> The DateTime to use. </param>
         /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="granularity"> The WafGranularity to use. </param>
+        /// <param name="granularity"> The <see cref="WafGranularity"/> to use. </param>
         /// <param name="actions"> The ArrayOfWafAction to use. </param>
         /// <param name="groupBy"> The ArrayOfWafRankingGroupBy to use. </param>
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>

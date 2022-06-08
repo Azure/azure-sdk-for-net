@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The auto-approval list of the private link service. </summary>
     internal partial class PrivateLinkServicePropertiesAutoApproval : ResourceSet
     {
-        /// <summary> Initializes a new instance of PrivateLinkServicePropertiesAutoApproval. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServicePropertiesAutoApproval"/>. </summary>
         public PrivateLinkServicePropertiesAutoApproval()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServicePropertiesAutoApproval. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServicePropertiesAutoApproval"/>. </summary>
         /// <param name="subscriptions"> The list of subscriptions. </param>
         internal PrivateLinkServicePropertiesAutoApproval(IList<string> subscriptions) : base(subscriptions)
         {

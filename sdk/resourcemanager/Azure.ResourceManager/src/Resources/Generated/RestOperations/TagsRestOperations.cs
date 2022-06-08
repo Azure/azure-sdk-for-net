@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="data"> The TagResource to use. </param>
+        /// <param name="data"> The <see cref="TagResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response<TagResourceData>> CreateOrUpdateAtScopeAsync(string scope, TagResourceData data, CancellationToken cancellationToken = default)
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="data"> The TagResource to use. </param>
+        /// <param name="data"> The <see cref="TagResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
         public Response<TagResourceData> CreateOrUpdateAtScope(string scope, TagResourceData data, CancellationToken cancellationToken = default)
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="patch"> The TagResourcePatch to use. </param>
+        /// <param name="patch"> The <see cref="TagResourcePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="patch"/> is null. </exception>
         public async Task<Response<TagResourceData>> UpdateAtScopeAsync(string scope, TagResourcePatch patch, CancellationToken cancellationToken = default)
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="patch"> The TagResourcePatch to use. </param>
+        /// <param name="patch"> The <see cref="TagResourcePatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="patch"/> is null. </exception>
         public Response<TagResourceData> UpdateAtScope(string scope, TagResourcePatch patch, CancellationToken cancellationToken = default)

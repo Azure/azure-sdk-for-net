@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> DDoS custom policy properties. </summary>
     public partial class ProtocolCustomSettingsFormat
     {
-        /// <summary> Initializes a new instance of ProtocolCustomSettingsFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtocolCustomSettingsFormat"/>. </summary>
         public ProtocolCustomSettingsFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtocolCustomSettingsFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtocolCustomSettingsFormat"/>. </summary>
         /// <param name="protocol"> The protocol for which the DDoS protection policy is being customized. </param>
         /// <param name="triggerRateOverride"> The customized DDoS protection trigger rate. </param>
         /// <param name="sourceRateOverride"> The customized DDoS protection source rate. </param>

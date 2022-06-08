@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The service tag information. </summary>
     public partial class ServiceTagInformation
     {
-        /// <summary> Initializes a new instance of ServiceTagInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagInformation"/>. </summary>
         internal ServiceTagInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceTagInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagInformation"/>. </summary>
         /// <param name="properties"> Properties of the service tag information. </param>
         /// <param name="name"> The name of service tag. </param>
         /// <param name="id"> The ID of service tag. </param>

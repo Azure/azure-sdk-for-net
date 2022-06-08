@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of NetworkArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkArmOperation" /> for mocking. </summary>
         protected NetworkArmOperation()
         {
         }

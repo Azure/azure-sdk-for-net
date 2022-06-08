@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListProbe API service call. </summary>
     internal partial class LoadBalancerProbeListResult
     {
-        /// <summary> Initializes a new instance of LoadBalancerProbeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerProbeListResult"/>. </summary>
         internal LoadBalancerProbeListResult()
         {
             Value = new ChangeTrackingList<ProbeData>();
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerProbeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerProbeListResult"/>. </summary>
         /// <param name="value"> A list of probes in a load balancer. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal LoadBalancerProbeListResult(IReadOnlyList<ProbeData> value, string nextLink)

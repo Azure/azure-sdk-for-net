@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the Route data model. </summary>
     public partial class RouteData : NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of RouteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
         public RouteData()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

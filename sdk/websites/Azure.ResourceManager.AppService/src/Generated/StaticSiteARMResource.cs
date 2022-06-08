@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/createUserInvitation
         /// Operation Id: StaticSites_CreateUserRolesInvitationLink
         /// </summary>
-        /// <param name="staticSiteUserRolesInvitationEnvelope"> The StaticSiteUserInvitationRequestResource to use. </param>
+        /// <param name="staticSiteUserRolesInvitationEnvelope"> The <see cref="StaticSiteUserInvitationRequestResource"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteUserRolesInvitationEnvelope"/> is null. </exception>
         public virtual async Task<Response<StaticSiteUserInvitationResponseResource>> CreateUserRolesInvitationLinkAsync(StaticSiteUserInvitationRequestResource staticSiteUserRolesInvitationEnvelope, CancellationToken cancellationToken = default)
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/createUserInvitation
         /// Operation Id: StaticSites_CreateUserRolesInvitationLink
         /// </summary>
-        /// <param name="staticSiteUserRolesInvitationEnvelope"> The StaticSiteUserInvitationRequestResource to use. </param>
+        /// <param name="staticSiteUserRolesInvitationEnvelope"> The <see cref="StaticSiteUserInvitationRequestResource"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteUserRolesInvitationEnvelope"/> is null. </exception>
         public virtual Response<StaticSiteUserInvitationResponseResource> CreateUserRolesInvitationLink(StaticSiteUserInvitationRequestResource staticSiteUserRolesInvitationEnvelope, CancellationToken cancellationToken = default)
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/resetapikey
         /// Operation Id: StaticSites_ResetStaticSiteApiKey
         /// </summary>
-        /// <param name="resetPropertiesEnvelope"> The StaticSiteResetPropertiesARMResource to use. </param>
+        /// <param name="resetPropertiesEnvelope"> The <see cref="StaticSiteResetPropertiesARMResource"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resetPropertiesEnvelope"/> is null. </exception>
         public virtual async Task<Response> ResetApiKeyAsync(StaticSiteResetPropertiesARMResource resetPropertiesEnvelope, CancellationToken cancellationToken = default)
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/resetapikey
         /// Operation Id: StaticSites_ResetStaticSiteApiKey
         /// </summary>
-        /// <param name="resetPropertiesEnvelope"> The StaticSiteResetPropertiesARMResource to use. </param>
+        /// <param name="resetPropertiesEnvelope"> The <see cref="StaticSiteResetPropertiesARMResource"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resetPropertiesEnvelope"/> is null. </exception>
         public virtual Response ResetApiKey(StaticSiteResetPropertiesARMResource resetPropertiesEnvelope, CancellationToken cancellationToken = default)

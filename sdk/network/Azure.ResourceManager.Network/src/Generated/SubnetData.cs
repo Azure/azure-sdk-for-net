@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the Subnet data model. </summary>
     public partial class SubnetData : NetworkWritableResourceData
     {
-        /// <summary> Initializes a new instance of SubnetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetData"/>. </summary>
         public SubnetData()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
             ApplicationGatewayIPConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of SubnetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubnetData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

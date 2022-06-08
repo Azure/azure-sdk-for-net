@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application Gateway autoscale configuration. </summary>
     public partial class ApplicationGatewayAutoscaleConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayAutoscaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAutoscaleConfiguration"/>. </summary>
         /// <param name="minCapacity"> Lower bound on number of Application Gateway capacity. </param>
         public ApplicationGatewayAutoscaleConfiguration(int minCapacity)
         {
             MinCapacity = minCapacity;
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayAutoscaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAutoscaleConfiguration"/>. </summary>
         /// <param name="minCapacity"> Lower bound on number of Application Gateway capacity. </param>
         /// <param name="maxCapacity"> Upper bound on number of Application Gateway capacity. </param>
         internal ApplicationGatewayAutoscaleConfiguration(int minCapacity, int? maxCapacity)

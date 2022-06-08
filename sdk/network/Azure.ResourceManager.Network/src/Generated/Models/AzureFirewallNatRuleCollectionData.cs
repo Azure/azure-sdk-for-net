@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> NAT rule collection resource. </summary>
     public partial class AzureFirewallNatRuleCollectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallNatRuleCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRuleCollectionData"/>. </summary>
         public AzureFirewallNatRuleCollectionData()
         {
             Rules = new ChangeTrackingList<AzureFirewallNatRule>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNatRuleCollectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRuleCollectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

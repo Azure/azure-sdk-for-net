@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListExpressRouteCircuit API service call. </summary>
     internal partial class ExpressRouteCircuitListResult
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitListResult"/>. </summary>
         internal ExpressRouteCircuitListResult()
         {
             Value = new ChangeTrackingList<ExpressRouteCircuitData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitListResult"/>. </summary>
         /// <param name="value"> A list of ExpressRouteCircuits in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ExpressRouteCircuitListResult(IReadOnlyList<ExpressRouteCircuitData> value, string nextLink)

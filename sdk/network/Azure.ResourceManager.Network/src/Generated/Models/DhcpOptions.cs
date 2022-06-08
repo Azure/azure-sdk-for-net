@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> DhcpOptions contains an array of DNS servers available to VMs deployed in the virtual network. Standard DHCP option for a subnet overrides VNET DHCP options. </summary>
     internal partial class DhcpOptions
     {
-        /// <summary> Initializes a new instance of DhcpOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DhcpOptions"/>. </summary>
         public DhcpOptions()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DhcpOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DhcpOptions"/>. </summary>
         /// <param name="dnsServers"> The list of DNS servers IP addresses. </param>
         internal DhcpOptions(IList<string> dnsServers)
         {

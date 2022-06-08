@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListExpressRouteCrossConnection API service call. </summary>
     internal partial class ExpressRouteCrossConnectionListResult
     {
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionListResult"/>. </summary>
         internal ExpressRouteCrossConnectionListResult()
         {
             Value = new ChangeTrackingList<ExpressRouteCrossConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionListResult"/>. </summary>
         /// <param name="value"> A list of ExpressRouteCrossConnection resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ExpressRouteCrossConnectionListResult(IReadOnlyList<ExpressRouteCrossConnectionData> value, string nextLink)

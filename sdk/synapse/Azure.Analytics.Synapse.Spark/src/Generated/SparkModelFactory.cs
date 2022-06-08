@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class SparkModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="SparkBatchJobCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJobCollection"/>. </summary>
         /// <param name="from"> The start index of fetched sessions. </param>
         /// <param name="total"> Number of sessions fetched. </param>
         /// <param name="sessions"> Batch list. </param>
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkBatchJobCollection(@from, total, sessions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkBatchJob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJob"/>. </summary>
         /// <param name="livyInfo"></param>
         /// <param name="name"> The batch name. </param>
         /// <param name="workspaceName"> The workspace name. </param>
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkBatchJob(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkBatchJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJobState"/>. </summary>
         /// <param name="notStartedAt"> the time that at which &quot;not_started&quot; livy state was first seen. </param>
         /// <param name="startingAt"> the time that at which &quot;starting&quot; livy state was first seen. </param>
         /// <param name="runningAt"> the time that at which &quot;running&quot; livy state was first seen. </param>
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkRequest"/>. </summary>
         /// <param name="name"></param>
         /// <param name="file"></param>
         /// <param name="className"></param>
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkRequest(name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkScheduler"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkScheduler"/>. </summary>
         /// <param name="submittedAt"></param>
         /// <param name="scheduledAt"></param>
         /// <param name="endedAt"></param>
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkServicePlugin"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkServicePlugin"/>. </summary>
         /// <param name="preparationStartedAt"></param>
         /// <param name="resourceAcquisitionStartedAt"></param>
         /// <param name="submissionStartedAt"></param>
@@ -125,7 +125,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkServiceError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkServiceError"/>. </summary>
         /// <param name="message"></param>
         /// <param name="errorCode"></param>
         /// <param name="source"></param>
@@ -135,7 +135,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkServiceError(message, errorCode, source);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkSessionCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkSessionCollection"/>. </summary>
         /// <param name="from"></param>
         /// <param name="total"></param>
         /// <param name="sessions"></param>
@@ -147,7 +147,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkSessionCollection(@from, total, sessions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkSession"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkSession"/>. </summary>
         /// <param name="livyInfo"></param>
         /// <param name="name"></param>
         /// <param name="workspaceName"></param>
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkSession(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkSessionState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkSessionState"/>. </summary>
         /// <param name="notStartedAt"></param>
         /// <param name="startingAt"></param>
         /// <param name="idleAt"></param>
@@ -195,7 +195,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkSessionState(notStartedAt, startingAt, idleAt, deadAt, shuttingDownAt, terminatedAt, recoveringAt, busyAt, errorAt, currentState, jobCreationRequest);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkStatementCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkStatementCollection"/>. </summary>
         /// <param name="total"></param>
         /// <param name="statements"></param>
         /// <returns> A new <see cref="Models.SparkStatementCollection"/> instance for mocking. </returns>
@@ -206,7 +206,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkStatementCollection(total, statements?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkStatement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkStatement"/>. </summary>
         /// <param name="id"></param>
         /// <param name="code"></param>
         /// <param name="state"></param>
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkStatement(id, code, state, output);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkStatementOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkStatementOutput"/>. </summary>
         /// <param name="status"></param>
         /// <param name="executionCount"></param>
         /// <param name="data"> Any object. </param>
@@ -232,7 +232,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             return new SparkStatementOutput(status, executionCount, data, errorName, errorValue, traceback?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="SparkStatementCancellationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SparkStatementCancellationResult"/>. </summary>
         /// <param name="message"> The msg property from the Livy API. The value is always &quot;canceled&quot;. </param>
         /// <returns> A new <see cref="Models.SparkStatementCancellationResult"/> instance for mocking. </returns>
         public static SparkStatementCancellationResult SparkStatementCancellationResult(string message = null)

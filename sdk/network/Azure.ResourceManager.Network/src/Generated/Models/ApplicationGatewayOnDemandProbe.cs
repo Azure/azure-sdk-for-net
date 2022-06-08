@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Details of on demand test probe request. </summary>
     public partial class ApplicationGatewayOnDemandProbe
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayOnDemandProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayOnDemandProbe"/>. </summary>
         public ApplicationGatewayOnDemandProbe()
         {
         }

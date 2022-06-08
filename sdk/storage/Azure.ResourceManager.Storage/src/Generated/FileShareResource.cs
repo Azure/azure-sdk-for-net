@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}/restore
         /// Operation Id: FileShares_Restore
         /// </summary>
-        /// <param name="deletedShare"> The DeletedShare to use. </param>
+        /// <param name="deletedShare"> The <see cref="DeletedShare"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShare"/> is null. </exception>
         public virtual async Task<Response> RestoreAsync(DeletedShare deletedShare, CancellationToken cancellationToken = default)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}/restore
         /// Operation Id: FileShares_Restore
         /// </summary>
-        /// <param name="deletedShare"> The DeletedShare to use. </param>
+        /// <param name="deletedShare"> The <see cref="DeletedShare"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShare"/> is null. </exception>
         public virtual Response Restore(DeletedShare deletedShare, CancellationToken cancellationToken = default)

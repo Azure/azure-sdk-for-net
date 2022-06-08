@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualNetworkGatewayConnection properties. </summary>
     public partial class TunnelConnectionHealth
     {
-        /// <summary> Initializes a new instance of TunnelConnectionHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="TunnelConnectionHealth"/>. </summary>
         internal TunnelConnectionHealth()
         {
         }
 
-        /// <summary> Initializes a new instance of TunnelConnectionHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="TunnelConnectionHealth"/>. </summary>
         /// <param name="tunnel"> Tunnel name. </param>
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
         /// <param name="ingressBytesTransferred"> The Ingress Bytes Transferred in this connection. </param>

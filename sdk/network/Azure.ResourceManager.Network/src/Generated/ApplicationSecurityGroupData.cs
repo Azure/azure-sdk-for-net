@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the ApplicationSecurityGroup data model. </summary>
     public partial class ApplicationSecurityGroupData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationSecurityGroupData"/>. </summary>
         public ApplicationSecurityGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationSecurityGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

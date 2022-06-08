@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for list ip configurations API service call. </summary>
     internal partial class NetworkInterfaceLoadBalancerListResult
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceLoadBalancerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceLoadBalancerListResult"/>. </summary>
         internal NetworkInterfaceLoadBalancerListResult()
         {
             Value = new ChangeTrackingList<LoadBalancerData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceLoadBalancerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceLoadBalancerListResult"/>. </summary>
         /// <param name="value"> A list of load balancers. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal NetworkInterfaceLoadBalancerListResult(IReadOnlyList<LoadBalancerData> value, string nextLink)

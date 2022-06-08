@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCrossConnection. </summary>
     internal partial class ExpressRouteCrossConnectionPeeringList
     {
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionPeeringList"/>. </summary>
         internal ExpressRouteCrossConnectionPeeringList()
         {
             Value = new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionPeeringList"/>. </summary>
         /// <param name="value"> The peerings in an express route cross connection. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ExpressRouteCrossConnectionPeeringList(IReadOnlyList<ExpressRouteCrossConnectionPeeringData> value, string nextLink)

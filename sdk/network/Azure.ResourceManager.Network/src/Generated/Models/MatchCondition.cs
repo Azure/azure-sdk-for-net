@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Define match conditions. </summary>
     public partial class MatchCondition
     {
-        /// <summary> Initializes a new instance of MatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchCondition"/>. </summary>
         /// <param name="matchVariables"> List of match variables. </param>
         /// <param name="operator"> The operator to be matched. </param>
         /// <param name="matchValues"> Match value. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             Transforms = new ChangeTrackingList<WebApplicationFirewallTransform>();
         }
 
-        /// <summary> Initializes a new instance of MatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchCondition"/>. </summary>
         /// <param name="matchVariables"> List of match variables. </param>
         /// <param name="operator"> The operator to be matched. </param>
         /// <param name="negationConditon"> Whether this is negate condition or not. </param>

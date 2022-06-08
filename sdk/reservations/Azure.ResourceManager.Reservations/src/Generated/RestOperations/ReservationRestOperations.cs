@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
-        /// <param name="content"> The AvailableScopeContent to use. </param>
+        /// <param name="content"> The <see cref="AvailableScopeContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Reservations
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="reservationId"> Id of the Reservation Item. </param>
-        /// <param name="content"> The AvailableScopeContent to use. </param>
+        /// <param name="content"> The <see cref="AvailableScopeContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>

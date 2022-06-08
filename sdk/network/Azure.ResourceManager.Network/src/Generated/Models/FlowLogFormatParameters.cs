@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the flow log format. </summary>
     public partial class FlowLogFormatParameters
     {
-        /// <summary> Initializes a new instance of FlowLogFormatParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowLogFormatParameters"/>. </summary>
         public FlowLogFormatParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowLogFormatParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowLogFormatParameters"/>. </summary>
         /// <param name="formatType"> The file type of flow log. </param>
         /// <param name="version"> The version (revision) of the flow log. </param>
         internal FlowLogFormatParameters(FlowLogFormatType? formatType, int? version)

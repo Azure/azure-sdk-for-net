@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The list of RouteTables to advertise the routes to. </summary>
     public partial class PropagatedRouteTable
     {
-        /// <summary> Initializes a new instance of PropagatedRouteTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropagatedRouteTable"/>. </summary>
         public PropagatedRouteTable()
         {
             Labels = new ChangeTrackingList<string>();
             Ids = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of PropagatedRouteTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropagatedRouteTable"/>. </summary>
         /// <param name="labels"> The list of labels. </param>
         /// <param name="ids"> The list of resource ids of all the RouteTables. </param>
         internal PropagatedRouteTable(IList<string> labels, IList<WritableSubResource> ids)

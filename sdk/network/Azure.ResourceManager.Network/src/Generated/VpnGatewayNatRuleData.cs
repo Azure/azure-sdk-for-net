@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the VpnGatewayNatRule data model. </summary>
     public partial class VpnGatewayNatRuleData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of VpnGatewayNatRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayNatRuleData"/>. </summary>
         public VpnGatewayNatRuleData()
         {
             InternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
             IngressVpnSiteLinkConnections = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VpnGatewayNatRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnGatewayNatRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

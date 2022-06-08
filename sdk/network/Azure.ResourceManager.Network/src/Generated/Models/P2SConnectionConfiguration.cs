@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> P2SConnectionConfiguration Resource. </summary>
     public partial class P2SConnectionConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="P2SConnectionConfiguration"/>. </summary>
         public P2SConnectionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="P2SConnectionConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

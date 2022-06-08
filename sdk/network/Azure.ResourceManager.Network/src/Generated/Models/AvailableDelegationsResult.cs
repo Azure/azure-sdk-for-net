@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An array of available delegations. </summary>
     internal partial class AvailableDelegationsResult
     {
-        /// <summary> Initializes a new instance of AvailableDelegationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDelegationsResult"/>. </summary>
         internal AvailableDelegationsResult()
         {
             Value = new ChangeTrackingList<AvailableDelegation>();
         }
 
-        /// <summary> Initializes a new instance of AvailableDelegationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDelegationsResult"/>. </summary>
         /// <param name="value"> An array of available delegations. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal AvailableDelegationsResult(IReadOnlyList<AvailableDelegation> value, string nextLink)

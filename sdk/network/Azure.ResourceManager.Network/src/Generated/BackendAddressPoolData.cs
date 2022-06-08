@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the BackendAddressPool data model. </summary>
     public partial class BackendAddressPoolData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAddressPoolData"/>. </summary>
         public BackendAddressPoolData()
         {
             TunnelInterfaces = new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
             OutboundRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAddressPoolData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

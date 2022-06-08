@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListRouteFilterRules API service call. </summary>
     internal partial class RouteFilterRuleListResult
     {
-        /// <summary> Initializes a new instance of RouteFilterRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteFilterRuleListResult"/>. </summary>
         internal RouteFilterRuleListResult()
         {
             Value = new ChangeTrackingList<RouteFilterRuleData>();
         }
 
-        /// <summary> Initializes a new instance of RouteFilterRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteFilterRuleListResult"/>. </summary>
         /// <param name="value"> A list of RouteFilterRules in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal RouteFilterRuleListResult(IReadOnlyList<RouteFilterRuleData> value, string nextLink)

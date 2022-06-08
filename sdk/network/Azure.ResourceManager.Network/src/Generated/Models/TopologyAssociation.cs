@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Resources that have an association with the parent resource. </summary>
     public partial class TopologyAssociation
     {
-        /// <summary> Initializes a new instance of TopologyAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologyAssociation"/>. </summary>
         internal TopologyAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of TopologyAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologyAssociation"/>. </summary>
         /// <param name="name"> The name of the resource that is associated with the parent resource. </param>
         /// <param name="resourceId"> The ID of the resource that is associated with the parent resource. </param>
         /// <param name="associationType"> The association type of the child resource to the parent resource. </param>

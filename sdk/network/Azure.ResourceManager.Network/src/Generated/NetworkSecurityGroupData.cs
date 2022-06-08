@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the NetworkSecurityGroup data model. </summary>
     public partial class NetworkSecurityGroupData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupData"/>. </summary>
         public NetworkSecurityGroupData()
         {
             SecurityRules = new ChangeTrackingList<SecurityRuleData>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
             FlowLogs = new ChangeTrackingList<FlowLogData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the PrivateEndpoint data model. </summary>
     public partial class PrivateEndpointData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointData"/>. </summary>
         public PrivateEndpointData()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
             CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigPropertiesFormat>();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

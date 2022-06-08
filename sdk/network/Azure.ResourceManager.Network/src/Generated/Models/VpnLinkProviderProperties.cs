@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of properties of a link provider. </summary>
     public partial class VpnLinkProviderProperties
     {
-        /// <summary> Initializes a new instance of VpnLinkProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnLinkProviderProperties"/>. </summary>
         public VpnLinkProviderProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnLinkProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnLinkProviderProperties"/>. </summary>
         /// <param name="linkProviderName"> Name of the link provider. </param>
         /// <param name="linkSpeedInMbps"> Link speed. </param>
         internal VpnLinkProviderProperties(string linkProviderName, int? linkSpeedInMbps)

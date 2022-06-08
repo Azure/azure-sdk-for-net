@@ -12,7 +12,7 @@ namespace Azure.Communication.Email
     /// <summary> Model factory for read-only models. </summary>
     public static partial class CommunicationEmailModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="SendStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SendStatusResult"/>. </summary>
         /// <param name="messageId"> System generated id of an email message sent. </param>
         /// <param name="status"> The type indicating the status of a request. </param>
         /// <returns> A new <see cref="Models.SendStatusResult"/> instance for mocking. </returns>

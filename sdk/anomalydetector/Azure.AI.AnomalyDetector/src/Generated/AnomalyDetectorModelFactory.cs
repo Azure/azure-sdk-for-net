@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class AnomalyDetectorModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="EntireDetectResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EntireDetectResponse"/>. </summary>
         /// <param name="period"> Frequency extracted from the series, zero means no recurrent pattern has been found. </param>
         /// <param name="expectedValues"> ExpectedValues contain expected value for each input point. The index of the array is consistent with the input series. </param>
         /// <param name="upperMargins"> UpperMargins contain upper margin of each input point. UpperMargin is used to calculate upperBoundary, which equals to expectedValue + (100 - marginScale)*upperMargin. Anomalies in response can be filtered by upperBoundary and lowerBoundary. By adjusting marginScale value, less significant anomalies can be filtered in client side. The index of the array is consistent with the input series. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new EntireDetectResponse(period, expectedValues?.ToList(), upperMargins?.ToList(), lowerMargins?.ToList(), isAnomaly?.ToList(), isNegativeAnomaly?.ToList(), isPositiveAnomaly?.ToList(), severity?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="LastDetectResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LastDetectResponse"/>. </summary>
         /// <param name="period"> Frequency extracted from the series, zero means no recurrent pattern has been found. </param>
         /// <param name="suggestedWindow"> Suggested input series points needed for detecting the latest point. </param>
         /// <param name="expectedValue"> Expected value of the latest point. </param>
@@ -53,7 +53,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new LastDetectResponse(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, severity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChangePointDetectResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ChangePointDetectResponse"/>. </summary>
         /// <param name="period"> Frequency extracted from the series, zero means no recurrent pattern has been found. </param>
         /// <param name="isChangePoint"> isChangePoint contains change point properties for each input point. True means an anomaly either negative or positive has been detected. The index of the array is consistent with the input series. </param>
         /// <param name="confidenceScores"> the change point confidence of each point. </param>
@@ -66,7 +66,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new ChangePointDetectResponse(period, isChangePoint?.ToList(), confidenceScores?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ModelInfo"/>. </summary>
         /// <param name="slidingWindow"> An optional field, indicating how many previous points will be used to compute the anomaly score of the subsequent point. </param>
         /// <param name="alignPolicy"></param>
         /// <param name="source"> Source link to the input variables. Each variable should be a csv file with two columns, `timestamp` and `value`. By default, the file name of the variable will be used as its variable name. </param>
@@ -84,7 +84,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new ModelInfo(slidingWindow, alignPolicy, source, startTime, endTime, displayName, status, errors?.ToList(), diagnosticsInfo);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorResponse"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The message explaining the error reported by the service. </param>
         /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
@@ -93,7 +93,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new ErrorResponse(code, message);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticsInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DiagnosticsInfo"/>. </summary>
         /// <param name="modelState"></param>
         /// <param name="variableStates"></param>
         /// <returns> A new <see cref="Models.DiagnosticsInfo"/> instance for mocking. </returns>
@@ -104,7 +104,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new DiagnosticsInfo(modelState, variableStates?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ModelState"/>. </summary>
         /// <param name="epochIds"> Epoch id. </param>
         /// <param name="trainLosses"></param>
         /// <param name="validationLosses"></param>
@@ -120,7 +120,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new ModelState(epochIds?.ToList(), trainLosses?.ToList(), validationLosses?.ToList(), latenciesInSeconds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="VariableState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VariableState"/>. </summary>
         /// <param name="variable"> Variable name. </param>
         /// <param name="filledNARatio"> Proportion of NaN values filled of the variable. </param>
         /// <param name="effectiveCount"> Number of effective points counted. </param>
@@ -132,7 +132,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new VariableState(variable, filledNARatio, effectiveCount, startTime, endTime);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelSnapshot"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ModelSnapshot"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
@@ -145,7 +145,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new ModelSnapshot(modelId, createdTime, lastUpdatedTime, status, displayName, variablesCount);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Model"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Model"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
         /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
@@ -156,7 +156,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new Model(modelId, createdTime, lastUpdatedTime, modelInfo);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DetectionResult"/>. </summary>
         /// <param name="resultId"></param>
         /// <param name="summary"></param>
         /// <param name="results"> Detection result for each timestamp. </param>
@@ -168,7 +168,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new DetectionResult(resultId, summary, results?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectionResultSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DetectionResultSummary"/>. </summary>
         /// <param name="status"> Status of detection results. One of CREATED, RUNNING, READY, and FAILED. </param>
         /// <param name="errors"> Error message when detection is failed. </param>
         /// <param name="variableStates"></param>
@@ -182,7 +182,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new DetectionResultSummary(status, errors?.ToList(), variableStates?.ToList(), setupInfo);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnomalyState"/>. </summary>
         /// <param name="timestamp"> timestamp. </param>
         /// <param name="value"></param>
         /// <param name="errors"> Error message for the current timestamp. </param>
@@ -194,7 +194,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new AnomalyState(timestamp, value, errors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyValue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnomalyValue"/>. </summary>
         /// <param name="isAnomaly"> True if an anomaly is detected at the current timestamp. </param>
         /// <param name="severity"> Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly. </param>
         /// <param name="score"> Raw score from the model. </param>
@@ -207,7 +207,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new AnomalyValue(isAnomaly, severity, score, interpretation?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnomalyInterpretation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnomalyInterpretation"/>. </summary>
         /// <param name="variable"></param>
         /// <param name="contributionScore"></param>
         /// <param name="correlationChanges"></param>
@@ -217,7 +217,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new AnomalyInterpretation(variable, contributionScore, correlationChanges);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CorrelationChanges"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CorrelationChanges"/>. </summary>
         /// <param name="changedVariables"> correlated variables. </param>
         /// <param name="changedValues"> changes in correlation. </param>
         /// <returns> A new <see cref="Models.CorrelationChanges"/> instance for mocking. </returns>
@@ -229,7 +229,7 @@ namespace Azure.AI.AnomalyDetector.Models
             return new CorrelationChanges(changedVariables?.ToList(), changedValues?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="LastDetectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LastDetectionResult"/>. </summary>
         /// <param name="variableStates"></param>
         /// <param name="results"></param>
         /// <returns> A new <see cref="Models.LastDetectionResult"/> instance for mocking. </returns>
