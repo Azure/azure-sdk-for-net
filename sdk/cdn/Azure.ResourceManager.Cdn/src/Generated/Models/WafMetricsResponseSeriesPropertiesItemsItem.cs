@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The WafMetricsResponseSeriesPropertiesItemsItem. </summary>
     public partial class WafMetricsResponseSeriesPropertiesItemsItem
     {
-        /// <summary> Initializes a new instance of WafMetricsResponseSeriesPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesPropertiesItemsItem"/>. </summary>
         internal WafMetricsResponseSeriesPropertiesItemsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of WafMetricsResponseSeriesPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesPropertiesItemsItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
         internal WafMetricsResponseSeriesPropertiesItemsItem(string name, string value)

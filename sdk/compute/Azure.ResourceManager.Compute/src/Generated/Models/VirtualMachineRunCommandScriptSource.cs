@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the script sources for run command. </summary>
     public partial class VirtualMachineRunCommandScriptSource
     {
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandScriptSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandScriptSource"/>. </summary>
         public VirtualMachineRunCommandScriptSource()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandScriptSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandScriptSource"/>. </summary>
         /// <param name="script"> Specifies the script content to be executed on the VM. </param>
         /// <param name="scriptUri"> Specifies the script download location. </param>
         /// <param name="commandId"> Specifies a commandId of predefined built-in script. </param>

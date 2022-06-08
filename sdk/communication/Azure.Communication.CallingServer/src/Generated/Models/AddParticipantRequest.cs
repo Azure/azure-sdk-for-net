@@ -12,7 +12,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The add participant request. </summary>
     internal partial class AddParticipantRequest
     {
-        /// <summary> Initializes a new instance of AddParticipantRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantRequest"/>. </summary>
         public AddParticipantRequest()
         {
         }

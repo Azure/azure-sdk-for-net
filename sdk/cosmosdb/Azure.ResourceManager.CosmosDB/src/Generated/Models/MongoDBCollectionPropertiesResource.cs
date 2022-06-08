@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The MongoDBCollectionPropertiesResource. </summary>
     public partial class MongoDBCollectionPropertiesResource : MongoDBCollectionResource
     {
-        /// <summary> Initializes a new instance of MongoDBCollectionPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionPropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB MongoDB collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public MongoDBCollectionPropertiesResource(string id) : base(id)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionPropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB MongoDB collection. </param>
         /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
         /// <param name="indexes"> List of index keys. </param>

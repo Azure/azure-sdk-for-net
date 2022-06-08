@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Container App container environment variable. </summary>
     public partial class EnvironmentVar
     {
-        /// <summary> Initializes a new instance of EnvironmentVar. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentVar"/>. </summary>
         public EnvironmentVar()
         {
         }
 
-        /// <summary> Initializes a new instance of EnvironmentVar. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentVar"/>. </summary>
         /// <param name="name"> Environment variable name. </param>
         /// <param name="value"> Non-secret environment variable value. </param>
         /// <param name="secretRef"> Name of the Container App secret from which to pull the environment variable value. </param>

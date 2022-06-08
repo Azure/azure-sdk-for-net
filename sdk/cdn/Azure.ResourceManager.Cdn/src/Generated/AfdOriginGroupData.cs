@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing the AfdOriginGroup data model. </summary>
     public partial class AfdOriginGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of AfdOriginGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdOriginGroupData"/>. </summary>
         public AfdOriginGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of AfdOriginGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdOriginGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

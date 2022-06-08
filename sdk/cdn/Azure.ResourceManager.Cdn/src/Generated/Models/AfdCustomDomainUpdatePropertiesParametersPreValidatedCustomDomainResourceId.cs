@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Resource reference to the Azure resource where custom domain ownership was prevalidated. </summary>
     internal partial class AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
     {
-        /// <summary> Initializes a new instance of AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId"/>. </summary>
         public AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId()
         {
         }
 
-        /// <summary> Initializes a new instance of AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         internal AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(ResourceIdentifier id)
         {

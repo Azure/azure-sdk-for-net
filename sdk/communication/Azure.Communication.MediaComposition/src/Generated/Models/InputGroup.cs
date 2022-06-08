@@ -13,7 +13,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure input group to be used in custom layouts. </summary>
     public partial class InputGroup
     {
-        /// <summary> Initializes a new instance of InputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputGroup"/>. </summary>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public InputGroup(object inputIds)
@@ -26,7 +26,7 @@ namespace Azure.Communication.MediaComposition
             InputIds = inputIds;
         }
 
-        /// <summary> Initializes a new instance of InputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputGroup"/>. </summary>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <param name="position"> The (x,y) position on scene or input group. </param>
         /// <param name="width"> The width of the input group container. Can be a number or percentage string. </param>

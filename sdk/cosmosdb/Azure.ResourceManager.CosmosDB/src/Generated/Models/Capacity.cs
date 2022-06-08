@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
     internal partial class Capacity
     {
-        /// <summary> Initializes a new instance of Capacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Capacity"/>. </summary>
         public Capacity()
         {
         }
 
-        /// <summary> Initializes a new instance of Capacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Capacity"/>. </summary>
         /// <param name="totalThroughputLimit"> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </param>
         internal Capacity(int? totalThroughputLimit)
         {

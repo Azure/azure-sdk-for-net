@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CosmosTablePropertiesResource. </summary>
     public partial class CosmosTablePropertiesResource : TableResource
     {
-        /// <summary> Initializes a new instance of CosmosTablePropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosTablePropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public CosmosTablePropertiesResource(string id) : base(id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        /// <summary> Initializes a new instance of CosmosTablePropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosTablePropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB table. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>

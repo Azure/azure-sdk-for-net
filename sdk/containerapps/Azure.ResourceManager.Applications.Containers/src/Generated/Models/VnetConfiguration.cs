@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Configuration properties for apps environment to join a Virtual Network. </summary>
     public partial class VnetConfiguration
     {
-        /// <summary> Initializes a new instance of VnetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetConfiguration"/>. </summary>
         public VnetConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of VnetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetConfiguration"/>. </summary>
         /// <param name="internal"> Boolean indicating the environment only has an internal load balancer. These environments do not have a public static IP resource, must provide ControlPlaneSubnetResourceId and AppSubnetResourceId if enabling this property. </param>
         /// <param name="infrastructureSubnetId"> Resource ID of a subnet for infrastructure components. This subnet must be in the same VNET as the subnet defined in runtimeSubnetId. Must not overlap with any other provided IP ranges. </param>
         /// <param name="runtimeSubnetId"> Resource ID of a subnet that Container App containers are injected into. This subnet must be in the same VNET as the subnet defined in infrastructureSubnetId. Must not overlap with any other provided IP ranges. </param>

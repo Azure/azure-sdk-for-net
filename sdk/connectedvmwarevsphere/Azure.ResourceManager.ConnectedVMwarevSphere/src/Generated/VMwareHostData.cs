@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing the VMwareHost data model. </summary>
     public partial class VMwareHostData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareHostData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareHostData(AzureLocation location) : base(location)
         {
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VMwareHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareHostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

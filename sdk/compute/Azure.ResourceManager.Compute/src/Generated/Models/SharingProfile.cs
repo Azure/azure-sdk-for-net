@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Profile for gallery sharing to subscription or tenant. </summary>
     public partial class SharingProfile
     {
-        /// <summary> Initializes a new instance of SharingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingProfile"/>. </summary>
         public SharingProfile()
         {
             Groups = new ChangeTrackingList<SharingProfileGroup>();
         }
 
-        /// <summary> Initializes a new instance of SharingProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingProfile"/>. </summary>
         /// <param name="permissions"> This property allows you to specify the permission of sharing gallery. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Private** &lt;br&gt;&lt;br&gt; **Groups**. </param>
         /// <param name="groups"> A list of sharing profile groups. </param>
         internal SharingProfile(GallerySharingPermissionTypes? permissions, IReadOnlyList<SharingProfileGroup> groups)

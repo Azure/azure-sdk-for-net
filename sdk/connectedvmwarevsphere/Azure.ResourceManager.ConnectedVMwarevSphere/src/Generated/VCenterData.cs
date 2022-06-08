@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing the VCenter data model. </summary>
     public partial class VCenterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VCenterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VCenterData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="fqdn"> Gets or sets the FQDN/IPAddress of the vCenter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fqdn"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VCenterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VCenterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

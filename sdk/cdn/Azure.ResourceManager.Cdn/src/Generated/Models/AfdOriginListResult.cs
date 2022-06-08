@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list origins. It contains a list of origin objects and a URL link to get the next set of results. </summary>
     internal partial class AfdOriginListResult
     {
-        /// <summary> Initializes a new instance of AfdOriginListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdOriginListResult"/>. </summary>
         internal AfdOriginListResult()
         {
             Value = new ChangeTrackingList<AfdOriginData>();
         }
 
-        /// <summary> Initializes a new instance of AfdOriginListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdOriginListResult"/>. </summary>
         /// <param name="value"> List of CDN origins within an endpoint. </param>
         /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
         internal AfdOriginListResult(IReadOnlyList<AfdOriginData> value, string nextLink)

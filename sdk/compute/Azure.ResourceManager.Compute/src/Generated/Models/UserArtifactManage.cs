@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The UserArtifactManage. </summary>
     public partial class UserArtifactManage
     {
-        /// <summary> Initializes a new instance of UserArtifactManage. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserArtifactManage"/>. </summary>
         /// <param name="install"> Required. The path and arguments to install the gallery application. This is limited to 4096 characters. </param>
         /// <param name="remove"> Required. The path and arguments to remove the gallery application. This is limited to 4096 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="install"/> or <paramref name="remove"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
             Remove = @remove;
         }
 
-        /// <summary> Initializes a new instance of UserArtifactManage. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserArtifactManage"/>. </summary>
         /// <param name="install"> Required. The path and arguments to install the gallery application. This is limited to 4096 characters. </param>
         /// <param name="remove"> Required. The path and arguments to remove the gallery application. This is limited to 4096 characters. </param>
         /// <param name="update"> Optional. The path and arguments to update the gallery application. If not present, then update operation will invoke remove command on the previous version and install command on the current version of the gallery application. This is limited to 4096 characters. </param>

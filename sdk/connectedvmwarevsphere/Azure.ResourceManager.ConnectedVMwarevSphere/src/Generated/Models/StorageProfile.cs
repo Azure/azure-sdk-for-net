@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the resource properties. </summary>
     public partial class StorageProfile
     {
-        /// <summary> Initializes a new instance of StorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         public StorageProfile()
         {
             Disks = new ChangeTrackingList<VirtualDisk>();
             ScsiControllers = new ChangeTrackingList<VirtualScsiController>();
         }
 
-        /// <summary> Initializes a new instance of StorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         /// <param name="disks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
         /// <param name="scsiControllers"> Gets or sets the list of virtual SCSI controllers associated with the virtual machine. </param>
         internal StorageProfile(IList<VirtualDisk> disks, IReadOnlyList<VirtualScsiController> scsiControllers)

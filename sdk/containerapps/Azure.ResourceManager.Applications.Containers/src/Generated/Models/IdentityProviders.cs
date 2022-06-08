@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </summary>
     public partial class IdentityProviders
     {
-        /// <summary> Initializes a new instance of IdentityProviders. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityProviders"/>. </summary>
         public IdentityProviders()
         {
             CustomOpenIdConnectProviders = new ChangeTrackingDictionary<string, CustomOpenIdConnectProvider>();
         }
 
-        /// <summary> Initializes a new instance of IdentityProviders. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityProviders"/>. </summary>
         /// <param name="azureActiveDirectory"> The configuration settings of the Azure Active directory provider. </param>
         /// <param name="facebook"> The configuration settings of the Facebook provider. </param>
         /// <param name="gitHub"> The configuration settings of the GitHub provider. </param>

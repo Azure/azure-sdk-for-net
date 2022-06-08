@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The RoleInstanceListResult. </summary>
     internal partial class RoleInstanceListResult
     {
-        /// <summary> Initializes a new instance of RoleInstanceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleInstanceListResult"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RoleInstanceListResult(IEnumerable<CloudServiceRoleInstanceData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RoleInstanceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleInstanceListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal RoleInstanceListResult(IReadOnlyList<CloudServiceRoleInstanceData> value, string nextLink)

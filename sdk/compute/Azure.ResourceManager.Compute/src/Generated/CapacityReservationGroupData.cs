@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing the CapacityReservationGroup data model. </summary>
     public partial class CapacityReservationGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CapacityReservationGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CapacityReservationGroupData(AzureLocation location) : base(location)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
             VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of CapacityReservationGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

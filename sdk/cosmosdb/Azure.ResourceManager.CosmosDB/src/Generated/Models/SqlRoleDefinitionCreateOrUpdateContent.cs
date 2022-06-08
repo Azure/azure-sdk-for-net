@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update an Azure Cosmos DB SQL Role Definition. </summary>
     public partial class SqlRoleDefinitionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SqlRoleDefinitionCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlRoleDefinitionCreateOrUpdateContent"/>. </summary>
         public SqlRoleDefinitionCreateOrUpdateContent()
         {
             AssignableScopes = new ChangeTrackingList<string>();

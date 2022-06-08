@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The definition of a metric. </summary>
     public partial class MetricDefinition
     {
-        /// <summary> Initializes a new instance of MetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
         internal MetricDefinition()
         {
             MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
         }
 
-        /// <summary> Initializes a new instance of MetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
         /// <param name="metricAvailabilities"> The list of metric availabilities for the account. </param>
         /// <param name="primaryAggregationType"> The primary aggregation type of the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>

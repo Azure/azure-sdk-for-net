@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Data POST-ed to the nameAvailability action. </summary>
     public partial class NameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of NameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NameAvailabilityContent"/>. </summary>
         /// <param name="resourceType"> The resource type. Should be always &quot;Microsoft.Communication/CommunicationServices&quot;. </param>
         /// <param name="name"> The CommunicationService name to validate. e.g.&quot;my-CommunicationService-name-here&quot;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>

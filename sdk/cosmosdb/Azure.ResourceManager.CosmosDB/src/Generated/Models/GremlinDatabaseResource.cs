@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Gremlin database resource object. </summary>
     public partial class GremlinDatabaseResource
     {
-        /// <summary> Initializes a new instance of GremlinDatabaseResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabaseResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB Gremlin database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public GremlinDatabaseResource(string id)

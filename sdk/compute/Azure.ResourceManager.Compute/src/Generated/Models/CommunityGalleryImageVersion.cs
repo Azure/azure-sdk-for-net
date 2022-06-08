@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
     public partial class CommunityGalleryImageVersion : PirCommunityGalleryResourceData
     {
-        /// <summary> Initializes a new instance of CommunityGalleryImageVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersion"/>. </summary>
         internal CommunityGalleryImageVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryImageVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersion"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>

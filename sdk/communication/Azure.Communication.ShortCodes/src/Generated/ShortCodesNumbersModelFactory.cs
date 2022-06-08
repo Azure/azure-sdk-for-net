@@ -14,7 +14,7 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ShortCodesNumbersModelFactory
     {
-        /// <summary> Initializes a new instance of ShortCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ShortCode"/>. </summary>
         /// <param name="number"> The value of the ShortCode or the alpha numeric e.g. &apos;555555&apos;, &apos;CONTOSO&apos;, etc. </param>
         /// <param name="numberType"> The type of number e.g. &apos;ShortCode&apos;, &apos;AlphaId&apos;. </param>
         /// <param name="countryCode"> ISO 3166 2-char code representing the country e.g. &apos;US&apos;. </param>

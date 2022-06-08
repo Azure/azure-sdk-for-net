@@ -12,7 +12,7 @@ namespace Azure.Communication.Email.Models
     /// <summary> Status of an email message that was sent previously. </summary>
     public partial class SendStatusResult
     {
-        /// <summary> Initializes a new instance of SendStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendStatusResult"/>. </summary>
         /// <param name="messageId"> System generated id of an email message sent. </param>
         /// <param name="status"> The type indicating the status of a request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>

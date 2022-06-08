@@ -12,7 +12,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure the presenter layout. </summary>
     public partial class PresenterLayoutOptions
     {
-        /// <summary> Initializes a new instance of PresenterLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresenterLayoutOptions"/>. </summary>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="supportId"> Id of the support input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="presenterId"/> or <paramref name="supportId"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.Communication.MediaComposition
             SupportId = supportId;
         }
 
-        /// <summary> Initializes a new instance of PresenterLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresenterLayoutOptions"/>. </summary>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="supportId"> Id of the support input. </param>
         /// <param name="supportPosition"> Position of the support stream. </param>

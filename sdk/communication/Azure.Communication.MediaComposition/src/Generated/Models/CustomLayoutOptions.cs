@@ -15,7 +15,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure custom layout. </summary>
     public partial class CustomLayoutOptions
     {
-        /// <summary> Initializes a new instance of CustomLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLayoutOptions"/>. </summary>
         /// <param name="inputGroups"> Configure input groups of the layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputGroups"/> is null. </exception>
         public CustomLayoutOptions(IDictionary<string, InputGroup> inputGroups)
@@ -29,7 +29,7 @@ namespace Azure.Communication.MediaComposition
             InputGroups = inputGroups;
         }
 
-        /// <summary> Initializes a new instance of CustomLayoutOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLayoutOptions"/>. </summary>
         /// <param name="layers"> Configure layer to control the z-position of input groups. </param>
         /// <param name="inputGroups"> Configure input groups of the layout. </param>
         internal CustomLayoutOptions(IDictionary<string, LayoutLayer> layers, IDictionary<string, InputGroup> inputGroups)

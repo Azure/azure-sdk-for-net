@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraKeyspacePropertiesOptions. </summary>
     public partial class CassandraKeyspacePropertiesOptions : OptionsResource
     {
-        /// <summary> Initializes a new instance of CassandraKeyspacePropertiesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraKeyspacePropertiesOptions"/>. </summary>
         public CassandraKeyspacePropertiesOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraKeyspacePropertiesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraKeyspacePropertiesOptions"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal CassandraKeyspacePropertiesOptions(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing the AfdEndpoint data model. </summary>
     public partial class AfdEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AfdEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AfdEndpointData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AfdEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

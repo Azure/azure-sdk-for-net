@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The MongoDBCollectionPropertiesOptions. </summary>
     public partial class MongoDBCollectionPropertiesOptions : OptionsResource
     {
-        /// <summary> Initializes a new instance of MongoDBCollectionPropertiesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionPropertiesOptions"/>. </summary>
         public MongoDBCollectionPropertiesOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionPropertiesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionPropertiesOptions"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal MongoDBCollectionPropertiesOptions(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)

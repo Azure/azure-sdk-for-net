@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class representing the AfdRoute data model. </summary>
     public partial class AfdRouteData : ResourceData
     {
-        /// <summary> Initializes a new instance of AfdRouteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdRouteData"/>. </summary>
         public AfdRouteData()
         {
             CustomDomains = new ChangeTrackingList<ActivatedResourceReference>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AfdRouteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdRouteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

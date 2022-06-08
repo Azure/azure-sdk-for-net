@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set network profile&apos;s network configurations. </summary>
     public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateNetworkConfiguration"/>. </summary>
         public VirtualMachineScaleSetUpdateNetworkConfiguration()
         {
             IPConfigurations = new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateNetworkConfiguration"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The network configuration name. </param>
         /// <param name="primary"> Whether this is a primary NIC on a virtual machine. </param>

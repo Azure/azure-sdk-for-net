@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Applications.Containers
     /// <summary> A class representing the DaprComponent data model. </summary>
     public partial class DaprComponentData : ResourceData
     {
-        /// <summary> Initializes a new instance of DaprComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprComponentData"/>. </summary>
         public DaprComponentData()
         {
             Secrets = new ChangeTrackingList<AppSecret>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Applications.Containers
             Scopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DaprComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprComponentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

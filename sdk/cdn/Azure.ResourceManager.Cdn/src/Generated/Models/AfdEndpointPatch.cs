@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Properties required to create or update an endpoint. </summary>
     public partial class AfdEndpointPatch
     {
-        /// <summary> Initializes a new instance of AfdEndpointPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdEndpointPatch"/>. </summary>
         public AfdEndpointPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

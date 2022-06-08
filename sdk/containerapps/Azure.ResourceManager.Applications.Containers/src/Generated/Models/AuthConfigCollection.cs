@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> AuthConfig collection ARM resource. </summary>
     internal partial class AuthConfigCollection
     {
-        /// <summary> Initializes a new instance of AuthConfigCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthConfigCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AuthConfigCollection(IEnumerable<AuthConfigData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AuthConfigCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthConfigCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal AuthConfigCollection(IReadOnlyList<AuthConfigData> value, string nextLink)

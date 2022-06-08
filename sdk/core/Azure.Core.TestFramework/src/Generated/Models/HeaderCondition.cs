@@ -10,7 +10,7 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Header condition to apply. </summary>
     public partial class HeaderCondition
     {
-        /// <summary> Initializes a new instance of HeaderCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeaderCondition"/>. </summary>
         public HeaderCondition()
         {
         }

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class representing the ClusterResource data model. </summary>
     public partial class ClusterResourceData : ManagedCassandraARMResourceProperties
     {
-        /// <summary> Initializes a new instance of ClusterResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ClusterResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

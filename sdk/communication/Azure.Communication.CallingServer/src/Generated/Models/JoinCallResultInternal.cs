@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The response payload of the join call operation. </summary>
     internal partial class JoinCallResultInternal
     {
-        /// <summary> Initializes a new instance of JoinCallResultInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="JoinCallResultInternal"/>. </summary>
         internal JoinCallResultInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of JoinCallResultInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="JoinCallResultInternal"/>. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         internal JoinCallResultInternal(string callConnectionId)
         {

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class representing the VMwareDatastore data model. </summary>
     public partial class VMwareDatastoreData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareDatastoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDatastoreData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareDatastoreData(AzureLocation location) : base(location)
         {
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VMwareDatastoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDatastoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

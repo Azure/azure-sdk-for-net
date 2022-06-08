@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The SqlContainerPropertiesOptions. </summary>
     public partial class SqlContainerPropertiesOptions : OptionsResource
     {
-        /// <summary> Initializes a new instance of SqlContainerPropertiesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainerPropertiesOptions"/>. </summary>
         public SqlContainerPropertiesOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlContainerPropertiesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainerPropertiesOptions"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal SqlContainerPropertiesOptions(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)

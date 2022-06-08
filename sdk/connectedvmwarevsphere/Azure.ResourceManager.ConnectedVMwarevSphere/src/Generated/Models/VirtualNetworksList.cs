@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of VirtualNetworks. </summary>
     internal partial class VirtualNetworksList
     {
-        /// <summary> Initializes a new instance of VirtualNetworksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksList"/>. </summary>
         /// <param name="value"> Array of VirtualNetworks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualNetworksList(IEnumerable<VirtualNetworkData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of VirtualNetworks. </param>
         /// <param name="value"> Array of VirtualNetworks. </param>
         internal VirtualNetworksList(string nextLink, IReadOnlyList<VirtualNetworkData> value)

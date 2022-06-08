@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The SqlTriggerPropertiesResource. </summary>
     public partial class SqlTriggerPropertiesResource : SqlTriggerResource
     {
-        /// <summary> Initializes a new instance of SqlTriggerPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlTriggerPropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SqlTriggerPropertiesResource(string id) : base(id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        /// <summary> Initializes a new instance of SqlTriggerPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlTriggerPropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL trigger. </param>
         /// <param name="body"> Body of the Trigger. </param>
         /// <param name="triggerType"> Type of the Trigger. </param>

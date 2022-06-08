@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Defines an update domain for the cloud service. </summary>
     public partial class UpdateDomainIdentifier
     {
-        /// <summary> Initializes a new instance of UpdateDomainIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDomainIdentifier"/>. </summary>
         public UpdateDomainIdentifier()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateDomainIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDomainIdentifier"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource Name. </param>
         internal UpdateDomainIdentifier(ResourceIdentifier id, string name)

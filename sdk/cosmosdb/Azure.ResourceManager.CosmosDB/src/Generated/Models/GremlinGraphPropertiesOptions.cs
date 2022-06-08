@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The GremlinGraphPropertiesOptions. </summary>
     public partial class GremlinGraphPropertiesOptions : OptionsResource
     {
-        /// <summary> Initializes a new instance of GremlinGraphPropertiesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphPropertiesOptions"/>. </summary>
         public GremlinGraphPropertiesOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of GremlinGraphPropertiesOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphPropertiesOptions"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal GremlinGraphPropertiesOptions(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)

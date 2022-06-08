@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A region in which the Azure Cosmos DB database account is deployed. </summary>
     public partial class DatabaseAccountLocation
     {
-        /// <summary> Initializes a new instance of DatabaseAccountLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountLocation"/>. </summary>
         public DatabaseAccountLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseAccountLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountLocation"/>. </summary>
         /// <param name="id"> The unique identifier of the region within the database account. Example: &amp;lt;accountName&amp;gt;-&amp;lt;locationName&amp;gt;. </param>
         /// <param name="locationName"> The name of the region. </param>
         /// <param name="documentEndpoint"> The connection endpoint for the specific region. Example: https://&amp;lt;accountName&amp;gt;-&amp;lt;locationName&amp;gt;.documents.azure.com:443/. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to regenerate the keys within the database account. </summary>
     public partial class DatabaseAccountRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of DatabaseAccountRegenerateKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountRegenerateKeyContent"/>. </summary>
         /// <param name="keyKind"> The access key to regenerate. </param>
         public DatabaseAccountRegenerateKeyContent(KeyKind keyKind)
         {

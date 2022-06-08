@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> LogAnalytics operation status response. </summary>
     public partial class LogAnalytics
     {
-        /// <summary> Initializes a new instance of LogAnalytics. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalytics"/>. </summary>
         internal LogAnalytics()
         {
         }
 
-        /// <summary> Initializes a new instance of LogAnalytics. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalytics"/>. </summary>
         /// <param name="properties"> LogAnalyticsOutput. </param>
         internal LogAnalytics(LogAnalyticsOutput properties)
         {

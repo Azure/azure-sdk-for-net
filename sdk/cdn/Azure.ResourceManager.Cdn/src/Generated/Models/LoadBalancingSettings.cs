@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Round-Robin load balancing settings for a backend pool. </summary>
     public partial class LoadBalancingSettings
     {
-        /// <summary> Initializes a new instance of LoadBalancingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancingSettings"/>. </summary>
         public LoadBalancingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancingSettings"/>. </summary>
         /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
         /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
         /// <param name="additionalLatencyInMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>

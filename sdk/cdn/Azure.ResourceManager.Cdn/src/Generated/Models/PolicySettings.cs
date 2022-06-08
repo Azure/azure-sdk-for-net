@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines contents of a web application firewall global configuration. </summary>
     public partial class PolicySettings
     {
-        /// <summary> Initializes a new instance of PolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySettings"/>. </summary>
         public PolicySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySettings"/>. </summary>
         /// <param name="enabledState"> describes if the policy is in enabled state or disabled state. </param>
         /// <param name="mode"> Describes if it is in detection mode or prevention mode at policy level. </param>
         /// <param name="defaultRedirectUri"> If action type is redirect, this field represents the default redirect URL for the client. </param>

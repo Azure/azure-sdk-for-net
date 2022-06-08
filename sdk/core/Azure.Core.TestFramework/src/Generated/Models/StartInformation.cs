@@ -12,7 +12,7 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Start object to be specified when starting playback or record. </summary>
     public partial class StartInformation
     {
-        /// <summary> Initializes a new instance of StartInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartInformation"/>. </summary>
         /// <param name="xRecordingFile"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingFile"/> is null. </exception>
         public StartInformation(string xRecordingFile)

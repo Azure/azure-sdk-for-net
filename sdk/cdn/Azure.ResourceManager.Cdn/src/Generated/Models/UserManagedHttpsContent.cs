@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </summary>
     public partial class UserManagedHttpsContent : CustomDomainHttpsContent
     {
-        /// <summary> Initializes a new instance of UserManagedHttpsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserManagedHttpsContent"/>. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user&apos;s keyvault certificate for enabling SSL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CertificateSource = CertificateSource.AzureKeyVault;
         }
 
-        /// <summary> Initializes a new instance of UserManagedHttpsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserManagedHttpsContent"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB capability object. </summary>
     public partial class DatabaseAccountCapability
     {
-        /// <summary> Initializes a new instance of DatabaseAccountCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountCapability"/>. </summary>
         public DatabaseAccountCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseAccountCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountCapability"/>. </summary>
         /// <param name="name"> Name of the Cosmos DB capability. For example, &quot;name&quot;: &quot;EnableCassandra&quot;. Current values also include &quot;EnableTable&quot; and &quot;EnableGremlin&quot;. </param>
         internal DatabaseAccountCapability(string name)
         {

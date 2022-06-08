@@ -12,7 +12,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> A user that got created with an Azure Communication Services resource. </summary>
     public partial class CommunicationUserIdentifierModel
     {
-        /// <summary> Initializes a new instance of CommunicationUserIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierModel"/>. </summary>
         /// <param name="id"> The Id of the communication user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public CommunicationUserIdentifierModel(string id)

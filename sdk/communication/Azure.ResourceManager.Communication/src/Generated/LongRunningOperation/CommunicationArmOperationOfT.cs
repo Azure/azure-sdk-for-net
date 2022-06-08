@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Communication
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of CommunicationArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationArmOperation{T}" /> for mocking. </summary>
         protected CommunicationArmOperation()
         {
         }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the Security profile settings for the virtual machine or virtual machine scale set. </summary>
     public partial class SecurityProfile
     {
-        /// <summary> Initializes a new instance of SecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
         public SecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
         /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. &lt;br&gt;&lt;br&gt; Default: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It is set as TrustedLaunch to enable UefiSettings. &lt;br&gt;&lt;br&gt; Default: UefiSettings will not be enabled unless this property is set as TrustedLaunch. </param>

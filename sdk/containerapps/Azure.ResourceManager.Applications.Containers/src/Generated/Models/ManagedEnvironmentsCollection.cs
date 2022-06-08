@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Collection of Environments. </summary>
     internal partial class ManagedEnvironmentsCollection
     {
-        /// <summary> Initializes a new instance of ManagedEnvironmentsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentsCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ManagedEnvironmentsCollection(IEnumerable<ManagedEnvironmentData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ManagedEnvironmentsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentsCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal ManagedEnvironmentsCollection(IReadOnlyList<ManagedEnvironmentData> value, string nextLink)

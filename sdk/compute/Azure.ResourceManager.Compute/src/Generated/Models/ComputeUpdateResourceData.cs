@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The Update Resource model definition. </summary>
     public partial class ComputeUpdateResourceData
     {
-        /// <summary> Initializes a new instance of ComputeUpdateResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeUpdateResourceData"/>. </summary>
         public ComputeUpdateResourceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

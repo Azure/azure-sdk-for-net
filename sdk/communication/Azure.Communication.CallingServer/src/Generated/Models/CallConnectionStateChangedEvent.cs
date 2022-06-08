@@ -10,14 +10,14 @@ namespace Azure.Communication.CallingServer
     /// <summary> The call connection state changed event. </summary>
     public partial class CallConnectionStateChangedEvent
     {
-        /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnectionStateChangedEvent"/>. </summary>
         /// <param name="callConnectionState"> The call connection state. </param>
         internal CallConnectionStateChangedEvent(CallConnectionState callConnectionState)
         {
             CallConnectionState = callConnectionState;
         }
 
-        /// <summary> Initializes a new instance of CallConnectionStateChangedEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnectionStateChangedEvent"/>. </summary>
         /// <param name="serverCallId"> The server call.id. </param>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="callConnectionState"> The call connection state. </param>

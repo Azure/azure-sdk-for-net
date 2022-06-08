@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The UpdateDomainListResult. </summary>
     internal partial class UpdateDomainListResult
     {
-        /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDomainListResult"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal UpdateDomainListResult(IEnumerable<UpdateDomainIdentifier> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of UpdateDomainListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDomainListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal UpdateDomainListResult(IReadOnlyList<UpdateDomainIdentifier> value, string nextLink)

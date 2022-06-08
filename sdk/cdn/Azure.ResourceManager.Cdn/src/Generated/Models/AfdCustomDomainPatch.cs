@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The domain JSON object required for domain creation or update. </summary>
     public partial class AfdCustomDomainPatch
     {
-        /// <summary> Initializes a new instance of AfdCustomDomainPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdCustomDomainPatch"/>. </summary>
         public AfdCustomDomainPatch()
         {
         }

@@ -12,7 +12,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> A Teams meeting to be used as an input or output. </summary>
     public partial class TeamsMeeting
     {
-        /// <summary> Initializes a new instance of TeamsMeeting. </summary>
+        /// <summary> Initializes a new instance of <see cref="TeamsMeeting"/>. </summary>
         /// <param name="teamsJoinUrl"> The url from Teams to join the meeting. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="teamsJoinUrl"/> is null. </exception>
         public TeamsMeeting(string teamsJoinUrl)

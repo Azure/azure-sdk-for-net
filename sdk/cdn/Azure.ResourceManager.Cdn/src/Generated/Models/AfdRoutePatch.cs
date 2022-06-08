@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The domain JSON object required for domain creation or update. </summary>
     public partial class AfdRoutePatch
     {
-        /// <summary> Initializes a new instance of AfdRoutePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdRoutePatch"/>. </summary>
         public AfdRoutePatch()
         {
             CustomDomains = new ChangeTrackingList<ActivatedResourceReference>();

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The CloudServiceVaultAndSecretReference. </summary>
     public partial class CloudServiceVaultAndSecretReference
     {
-        /// <summary> Initializes a new instance of CloudServiceVaultAndSecretReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceVaultAndSecretReference"/>. </summary>
         public CloudServiceVaultAndSecretReference()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceVaultAndSecretReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceVaultAndSecretReference"/>. </summary>
         /// <param name="sourceVault"></param>
         /// <param name="secretUri"></param>
         internal CloudServiceVaultAndSecretReference(WritableSubResource sourceVault, Uri secretUri)

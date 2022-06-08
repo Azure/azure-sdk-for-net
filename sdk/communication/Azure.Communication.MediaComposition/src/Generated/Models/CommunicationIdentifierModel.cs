@@ -10,12 +10,12 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. </summary>
     public partial class CommunicationIdentifierModel
     {
-        /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
         public CommunicationIdentifierModel()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
         /// <param name="communicationUser"> A user that got created with an Azure Communication Services resource. </param>
         /// <param name="microsoftTeamsUser"> &quot;A Microsoft Teams user. </param>
         internal CommunicationIdentifierModel(CommunicationUserIdentifierModel communicationUser, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)

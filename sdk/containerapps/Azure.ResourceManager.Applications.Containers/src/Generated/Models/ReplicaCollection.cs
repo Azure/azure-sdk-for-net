@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Container App Revision Replicas collection ARM resource. </summary>
     internal partial class ReplicaCollection
     {
-        /// <summary> Initializes a new instance of ReplicaCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicaCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ReplicaCollection(IEnumerable<ContainerAppReplicaData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ReplicaCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicaCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         internal ReplicaCollection(IReadOnlyList<ContainerAppReplicaData> value)
         {

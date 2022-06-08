@@ -10,7 +10,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Changeable attributes. </summary>
     internal partial class ManifestWriteableProperties
     {
-        /// <summary> Initializes a new instance of ManifestWriteableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestWriteableProperties"/>. </summary>
         public ManifestWriteableProperties()
         {
         }

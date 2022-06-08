@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> List of managed Cassandra clusters. </summary>
     internal partial class ListClusters
     {
-        /// <summary> Initializes a new instance of ListClusters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListClusters"/>. </summary>
         internal ListClusters()
         {
             Value = new ChangeTrackingList<ClusterResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ListClusters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListClusters"/>. </summary>
         /// <param name="value"> Container for the array of clusters. </param>
         internal ListClusters(IReadOnlyList<ClusterResourceData> value)
         {

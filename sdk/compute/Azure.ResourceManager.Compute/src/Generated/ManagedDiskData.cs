@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing the ManagedDisk data model. </summary>
     public partial class ManagedDiskData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedDiskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedDiskData(AzureLocation location) : base(location)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
             ShareInfo = new ChangeTrackingList<ShareInfoElement>();
         }
 
-        /// <summary> Initializes a new instance of ManagedDiskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

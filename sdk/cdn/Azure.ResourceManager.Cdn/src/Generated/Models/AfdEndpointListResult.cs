@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list endpoints. It contains a list of endpoint objects and a URL link to get the next set of results. </summary>
     internal partial class AfdEndpointListResult
     {
-        /// <summary> Initializes a new instance of AfdEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdEndpointListResult"/>. </summary>
         internal AfdEndpointListResult()
         {
             Value = new ChangeTrackingList<AfdEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of AfdEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdEndpointListResult"/>. </summary>
         /// <param name="value"> List of AzureFrontDoor endpoints within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of endpoint objects if there is any. </param>
         internal AfdEndpointListResult(IReadOnlyList<AfdEndpointData> value, string nextLink)

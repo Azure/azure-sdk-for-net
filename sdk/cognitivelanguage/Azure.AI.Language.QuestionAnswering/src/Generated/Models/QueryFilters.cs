@@ -13,7 +13,7 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> filters over knowledge base. </summary>
     public partial class QueryFilters
     {
-        /// <summary> Initializes a new instance of QueryFilters. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryFilters"/>. </summary>
         public QueryFilters()
         {
             SourceFilter = new ChangeTrackingList<string>();

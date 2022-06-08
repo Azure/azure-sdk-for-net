@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of Hosts. </summary>
     internal partial class HostsList
     {
-        /// <summary> Initializes a new instance of HostsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostsList"/>. </summary>
         /// <param name="value"> Array of Hosts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HostsList(IEnumerable<VMwareHostData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of HostsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostsList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of Hosts. </param>
         /// <param name="value"> Array of Hosts. </param>
         internal HostsList(string nextLink, IReadOnlyList<VMwareHostData> value)

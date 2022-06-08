@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineExtensionImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineExtensionImageResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string publisherName, string type, string version)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publisherName, string type, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}";
             return new ResourceIdentifier(resourceId);

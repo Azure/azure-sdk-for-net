@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Metric data. </summary>
     public partial class BaseMetric
     {
-        /// <summary> Initializes a new instance of BaseMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseMetric"/>. </summary>
         internal BaseMetric()
         {
             MetricValues = new ChangeTrackingList<MetricValue>();
         }
 
-        /// <summary> Initializes a new instance of BaseMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaseMetric"/>. </summary>
         /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>

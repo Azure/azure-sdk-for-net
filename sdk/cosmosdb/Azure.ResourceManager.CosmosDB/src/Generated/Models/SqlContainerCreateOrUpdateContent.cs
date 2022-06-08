@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update Cosmos DB container. </summary>
     public partial class SqlContainerCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SqlContainerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainerCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="resource"> The standard JSON format of a container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Resource = resource;
         }
 
-        /// <summary> Initializes a new instance of SqlContainerCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainerCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

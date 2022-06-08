@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the virtualMachineUpdate. </summary>
     public partial class VirtualMachinePatch
     {
-        /// <summary> Initializes a new instance of VirtualMachinePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePatch"/>. </summary>
         public VirtualMachinePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

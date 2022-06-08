@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Dapr component Secrets Collection ARM resource. </summary>
     internal partial class DaprSecretsCollection
     {
-        /// <summary> Initializes a new instance of DaprSecretsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprSecretsCollection"/>. </summary>
         /// <param name="value"> Collection of secrets used by a Dapr component. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DaprSecretsCollection(IEnumerable<AppSecret> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DaprSecretsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprSecretsCollection"/>. </summary>
         /// <param name="value"> Collection of secrets used by a Dapr component. </param>
         internal DaprSecretsCollection(IReadOnlyList<AppSecret> value)
         {

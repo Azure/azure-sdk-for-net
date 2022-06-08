@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The add participant result. </summary>
     public partial class AddParticipantResult
     {
-        /// <summary> Initializes a new instance of AddParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantResult"/>. </summary>
         internal AddParticipantResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AddParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantResult"/>. </summary>
         /// <param name="participantId"> The id of the added participant. </param>
         internal AddParticipantResult(string participantId)
         {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The Update Resource model definition. </summary>
     public partial class GalleryUpdateResourceDefinition : ResourceData
     {
-        /// <summary> Initializes a new instance of GalleryUpdateResourceDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryUpdateResourceDefinition"/>. </summary>
         public GalleryUpdateResourceDefinition()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

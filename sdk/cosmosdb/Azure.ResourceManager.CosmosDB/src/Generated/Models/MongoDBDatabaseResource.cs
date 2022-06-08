@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB MongoDB database resource object. </summary>
     public partial class MongoDBDatabaseResource
     {
-        /// <summary> Initializes a new instance of MongoDBDatabaseResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB MongoDB database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public MongoDBDatabaseResource(string id)

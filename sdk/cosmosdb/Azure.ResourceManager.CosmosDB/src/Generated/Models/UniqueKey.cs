@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The unique key on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>
     public partial class UniqueKey
     {
-        /// <summary> Initializes a new instance of UniqueKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="UniqueKey"/>. </summary>
         public UniqueKey()
         {
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of UniqueKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="UniqueKey"/>. </summary>
         /// <param name="paths"> List of paths must be unique for each document in the Azure Cosmos DB service. </param>
         internal UniqueKey(IList<string> paths)
         {

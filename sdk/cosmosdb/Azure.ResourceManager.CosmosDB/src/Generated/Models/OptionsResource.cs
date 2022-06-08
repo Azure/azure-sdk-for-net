@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB options resource object. </summary>
     public partial class OptionsResource
     {
-        /// <summary> Initializes a new instance of OptionsResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionsResource"/>. </summary>
         public OptionsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of OptionsResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionsResource"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
         internal OptionsResource(int? throughput, AutoscaleSettings autoscaleSettings)

@@ -10,7 +10,7 @@ namespace Azure.Communication.Chat
     /// <summary> Request payload for typing notifications. </summary>
     internal partial class SendTypingNotificationRequest
     {
-        /// <summary> Initializes a new instance of SendTypingNotificationRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendTypingNotificationRequest"/>. </summary>
         public SendTypingNotificationRequest()
         {
         }

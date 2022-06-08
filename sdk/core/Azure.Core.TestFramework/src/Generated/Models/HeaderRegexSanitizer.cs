@@ -12,7 +12,7 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Sanitizer for a request header. </summary>
     public partial class HeaderRegexSanitizer
     {
-        /// <summary> Initializes a new instance of HeaderRegexSanitizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeaderRegexSanitizer"/>. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>

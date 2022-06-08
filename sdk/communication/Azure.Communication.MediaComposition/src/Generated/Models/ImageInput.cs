@@ -12,7 +12,7 @@ namespace Azure.Communication.MediaComposition.Models
     /// <summary> An image input. </summary>
     public partial class ImageInput
     {
-        /// <summary> Initializes a new instance of ImageInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageInput"/>. </summary>
         /// <param name="uri"> Url of the image file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public ImageInput(string uri)

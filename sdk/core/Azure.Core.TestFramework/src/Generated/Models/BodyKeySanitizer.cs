@@ -12,7 +12,7 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Sanitizer for a request body. </summary>
     public partial class BodyKeySanitizer
     {
-        /// <summary> Initializes a new instance of BodyKeySanitizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BodyKeySanitizer(string value)

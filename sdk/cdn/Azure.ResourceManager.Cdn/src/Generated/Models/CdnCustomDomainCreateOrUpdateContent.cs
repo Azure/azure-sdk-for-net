@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The customDomain JSON object required for custom domain creation or update. </summary>
     public partial class CdnCustomDomainCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of CdnCustomDomainCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnCustomDomainCreateOrUpdateContent"/>. </summary>
         public CdnCustomDomainCreateOrUpdateContent()
         {
         }

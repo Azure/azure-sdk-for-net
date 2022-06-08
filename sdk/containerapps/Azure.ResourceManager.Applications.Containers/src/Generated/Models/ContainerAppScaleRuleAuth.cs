@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Auth Secrets for Container App Scale Rule. </summary>
     public partial class ContainerAppScaleRuleAuth
     {
-        /// <summary> Initializes a new instance of ContainerAppScaleRuleAuth. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppScaleRuleAuth"/>. </summary>
         public ContainerAppScaleRuleAuth()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppScaleRuleAuth. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppScaleRuleAuth"/>. </summary>
         /// <param name="secretRef"> Name of the Container App secret from which to pull the auth params. </param>
         /// <param name="triggerParameter"> Trigger Parameter that uses the secret. </param>
         internal ContainerAppScaleRuleAuth(string secretRef, string triggerParameter)

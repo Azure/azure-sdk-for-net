@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes The zonal capabilities of a SKU. </summary>
     public partial class ResourceSkuZoneDetails
     {
-        /// <summary> Initializes a new instance of ResourceSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuZoneDetails"/>. </summary>
         internal ResourceSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<ResourceSkuCapabilities>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuZoneDetails"/>. </summary>
         /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
         internal ResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ResourceSkuCapabilities> capabilities)

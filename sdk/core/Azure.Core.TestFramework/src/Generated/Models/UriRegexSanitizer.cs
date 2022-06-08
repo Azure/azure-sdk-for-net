@@ -12,7 +12,7 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Sanitizer for a request URI. </summary>
     public partial class UriRegexSanitizer
     {
-        /// <summary> Initializes a new instance of UriRegexSanitizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriRegexSanitizer"/>. </summary>
         /// <param name="regex"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="regex"/> or <paramref name="value"/> is null. </exception>

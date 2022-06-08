@@ -14,13 +14,13 @@ namespace Azure.Containers.ContainerRegistry.Specialized
     /// <summary> Docker V2 image layer descriptor including config and layers. </summary>
     public partial class OciBlobDescriptor
     {
-        /// <summary> Initializes a new instance of OciBlobDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciBlobDescriptor"/>. </summary>
         public OciBlobDescriptor()
         {
             Urls = new ChangeTrackingList<Uri>();
         }
 
-        /// <summary> Initializes a new instance of OciBlobDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciBlobDescriptor"/>. </summary>
         /// <param name="mediaType"> Layer media type. </param>
         /// <param name="size"> Layer size. </param>
         /// <param name="digest"> Layer digest. </param>

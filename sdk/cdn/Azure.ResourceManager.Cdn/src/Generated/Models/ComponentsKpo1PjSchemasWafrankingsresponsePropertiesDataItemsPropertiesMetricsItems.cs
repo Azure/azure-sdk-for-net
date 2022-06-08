@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems. </summary>
     public partial class ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems
     {
-        /// <summary> Initializes a new instance of ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems"/>. </summary>
         internal ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems()
         {
         }
 
-        /// <summary> Initializes a new instance of ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems"/>. </summary>
         /// <param name="metric"></param>
         /// <param name="value"></param>
         /// <param name="percentage"></param>

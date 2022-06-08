@@ -13,7 +13,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Rtmp stream to be used as an input or output. </summary>
     public partial class RtmpStream
     {
-        /// <summary> Initializes a new instance of RtmpStream. </summary>
+        /// <summary> Initializes a new instance of <see cref="RtmpStream"/>. </summary>
         /// <param name="streamKey"> Stream key of the stream. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
@@ -38,7 +38,7 @@ namespace Azure.Communication.MediaComposition
             StreamUrl = streamUrl;
         }
 
-        /// <summary> Initializes a new instance of RtmpStream. </summary>
+        /// <summary> Initializes a new instance of <see cref="RtmpStream"/>. </summary>
         /// <param name="streamKey"> Stream key of the stream. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>

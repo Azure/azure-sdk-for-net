@@ -12,7 +12,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Long running operation. </summary>
     internal partial class PhoneNumberOperation
     {
-        /// <summary> Initializes a new instance of PhoneNumberOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberOperation"/>. </summary>
         /// <param name="status"> Status of operation. </param>
         /// <param name="createdDateTime"> The date that the operation was created. </param>
         /// <param name="id"> Id of operation. </param>
@@ -31,7 +31,7 @@ namespace Azure.Communication.PhoneNumbers
             OperationType = operationType;
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberOperation"/>. </summary>
         /// <param name="status"> Status of operation. </param>
         /// <param name="resourceLocation"> URL for retrieving the result of the operation, if any. </param>
         /// <param name="createdDateTime"> The date that the operation was created. </param>

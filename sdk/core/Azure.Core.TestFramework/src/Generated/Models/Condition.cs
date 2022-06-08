@@ -10,7 +10,7 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Condition to apply for the sanitization or transform. If the condition is not met, sanitization/transform is not performed. </summary>
     public partial class Condition
     {
-        /// <summary> Initializes a new instance of Condition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Condition"/>. </summary>
         public Condition()
         {
         }

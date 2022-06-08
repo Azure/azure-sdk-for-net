@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Api error. </summary>
     public partial class ApiError
     {
-        /// <summary> Initializes a new instance of ApiError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiError"/>. </summary>
         internal ApiError()
         {
             Details = new ChangeTrackingList<ApiErrorBase>();
         }
 
-        /// <summary> Initializes a new instance of ApiError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiError"/>. </summary>
         /// <param name="details"> The Api error details. </param>
         /// <param name="innererror"> The Api inner error. </param>
         /// <param name="code"> The error code. </param>

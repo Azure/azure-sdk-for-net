@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of InventoryItems. </summary>
     internal partial class InventoryItemsList
     {
-        /// <summary> Initializes a new instance of InventoryItemsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InventoryItemsList"/>. </summary>
         /// <param name="value"> Array of InventoryItems. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal InventoryItemsList(IEnumerable<InventoryItemData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of InventoryItemsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="InventoryItemsList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of InventoryItems. </param>
         /// <param name="value"> Array of InventoryItems. </param>
         internal InventoryItemsList(string nextLink, IReadOnlyList<InventoryItemData> value)

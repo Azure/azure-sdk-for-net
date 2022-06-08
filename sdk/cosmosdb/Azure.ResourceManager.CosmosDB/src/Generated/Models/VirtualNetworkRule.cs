@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Virtual Network ACL Rule object. </summary>
     public partial class VirtualNetworkRule
     {
-        /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRule"/>. </summary>
         public VirtualNetworkRule()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkRule"/>. </summary>
         /// <param name="id"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
         /// <param name="ignoreMissingVNetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
         internal VirtualNetworkRule(string id, bool? ignoreMissingVNetServiceEndpoint)

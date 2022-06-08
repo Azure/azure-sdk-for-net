@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the resource update properties. </summary>
     internal partial class StorageProfileUpdate
     {
-        /// <summary> Initializes a new instance of StorageProfileUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProfileUpdate"/>. </summary>
         public StorageProfileUpdate()
         {
             Disks = new ChangeTrackingList<VirtualDiskUpdate>();

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the storedProcedures and their properties. </summary>
     internal partial class SqlStoredProcedureListResult
     {
-        /// <summary> Initializes a new instance of SqlStoredProcedureListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlStoredProcedureListResult"/>. </summary>
         internal SqlStoredProcedureListResult()
         {
             Value = new ChangeTrackingList<SqlStoredProcedureData>();
         }
 
-        /// <summary> Initializes a new instance of SqlStoredProcedureListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlStoredProcedureListResult"/>. </summary>
         /// <param name="value"> List of storedProcedures and their properties. </param>
         internal SqlStoredProcedureListResult(IReadOnlyList<SqlStoredProcedureData> value)
         {

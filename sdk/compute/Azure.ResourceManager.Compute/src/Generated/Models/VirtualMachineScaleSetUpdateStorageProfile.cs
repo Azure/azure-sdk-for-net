@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set storage profile. </summary>
     public partial class VirtualMachineScaleSetUpdateStorageProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateStorageProfile"/>. </summary>
         public VirtualMachineScaleSetUpdateStorageProfile()
         {
             DataDisks = new ChangeTrackingList<VirtualMachineScaleSetDataDisk>();

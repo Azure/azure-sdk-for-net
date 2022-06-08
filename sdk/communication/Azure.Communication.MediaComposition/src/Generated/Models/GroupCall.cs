@@ -12,7 +12,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Group call to be used as an input or output. </summary>
     public partial class GroupCall
     {
-        /// <summary> Initializes a new instance of GroupCall. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupCall"/>. </summary>
         /// <param name="id"> Group call identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public GroupCall(string id)

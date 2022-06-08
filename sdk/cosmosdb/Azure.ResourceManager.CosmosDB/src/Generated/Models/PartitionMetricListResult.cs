@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The response to a list partition metrics request. </summary>
     internal partial class PartitionMetricListResult
     {
-        /// <summary> Initializes a new instance of PartitionMetricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionMetricListResult"/>. </summary>
         internal PartitionMetricListResult()
         {
             Value = new ChangeTrackingList<PartitionMetric>();
         }
 
-        /// <summary> Initializes a new instance of PartitionMetricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartitionMetricListResult"/>. </summary>
         /// <param name="value"> The list of partition-level metrics for the account. </param>
         internal PartitionMetricListResult(IReadOnlyList<PartitionMetric> value)
         {

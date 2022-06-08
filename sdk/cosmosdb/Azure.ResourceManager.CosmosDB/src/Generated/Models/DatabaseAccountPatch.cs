@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters for patching Azure Cosmos DB database account properties. </summary>
     public partial class DatabaseAccountPatch
     {
-        /// <summary> Initializes a new instance of DatabaseAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseAccountPatch"/>. </summary>
         public DatabaseAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -93,7 +93,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        /// <summary> The object representing the policy for taking backups on an account. </summary>
+        /// <summary>
+        /// The object representing the policy for taking backups on an account.
+        /// Please note <see cref="BackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
+        /// </summary>
         public BackupPolicy BackupPolicy { get; set; }
         /// <summary> The CORS policy for the Cosmos DB database account. </summary>
         public IList<CorsPolicy> Cors { get; }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The GremlinDatabasePropertiesResource. </summary>
     public partial class GremlinDatabasePropertiesResource : GremlinDatabaseResource
     {
-        /// <summary> Initializes a new instance of GremlinDatabasePropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabasePropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB Gremlin database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public GremlinDatabasePropertiesResource(string id) : base(id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        /// <summary> Initializes a new instance of GremlinDatabasePropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabasePropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB Gremlin database. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>

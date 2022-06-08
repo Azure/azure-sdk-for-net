@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A feature for gallery image. </summary>
     public partial class GalleryImageFeature
     {
-        /// <summary> Initializes a new instance of GalleryImageFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageFeature"/>. </summary>
         public GalleryImageFeature()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageFeature"/>. </summary>
         /// <param name="name"> The name of the gallery image feature. </param>
         /// <param name="value"> The value of the gallery image feature. </param>
         internal GalleryImageFeature(string name, string value)

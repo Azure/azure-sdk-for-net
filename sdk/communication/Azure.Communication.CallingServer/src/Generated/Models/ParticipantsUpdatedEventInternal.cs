@@ -13,13 +13,13 @@ namespace Azure.Communication.CallingServer
     /// <summary> The participant update event. </summary>
     internal partial class ParticipantsUpdatedEventInternal
     {
-        /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParticipantsUpdatedEventInternal"/>. </summary>
         internal ParticipantsUpdatedEventInternal()
         {
             Participants = new ChangeTrackingList<CallParticipantInternal>();
         }
 
-        /// <summary> Initializes a new instance of ParticipantsUpdatedEventInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParticipantsUpdatedEventInternal"/>. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="participants"> The list of participants. </param>
         internal ParticipantsUpdatedEventInternal(string callConnectionId, IReadOnlyList<CallParticipantInternal> participants)

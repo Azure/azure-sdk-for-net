@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> The resource status information. </summary>
     public partial class ResourceStatus
     {
-        /// <summary> Initializes a new instance of ResourceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceStatus"/>. </summary>
         internal ResourceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceStatus"/>. </summary>
         /// <param name="resourceStatusType"> The type of the condition. </param>
         /// <param name="status"> Status of the condition. </param>
         /// <param name="reason"> The reason for the condition&apos;s status. </param>

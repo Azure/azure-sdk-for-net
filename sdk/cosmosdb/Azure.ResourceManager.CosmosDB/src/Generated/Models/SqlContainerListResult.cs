@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the containers and their properties. </summary>
     internal partial class SqlContainerListResult
     {
-        /// <summary> Initializes a new instance of SqlContainerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainerListResult"/>. </summary>
         internal SqlContainerListResult()
         {
             Value = new ChangeTrackingList<SqlContainerData>();
         }
 
-        /// <summary> Initializes a new instance of SqlContainerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainerListResult"/>. </summary>
         /// <param name="value"> List of containers and their properties. </param>
         internal SqlContainerListResult(IReadOnlyList<SqlContainerData> value)
         {

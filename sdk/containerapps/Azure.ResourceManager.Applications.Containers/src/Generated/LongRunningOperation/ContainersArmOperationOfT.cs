@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Applications.Containers
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of ContainersArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainersArmOperation{T}" /> for mocking. </summary>
         protected ContainersArmOperation()
         {
         }

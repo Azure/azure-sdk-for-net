@@ -10,7 +10,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The request payload for playing audio. </summary>
     internal partial class PlayAudioRequest
     {
-        /// <summary> Initializes a new instance of PlayAudioRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayAudioRequest"/>. </summary>
         public PlayAudioRequest()
         {
         }

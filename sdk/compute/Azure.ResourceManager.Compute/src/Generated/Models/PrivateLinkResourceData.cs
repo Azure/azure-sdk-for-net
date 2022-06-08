@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> A private link resource. </summary>
     public partial class PrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceData"/>. </summary>
         internal PrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

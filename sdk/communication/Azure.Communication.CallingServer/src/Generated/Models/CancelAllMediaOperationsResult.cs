@@ -10,14 +10,14 @@ namespace Azure.Communication.CallingServer
     /// <summary> The response payload of the cancel all media operations. </summary>
     public partial class CancelAllMediaOperationsResult
     {
-        /// <summary> Initializes a new instance of CancelAllMediaOperationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelAllMediaOperationsResult"/>. </summary>
         /// <param name="status"> The status of the operation. </param>
         internal CancelAllMediaOperationsResult(OperationStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of CancelAllMediaOperationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelAllMediaOperationsResult"/>. </summary>
         /// <param name="operationId"> The operation id. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationContext"> The operation context provided by client. </param>

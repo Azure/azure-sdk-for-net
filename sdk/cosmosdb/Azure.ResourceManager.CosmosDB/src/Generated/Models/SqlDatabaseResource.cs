@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB SQL database resource object. </summary>
     public partial class SqlDatabaseResource
     {
-        /// <summary> Initializes a new instance of SqlDatabaseResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabaseResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SqlDatabaseResource(string id)

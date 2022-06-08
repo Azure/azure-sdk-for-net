@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes an Operating System disk. </summary>
     public partial class RestorePointSourceVmOSDisk
     {
-        /// <summary> Initializes a new instance of RestorePointSourceVmOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmOSDisk"/>. </summary>
         internal RestorePointSourceVmOSDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVmOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmOSDisk"/>. </summary>
         /// <param name="osType"> Gets the Operating System type. </param>
         /// <param name="encryptionSettings"> Gets the disk encryption settings. </param>
         /// <param name="name"> Gets the disk name. </param>

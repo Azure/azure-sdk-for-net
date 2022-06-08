@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Network Interface model. </summary>
     public partial class NetworkInterface
     {
-        /// <summary> Initializes a new instance of NetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
         public NetworkInterface()
         {
             IPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
         /// <param name="name"> Gets or sets the name of the network interface. </param>
         /// <param name="label"> Gets or sets the label of the virtual network in vCenter that the nic is connected to. </param>
         /// <param name="ipAddresses"> Gets or sets the nic ip addresses. </param>

@@ -12,7 +12,7 @@ namespace Azure.Communication.Email.Models
     /// <summary> Attachment to the email. </summary>
     public partial class EmailAttachment
     {
-        /// <summary> Initializes a new instance of EmailAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailAttachment"/>. </summary>
         /// <param name="name"> Name of the attachment. </param>
         /// <param name="attachmentType"> The type of attachment file. </param>
         /// <param name="contentBytesBase64"> Base64 encoded contents of the attachment. </param>

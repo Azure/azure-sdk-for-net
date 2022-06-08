@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra keyspace resource object. </summary>
     public partial class CassandraKeyspaceResource
     {
-        /// <summary> Initializes a new instance of CassandraKeyspaceResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraKeyspaceResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB Cassandra keyspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public CassandraKeyspaceResource(string id)

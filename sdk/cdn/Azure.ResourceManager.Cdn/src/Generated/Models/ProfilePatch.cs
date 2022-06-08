@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Properties required to update a profile. </summary>
     public partial class ProfilePatch
     {
-        /// <summary> Initializes a new instance of ProfilePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfilePatch"/>. </summary>
         public ProfilePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

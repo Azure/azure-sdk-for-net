@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB resource auto-upgrade policy. </summary>
     internal partial class AutoUpgradePolicyResource
     {
-        /// <summary> Initializes a new instance of AutoUpgradePolicyResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradePolicyResource"/>. </summary>
         public AutoUpgradePolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of AutoUpgradePolicyResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoUpgradePolicyResource"/>. </summary>
         /// <param name="throughputPolicy"> Represents throughput policy which service must adhere to for auto-upgrade. </param>
         internal AutoUpgradePolicyResource(ThroughputPolicyResource throughputPolicy)
         {

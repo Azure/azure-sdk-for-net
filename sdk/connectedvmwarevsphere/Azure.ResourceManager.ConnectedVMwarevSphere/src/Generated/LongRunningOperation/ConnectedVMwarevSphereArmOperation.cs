@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of ConnectedVMwarevSphereArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedVMwarevSphereArmOperation" /> for mocking. </summary>
         protected ConnectedVMwarevSphereArmOperation()
         {
         }

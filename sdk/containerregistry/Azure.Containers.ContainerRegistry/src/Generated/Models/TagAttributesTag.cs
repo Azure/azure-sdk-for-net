@@ -10,7 +10,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Tag. </summary>
     internal partial class TagAttributesTag
     {
-        /// <summary> Initializes a new instance of TagAttributesTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagAttributesTag"/>. </summary>
         internal TagAttributesTag()
         {
         }

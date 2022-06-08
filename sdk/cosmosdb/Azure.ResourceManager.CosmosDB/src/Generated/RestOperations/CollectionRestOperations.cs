@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of CollectionRestOperations. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionRestOperations" />. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>

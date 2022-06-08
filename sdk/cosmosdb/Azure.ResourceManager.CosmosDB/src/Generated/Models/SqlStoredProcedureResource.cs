@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB SQL storedProcedure resource object. </summary>
     public partial class SqlStoredProcedureResource
     {
-        /// <summary> Initializes a new instance of SqlStoredProcedureResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlStoredProcedureResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SqlStoredProcedureResource(string id)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of SqlStoredProcedureResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlStoredProcedureResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <param name="body"> Body of the Stored Procedure. </param>
         internal SqlStoredProcedureResource(string id, string body)

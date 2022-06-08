@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Describes a Machine Extension Update. </summary>
     public partial class MachineExtensionPatch : ResourcePatch
     {
-        /// <summary> Initializes a new instance of MachineExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionPatch"/>. </summary>
         public MachineExtensionPatch()
         {
         }

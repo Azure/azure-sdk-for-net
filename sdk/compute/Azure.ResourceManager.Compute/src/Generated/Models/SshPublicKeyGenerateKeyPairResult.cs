@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Response from generation of an SSH key pair. </summary>
     public partial class SshPublicKeyGenerateKeyPairResult
     {
-        /// <summary> Initializes a new instance of SshPublicKeyGenerateKeyPairResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshPublicKeyGenerateKeyPairResult"/>. </summary>
         /// <param name="privateKey"> Private key portion of the key pair used to authenticate to a virtual machine through ssh. The private key is returned in RFC3447 format and should be treated as a secret. </param>
         /// <param name="publicKey"> Public key portion of the key pair used to authenticate to a virtual machine through ssh. The public key is in ssh-rsa format. </param>
         /// <param name="id"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{SshPublicKeyName}. </param>

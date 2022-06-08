@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Container App credentials. </summary>
     public partial class AzureCredentials
     {
-        /// <summary> Initializes a new instance of AzureCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCredentials"/>. </summary>
         public AzureCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCredentials"/>. </summary>
         /// <param name="clientId"> Client Id. </param>
         /// <param name="clientSecret"> Client Secret. </param>
         /// <param name="tenantId"> Tenant Id. </param>

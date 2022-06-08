@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The response payload of the create call operation. </summary>
     internal partial class CreateCallResultInternal
     {
-        /// <summary> Initializes a new instance of CreateCallResultInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateCallResultInternal"/>. </summary>
         internal CreateCallResultInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of CreateCallResultInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateCallResultInternal"/>. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         internal CreateCallResultInternal(string callConnectionId)
         {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Container App registry information. </summary>
     public partial class RegistryInfo
     {
-        /// <summary> Initializes a new instance of RegistryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryInfo"/>. </summary>
         public RegistryInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RegistryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryInfo"/>. </summary>
         /// <param name="registryUri"> registry server Url. </param>
         /// <param name="registryUserName"> registry username. </param>
         /// <param name="registryPassword"> registry secret. </param>

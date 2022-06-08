@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The CloudServiceListResult. </summary>
     internal partial class CloudServiceListResult
     {
-        /// <summary> Initializes a new instance of CloudServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceListResult"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CloudServiceListResult(IEnumerable<CloudServiceData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal CloudServiceListResult(IReadOnlyList<CloudServiceData> value, string nextLink)

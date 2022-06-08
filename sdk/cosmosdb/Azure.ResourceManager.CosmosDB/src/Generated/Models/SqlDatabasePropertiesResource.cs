@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The SqlDatabasePropertiesResource. </summary>
     public partial class SqlDatabasePropertiesResource : SqlDatabaseResource
     {
-        /// <summary> Initializes a new instance of SqlDatabasePropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabasePropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SqlDatabasePropertiesResource(string id) : base(id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        /// <summary> Initializes a new instance of SqlDatabasePropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDatabasePropertiesResource"/>. </summary>
         /// <param name="id"> Name of the Cosmos DB SQL database. </param>
         /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
         /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>

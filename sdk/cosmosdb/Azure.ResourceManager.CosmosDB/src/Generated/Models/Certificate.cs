@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The Certificate. </summary>
     public partial class Certificate
     {
-        /// <summary> Initializes a new instance of Certificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Certificate"/>. </summary>
         public Certificate()
         {
         }
 
-        /// <summary> Initializes a new instance of Certificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Certificate"/>. </summary>
         /// <param name="pem"> PEM formatted public key. </param>
         internal Certificate(string pem)
         {

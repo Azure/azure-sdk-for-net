@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// </summary>
     public partial class ContainerAppTemplate
     {
-        /// <summary> Initializes a new instance of ContainerAppTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppTemplate"/>. </summary>
         public ContainerAppTemplate()
         {
             Containers = new ChangeTrackingList<ContainerAppContainer>();
             Volumes = new ChangeTrackingList<ContainerAppVolume>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppTemplate"/>. </summary>
         /// <param name="revisionSuffix"> User friendly suffix that is appended to the revision name. </param>
         /// <param name="containers"> List of container definitions for the Container App. </param>
         /// <param name="scale"> Scaling properties for the Container App. </param>

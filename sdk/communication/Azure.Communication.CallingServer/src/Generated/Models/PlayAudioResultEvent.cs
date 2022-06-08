@@ -10,14 +10,14 @@ namespace Azure.Communication.CallingServer
     /// <summary> The play audio result event. </summary>
     public partial class PlayAudioResultEvent
     {
-        /// <summary> Initializes a new instance of PlayAudioResultEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayAudioResultEvent"/>. </summary>
         /// <param name="status"> The status of the operation. </param>
         internal PlayAudioResultEvent(OperationStatus status)
         {
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of PlayAudioResultEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlayAudioResultEvent"/>. </summary>
         /// <param name="resultInfo"> The result details. </param>
         /// <param name="operationContext"> The operation context. </param>
         /// <param name="status"> The status of the operation. </param>

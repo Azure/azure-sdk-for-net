@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the SslProtocol condition for the delivery rule. </summary>
     public partial class DeliveryRuleSslProtocolCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleSslProtocolCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolCondition"/>. </summary>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleSslProtocolCondition(SslProtocolMatchCondition properties)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = MatchVariable.SslProtocol;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleSslProtocolCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
         internal DeliveryRuleSslProtocolCondition(MatchVariable name, SslProtocolMatchCondition properties) : base(name)

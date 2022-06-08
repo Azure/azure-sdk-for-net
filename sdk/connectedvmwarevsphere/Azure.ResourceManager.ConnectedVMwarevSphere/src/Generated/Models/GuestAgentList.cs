@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of GuestAgent. </summary>
     internal partial class GuestAgentList
     {
-        /// <summary> Initializes a new instance of GuestAgentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestAgentList"/>. </summary>
         /// <param name="value"> Array of GuestAgent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GuestAgentList(IEnumerable<GuestAgentData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GuestAgentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestAgentList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of GuestAgent. </param>
         /// <param name="value"> Array of GuestAgent. </param>
         internal GuestAgentList(string nextLink, IReadOnlyList<GuestAgentData> value)

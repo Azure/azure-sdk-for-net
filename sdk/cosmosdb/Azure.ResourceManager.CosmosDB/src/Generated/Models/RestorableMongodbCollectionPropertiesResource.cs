@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The resource of an Azure Cosmos DB MongoDB collection event. </summary>
     public partial class RestorableMongodbCollectionPropertiesResource
     {
-        /// <summary> Initializes a new instance of RestorableMongodbCollectionPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableMongodbCollectionPropertiesResource"/>. </summary>
         internal RestorableMongodbCollectionPropertiesResource()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableMongodbCollectionPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableMongodbCollectionPropertiesResource"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this collection event. </param>
         /// <param name="eventTimestamp"> The time when this collection event happened. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Applications.Containers
     /// <summary> A class representing the ManagedEnvironmentStorage data model. </summary>
     public partial class ManagedEnvironmentStorageData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedEnvironmentStorageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStorageData"/>. </summary>
         public ManagedEnvironmentStorageData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedEnvironmentStorageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStorageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

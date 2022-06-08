@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Applications.Containers.Models
     /// <summary> Traffic weight assigned to a revision. </summary>
     public partial class TrafficWeight
     {
-        /// <summary> Initializes a new instance of TrafficWeight. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficWeight"/>. </summary>
         public TrafficWeight()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficWeight. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficWeight"/>. </summary>
         /// <param name="revisionName"> Name of a revision. </param>
         /// <param name="weight"> Traffic weight assigned to a revision. </param>
         /// <param name="latestRevision"> Indicates that the traffic weight belongs to a latest stable revision. </param>

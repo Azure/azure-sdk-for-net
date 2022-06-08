@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Information about the current running state of the overall upgrade. </summary>
     public partial class RollingUpgradeRunningStatus
     {
-        /// <summary> Initializes a new instance of RollingUpgradeRunningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="RollingUpgradeRunningStatus"/>. </summary>
         internal RollingUpgradeRunningStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of RollingUpgradeRunningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="RollingUpgradeRunningStatus"/>. </summary>
         /// <param name="code"> Code indicating the current status of the upgrade. </param>
         /// <param name="startOn"> Start time of the upgrade. </param>
         /// <param name="lastAction"> The last action performed on the rolling upgrade. </param>

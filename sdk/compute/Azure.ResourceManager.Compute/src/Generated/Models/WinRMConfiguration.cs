@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes Windows Remote Management configuration of the VM. </summary>
     internal partial class WinRMConfiguration
     {
-        /// <summary> Initializes a new instance of WinRMConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WinRMConfiguration"/>. </summary>
         public WinRMConfiguration()
         {
             Listeners = new ChangeTrackingList<WinRMListener>();
         }
 
-        /// <summary> Initializes a new instance of WinRMConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WinRMConfiguration"/>. </summary>
         /// <param name="listeners"> The list of Windows Remote Management listeners. </param>
         internal WinRMConfiguration(IList<WinRMListener> listeners)
         {

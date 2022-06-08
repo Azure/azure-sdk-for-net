@@ -10,7 +10,7 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> The CustomDefaultMatcher. </summary>
     public partial class CustomDefaultMatcher
     {
-        /// <summary> Initializes a new instance of CustomDefaultMatcher. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDefaultMatcher"/>. </summary>
         public CustomDefaultMatcher()
         {
         }

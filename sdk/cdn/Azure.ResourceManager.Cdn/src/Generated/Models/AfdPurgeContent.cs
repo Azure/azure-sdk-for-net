@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Parameters required for content purge. </summary>
     public partial class AfdPurgeContent
     {
-        /// <summary> Initializes a new instance of AfdPurgeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AfdPurgeContent"/>. </summary>
         /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentPaths"/> is null. </exception>
         public AfdPurgeContent(IEnumerable<string> contentPaths)

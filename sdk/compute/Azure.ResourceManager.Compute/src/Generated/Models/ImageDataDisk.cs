@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a data disk. </summary>
     public partial class ImageDataDisk : ImageDisk
     {
-        /// <summary> Initializes a new instance of ImageDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDataDisk"/>. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
         public ImageDataDisk(int lun)
         {
             Lun = lun;
         }
 
-        /// <summary> Initializes a new instance of ImageDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDataDisk"/>. </summary>
         /// <param name="snapshot"> The snapshot. </param>
         /// <param name="managedDisk"> The managedDisk. </param>
         /// <param name="blobUri"> The Virtual Hard Disk. </param>
