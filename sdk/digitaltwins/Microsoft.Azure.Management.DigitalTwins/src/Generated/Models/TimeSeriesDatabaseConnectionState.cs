@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
 
     /// <summary>
-    /// Defines values for EndpointProvisioningState.
+    /// Defines values for TimeSeriesDatabaseConnectionState.
     /// </summary>
-    public static class EndpointProvisioningState
+    public static class TimeSeriesDatabaseConnectionState
     {
         public const string Provisioning = "Provisioning";
         public const string Deleting = "Deleting";
