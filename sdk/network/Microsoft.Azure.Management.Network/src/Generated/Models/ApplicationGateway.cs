@@ -499,6 +499,16 @@ namespace Microsoft.Azure.Management.Network.Models
                     }
                 }
             }
+            if (RoutingRules != null)
+            {
+                foreach (var element3 in RoutingRules)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
+                    }
+                }
+            }
             if (WebApplicationFirewallConfiguration != null)
             {
                 WebApplicationFirewallConfiguration.Validate();

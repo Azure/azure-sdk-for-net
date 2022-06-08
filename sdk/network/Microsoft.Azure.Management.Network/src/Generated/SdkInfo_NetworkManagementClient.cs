@@ -19,10 +19,11 @@ namespace Microsoft.Azure.Management.Network
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Compute", "NetworkInterfaces", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "NetworkInterfaces", "2021-08-01"),
-                new Tuple<string, string, string>("Compute", "PublicIPAddresses", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "PublicIPAddresses", "2021-08-01"),
+                new Tuple<string, string, string>("Management", "ManagementGroupNetworkManagerConnections", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "AdminRuleCollections", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "AdminRules", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "ApplicationGatewayPrivateEndpointConnections", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "ApplicationGatewayPrivateLinkResources", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "ApplicationGateways", "2021-08-01"),
@@ -39,6 +40,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "CheckDnsNameAvailability", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "ConfigurationPolicyGroups", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "ConnectionMonitors", "2021-08-01"),
+                new Tuple<string, string, string>("Network", "ConnectivityConfigurations", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "CustomIPPrefixes", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "DdosCustomPolicies", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "DdosProtectionPlans", "2021-08-01"),
@@ -46,6 +48,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "DeleteBastionShareableLink", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "DisconnectActiveSessions", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "DscpConfiguration", "2021-08-01"),
+                new Tuple<string, string, string>("Network", "EffectiveVirtualNetworks", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "ExpressRouteCircuitAuthorizations", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteCircuitConnections", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteCircuitPeerings", "2021-08-01"),
@@ -73,6 +76,12 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "InboundSecurityRule", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "IpAllocations", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "IpGroups", "2021-08-01"),
+                new Tuple<string, string, string>("Network", "ListActiveConnectivityConfigurations", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "ListActiveSecurityAdminRules", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "ListActiveSecurityUserRules", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "ListEffectiveVirtualNetworks", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "ListNetworkManagerEffectiveConnectivityConfigurations", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "ListNetworkManagerEffectiveSecurityAdminRules", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "LoadBalancerBackendAddressPools", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerFrontendIPConfigurations", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "LoadBalancerLoadBalancingRules", "2021-08-01"),
@@ -83,10 +92,14 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "LocalNetworkGateways", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "NatGateways", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "NatRules", "2021-08-01"),
+                new Tuple<string, string, string>("Network", "NetworkGroups", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "NetworkInterfaceIPConfigurations", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "NetworkInterfaceLoadBalancers", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "NetworkInterfaceTapConfigurations", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "NetworkInterfaces", "2021-08-01"),
+                new Tuple<string, string, string>("Network", "NetworkManagerCommits", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "NetworkManagerDeploymentStatus", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "NetworkManagers", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "NetworkProfiles", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "NetworkSecurityGroups", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "NetworkVirtualAppliances", "2021-08-01"),
@@ -108,16 +121,23 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "RouteTables", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "Routes", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "RoutingIntent", "2021-08-01"),
+                new Tuple<string, string, string>("Network", "ScopeConnections", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "SecurityAdminConfigurations", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "SecurityPartnerProviders", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "SecurityRules", "2021-08-01"),
+                new Tuple<string, string, string>("Network", "SecurityUserConfigurations", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "ServiceAssociationLinks", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "ServiceEndpointPolicies", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "ServiceEndpointPolicyDefinitions", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "ServiceTagInformation", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "ServiceTags", "2021-08-01"),
+                new Tuple<string, string, string>("Network", "StaticMembers", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "Subnets", "2021-08-01"),
+                new Tuple<string, string, string>("Network", "SubscriptionNetworkManagerConnections", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "SupportedSecurityProviders", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "Usages", "2021-08-01"),
+                new Tuple<string, string, string>("Network", "UserRuleCollections", "2022-04-01-preview"),
+                new Tuple<string, string, string>("Network", "UserRules", "2022-04-01-preview"),
                 new Tuple<string, string, string>("Network", "VirtualApplianceSites", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "VirtualApplianceSkus", "2021-08-01"),
                 new Tuple<string, string, string>("Network", "VirtualHubBgpConnection", "2021-08-01"),
@@ -150,5 +170,17 @@ namespace Microsoft.Azure.Management.Network
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.1.5";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/network/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --tag=package-2022-04-preview --csharp-sdks-folder=E:\\wd\\swaggerpr\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "7eff9fe33b6f31e92e2d7eebf8f53faf68ee7363";
+      public static readonly String CodeGenerationErrors = "npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+
+
