@@ -58,7 +58,7 @@ no-property-type-replacement:
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
-  AfdProfiles_CheckHostNameAvailability: CheckFrontDoorProfileHostNameAvailability
+  FrontDoorProfiles_CheckHostNameAvailability: CheckFrontDoorProfileHostNameAvailability
   LogAnalytics_GetLogAnalyticsMetrics: GetLogAnalyticsMetrics
   LogAnalytics_GetLogAnalyticsRankings: GetLogAnalyticsRankings
   LogAnalytics_GetLogAnalyticsResources: GetLogAnalyticsResources
@@ -67,10 +67,10 @@ override-operation-name:
   LogAnalytics_GetWafLogAnalyticsRankings: GetWafLogAnalyticsRankings
   Profiles_ListResourceUsage: GetResourceUsages
   CdnEndpoints_ListResourceUsage: GetResourceUsages
-  AfdProfiles_ListResourceUsage: GetFrontDoorProfileResourceUsages
-  AfdEndpoints_ListResourceUsage: GetResourceUsages
-  AfdOriginGroups_ListResourceUsage: GetResourceUsages
-  AfdRuleSets_ListResourceUsage: GetResourceUsages
+  FrontDoorProfiles_ListResourceUsage: GetFrontDoorProfileResourceUsages
+  FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
+  FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
+  FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
 directive:
   - from: swagger-document
     where: $.definitions..parameters

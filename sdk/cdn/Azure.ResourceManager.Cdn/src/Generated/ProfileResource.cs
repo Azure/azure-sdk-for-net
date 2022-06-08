@@ -523,11 +523,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnUsage> GetResourceUsageFrontDoorProfilesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CdnUsage> GetFrontDoorProfileResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageFrontDoorProfiles");
+                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
                 try
                 {
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageFrontDoorProfiles");
+                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
                 try
                 {
@@ -565,11 +565,11 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnUsage> GetResourceUsageFrontDoorProfiles(CancellationToken cancellationToken = default)
+        public virtual Pageable<CdnUsage> GetFrontDoorProfileResourceUsages(CancellationToken cancellationToken = default)
         {
             Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageFrontDoorProfiles");
+                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
                 try
                 {
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetResourceUsageFrontDoorProfiles");
+                using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.GetFrontDoorProfileResourceUsages");
                 scope.Start();
                 try
                 {
@@ -608,11 +608,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckHostNameAvailabilityFrontDoorProfileAsync(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnNameAvailabilityResult>> CheckFrontDoorProfileHostNameAvailabilityAsync(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckHostNameAvailabilityFrontDoorProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
             scope.Start();
             try
             {
@@ -634,11 +634,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="content"> Custom domain to be validated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CdnNameAvailabilityResult> CheckHostNameAvailabilityFrontDoorProfile(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CdnNameAvailabilityResult> CheckFrontDoorProfileHostNameAvailability(HostNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckHostNameAvailabilityFrontDoorProfile");
+            using var scope = _frontDoorProfilesClientDiagnostics.CreateScope("ProfileResource.CheckFrontDoorProfileHostNameAvailability");
             scope.Start();
             try
             {
