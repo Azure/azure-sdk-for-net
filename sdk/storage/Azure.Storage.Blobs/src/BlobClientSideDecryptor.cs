@@ -282,6 +282,7 @@ namespace Azure.Storage.Blobs
 
             return new HttpRange(originalRange.Offset - offsetAdjustment, adjustedDownloadCount);
         }
+    }
 
     internal static class EncryptionRangeExtensions
     {
