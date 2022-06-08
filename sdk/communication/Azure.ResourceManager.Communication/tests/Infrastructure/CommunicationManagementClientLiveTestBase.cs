@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Communication.Tests
             return emailServiceLro.Value;
         }
 
-        internal async Task<DomainResource> CreateDefaultDomain(string domainName, EmailServiceResource emailService)
+        internal async Task<CommunicationDomainResource> CreateDefaultDomain(string domainName, EmailServiceResource emailService)
         {
-            DomainResourceData data = new DomainResourceData(ResourceLocation)
+            CommunicationDomainResourceData data = new CommunicationDomainResourceData(ResourceLocation)
             {
                 DomainManagement = DomainManagement.CustomerManaged,
                 ValidSenderUsernames = { {"username", "displayName" } }
             };
-            var domainLro = await emailService.GetDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, domainName, data);
+            var domainLro = await emailService.GetCommunicationDomainResources().CreateOrUpdateAsync(WaitUntil.Completed, domainName, data);
             return domainLro.Value;
         }
     }

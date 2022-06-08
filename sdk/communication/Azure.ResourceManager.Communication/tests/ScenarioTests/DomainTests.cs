@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Communication.Tests
         [TearDown]
         public async Task TearDown()
         {
-            await foreach (var domain in _emailService.GetDomainResources().GetAllAsync())
+            await foreach (var domain in _emailService.GetCommunicationDomainResources().GetAllAsync())
             {
                 await domain.DeleteAsync(WaitUntil.Completed);
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task AddTag()
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
-            var collection = _emailService.GetDomainResources();
+            var collection = _emailService.GetCommunicationDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
             await domain.AddTagAsync("testkey", "testvalue");
             domain = await collection.GetAsync(domainName);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task RemoveTag()
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
-            var collection = _emailService.GetDomainResources();
+            var collection = _emailService.GetCommunicationDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
             await domain.AddTagAsync("testkey", "testvalue");
             domain = await collection.GetAsync(domainName);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task SetTags()
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
-            var collection = _emailService.GetDomainResources();
+            var collection = _emailService.GetCommunicationDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
             await domain.AddTagAsync("testkey", "testvalue");
             domain = await collection.GetAsync(domainName);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task Exists()
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
-            var collection = _emailService.GetDomainResources();
+            var collection = _emailService.GetCommunicationDomainResources();
             await CreateDefaultDomain(domainName, _emailService);
             bool exists = await collection.ExistsAsync(domainName);
             Assert.IsTrue(exists);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var domain1 = await CreateDefaultDomain(domainName, _emailService);
-            var patch = new DomainResourcePatch()
+            var patch = new CommunicationDomainResourcePatch()
             {
                 UserEngagementTracking = UserEngagementTracking.Enabled
             };
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task Delete()
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
-            var collection = _emailService.GetDomainResources();
+            var collection = _emailService.GetCommunicationDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
             await domain.DeleteAsync(WaitUntil.Completed);
             bool exists = await collection.ExistsAsync(domainName);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task Get()
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
-            var collection = _emailService.GetDomainResources();
+            var collection = _emailService.GetCommunicationDomainResources();
             await CreateDefaultDomain(domainName, _emailService);
             var domain = await collection.GetAsync(domainName);
             Assert.IsNotNull(domain);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             await CreateDefaultDomain(domainName, _emailService);
-            var list = await _emailService.GetDomainResources().GetAllAsync().ToEnumerableAsync();
+            var list = await _emailService.GetCommunicationDomainResources().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             Assert.AreEqual(domainName, list.FirstOrDefault().Data.Name);
             Assert.AreEqual(_location.ToString().ToLower(), list.FirstOrDefault().Data.Location.ToString().ToLower());
@@ -181,9 +181,9 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task VerificationOperation()
         {
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
-            var collection = _emailService.GetDomainResources();
+            var collection = _emailService.GetCommunicationDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
-            var data = new VerificationParameter(VerificationType.SPF);
+            var data = new VerificationContent(VerificationType.Spf);
             await domain.InitiateVerificationAsync(WaitUntil.Completed, data);
             await domain.CancelVerificationAsync(WaitUntil.Completed, data);
         }
