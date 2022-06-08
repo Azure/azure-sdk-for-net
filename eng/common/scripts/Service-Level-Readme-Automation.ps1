@@ -104,6 +104,23 @@ function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService,
   }
 }
 
+function CompareAndValidateMetadata ($original, $updated) {
+  $originalTable = ConvertFrom-StringData -StringData $original
+  $updatedTable = ConvertFrom-StringData -StringData $original
+  foreach ($key in $originalTable.Keys) {
+    if (!($updatedTable.ContainsKey($key))) {
+      Write-Warning "New metadata missed the entry: $key"
+    }
+    if ($updatedTable[$key] -ne $originalTable[$key]) {
+      Write-Warning "Will update metadata from old value $originalTable[$key] to new value $updatedTable[$key]"
+    }
+    $updatedTable.Remove($key)
+  }
+  foreach ($key in $updatedTable.Keys) {
+    Write-Host "Will update new entry $key with value $updatedTable[$key]"
+  }
+}
+
 # Update the metadata table.
 function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msService)
 {
@@ -113,9 +130,11 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
   $restContent = $Matches["content"]
 
   $lang = $LanguageDisplayName
+  $orignalMetadata = $Matches["metadata"]
   $metadataString = GenerateDocsMsMetadata -language $lang -serviceName $serviceName `
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
     -msService $msService
+  CompareAndValidateMetadata($orignalMetadata, $metadataString) 
   Set-Content -Path $readmePath -Value "$metadataString`n$restContent" -NoNewline
 }
 
@@ -125,7 +144,11 @@ function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moni
   # Here is the table, the versioned value will
   foreach ($pkg in $packageInfo) {
     $repositoryLink = $RepositoryUri
-    $packageLevelReadme = &$GetPackageLevelReadmeFn -packageMetadata $pkg
+    $packageLevelReadme = ""
+    if (Test-Path "Function:$GetPackageLevelReadmeFn") {
+      $packageLevelReadme = &$GetPackageLevelReadmeFn -packageMetadata $pkg
+    }
+    
     $referenceLink = "[$($pkg.DisplayName)]($packageLevelReadme-readme.md)"
     if (!(Test-Path (Join-Path $readmeFolder -ChildPath "$packageLevelReadme-readme.md"))) {
       $referenceLink = $pkg.DisplayName
@@ -175,13 +198,13 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $packageInf
 $fullMetadata = Get-CSVMetadata
 $monikers = @("latest", "preview")
 foreach($moniker in $monikers) {
-  $metadata = &$GetOnboardedDocsMsPackagesForMonikerFn `
+  $onboardedPackages = &$GetOnboardedDocsMsPackagesForMonikerFn `
     -DocRepoLocation $DocRepoLocation -moniker $moniker
   $csvMetadata = @()
   foreach($metadataEntry in $fullMetadata) {
     if ($metadataEntry.Package -and $metadataEntry.Hide -ne 'true') {
       $pkgKey = GetPackageKey $metadataEntry
-      if($metadata.ContainsKey($pkgKey)) {
+      if($onboardedPackages.ContainsKey($pkgKey)) {
         $jsonFileName = $pkgKey.Replace('@azure/', 'azure-')
         $jsonFilePath = "$DocRepoLocation/metadata/$moniker/$jsonFileName.json"
         if(!(Test-Path $jsonFilePath)){
@@ -209,8 +232,6 @@ foreach($moniker in $monikers) {
     }
     $packagesForService[$metadataKey] = $metadataEntry
   }
-  # Get unique service names and sort alphabetically to act as the service nodes
-  # in the ToC
   $services = @{}
   foreach ($package in $packagesForService.Values) {
     if ($package.ServiceName -eq 'Other') {
