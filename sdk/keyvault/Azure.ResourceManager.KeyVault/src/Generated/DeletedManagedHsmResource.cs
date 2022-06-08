@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault
     public partial class DeletedManagedHsmResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedManagedHsmResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string name)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.KeyVault/locations/{location}/deletedManagedHSMs/{name}";
             return new ResourceIdentifier(resourceId);

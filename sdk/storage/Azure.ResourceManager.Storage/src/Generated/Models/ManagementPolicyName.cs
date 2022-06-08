@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The ManagementPolicyName. </summary>
-    internal readonly partial struct ManagementPolicyName : IEquatable<ManagementPolicyName>
+    public readonly partial struct ManagementPolicyName : IEquatable<ManagementPolicyName>
     {
         private readonly string _value;
 
