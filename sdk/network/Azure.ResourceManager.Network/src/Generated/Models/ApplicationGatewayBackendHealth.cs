@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ApplicationGatewayBackendHealth API service call. </summary>
     public partial class ApplicationGatewayBackendHealth
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealth"/>. </summary>
         internal ApplicationGatewayBackendHealth()
         {
             BackendAddressPools = new ChangeTrackingList<ApplicationGatewayBackendHealthPool>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealth"/>. </summary>
         /// <param name="backendAddressPools"> A list of ApplicationGatewayBackendHealthPool resources. </param>
         internal ApplicationGatewayBackendHealth(IReadOnlyList<ApplicationGatewayBackendHealthPool> backendAddressPools)
         {

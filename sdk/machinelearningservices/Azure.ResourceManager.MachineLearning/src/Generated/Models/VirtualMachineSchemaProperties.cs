@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The VirtualMachineSchemaProperties. </summary>
     public partial class VirtualMachineSchemaProperties
     {
-        /// <summary> Initializes a new instance of VirtualMachineSchemaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSchemaProperties"/>. </summary>
         public VirtualMachineSchemaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineSchemaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSchemaProperties"/>. </summary>
         /// <param name="virtualMachineSize"> Virtual Machine size. </param>
         /// <param name="sshPort"> Port open for ssh connections. </param>
         /// <param name="notebookServerPort"> Notebook server port open for ssh connections. </param>

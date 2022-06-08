@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Optimization objective. </summary>
     public partial class Objective
     {
-        /// <summary> Initializes a new instance of Objective. </summary>
+        /// <summary> Initializes a new instance of <see cref="Objective"/>. </summary>
         /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
         /// <param name="primaryMetric"> [Required] Name of the metric to optimize. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryMetric"/> is null. </exception>

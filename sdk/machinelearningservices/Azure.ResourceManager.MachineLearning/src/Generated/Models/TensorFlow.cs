@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> TensorFlow distribution configuration. </summary>
     public partial class TensorFlow : DistributionConfiguration
     {
-        /// <summary> Initializes a new instance of TensorFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="TensorFlow"/>. </summary>
         public TensorFlow()
         {
             DistributionType = DistributionType.TensorFlow;
         }
 
-        /// <summary> Initializes a new instance of TensorFlow. </summary>
+        /// <summary> Initializes a new instance of <see cref="TensorFlow"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         /// <param name="parameterServerCount"> Number of parameter server tasks. </param>
         /// <param name="workerCount"> Number of workers. If not specified, will default to the instance count. </param>

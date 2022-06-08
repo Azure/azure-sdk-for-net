@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The resource management error additional info. </summary>
     public partial class ErrorAdditionalInfo
     {
-        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorAdditionalInfo"/>. </summary>
         internal ErrorAdditionalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorAdditionalInfo"/>. </summary>
         /// <param name="errorAdditionalInfoType"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
         internal ErrorAdditionalInfo(string errorAdditionalInfoType, BinaryData info)

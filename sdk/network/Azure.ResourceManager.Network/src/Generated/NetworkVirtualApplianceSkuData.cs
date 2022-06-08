@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the NetworkVirtualApplianceSku data model. </summary>
     public partial class NetworkVirtualApplianceSkuData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuData"/>. </summary>
         public NetworkVirtualApplianceSkuData()
         {
             AvailableVersions = new ChangeTrackingList<string>();
             AvailableScaleUnits = new ChangeTrackingList<NetworkVirtualApplianceSkuInstances>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

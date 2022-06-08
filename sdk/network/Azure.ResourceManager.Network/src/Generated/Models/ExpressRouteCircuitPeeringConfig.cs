@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Specifies the peering configuration. </summary>
     public partial class ExpressRouteCircuitPeeringConfig
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringConfig"/>. </summary>
         public ExpressRouteCircuitPeeringConfig()
         {
             AdvertisedPublicPrefixes = new ChangeTrackingList<string>();
             AdvertisedCommunities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringConfig"/>. </summary>
         /// <param name="advertisedPublicPrefixes"> The reference to AdvertisedPublicPrefixes. </param>
         /// <param name="advertisedCommunities"> The communities of bgp peering. Specified for microsoft peering. </param>
         /// <param name="advertisedPublicPrefixesState"> The advertised public prefix state of the Peering resource. </param>

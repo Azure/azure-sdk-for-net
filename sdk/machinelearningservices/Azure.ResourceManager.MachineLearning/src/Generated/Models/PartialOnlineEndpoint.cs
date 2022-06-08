@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Mutable online endpoint configuration. </summary>
     public partial class PartialOnlineEndpoint
     {
-        /// <summary> Initializes a new instance of PartialOnlineEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartialOnlineEndpoint"/>. </summary>
         public PartialOnlineEndpoint()
         {
             MirrorTraffic = new ChangeTrackingDictionary<string, int>();

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Describes a receiver that should be resubscribed. </summary>
     public partial class EnableContent
     {
-        /// <summary> Initializes a new instance of EnableContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnableContent"/>. </summary>
         /// <param name="receiverName"> The name of the receiver to resubscribe. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receiverName"/> is null. </exception>
         public EnableContent(string receiverName)

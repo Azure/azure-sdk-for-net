@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> AzureFirewall NAT Rule Collection Action. </summary>
     internal partial class AzureFirewallNatRCAction
     {
-        /// <summary> Initializes a new instance of AzureFirewallNatRCAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRCAction"/>. </summary>
         public AzureFirewallNatRCAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNatRCAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRCAction"/>. </summary>
         /// <param name="actionType"> The type of action. </param>
         internal AzureFirewallNatRCAction(AzureFirewallNatRCActionType? actionType)
         {

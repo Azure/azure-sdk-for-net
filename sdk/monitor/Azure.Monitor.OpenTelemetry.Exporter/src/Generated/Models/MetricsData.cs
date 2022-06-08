@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> An instance of the Metric item is a list of measurements (single data points) and/or aggregations. </summary>
     internal partial class MetricsData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of MetricsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricsData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="metrics"> List of metrics. Only one metric in the list is currently supported by Application Insights storage. If multiple data points were sent only the first one will be used. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>

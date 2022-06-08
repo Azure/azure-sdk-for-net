@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The parameters for updating a machine learning workspace. </summary>
     public partial class MachineLearningWorkspacePatch
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspacePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePatch"/>. </summary>
         public MachineLearningWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

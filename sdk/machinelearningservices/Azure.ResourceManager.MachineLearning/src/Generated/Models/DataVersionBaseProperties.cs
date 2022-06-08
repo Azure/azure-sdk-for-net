@@ -10,10 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Data version base definition. </summary>
+    /// <summary>
+    /// Data version base definition
+    /// Please note <see cref="DataVersionBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="MLTableData"/>, <see cref="UriFileDataVersion"/> and <see cref="UriFolderDataVersion"/>.
+    /// </summary>
     public partial class DataVersionBaseProperties : AssetBase
     {
-        /// <summary> Initializes a new instance of DataVersionBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataVersionBaseProperties"/>. </summary>
         /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public DataVersionBaseProperties(Uri dataUri)
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataUri = dataUri;
         }
 
-        /// <summary> Initializes a new instance of DataVersionBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataVersionBaseProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

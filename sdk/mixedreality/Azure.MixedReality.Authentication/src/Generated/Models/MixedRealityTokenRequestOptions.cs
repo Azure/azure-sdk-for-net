@@ -10,7 +10,7 @@ namespace Azure.MixedReality.Authentication
     /// <summary> Parameter group. </summary>
     internal partial class MixedRealityTokenRequestOptions
     {
-        /// <summary> Initializes a new instance of MixedRealityTokenRequestOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MixedRealityTokenRequestOptions"/>. </summary>
         public MixedRealityTokenRequestOptions()
         {
         }

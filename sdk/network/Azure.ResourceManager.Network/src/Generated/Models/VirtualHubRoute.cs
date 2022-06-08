@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualHub route. </summary>
     public partial class VirtualHubRoute
     {
-        /// <summary> Initializes a new instance of VirtualHubRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRoute"/>. </summary>
         public VirtualHubRoute()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualHubRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualHubRoute"/>. </summary>
         /// <param name="addressPrefixes"> List of all addressPrefixes. </param>
         /// <param name="nextHopIPAddress"> NextHop ip address. </param>
         internal VirtualHubRoute(IList<string> addressPrefixes, string nextHopIPAddress)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Limit settings for model sweeping and hyperparameter sweeping. </summary>
     public partial class ImageSweepLimitSettings
     {
-        /// <summary> Initializes a new instance of ImageSweepLimitSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSweepLimitSettings"/>. </summary>
         public ImageSweepLimitSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageSweepLimitSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSweepLimitSettings"/>. </summary>
         /// <param name="maxConcurrentTrials"> Maximum number of concurrent iterations for the underlying Sweep job. </param>
         /// <param name="maxTrials"> Maximum number of iterations for the underlying Sweep job. </param>
         internal ImageSweepLimitSettings(int? maxConcurrentTrials, int? maxTrials)

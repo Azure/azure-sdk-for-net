@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the VirtualNetworkGateway data model. </summary>
     public partial class VirtualNetworkGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayData"/>. </summary>
         public VirtualNetworkGatewayData()
         {
             IPConfigurations = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
             NatRules = new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

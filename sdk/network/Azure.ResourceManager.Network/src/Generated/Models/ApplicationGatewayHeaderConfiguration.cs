@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Header configuration of the Actions set in Application Gateway. </summary>
     public partial class ApplicationGatewayHeaderConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayHeaderConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHeaderConfiguration"/>. </summary>
         public ApplicationGatewayHeaderConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayHeaderConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayHeaderConfiguration"/>. </summary>
         /// <param name="headerName"> Header name of the header configuration. </param>
         /// <param name="headerValue"> Header value of the header configuration. </param>
         internal ApplicationGatewayHeaderConfiguration(string headerName, string headerValue)

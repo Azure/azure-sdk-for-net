@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The related metadata items for the Log Analytics solution. </summary>
     internal partial class MetadataSolutionRelated
     {
-        /// <summary> Initializes a new instance of MetadataSolutionRelated. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataSolutionRelated"/>. </summary>
         /// <param name="tables"> The tables related to the Log Analytics solution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tables"/> is null. </exception>
         internal MetadataSolutionRelated(IEnumerable<string> tables)

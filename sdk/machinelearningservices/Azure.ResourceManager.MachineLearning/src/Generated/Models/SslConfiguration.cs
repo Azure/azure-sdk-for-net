@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The ssl configuration for scoring. </summary>
     public partial class SslConfiguration
     {
-        /// <summary> Initializes a new instance of SslConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SslConfiguration"/>. </summary>
         public SslConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SslConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SslConfiguration"/>. </summary>
         /// <param name="status"> Enable or disable ssl for scoring. </param>
         /// <param name="cert"> Cert data. </param>
         /// <param name="key"> Key data. </param>

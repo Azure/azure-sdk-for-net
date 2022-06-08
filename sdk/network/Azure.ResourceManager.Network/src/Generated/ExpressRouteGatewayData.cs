@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the ExpressRouteGateway data model. </summary>
     public partial class ExpressRouteGatewayData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayData"/>. </summary>
         public ExpressRouteGatewayData()
         {
             ExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

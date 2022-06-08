@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of JobBase entities. </summary>
     internal partial class JobBaseResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of JobBaseResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobBaseResourceArmPaginatedResult"/>. </summary>
         internal JobBaseResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningJobData>();
         }
 
-        /// <summary> Initializes a new instance of JobBaseResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobBaseResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of JobBase objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type JobBase. </param>
         internal JobBaseResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningJobData> value)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Paginated list of Workspace connection objects. </summary>
     internal partial class PaginatedWorkspaceConnectionsList
     {
-        /// <summary> Initializes a new instance of PaginatedWorkspaceConnectionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaginatedWorkspaceConnectionsList"/>. </summary>
         internal PaginatedWorkspaceConnectionsList()
         {
             Value = new ChangeTrackingList<WorkspaceConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of PaginatedWorkspaceConnectionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaginatedWorkspaceConnectionsList"/>. </summary>
         /// <param name="value"> An array of Workspace connection objects. </param>
         /// <param name="nextLink"> A continuation link (absolute URI) to the next page of results in the list. </param>
         internal PaginatedWorkspaceConnectionsList(IReadOnlyList<WorkspaceConnectionData> value, string nextLink)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Validation settings. </summary>
     public partial class ValidationDataSettings
     {
-        /// <summary> Initializes a new instance of ValidationDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationDataSettings"/>. </summary>
         public ValidationDataSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidationDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationDataSettings"/>. </summary>
         /// <param name="data"> Validation data MLTable. </param>
         /// <param name="validationDataSize">
         /// The fraction of training dataset that needs to be set aside for validation purpose.

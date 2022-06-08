@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The response when test notification succeeded. </summary>
     public partial class TestNotificationResponse
     {
-        /// <summary> Initializes a new instance of TestNotificationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestNotificationResponse"/>. </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="correlationId"> The correlation id. </param>
         /// <param name="createdTime"> The created time. </param>

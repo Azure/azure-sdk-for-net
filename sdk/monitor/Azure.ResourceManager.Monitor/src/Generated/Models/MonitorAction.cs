@@ -7,15 +7,19 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Action descriptor. </summary>
+    /// <summary>
+    /// Action descriptor.
+    /// Please note <see cref="MonitorAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AlertingAction"/> and <see cref="LogToMetricAction"/>.
+    /// </summary>
     public partial class MonitorAction
     {
-        /// <summary> Initializes a new instance of MonitorAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorAction"/>. </summary>
         public MonitorAction()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorAction"/>. </summary>
         /// <param name="odataType"> Specifies the action. Supported values - AlertingAction, LogToMetricAction. </param>
         internal MonitorAction(string odataType)
         {

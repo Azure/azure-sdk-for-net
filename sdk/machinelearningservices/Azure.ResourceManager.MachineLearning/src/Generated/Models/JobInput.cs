@@ -7,15 +7,19 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Command job definition. </summary>
+    /// <summary>
+    /// Command job definition.
+    /// Please note <see cref="JobInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="CustomModelJobInput"/>, <see cref="LiteralJobInput"/>, <see cref="MLFlowModelJobInput"/>, <see cref="MLTableJobInput"/>, <see cref="TritonModelJobInput"/>, <see cref="UriFileJobInput"/> and <see cref="UriFolderJobInput"/>.
+    /// </summary>
     public partial class JobInput
     {
-        /// <summary> Initializes a new instance of JobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobInput"/>. </summary>
         public JobInput()
         {
         }
 
-        /// <summary> Initializes a new instance of JobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         internal JobInput(string description, JobInputType jobInputType)

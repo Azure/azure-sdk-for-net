@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> HDInsight compute properties. </summary>
     public partial class HDInsightProperties
     {
-        /// <summary> Initializes a new instance of HDInsightProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightProperties"/>. </summary>
         public HDInsightProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightProperties"/>. </summary>
         /// <param name="sshPort"> Port open for ssh connections on the master node of the cluster. </param>
         /// <param name="address"> Public IP address of the master node of the cluster. </param>
         /// <param name="administratorAccount"> Admin credentials for master node of the cluster. </param>

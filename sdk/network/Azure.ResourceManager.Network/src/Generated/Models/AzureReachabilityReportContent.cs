@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Geographic and time constraints for Azure reachability report. </summary>
     public partial class AzureReachabilityReportContent
     {
-        /// <summary> Initializes a new instance of AzureReachabilityReportContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportContent"/>. </summary>
         /// <param name="providerLocation"> Parameters that define a geographic location. </param>
         /// <param name="startOn"> The start time for the Azure reachability report. </param>
         /// <param name="endOn"> The end time for the Azure reachability report. </param>

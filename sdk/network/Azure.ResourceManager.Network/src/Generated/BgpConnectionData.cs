@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the BgpConnection data model. </summary>
     public partial class BgpConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of BgpConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpConnectionData"/>. </summary>
         public BgpConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of BgpConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BgpConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

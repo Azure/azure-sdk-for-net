@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The context info. </summary>
     public partial class Context
     {
-        /// <summary> Initializes a new instance of Context. </summary>
+        /// <summary> Initializes a new instance of <see cref="Context"/>. </summary>
         internal Context()
         {
         }
 
-        /// <summary> Initializes a new instance of Context. </summary>
+        /// <summary> Initializes a new instance of <see cref="Context"/>. </summary>
         /// <param name="notificationSource"> The source of the notification request. </param>
         /// <param name="contextType"> The context id type. </param>
         internal Context(string notificationSource, string contextType)

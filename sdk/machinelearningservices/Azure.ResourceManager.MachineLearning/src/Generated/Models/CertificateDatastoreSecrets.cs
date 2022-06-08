@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Datastore certificate secrets. </summary>
     public partial class CertificateDatastoreSecrets : DatastoreSecrets
     {
-        /// <summary> Initializes a new instance of CertificateDatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateDatastoreSecrets"/>. </summary>
         public CertificateDatastoreSecrets()
         {
             SecretsType = SecretsType.Certificate;
         }
 
-        /// <summary> Initializes a new instance of CertificateDatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="certificate"> Service principal certificate. </param>
         internal CertificateDatastoreSecrets(SecretsType secretsType, string certificate) : base(secretsType)

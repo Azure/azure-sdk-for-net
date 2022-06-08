@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageClassification : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of ImageClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageClassification"/>. </summary>
         /// <param name="dataSettings"> [Required] Collection of registered Tabular Dataset Ids and other data settings required for training and validating models. </param>
         /// <param name="limitSettings"> [Required] Limit settings for the AutoML job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSettings"/> or <paramref name="limitSettings"/> is null. </exception>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.ImageClassification;
         }
 
-        /// <summary> Initializes a new instance of ImageClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageClassification"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="primaryMetric"> Primary metric to optimize for this task. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Cron schedule definition. </summary>
     public partial class CronSchedule : ScheduleBase
     {
-        /// <summary> Initializes a new instance of CronSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="CronSchedule"/>. </summary>
         /// <param name="expression">
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ScheduleType = ScheduleType.Cron;
         }
 
-        /// <summary> Initializes a new instance of CronSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="CronSchedule"/>. </summary>
         /// <param name="endOn">
         /// Specifies end time of schedule in ISO 8601 format.
         /// If not present, the schedule will run indefinitely

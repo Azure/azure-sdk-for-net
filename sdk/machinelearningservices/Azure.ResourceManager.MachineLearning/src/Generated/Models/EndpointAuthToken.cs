@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Service Token. </summary>
     public partial class EndpointAuthToken
     {
-        /// <summary> Initializes a new instance of EndpointAuthToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointAuthToken"/>. </summary>
         internal EndpointAuthToken()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointAuthToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointAuthToken"/>. </summary>
         /// <param name="accessToken"> Access token for endpoint authentication. </param>
         /// <param name="expiryTimeUtc"> Access token expiry time (UTC). </param>
         /// <param name="refreshAfterTimeUtc"> Refresh access token after time (UTC). </param>

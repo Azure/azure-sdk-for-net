@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
     public partial class LogsBatchQueryResult : LogsQueryResult
     {
-        /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/>. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
         internal LogsBatchQueryResult(IEnumerable<LogsTable> allTables) : base(allTables)
@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Models
             }
         }
 
-        /// <summary> Initializes a new instance of LogsBatchQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/>. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>

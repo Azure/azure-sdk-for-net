@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Test data inputs. </summary>
     public partial class TestDataSettings
     {
-        /// <summary> Initializes a new instance of TestDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestDataSettings"/>. </summary>
         public TestDataSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of TestDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestDataSettings"/>. </summary>
         /// <param name="data"> Test data MLTable. </param>
         /// <param name="testDataSize">
         /// The fraction of test dataset that needs to be set aside for validation purpose.

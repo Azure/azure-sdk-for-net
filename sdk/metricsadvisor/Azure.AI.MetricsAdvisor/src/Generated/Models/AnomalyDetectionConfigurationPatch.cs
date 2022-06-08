@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyDetectionConfigurationPatch. </summary>
     internal partial class AnomalyDetectionConfigurationPatch
     {
-        /// <summary> Initializes a new instance of AnomalyDetectionConfigurationPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetectionConfigurationPatch"/>. </summary>
         public AnomalyDetectionConfigurationPatch()
         {
             DimensionGroupOverrideConfigurations = new ChangeTrackingList<MetricSeriesGroupDetectionCondition>();

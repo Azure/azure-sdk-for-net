@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Base definition for endpoint deployment. </summary>
     public partial class EndpointDeploymentPropertiesBase
     {
-        /// <summary> Initializes a new instance of EndpointDeploymentPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDeploymentPropertiesBase"/>. </summary>
         public EndpointDeploymentPropertiesBase()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of EndpointDeploymentPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDeploymentPropertiesBase"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>

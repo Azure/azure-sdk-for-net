@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Featurization Configuration. </summary>
     public partial class FeaturizationSettings
     {
-        /// <summary> Initializes a new instance of FeaturizationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturizationSettings"/>. </summary>
         public FeaturizationSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of FeaturizationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturizationSettings"/>. </summary>
         /// <param name="datasetLanguage"> Dataset language, useful for the text data. </param>
         internal FeaturizationSettings(string datasetLanguage)
         {

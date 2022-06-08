@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An azure resource object. </summary>
     public partial class AzureResource : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AzureResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResource"/>. </summary>
         /// <param name="location"> The location. </param>
         public AzureResource(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AzureResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

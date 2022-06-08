@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The RegistryListCredentialsResult. </summary>
     public partial class RegistryListCredentialsResult
     {
-        /// <summary> Initializes a new instance of RegistryListCredentialsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryListCredentialsResult"/>. </summary>
         internal RegistryListCredentialsResult()
         {
             Passwords = new ChangeTrackingList<PasswordDetail>();
         }
 
-        /// <summary> Initializes a new instance of RegistryListCredentialsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryListCredentialsResult"/>. </summary>
         /// <param name="location"></param>
         /// <param name="username"></param>
         /// <param name="passwords"></param>

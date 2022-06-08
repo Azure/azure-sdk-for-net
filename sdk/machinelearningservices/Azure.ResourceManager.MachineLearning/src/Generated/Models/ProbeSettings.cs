@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Deployment container liveness/readiness probe configuration. </summary>
     public partial class ProbeSettings
     {
-        /// <summary> Initializes a new instance of ProbeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProbeSettings"/>. </summary>
         public ProbeSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ProbeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProbeSettings"/>. </summary>
         /// <param name="failureThreshold"> The number of failures to allow before returning an unhealthy status. </param>
         /// <param name="initialDelay"> The delay before the first probe in ISO 8601 format. </param>
         /// <param name="period"> The length of time between probes in ISO 8601 format. </param>

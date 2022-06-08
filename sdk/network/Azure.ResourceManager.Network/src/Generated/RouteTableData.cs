@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the RouteTable data model. </summary>
     public partial class RouteTableData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of RouteTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTableData"/>. </summary>
         public RouteTableData()
         {
             Routes = new ChangeTrackingList<RouteData>();
             Subnets = new ChangeTrackingList<SubnetData>();
         }
 
-        /// <summary> Initializes a new instance of RouteTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTableData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

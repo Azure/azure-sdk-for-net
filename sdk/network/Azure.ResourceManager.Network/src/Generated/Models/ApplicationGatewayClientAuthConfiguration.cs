@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application gateway client authentication configuration. </summary>
     internal partial class ApplicationGatewayClientAuthConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayClientAuthConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayClientAuthConfiguration"/>. </summary>
         public ApplicationGatewayClientAuthConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayClientAuthConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayClientAuthConfiguration"/>. </summary>
         /// <param name="verifyClientCertIssuerDN"> Verify client certificate issuer name on the application gateway. </param>
         internal ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN)
         {

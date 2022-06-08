@@ -14,13 +14,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DataSourceCredentialList. </summary>
     internal partial class DataSourceCredentialList
     {
-        /// <summary> Initializes a new instance of DataSourceCredentialList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialList"/>. </summary>
         internal DataSourceCredentialList()
         {
             Value = new ChangeTrackingList<DataSourceCredentialEntity>();
         }
 
-        /// <summary> Initializes a new instance of DataSourceCredentialList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
         internal DataSourceCredentialList(string nextLink, IReadOnlyList<DataSourceCredentialEntity> value)

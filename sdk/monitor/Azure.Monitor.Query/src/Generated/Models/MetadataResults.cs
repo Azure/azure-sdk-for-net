@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The metadata response for the app, including available tables, etc. </summary>
     internal partial class MetadataResults
     {
-        /// <summary> Initializes a new instance of MetadataResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataResults"/>. </summary>
         internal MetadataResults()
         {
             Categories = new ChangeTrackingList<MetadataCategory>();

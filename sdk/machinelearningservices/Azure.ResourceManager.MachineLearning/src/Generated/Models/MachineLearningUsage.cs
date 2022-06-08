@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Describes AML Resource Usage. </summary>
     public partial class MachineLearningUsage
     {
-        /// <summary> Initializes a new instance of MachineLearningUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsage"/>. </summary>
         internal MachineLearningUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUsage"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
         /// <param name="usageType"> Specifies the resource type. </param>

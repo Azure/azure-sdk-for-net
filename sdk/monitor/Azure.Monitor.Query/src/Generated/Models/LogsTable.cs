@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Contains the columns and rows for one table in a query response. </summary>
     public partial class LogsTable
     {
-        /// <summary> Initializes a new instance of LogsTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsTable"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
         /// <param name="internalRows"> The resulting rows from this query. </param>
@@ -36,7 +36,7 @@ namespace Azure.Monitor.Query.Models
             InternalRows = internalRows;
         }
 
-        /// <summary> Initializes a new instance of LogsTable. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsTable"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
         /// <param name="internalRows"> The resulting rows from this query. </param>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The properties for Quota update or retrieval. </summary>
     public partial class QuotaBaseProperties
     {
-        /// <summary> Initializes a new instance of QuotaBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaBaseProperties"/>. </summary>
         public QuotaBaseProperties()
         {
         }

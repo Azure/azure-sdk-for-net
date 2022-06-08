@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DataSourceCredentialPatch. </summary>
     internal partial class DataSourceCredentialPatch
     {
-        /// <summary> Initializes a new instance of DataSourceCredentialPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialPatch"/>. </summary>
         public DataSourceCredentialPatch()
         {
         }

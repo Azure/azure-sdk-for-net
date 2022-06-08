@@ -10,16 +10,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Compute start stop schedule properties. </summary>
     public partial class ComputeStartStopSchedule
     {
-        /// <summary> Initializes a new instance of ComputeStartStopSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopSchedule"/>. </summary>
         internal ComputeStartStopSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeStartStopSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeStartStopSchedule"/>. </summary>
         /// <param name="id"> Schedule id. </param>
         /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
         /// <param name="action"> The compute power action. </param>
-        /// <param name="schedule"> Base definition of a schedule. </param>
+        /// <param name="schedule">
+        /// Base definition of a schedule
+        /// Please note <see cref="ScheduleBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CronSchedule"/> and <see cref="RecurrenceSchedule"/>.
+        /// </param>
         internal ComputeStartStopSchedule(string id, ProvisioningStatus? provisioningStatus, ComputePowerAction? action, ScheduleBase schedule)
         {
             Id = id;
@@ -34,7 +38,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public ProvisioningStatus? ProvisioningStatus { get; }
         /// <summary> The compute power action. </summary>
         public ComputePowerAction? Action { get; }
-        /// <summary> Base definition of a schedule. </summary>
+        /// <summary>
+        /// Base definition of a schedule
+        /// Please note <see cref="ScheduleBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CronSchedule"/> and <see cref="RecurrenceSchedule"/>.
+        /// </summary>
         public ScheduleBase Schedule { get; }
     }
 }

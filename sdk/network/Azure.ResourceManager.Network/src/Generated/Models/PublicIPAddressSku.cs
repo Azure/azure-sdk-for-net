@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> SKU of a public IP address. </summary>
     public partial class PublicIPAddressSku
     {
-        /// <summary> Initializes a new instance of PublicIPAddressSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressSku"/>. </summary>
         public PublicIPAddressSku()
         {
         }
 
-        /// <summary> Initializes a new instance of PublicIPAddressSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressSku"/>. </summary>
         /// <param name="name"> Name of a public IP address SKU. </param>
         /// <param name="tier"> Tier of a public IP address SKU. </param>
         internal PublicIPAddressSku(PublicIPAddressSkuName? name, PublicIPAddressSkuTier? tier)

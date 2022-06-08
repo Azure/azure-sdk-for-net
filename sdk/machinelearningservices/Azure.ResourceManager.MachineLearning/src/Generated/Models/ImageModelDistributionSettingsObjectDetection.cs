@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelDistributionSettingsObjectDetection : ImageModelDistributionSettings
     {
-        /// <summary> Initializes a new instance of ImageModelDistributionSettingsObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsObjectDetection"/>. </summary>
         public ImageModelDistributionSettingsObjectDetection()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelDistributionSettingsObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsObjectDetection"/>. </summary>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is &apos;adam&apos; or &apos;adamw&apos;. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
         /// <param name="beta1"> Value of &apos;beta1&apos; when optimizer is &apos;adam&apos; or &apos;adamw&apos;. Must be a float in the range [0, 1]. </param>

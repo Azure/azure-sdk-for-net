@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains IPv6 peering config. </summary>
     public partial class IPv6ExpressRouteCircuitPeeringConfig
     {
-        /// <summary> Initializes a new instance of IPv6ExpressRouteCircuitPeeringConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPv6ExpressRouteCircuitPeeringConfig"/>. </summary>
         public IPv6ExpressRouteCircuitPeeringConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of IPv6ExpressRouteCircuitPeeringConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPv6ExpressRouteCircuitPeeringConfig"/>. </summary>
         /// <param name="primaryPeerAddressPrefix"> The primary address prefix. </param>
         /// <param name="secondaryPeerAddressPrefix"> The secondary address prefix. </param>
         /// <param name="microsoftPeeringConfig"> The Microsoft peering configuration. </param>

@@ -10,12 +10,12 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The ErrorCode. </summary>
     internal partial class ErrorCode
     {
-        /// <summary> Initializes a new instance of ErrorCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorCode"/>. </summary>
         internal ErrorCode()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorCode"/>. </summary>
         /// <param name="message"></param>
         /// <param name="code"></param>
         internal ErrorCode(string message, string code)

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary> A class representing the MachineLearningCompute data model. </summary>
     public partial class MachineLearningComputeData : ResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>
         public MachineLearningComputeData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="properties"> Compute properties. </param>
+        /// <param name="properties">
+        /// Compute properties
+        /// Please note <see cref="Compute"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AksCompute"/>, <see cref="AmlCompute"/>, <see cref="ComputeInstance"/>, <see cref="DataFactoryCompute"/>, <see cref="DataLakeAnalyticsCompute"/>, <see cref="DatabricksCompute"/>, <see cref="HDInsightCompute"/>, <see cref="KubernetesCompute"/>, <see cref="SynapseSparkCompute"/> and <see cref="VirtualMachineCompute"/>.
+        /// </param>
         internal MachineLearningComputeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningSku sku, Compute properties) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
@@ -48,7 +52,11 @@ namespace Azure.ResourceManager.MachineLearning
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
         public MachineLearningSku Sku { get; set; }
-        /// <summary> Compute properties. </summary>
+        /// <summary>
+        /// Compute properties
+        /// Please note <see cref="Compute"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AksCompute"/>, <see cref="AmlCompute"/>, <see cref="ComputeInstance"/>, <see cref="DataFactoryCompute"/>, <see cref="DataLakeAnalyticsCompute"/>, <see cref="DatabricksCompute"/>, <see cref="HDInsightCompute"/>, <see cref="KubernetesCompute"/>, <see cref="SynapseSparkCompute"/> and <see cref="VirtualMachineCompute"/>.
+        /// </summary>
         public Compute Properties { get; set; }
     }
 }

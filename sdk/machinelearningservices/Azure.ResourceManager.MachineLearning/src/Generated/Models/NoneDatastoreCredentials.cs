@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Empty/none datastore credentials. </summary>
     public partial class NoneDatastoreCredentials : DatastoreCredentials
     {
-        /// <summary> Initializes a new instance of NoneDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="NoneDatastoreCredentials"/>. </summary>
         public NoneDatastoreCredentials()
         {
             CredentialsType = CredentialsType.None;
         }
 
-        /// <summary> Initializes a new instance of NoneDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="NoneDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         internal NoneDatastoreCredentials(CredentialsType credentialsType) : base(credentialsType)
         {

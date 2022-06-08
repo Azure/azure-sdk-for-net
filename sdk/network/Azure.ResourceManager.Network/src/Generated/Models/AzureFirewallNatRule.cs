@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of a NAT rule. </summary>
     public partial class AzureFirewallNatRule
     {
-        /// <summary> Initializes a new instance of AzureFirewallNatRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRule"/>. </summary>
         public AzureFirewallNatRule()
         {
             SourceAddresses = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             SourceIPGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNatRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRule"/>. </summary>
         /// <param name="name"> Name of the NAT rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>

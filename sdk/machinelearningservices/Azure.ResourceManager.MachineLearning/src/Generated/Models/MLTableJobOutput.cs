@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MLTableJobOutput. </summary>
     public partial class MLTableJobOutput : JobOutput
     {
-        /// <summary> Initializes a new instance of MLTableJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MLTableJobOutput"/>. </summary>
         public MLTableJobOutput()
         {
             JobOutputType = JobOutputType.MLTable;
         }
 
-        /// <summary> Initializes a new instance of MLTableJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MLTableJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>

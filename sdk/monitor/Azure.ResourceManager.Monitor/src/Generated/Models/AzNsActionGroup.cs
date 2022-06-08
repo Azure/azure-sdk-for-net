@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Azure action group. </summary>
     public partial class AzNsActionGroup
     {
-        /// <summary> Initializes a new instance of AzNsActionGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzNsActionGroup"/>. </summary>
         public AzNsActionGroup()
         {
             ActionGroup = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzNsActionGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzNsActionGroup"/>. </summary>
         /// <param name="actionGroup"> Azure Action Group reference. </param>
         /// <param name="emailSubject"> Custom subject override for all email ids in Azure action group. </param>
         /// <param name="customWebhookPayload"> Custom payload to be sent for all webhook URI in Azure action group. </param>

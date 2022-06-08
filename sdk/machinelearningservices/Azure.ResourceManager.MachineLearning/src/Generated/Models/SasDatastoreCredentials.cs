@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> SAS datastore credentials configuration. </summary>
     public partial class SasDatastoreCredentials : DatastoreCredentials
     {
-        /// <summary> Initializes a new instance of SasDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDatastoreCredentials"/>. </summary>
         /// <param name="secrets"> [Required] Storage container secrets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
         public SasDatastoreCredentials(SasDatastoreSecrets secrets)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CredentialsType = CredentialsType.Sas;
         }
 
-        /// <summary> Initializes a new instance of SasDatastoreCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="secrets"> [Required] Storage container secrets. </param>
         internal SasDatastoreCredentials(CredentialsType credentialsType, SasDatastoreSecrets secrets) : base(credentialsType)

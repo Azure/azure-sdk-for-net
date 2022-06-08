@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the NetworkPrivateEndpointConnection data model. </summary>
     public partial class NetworkPrivateEndpointConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateEndpointConnectionData"/>. </summary>
         public NetworkPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

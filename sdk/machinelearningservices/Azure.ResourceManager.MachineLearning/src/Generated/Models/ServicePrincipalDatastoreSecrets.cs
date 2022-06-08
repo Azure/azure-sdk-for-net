@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Datastore Service Principal secrets. </summary>
     public partial class ServicePrincipalDatastoreSecrets : DatastoreSecrets
     {
-        /// <summary> Initializes a new instance of ServicePrincipalDatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalDatastoreSecrets"/>. </summary>
         public ServicePrincipalDatastoreSecrets()
         {
             SecretsType = SecretsType.ServicePrincipal;
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalDatastoreSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
         /// <param name="clientSecret"> Service principal secret. </param>
         internal ServicePrincipalDatastoreSecrets(SecretsType secretsType, string clientSecret) : base(secretsType)

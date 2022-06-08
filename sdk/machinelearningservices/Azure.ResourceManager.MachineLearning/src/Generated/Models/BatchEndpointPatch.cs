@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Strictly used in update requests. </summary>
     public partial class BatchEndpointPatch
     {
-        /// <summary> Initializes a new instance of BatchEndpointPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointPatch"/>. </summary>
         public BatchEndpointPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

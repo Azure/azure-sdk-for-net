@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A pointer to an Azure Action Group. </summary>
     public partial class ActivityLogAlertActionGroup
     {
-        /// <summary> Initializes a new instance of ActivityLogAlertActionGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertActionGroup"/>. </summary>
         /// <param name="actionGroupId"> The resourceId of the action group. This cannot be null or empty. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionGroupId"/> is null. </exception>
         public ActivityLogAlertActionGroup(string actionGroupId)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             WebhookProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ActivityLogAlertActionGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertActionGroup"/>. </summary>
         /// <param name="actionGroupId"> The resourceId of the action group. This cannot be null or empty. </param>
         /// <param name="webhookProperties"> the dictionary of custom properties to include with the post operation. These data are appended to the webhook payload. </param>
         internal ActivityLogAlertActionGroup(string actionGroupId, IDictionary<string, string> webhookProperties)

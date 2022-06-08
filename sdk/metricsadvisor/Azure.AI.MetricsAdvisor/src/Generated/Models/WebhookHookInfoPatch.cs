@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The WebhookHookInfoPatch. </summary>
     internal partial class WebhookHookInfoPatch : HookInfoPatch
     {
-        /// <summary> Initializes a new instance of WebhookHookInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookHookInfoPatch"/>. </summary>
         public WebhookHookInfoPatch()
         {
             HookType = NotificationHookKind.Webhook;

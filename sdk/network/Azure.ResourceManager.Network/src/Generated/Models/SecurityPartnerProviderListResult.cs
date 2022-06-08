@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListSecurityPartnerProviders API service call. </summary>
     internal partial class SecurityPartnerProviderListResult
     {
-        /// <summary> Initializes a new instance of SecurityPartnerProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPartnerProviderListResult"/>. </summary>
         internal SecurityPartnerProviderListResult()
         {
             Value = new ChangeTrackingList<SecurityPartnerProviderData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityPartnerProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPartnerProviderListResult"/>. </summary>
         /// <param name="value"> List of Security Partner Providers in a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal SecurityPartnerProviderListResult(IReadOnlyList<SecurityPartnerProviderData> value, string nextLink)

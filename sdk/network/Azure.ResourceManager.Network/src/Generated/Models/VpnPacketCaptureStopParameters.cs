@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Stop packet capture parameters. </summary>
     public partial class VpnPacketCaptureStopParameters
     {
-        /// <summary> Initializes a new instance of VpnPacketCaptureStopParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnPacketCaptureStopParameters"/>. </summary>
         public VpnPacketCaptureStopParameters()
         {
         }

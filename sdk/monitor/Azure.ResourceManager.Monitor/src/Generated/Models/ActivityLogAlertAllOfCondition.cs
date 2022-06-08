@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An Activity Log alert condition that is met when all its member conditions are met. </summary>
     internal partial class ActivityLogAlertAllOfCondition
     {
-        /// <summary> Initializes a new instance of ActivityLogAlertAllOfCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertAllOfCondition"/>. </summary>
         /// <param name="allOf"> The list of activity log alert conditions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allOf"/> is null. </exception>
         public ActivityLogAlertAllOfCondition(IEnumerable<ActivityLogAlertLeafCondition> allOf)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
             AllOf = allOf.ToList();
         }
 
-        /// <summary> Initializes a new instance of ActivityLogAlertAllOfCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertAllOfCondition"/>. </summary>
         /// <param name="allOf"> The list of activity log alert conditions. </param>
         internal ActivityLogAlertAllOfCondition(IList<ActivityLogAlertLeafCondition> allOf)
         {

@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Secrets related to a Machine Learning compute based on AKS. </summary>
     public partial class VirtualMachineSecrets : ComputeSecrets
     {
-        /// <summary> Initializes a new instance of VirtualMachineSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSecrets"/>. </summary>
         internal VirtualMachineSecrets()
         {
             ComputeType = ComputeType.VirtualMachine;
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSecrets"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="administratorAccount"> Admin credentials for virtual machine. </param>
         internal VirtualMachineSecrets(ComputeType computeType, VirtualMachineSshCredentials administratorAccount) : base(computeType)

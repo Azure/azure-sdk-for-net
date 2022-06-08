@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Instance type schema. </summary>
     public partial class InstanceTypeSchema
     {
-        /// <summary> Initializes a new instance of InstanceTypeSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceTypeSchema"/>. </summary>
         public InstanceTypeSchema()
         {
             NodeSelector = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of InstanceTypeSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceTypeSchema"/>. </summary>
         /// <param name="nodeSelector"> Node Selector. </param>
         /// <param name="resources"> Resource requests/limits for this instance type. </param>
         internal InstanceTypeSchema(IDictionary<string, string> nodeSelector, InstanceTypeSchemaResources resources)

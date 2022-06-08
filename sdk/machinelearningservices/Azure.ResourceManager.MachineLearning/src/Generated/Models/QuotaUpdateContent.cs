@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Quota update parameters. </summary>
     public partial class QuotaUpdateContent
     {
-        /// <summary> Initializes a new instance of QuotaUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaUpdateContent"/>. </summary>
         public QuotaUpdateContent()
         {
             Value = new ChangeTrackingList<QuotaBaseProperties>();

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines an Aml Instance container. </summary>
     public partial class ComputeInstanceContainer
     {
-        /// <summary> Initializes a new instance of ComputeInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeInstanceContainer"/>. </summary>
         internal ComputeInstanceContainer()
         {
             Services = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ComputeInstanceContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeInstanceContainer"/>. </summary>
         /// <param name="name"> Name of the ComputeInstance container. </param>
         /// <param name="autosave"> Auto save settings. </param>
         /// <param name="gpu"> Information of GPU. </param>

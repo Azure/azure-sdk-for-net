@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListSubnets API service call. Retrieves all subnets that belong to a virtual network. </summary>
     internal partial class VirtualNetworkPeeringListResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworkPeeringListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringListResult"/>. </summary>
         internal VirtualNetworkPeeringListResult()
         {
             Value = new ChangeTrackingList<VirtualNetworkPeeringData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkPeeringListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringListResult"/>. </summary>
         /// <param name="value"> The peerings in a virtual network. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal VirtualNetworkPeeringListResult(IReadOnlyList<VirtualNetworkPeeringData> value, string nextLink)

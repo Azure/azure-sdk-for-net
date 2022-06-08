@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines an Aml Instance application and its connectivity endpoint URI. </summary>
     public partial class ComputeInstanceApplication
     {
-        /// <summary> Initializes a new instance of ComputeInstanceApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeInstanceApplication"/>. </summary>
         internal ComputeInstanceApplication()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeInstanceApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeInstanceApplication"/>. </summary>
         /// <param name="displayName"> Name of the ComputeInstance application. </param>
         /// <param name="endpointUri"> Application&apos; endpoint URI. </param>
         internal ComputeInstanceApplication(string displayName, Uri endpointUri)

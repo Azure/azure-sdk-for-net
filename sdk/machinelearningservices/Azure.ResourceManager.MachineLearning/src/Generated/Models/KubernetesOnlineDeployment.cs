@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Properties specific to a KubernetesOnlineDeployment. </summary>
     public partial class KubernetesOnlineDeployment : OnlineDeploymentProperties
     {
-        /// <summary> Initializes a new instance of KubernetesOnlineDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesOnlineDeployment"/>. </summary>
         public KubernetesOnlineDeployment()
         {
             EndpointComputeType = EndpointComputeType.Kubernetes;
         }
 
-        /// <summary> Initializes a new instance of KubernetesOnlineDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesOnlineDeployment"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
@@ -43,6 +43,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If it is null or not provided,
         /// it defaults to TargetUtilizationScaleSettings for KubernetesOnlineDeployment
         /// and to DefaultScaleSettings for ManagedOnlineDeployment.
+        /// Please note <see cref="OnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DefaultScaleSettings"/> and <see cref="TargetUtilizationScaleSettings"/>.
         /// </param>
         /// <param name="containerResourceRequirements"> The resource requirements for the container (cpu and memory). </param>
         internal KubernetesOnlineDeployment(CodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, bool? appInsightsEnabled, EgressPublicNetworkAccessType? egressPublicNetworkAccess, EndpointComputeType endpointComputeType, string instanceType, ProbeSettings livenessProbe, string model, string modelMountPath, bool? privateNetworkConnection, DeploymentProvisioningState? provisioningState, ProbeSettings readinessProbe, OnlineRequestSettings requestSettings, OnlineScaleSettings scaleSettings, ContainerResourceRequirements containerResourceRequirements) : base(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, privateNetworkConnection, provisioningState, readinessProbe, requestSettings, scaleSettings)

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UriFileJobInput. </summary>
     public partial class UriFileJobInput : JobInput
     {
-        /// <summary> Initializes a new instance of UriFileJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFileJobInput"/>. </summary>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public UriFileJobInput(Uri uri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobInputType = JobInputType.UriFile;
         }
 
-        /// <summary> Initializes a new instance of UriFileJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFileJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="mode"> Input Asset Delivery Mode. </param>

@@ -9,15 +9,19 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The JobLimits. </summary>
+    /// <summary>
+    /// The JobLimits.
+    /// Please note <see cref="JobLimits"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SweepJobLimits"/> and <see cref="CommandJobLimits"/>.
+    /// </summary>
     public partial class JobLimits
     {
-        /// <summary> Initializes a new instance of JobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobLimits"/>. </summary>
         public JobLimits()
         {
         }
 
-        /// <summary> Initializes a new instance of JobLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobLimits"/>. </summary>
         /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
         /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
         internal JobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout)

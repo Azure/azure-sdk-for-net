@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specifies an auto scale rule metric dimension. </summary>
     public partial class ScaleRuleMetricDimension
     {
-        /// <summary> Initializes a new instance of ScaleRuleMetricDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScaleRuleMetricDimension"/>. </summary>
         /// <param name="dimensionName"> Name of the dimension. </param>
         /// <param name="operator"> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </param>
         /// <param name="values"> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Values = values.ToList();
         }
 
-        /// <summary> Initializes a new instance of ScaleRuleMetricDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScaleRuleMetricDimension"/>. </summary>
         /// <param name="dimensionName"> Name of the dimension. </param>
         /// <param name="operator"> the dimension operator. Only &apos;Equals&apos; and &apos;NotEquals&apos; are supported. &apos;Equals&apos; being equal to any of the values. &apos;NotEquals&apos; being not equal to all of the values. </param>
         /// <param name="values"> list of dimension values. For example: [&quot;App1&quot;,&quot;App2&quot;]. </param>

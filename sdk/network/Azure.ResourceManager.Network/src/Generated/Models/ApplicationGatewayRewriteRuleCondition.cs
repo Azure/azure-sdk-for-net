@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Set of conditions in the Rewrite Rule in Application Gateway. </summary>
     public partial class ApplicationGatewayRewriteRuleCondition
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleCondition"/>. </summary>
         public ApplicationGatewayRewriteRuleCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleCondition"/>. </summary>
         /// <param name="variable"> The condition parameter of the RewriteRuleCondition. </param>
         /// <param name="pattern"> The pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition. </param>
         /// <param name="ignoreCase"> Setting this parameter to truth value with force the pattern to do a case in-sensitive comparison. </param>

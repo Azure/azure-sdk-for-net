@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Batch endpoint default values. </summary>
     internal partial class BatchEndpointDefaults
     {
-        /// <summary> Initializes a new instance of BatchEndpointDefaults. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointDefaults"/>. </summary>
         public BatchEndpointDefaults()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchEndpointDefaults. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointDefaults"/>. </summary>
         /// <param name="deploymentName">
         /// Name of the deployment that will be default for the endpoint.
         /// This deployment will end up getting 100% traffic when the endpoint scoring URL is invoked.

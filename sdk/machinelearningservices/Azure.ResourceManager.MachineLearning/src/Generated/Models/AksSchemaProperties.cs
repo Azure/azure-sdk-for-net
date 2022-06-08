@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> AKS properties. </summary>
     public partial class AksSchemaProperties
     {
-        /// <summary> Initializes a new instance of AksSchemaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AksSchemaProperties"/>. </summary>
         public AksSchemaProperties()
         {
             SystemServices = new ChangeTrackingList<SystemService>();
         }
 
-        /// <summary> Initializes a new instance of AksSchemaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AksSchemaProperties"/>. </summary>
         /// <param name="clusterFqdn"> Cluster full qualified domain name. </param>
         /// <param name="systemServices"> System services. </param>
         /// <param name="agentCount"> Number of agents. </param>

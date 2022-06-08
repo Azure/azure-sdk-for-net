@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The EncryptionKeyVaultProperties. </summary>
     public partial class EncryptionKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of EncryptionKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultArmId"> The ArmId of the keyVault where the customer owned encryption key is present. </param>
         /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultArmId"/> or <paramref name="keyIdentifier"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyIdentifier = keyIdentifier;
         }
 
-        /// <summary> Initializes a new instance of EncryptionKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionKeyVaultProperties"/>. </summary>
         /// <param name="keyVaultArmId"> The ArmId of the keyVault where the customer owned encryption key is present. </param>
         /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
         /// <param name="identityClientId"> For future use - The client id of the identity which will be used to access key vault. </param>

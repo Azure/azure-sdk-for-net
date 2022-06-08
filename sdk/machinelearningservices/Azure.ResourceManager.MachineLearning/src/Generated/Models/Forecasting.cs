@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting task in AutoML Table vertical. </summary>
     public partial class Forecasting : AutoMLVertical
     {
-        /// <summary> Initializes a new instance of Forecasting. </summary>
+        /// <summary> Initializes a new instance of <see cref="Forecasting"/>. </summary>
         public Forecasting()
         {
             AllowedModels = new ChangeTrackingList<ForecastingModels>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType = TaskType.Forecasting;
         }
 
-        /// <summary> Initializes a new instance of Forecasting. </summary>
+        /// <summary> Initializes a new instance of <see cref="Forecasting"/>. </summary>
         /// <param name="logVerbosity"> Log verbosity for the job. </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="allowedModels"> Allowed models for forecasting task. </param>

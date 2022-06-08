@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An email receiver. </summary>
     public partial class EmailReceiver
     {
-        /// <summary> Initializes a new instance of EmailReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailReceiver"/>. </summary>
         /// <param name="name"> The name of the email receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="emailAddress"> The email address of this receiver. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="emailAddress"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             EmailAddress = emailAddress;
         }
 
-        /// <summary> Initializes a new instance of EmailReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailReceiver"/>. </summary>
         /// <param name="name"> The name of the email receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="emailAddress"> The email address of this receiver. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>

@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The EmailHookInfoPatch. </summary>
     internal partial class EmailHookInfoPatch : HookInfoPatch
     {
-        /// <summary> Initializes a new instance of EmailHookInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailHookInfoPatch"/>. </summary>
         public EmailHookInfoPatch()
         {
             HookType = NotificationHookKind.Email;

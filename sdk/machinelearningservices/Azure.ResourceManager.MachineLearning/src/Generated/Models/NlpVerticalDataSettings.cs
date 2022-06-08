@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class NlpVerticalDataSettings : DataSettings
     {
-        /// <summary> Initializes a new instance of NlpVerticalDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpVerticalDataSettings"/>. </summary>
         /// <param name="targetColumnName">
         /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Initializes a new instance of NlpVerticalDataSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpVerticalDataSettings"/>. </summary>
         /// <param name="targetColumnName">
         /// [Required] Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.

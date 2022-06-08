@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Container for data asset versions. </summary>
     public partial class DataContainerProperties : AssetContainer
     {
-        /// <summary> Initializes a new instance of DataContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataContainerProperties"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the type of data. </param>
         public DataContainerProperties(DataType dataType)
         {
             DataType = dataType;
         }
 
-        /// <summary> Initializes a new instance of DataContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

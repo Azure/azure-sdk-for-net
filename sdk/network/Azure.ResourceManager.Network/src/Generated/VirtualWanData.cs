@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the VirtualWan data model. </summary>
     public partial class VirtualWanData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualWanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWanData"/>. </summary>
         public VirtualWanData()
         {
             VirtualHubs = new ChangeTrackingList<WritableSubResource>();
             VpnSites = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of VirtualWanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWanData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

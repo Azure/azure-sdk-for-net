@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
     public partial class PrivateLinkScopePatch
     {
-        /// <summary> Initializes a new instance of PrivateLinkScopePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkScopePatch"/>. </summary>
         public PrivateLinkScopePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A DataFactory compute. </summary>
     public partial class DatabricksCompute : Compute
     {
-        /// <summary> Initializes a new instance of DatabricksCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksCompute"/>. </summary>
         public DatabricksCompute()
         {
             ComputeType = ComputeType.Databricks;
         }
 
-        /// <summary> Initializes a new instance of DatabricksCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksCompute"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>

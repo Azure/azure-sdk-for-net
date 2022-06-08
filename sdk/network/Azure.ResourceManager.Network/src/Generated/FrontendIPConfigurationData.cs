@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// <summary> A class representing the FrontendIPConfiguration data model. </summary>
     public partial class FrontendIPConfigurationData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of FrontendIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendIPConfigurationData"/>. </summary>
         public FrontendIPConfigurationData()
         {
             Zones = new ChangeTrackingList<string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
             LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of FrontendIPConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendIPConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

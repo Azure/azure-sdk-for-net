@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The ModelContainerProperties. </summary>
     public partial class ModelContainerProperties : AssetContainer
     {
-        /// <summary> Initializes a new instance of ModelContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelContainerProperties"/>. </summary>
         public ModelContainerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ModelContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelContainerProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

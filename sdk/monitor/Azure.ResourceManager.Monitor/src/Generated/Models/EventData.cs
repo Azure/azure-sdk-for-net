@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The Azure event log entries are of type EventData. </summary>
     public partial class EventData
     {
-        /// <summary> Initializes a new instance of EventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventData"/>. </summary>
         internal EventData()
         {
             Claims = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of EventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventData"/>. </summary>
         /// <param name="authorization"> The sender authorization information. </param>
         /// <param name="claims"> key value pairs to identify ARM permissions. </param>
         /// <param name="caller"> the email address of the user who has performed the operation, the UPN claim or SPN claim based on availability. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
     public partial class PartialManagedServiceIdentity
     {
-        /// <summary> Initializes a new instance of PartialManagedServiceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartialManagedServiceIdentity"/>. </summary>
         public PartialManagedServiceIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, BinaryData>();

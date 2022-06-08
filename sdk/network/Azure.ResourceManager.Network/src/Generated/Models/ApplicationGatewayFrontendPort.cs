@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Frontend port of an application gateway. </summary>
     public partial class ApplicationGatewayFrontendPort : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFrontendPort"/>. </summary>
         public ApplicationGatewayFrontendPort()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFrontendPort"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

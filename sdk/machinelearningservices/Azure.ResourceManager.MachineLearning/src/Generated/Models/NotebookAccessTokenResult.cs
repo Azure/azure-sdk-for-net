@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The NotebookAccessTokenResult. </summary>
     public partial class NotebookAccessTokenResult
     {
-        /// <summary> Initializes a new instance of NotebookAccessTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookAccessTokenResult"/>. </summary>
         internal NotebookAccessTokenResult()
         {
         }
 
-        /// <summary> Initializes a new instance of NotebookAccessTokenResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookAccessTokenResult"/>. </summary>
         /// <param name="notebookResourceId"></param>
         /// <param name="hostName"></param>
         /// <param name="publicDns"></param>

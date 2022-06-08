@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Load balancer backend addresses. </summary>
     public partial class LoadBalancerBackendAddress
     {
-        /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddress"/>. </summary>
         public LoadBalancerBackendAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddress"/>. </summary>
         /// <param name="name"> Name of the backend address. </param>
         /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>
         /// <param name="subnet"> Reference to an existing subnet. </param>

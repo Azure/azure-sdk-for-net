@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Describes the list of Azure Monitor PrivateLinkScope resources. </summary>
     internal partial class AzureMonitorPrivateLinkScopeListResult
     {
-        /// <summary> Initializes a new instance of AzureMonitorPrivateLinkScopeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorPrivateLinkScopeListResult"/>. </summary>
         /// <param name="value"> List of Azure Monitor PrivateLinkScope definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AzureMonitorPrivateLinkScopeListResult(IEnumerable<PrivateLinkScopeData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AzureMonitorPrivateLinkScopeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMonitorPrivateLinkScopeListResult"/>. </summary>
         /// <param name="value"> List of Azure Monitor PrivateLinkScope definitions. </param>
         /// <param name="nextLink"> The URI to get the next set of Azure Monitor PrivateLinkScope definitions if too many PrivateLinkScopes where returned in the result set. </param>
         internal AzureMonitorPrivateLinkScopeListResult(IReadOnlyList<PrivateLinkScopeData> value, string nextLink)

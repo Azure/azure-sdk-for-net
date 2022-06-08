@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Virtual Appliance Sku Properties. </summary>
     public partial class VirtualApplianceSkuProperties
     {
-        /// <summary> Initializes a new instance of VirtualApplianceSkuProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceSkuProperties"/>. </summary>
         public VirtualApplianceSkuProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceSkuProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceSkuProperties"/>. </summary>
         /// <param name="vendor"> Virtual Appliance Vendor. </param>
         /// <param name="bundledScaleUnit"> Virtual Appliance Scale Unit. </param>
         /// <param name="marketPlaceVersion"> Virtual Appliance Version. </param>

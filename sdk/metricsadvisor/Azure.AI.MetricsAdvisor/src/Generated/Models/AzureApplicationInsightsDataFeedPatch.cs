@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureApplicationInsightsDataFeedPatch. </summary>
     internal partial class AzureApplicationInsightsDataFeedPatch : DataFeedDetailPatch
     {
-        /// <summary> Initializes a new instance of AzureApplicationInsightsDataFeedPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureApplicationInsightsDataFeedPatch"/>. </summary>
         public AzureApplicationInsightsDataFeedPatch()
         {
             DataSourceType = DataFeedSourceKind.AzureApplicationInsights;

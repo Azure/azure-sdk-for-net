@@ -10,7 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The ChangeThresholdConditionPatch. </summary>
     internal partial class ChangeThresholdConditionPatch
     {
-        /// <summary> Initializes a new instance of ChangeThresholdConditionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeThresholdConditionPatch"/>. </summary>
         public ChangeThresholdConditionPatch()
         {
         }

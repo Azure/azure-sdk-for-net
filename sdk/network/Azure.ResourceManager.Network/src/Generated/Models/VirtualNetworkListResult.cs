@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListVirtualNetworks API service call. </summary>
     internal partial class VirtualNetworkListResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkListResult"/>. </summary>
         internal VirtualNetworkListResult()
         {
             Value = new ChangeTrackingList<VirtualNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkListResult"/>. </summary>
         /// <param name="value"> A list of VirtualNetwork resources in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal VirtualNetworkListResult(IReadOnlyList<VirtualNetworkData> value, string nextLink)

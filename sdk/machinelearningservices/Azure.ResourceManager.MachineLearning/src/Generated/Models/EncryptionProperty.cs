@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The EncryptionProperty. </summary>
     public partial class EncryptionProperty
     {
-        /// <summary> Initializes a new instance of EncryptionProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProperty"/>. </summary>
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
         /// <param name="keyVaultProperties"> Customer Key vault properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyVaultProperties = keyVaultProperties;
         }
 
-        /// <summary> Initializes a new instance of EncryptionProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProperty"/>. </summary>
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
         /// <param name="identity"> The identity that will be used to access the key vault for encryption at rest. </param>
         /// <param name="keyVaultProperties"> Customer Key vault properties. </param>

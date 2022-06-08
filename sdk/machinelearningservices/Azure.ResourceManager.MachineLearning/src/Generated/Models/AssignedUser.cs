@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A user that can be assigned to a compute instance. </summary>
     public partial class AssignedUser
     {
-        /// <summary> Initializes a new instance of AssignedUser. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignedUser"/>. </summary>
         /// <param name="objectId"> User’s AAD Object Id. </param>
         /// <param name="tenantId"> User’s AAD Tenant Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="tenantId"/> is null. </exception>

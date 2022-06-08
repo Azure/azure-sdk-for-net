@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Resource requirements for each container instance within an online deployment. </summary>
     public partial class ContainerResourceRequirements
     {
-        /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceRequirements"/>. </summary>
         public ContainerResourceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceRequirements"/>. </summary>
         /// <param name="containerResourceLimits"> Container resource limit info:. </param>
         /// <param name="containerResourceRequests"> Container resource request info:. </param>
         internal ContainerResourceRequirements(ContainerResourceSettings containerResourceLimits, ContainerResourceSettings containerResourceRequests)

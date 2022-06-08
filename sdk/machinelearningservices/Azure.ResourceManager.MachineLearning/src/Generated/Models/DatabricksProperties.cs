@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Properties of Databricks. </summary>
     public partial class DatabricksProperties
     {
-        /// <summary> Initializes a new instance of DatabricksProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksProperties"/>. </summary>
         public DatabricksProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabricksProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksProperties"/>. </summary>
         /// <param name="databricksAccessToken"> Databricks access token. </param>
         /// <param name="workspaceUri"> Workspace Url. </param>
         internal DatabricksProperties(string databricksAccessToken, Uri workspaceUri)

@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The related metadata items for the Application Insights app. </summary>
     internal partial class MetadataApplicationRelated
     {
-        /// <summary> Initializes a new instance of MetadataApplicationRelated. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataApplicationRelated"/>. </summary>
         internal MetadataApplicationRelated()
         {
             Tables = new ChangeTrackingList<string>();

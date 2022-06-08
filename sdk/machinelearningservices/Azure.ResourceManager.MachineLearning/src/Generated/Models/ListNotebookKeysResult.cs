@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The ListNotebookKeysResult. </summary>
     public partial class ListNotebookKeysResult
     {
-        /// <summary> Initializes a new instance of ListNotebookKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListNotebookKeysResult"/>. </summary>
         internal ListNotebookKeysResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ListNotebookKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListNotebookKeysResult"/>. </summary>
         /// <param name="primaryAccessKey"></param>
         /// <param name="secondaryAccessKey"></param>
         internal ListNotebookKeysResult(string primaryAccessKey, string secondaryAccessKey)

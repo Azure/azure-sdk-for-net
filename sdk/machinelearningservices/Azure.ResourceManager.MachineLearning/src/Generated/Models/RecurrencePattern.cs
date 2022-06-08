@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Recurrence schedule pattern definition. </summary>
     public partial class RecurrencePattern
     {
-        /// <summary> Initializes a new instance of RecurrencePattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecurrencePattern"/>. </summary>
         /// <param name="hours"> [Required] List of hours for recurrence schedule pattern. </param>
         /// <param name="minutes"> [Required] List of minutes for recurrence schedule pattern. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hours"/> or <paramref name="minutes"/> is null. </exception>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Weekdays = new ChangeTrackingList<Weekday>();
         }
 
-        /// <summary> Initializes a new instance of RecurrencePattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecurrencePattern"/>. </summary>
         /// <param name="hours"> [Required] List of hours for recurrence schedule pattern. </param>
         /// <param name="minutes"> [Required] List of minutes for recurrence schedule pattern. </param>
         /// <param name="weekdays"> List of weekdays for recurrence schedule pattern. </param>

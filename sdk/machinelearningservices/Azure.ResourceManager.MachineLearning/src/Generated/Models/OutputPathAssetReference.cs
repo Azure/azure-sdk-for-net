@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Reference to an asset via its path in a job output. </summary>
     public partial class OutputPathAssetReference : AssetReferenceBase
     {
-        /// <summary> Initializes a new instance of OutputPathAssetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutputPathAssetReference"/>. </summary>
         public OutputPathAssetReference()
         {
             ReferenceType = ReferenceType.OutputPath;
         }
 
-        /// <summary> Initializes a new instance of OutputPathAssetReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutputPathAssetReference"/>. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
         /// <param name="jobId"> ARM resource ID of the job. </param>
         /// <param name="path"> The path of the file/directory in the job output. </param>

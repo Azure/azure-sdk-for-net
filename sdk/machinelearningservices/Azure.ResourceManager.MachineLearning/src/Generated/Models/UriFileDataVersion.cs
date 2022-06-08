@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> uri-file data version entity. </summary>
     public partial class UriFileDataVersion : DataVersionBaseProperties
     {
-        /// <summary> Initializes a new instance of UriFileDataVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFileDataVersion"/>. </summary>
         /// <param name="dataUri"> [Required] Uri of the data. Usage/meaning depends on Microsoft.MachineLearning.ManagementFrontEnd.Contracts.V20220201Preview.Assets.DataVersionBase.DataType. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public UriFileDataVersion(Uri dataUri) : base(dataUri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataType = DataType.UriFile;
         }
 
-        /// <summary> Initializes a new instance of UriFileDataVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriFileDataVersion"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
