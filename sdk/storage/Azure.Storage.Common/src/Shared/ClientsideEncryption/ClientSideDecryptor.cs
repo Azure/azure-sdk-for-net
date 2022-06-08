@@ -156,7 +156,7 @@ namespace Azure.Storage.Cryptography
                 encryptionData,
                 async,
                 cancellationToken).ConfigureAwait(false);
-            var authRegionDataLength = encryptionData.EncryptedRegionInfo.EncryptedRegionDataLength;
+            var authRegionDataLength = encryptionData.EncryptedRegionInfo.DataLength;
 
             return WrapStreamV2_0(ciphertext, mode, contentEncryptionKey.ToArray(), authRegionDataLength);
         }

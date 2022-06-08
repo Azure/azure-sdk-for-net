@@ -214,9 +214,9 @@ namespace Azure.Storage.Blobs
 
         private static HttpRange GetEncryptedBlobRangeV2_0(HttpRange originalRange, EncryptionData encryptionData)
         {
-            int encryptedRegionDataSize = encryptionData.EncryptedRegionInfo.EncryptedRegionDataLength;
+            int encryptedRegionDataSize = encryptionData.EncryptedRegionInfo.DataLength;
             int totalEncryptedRegionSize = encryptionData.EncryptedRegionInfo.NonceLength
-                + encryptionData.EncryptedRegionInfo.EncryptedRegionDataLength
+                + encryptionData.EncryptedRegionInfo.DataLength
                 + encryptionData.EncryptedRegionInfo.TagLength;
 
             long newOffset = 0;
@@ -286,9 +286,9 @@ namespace Azure.Storage.Blobs
 
     internal static class EncryptionRangeExtensions
     {
-        public static int GetTotalRegionLength(this AuthenticationBlockInfo info)
+        public static int GetTotalRegionLength(this EncryptedRegionInfo info)
         {
-            return info.NonceLength + info.EncryptedRegionDataLength + info.TagLength;
+            return info.NonceLength + info.DataLength + info.TagLength;
         }
     }
 }

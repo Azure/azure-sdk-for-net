@@ -76,9 +76,9 @@ namespace Azure.Storage.Cryptography.Models
             json.WriteEndObject();
         }
 
-        private static void WriteEncryptedRegionInfo(Utf8JsonWriter json, AuthenticationBlockInfo encryptedRegionInfo)
+        private static void WriteEncryptedRegionInfo(Utf8JsonWriter json, EncryptedRegionInfo encryptedRegionInfo)
         {
-            json.WriteNumber(nameof(encryptedRegionInfo.EncryptedRegionDataLength), encryptedRegionInfo.EncryptedRegionDataLength);
+            json.WriteNumber(nameof(encryptedRegionInfo.DataLength), encryptedRegionInfo.DataLength);
             json.WriteNumber(nameof(encryptedRegionInfo.NonceLength), encryptedRegionInfo.NonceLength);
             json.WriteNumber(nameof(encryptedRegionInfo.TagLength), encryptedRegionInfo.TagLength);
         }
@@ -183,7 +183,7 @@ namespace Azure.Storage.Cryptography.Models
             }
             else if (property.NameEquals(nameof(data.EncryptedRegionInfo)))
             {
-                var info = new AuthenticationBlockInfo();
+                var info = new EncryptedRegionInfo();
                 foreach (var subProperty in property.Value.EnumerateObject())
                 {
                     ReadPropertyValue(info, subProperty);
@@ -220,7 +220,7 @@ namespace Azure.Storage.Cryptography.Models
             }
         }
 
-        private static void ReadPropertyValue(AuthenticationBlockInfo info, JsonProperty property)
+        private static void ReadPropertyValue(EncryptedRegionInfo info, JsonProperty property)
         {
             if (property.NameEquals(nameof(info.NonceLength)))
             {
@@ -230,9 +230,9 @@ namespace Azure.Storage.Cryptography.Models
             {
                 info.TagLength = property.Value.GetInt32();
             }
-            else if (property.NameEquals(nameof(info.EncryptedRegionDataLength)))
+            else if (property.NameEquals(nameof(info.DataLength)))
             {
-                info.EncryptedRegionDataLength = property.Value.GetInt32();
+                info.DataLength = property.Value.GetInt32();
             }
         }
         #endregion

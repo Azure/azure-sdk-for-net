@@ -8,12 +8,12 @@ namespace Azure.Storage.Cryptography.Models
     /// <summary>
     /// Describes the structure of authenticated encrypted blocks of data in a content stream.
     /// </summary>
-    internal class AuthenticationBlockInfo
+    internal class EncryptedRegionInfo
     {
         /// <summary>
         /// Length of the ciphertext data in the region.
         /// </summary>
-        public int EncryptedRegionDataLength { get; set; }
+        public int DataLength { get; set; }
 
         /// <summary>
         /// Length of the nonce found in the content stream.

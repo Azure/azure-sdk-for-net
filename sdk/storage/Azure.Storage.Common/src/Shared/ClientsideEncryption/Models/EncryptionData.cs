@@ -40,7 +40,7 @@ namespace Azure.Storage.Cryptography.Models
         /// <summary>
         /// Information about structure of authenticated encryption blocks. Only present for v2.0.
         /// </summary>
-        public AuthenticationBlockInfo EncryptedRegionInfo { get; set; }
+        public EncryptedRegionInfo EncryptedRegionInfo { get; set; }
 
 #pragma warning disable CA2227 // Collection properties should be read only
         /// <summary>
@@ -93,9 +93,9 @@ namespace Azure.Storage.Cryptography.Models
                     EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesGcm256,
                     EncryptionVersion = ClientSideEncryptionVersion.V2_0
                 },
-                EncryptedRegionInfo = new AuthenticationBlockInfo()
+                EncryptedRegionInfo = new EncryptedRegionInfo()
                 {
-                    EncryptedRegionDataLength = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize,
+                    DataLength = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize,
                     NonceLength = Constants.ClientSideEncryption.V2.NonceSize,
                     TagLength = Constants.ClientSideEncryption.V2.TagSize
                 },
