@@ -35,7 +35,7 @@ namespace Azure.Storage.Queues.Test
             new byte[] { 0xe1, 0x9a, 0xa0, 0xe1, 0x9b, 0x87, 0xe1, 0x9a, 0xbb, 0x0a }); // valid UTF-8 bytes
 
         public ClientSideEncryptionTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
