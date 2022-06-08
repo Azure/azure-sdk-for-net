@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class DomainResourcePatch : IUtf8JsonSerializable
+    public partial class CommunicationDomainResourcePatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

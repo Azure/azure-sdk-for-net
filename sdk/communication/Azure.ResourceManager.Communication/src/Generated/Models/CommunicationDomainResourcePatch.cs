@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class that describes the PATCH request parameters of a Domains resource. </summary>
-    public partial class DomainResourcePatch : TaggedResource
+    public partial class CommunicationDomainResourcePatch : AcceptTags
     {
-        /// <summary> Initializes a new instance of DomainResourcePatch. </summary>
-        public DomainResourcePatch()
+        /// <summary> Initializes a new instance of CommunicationDomainResourcePatch. </summary>
+        public CommunicationDomainResourcePatch()
         {
             ValidSenderUsernames = new ChangeTrackingDictionary<string, string>();
         }

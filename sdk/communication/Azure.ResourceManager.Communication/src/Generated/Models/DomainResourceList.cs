@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of DomainResourceList. </summary>
         internal DomainResourceList()
         {
-            Value = new ChangeTrackingList<DomainResourceData>();
+            Value = new ChangeTrackingList<CommunicationDomainResourceData>();
         }
 
         /// <summary> Initializes a new instance of DomainResourceList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Communication.Models
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal DomainResourceList(IReadOnlyList<DomainResourceData> value, string nextLink)
+        internal DomainResourceList(IReadOnlyList<CommunicationDomainResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Domains resource. </summary>
-        public IReadOnlyList<DomainResourceData> Value { get; }
+        public IReadOnlyList<CommunicationDomainResourceData> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

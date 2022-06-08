@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityCommunicationServiceAsync(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CommunicationServiceNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityCommunicationServiceAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityCommunicationService(this SubscriptionResource subscriptionResource, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CommunicationServiceNameAvailabilityResult> CheckCommunicationNameAvailability(this SubscriptionResource subscriptionResource, CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityCommunicationService(content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckCommunicationNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -246,20 +246,20 @@ namespace Azure.ResourceManager.Communication
         }
         #endregion
 
-        #region DomainResource
+        #region CommunicationDomainResource
         /// <summary>
-        /// Gets an object representing a <see cref="DomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DomainResource.CreateResourceIdentifier" /> to create a <see cref="DomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CommunicationDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommunicationDomainResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DomainResource" /> object. </returns>
-        public static DomainResource GetDomainResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CommunicationDomainResource" /> object. </returns>
+        public static CommunicationDomainResource GetCommunicationDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DomainResource.ValidateResourceId(id);
-                return new DomainResource(client, id);
+                CommunicationDomainResource.ValidateResourceId(id);
+                return new CommunicationDomainResource(client, id);
             }
             );
         }

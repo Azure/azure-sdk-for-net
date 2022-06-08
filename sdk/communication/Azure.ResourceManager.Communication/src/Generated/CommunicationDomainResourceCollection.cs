@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DomainResource" /> and their operations.
-    /// Each <see cref="DomainResource" /> in the collection will belong to the same instance of <see cref="EmailServiceResource" />.
-    /// To get a <see cref="DomainResourceCollection" /> instance call the GetDomainResources method from an instance of <see cref="EmailServiceResource" />.
+    /// A class representing a collection of <see cref="CommunicationDomainResource" /> and their operations.
+    /// Each <see cref="CommunicationDomainResource" /> in the collection will belong to the same instance of <see cref="EmailServiceResource" />.
+    /// To get a <see cref="CommunicationDomainResourceCollection" /> instance call the GetCommunicationDomainResources method from an instance of <see cref="EmailServiceResource" />.
     /// </summary>
-    public partial class DomainResourceCollection : ArmCollection, IEnumerable<DomainResource>, IAsyncEnumerable<DomainResource>
+    public partial class CommunicationDomainResourceCollection : ArmCollection, IEnumerable<CommunicationDomainResource>, IAsyncEnumerable<CommunicationDomainResource>
     {
-        private readonly ClientDiagnostics _domainResourceDomainsClientDiagnostics;
-        private readonly DomainsRestOperations _domainResourceDomainsRestClient;
+        private readonly ClientDiagnostics _communicationDomainResourceDomainsClientDiagnostics;
+        private readonly DomainsRestOperations _communicationDomainResourceDomainsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DomainResourceCollection"/> class for mocking. </summary>
-        protected DomainResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="CommunicationDomainResourceCollection"/> class for mocking. </summary>
+        protected CommunicationDomainResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DomainResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationDomainResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal DomainResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CommunicationDomainResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _domainResourceDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", DomainResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DomainResource.ResourceType, out string domainResourceDomainsApiVersion);
-            _domainResourceDomainsRestClient = new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, domainResourceDomainsApiVersion);
+            _communicationDomainResourceDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationDomainResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CommunicationDomainResource.ResourceType, out string communicationDomainResourceDomainsApiVersion);
+            _communicationDomainResourceDomainsRestClient = new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communicationDomainResourceDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, DomainResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommunicationDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, CommunicationDomainResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResourceCollection.CreateOrUpdate");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _domainResourceDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation<DomainResource>(new DomainResourceOperationSource(Client), _domainResourceDomainsClientDiagnostics, Pipeline, _domainResourceDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _communicationDomainResourceDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation<CommunicationDomainResource>(new CommunicationDomainResourceOperationSource(Client), _communicationDomainResourceDomainsClientDiagnostics, Pipeline, _communicationDomainResourceDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, DomainResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommunicationDomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, CommunicationDomainResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResourceCollection.CreateOrUpdate");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _domainResourceDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, data, cancellationToken);
-                var operation = new CommunicationArmOperation<DomainResource>(new DomainResourceOperationSource(Client), _domainResourceDomainsClientDiagnostics, Pipeline, _domainResourceDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _communicationDomainResourceDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, data, cancellationToken);
+                var operation = new CommunicationArmOperation<CommunicationDomainResource>(new CommunicationDomainResourceOperationSource(Client), _communicationDomainResourceDomainsClientDiagnostics, Pipeline, _communicationDomainResourceDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual async Task<Response<DomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationDomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResourceCollection.Get");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _domainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationDomainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual Response<DomainResource> Get(string domainName, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationDomainResource> Get(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResourceCollection.Get");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _domainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken);
+                var response = _communicationDomainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: Domains_ListByEmailServiceResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DomainResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CommunicationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommunicationDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DomainResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CommunicationDomainResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResourceCollection.GetAll");
+                using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _domainResourceDomainsRestClient.ListByEmailServiceResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _communicationDomainResourceDomainsRestClient.ListByEmailServiceResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.Communication
                     throw;
                 }
             }
-            async Task<Page<DomainResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CommunicationDomainResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResourceCollection.GetAll");
+                using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _domainResourceDomainsRestClient.ListByEmailServiceResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _communicationDomainResourceDomainsRestClient.ListByEmailServiceResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,17 +225,17 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: Domains_ListByEmailServiceResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DomainResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunicationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommunicationDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DomainResource> FirstPageFunc(int? pageSizeHint)
+            Page<CommunicationDomainResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResourceCollection.GetAll");
+                using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _domainResourceDomainsRestClient.ListByEmailServiceResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _communicationDomainResourceDomainsRestClient.ListByEmailServiceResource(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.Communication
                     throw;
                 }
             }
-            Page<DomainResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CommunicationDomainResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResourceCollection.GetAll");
+                using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _domainResourceDomainsRestClient.ListByEmailServiceResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _communicationDomainResourceDomainsRestClient.ListByEmailServiceResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResourceCollection.Exists");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _domainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _communicationDomainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResourceCollection.Exists");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _domainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken);
+                var response = _communicationDomainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        IEnumerator<DomainResource> IEnumerable<DomainResource>.GetEnumerator()
+        IEnumerator<CommunicationDomainResource> IEnumerable<CommunicationDomainResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Communication
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DomainResource> IAsyncEnumerable<DomainResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CommunicationDomainResource> IAsyncEnumerable<CommunicationDomainResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

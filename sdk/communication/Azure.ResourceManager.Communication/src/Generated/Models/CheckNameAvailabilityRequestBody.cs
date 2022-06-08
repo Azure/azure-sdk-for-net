@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> The check availability request body. </summary>
-    public partial class CheckNameAvailabilityRequest
+    public partial class CheckNameAvailabilityRequestBody
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityRequest. </summary>
-        public CheckNameAvailabilityRequest()
+        /// <summary> Initializes a new instance of CheckNameAvailabilityRequestBody. </summary>
+        public CheckNameAvailabilityRequestBody()
         {
         }
 

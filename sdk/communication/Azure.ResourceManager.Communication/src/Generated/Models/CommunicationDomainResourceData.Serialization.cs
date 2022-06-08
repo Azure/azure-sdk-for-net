@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    public partial class DomainResourceData : IUtf8JsonSerializable
+    public partial class CommunicationDomainResourceData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Communication
             writer.WriteEndObject();
         }
 
-        internal static DomainResourceData DeserializeDomainResourceData(JsonElement element)
+        internal static CommunicationDomainResourceData DeserializeCommunicationDomainResourceData(JsonElement element)
         {
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Communication
                     continue;
                 }
             }
-            return new DomainResourceData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Optional.ToDictionary(validSenderUsernames), Optional.ToNullable(userEngagementTracking));
+            return new CommunicationDomainResourceData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Optional.ToDictionary(validSenderUsernames), Optional.ToNullable(userEngagementTracking));
         }
     }
 }

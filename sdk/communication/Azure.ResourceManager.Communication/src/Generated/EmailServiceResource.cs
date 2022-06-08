@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DomainResources in the EmailServiceResource. </summary>
-        /// <returns> An object representing collection of DomainResources and their operations over a DomainResource. </returns>
-        public virtual DomainResourceCollection GetDomainResources()
+        /// <summary> Gets a collection of CommunicationDomainResources in the EmailServiceResource. </summary>
+        /// <returns> An object representing collection of CommunicationDomainResources and their operations over a CommunicationDomainResource. </returns>
+        public virtual CommunicationDomainResourceCollection GetCommunicationDomainResources()
         {
-            return GetCachedClient(Client => new DomainResourceCollection(Client, Id));
+            return GetCachedClient(Client => new CommunicationDomainResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DomainResource>> GetDomainResourceAsync(string domainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationDomainResource>> GetCommunicationDomainResourceAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            return await GetDomainResources().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
+            return await GetCommunicationDomainResources().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DomainResource> GetDomainResource(string domainName, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationDomainResource> GetCommunicationDomainResource(string domainName, CancellationToken cancellationToken = default)
         {
-            return GetDomainResources().Get(domainName, cancellationToken);
+            return GetCommunicationDomainResources().Get(domainName, cancellationToken);
         }
 
         /// <summary>

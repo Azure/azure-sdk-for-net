@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityCommunicationServiceAsync(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationServiceNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityCommunicationService");
+            using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
             scope.Start();
             try
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityCommunicationService(NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationServiceNameAvailabilityResult> CheckCommunicationNameAvailability(CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityCommunicationService");
+            using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckCommunicationNameAvailability");
             scope.Start();
             try
             {

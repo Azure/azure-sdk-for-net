@@ -19,46 +19,46 @@ using Azure.ResourceManager.Communication.Models;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A Class representing a DomainResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EmailServiceResource" /> using the GetDomainResource method.
+    /// A Class representing a CommunicationDomainResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommunicationDomainResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetCommunicationDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EmailServiceResource" /> using the GetCommunicationDomainResource method.
     /// </summary>
-    public partial class DomainResource : ArmResource
+    public partial class CommunicationDomainResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DomainResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CommunicationDomainResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName, string domainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}/domains/{domainName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _domainResourceDomainsClientDiagnostics;
-        private readonly DomainsRestOperations _domainResourceDomainsRestClient;
-        private readonly DomainResourceData _data;
+        private readonly ClientDiagnostics _communicationDomainResourceDomainsClientDiagnostics;
+        private readonly DomainsRestOperations _communicationDomainResourceDomainsRestClient;
+        private readonly CommunicationDomainResourceData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DomainResource"/> class for mocking. </summary>
-        protected DomainResource()
+        /// <summary> Initializes a new instance of the <see cref="CommunicationDomainResource"/> class for mocking. </summary>
+        protected CommunicationDomainResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CommunicationDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DomainResource(ArmClient client, DomainResourceData data) : this(client, data.Id)
+        internal CommunicationDomainResource(ArmClient client, CommunicationDomainResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CommunicationDomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _domainResourceDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string domainResourceDomainsApiVersion);
-            _domainResourceDomainsRestClient = new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, domainResourceDomainsApiVersion);
+            _communicationDomainResourceDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string communicationDomainResourceDomainsApiVersion);
+            _communicationDomainResourceDomainsRestClient = new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communicationDomainResourceDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Communication
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DomainResourceData Data
+        public virtual CommunicationDomainResourceData Data
         {
             get
             {
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: Domains_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DomainResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationDomainResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.Get");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.Get");
             scope.Start();
             try
             {
-                var response = await _domainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _communicationDomainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: Domains_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DomainResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationDomainResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.Get");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.Get");
             scope.Start();
             try
             {
-                var response = _domainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _communicationDomainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CommunicationDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.Delete");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.Delete");
             scope.Start();
             try
             {
-                var response = await _domainResourceDomainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation(_domainResourceDomainsClientDiagnostics, Pipeline, _domainResourceDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _communicationDomainResourceDomainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation(_communicationDomainResourceDomainsClientDiagnostics, Pipeline, _communicationDomainResourceDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.Communication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.Delete");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.Delete");
             scope.Start();
             try
             {
-                var response = _domainResourceDomainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CommunicationArmOperation(_domainResourceDomainsClientDiagnostics, Pipeline, _domainResourceDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _communicationDomainResourceDomainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CommunicationArmOperation(_communicationDomainResourceDomainsClientDiagnostics, Pipeline, _communicationDomainResourceDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -197,16 +197,16 @@ namespace Azure.ResourceManager.Communication
         /// <param name="patch"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DomainResource>> UpdateAsync(WaitUntil waitUntil, DomainResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CommunicationDomainResource>> UpdateAsync(WaitUntil waitUntil, CommunicationDomainResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.Update");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.Update");
             scope.Start();
             try
             {
-                var response = await _domainResourceDomainsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation<DomainResource>(new DomainResourceOperationSource(Client), _domainResourceDomainsClientDiagnostics, Pipeline, _domainResourceDomainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _communicationDomainResourceDomainsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation<CommunicationDomainResource>(new CommunicationDomainResourceOperationSource(Client), _communicationDomainResourceDomainsClientDiagnostics, Pipeline, _communicationDomainResourceDomainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -227,16 +227,16 @@ namespace Azure.ResourceManager.Communication
         /// <param name="patch"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<DomainResource> Update(WaitUntil waitUntil, DomainResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CommunicationDomainResource> Update(WaitUntil waitUntil, CommunicationDomainResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.Update");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.Update");
             scope.Start();
             try
             {
-                var response = _domainResourceDomainsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new CommunicationArmOperation<DomainResource>(new DomainResourceOperationSource(Client), _domainResourceDomainsClientDiagnostics, Pipeline, _domainResourceDomainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _communicationDomainResourceDomainsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new CommunicationArmOperation<CommunicationDomainResource>(new CommunicationDomainResourceOperationSource(Client), _communicationDomainResourceDomainsClientDiagnostics, Pipeline, _communicationDomainResourceDomainsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -254,19 +254,19 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: Domains_InitiateVerification
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="verificationParameter"> Type of verification to be initiated. </param>
+        /// <param name="content"> Type of verification to be initiated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="verificationParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation> InitiateVerificationAsync(WaitUntil waitUntil, VerificationParameter verificationParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> InitiateVerificationAsync(WaitUntil waitUntil, VerificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(verificationParameter, nameof(verificationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.InitiateVerification");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.InitiateVerification");
             scope.Start();
             try
             {
-                var response = await _domainResourceDomainsRestClient.InitiateVerificationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, verificationParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation(_domainResourceDomainsClientDiagnostics, Pipeline, _domainResourceDomainsRestClient.CreateInitiateVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, verificationParameter).Request, response, OperationFinalStateVia.Location);
+                var response = await _communicationDomainResourceDomainsRestClient.InitiateVerificationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation(_communicationDomainResourceDomainsClientDiagnostics, Pipeline, _communicationDomainResourceDomainsRestClient.CreateInitiateVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: Domains_InitiateVerification
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="verificationParameter"> Type of verification to be initiated. </param>
+        /// <param name="content"> Type of verification to be initiated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="verificationParameter"/> is null. </exception>
-        public virtual ArmOperation InitiateVerification(WaitUntil waitUntil, VerificationParameter verificationParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation InitiateVerification(WaitUntil waitUntil, VerificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(verificationParameter, nameof(verificationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.InitiateVerification");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.InitiateVerification");
             scope.Start();
             try
             {
-                var response = _domainResourceDomainsRestClient.InitiateVerification(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, verificationParameter, cancellationToken);
-                var operation = new CommunicationArmOperation(_domainResourceDomainsClientDiagnostics, Pipeline, _domainResourceDomainsRestClient.CreateInitiateVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, verificationParameter).Request, response, OperationFinalStateVia.Location);
+                var response = _communicationDomainResourceDomainsRestClient.InitiateVerification(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new CommunicationArmOperation(_communicationDomainResourceDomainsClientDiagnostics, Pipeline, _communicationDomainResourceDomainsRestClient.CreateInitiateVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -314,19 +314,19 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: Domains_CancelVerification
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="verificationParameter"> Type of verification to be canceled. </param>
+        /// <param name="content"> Type of verification to be canceled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="verificationParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation> CancelVerificationAsync(WaitUntil waitUntil, VerificationParameter verificationParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> CancelVerificationAsync(WaitUntil waitUntil, VerificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(verificationParameter, nameof(verificationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.CancelVerification");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.CancelVerification");
             scope.Start();
             try
             {
-                var response = await _domainResourceDomainsRestClient.CancelVerificationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, verificationParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation(_domainResourceDomainsClientDiagnostics, Pipeline, _domainResourceDomainsRestClient.CreateCancelVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, verificationParameter).Request, response, OperationFinalStateVia.Location);
+                var response = await _communicationDomainResourceDomainsRestClient.CancelVerificationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation(_communicationDomainResourceDomainsClientDiagnostics, Pipeline, _communicationDomainResourceDomainsRestClient.CreateCancelVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -344,19 +344,19 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: Domains_CancelVerification
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="verificationParameter"> Type of verification to be canceled. </param>
+        /// <param name="content"> Type of verification to be canceled. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="verificationParameter"/> is null. </exception>
-        public virtual ArmOperation CancelVerification(WaitUntil waitUntil, VerificationParameter verificationParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation CancelVerification(WaitUntil waitUntil, VerificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(verificationParameter, nameof(verificationParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.CancelVerification");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.CancelVerification");
             scope.Start();
             try
             {
-                var response = _domainResourceDomainsRestClient.CancelVerification(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, verificationParameter, cancellationToken);
-                var operation = new CommunicationArmOperation(_domainResourceDomainsClientDiagnostics, Pipeline, _domainResourceDomainsRestClient.CreateCancelVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, verificationParameter).Request, response, OperationFinalStateVia.Location);
+                var response = _communicationDomainResourceDomainsRestClient.CancelVerification(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new CommunicationArmOperation(_communicationDomainResourceDomainsClientDiagnostics, Pipeline, _communicationDomainResourceDomainsRestClient.CreateCancelVerificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -377,20 +377,20 @@ namespace Azure.ResourceManager.Communication
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<DomainResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationDomainResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.AddTag");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _domainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _communicationDomainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CommunicationDomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -408,20 +408,20 @@ namespace Azure.ResourceManager.Communication
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<DomainResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationDomainResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.AddTag");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _domainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new DomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _communicationDomainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new CommunicationDomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -438,11 +438,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<DomainResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationDomainResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.SetTags");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.SetTags");
             scope.Start();
             try
             {
@@ -450,8 +450,8 @@ namespace Azure.ResourceManager.Communication
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _domainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _communicationDomainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CommunicationDomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -468,11 +468,11 @@ namespace Azure.ResourceManager.Communication
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<DomainResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationDomainResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.SetTags");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.SetTags");
             scope.Start();
             try
             {
@@ -480,8 +480,8 @@ namespace Azure.ResourceManager.Communication
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _domainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new DomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _communicationDomainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new CommunicationDomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -498,19 +498,19 @@ namespace Azure.ResourceManager.Communication
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<DomainResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunicationDomainResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.RemoveTag");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _domainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _communicationDomainResourceDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new CommunicationDomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -527,19 +527,19 @@ namespace Azure.ResourceManager.Communication
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<DomainResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<CommunicationDomainResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _domainResourceDomainsClientDiagnostics.CreateScope("DomainResource.RemoveTag");
+            using var scope = _communicationDomainResourceDomainsClientDiagnostics.CreateScope("CommunicationDomainResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = GetTagResource().Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _domainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new DomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _communicationDomainResourceDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new CommunicationDomainResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

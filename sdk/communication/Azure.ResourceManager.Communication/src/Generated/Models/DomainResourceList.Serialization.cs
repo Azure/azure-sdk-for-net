@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static DomainResourceList DeserializeDomainResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<DomainResourceData>> value = default;
+            Optional<IReadOnlyList<CommunicationDomainResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Communication.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DomainResourceData> array = new List<DomainResourceData>();
+                    List<CommunicationDomainResourceData> array = new List<CommunicationDomainResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DomainResourceData.DeserializeDomainResourceData(item));
+                        array.Add(CommunicationDomainResourceData.DeserializeCommunicationDomainResourceData(item));
                     }
                     value = array;
                     continue;

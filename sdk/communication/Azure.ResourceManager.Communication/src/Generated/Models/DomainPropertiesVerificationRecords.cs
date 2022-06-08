@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Communication.Models
         internal DomainPropertiesVerificationRecords(DnsRecord domain, DnsRecord spf, DnsRecord dkim, DnsRecord dkim2, DnsRecord dmarc)
         {
             Domain = domain;
-            SPF = spf;
+            Spf = spf;
             Dkim = dkim;
             Dkim2 = dkim2;
             Dmarc = dmarc;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> A class that represents a VerificationStatus record. </summary>
         public DnsRecord Domain { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>
-        public DnsRecord SPF { get; }
+        public DnsRecord Spf { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>
         public DnsRecord Dkim { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>

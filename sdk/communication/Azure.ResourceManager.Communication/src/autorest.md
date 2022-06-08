@@ -7,13 +7,13 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 azure-arm: true
 title: communication
 namespace: Azure.ResourceManager.Communication
-require: https://github.com/Azure/azure-rest-api-specs/blob/4716fb039c67e1bee1d5448af9ce57e4942832fe/specification/communication/resource-manager/readme.md
-tag: package-preview-2021-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/7168ecde052e9797d31d74c40ad00ac68c74ec6a/specification/communication/resource-manager/readme.md
+tag: package-2021-10-01-preview
 
 skip-csproj: true
 output-folder: Generated/
 override-operation-name:
-  CommunicationService_CheckNameAvailability: CheckCommunicationNameAvailability
+  CommunicationServices_CheckNameAvailability: CheckCommunicationNameAvailability
 
 rename-rules:
   CPU: Cpu
@@ -36,15 +36,23 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-```
+  SPF: Spf
 
-### Tag: package-preview-2021-10
-
-These settings apply only when `--tag=package-preview-2021-10` is specified on the command line.
-
-```yaml $(tag) == 'package-preview-2021-10'
-input-file:  
-  - ../REST/CommunicationServices.json
-  - ../REST/Domains.json
-  - ../REST/EmailServices.json
+directive:
+  - rename-model:
+      from: DomainResource
+      to: CommunicationDomainResource
+  - rename-model:
+      from: VerificationParameter
+      to: VerificationContent
+  - from: types.json
+    where: $.definitions
+    transform: >
+      $.CheckNameAvailabilityRequest["x-ms-client-name"] = "CheckNameAvailabilityRequestBody";
+      $.CheckNameAvailabilityResponse["x-ms-client-name"] = "CommunicationServiceNameAvailabilityResult";
+  - from: CommunicationServices.json
+    where: $.definitions
+    transform: >
+      $.NameAvailabilityParameters["x-ms-client-name"] = "CommunicationServiceNameAvailabilityContent"; 
+      $.TaggedResource["x-ms-client-name"] = "AcceptTags";          
 ```

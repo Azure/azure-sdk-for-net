@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class CheckNameAvailabilityResponse
+    public partial class CommunicationServiceNameAvailabilityResult
     {
-        internal static CheckNameAvailabilityResponse DeserializeCheckNameAvailabilityResponse(JsonElement element)
+        internal static CommunicationServiceNameAvailabilityResult DeserializeCommunicationServiceNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
             Optional<CheckNameAvailabilityReason> reason = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new CheckNameAvailabilityResponse(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new CommunicationServiceNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }

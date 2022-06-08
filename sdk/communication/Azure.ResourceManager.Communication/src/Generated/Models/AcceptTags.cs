@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> An ARM resource with that can accept tags. </summary>
-    public partial class TaggedResource
+    public partial class AcceptTags
     {
-        /// <summary> Initializes a new instance of TaggedResource. </summary>
-        public TaggedResource()
+        /// <summary> Initializes a new instance of AcceptTags. </summary>
+        public AcceptTags()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

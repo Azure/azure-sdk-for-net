@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         private const string DomainValue = "Domain";
-        private const string SPFValue = "SPF";
+        private const string SpfValue = "SPF";
         private const string DkimValue = "DKIM";
         private const string Dkim2Value = "DKIM2";
         private const string DmarcValue = "DMARC";
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Domain. </summary>
         public static VerificationType Domain { get; } = new VerificationType(DomainValue);
         /// <summary> SPF. </summary>
-        public static VerificationType SPF { get; } = new VerificationType(SPFValue);
+        public static VerificationType Spf { get; } = new VerificationType(SpfValue);
         /// <summary> DKIM. </summary>
         public static VerificationType Dkim { get; } = new VerificationType(DkimValue);
         /// <summary> DKIM2. </summary>
