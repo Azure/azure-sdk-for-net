@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Resource request payload of Application Configuration Service. </summary>
     public partial class ConfigurationServiceResourceRequests
     {
-        /// <summary> Initializes a new instance of ConfigurationServiceResourceRequests. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationServiceResourceRequests"/>. </summary>
         internal ConfigurationServiceResourceRequests()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceResourceRequests. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationServiceResourceRequests"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each Application Configuration Service instance. </param>
         /// <param name="memory"> Memory allocated to each Application Configuration Service instance. </param>
         /// <param name="instanceCount"> Instance count of the Application Configuration Service. </param>

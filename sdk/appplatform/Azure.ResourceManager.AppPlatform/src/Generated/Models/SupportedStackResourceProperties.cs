@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Supported stack resource properties. </summary>
     public partial class SupportedStackResourceProperties
     {
-        /// <summary> Initializes a new instance of SupportedStackResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedStackResourceProperties"/>. </summary>
         public SupportedStackResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportedStackResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedStackResourceProperties"/>. </summary>
         /// <param name="stackId"> The id of supported stack. </param>
         /// <param name="version"> The version of supported stack. </param>
         internal SupportedStackResourceProperties(string stackId, string version)

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Name availability parameters payload. </summary>
     public partial class ServiceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ServiceNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNameAvailabilityContent"/>. </summary>
         /// <param name="resourceType"> Type of the resource to check name availability. </param>
         /// <param name="name"> Name to be checked. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>

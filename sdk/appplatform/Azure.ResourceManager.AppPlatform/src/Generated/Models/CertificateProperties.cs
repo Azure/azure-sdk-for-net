@@ -10,16 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Certificate resource payload. </summary>
+    /// <summary>
+    /// Certificate resource payload.
+    /// Please note <see cref="CertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ContentCertificateProperties"/> and <see cref="KeyVaultCertificateProperties"/>.
+    /// </summary>
     public partial class CertificateProperties
     {
-        /// <summary> Initializes a new instance of CertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateProperties"/>. </summary>
         public CertificateProperties()
         {
             DnsNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateProperties"/>. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>

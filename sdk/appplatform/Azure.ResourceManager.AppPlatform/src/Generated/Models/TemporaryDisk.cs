@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Temporary disk payload. </summary>
     public partial class TemporaryDisk
     {
-        /// <summary> Initializes a new instance of TemporaryDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemporaryDisk"/>. </summary>
         public TemporaryDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of TemporaryDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemporaryDisk"/>. </summary>
         /// <param name="sizeInGB"> Size of the temporary disk in GB. </param>
         /// <param name="mountPath"> Mount path of the temporary disk. </param>
         internal TemporaryDisk(int? sizeInGB, string mountPath)

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// <summary> A class representing the ServiceRegistryResource data model. </summary>
     public partial class ServiceRegistryResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceRegistryResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceRegistryResourceData"/>. </summary>
         public ServiceRegistryResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceRegistryResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceRegistryResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

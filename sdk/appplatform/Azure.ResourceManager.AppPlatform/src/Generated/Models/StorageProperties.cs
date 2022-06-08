@@ -7,15 +7,19 @@
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Storage resource payload. </summary>
+    /// <summary>
+    /// Storage resource payload.
+    /// Please note <see cref="StorageProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="StorageAccount"/>.
+    /// </summary>
     public partial class StorageProperties
     {
-        /// <summary> Initializes a new instance of StorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProperties"/>. </summary>
         public StorageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageProperties"/>. </summary>
         /// <param name="storageType"> The type of the storage. </param>
         internal StorageProperties(StorageType storageType)
         {

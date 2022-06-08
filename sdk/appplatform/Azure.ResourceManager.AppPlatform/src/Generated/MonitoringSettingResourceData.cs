@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// <summary> A class representing the MonitoringSettingResource data model. </summary>
     public partial class MonitoringSettingResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitoringSettingResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringSettingResourceData"/>. </summary>
         public MonitoringSettingResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringSettingResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringSettingResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

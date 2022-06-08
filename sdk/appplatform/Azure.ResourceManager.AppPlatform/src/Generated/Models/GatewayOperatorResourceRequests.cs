@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Properties of the Spring Cloud Gateway Operator. </summary>
     public partial class GatewayOperatorResourceRequests
     {
-        /// <summary> Initializes a new instance of GatewayOperatorResourceRequests. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayOperatorResourceRequests"/>. </summary>
         internal GatewayOperatorResourceRequests()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayOperatorResourceRequests. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayOperatorResourceRequests"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each Spring Cloud Gateway Operator instance. </param>
         /// <param name="memory"> Memory allocated to each Spring Cloud Gateway Operator instance. </param>
         /// <param name="instanceCount"> Instance count of the Spring Cloud Gateway Operator. </param>

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Properties of certificate imported from key vault. </summary>
     public partial class ContentCertificateProperties : CertificateProperties
     {
-        /// <summary> Initializes a new instance of ContentCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentCertificateProperties"/>. </summary>
         public ContentCertificateProperties()
         {
             CertificatePropertiesType = "ContentCertificate";
         }
 
-        /// <summary> Initializes a new instance of ContentCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentCertificateProperties"/>. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>

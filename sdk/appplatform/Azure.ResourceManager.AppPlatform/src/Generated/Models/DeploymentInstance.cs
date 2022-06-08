@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Deployment instance payload. </summary>
     public partial class DeploymentInstance
     {
-        /// <summary> Initializes a new instance of DeploymentInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentInstance"/>. </summary>
         internal DeploymentInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentInstance"/>. </summary>
         /// <param name="name"> Name of the deployment instance. </param>
         /// <param name="status"> Status of the deployment instance. </param>
         /// <param name="reason"> Failed reason of the deployment instance. </param>

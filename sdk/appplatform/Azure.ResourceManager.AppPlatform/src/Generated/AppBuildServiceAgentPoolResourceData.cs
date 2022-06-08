@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// <summary> A class representing the AppBuildServiceAgentPoolResource data model. </summary>
     public partial class AppBuildServiceAgentPoolResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppBuildServiceAgentPoolResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppBuildServiceAgentPoolResourceData"/>. </summary>
         public AppBuildServiceAgentPoolResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppBuildServiceAgentPoolResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppBuildServiceAgentPoolResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

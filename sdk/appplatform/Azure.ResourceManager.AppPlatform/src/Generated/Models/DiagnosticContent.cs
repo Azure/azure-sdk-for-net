@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Diagnostic parameters of diagnostic operations. </summary>
     public partial class DiagnosticContent
     {
-        /// <summary> Initializes a new instance of DiagnosticContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticContent"/>. </summary>
         public DiagnosticContent()
         {
         }

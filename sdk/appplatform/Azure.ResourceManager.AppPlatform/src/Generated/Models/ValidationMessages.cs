@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Validate messages of the configuration service git repositories. </summary>
     public partial class ValidationMessages
     {
-        /// <summary> Initializes a new instance of ValidationMessages. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationMessages"/>. </summary>
         internal ValidationMessages()
         {
             Messages = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ValidationMessages. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationMessages"/>. </summary>
         /// <param name="name"> The name of the configuration service git repository. </param>
         /// <param name="messages"> Detailed validation messages. </param>
         internal ValidationMessages(string name, IReadOnlyList<string> messages)

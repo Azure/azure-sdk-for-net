@@ -7,16 +7,20 @@
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Source with uploaded location. </summary>
+    /// <summary>
+    /// Source with uploaded location
+    /// Please note <see cref="UploadedUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/> and <see cref="SourceUploadedUserSourceInfo"/>.
+    /// </summary>
     public partial class UploadedUserSourceInfo : UserSourceInfo
     {
-        /// <summary> Initializes a new instance of UploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadedUserSourceInfo"/>. </summary>
         public UploadedUserSourceInfo()
         {
             UserSourceInfoType = "UploadedUserSourceInfo";
         }
 
-        /// <summary> Initializes a new instance of UploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadedUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
         /// <param name="relativePath"> Relative path of the storage which stores the source. </param>

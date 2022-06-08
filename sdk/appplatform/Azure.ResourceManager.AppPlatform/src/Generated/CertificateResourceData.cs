@@ -14,23 +14,31 @@ namespace Azure.ResourceManager.AppPlatform
     /// <summary> A class representing the CertificateResource data model. </summary>
     public partial class CertificateResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of CertificateResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateResourceData"/>. </summary>
         public CertificateResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the certificate resource payload. </param>
+        /// <param name="properties">
+        /// Properties of the certificate resource payload.
+        /// Please note <see cref="CertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ContentCertificateProperties"/> and <see cref="KeyVaultCertificateProperties"/>.
+        /// </param>
         internal CertificateResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Properties of the certificate resource payload. </summary>
+        /// <summary>
+        /// Properties of the certificate resource payload.
+        /// Please note <see cref="CertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ContentCertificateProperties"/> and <see cref="KeyVaultCertificateProperties"/>.
+        /// </summary>
         public CertificateProperties Properties { get; set; }
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Collection of instances belong to the Spring Cloud Gateway. </summary>
     public partial class GatewayInstance
     {
-        /// <summary> Initializes a new instance of GatewayInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayInstance"/>. </summary>
         internal GatewayInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayInstance"/>. </summary>
         /// <param name="name"> Name of the Spring Cloud Gateway instance. </param>
         /// <param name="status"> Status of the Spring Cloud Gateway instance. </param>
         internal GatewayInstance(string name, string status)

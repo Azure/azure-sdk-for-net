@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// <summary> A class representing the AppBuild data model. </summary>
     public partial class AppBuildData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppBuildData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppBuildData"/>. </summary>
         public AppBuildData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppBuildData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppBuildData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Service Registry properties payload. </summary>
     public partial class ServiceRegistryProperties
     {
-        /// <summary> Initializes a new instance of ServiceRegistryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceRegistryProperties"/>. </summary>
         public ServiceRegistryProperties()
         {
             Instances = new ChangeTrackingList<ServiceRegistryInstance>();
         }
 
-        /// <summary> Initializes a new instance of ServiceRegistryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceRegistryProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Service Registry. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Service Registry. </param>

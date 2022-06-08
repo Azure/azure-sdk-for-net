@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppPlatform
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of AppPlatformArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformArmOperation" /> for mocking. </summary>
         protected AppPlatformArmOperation()
         {
         }

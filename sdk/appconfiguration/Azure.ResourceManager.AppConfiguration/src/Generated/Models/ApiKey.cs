@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> An API key used for authenticating with a configuration store endpoint. </summary>
     public partial class ApiKey
     {
-        /// <summary> Initializes a new instance of ApiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiKey"/>. </summary>
         internal ApiKey()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiKey"/>. </summary>
         /// <param name="id"> The key ID. </param>
         /// <param name="name"> A name for the key describing its usage. </param>
         /// <param name="value"> The value of the key that is used for authentication purposes. </param>

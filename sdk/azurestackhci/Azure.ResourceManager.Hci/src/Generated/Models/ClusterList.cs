@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of clusters. </summary>
     internal partial class ClusterList
     {
-        /// <summary> Initializes a new instance of ClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterList"/>. </summary>
         internal ClusterList()
         {
             Value = new ChangeTrackingList<HciClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterList"/>. </summary>
         /// <param name="value"> List of clusters. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal ClusterList(IReadOnlyList<HciClusterData> value, string nextLink)

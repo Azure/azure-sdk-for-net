@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class AppConfigurationPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateLinkResourceListResult"/>. </summary>
         internal AppConfigurationPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<AppConfigurationPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         internal AppConfigurationPrivateLinkResourceListResult(IReadOnlyList<AppConfigurationPrivateLinkResourceData> value, string nextLink)

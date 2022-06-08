@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Custom container payload. </summary>
     public partial class CustomContainer
     {
-        /// <summary> Initializes a new instance of CustomContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomContainer"/>. </summary>
         public CustomContainer()
         {
             Command = new ChangeTrackingList<string>();
             Args = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CustomContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomContainer"/>. </summary>
         /// <param name="server"> The name of the registry that contains the container image. </param>
         /// <param name="containerImage"> Container image of the custom container. This should be in the form of &lt;repository&gt;:&lt;tag&gt; without the server name of the registry. </param>
         /// <param name="command"> Entrypoint array. Not executed within a shell. The docker image&apos;s ENTRYPOINT is used if this is not provided. </param>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of HciArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciArmOperation{T}" /> for mocking. </summary>
         protected HciArmOperation()
         {
         }

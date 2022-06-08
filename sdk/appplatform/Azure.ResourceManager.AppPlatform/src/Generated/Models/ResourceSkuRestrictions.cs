@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Restrictions where the SKU cannot be used. </summary>
     public partial class ResourceSkuRestrictions
     {
-        /// <summary> Initializes a new instance of ResourceSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictions"/>. </summary>
         internal ResourceSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: &apos;Location&apos;, &apos;Zone&apos;. </param>
         /// <param name="values">
         /// Gets the value of restrictions. If the restriction type is set to

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Buildpack group properties of the Builder. </summary>
     public partial class BuildpacksGroupProperties
     {
-        /// <summary> Initializes a new instance of BuildpacksGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildpacksGroupProperties"/>. </summary>
         public BuildpacksGroupProperties()
         {
             Buildpacks = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of BuildpacksGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildpacksGroupProperties"/>. </summary>
         /// <param name="name"> Buildpack group name. </param>
         /// <param name="buildpacks"> Buildpacks in the buildpack group. </param>
         internal BuildpacksGroupProperties(string name, IList<WritableSubResource> buildpacks)

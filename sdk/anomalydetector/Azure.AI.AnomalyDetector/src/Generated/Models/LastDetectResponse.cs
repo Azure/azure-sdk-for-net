@@ -10,7 +10,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The response of last anomaly detection. </summary>
     public partial class LastDetectResponse
     {
-        /// <summary> Initializes a new instance of LastDetectResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LastDetectResponse"/>. </summary>
         /// <param name="period"> Frequency extracted from the series, zero means no recurrent pattern has been found. </param>
         /// <param name="suggestedWindow"> Suggested input series points needed for detecting the latest point. </param>
         /// <param name="expectedValue"> Expected value of the latest point. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.AnomalyDetector.Models
             IsPositiveAnomaly = isPositiveAnomaly;
         }
 
-        /// <summary> Initializes a new instance of LastDetectResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LastDetectResponse"/>. </summary>
         /// <param name="period"> Frequency extracted from the series, zero means no recurrent pattern has been found. </param>
         /// <param name="suggestedWindow"> Suggested input series points needed for detecting the latest point. </param>
         /// <param name="expectedValue"> Expected value of the latest point. </param>

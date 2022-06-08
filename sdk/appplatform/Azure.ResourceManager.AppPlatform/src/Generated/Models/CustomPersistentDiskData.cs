@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Custom persistent disk resource payload. </summary>
     public partial class CustomPersistentDiskData
     {
-        /// <summary> Initializes a new instance of CustomPersistentDiskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomPersistentDiskData"/>. </summary>
         /// <param name="storageId"> The resource id of Azure Spring Cloud Storage resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageId"/> is null. </exception>
         public CustomPersistentDiskData(string storageId)
@@ -25,8 +25,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             StorageId = storageId;
         }
 
-        /// <summary> Initializes a new instance of CustomPersistentDiskData. </summary>
-        /// <param name="customPersistentDiskProperties"> Properties of the custom persistent disk resource payload. </param>
+        /// <summary> Initializes a new instance of <see cref="CustomPersistentDiskData"/>. </summary>
+        /// <param name="customPersistentDiskProperties">
+        /// Properties of the custom persistent disk resource payload.
+        /// Please note <see cref="CustomPersistentDiskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureFileVolume"/>.
+        /// </param>
         /// <param name="storageId"> The resource id of Azure Spring Cloud Storage resource. </param>
         internal CustomPersistentDiskData(CustomPersistentDiskProperties customPersistentDiskProperties, string storageId)
         {
@@ -34,7 +38,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             StorageId = storageId;
         }
 
-        /// <summary> Properties of the custom persistent disk resource payload. </summary>
+        /// <summary>
+        /// Properties of the custom persistent disk resource payload.
+        /// Please note <see cref="CustomPersistentDiskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureFileVolume"/>.
+        /// </summary>
         public CustomPersistentDiskProperties CustomPersistentDiskProperties { get; set; }
         /// <summary> The resource id of Azure Spring Cloud Storage resource. </summary>
         public string StorageId { get; set; }

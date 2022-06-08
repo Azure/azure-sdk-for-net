@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> KPack ClusterStack properties payload. </summary>
     public partial class StackProperties
     {
-        /// <summary> Initializes a new instance of StackProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StackProperties"/>. </summary>
         public StackProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StackProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StackProperties"/>. </summary>
         /// <param name="id"> Id of the ClusterStack. </param>
         /// <param name="version"> Version of the ClusterStack. </param>
         internal StackProperties(string id, string version)

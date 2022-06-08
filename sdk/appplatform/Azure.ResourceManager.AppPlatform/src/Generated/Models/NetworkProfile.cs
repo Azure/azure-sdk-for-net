@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Service network profile payload. </summary>
     public partial class NetworkProfile
     {
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         public NetworkProfile()
         {
             RequiredTraffics = new ChangeTrackingList<RequiredTraffic>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         /// <param name="serviceRuntimeSubnetId"> Fully qualified resource Id of the subnet to host Azure Spring Cloud Service Runtime. </param>
         /// <param name="appSubnetId"> Fully qualified resource Id of the subnet to host Azure Spring Cloud Apps. </param>
         /// <param name="serviceCidr"> Azure Spring Cloud service reserved CIDR. </param>

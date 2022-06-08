@@ -13,14 +13,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Deployment resource properties payload. </summary>
     public partial class DeploymentResourceProperties
     {
-        /// <summary> Initializes a new instance of DeploymentResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentResourceProperties"/>. </summary>
         public DeploymentResourceProperties()
         {
             Instances = new ChangeTrackingList<DeploymentInstance>();
         }
 
-        /// <summary> Initializes a new instance of DeploymentResourceProperties. </summary>
-        /// <param name="source"> Uploaded source information of the deployment. </param>
+        /// <summary> Initializes a new instance of <see cref="DeploymentResourceProperties"/>. </summary>
+        /// <param name="source">
+        /// Uploaded source information of the deployment.
+        /// Please note <see cref="UserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BuildResultUserSourceInfo"/>, <see cref="CustomContainerUserSourceInfo"/>, <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/> and <see cref="UploadedUserSourceInfo"/>.
+        /// </param>
         /// <param name="deploymentSettings"> Deployment settings of the Deployment. </param>
         /// <param name="provisioningState"> Provisioning state of the Deployment. </param>
         /// <param name="status"> Status of the Deployment. </param>
@@ -36,7 +40,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Instances = instances;
         }
 
-        /// <summary> Uploaded source information of the deployment. </summary>
+        /// <summary>
+        /// Uploaded source information of the deployment.
+        /// Please note <see cref="UserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BuildResultUserSourceInfo"/>, <see cref="CustomContainerUserSourceInfo"/>, <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/> and <see cref="UploadedUserSourceInfo"/>.
+        /// </summary>
         public UserSourceInfo Source { get; set; }
         /// <summary> Deployment settings of the Deployment. </summary>
         public DeploymentSettings DeploymentSettings { get; set; }

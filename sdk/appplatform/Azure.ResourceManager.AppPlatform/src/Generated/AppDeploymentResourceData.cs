@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// <summary> A class representing the AppDeploymentResource data model. </summary>
     public partial class AppDeploymentResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppDeploymentResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppDeploymentResourceData"/>. </summary>
         public AppDeploymentResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppDeploymentResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppDeploymentResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

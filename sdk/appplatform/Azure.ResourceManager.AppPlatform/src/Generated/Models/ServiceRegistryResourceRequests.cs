@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Resource request payload of Service Registry. </summary>
     public partial class ServiceRegistryResourceRequests
     {
-        /// <summary> Initializes a new instance of ServiceRegistryResourceRequests. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceRegistryResourceRequests"/>. </summary>
         internal ServiceRegistryResourceRequests()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceRegistryResourceRequests. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceRegistryResourceRequests"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each Service Registry instance. </param>
         /// <param name="memory"> Memory allocated to each Service Registry instance. </param>
         /// <param name="instanceCount"> Instance count of the Service Registry. </param>

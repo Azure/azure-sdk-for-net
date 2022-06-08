@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Build service agent pool size properties. </summary>
     public partial class BuildServiceAgentPoolSizeProperties
     {
-        /// <summary> Initializes a new instance of BuildServiceAgentPoolSizeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildServiceAgentPoolSizeProperties"/>. </summary>
         public BuildServiceAgentPoolSizeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BuildServiceAgentPoolSizeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildServiceAgentPoolSizeProperties"/>. </summary>
         /// <param name="name"> The name of build service agent pool size. </param>
         /// <param name="cpu"> The cpu property of build service agent pool size. </param>
         /// <param name="memory"> The memory property of build service agent pool size. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Test keys payload. </summary>
     public partial class TestKeys
     {
-        /// <summary> Initializes a new instance of TestKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestKeys"/>. </summary>
         internal TestKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of TestKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestKeys"/>. </summary>
         /// <param name="primaryKey"> Primary key. </param>
         /// <param name="secondaryKey"> Secondary key. </param>
         /// <param name="primaryTestEndpoint"> Primary test endpoint. </param>

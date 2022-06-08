@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> List of VirtualNetworks. </summary>
     internal partial class VirtualNetworkListResult
     {
-        /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkListResult"/>. </summary>
         internal VirtualNetworkListResult()
         {
             Value = new ChangeTrackingList<ScVmmVirtualNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkListResult"/>. </summary>
         /// <param name="value"> List of VirtualNetworks. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal VirtualNetworkListResult(IReadOnlyList<ScVmmVirtualNetworkData> value, string nextLink)

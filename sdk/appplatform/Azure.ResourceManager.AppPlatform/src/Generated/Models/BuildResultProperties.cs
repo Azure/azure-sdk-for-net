@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Build result resource properties payload. </summary>
     public partial class BuildResultProperties
     {
-        /// <summary> Initializes a new instance of BuildResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildResultProperties"/>. </summary>
         public BuildResultProperties()
         {
             BuildStages = new ChangeTrackingList<BuildStageProperties>();
         }
 
-        /// <summary> Initializes a new instance of BuildResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildResultProperties"/>. </summary>
         /// <param name="name"> The name of this build result. </param>
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="buildPodName"> The build pod name which can be used to get the build log streaming. </param>

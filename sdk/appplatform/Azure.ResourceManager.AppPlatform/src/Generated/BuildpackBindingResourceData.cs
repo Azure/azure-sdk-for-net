@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// <summary> A class representing the BuildpackBindingResource data model. </summary>
     public partial class BuildpackBindingResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of BuildpackBindingResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildpackBindingResourceData"/>. </summary>
         public BuildpackBindingResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of BuildpackBindingResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildpackBindingResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

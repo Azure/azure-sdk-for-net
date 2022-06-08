@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The SKU capacity. </summary>
     public partial class SkuCapacity
     {
-        /// <summary> Initializes a new instance of SkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuCapacity"/>. </summary>
         /// <param name="minimum"> Gets or sets the minimum. </param>
         internal SkuCapacity(int minimum)
         {
             Minimum = minimum;
         }
 
-        /// <summary> Initializes a new instance of SkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuCapacity"/>. </summary>
         /// <param name="minimum"> Gets or sets the minimum. </param>
         /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="default"> Gets or sets the default. </param>

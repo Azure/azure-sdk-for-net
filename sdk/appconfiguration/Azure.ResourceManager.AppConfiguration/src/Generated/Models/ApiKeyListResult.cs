@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> The result of a request to list API keys. </summary>
     internal partial class ApiKeyListResult
     {
-        /// <summary> Initializes a new instance of ApiKeyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiKeyListResult"/>. </summary>
         internal ApiKeyListResult()
         {
             Value = new ChangeTrackingList<ApiKey>();
         }
 
-        /// <summary> Initializes a new instance of ApiKeyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiKeyListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         internal ApiKeyListResult(IReadOnlyList<ApiKey> value, string nextLink)

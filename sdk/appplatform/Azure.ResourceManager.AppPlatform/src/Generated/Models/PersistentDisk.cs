@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Persistent disk payload. </summary>
     public partial class PersistentDisk
     {
-        /// <summary> Initializes a new instance of PersistentDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersistentDisk"/>. </summary>
         public PersistentDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of PersistentDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersistentDisk"/>. </summary>
         /// <param name="sizeInGB"> Size of the persistent disk in GB. </param>
         /// <param name="usedInGB"> Size of the used persistent disk in GB. </param>
         /// <param name="mountPath"> Mount path of the persistent disk. </param>

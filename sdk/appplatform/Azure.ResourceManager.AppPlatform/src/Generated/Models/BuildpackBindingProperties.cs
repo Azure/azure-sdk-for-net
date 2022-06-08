@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Properties of a buildpack binding. </summary>
     public partial class BuildpackBindingProperties
     {
-        /// <summary> Initializes a new instance of BuildpackBindingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildpackBindingProperties"/>. </summary>
         public BuildpackBindingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BuildpackBindingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildpackBindingProperties"/>. </summary>
         /// <param name="bindingType"> Buildpack Binding Type. </param>
         /// <param name="provisioningState"> State of the Buildpack Binding. </param>
         /// <param name="launchProperties"> The object describes the buildpack binding launch properties. </param>

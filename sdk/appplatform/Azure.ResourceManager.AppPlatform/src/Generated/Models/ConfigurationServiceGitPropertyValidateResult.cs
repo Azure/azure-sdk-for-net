@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Validation result for configuration service settings. </summary>
     public partial class ConfigurationServiceGitPropertyValidateResult
     {
-        /// <summary> Initializes a new instance of ConfigurationServiceGitPropertyValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationServiceGitPropertyValidateResult"/>. </summary>
         internal ConfigurationServiceGitPropertyValidateResult()
         {
             GitReposValidationResult = new ChangeTrackingList<ValidationMessages>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceGitPropertyValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationServiceGitPropertyValidateResult"/>. </summary>
         /// <param name="isValid"> Indicate if the configuration service settings are valid. </param>
         /// <param name="gitReposValidationResult"> The detail validation results. </param>
         internal ConfigurationServiceGitPropertyValidateResult(bool? isValid, IReadOnlyList<ValidationMessages> gitReposValidationResult)

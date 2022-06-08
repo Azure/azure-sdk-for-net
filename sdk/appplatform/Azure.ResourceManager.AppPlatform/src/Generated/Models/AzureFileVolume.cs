@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The properties of the Azure File volume. Azure File shares are mounted as volumes. </summary>
     public partial class AzureFileVolume : CustomPersistentDiskProperties
     {
-        /// <summary> Initializes a new instance of AzureFileVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileVolume"/>. </summary>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
         /// <param name="shareName"> The share name of the Azure File share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mountPath"/> or <paramref name="shareName"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             UnderlyingResourceType = UnderlyingResourceType.AzureFileVolume;
         }
 
-        /// <summary> Initializes a new instance of AzureFileVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFileVolume"/>. </summary>
         /// <param name="underlyingResourceType"> The type of the underlying resource to mount as a persistent disk. </param>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
         /// <param name="readOnly"> Indicates whether the persistent disk is a readOnly one. </param>

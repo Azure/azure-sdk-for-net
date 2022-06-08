@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Deployment settings payload. </summary>
     public partial class DeploymentSettings
     {
-        /// <summary> Initializes a new instance of DeploymentSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettings"/>. </summary>
         public DeploymentSettings()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             AddonConfigs = new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
         }
 
-        /// <summary> Initializes a new instance of DeploymentSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettings"/>. </summary>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. It is recommended that using this field to represent the required CPU and Memory, the old field cpu and memoryInGB will be deprecated later. </param>
         /// <param name="environmentVariables"> Collection of environment variables. </param>
         /// <param name="addonConfigs"> Collection of addons. </param>

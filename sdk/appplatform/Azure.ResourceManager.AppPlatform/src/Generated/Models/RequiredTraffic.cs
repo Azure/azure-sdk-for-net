@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Required inbound or outbound traffic for Azure Spring Cloud instance. </summary>
     public partial class RequiredTraffic
     {
-        /// <summary> Initializes a new instance of RequiredTraffic. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequiredTraffic"/>. </summary>
         internal RequiredTraffic()
         {
             IPs = new ChangeTrackingList<string>();
             Fqdns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RequiredTraffic. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequiredTraffic"/>. </summary>
         /// <param name="protocol"> The protocol of required traffic. </param>
         /// <param name="port"> The port of required traffic. </param>
         /// <param name="iPs"> The ip list of required traffic. </param>

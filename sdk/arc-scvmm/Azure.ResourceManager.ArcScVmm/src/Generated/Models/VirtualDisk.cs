@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Virtual disk model. </summary>
     public partial class VirtualDisk
     {
-        /// <summary> Initializes a new instance of VirtualDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDisk"/>. </summary>
         public VirtualDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualDisk"/>. </summary>
         /// <param name="name"> Gets or sets the name of the disk. </param>
         /// <param name="displayName"> Gets the display name of the virtual disk as shown in the vmmServer. This is the fallback label for a disk when the name is not set. </param>
         /// <param name="diskId"> Gets or sets the disk id. </param>

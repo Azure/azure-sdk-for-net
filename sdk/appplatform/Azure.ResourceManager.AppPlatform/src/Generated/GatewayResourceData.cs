@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppPlatform
     /// <summary> A class representing the GatewayResource data model. </summary>
     public partial class GatewayResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of GatewayResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayResourceData"/>. </summary>
         public GatewayResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

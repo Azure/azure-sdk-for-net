@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Custom domain validate payload. </summary>
     public partial class CustomDomainValidatePayload
     {
-        /// <summary> Initializes a new instance of CustomDomainValidatePayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainValidatePayload"/>. </summary>
         /// <param name="name"> Name to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CustomDomainValidatePayload(string name)

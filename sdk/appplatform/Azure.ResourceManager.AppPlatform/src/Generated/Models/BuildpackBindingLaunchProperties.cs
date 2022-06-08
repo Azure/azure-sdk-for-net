@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Buildpack Binding Launch Properties. </summary>
     public partial class BuildpackBindingLaunchProperties
     {
-        /// <summary> Initializes a new instance of BuildpackBindingLaunchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildpackBindingLaunchProperties"/>. </summary>
         public BuildpackBindingLaunchProperties()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
             Secrets = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of BuildpackBindingLaunchProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildpackBindingLaunchProperties"/>. </summary>
         /// <param name="properties"> Non-sensitive properties for launchProperties. </param>
         /// <param name="secrets"> Sensitive properties for launchProperties. </param>
         internal BuildpackBindingLaunchProperties(IDictionary<string, string> properties, IDictionary<string, string> secrets)

@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The request of change point detection. </summary>
     public partial class ChangePointDetectRequest
     {
-        /// <summary> Initializes a new instance of ChangePointDetectRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangePointDetectRequest"/>. </summary>
         /// <param name="series"> Time series data points. Points should be sorted by timestamp in ascending order to match the change point detection result. </param>
         /// <param name="granularity"> Can only be one of yearly, monthly, weekly, daily, hourly, minutely or secondly. Granularity is used for verify whether input series is valid. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>

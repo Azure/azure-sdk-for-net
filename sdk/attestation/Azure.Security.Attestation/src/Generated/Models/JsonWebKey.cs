@@ -14,7 +14,7 @@ namespace Azure.Security.Attestation
     /// <summary> The JsonWebKey. </summary>
     internal partial class JsonWebKey
     {
-        /// <summary> Initializes a new instance of JsonWebKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
         /// <param name="kty">
         /// The &quot;kty&quot; (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as &quot;RSA&quot; or &quot;EC&quot;. &quot;kty&quot; values should
@@ -34,7 +34,7 @@ namespace Azure.Security.Attestation
             X5C = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of JsonWebKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
         /// <param name="alg">
         /// The &quot;alg&quot; (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the

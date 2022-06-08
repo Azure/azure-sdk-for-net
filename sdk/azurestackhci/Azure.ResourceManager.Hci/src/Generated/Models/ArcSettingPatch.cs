@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> ArcSetting details to update. </summary>
     public partial class ArcSettingPatch
     {
-        /// <summary> Initializes a new instance of ArcSettingPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcSettingPatch"/>. </summary>
         public ArcSettingPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

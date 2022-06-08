@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Validation result for custom domain. </summary>
     public partial class CustomDomainValidateResult
     {
-        /// <summary> Initializes a new instance of CustomDomainValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainValidateResult"/>. </summary>
         internal CustomDomainValidateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomDomainValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainValidateResult"/>. </summary>
         /// <param name="isValid"> Indicates if domain name is valid. </param>
         /// <param name="message"> Message of why domain name is invalid. </param>
         internal CustomDomainValidateResult(bool? isValid, string message)

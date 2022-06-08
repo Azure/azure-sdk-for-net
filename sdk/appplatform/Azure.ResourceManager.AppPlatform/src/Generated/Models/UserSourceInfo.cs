@@ -7,15 +7,19 @@
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Source information for a deployment. </summary>
+    /// <summary>
+    /// Source information for a deployment
+    /// Please note <see cref="UserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="BuildResultUserSourceInfo"/>, <see cref="CustomContainerUserSourceInfo"/>, <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/> and <see cref="UploadedUserSourceInfo"/>.
+    /// </summary>
     public partial class UserSourceInfo
     {
-        /// <summary> Initializes a new instance of UserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserSourceInfo"/>. </summary>
         public UserSourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of UserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
         internal UserSourceInfo(string userSourceInfoType, string version)

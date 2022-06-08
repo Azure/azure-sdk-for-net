@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> KPack Builder properties payload. </summary>
     public partial class AppBuilderProperties
     {
-        /// <summary> Initializes a new instance of AppBuilderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppBuilderProperties"/>. </summary>
         public AppBuilderProperties()
         {
             BuildpackGroups = new ChangeTrackingList<BuildpacksGroupProperties>();
         }
 
-        /// <summary> Initializes a new instance of AppBuilderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppBuilderProperties"/>. </summary>
         /// <param name="provisioningState"> Builder provision status. </param>
         /// <param name="stack"> Builder cluster stack property. </param>
         /// <param name="buildpackGroups"> Builder buildpack groups. </param>

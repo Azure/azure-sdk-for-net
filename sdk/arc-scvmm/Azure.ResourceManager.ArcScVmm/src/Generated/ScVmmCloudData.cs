@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ArcScVmm
     /// <summary> A class representing the ScVmmCloud data model. </summary>
     public partial class ScVmmCloudData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScVmmCloudData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmCloudData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcScVmm
             StorageQoSPolicies = new ChangeTrackingList<StorageQoSPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ScVmmCloudData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmCloudData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

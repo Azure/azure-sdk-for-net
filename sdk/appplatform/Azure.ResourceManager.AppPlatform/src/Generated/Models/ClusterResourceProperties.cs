@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Service properties payload. </summary>
     public partial class ClusterResourceProperties
     {
-        /// <summary> Initializes a new instance of ClusterResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterResourceProperties"/>. </summary>
         public ClusterResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the Service. </param>
         /// <param name="networkProfile"> Network profile of the Service. </param>
         /// <param name="version"> Version of the Service. </param>

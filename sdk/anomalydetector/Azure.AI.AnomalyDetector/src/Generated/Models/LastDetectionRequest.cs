@@ -14,7 +14,7 @@ namespace Azure.AI.AnomalyDetector.Models
     /// <summary> The LastDetectionRequest. </summary>
     public partial class LastDetectionRequest
     {
-        /// <summary> Initializes a new instance of LastDetectionRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LastDetectionRequest"/>. </summary>
         /// <param name="variables"> variables. </param>
         /// <param name="detectingPoints"> number of timestamps on which the model detects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="variables"/> is null. </exception>

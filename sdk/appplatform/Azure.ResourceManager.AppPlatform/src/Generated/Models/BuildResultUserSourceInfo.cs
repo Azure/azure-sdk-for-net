@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Reference to a build result. </summary>
     public partial class BuildResultUserSourceInfo : UserSourceInfo
     {
-        /// <summary> Initializes a new instance of BuildResultUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildResultUserSourceInfo"/>. </summary>
         public BuildResultUserSourceInfo()
         {
             UserSourceInfoType = "BuildResult";
         }
 
-        /// <summary> Initializes a new instance of BuildResultUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildResultUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
         /// <param name="buildResultId"> Resource id of an existing succeeded build result under the same Spring instance. </param>

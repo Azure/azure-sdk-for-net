@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Config server git properties payload. </summary>
     public partial class ConfigServerProperties
     {
-        /// <summary> Initializes a new instance of ConfigServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigServerProperties"/>. </summary>
         public ConfigServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigServerProperties"/>. </summary>
         /// <param name="provisioningState"> State of the config server. </param>
         /// <param name="error"> Error when apply config server settings. </param>
         /// <param name="configServer"> Settings of config server. </param>

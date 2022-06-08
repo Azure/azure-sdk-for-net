@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class representing the ConfigurationStore data model. </summary>
     public partial class ConfigurationStoreData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ConfigurationStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationStoreData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The sku of the configuration store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppConfiguration
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionReference>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationStoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

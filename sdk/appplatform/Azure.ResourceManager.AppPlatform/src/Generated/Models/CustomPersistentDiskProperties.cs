@@ -11,10 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Custom persistent disk resource payload. </summary>
+    /// <summary>
+    /// Custom persistent disk resource payload.
+    /// Please note <see cref="CustomPersistentDiskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureFileVolume"/>.
+    /// </summary>
     public partial class CustomPersistentDiskProperties
     {
-        /// <summary> Initializes a new instance of CustomPersistentDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomPersistentDiskProperties"/>. </summary>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mountPath"/> is null. </exception>
         public CustomPersistentDiskProperties(string mountPath)
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             MountOptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CustomPersistentDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomPersistentDiskProperties"/>. </summary>
         /// <param name="underlyingResourceType"> The type of the underlying resource to mount as a persistent disk. </param>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
         /// <param name="readOnly"> Indicates whether the persistent disk is a readOnly one. </param>

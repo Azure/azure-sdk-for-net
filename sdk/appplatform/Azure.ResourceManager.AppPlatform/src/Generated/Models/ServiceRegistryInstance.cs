@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Collection of instances belong to the Service Registry. </summary>
     public partial class ServiceRegistryInstance
     {
-        /// <summary> Initializes a new instance of ServiceRegistryInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceRegistryInstance"/>. </summary>
         internal ServiceRegistryInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceRegistryInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceRegistryInstance"/>. </summary>
         /// <param name="name"> Name of the Service Registry instance. </param>
         /// <param name="status"> Status of the Service Registry instance. </param>
         internal ServiceRegistryInstance(string name, string status)

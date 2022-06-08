@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Locations and availability zones where the SKU is available. </summary>
     public partial class ResourceSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuLocationInfo"/>. </summary>
         internal ResourceSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
             ZoneDetails = new ChangeTrackingList<ResourceSkuZoneDetails>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuLocationInfo"/>. </summary>
         /// <param name="location"> Gets location of the SKU. </param>
         /// <param name="zones"> Gets list of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>

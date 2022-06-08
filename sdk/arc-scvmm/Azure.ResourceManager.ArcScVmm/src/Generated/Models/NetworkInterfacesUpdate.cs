@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Network Interface model. </summary>
     public partial class NetworkInterfacesUpdate
     {
-        /// <summary> Initializes a new instance of NetworkInterfacesUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfacesUpdate"/>. </summary>
         public NetworkInterfacesUpdate()
         {
         }

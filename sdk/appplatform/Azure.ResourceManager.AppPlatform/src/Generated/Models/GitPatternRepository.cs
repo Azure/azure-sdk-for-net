@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Git repository property payload for config server. </summary>
     public partial class GitPatternRepository
     {
-        /// <summary> Initializes a new instance of GitPatternRepository. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitPatternRepository"/>. </summary>
         /// <param name="name"> Name of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             SearchPaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GitPatternRepository. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitPatternRepository"/>. </summary>
         /// <param name="name"> Name of the repository. </param>
         /// <param name="pattern"> Collection of pattern of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>

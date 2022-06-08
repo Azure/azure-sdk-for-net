@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Spring Cloud Gateway properties payload. </summary>
     public partial class GatewayProperties
     {
-        /// <summary> Initializes a new instance of GatewayProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayProperties"/>. </summary>
         public GatewayProperties()
         {
             Instances = new ChangeTrackingList<GatewayInstance>();
         }
 
-        /// <summary> Initializes a new instance of GatewayProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway. </param>
         /// <param name="public"> Indicates whether the Spring Cloud Gateway exposes endpoint. </param>
         /// <param name="uri"> URL of the Spring Cloud Gateway, exposed when &apos;public&apos; is true. </param>

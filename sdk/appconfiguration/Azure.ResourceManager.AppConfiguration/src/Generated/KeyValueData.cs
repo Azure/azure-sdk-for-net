@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class representing the KeyValue data model. </summary>
     public partial class KeyValueData : ResourceData
     {
-        /// <summary> Initializes a new instance of KeyValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyValueData"/>. </summary>
         public KeyValueData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KeyValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyValueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

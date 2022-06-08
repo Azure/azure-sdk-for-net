@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The build stage (init-container and container) resources in build pod. </summary>
     public partial class BuildStageProperties
     {
-        /// <summary> Initializes a new instance of BuildStageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildStageProperties"/>. </summary>
         internal BuildStageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BuildStageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildStageProperties"/>. </summary>
         /// <param name="name"> The name of this build stage resource. </param>
         /// <param name="status"> The provisioning state of this build stage resource. </param>
         internal BuildStageProperties(string name, KPackBuildStageProvisioningState? status)
