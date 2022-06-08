@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Virtual Network information contract. </summary>
     public partial class VnetInfo
     {
-        /// <summary> Initializes a new instance of VnetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetInfo"/>. </summary>
         internal VnetInfo()
         {
             Routes = new ChangeTrackingList<VnetRoute>();
         }
 
-        /// <summary> Initializes a new instance of VnetInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetInfo"/>. </summary>
         /// <param name="vnetResourceId"> The Virtual Network&apos;s resource ID. </param>
         /// <param name="certThumbprint"> The client certificate thumbprint. </param>
         /// <param name="certBlob">

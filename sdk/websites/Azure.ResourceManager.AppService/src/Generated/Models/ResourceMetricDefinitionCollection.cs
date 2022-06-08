@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of metric definitions. </summary>
     internal partial class ResourceMetricDefinitionCollection
     {
-        /// <summary> Initializes a new instance of ResourceMetricDefinitionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinitionCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceMetricDefinitionCollection(IEnumerable<ResourceMetricDefinition> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceMetricDefinitionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinitionCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal ResourceMetricDefinitionCollection(IReadOnlyList<ResourceMetricDefinition> value, string nextLink)

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the PublicCertificate data model. </summary>
     public partial class PublicCertificateData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of PublicCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicCertificateData"/>. </summary>
         public PublicCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of PublicCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

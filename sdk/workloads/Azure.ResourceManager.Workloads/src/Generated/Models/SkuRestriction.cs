@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SKU restriction definition. </summary>
     public partial class SkuRestriction
     {
-        /// <summary> Initializes a new instance of SkuRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuRestriction"/>. </summary>
         internal SkuRestriction()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SkuRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuRestriction"/>. </summary>
         /// <param name="restrictionType"> The SKU restriction type. </param>
         /// <param name="values"> Restriction values. </param>
         /// <param name="restrictionInfo"> The restriction information. </param>

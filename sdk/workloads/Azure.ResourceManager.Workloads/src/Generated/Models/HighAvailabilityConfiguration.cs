@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the high availability configuration. </summary>
     internal partial class HighAvailabilityConfiguration
     {
-        /// <summary> Initializes a new instance of HighAvailabilityConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HighAvailabilityConfiguration"/>. </summary>
         /// <param name="highAvailabilityType"> The high availability type. </param>
         public HighAvailabilityConfiguration(SapHighAvailabilityType highAvailabilityType)
         {

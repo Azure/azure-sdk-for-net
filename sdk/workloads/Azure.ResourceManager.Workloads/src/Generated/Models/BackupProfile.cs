@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Backup profile. </summary>
     public partial class BackupProfile
     {
-        /// <summary> Initializes a new instance of BackupProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProfile"/>. </summary>
         /// <param name="backupEnabled"> Whether to enable Azure backup for the workload. </param>
         public BackupProfile(EnableBackup backupEnabled)
         {
             BackupEnabled = backupEnabled;
         }
 
-        /// <summary> Initializes a new instance of BackupProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupProfile"/>. </summary>
         /// <param name="backupEnabled"> Whether to enable Azure backup for the workload. </param>
         /// <param name="vaultResourceId"> Backup vault resource Id. </param>
         internal BackupProfile(EnableBackup backupEnabled, ResourceIdentifier vaultResourceId)

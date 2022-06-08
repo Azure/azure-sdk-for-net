@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the PrometheusHaCluster provider properties. </summary>
     public partial class PrometheusHAClusterProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of PrometheusHAClusterProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusHAClusterProviderInstanceProperties"/>. </summary>
         public PrometheusHAClusterProviderInstanceProperties()
         {
             ProviderType = "PrometheusHaCluster";
         }
 
-        /// <summary> Initializes a new instance of PrometheusHAClusterProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusHAClusterProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="prometheusUri"> URL of the Node Exporter endpoint. </param>
         /// <param name="hostname"> Gets or sets the target machine name. </param>

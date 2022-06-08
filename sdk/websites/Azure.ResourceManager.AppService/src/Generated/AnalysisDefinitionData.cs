@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the AnalysisDefinition data model. </summary>
     public partial class AnalysisDefinitionData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of AnalysisDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisDefinitionData"/>. </summary>
         public AnalysisDefinitionData()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

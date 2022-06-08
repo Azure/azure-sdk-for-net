@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SKU cost definition. </summary>
     public partial class SkuCost
     {
-        /// <summary> Initializes a new instance of SkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuCost"/>. </summary>
         internal SkuCost()
         {
         }
 
-        /// <summary> Initializes a new instance of SkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuCost"/>. </summary>
         /// <param name="meterId"> Billing meter id. </param>
         /// <param name="quantity"> The quantity. </param>
         /// <param name="extendedUnit"> The extended unit. </param>

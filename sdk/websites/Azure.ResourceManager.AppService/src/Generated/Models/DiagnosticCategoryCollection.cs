@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Diagnostic Categories. </summary>
     internal partial class DiagnosticCategoryCollection
     {
-        /// <summary> Initializes a new instance of DiagnosticCategoryCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticCategoryCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiagnosticCategoryCollection(IEnumerable<DiagnosticCategoryData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticCategoryCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticCategoryCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal DiagnosticCategoryCollection(IReadOnlyList<DiagnosticCategoryData> value, string nextLink)

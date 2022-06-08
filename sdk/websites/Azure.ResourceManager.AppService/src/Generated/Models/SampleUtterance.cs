@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Sample utterance. </summary>
     public partial class SampleUtterance
     {
-        /// <summary> Initializes a new instance of SampleUtterance. </summary>
+        /// <summary> Initializes a new instance of <see cref="SampleUtterance"/>. </summary>
         public SampleUtterance()
         {
             Links = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SampleUtterance. </summary>
+        /// <summary> Initializes a new instance of <see cref="SampleUtterance"/>. </summary>
         /// <param name="text"> Text attribute of sample utterance. </param>
         /// <param name="links"> Links attribute of sample utterance. </param>
         /// <param name="qid"> Question id of sample utterance (for stackoverflow questions titles). </param>

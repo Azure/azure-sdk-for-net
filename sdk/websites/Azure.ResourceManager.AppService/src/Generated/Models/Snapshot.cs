@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A snapshot of an app. </summary>
     public partial class Snapshot : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of Snapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="Snapshot"/>. </summary>
         public Snapshot()
         {
         }
 
-        /// <summary> Initializes a new instance of Snapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="Snapshot"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

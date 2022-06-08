@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the DiagnosticCategory data model. </summary>
     public partial class DiagnosticCategoryData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of DiagnosticCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticCategoryData"/>. </summary>
         public DiagnosticCategoryData()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticCategoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

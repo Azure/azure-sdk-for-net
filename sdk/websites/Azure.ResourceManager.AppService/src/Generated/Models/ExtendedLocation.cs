@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Extended Location. </summary>
     public partial class ExtendedLocation
     {
-        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         public ExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
         /// <param name="name"> Name of extended location. </param>
         /// <param name="extendedLocationType"> Type of extended location. </param>
         internal ExtendedLocation(string name, string extendedLocationType)

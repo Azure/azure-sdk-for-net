@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Specifies Windows operating system settings on the virtual machine. </summary>
     public partial class WindowsConfiguration : OSConfiguration
     {
-        /// <summary> Initializes a new instance of WindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
         public WindowsConfiguration()
         {
             OSType = OSType.Windows;
         }
 
-        /// <summary> Initializes a new instance of WindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
         internal WindowsConfiguration(OSType osType) : base(osType)
         {

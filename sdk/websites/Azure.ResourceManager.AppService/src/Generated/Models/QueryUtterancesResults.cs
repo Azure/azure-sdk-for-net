@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Suggested utterances where the detector can be applicable. </summary>
     public partial class QueryUtterancesResults
     {
-        /// <summary> Initializes a new instance of QueryUtterancesResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryUtterancesResults"/>. </summary>
         public QueryUtterancesResults()
         {
             Results = new ChangeTrackingList<QueryUtterancesResult>();
         }
 
-        /// <summary> Initializes a new instance of QueryUtterancesResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryUtterancesResults"/>. </summary>
         /// <param name="query"> Search Query. </param>
         /// <param name="results"> Array of utterance results for search query. </param>
         internal QueryUtterancesResults(string query, IList<QueryUtterancesResult> results)

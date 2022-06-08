@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Network trace. </summary>
     public partial class NetworkTrace
     {
-        /// <summary> Initializes a new instance of NetworkTrace. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTrace"/>. </summary>
         internal NetworkTrace()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkTrace. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTrace"/>. </summary>
         /// <param name="path"> Local file path for the captured network trace file. </param>
         /// <param name="status"> Current status of the network trace operation, same as Operation.Status (InProgress/Succeeded/Failed). </param>
         /// <param name="message"> Detailed message of a network trace operation, e.g. error message in case of failure. </param>

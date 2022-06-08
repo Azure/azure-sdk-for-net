@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the SAP ERS Server properties. </summary>
     public partial class EnqueueReplicationServerProperties
     {
-        /// <summary> Initializes a new instance of EnqueueReplicationServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnqueueReplicationServerProperties"/>. </summary>
         public EnqueueReplicationServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EnqueueReplicationServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnqueueReplicationServerProperties"/>. </summary>
         /// <param name="ersVersion"> Defines the type of Enqueue Replication Server. </param>
         /// <param name="instanceNo"> The ERS server instance id. </param>
         /// <param name="hostname"> The ERS server SAP host name. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> File share profile. </summary>
     public partial class FileshareProfile
     {
-        /// <summary> Initializes a new instance of FileshareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileshareProfile"/>. </summary>
         /// <param name="shareType"> Share type. </param>
         /// <param name="storageType"> File share backing storage type. </param>
         public FileshareProfile(FileShareType shareType, FileShareStorageType storageType)
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Workloads.Models
             StorageType = storageType;
         }
 
-        /// <summary> Initializes a new instance of FileshareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileshareProfile"/>. </summary>
         /// <param name="shareType"> Share type. </param>
         /// <param name="storageType"> File share backing storage type. </param>
         /// <param name="shareSizeInGB"> File share size in GB. </param>

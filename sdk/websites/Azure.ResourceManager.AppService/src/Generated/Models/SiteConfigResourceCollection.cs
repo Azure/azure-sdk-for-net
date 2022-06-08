@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of site configurations. </summary>
     internal partial class SiteConfigResourceCollection
     {
-        /// <summary> Initializes a new instance of SiteConfigResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigResourceCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SiteConfigResourceCollection(IEnumerable<SiteConfigData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SiteConfigResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteConfigResourceCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal SiteConfigResourceCollection(IReadOnlyList<SiteConfigData> value, string nextLink)

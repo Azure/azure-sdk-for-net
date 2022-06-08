@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the virtual machine configuration. </summary>
     public partial class VirtualMachineConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineConfiguration"/>. </summary>
         /// <param name="vmSize"> The virtual machine size. </param>
         /// <param name="imageReference"> The image reference. </param>
         /// <param name="osProfile"> The OS profile. </param>

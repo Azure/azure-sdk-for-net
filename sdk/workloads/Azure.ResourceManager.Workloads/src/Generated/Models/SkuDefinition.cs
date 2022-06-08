@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SKU definition. </summary>
     public partial class SkuDefinition
     {
-        /// <summary> Initializes a new instance of SkuDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuDefinition"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal SkuDefinition(string name)
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Restrictions = new ChangeTrackingList<SkuRestriction>();
         }
 
-        /// <summary> Initializes a new instance of SkuDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuDefinition"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="resourceType"> Resource type the SKU applicable for. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP Software configuration Input when the software is to be installed by service without OS Configurations. </summary>
     public partial class SapInstallWithoutOSConfigSoftwareConfiguration : SoftwareConfiguration
     {
-        /// <summary> Initializes a new instance of SapInstallWithoutOSConfigSoftwareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/>. </summary>
         /// <param name="bomUri"> The URL to the SAP Build of Materials(BOM) file. </param>
         /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>
         /// <param name="softwareVersion"> The software version to install. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SoftwareInstallationType = SapSoftwareInstallationType.SapInstallWithoutOSConfig;
         }
 
-        /// <summary> Initializes a new instance of SapInstallWithoutOSConfigSoftwareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/>. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
         /// <param name="bomUri"> The URL to the SAP Build of Materials(BOM) file. </param>
         /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>

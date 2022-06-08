@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SKU zone details. </summary>
     public partial class SkuZoneDetail
     {
-        /// <summary> Initializes a new instance of SkuZoneDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuZoneDetail"/>. </summary>
         internal SkuZoneDetail()
         {
             Zones = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<SkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of SkuZoneDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuZoneDetail"/>. </summary>
         /// <param name="zones"> The physical zones. </param>
         /// <param name="capabilities"> The capabilities. </param>
         internal SkuZoneDetail(IReadOnlyList<string> zones, IReadOnlyList<SkuCapability> capabilities)

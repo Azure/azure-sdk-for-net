@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> VMSS profile. </summary>
     public partial class VmssNodesProfile : NodeProfile
     {
-        /// <summary> Initializes a new instance of VmssNodesProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmssNodesProfile"/>. </summary>
         /// <param name="nodeSku"> VM SKU for node(s). </param>
         /// <param name="osImage"> OS image used for creating the nodes. </param>
         /// <param name="osDisk"> OS disk details. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
         }
 
-        /// <summary> Initializes a new instance of VmssNodesProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmssNodesProfile"/>. </summary>
         /// <param name="name"> VM or VMSS name. </param>
         /// <param name="nodeSku"> VM SKU for node(s). </param>
         /// <param name="osImage"> OS image used for creating the nodes. </param>

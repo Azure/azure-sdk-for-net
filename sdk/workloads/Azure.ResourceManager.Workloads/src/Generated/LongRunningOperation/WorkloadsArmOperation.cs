@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Workloads
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of WorkloadsArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadsArmOperation" /> for mocking. </summary>
         protected WorkloadsArmOperation()
         {
         }

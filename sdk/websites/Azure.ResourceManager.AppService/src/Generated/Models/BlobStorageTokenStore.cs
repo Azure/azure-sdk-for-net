@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
     internal partial class BlobStorageTokenStore
     {
-        /// <summary> Initializes a new instance of BlobStorageTokenStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobStorageTokenStore"/>. </summary>
         public BlobStorageTokenStore()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobStorageTokenStore. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobStorageTokenStore"/>. </summary>
         /// <param name="sasUrlSettingName"> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </param>
         internal BlobStorageTokenStore(string sasUrlSettingName)
         {

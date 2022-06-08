@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> String dictionary resource. </summary>
     public partial class StringDictionary : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StringDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringDictionary"/>. </summary>
         public StringDictionary()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of StringDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="StringDictionary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

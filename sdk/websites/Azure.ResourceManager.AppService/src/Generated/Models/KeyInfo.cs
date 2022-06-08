@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function key info. </summary>
     public partial class KeyInfo
     {
-        /// <summary> Initializes a new instance of KeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
         public KeyInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
         /// <param name="name"> Key name. </param>
         /// <param name="value"> Key value. </param>
         internal KeyInfo(string name, string value)

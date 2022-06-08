@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static Site Custom Domain Request Properties ARM resource. </summary>
     public partial class StaticSiteCustomDomainRequestPropertiesARMResource : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainRequestPropertiesARMResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainRequestPropertiesARMResource"/>. </summary>
         public StaticSiteCustomDomainRequestPropertiesARMResource()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainRequestPropertiesARMResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainRequestPropertiesARMResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

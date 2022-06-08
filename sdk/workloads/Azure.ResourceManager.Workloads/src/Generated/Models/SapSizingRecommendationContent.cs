@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP Sizing Recommendation request. </summary>
     public partial class SapSizingRecommendationContent
     {
-        /// <summary> Initializes a new instance of SapSizingRecommendationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the resource is to be created. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>

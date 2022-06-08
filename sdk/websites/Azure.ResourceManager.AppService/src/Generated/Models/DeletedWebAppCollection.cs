@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of deleted apps. </summary>
     internal partial class DeletedWebAppCollection
     {
-        /// <summary> Initializes a new instance of DeletedWebAppCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedWebAppCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DeletedWebAppCollection(IEnumerable<DeletedSiteData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DeletedWebAppCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedWebAppCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal DeletedWebAppCollection(IReadOnlyList<DeletedSiteData> value, string nextLink)

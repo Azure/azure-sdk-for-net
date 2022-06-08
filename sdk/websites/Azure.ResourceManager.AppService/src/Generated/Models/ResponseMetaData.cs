@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The ResponseMetaData. </summary>
     internal partial class ResponseMetaData
     {
-        /// <summary> Initializes a new instance of ResponseMetaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseMetaData"/>. </summary>
         public ResponseMetaData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResponseMetaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseMetaData"/>. </summary>
         /// <param name="dataSource"> Source of the Data. </param>
         internal ResponseMetaData(DataSource dataSource)
         {

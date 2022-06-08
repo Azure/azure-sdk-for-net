@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> WordPress instance resource list. </summary>
     internal partial class WordPressInstanceResourceList
     {
-        /// <summary> Initializes a new instance of WordPressInstanceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WordPressInstanceResourceList"/>. </summary>
         internal WordPressInstanceResourceList()
         {
             Value = new ChangeTrackingList<WordPressInstanceResourceData>();
         }
 
-        /// <summary> Initializes a new instance of WordPressInstanceResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WordPressInstanceResourceList"/>. </summary>
         /// <param name="value"> List of resources in current page. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal WordPressInstanceResourceList(IReadOnlyList<WordPressInstanceResourceData> value, string nextLink)

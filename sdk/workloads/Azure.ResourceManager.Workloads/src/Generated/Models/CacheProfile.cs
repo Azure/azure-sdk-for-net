@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Cache profile. </summary>
     public partial class CacheProfile
     {
-        /// <summary> Initializes a new instance of CacheProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheProfile"/>. </summary>
         /// <param name="skuName"> Cache SKU name. </param>
         /// <param name="family"> Cache family. </param>
         /// <param name="capacity"> Cache capacity. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Capacity = capacity;
         }
 
-        /// <summary> Initializes a new instance of CacheProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CacheProfile"/>. </summary>
         /// <param name="name"> Cache name. </param>
         /// <param name="skuName"> Cache SKU name. </param>
         /// <param name="family"> Cache family. </param>

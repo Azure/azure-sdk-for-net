@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of slot differences. </summary>
     internal partial class SlotDifferenceCollection
     {
-        /// <summary> Initializes a new instance of SlotDifferenceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlotDifferenceCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SlotDifferenceCollection(IEnumerable<SlotDifference> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SlotDifferenceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlotDifferenceCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal SlotDifferenceCollection(IReadOnlyList<SlotDifference> value, string nextLink)

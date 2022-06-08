@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
     public partial class LiveTraceConfiguration
     {
-        /// <summary> Initializes a new instance of LiveTraceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveTraceConfiguration"/>. </summary>
         public LiveTraceConfiguration()
         {
             Categories = new ChangeTrackingList<LiveTraceCategory>();
         }
 
-        /// <summary> Initializes a new instance of LiveTraceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveTraceConfiguration"/>. </summary>
         /// <param name="enabled">
         /// Indicates whether or not enable live trace.
         /// When it&apos;s set to true, live trace client can connect to the service.

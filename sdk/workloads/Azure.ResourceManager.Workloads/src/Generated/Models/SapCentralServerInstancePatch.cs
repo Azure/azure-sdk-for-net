@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the request body for updating SAP Central Instance. </summary>
     public partial class SapCentralServerInstancePatch
     {
-        /// <summary> Initializes a new instance of SapCentralServerInstancePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCentralServerInstancePatch"/>. </summary>
         public SapCentralServerInstancePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

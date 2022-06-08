@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the BackupItem data model. </summary>
     public partial class BackupItemData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of BackupItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupItemData"/>. </summary>
         public BackupItemData()
         {
             Databases = new ChangeTrackingList<DatabaseBackupSetting>();
         }
 
-        /// <summary> Initializes a new instance of BackupItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

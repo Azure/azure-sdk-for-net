@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> ACL for a private endpoint. </summary>
     public partial class PrivateEndpointAcl : NetworkAcl
     {
-        /// <summary> Initializes a new instance of PrivateEndpointAcl. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointAcl"/>. </summary>
         /// <param name="name"> Name of the private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PrivateEndpointAcl(string name)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointAcl. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointAcl"/>. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="name"> Name of the private endpoint connection. </param>

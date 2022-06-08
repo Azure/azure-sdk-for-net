@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Upstream auth settings. </summary>
     public partial class UpstreamAuthSettings
     {
-        /// <summary> Initializes a new instance of UpstreamAuthSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpstreamAuthSettings"/>. </summary>
         public UpstreamAuthSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of UpstreamAuthSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpstreamAuthSettings"/>. </summary>
         /// <param name="authType"> Gets or sets the type of auth. None or ManagedIdentity is supported now. </param>
         /// <param name="managedIdentity"> Gets or sets the managed identity settings. It&apos;s required if the auth type is set to ManagedIdentity. </param>
         internal UpstreamAuthSettings(UpstreamAuthType? authType, ManagedIdentitySettings managedIdentity)

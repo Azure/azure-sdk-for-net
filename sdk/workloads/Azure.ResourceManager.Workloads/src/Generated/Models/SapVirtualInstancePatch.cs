@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the request body for updating Virtual Instance for SAP. </summary>
     public partial class SapVirtualInstancePatch
     {
-        /// <summary> Initializes a new instance of SapVirtualInstancePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstancePatch"/>. </summary>
         public SapVirtualInstancePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
     internal partial class ResourceLogConfiguration
     {
-        /// <summary> Initializes a new instance of ResourceLogConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceLogConfiguration"/>. </summary>
         public ResourceLogConfiguration()
         {
             Categories = new ChangeTrackingList<ResourceLogCategory>();
         }
 
-        /// <summary> Initializes a new instance of ResourceLogConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceLogConfiguration"/>. </summary>
         /// <param name="categories"> Gets or sets the list of category configurations. </param>
         internal ResourceLogConfiguration(IList<ResourceLogCategory> categories)
         {

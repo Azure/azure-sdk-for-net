@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the AppServicePlan data model. </summary>
     public partial class AppServicePlanData : AppServiceResource
     {
-        /// <summary> Initializes a new instance of AppServicePlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppServicePlanData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AppServicePlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

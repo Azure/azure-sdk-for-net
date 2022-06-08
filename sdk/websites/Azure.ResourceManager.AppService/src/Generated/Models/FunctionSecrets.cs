@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function secrets. </summary>
     public partial class FunctionSecrets
     {
-        /// <summary> Initializes a new instance of FunctionSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionSecrets"/>. </summary>
         internal FunctionSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of FunctionSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionSecrets"/>. </summary>
         /// <param name="key"> Secret key. </param>
         /// <param name="triggerUri"> Trigger URL. </param>
         internal FunctionSecrets(string key, Uri triggerUri)

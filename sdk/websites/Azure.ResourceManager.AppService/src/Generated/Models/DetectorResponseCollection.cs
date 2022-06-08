@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of detector responses. </summary>
     internal partial class DetectorResponseCollection
     {
-        /// <summary> Initializes a new instance of DetectorResponseCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorResponseCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DetectorResponseCollection(IEnumerable<AppServiceDetectorData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DetectorResponseCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorResponseCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal DetectorResponseCollection(IReadOnlyList<AppServiceDetectorData> value, string nextLink)

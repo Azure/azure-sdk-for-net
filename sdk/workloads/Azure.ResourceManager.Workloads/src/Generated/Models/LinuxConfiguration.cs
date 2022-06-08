@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Specifies the Linux operating system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
     public partial class LinuxConfiguration : OSConfiguration
     {
-        /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
         public LinuxConfiguration()
         {
             OSType = OSType.Linux;
         }
 
-        /// <summary> Initializes a new instance of LinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
         /// <param name="disablePasswordAuthentication"> Specifies whether password authentication should be disabled. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for a Linux OS. (This property is deprecated, please use &apos;sshKeyPair&apos; instead). </param>

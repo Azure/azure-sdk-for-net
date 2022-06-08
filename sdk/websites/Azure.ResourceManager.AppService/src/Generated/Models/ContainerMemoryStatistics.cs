@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The ContainerMemoryStatistics. </summary>
     public partial class ContainerMemoryStatistics
     {
-        /// <summary> Initializes a new instance of ContainerMemoryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerMemoryStatistics"/>. </summary>
         public ContainerMemoryStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerMemoryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerMemoryStatistics"/>. </summary>
         /// <param name="usage"></param>
         /// <param name="maxUsage"></param>
         /// <param name="limit"></param>

@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Disk resource creation details. </summary>
     public partial class DiskInfo
     {
-        /// <summary> Initializes a new instance of DiskInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskInfo"/>. </summary>
         /// <param name="storageType"> Storage type. </param>
         public DiskInfo(DiskStorageType storageType)
         {
             StorageType = storageType;
         }
 
-        /// <summary> Initializes a new instance of DiskInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskInfo"/>. </summary>
         /// <param name="storageType"> Storage type. </param>
         /// <param name="sizeInGB"> Disk size in GB. </param>
         internal DiskInfo(DiskStorageType storageType, long? sizeInGB)

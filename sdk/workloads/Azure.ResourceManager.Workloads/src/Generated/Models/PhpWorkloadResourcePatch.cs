@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Resource patch request body. </summary>
     public partial class PhpWorkloadResourcePatch
     {
-        /// <summary> Initializes a new instance of PhpWorkloadResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhpWorkloadResourcePatch"/>. </summary>
         public PhpWorkloadResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

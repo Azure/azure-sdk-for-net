@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The KeyValuePairStringObject. </summary>
     public partial class KeyValuePairStringObject
     {
-        /// <summary> Initializes a new instance of KeyValuePairStringObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyValuePairStringObject"/>. </summary>
         internal KeyValuePairStringObject()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyValuePairStringObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyValuePairStringObject"/>. </summary>
         /// <param name="key"></param>
         /// <param name="value"> Any object. </param>
         internal KeyValuePairStringObject(string key, BinaryData value)

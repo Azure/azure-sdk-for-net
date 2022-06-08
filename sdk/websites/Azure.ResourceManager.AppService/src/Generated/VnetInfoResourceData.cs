@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the VnetInfoResource data model. </summary>
     public partial class VnetInfoResourceData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of VnetInfoResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetInfoResourceData"/>. </summary>
         public VnetInfoResourceData()
         {
             Routes = new ChangeTrackingList<VnetRoute>();
         }
 
-        /// <summary> Initializes a new instance of VnetInfoResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetInfoResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

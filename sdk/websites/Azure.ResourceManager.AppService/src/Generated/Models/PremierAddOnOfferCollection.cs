@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of premier add-on offers. </summary>
     internal partial class PremierAddOnOfferCollection
     {
-        /// <summary> Initializes a new instance of PremierAddOnOfferCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnOfferCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PremierAddOnOfferCollection(IEnumerable<PremierAddOnOffer> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PremierAddOnOfferCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnOfferCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal PremierAddOnOfferCollection(IReadOnlyList<PremierAddOnOffer> value, string nextLink)

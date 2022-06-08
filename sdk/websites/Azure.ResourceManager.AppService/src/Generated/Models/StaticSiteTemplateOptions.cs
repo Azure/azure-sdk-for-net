@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Template Options for the static site. </summary>
     public partial class StaticSiteTemplateOptions
     {
-        /// <summary> Initializes a new instance of StaticSiteTemplateOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteTemplateOptions"/>. </summary>
         public StaticSiteTemplateOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteTemplateOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteTemplateOptions"/>. </summary>
         /// <param name="templateRepositoryUri"> URL of the template repository. The newly generated repository will be based on this one. </param>
         /// <param name="owner"> Owner of the newly generated repository. </param>
         /// <param name="repositoryName"> Name of the newly generated repository. </param>

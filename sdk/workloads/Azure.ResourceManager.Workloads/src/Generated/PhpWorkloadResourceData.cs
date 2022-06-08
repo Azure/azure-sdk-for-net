@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads
     /// <summary> A class representing the PhpWorkloadResource data model. </summary>
     public partial class PhpWorkloadResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PhpWorkloadResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhpWorkloadResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Indicates which kind of php workload this resource represent e.g WordPress. </param>
         public PhpWorkloadResourceData(AzureLocation location, WorkloadKind kind) : base(location)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Workloads
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of PhpWorkloadResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhpWorkloadResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

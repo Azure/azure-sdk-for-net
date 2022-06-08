@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Instructions for rendering the data. </summary>
     public partial class Rendering
     {
-        /// <summary> Initializes a new instance of Rendering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Rendering"/>. </summary>
         public Rendering()
         {
         }
 
-        /// <summary> Initializes a new instance of Rendering. </summary>
+        /// <summary> Initializes a new instance of <see cref="Rendering"/>. </summary>
         /// <param name="renderingType"> Rendering Type. </param>
         /// <param name="title"> Title of data. </param>
         /// <param name="description"> Description of the data that will help it be interpreted. </param>

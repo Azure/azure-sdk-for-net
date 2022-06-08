@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Result of the request to check name availability. It contains a flag and possible reason of failure. </summary>
     public partial class NameAvailability
     {
-        /// <summary> Initializes a new instance of NameAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="NameAvailability"/>. </summary>
         internal NameAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of NameAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="NameAvailability"/>. </summary>
         /// <param name="nameAvailable"> Indicates whether the name is available or not. </param>
         /// <param name="reason"> The reason of the availability. Required if name is not available. </param>
         /// <param name="message"> The message of the operation. </param>

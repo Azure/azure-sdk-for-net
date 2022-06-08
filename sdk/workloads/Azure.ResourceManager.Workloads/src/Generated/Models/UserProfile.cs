@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> User profile to configure on a compute resources such as VM, VMSS. </summary>
     public partial class UserProfile
     {
-        /// <summary> Initializes a new instance of UserProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserProfile"/>. </summary>
         /// <param name="userName"> User name. </param>
         /// <param name="sshPublicKey"> SSH public key data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="sshPublicKey"/> is null. </exception>

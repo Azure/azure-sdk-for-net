@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The Database VM Details. </summary>
     public partial class DatabaseVmDetails
     {
-        /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseVmDetails"/>. </summary>
         internal DatabaseVmDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseVmDetails"/>. </summary>
         /// <param name="virtualMachineId"></param>
         /// <param name="status"> Defines the SAP Instance status. </param>
         internal DatabaseVmDetails(ResourceIdentifier virtualMachineId, SapVirtualInstanceStatus? status)

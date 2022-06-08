@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Object with a list of the resources that need to be moved and the resource group they should be moved to. </summary>
     public partial class CsmMoveResourceEnvelope
     {
-        /// <summary> Initializes a new instance of CsmMoveResourceEnvelope. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmMoveResourceEnvelope"/>. </summary>
         public CsmMoveResourceEnvelope()
         {
             Resources = new ChangeTrackingList<string>();

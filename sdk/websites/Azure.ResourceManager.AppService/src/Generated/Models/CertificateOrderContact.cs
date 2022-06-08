@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The CertificateOrderContact. </summary>
     public partial class CertificateOrderContact
     {
-        /// <summary> Initializes a new instance of CertificateOrderContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateOrderContact"/>. </summary>
         internal CertificateOrderContact()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateOrderContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateOrderContact"/>. </summary>
         /// <param name="email"></param>
         /// <param name="nameFirst"></param>
         /// <param name="nameLast"></param>

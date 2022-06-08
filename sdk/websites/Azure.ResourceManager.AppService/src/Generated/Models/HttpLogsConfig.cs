@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Http logs configuration. </summary>
     public partial class HttpLogsConfig
     {
-        /// <summary> Initializes a new instance of HttpLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpLogsConfig"/>. </summary>
         public HttpLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of HttpLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpLogsConfig"/>. </summary>
         /// <param name="fileSystem"> Http logs to file system configuration. </param>
         /// <param name="azureBlobStorage"> Http logs to azure blob storage configuration. </param>
         internal HttpLogsConfig(FileSystemHttpLogsConfig fileSystem, AzureBlobStorageHttpLogsConfig azureBlobStorage)

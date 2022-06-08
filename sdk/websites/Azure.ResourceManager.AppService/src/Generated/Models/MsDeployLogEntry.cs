@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> MSDeploy log entry. </summary>
     public partial class MsDeployLogEntry
     {
-        /// <summary> Initializes a new instance of MsDeployLogEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsDeployLogEntry"/>. </summary>
         internal MsDeployLogEntry()
         {
         }
 
-        /// <summary> Initializes a new instance of MsDeployLogEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsDeployLogEntry"/>. </summary>
         /// <param name="time"> Timestamp of log entry. </param>
         /// <param name="msDeployLogEntryType"> Log entry type. </param>
         /// <param name="message"> Log entry message. </param>

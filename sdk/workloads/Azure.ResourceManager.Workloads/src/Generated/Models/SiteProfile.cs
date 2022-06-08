@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Workload website profile. </summary>
     internal partial class SiteProfile
     {
-        /// <summary> Initializes a new instance of SiteProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteProfile"/>. </summary>
         public SiteProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteProfile"/>. </summary>
         /// <param name="domainName"> Domain name for the application site URL. </param>
         internal SiteProfile(string domainName)
         {

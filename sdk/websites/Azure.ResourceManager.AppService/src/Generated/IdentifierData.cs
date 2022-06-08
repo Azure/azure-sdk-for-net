@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the Identifier data model. </summary>
     public partial class IdentifierData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of IdentifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentifierData"/>. </summary>
         public IdentifierData()
         {
         }
 
-        /// <summary> Initializes a new instance of IdentifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

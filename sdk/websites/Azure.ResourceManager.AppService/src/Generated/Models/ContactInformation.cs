@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// </summary>
     public partial class ContactInformation
     {
-        /// <summary> Initializes a new instance of ContactInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactInformation"/>. </summary>
         /// <param name="email"> Email address. </param>
         /// <param name="nameFirst"> First name. </param>
         /// <param name="nameLast"> Last name. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
             Phone = phone;
         }
 
-        /// <summary> Initializes a new instance of ContactInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactInformation"/>. </summary>
         /// <param name="addressMailing"> Mailing address. </param>
         /// <param name="email"> Email address. </param>
         /// <param name="fax"> Fax number. </param>

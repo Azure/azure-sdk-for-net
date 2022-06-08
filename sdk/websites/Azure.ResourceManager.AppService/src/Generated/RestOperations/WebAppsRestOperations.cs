@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of WebAppsRestOperations. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppsRestOperations" />. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The <see cref="CsmPublishingCredentialsPoliciesEntityData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1405,7 +1405,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The <see cref="CsmPublishingCredentialsPoliciesEntityData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1544,7 +1544,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The <see cref="CsmPublishingCredentialsPoliciesEntityData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1575,7 +1575,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The <see cref="CsmPublishingCredentialsPoliciesEntityData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -12016,7 +12016,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
-        /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
+        /// <param name="privateEndpointWrapper"> The <see cref="PrivateLinkConnectionApprovalRequestResource"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -12045,7 +12045,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the site. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
-        /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
+        /// <param name="privateEndpointWrapper"> The <see cref="PrivateLinkConnectionApprovalRequestResource"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -15289,7 +15289,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
-        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The <see cref="CsmPublishingCredentialsPoliciesEntityData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -15322,7 +15322,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
-        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The <see cref="CsmPublishingCredentialsPoliciesEntityData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -15471,7 +15471,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
-        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The <see cref="CsmPublishingCredentialsPoliciesEntityData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -15504,7 +15504,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> The String to use. </param>
-        /// <param name="data"> The CsmPublishingCredentialsPoliciesEntity to use. </param>
+        /// <param name="data"> The <see cref="CsmPublishingCredentialsPoliciesEntityData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -26348,7 +26348,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
-        /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
+        /// <param name="privateEndpointWrapper"> The <see cref="PrivateLinkConnectionApprovalRequestResource"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -26379,7 +26379,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of the site. </param>
         /// <param name="slot"> The String to use. </param>
         /// <param name="privateEndpointConnectionName"> The String to use. </param>
-        /// <param name="privateEndpointWrapper"> The PrivateLinkConnectionApprovalRequestResource to use. </param>
+        /// <param name="privateEndpointWrapper"> The <see cref="PrivateLinkConnectionApprovalRequestResource"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="privateEndpointWrapper"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>

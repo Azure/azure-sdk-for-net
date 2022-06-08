@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the three tier SAP configuration. </summary>
     public partial class ThreeTierConfiguration : InfrastructureConfiguration
     {
-        /// <summary> Initializes a new instance of ThreeTierConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreeTierConfiguration"/>. </summary>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <param name="centralServer"> The central server configuration. </param>
         /// <param name="applicationServer"> The application server configuration. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Workloads.Models
             DeploymentType = SapDeploymentType.ThreeTier;
         }
 
-        /// <summary> Initializes a new instance of ThreeTierConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreeTierConfiguration"/>. </summary>
         /// <param name="deploymentType"> The deployment Type. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <param name="networkConfiguration"> Network configuration common to all servers. </param>

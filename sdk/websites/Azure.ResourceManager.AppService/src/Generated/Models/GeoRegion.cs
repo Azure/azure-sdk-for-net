@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Geographical region. </summary>
     public partial class GeoRegion : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of GeoRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoRegion"/>. </summary>
         public GeoRegion()
         {
         }
 
-        /// <summary> Initializes a new instance of GeoRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoRegion"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

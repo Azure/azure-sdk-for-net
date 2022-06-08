@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> PHP profile. </summary>
     internal partial class PhpProfile
     {
-        /// <summary> Initializes a new instance of PhpProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhpProfile"/>. </summary>
         /// <param name="version"> PHP version. </param>
         public PhpProfile(PhpVersion version)
         {

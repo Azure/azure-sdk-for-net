@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the AseV3NetworkingConfiguration data model. </summary>
     public partial class AseV3NetworkingConfigurationData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationData"/>. </summary>
         public AseV3NetworkingConfigurationData()
         {
             WindowsOutboundIPAddresses = new ChangeTrackingList<string>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService
             InternalInboundIPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> OS image profile. </summary>
     public partial class OSImageProfile
     {
-        /// <summary> Initializes a new instance of OSImageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSImageProfile"/>. </summary>
         public OSImageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of OSImageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSImageProfile"/>. </summary>
         /// <param name="publisher"> OS image publisher. </param>
         /// <param name="offer"> OS image offer. </param>
         /// <param name="sku"> OS image sku. </param>

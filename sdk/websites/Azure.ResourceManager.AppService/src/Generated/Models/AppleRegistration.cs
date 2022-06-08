@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the registration for the Apple provider. </summary>
     public partial class AppleRegistration
     {
-        /// <summary> Initializes a new instance of AppleRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppleRegistration"/>. </summary>
         public AppleRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of AppleRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppleRegistration"/>. </summary>
         /// <param name="clientId"> The Client ID of the app used for login. </param>
         /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
         internal AppleRegistration(string clientId, string clientSecretSettingName)

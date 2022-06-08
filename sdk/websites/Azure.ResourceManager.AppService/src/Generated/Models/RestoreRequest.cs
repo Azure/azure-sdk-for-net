@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a restore request. </summary>
     public partial class RestoreRequest : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of RestoreRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreRequest"/>. </summary>
         public RestoreRequest()
         {
             Databases = new ChangeTrackingList<DatabaseBackupSetting>();
         }
 
-        /// <summary> Initializes a new instance of RestoreRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreRequest"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

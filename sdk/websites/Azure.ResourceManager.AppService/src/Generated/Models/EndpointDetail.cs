@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Current TCP connectivity information from the App Service Environment to a single endpoint. </summary>
     public partial class EndpointDetail
     {
-        /// <summary> Initializes a new instance of EndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDetail"/>. </summary>
         internal EndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDetail"/>. </summary>
         /// <param name="ipAddress"> An IP Address that Domain Name currently resolves to. </param>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="latency"> The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port. </param>

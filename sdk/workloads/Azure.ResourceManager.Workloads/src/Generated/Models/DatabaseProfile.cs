@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Workload database profile. </summary>
     public partial class DatabaseProfile
     {
-        /// <summary> Initializes a new instance of DatabaseProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseProfile"/>. </summary>
         /// <param name="databaseType"> Database type. </param>
         /// <param name="sku"> The name of the server SKU, e.g. Standard_D32s_v4. </param>
         /// <param name="tier"> Tier of the server SKU. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Tier = tier;
         }
 
-        /// <summary> Initializes a new instance of DatabaseProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseProfile"/>. </summary>
         /// <param name="databaseType"> Database type. </param>
         /// <param name="serverName"> Database server name. </param>
         /// <param name="version"> Database version. </param>

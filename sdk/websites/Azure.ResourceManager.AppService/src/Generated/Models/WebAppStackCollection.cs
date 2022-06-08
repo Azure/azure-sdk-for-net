@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Web app Stacks. </summary>
     internal partial class WebAppStackCollection
     {
-        /// <summary> Initializes a new instance of WebAppStackCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppStackCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WebAppStackCollection(IEnumerable<WebAppStack> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of WebAppStackCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppStackCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal WebAppStackCollection(IReadOnlyList<WebAppStack> value, string nextLink)

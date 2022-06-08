@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the CsmPublishingCredentialsPoliciesEntity data model. </summary>
     public partial class CsmPublishingCredentialsPoliciesEntityData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of CsmPublishingCredentialsPoliciesEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmPublishingCredentialsPoliciesEntityData"/>. </summary>
         public CsmPublishingCredentialsPoliciesEntityData()
         {
         }
 
-        /// <summary> Initializes a new instance of CsmPublishingCredentialsPoliciesEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmPublishingCredentialsPoliciesEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

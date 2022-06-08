@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the AppServiceDomain data model. </summary>
     public partial class AppServiceDomainData : AppServiceResource
     {
-        /// <summary> Initializes a new instance of AppServiceDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDomainData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AppServiceDomainData(AzureLocation location) : base(location)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService
             DomainNotRenewableReasons = new ChangeTrackingList<AppServiceDomainPropertiesDomainNotRenewableReasonsItem>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

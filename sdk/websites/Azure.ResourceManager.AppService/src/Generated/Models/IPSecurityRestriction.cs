@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> IP security restriction on an app. </summary>
     public partial class IPSecurityRestriction
     {
-        /// <summary> Initializes a new instance of IPSecurityRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPSecurityRestriction"/>. </summary>
         public IPSecurityRestriction()
         {
             Headers = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of IPSecurityRestriction. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPSecurityRestriction"/>. </summary>
         /// <param name="ipAddress">
         /// IP address the security restriction is valid for.
         /// It can be in form of pure ipv4 address (required SubnetMask property) or

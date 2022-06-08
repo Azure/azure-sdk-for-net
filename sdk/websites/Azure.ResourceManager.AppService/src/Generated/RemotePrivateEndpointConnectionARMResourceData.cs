@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the RemotePrivateEndpointConnectionARMResource data model. </summary>
     public partial class RemotePrivateEndpointConnectionARMResourceData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionARMResourceData"/>. </summary>
         public RemotePrivateEndpointConnectionARMResourceData()
         {
             IPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionARMResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

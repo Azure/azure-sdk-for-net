@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The Central Server VM Details. </summary>
     public partial class CentralServerVmDetails
     {
-        /// <summary> Initializes a new instance of CentralServerVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CentralServerVmDetails"/>. </summary>
         internal CentralServerVmDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CentralServerVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CentralServerVmDetails"/>. </summary>
         /// <param name="virtualMachineType"> Defines the type of central server VM. </param>
         /// <param name="virtualMachineId"></param>
         internal CentralServerVmDetails(CentralServerVirtualMachineType? virtualMachineType, ResourceIdentifier virtualMachineId)

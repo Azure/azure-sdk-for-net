@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The PatchResourceRequestBodyIdentity. </summary>
     public partial class PatchResourceRequestBodyIdentity : UserAssignedServiceIdentity
     {
-        /// <summary> Initializes a new instance of PatchResourceRequestBodyIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatchResourceRequestBodyIdentity"/>. </summary>
         /// <param name="managedServiceIdentityType"> Type of manage identity. </param>
         public PatchResourceRequestBodyIdentity(ManagedServiceIdentityType managedServiceIdentityType) : base(managedServiceIdentityType)
         {
         }
 
-        /// <summary> Initializes a new instance of PatchResourceRequestBodyIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatchResourceRequestBodyIdentity"/>. </summary>
         /// <param name="managedServiceIdentityType"> Type of manage identity. </param>
         /// <param name="userAssignedIdentities"> User assigned identities dictionary. </param>
         internal PatchResourceRequestBodyIdentity(ManagedServiceIdentityType managedServiceIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities) : base(managedServiceIdentityType, userAssignedIdentities)

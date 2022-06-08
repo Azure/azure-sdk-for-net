@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Network profile. </summary>
     public partial class NetworkProfile
     {
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         /// <param name="loadBalancerType"> Load balancer type. </param>
         public NetworkProfile(LoadBalancerType loadBalancerType)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Workloads.Models
             OutboundPublicIPResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         /// <param name="loadBalancerType"> Load balancer type. </param>
         /// <param name="loadBalancerSku"> Load balancer SKU. </param>
         /// <param name="loadBalancerTier"> Load balancer tier. </param>

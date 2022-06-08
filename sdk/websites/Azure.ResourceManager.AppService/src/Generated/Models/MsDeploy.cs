@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> MSDeploy ARM PUT information. </summary>
     public partial class MsDeploy : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of MsDeploy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsDeploy"/>. </summary>
         public MsDeploy()
         {
             SetParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MsDeploy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsDeploy"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

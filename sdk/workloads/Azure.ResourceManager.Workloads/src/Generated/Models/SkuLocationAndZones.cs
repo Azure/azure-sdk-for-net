@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SKU location and zone. </summary>
     public partial class SkuLocationAndZones
     {
-        /// <summary> Initializes a new instance of SkuLocationAndZones. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuLocationAndZones"/>. </summary>
         internal SkuLocationAndZones()
         {
             Zones = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Workloads.Models
             ExtendedLocations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SkuLocationAndZones. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuLocationAndZones"/>. </summary>
         /// <param name="location"> The location of the SKU. </param>
         /// <param name="zones"> The availability zones of SKU location. </param>
         /// <param name="zoneDetails"> The availability zone details of the SKU location. </param>

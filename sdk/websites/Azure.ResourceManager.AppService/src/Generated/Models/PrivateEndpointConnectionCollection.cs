@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The PrivateEndpointConnectionCollection. </summary>
     internal partial class PrivateEndpointConnectionCollection
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PrivateEndpointConnectionCollection(IEnumerable<RemotePrivateEndpointConnectionARMResourceData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal PrivateEndpointConnectionCollection(IReadOnlyList<RemotePrivateEndpointConnectionARMResourceData> value, string nextLink)

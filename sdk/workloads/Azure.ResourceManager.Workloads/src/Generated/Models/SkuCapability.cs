@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SKU capability definition. </summary>
     public partial class SkuCapability
     {
-        /// <summary> Initializes a new instance of SkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuCapability"/>. </summary>
         internal SkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of SkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuCapability"/>. </summary>
         /// <param name="name"> The capability name. </param>
         /// <param name="value"> The capability value. </param>
         internal SkuCapability(string name, string value)

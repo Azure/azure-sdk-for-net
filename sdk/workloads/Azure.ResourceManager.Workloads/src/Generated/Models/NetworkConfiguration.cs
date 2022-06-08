@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the network configuration for SAP infrastructure. </summary>
     internal partial class NetworkConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfiguration"/>. </summary>
         public NetworkConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkConfiguration"/>. </summary>
         /// <param name="isSecondaryIPEnabled"> Specifies whether a secondary IP address should be added to the network interface on all VMs. </param>
         internal NetworkConfiguration(bool? isSecondaryIPEnabled)
         {

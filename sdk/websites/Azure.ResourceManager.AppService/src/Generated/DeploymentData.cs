@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the Deployment data model. </summary>
     public partial class DeploymentData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of DeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentData"/>. </summary>
         public DeploymentData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

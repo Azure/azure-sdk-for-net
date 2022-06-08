@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Discovery Details. </summary>
     public partial class DiscoveryConfiguration : SapConfiguration
     {
-        /// <summary> Initializes a new instance of DiscoveryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryConfiguration"/>. </summary>
         public DiscoveryConfiguration()
         {
             ConfigurationType = SapConfigurationType.Discovery;
         }
 
-        /// <summary> Initializes a new instance of DiscoveryConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         /// <param name="centralServerVmId"> The virtual machine ID of the Central Server. </param>
         /// <param name="appLocation"> The geo-location where the SAP system exists. </param>

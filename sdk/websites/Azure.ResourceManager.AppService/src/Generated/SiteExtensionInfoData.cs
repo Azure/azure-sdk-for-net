@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the SiteExtensionInfo data model. </summary>
     public partial class SiteExtensionInfoData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of SiteExtensionInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteExtensionInfoData"/>. </summary>
         public SiteExtensionInfoData()
         {
             Authors = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteExtensionInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteExtensionInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

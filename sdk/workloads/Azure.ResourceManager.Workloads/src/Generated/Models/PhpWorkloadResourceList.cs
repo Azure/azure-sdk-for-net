@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Php workload resource list. </summary>
     internal partial class PhpWorkloadResourceList
     {
-        /// <summary> Initializes a new instance of PhpWorkloadResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhpWorkloadResourceList"/>. </summary>
         internal PhpWorkloadResourceList()
         {
             Value = new ChangeTrackingList<PhpWorkloadResourceData>();
         }
 
-        /// <summary> Initializes a new instance of PhpWorkloadResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhpWorkloadResourceList"/>. </summary>
         /// <param name="value"> List of resources in current page. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal PhpWorkloadResourceList(IReadOnlyList<PhpWorkloadResourceData> value, string nextLink)

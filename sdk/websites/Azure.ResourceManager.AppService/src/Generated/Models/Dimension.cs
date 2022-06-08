@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// </summary>
     public partial class Dimension
     {
-        /// <summary> Initializes a new instance of Dimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dimension"/>. </summary>
         internal Dimension()
         {
         }
 
-        /// <summary> Initializes a new instance of Dimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dimension"/>. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="internalName"></param>

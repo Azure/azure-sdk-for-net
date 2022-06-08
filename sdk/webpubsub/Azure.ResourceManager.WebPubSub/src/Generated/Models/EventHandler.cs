@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Properties of event handler. </summary>
     public partial class EventHandler
     {
-        /// <summary> Initializes a new instance of EventHandler. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHandler"/>. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
         /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can&apos;t contains parameters.
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             SystemEvents = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventHandler. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHandler"/>. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the EventHandler URL template. You can use a predefined parameter {hub} and {event} inside the template, the value of the EventHandler URL is dynamically calculated when the client request comes in.
         /// For example, UrlTemplate can be `http://example.com/api/{hub}/{event}`. The host part can&apos;t contains parameters.

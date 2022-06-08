@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the StaticSiteCustomDomainOverviewARMResource data model. </summary>
     public partial class StaticSiteCustomDomainOverviewARMResourceData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewARMResourceData"/>. </summary>
         public StaticSiteCustomDomainOverviewARMResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewARMResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Kubernetes Environments. </summary>
     internal partial class KubeEnvironmentCollection
     {
-        /// <summary> Initializes a new instance of KubeEnvironmentCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubeEnvironmentCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal KubeEnvironmentCollection(IEnumerable<KubeEnvironmentData> value)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of KubeEnvironmentCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubeEnvironmentCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal KubeEnvironmentCollection(IReadOnlyList<KubeEnvironmentData> value, string nextLink)

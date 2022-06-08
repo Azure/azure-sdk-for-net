@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the StaticSiteBuildARMResource data model. </summary>
     public partial class StaticSiteBuildARMResourceData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSiteBuildARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildARMResourceData"/>. </summary>
         public StaticSiteBuildARMResourceData()
         {
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionApp>();
         }
 
-        /// <summary> Initializes a new instance of StaticSiteBuildARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildARMResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

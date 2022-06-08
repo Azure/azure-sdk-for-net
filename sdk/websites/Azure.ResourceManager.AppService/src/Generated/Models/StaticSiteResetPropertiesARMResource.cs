@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Static Site Reset Properties ARM resource. </summary>
     public partial class StaticSiteResetPropertiesARMResource : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of StaticSiteResetPropertiesARMResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteResetPropertiesARMResource"/>. </summary>
         public StaticSiteResetPropertiesARMResource()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteResetPropertiesARMResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteResetPropertiesARMResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

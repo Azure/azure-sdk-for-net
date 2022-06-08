@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the HybridConnection data model. </summary>
     public partial class HybridConnectionData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of HybridConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionData"/>. </summary>
         public HybridConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Name value pair. </summary>
     public partial class NameValuePair
     {
-        /// <summary> Initializes a new instance of NameValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="NameValuePair"/>. </summary>
         public NameValuePair()
         {
         }
 
-        /// <summary> Initializes a new instance of NameValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="NameValuePair"/>. </summary>
         /// <param name="name"> Pair name. </param>
         /// <param name="value"> Pair value. </param>
         internal NameValuePair(string name, string value)

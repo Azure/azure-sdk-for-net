@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Azure resource manager operation metadata. </summary>
     internal partial class CsmOperationCollection
     {
-        /// <summary> Initializes a new instance of CsmOperationCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmOperationCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CsmOperationCollection(IEnumerable<CsmOperationDescription> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CsmOperationCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmOperationCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal CsmOperationCollection(IReadOnlyList<CsmOperationDescription> value, string nextLink)

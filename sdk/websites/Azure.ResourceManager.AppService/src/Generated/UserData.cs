@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the User data model. </summary>
     public partial class UserData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of UserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserData"/>. </summary>
         public UserData()
         {
         }
 
-        /// <summary> Initializes a new instance of UserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

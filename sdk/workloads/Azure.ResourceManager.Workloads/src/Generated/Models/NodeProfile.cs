@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> VM or VMSS node profile. </summary>
     public partial class NodeProfile
     {
-        /// <summary> Initializes a new instance of NodeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeProfile"/>. </summary>
         /// <param name="nodeSku"> VM SKU for node(s). </param>
         /// <param name="osImage"> OS image used for creating the nodes. </param>
         /// <param name="osDisk"> OS disk details. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
             NodeResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NodeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeProfile"/>. </summary>
         /// <param name="name"> VM or VMSS name. </param>
         /// <param name="nodeSku"> VM SKU for node(s). </param>
         /// <param name="osImage"> OS image used for creating the nodes. </param>

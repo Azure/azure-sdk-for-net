@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the PremierAddOn data model. </summary>
     public partial class PremierAddOnData : AppServiceResource
     {
-        /// <summary> Initializes a new instance of PremierAddOnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PremierAddOnData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PremierAddOnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PremierAddOnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

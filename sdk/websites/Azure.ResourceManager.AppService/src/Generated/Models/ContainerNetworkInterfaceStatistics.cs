@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The ContainerNetworkInterfaceStatistics. </summary>
     public partial class ContainerNetworkInterfaceStatistics
     {
-        /// <summary> Initializes a new instance of ContainerNetworkInterfaceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceStatistics"/>. </summary>
         public ContainerNetworkInterfaceStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerNetworkInterfaceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceStatistics"/>. </summary>
         /// <param name="rxBytes"></param>
         /// <param name="rxPackets"></param>
         /// <param name="rxErrors"></param>

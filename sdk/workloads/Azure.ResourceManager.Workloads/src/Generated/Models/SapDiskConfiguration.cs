@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP Disk Configuration. </summary>
     public partial class SapDiskConfiguration
     {
-        /// <summary> Initializes a new instance of SapDiskConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfiguration"/>. </summary>
         internal SapDiskConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SapDiskConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfiguration"/>. </summary>
         /// <param name="volume"> The volume name. </param>
         /// <param name="diskType"> The disk type. </param>
         /// <param name="diskCount"> The disk count. </param>

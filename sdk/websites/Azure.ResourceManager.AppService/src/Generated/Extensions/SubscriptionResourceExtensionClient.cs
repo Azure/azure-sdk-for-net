@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
@@ -1088,7 +1088,7 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
-        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)

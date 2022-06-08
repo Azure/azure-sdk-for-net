@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the StaticSiteARMResource data model. </summary>
     public partial class StaticSiteARMResourceData : AppServiceResource
     {
-        /// <summary> Initializes a new instance of StaticSiteARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteARMResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StaticSiteARMResourceData(AzureLocation location) : base(location)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionApp>();
         }
 
-        /// <summary> Initializes a new instance of StaticSiteARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteARMResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

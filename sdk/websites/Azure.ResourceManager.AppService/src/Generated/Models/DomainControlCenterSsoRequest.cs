@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Single sign-on request information for domain management. </summary>
     public partial class DomainControlCenterSsoRequest
     {
-        /// <summary> Initializes a new instance of DomainControlCenterSsoRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainControlCenterSsoRequest"/>. </summary>
         internal DomainControlCenterSsoRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainControlCenterSsoRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainControlCenterSsoRequest"/>. </summary>
         /// <param name="uri"> URL where the single sign-on request is to be made. </param>
         /// <param name="postParameterKey"> Post parameter key. </param>
         /// <param name="postParameterValue"> Post parameter value. Client should use &apos;application/x-www-form-urlencoded&apos; encoding for this value. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SKU restriction information. </summary>
     public partial class RestrictionInfo
     {
-        /// <summary> Initializes a new instance of RestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestrictionInfo"/>. </summary>
         internal RestrictionInfo()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestrictionInfo"/>. </summary>
         /// <param name="locations"> The restriction locations. </param>
         /// <param name="zones"> The restriction zones. </param>
         internal RestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones)

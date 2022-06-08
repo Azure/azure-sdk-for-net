@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the SlotConfigNamesResource data model. </summary>
     public partial class SlotConfigNamesResourceData : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlotConfigNamesResourceData"/>. </summary>
         public SlotConfigNamesResourceData()
         {
             ConnectionStringNames = new ChangeTrackingList<string>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
             AzureStorageConfigNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlotConfigNamesResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

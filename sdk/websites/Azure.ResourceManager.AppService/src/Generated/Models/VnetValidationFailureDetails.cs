@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A class that describes the reason for a validation failure. </summary>
     public partial class VnetValidationFailureDetails : ProxyOnlyResource
     {
-        /// <summary> Initializes a new instance of VnetValidationFailureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetValidationFailureDetails"/>. </summary>
         public VnetValidationFailureDetails()
         {
             FailedTests = new ChangeTrackingList<VnetValidationTestFailure>();
             Warnings = new ChangeTrackingList<VnetValidationTestFailure>();
         }
 
-        /// <summary> Initializes a new instance of VnetValidationFailureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetValidationFailureDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

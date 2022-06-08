@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectLogin
     {
-        /// <summary> Initializes a new instance of OpenIdConnectLogin. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenIdConnectLogin"/>. </summary>
         public OpenIdConnectLogin()
         {
             Scopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OpenIdConnectLogin. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenIdConnectLogin"/>. </summary>
         /// <param name="nameClaimType"> The name of the claim that contains the users name. </param>
         /// <param name="scopes"> A list of the scopes that should be requested while authenticating. </param>
         internal OpenIdConnectLogin(string nameClaimType, IList<string> scopes)

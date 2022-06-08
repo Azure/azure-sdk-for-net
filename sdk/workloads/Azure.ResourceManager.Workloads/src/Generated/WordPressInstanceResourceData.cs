@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Workloads
     /// <summary> A class representing the WordPressInstanceResource data model. </summary>
     public partial class WordPressInstanceResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of WordPressInstanceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WordPressInstanceResourceData"/>. </summary>
         public WordPressInstanceResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of WordPressInstanceResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WordPressInstanceResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
