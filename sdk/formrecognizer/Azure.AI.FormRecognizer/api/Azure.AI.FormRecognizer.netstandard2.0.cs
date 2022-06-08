@@ -510,6 +510,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSignatureType AsSignatureType() { throw null; }
         public string AsString() { throw null; }
         public System.TimeSpan AsTime() { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DocumentFieldSchema
     {
