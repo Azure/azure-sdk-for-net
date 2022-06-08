@@ -54,13 +54,15 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 // Create Queue
                 var queueName = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
+                
                 var createQueueResponse = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName,
-                new SBQueue() { EnableExpress = true, EnableBatchedOperations = true});
+                    new SBQueue() { EnableExpress = true, EnableBatchedOperations = true});
 
                 Assert.NotNull(createQueueResponse);
                 Assert.Equal(createQueueResponse.Name, queueName);
                 Assert.True(createQueueResponse.EnableExpress);
-                
+                Assert.True(createQueueResponse.EnableBatchedOperations);
+
                 // Get the created Queue
                 var getQueueResponse = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);
                 Assert.NotNull(getQueueResponse);
@@ -70,7 +72,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Get all Queues
                 var getQueueListAllResponse = ServiceBusManagementClient.Queues.ListByNamespace(resourceGroup, namespaceName);
                 Assert.NotNull(getQueueListAllResponse);
-                Assert.True(getQueueListAllResponse.Count() >= 1);                
+                Assert.True(getQueueListAllResponse.Count() == 1);                
                 Assert.True(getQueueListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
 
@@ -88,7 +90,6 @@ namespace ServiceBus.Tests.ScenarioTests
                     MaxSizeInMegabytes = 1024,
                     ForwardTo = queueName1,
                     ForwardDeadLetteredMessagesTo = queueName1
-                    
                 };
 
                 var updateQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, updateQueuesParameter);

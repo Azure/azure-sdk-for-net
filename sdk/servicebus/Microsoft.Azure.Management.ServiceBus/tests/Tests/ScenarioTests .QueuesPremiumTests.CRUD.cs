@@ -88,7 +88,6 @@ namespace ServiceBus.Tests.ScenarioTests
                     ForwardTo = queueName1,
                     ForwardDeadLetteredMessagesTo = queueName1,
                     MaxMessageSizeInKilobytes = 13312,
-
                 };
 
                 var updateQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, updateQueuesParameter);
