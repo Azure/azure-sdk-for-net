@@ -1,142 +1,142 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "251215",
         "Content-Type": "application/octet-stream",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-9a5464a0ac049244a6cfc7b41c07a999-10d81825a5e16142-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "cfd33813d99aaa778cac51b64b636348",
+        "traceparent": "00-979647cc0012649021176a760ca96133-6cbc7296803b8d0d-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "126f96dbcd9ea7392844a7c07b7c6f36",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "11566aab-09d5-4547-92d1-7924f3f45716",
+        "apim-request-id": "3bb497ee-0fe0-4463-a5bd-0c22a67ca3f3",
         "Content-Length": "0",
-        "Date": "Wed, 26 Jan 2022 00:17:03 GMT",
-        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/11566aab-09d5-4547-92d1-7924f3f45716?api-version=2022-01-30-preview",
+        "Date": "Fri, 20 May 2022 21:40:47 GMT",
+        "Operation-Location": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/3bb497ee-0fe0-4463-a5bd-0c22a67ca3f3?api-version=2022-06-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "497"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "302"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/11566aab-09d5-4547-92d1-7924f3f45716?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/3bb497ee-0fe0-4463-a5bd-0c22a67ca3f3?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "9f9a67ce086280b80ed7d89cd4a934b6",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "f90b88f620f27a56e32778f990d87e40",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "307efbbb-1c3e-4ebe-9532-76aa4b77ff19",
+        "apim-request-id": "432f3aff-5020-4e8b-b938-d0e041da61c4",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:17:03 GMT",
+        "Date": "Fri, 20 May 2022 21:40:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "35"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-26T00:17:03Z",
-        "lastUpdatedDateTime": "2022-01-26T00:17:03Z"
+        "createdDateTime": "2022-05-20T21:40:48Z",
+        "lastUpdatedDateTime": "2022-05-20T21:40:48Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/11566aab-09d5-4547-92d1-7924f3f45716?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/3bb497ee-0fe0-4463-a5bd-0c22a67ca3f3?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "8588c9408c3740c3e0422afae2d02249",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8df44567fcac96e475d7c075a96276f4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "614073e0-3963-4055-9e34-fcb5aa66e114",
+        "apim-request-id": "43dee289-c68e-47fd-9d0f-e7800a43c354",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:17:04 GMT",
+        "Date": "Fri, 20 May 2022 21:40:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "28"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "48"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-26T00:17:03Z",
-        "lastUpdatedDateTime": "2022-01-26T00:17:03Z"
+        "createdDateTime": "2022-05-20T21:40:48Z",
+        "lastUpdatedDateTime": "2022-05-20T21:40:48Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/11566aab-09d5-4547-92d1-7924f3f45716?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/3bb497ee-0fe0-4463-a5bd-0c22a67ca3f3?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "19eb792751720b5b8053c0c201dbd6e3",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b1473d67faddbabd3ff52f7655401750",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "630bebfe-3c13-43a9-b07b-0a0ee90fc451",
+        "apim-request-id": "a68e67a2-22de-4f33-894e-58eaca1209f3",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:17:05 GMT",
+        "Date": "Fri, 20 May 2022 21:40:51 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2022-01-26T00:17:03Z",
-        "lastUpdatedDateTime": "2022-01-26T00:17:03Z"
+        "createdDateTime": "2022-05-20T21:40:48Z",
+        "lastUpdatedDateTime": "2022-05-20T21:40:48Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/11566aab-09d5-4547-92d1-7924f3f45716?api-version=2022-01-30-preview",
+      "RequestUri": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-layout/analyzeResults/3bb497ee-0fe0-4463-a5bd-0c22a67ca3f3?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220125.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "81759a78dddb4111a459be20ddbe9e3e",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220520.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "355867c6e287fa8aa375831b60e0d080",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bc154e08-5353-4432-bf21-3c56cfaa2b81",
+        "apim-request-id": "b3fa9985-c7c3-421b-af1c-de00f97d2398",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 26 Jan 2022 00:17:06 GMT",
+        "Date": "Fri, 20 May 2022 21:40:52 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "49"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "47"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2022-01-26T00:17:03Z",
-        "lastUpdatedDateTime": "2022-01-26T00:17:06Z",
+        "createdDateTime": "2022-05-20T21:40:48Z",
+        "lastUpdatedDateTime": "2022-05-20T21:40:51Z",
         "analyzeResult": {
-          "apiVersion": "2022-01-30-preview",
+          "apiVersion": "2022-06-30-preview",
           "modelId": "prebuilt-layout",
           "stringIndexType": "utf16CodeUnit",
-          "content": "STATE OF CALIFORNIA: CONTOSO\nBUREAU OF INSURANCE\n124 Main Street Palo Alto CA 842325\n(650)768-2322\nAUTHORIZATION OF CREDIT CARD PAYMENT\nFees owed to this Department may be paid by the use of a credit card. If you wish to pay your fee(s)\nwith your credit card, please complete this form and send it with your paperwork. Payment through\ncredit cards will not be processed without this authorization form. Please print or type clearly.\nName (company/individual for whom payment is being made) (Please Include License # and SSN/FEIN):\nContoso Insurance 54353T7A, 36-1222985\nPurpose of Payment:\nBalance on Account\nCard Type: \u2751Visa\n\u2751x AMEX\n\u2751Master Card\nI authorize Contoso Department of Professional and Financial Regulation, Bureau of Insurance\nto charge my: Visa\n4872876432425423\n____________________________\nExpiration date:\n09\n/\n21\nin the amount of: $__________________\n(Card number \u2013 Please print clearly)\n263.00\nSignature: ___________________________________________\n(must be signed by authorized person to validate)\n08\n23\n2018\n______\nForm is available on our website: www.contoso.com/insurance You may fax the form to:\n650-768-2322 or e-mail to: insurance@contoso.com\nOFFICES LOCATED AT 24 Main Street Palo Alto CA 842325\nwww.contoso.com/insurance\ncontoso\nCONTOSO BANK\nName of Cardholder:\nContact persons phone #, if questions with this\nJohn Singer\nform. Telephone #: (\n425\n)\n779 3479\n-\nEmail Address:\njohnsinger@hotmail.com\nMailing Address:\n472 SE 74th ST\nCity:\nLakewood\nState:\nWA\nZip Code:\n98712\nJohn Singer\n:unselected:\n:selected:\n:unselected:",
+          "content": "STATE OF CALIFORNIA: CONTOSO BUREAU OF INSURANCE 124 Main Street Palo Alto CA 842325 (650)768-2322\nAUTHORIZATION OF CREDIT CARD PAYMENT\nFees owed to this Department may be paid by the use of a credit card. If you wish to pay your fee(s) with your credit card, please complete this form and send it with your paperwork. Payment through credit cards will not be processed without this authorization form. Please print or type clearly.\nName (company/individual for whom payment is being made) (Please Include License # and SSN/FEIN): Contoso Insurance 54353T7A, 36-1222985\nPurpose of Payment: Balance on Account\nCard Type: \u2751Visa\n\u2751x AMEX\n\u2751Master Card\nI authorize Contoso Department of Professional and Financial Regulation, Bureau of Insurance to charge my: Visa\n____________________________\n(Card number \u2013 Please print clearly)\n4872876432425423\nExpiration date:\n09\n/\n21\nin the amount of: $__________________\n263.00\nSignature: ___________________________________________ Date: ______\n______\n08\n/\n23\n/\n2018\n(must be signed by authorized person to validate)\n________\nForm is available on our website: www.contoso.com/insurance You may fax the form to: 650-768-2322 or e-mail to: insurance@contoso.com\nOFFICES LOCATED AT 24 Main Street Palo Alto CA 842325 www.contoso.com/insurance\ncontoso\nCONTOSO BANK\nName of Cardholder:\nJohn Singer\nContact persons phone #, if questions with this\nform. Telephone #: (\n-\n425\n)\n779 3479\nEmail Address:\njohnsinger@hotmail.com\nMailing Address:\n472 SE 74th ST\nCity:\nLakewood\nState:\nWA\nZip Code:\n98712\nJohn Singer :unselected: :selected: :unselected:",
           "pages": [
             {
               "pageNumber": 1,
@@ -147,7 +147,7 @@
               "words": [
                 {
                   "content": "STATE",
-                  "boundingBox": [
+                  "polygon": [
                     3.2791,
                     0.7373,
                     3.5799,
@@ -165,7 +165,7 @@
                 },
                 {
                   "content": "OF",
-                  "boundingBox": [
+                  "polygon": [
                     3.6193,
                     0.7373,
                     3.7481,
@@ -183,7 +183,7 @@
                 },
                 {
                   "content": "CALIFORNIA:",
-                  "boundingBox": [
+                  "polygon": [
                     3.7831,
                     0.737,
                     4.386,
@@ -201,7 +201,7 @@
                 },
                 {
                   "content": "CONTOSO",
-                  "boundingBox": [
+                  "polygon": [
                     4.4383,
                     0.7167,
                     5.0584,
@@ -219,7 +219,7 @@
                 },
                 {
                   "content": "BUREAU",
-                  "boundingBox": [
+                  "polygon": [
                     3.4183,
                     0.8641,
                     3.9344,
@@ -237,7 +237,7 @@
                 },
                 {
                   "content": "OF",
-                  "boundingBox": [
+                  "polygon": [
                     3.9836,
                     0.8641,
                     4.1487,
@@ -255,7 +255,7 @@
                 },
                 {
                   "content": "INSURANCE",
-                  "boundingBox": [
+                  "polygon": [
                     4.1947,
                     0.8618,
                     4.9237,
@@ -273,7 +273,7 @@
                 },
                 {
                   "content": "124",
-                  "boundingBox": [
+                  "polygon": [
                     3.1443,
                     1.0073,
                     3.333,
@@ -291,7 +291,7 @@
                 },
                 {
                   "content": "Main",
-                  "boundingBox": [
+                  "polygon": [
                     3.3832,
                     1.0077,
                     3.6359,
@@ -309,7 +309,7 @@
                 },
                 {
                   "content": "Street",
-                  "boundingBox": [
+                  "polygon": [
                     3.6851,
                     1.0062,
                     4.0117,
@@ -327,7 +327,7 @@
                 },
                 {
                   "content": "Palo",
-                  "boundingBox": [
+                  "polygon": [
                     4.0571,
                     1.0077,
                     4.2928,
@@ -345,7 +345,7 @@
                 },
                 {
                   "content": "Alto",
-                  "boundingBox": [
+                  "polygon": [
                     4.3323,
                     1.0077,
                     4.5428,
@@ -363,7 +363,7 @@
                 },
                 {
                   "content": "CA",
-                  "boundingBox": [
+                  "polygon": [
                     4.5886,
                     1.0062,
                     4.756,
@@ -381,7 +381,7 @@
                 },
                 {
                   "content": "842325",
-                  "boundingBox": [
+                  "polygon": [
                     4.7959,
                     1.0073,
                     5.2024,
@@ -399,7 +399,7 @@
                 },
                 {
                   "content": "(650)768-2322",
-                  "boundingBox": [
+                  "polygon": [
                     3.7689,
                     1.1509,
                     4.5703,
@@ -417,7 +417,7 @@
                 },
                 {
                   "content": "AUTHORIZATION",
-                  "boundingBox": [
+                  "polygon": [
                     2.4417,
                     2.2182,
                     3.8058,
@@ -435,7 +435,7 @@
                 },
                 {
                   "content": "OF",
-                  "boundingBox": [
+                  "polygon": [
                     3.856,
                     2.2182,
                     4.0615,
@@ -453,7 +453,7 @@
                 },
                 {
                   "content": "CREDIT",
-                  "boundingBox": [
+                  "polygon": [
                     4.1098,
                     2.2182,
                     4.7034,
@@ -471,7 +471,7 @@
                 },
                 {
                   "content": "CARD",
-                  "boundingBox": [
+                  "polygon": [
                     4.753,
                     2.2182,
                     5.2052,
@@ -489,7 +489,7 @@
                 },
                 {
                   "content": "PAYMENT",
-                  "boundingBox": [
+                  "polygon": [
                     5.256,
                     2.2185,
                     6.0557,
@@ -507,7 +507,7 @@
                 },
                 {
                   "content": "Fees",
-                  "boundingBox": [
+                  "polygon": [
                     0.8106,
                     3.5151,
                     1.1118,
@@ -525,7 +525,7 @@
                 },
                 {
                   "content": "owed",
-                  "boundingBox": [
+                  "polygon": [
                     1.16,
                     3.5151,
                     1.5019,
@@ -543,7 +543,7 @@
                 },
                 {
                   "content": "to",
-                  "boundingBox": [
+                  "polygon": [
                     1.55,
                     3.5209,
                     1.6753,
@@ -561,7 +561,7 @@
                 },
                 {
                   "content": "this",
-                  "boundingBox": [
+                  "polygon": [
                     1.7196,
                     3.5141,
                     1.9602,
@@ -579,7 +579,7 @@
                 },
                 {
                   "content": "Department",
-                  "boundingBox": [
+                  "polygon": [
                     2.0143,
                     3.5151,
                     2.7723,
@@ -597,7 +597,7 @@
                 },
                 {
                   "content": "may",
-                  "boundingBox": [
+                  "polygon": [
                     2.8228,
                     3.539,
                     3.0909,
@@ -615,7 +615,7 @@
                 },
                 {
                   "content": "be",
-                  "boundingBox": [
+                  "polygon": [
                     3.1377,
                     3.5151,
                     3.2877,
@@ -633,7 +633,7 @@
                 },
                 {
                   "content": "paid",
-                  "boundingBox": [
+                  "polygon": [
                     3.3395,
                     3.5141,
                     3.6084,
@@ -651,7 +651,7 @@
                 },
                 {
                   "content": "by",
-                  "boundingBox": [
+                  "polygon": [
                     3.6635,
                     3.5151,
                     3.8159,
@@ -669,7 +669,7 @@
                 },
                 {
                   "content": "the",
-                  "boundingBox": [
+                  "polygon": [
                     3.8565,
                     3.5151,
                     4.0598,
@@ -687,7 +687,7 @@
                 },
                 {
                   "content": "use",
-                  "boundingBox": [
+                  "polygon": [
                     4.1112,
                     3.539,
                     4.3377,
@@ -705,7 +705,7 @@
                 },
                 {
                   "content": "of",
-                  "boundingBox": [
+                  "polygon": [
                     4.3863,
                     3.5138,
                     4.5109,
@@ -723,7 +723,7 @@
                 },
                 {
                   "content": "a",
-                  "boundingBox": [
+                  "polygon": [
                     4.5554,
                     3.539,
                     4.6247,
@@ -741,7 +741,7 @@
                 },
                 {
                   "content": "credit",
-                  "boundingBox": [
+                  "polygon": [
                     4.6718,
                     3.5141,
                     5.0411,
@@ -759,7 +759,7 @@
                 },
                 {
                   "content": "card.",
-                  "boundingBox": [
+                  "polygon": [
                     5.0875,
                     3.5151,
                     5.4065,
@@ -777,7 +777,7 @@
                 },
                 {
                   "content": "If",
-                  "boundingBox": [
+                  "polygon": [
                     5.501,
                     3.5138,
                     5.5751,
@@ -795,7 +795,7 @@
                 },
                 {
                   "content": "you",
-                  "boundingBox": [
+                  "polygon": [
                     5.6177,
                     3.539,
                     5.8539,
@@ -813,7 +813,7 @@
                 },
                 {
                   "content": "wish",
-                  "boundingBox": [
+                  "polygon": [
                     5.9011,
                     3.5141,
                     6.2016,
@@ -831,7 +831,7 @@
                 },
                 {
                   "content": "to",
-                  "boundingBox": [
+                  "polygon": [
                     6.2504,
                     3.5209,
                     6.3758,
@@ -849,7 +849,7 @@
                 },
                 {
                   "content": "pay",
-                  "boundingBox": [
+                  "polygon": [
                     6.4273,
                     3.539,
                     6.6562,
@@ -867,7 +867,7 @@
                 },
                 {
                   "content": "your",
-                  "boundingBox": [
+                  "polygon": [
                     6.6976,
                     3.539,
                     6.994,
@@ -885,7 +885,7 @@
                 },
                 {
                   "content": "fee(s)",
-                  "boundingBox": [
+                  "polygon": [
                     7.036,
                     3.5128,
                     7.4009,
@@ -903,7 +903,7 @@
                 },
                 {
                   "content": "with",
-                  "boundingBox": [
+                  "polygon": [
                     0.8014,
                     3.6792,
                     1.0698,
@@ -921,7 +921,7 @@
                 },
                 {
                   "content": "your",
-                  "boundingBox": [
+                  "polygon": [
                     1.1194,
                     3.7041,
                     1.4149,
@@ -939,7 +939,7 @@
                 },
                 {
                   "content": "credit",
-                  "boundingBox": [
+                  "polygon": [
                     1.4602,
                     3.6792,
                     1.8317,
@@ -957,7 +957,7 @@
                 },
                 {
                   "content": "card,",
-                  "boundingBox": [
+                  "polygon": [
                     1.8781,
                     3.6801,
                     2.1969,
@@ -975,7 +975,7 @@
                 },
                 {
                   "content": "please",
-                  "boundingBox": [
+                  "polygon": [
                     2.2527,
                     3.6801,
                     2.6721,
@@ -993,7 +993,7 @@
                 },
                 {
                   "content": "complete",
-                  "boundingBox": [
+                  "polygon": [
                     2.7191,
                     3.6801,
                     3.3204,
@@ -1011,7 +1011,7 @@
                 },
                 {
                   "content": "this",
-                  "boundingBox": [
+                  "polygon": [
                     3.364,
                     3.6792,
                     3.6047,
@@ -1029,7 +1029,7 @@
                 },
                 {
                   "content": "form",
-                  "boundingBox": [
+                  "polygon": [
                     3.6496,
                     3.6789,
                     3.9485,
@@ -1047,7 +1047,7 @@
                 },
                 {
                   "content": "and",
-                  "boundingBox": [
+                  "polygon": [
                     3.9997,
                     3.6801,
                     4.2346,
@@ -1065,7 +1065,7 @@
                 },
                 {
                   "content": "send",
-                  "boundingBox": [
+                  "polygon": [
                     4.2855,
                     3.6801,
                     4.5976,
@@ -1083,7 +1083,7 @@
                 },
                 {
                   "content": "it",
-                  "boundingBox": [
+                  "polygon": [
                     4.6539,
                     3.6792,
                     4.7259,
@@ -1101,7 +1101,7 @@
                 },
                 {
                   "content": "with",
-                  "boundingBox": [
+                  "polygon": [
                     4.7682,
                     3.6792,
                     5.0366,
@@ -1119,7 +1119,7 @@
                 },
                 {
                   "content": "your",
-                  "boundingBox": [
+                  "polygon": [
                     5.0862,
                     3.7041,
                     5.3817,
@@ -1137,7 +1137,7 @@
                 },
                 {
                   "content": "paperwork.",
-                  "boundingBox": [
+                  "polygon": [
                     5.4308,
                     3.6801,
                     6.1548,
@@ -1155,7 +1155,7 @@
                 },
                 {
                   "content": "Payment",
-                  "boundingBox": [
+                  "polygon": [
                     6.2509,
                     3.6801,
                     6.8158,
@@ -1173,7 +1173,7 @@
                 },
                 {
                   "content": "through",
-                  "boundingBox": [
+                  "polygon": [
                     6.8588,
                     3.6801,
                     7.373,
@@ -1191,7 +1191,7 @@
                 },
                 {
                   "content": "credit",
-                  "boundingBox": [
+                  "polygon": [
                     0.8047,
                     3.8459,
                     1.1755,
@@ -1209,7 +1209,7 @@
                 },
                 {
                   "content": "cards",
-                  "boundingBox": [
+                  "polygon": [
                     1.222,
                     3.8468,
                     1.5826,
@@ -1227,7 +1227,7 @@
                 },
                 {
                   "content": "will",
-                  "boundingBox": [
+                  "polygon": [
                     1.6266,
                     3.8459,
                     1.8414,
@@ -1245,7 +1245,7 @@
                 },
                 {
                   "content": "not",
-                  "boundingBox": [
+                  "polygon": [
                     1.8984,
                     3.8527,
                     2.1015,
@@ -1263,7 +1263,7 @@
                 },
                 {
                   "content": "be",
-                  "boundingBox": [
+                  "polygon": [
                     2.1517,
                     3.8468,
                     2.3017,
@@ -1281,7 +1281,7 @@
                 },
                 {
                   "content": "processed",
-                  "boundingBox": [
+                  "polygon": [
                     2.3526,
                     3.8468,
                     3.0301,
@@ -1299,7 +1299,7 @@
                 },
                 {
                   "content": "without",
-                  "boundingBox": [
+                  "polygon": [
                     3.0757,
                     3.8459,
                     3.5679,
@@ -1317,7 +1317,7 @@
                 },
                 {
                   "content": "this",
-                  "boundingBox": [
+                  "polygon": [
                     3.6109,
                     3.8459,
                     3.8518,
@@ -1335,7 +1335,7 @@
                 },
                 {
                   "content": "authorization",
-                  "boundingBox": [
+                  "polygon": [
                     3.8985,
                     3.8459,
                     4.7585,
@@ -1353,7 +1353,7 @@
                 },
                 {
                   "content": "form.",
-                  "boundingBox": [
+                  "polygon": [
                     4.8073,
                     3.8456,
                     5.144,
@@ -1371,7 +1371,7 @@
                 },
                 {
                   "content": "Please",
-                  "boundingBox": [
+                  "polygon": [
                     5.2402,
                     3.8468,
                     5.6667,
@@ -1389,7 +1389,7 @@
                 },
                 {
                   "content": "print",
-                  "boundingBox": [
+                  "polygon": [
                     5.7176,
                     3.8459,
                     6.0148,
@@ -1407,7 +1407,7 @@
                 },
                 {
                   "content": "or",
-                  "boundingBox": [
+                  "polygon": [
                     6.0612,
                     3.8708,
                     6.1934,
@@ -1425,7 +1425,7 @@
                 },
                 {
                   "content": "type",
-                  "boundingBox": [
+                  "polygon": [
                     6.2353,
                     3.8527,
                     6.5149,
@@ -1443,7 +1443,7 @@
                 },
                 {
                   "content": "clearly.",
-                  "boundingBox": [
+                  "polygon": [
                     6.5627,
                     3.8468,
                     7.0271,
@@ -1461,7 +1461,7 @@
                 },
                 {
                   "content": "Name",
-                  "boundingBox": [
+                  "polygon": [
                     0.8479,
                     4.2002,
                     1.2134,
@@ -1479,7 +1479,7 @@
                 },
                 {
                   "content": "(company/individual",
-                  "boundingBox": [
+                  "polygon": [
                     1.2654,
                     4.1881,
                     2.4681,
@@ -1497,7 +1497,7 @@
                 },
                 {
                   "content": "for",
-                  "boundingBox": [
+                  "polygon": [
                     2.5128,
                     4.2091,
                     2.6764,
@@ -1515,11 +1515,11 @@
                 },
                 {
                   "content": "whom",
-                  "boundingBox": [
+                  "polygon": [
                     2.7128,
-                    4.2102,
+                    4.2103,
                     3.0674,
-                    4.2102,
+                    4.2103,
                     3.0674,
                     4.3016,
                     2.7128,
@@ -1533,7 +1533,7 @@
                 },
                 {
                   "content": "payment",
-                  "boundingBox": [
+                  "polygon": [
                     3.1169,
                     4.2155,
                     3.6202,
@@ -1551,7 +1551,7 @@
                 },
                 {
                   "content": "is",
-                  "boundingBox": [
+                  "polygon": [
                     3.6667,
                     4.2094,
                     3.7576,
@@ -1569,7 +1569,7 @@
                 },
                 {
                   "content": "being",
-                  "boundingBox": [
+                  "polygon": [
                     3.8047,
                     4.2094,
                     4.1234,
@@ -1587,11 +1587,11 @@
                 },
                 {
                   "content": "made)",
-                  "boundingBox": [
+                  "polygon": [
                     4.1727,
-                    4.2082,
+                    4.2083,
                     4.5281,
-                    4.2082,
+                    4.2083,
                     4.5281,
                     4.3259,
                     4.1727,
@@ -1605,11 +1605,11 @@
                 },
                 {
                   "content": "(Please",
-                  "boundingBox": [
+                  "polygon": [
                     4.5718,
-                    4.2082,
+                    4.2083,
                     5.0014,
-                    4.2082,
+                    4.2083,
                     5.0014,
                     4.3259,
                     4.5718,
@@ -1623,11 +1623,11 @@
                 },
                 {
                   "content": "Include",
-                  "boundingBox": [
+                  "polygon": [
                     5.0484,
-                    4.2102,
+                    4.2103,
                     5.4746,
-                    4.2102,
+                    4.2103,
                     5.4746,
                     4.3016,
                     5.0484,
@@ -1641,7 +1641,7 @@
                 },
                 {
                   "content": "License",
-                  "boundingBox": [
+                  "polygon": [
                     5.5225,
                     4.2094,
                     5.975,
@@ -1659,7 +1659,7 @@
                 },
                 {
                   "content": "#",
-                  "boundingBox": [
+                  "polygon": [
                     6.0157,
                     4.2128,
                     6.0807,
@@ -1677,11 +1677,11 @@
                 },
                 {
                   "content": "and",
-                  "boundingBox": [
+                  "polygon": [
                     6.1214,
-                    4.2102,
+                    4.2103,
                     6.3327,
-                    4.2102,
+                    4.2103,
                     6.3327,
                     4.3016,
                     6.1214,
@@ -1695,7 +1695,7 @@
                 },
                 {
                   "content": "SSN/FEIN):",
-                  "boundingBox": [
+                  "polygon": [
                     6.3805,
                     4.2079,
                     7.0286,
@@ -1713,7 +1713,7 @@
                 },
                 {
                   "content": "Contoso",
-                  "boundingBox": [
+                  "polygon": [
                     0.8942,
                     4.3643,
                     1.4017,
@@ -1731,7 +1731,7 @@
                 },
                 {
                   "content": "Insurance",
-                  "boundingBox": [
+                  "polygon": [
                     1.4589,
                     4.3659,
                     2.0531,
@@ -1749,7 +1749,7 @@
                 },
                 {
                   "content": "54353T7A,",
-                  "boundingBox": [
+                  "polygon": [
                     2.1427,
                     4.3655,
                     2.807,
@@ -1767,7 +1767,7 @@
                 },
                 {
                   "content": "36-1222985",
-                  "boundingBox": [
+                  "polygon": [
                     2.9033,
                     4.3655,
                     3.6366,
@@ -1785,7 +1785,7 @@
                 },
                 {
                   "content": "Purpose",
-                  "boundingBox": [
+                  "polygon": [
                     3.5656,
                     4.9384,
                     4.1075,
@@ -1803,7 +1803,7 @@
                 },
                 {
                   "content": "of",
-                  "boundingBox": [
+                  "polygon": [
                     4.1544,
                     4.9372,
                     4.2781,
@@ -1821,7 +1821,7 @@
                 },
                 {
                   "content": "Payment:",
-                  "boundingBox": [
+                  "polygon": [
                     4.3295,
                     4.9384,
                     4.9313,
@@ -1839,7 +1839,7 @@
                 },
                 {
                   "content": "Balance",
-                  "boundingBox": [
+                  "polygon": [
                     5.0848,
                     4.9313,
                     5.5713,
@@ -1857,7 +1857,7 @@
                 },
                 {
                   "content": "on",
-                  "boundingBox": [
+                  "polygon": [
                     5.6202,
                     4.9576,
                     5.7607,
@@ -1875,7 +1875,7 @@
                 },
                 {
                   "content": "Account",
-                  "boundingBox": [
+                  "polygon": [
                     5.8088,
                     4.9313,
                     6.3102,
@@ -1893,7 +1893,7 @@
                 },
                 {
                   "content": "Card",
-                  "boundingBox": [
+                  "polygon": [
                     0.8258,
                     5.4268,
                     1.1104,
@@ -1911,7 +1911,7 @@
                 },
                 {
                   "content": "Type:",
-                  "boundingBox": [
+                  "polygon": [
                     1.1624,
                     5.4285,
                     1.495,
@@ -1929,7 +1929,7 @@
                 },
                 {
                   "content": "\u2751Visa",
-                  "boundingBox": [
+                  "polygon": [
                     1.6159,
                     5.4302,
                     2.1074,
@@ -1947,7 +1947,7 @@
                 },
                 {
                   "content": "\u2751x",
-                  "boundingBox": [
+                  "polygon": [
                     2.2989,
                     5.4295,
                     2.4591,
@@ -1965,7 +1965,7 @@
                 },
                 {
                   "content": "AMEX",
-                  "boundingBox": [
+                  "polygon": [
                     2.4996,
                     5.4443,
                     2.8924,
@@ -1983,7 +1983,7 @@
                 },
                 {
                   "content": "\u2751Master",
-                  "boundingBox": [
+                  "polygon": [
                     3.0846,
                     5.4481,
                     3.7051,
@@ -2001,7 +2001,7 @@
                 },
                 {
                   "content": "Card",
-                  "boundingBox": [
+                  "polygon": [
                     3.7487,
                     5.4569,
                     4.0327,
@@ -2019,7 +2019,7 @@
                 },
                 {
                   "content": "I",
-                  "boundingBox": [
+                  "polygon": [
                     0.8033,
                     6.9598,
                     0.8617,
@@ -2037,7 +2037,7 @@
                 },
                 {
                   "content": "authorize",
-                  "boundingBox": [
+                  "polygon": [
                     0.9107,
                     6.9573,
                     1.5801,
@@ -2055,7 +2055,7 @@
                 },
                 {
                   "content": "Contoso",
-                  "boundingBox": [
+                  "polygon": [
                     1.6314,
                     6.958,
                     2.2027,
@@ -2073,7 +2073,7 @@
                 },
                 {
                   "content": "Department",
-                  "boundingBox": [
+                  "polygon": [
                     2.2527,
                     6.9598,
                     3.1119,
@@ -2091,7 +2091,7 @@
                 },
                 {
                   "content": "of",
-                  "boundingBox": [
+                  "polygon": [
                     3.1579,
                     6.9573,
                     3.302,
@@ -2109,12 +2109,12 @@
                 },
                 {
                   "content": "Professional",
-                  "boundingBox": [
+                  "polygon": [
                     3.3372,
                     6.9573,
-                    4.2012,
+                    4.2013,
                     6.9573,
-                    4.2012,
+                    4.2013,
                     7.0747,
                     3.3372,
                     7.0747
@@ -2127,7 +2127,7 @@
                 },
                 {
                   "content": "and",
-                  "boundingBox": [
+                  "polygon": [
                     4.2509,
                     6.9598,
                     4.5118,
@@ -2145,7 +2145,7 @@
                 },
                 {
                   "content": "Financial",
-                  "boundingBox": [
+                  "polygon": [
                     4.5598,
                     6.9573,
                     5.2201,
@@ -2163,7 +2163,7 @@
                 },
                 {
                   "content": "Regulation,",
-                  "boundingBox": [
+                  "polygon": [
                     5.2699,
                     6.9573,
                     6.0806,
@@ -2181,7 +2181,7 @@
                 },
                 {
                   "content": "Bureau",
-                  "boundingBox": [
+                  "polygon": [
                     6.1294,
                     6.9598,
                     6.6514,
@@ -2199,7 +2199,7 @@
                 },
                 {
                   "content": "of",
-                  "boundingBox": [
+                  "polygon": [
                     6.7004,
                     6.9573,
                     6.8444,
@@ -2217,7 +2217,7 @@
                 },
                 {
                   "content": "Insurance",
-                  "boundingBox": [
+                  "polygon": [
                     6.8801,
                     6.9598,
                     7.5868,
@@ -2235,7 +2235,7 @@
                 },
                 {
                   "content": "to",
-                  "boundingBox": [
+                  "polygon": [
                     0.8033,
                     7.1592,
                     0.9348,
@@ -2253,7 +2253,7 @@
                 },
                 {
                   "content": "charge",
-                  "boundingBox": [
+                  "polygon": [
                     0.9847,
                     7.1515,
                     1.4588,
@@ -2271,7 +2271,7 @@
                 },
                 {
                   "content": "my:",
-                  "boundingBox": [
+                  "polygon": [
                     1.5062,
                     7.1853,
                     1.7675,
@@ -2289,7 +2289,7 @@
                 },
                 {
                   "content": "Visa",
-                  "boundingBox": [
+                  "polygon": [
                     1.8242,
                     7.1495,
                     2.1348,
@@ -2306,26 +2306,8 @@
                   }
                 },
                 {
-                  "content": "4872876432425423",
-                  "boundingBox": [
-                    0.8996,
-                    7.8438,
-                    2.2164,
-                    7.8438,
-                    2.2164,
-                    7.9603,
-                    0.8996,
-                    7.9603
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 759,
-                    "length": 16
-                  }
-                },
-                {
                   "content": "____________________________",
-                  "boundingBox": [
+                  "polygon": [
                     0.8,
                     8.0223,
                     3.1333,
@@ -2337,193 +2319,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 776,
+                    "offset": 759,
                     "length": 28
                   }
                 },
                 {
-                  "content": "Expiration",
-                  "boundingBox": [
-                    3.3024,
-                    7.9046,
-                    4.0018,
-                    7.9046,
-                    4.0018,
-                    8.0411,
-                    3.3024,
-                    8.0411
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 805,
-                    "length": 10
-                  }
-                },
-                {
-                  "content": "date:",
-                  "boundingBox": [
-                    4.0467,
-                    7.9069,
-                    4.3518,
-                    7.9069,
-                    4.3518,
-                    8.012,
-                    4.0467,
-                    8.012
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 816,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "09",
-                  "boundingBox": [
-                    4.442,
-                    7.8916,
-                    4.5825,
-                    7.8916,
-                    4.5825,
-                    7.9982,
-                    4.442,
-                    7.9982
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 822,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "/",
-                  "boundingBox": [
-                    4.6708,
-                    7.9069,
-                    4.7157,
-                    7.9069,
-                    4.7157,
-                    8.012,
-                    4.6708,
-                    8.012
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 825,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "21",
-                  "boundingBox": [
-                    4.7708,
-                    7.8956,
-                    4.9015,
-                    7.8956,
-                    4.9015,
-                    8.0002,
-                    4.7708,
-                    8.0002
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 827,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "in",
-                  "boundingBox": [
-                    5.0592,
-                    7.9046,
-                    5.1817,
-                    7.9046,
-                    5.1817,
-                    8.01,
-                    5.0592,
-                    8.01
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 830,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "the",
-                  "boundingBox": [
-                    5.2259,
-                    7.9069,
-                    5.4239,
-                    7.9069,
-                    5.4239,
-                    8.012,
-                    5.2259,
-                    8.012
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 833,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "amount",
-                  "boundingBox": [
-                    5.4691,
-                    7.9139,
-                    5.9657,
-                    7.9139,
-                    5.9657,
-                    8.012,
-                    5.4691,
-                    8.012
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 837,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "of:",
-                  "boundingBox": [
-                    6.0082,
-                    7.9046,
-                    6.1702,
-                    7.9046,
-                    6.1702,
-                    8.012,
-                    6.0082,
-                    8.012
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 844,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "$__________________",
-                  "boundingBox": [
-                    6.2258,
-                    7.8956,
-                    7.6702,
-                    7.8956,
-                    7.6702,
-                    8.0289,
-                    6.2258,
-                    8.0289
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 848,
-                    "length": 19
-                  }
-                },
-                {
                   "content": "(Card",
-                  "boundingBox": [
+                  "polygon": [
                     0.806,
                     8.0771,
                     1.0841,
@@ -2535,13 +2337,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 868,
+                    "offset": 788,
                     "length": 5
                   }
                 },
                 {
                   "content": "number",
-                  "boundingBox": [
+                  "polygon": [
                     1.119,
                     8.0771,
                     1.4992,
@@ -2553,17 +2355,17 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 874,
+                    "offset": 794,
                     "length": 6
                   }
                 },
                 {
                   "content": "\u2013",
-                  "boundingBox": [
+                  "polygon": [
                     1.5308,
-                    8.1322,
+                    8.1323,
                     1.5933,
-                    8.1322,
+                    8.1323,
                     1.5933,
                     8.1374,
                     1.5308,
@@ -2571,31 +2373,31 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 881,
+                    "offset": 801,
                     "length": 1
                   }
                 },
                 {
                   "content": "Please",
-                  "boundingBox": [
+                  "polygon": [
                     1.6253,
                     8.0771,
-                    1.94,
+                    1.9401,
                     8.0771,
-                    1.94,
+                    1.9401,
                     8.1636,
                     1.6253,
                     8.1636
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 883,
+                    "offset": 803,
                     "length": 6
                   }
                 },
                 {
                   "content": "print",
-                  "boundingBox": [
+                  "polygon": [
                     1.975,
                     8.0771,
                     2.2103,
@@ -2607,13 +2409,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 890,
+                    "offset": 810,
                     "length": 5
                   }
                 },
                 {
                   "content": "clearly)",
-                  "boundingBox": [
+                  "polygon": [
                     2.2444,
                     8.0771,
                     2.6175,
@@ -2625,13 +2427,211 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 896,
+                    "offset": 816,
                     "length": 8
                   }
                 },
                 {
+                  "content": "4872876432425423",
+                  "polygon": [
+                    0.8996,
+                    7.8438,
+                    2.2164,
+                    7.8438,
+                    2.2164,
+                    7.9603,
+                    0.8996,
+                    7.9603
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 825,
+                    "length": 16
+                  }
+                },
+                {
+                  "content": "Expiration",
+                  "polygon": [
+                    3.3024,
+                    7.9046,
+                    4.0018,
+                    7.9046,
+                    4.0018,
+                    8.0411,
+                    3.3024,
+                    8.0411
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 842,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "date:",
+                  "polygon": [
+                    4.0467,
+                    7.9069,
+                    4.3518,
+                    7.9069,
+                    4.3518,
+                    8.012,
+                    4.0467,
+                    8.012
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 853,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "09",
+                  "polygon": [
+                    4.442,
+                    7.8916,
+                    4.5825,
+                    7.8916,
+                    4.5825,
+                    7.9982,
+                    4.442,
+                    7.9982
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 859,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "/",
+                  "polygon": [
+                    4.6708,
+                    7.9069,
+                    4.7157,
+                    7.9069,
+                    4.7157,
+                    8.012,
+                    4.6708,
+                    8.012
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 862,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "21",
+                  "polygon": [
+                    4.7708,
+                    7.8956,
+                    4.9015,
+                    7.8956,
+                    4.9015,
+                    8.0003,
+                    4.7708,
+                    8.0003
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 864,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "in",
+                  "polygon": [
+                    5.0592,
+                    7.9046,
+                    5.1817,
+                    7.9046,
+                    5.1817,
+                    8.01,
+                    5.0592,
+                    8.01
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 867,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "the",
+                  "polygon": [
+                    5.2259,
+                    7.9069,
+                    5.4239,
+                    7.9069,
+                    5.4239,
+                    8.012,
+                    5.2259,
+                    8.012
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 870,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "amount",
+                  "polygon": [
+                    5.4691,
+                    7.9139,
+                    5.9657,
+                    7.9139,
+                    5.9657,
+                    8.012,
+                    5.4691,
+                    8.012
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 874,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "of:",
+                  "polygon": [
+                    6.0082,
+                    7.9046,
+                    6.1702,
+                    7.9046,
+                    6.1702,
+                    8.012,
+                    6.0082,
+                    8.012
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 881,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "$__________________",
+                  "polygon": [
+                    6.2258,
+                    7.8956,
+                    7.6702,
+                    7.8956,
+                    7.6702,
+                    8.0289,
+                    6.2258,
+                    8.0289
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 885,
+                    "length": 19
+                  }
+                },
+                {
                   "content": "263.00",
-                  "boundingBox": [
+                  "polygon": [
                     6.5828,
                     7.8896,
                     6.9948,
@@ -2649,7 +2649,7 @@
                 },
                 {
                   "content": "Signature:",
-                  "boundingBox": [
+                  "polygon": [
                     0.8059,
                     8.3968,
                     1.5333,
@@ -2667,7 +2667,7 @@
                 },
                 {
                   "content": "___________________________________________",
-                  "boundingBox": [
+                  "polygon": [
                     1.5893,
                     8.5205,
                     5.2429,
@@ -2684,16 +2684,16 @@
                   }
                 },
                 {
-                  "content": "(must",
-                  "boundingBox": [
-                    1.7087,
-                    8.6229,
-                    1.9762,
-                    8.6229,
-                    1.9762,
-                    8.727,
-                    1.7087,
-                    8.727
+                  "content": "Date:",
+                  "polygon": [
+                    5.2557,
+                    8.3997,
+                    5.6041,
+                    8.3997,
+                    5.6041,
+                    8.5111,
+                    5.2557,
+                    8.5111
                   ],
                   "confidence": 1,
                   "span": {
@@ -2702,188 +2702,8 @@
                   }
                 },
                 {
-                  "content": "be",
-                  "boundingBox": [
-                    2.0158,
-                    8.6246,
-                    2.1283,
-                    8.6246,
-                    2.1283,
-                    8.7057,
-                    2.0158,
-                    8.7057
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 973,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "signed",
-                  "boundingBox": [
-                    2.168,
-                    8.6246,
-                    2.485,
-                    8.6246,
-                    2.485,
-                    8.7284,
-                    2.168,
-                    8.7284
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 976,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "by",
-                  "boundingBox": [
-                    2.5286,
-                    8.6246,
-                    2.6389,
-                    8.6246,
-                    2.6389,
-                    8.7278,
-                    2.5286,
-                    8.7278
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 983,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "authorized",
-                  "boundingBox": [
-                    2.6737,
-                    8.6246,
-                    3.1831,
-                    8.6246,
-                    3.1831,
-                    8.7057,
-                    2.6737,
-                    8.7057
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 986,
-                    "length": 10
-                  }
-                },
-                {
-                  "content": "person",
-                  "boundingBox": [
-                    3.2268,
-                    8.6445,
-                    3.5523,
-                    8.6445,
-                    3.5523,
-                    8.727,
-                    3.2268,
-                    8.727
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 997,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "to",
-                  "boundingBox": [
-                    3.592,
-                    8.63,
-                    3.6791,
-                    8.63,
-                    3.6791,
-                    8.7056,
-                    3.592,
-                    8.7056
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1004,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "validate)",
-                  "boundingBox": [
-                    3.7147,
-                    8.6229,
-                    4.1257,
-                    8.6229,
-                    4.1257,
-                    8.727,
-                    3.7147,
-                    8.727
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1007,
-                    "length": 9
-                  }
-                },
-                {
-                  "content": "08",
-                  "boundingBox": [
-                    5.8155,
-                    8.3705,
-                    5.9721,
-                    8.3705,
-                    5.9721,
-                    8.4835,
-                    5.8155,
-                    8.4835
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1017,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "23",
-                  "boundingBox": [
-                    6.5359,
-                    8.3585,
-                    6.6943,
-                    8.3585,
-                    6.6943,
-                    8.4716,
-                    6.5359,
-                    8.4716
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1020,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "2018",
-                  "boundingBox": [
-                    7.0358,
-                    8.3585,
-                    7.3644,
-                    8.3585,
-                    7.3644,
-                    8.4715,
-                    7.0358,
-                    8.4715
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1023,
-                    "length": 4
-                  }
-                },
-                {
                   "content": "______",
-                  "boundingBox": [
+                  "polygon": [
                     5.66,
                     8.5205,
                     6.1697,
@@ -2895,13 +2715,283 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1028,
+                    "offset": 973,
                     "length": 6
                   }
                 },
                 {
+                  "content": "______",
+                  "polygon": [
+                    6.2125,
+                    8.5205,
+                    6.7221,
+                    8.5205,
+                    6.7221,
+                    8.5281,
+                    6.2125,
+                    8.5281
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 980,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "08",
+                  "polygon": [
+                    5.8155,
+                    8.3705,
+                    5.9721,
+                    8.3705,
+                    5.9721,
+                    8.4835,
+                    5.8155,
+                    8.4835
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 987,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "/",
+                  "polygon": [
+                    6.1674,
+                    8.3968,
+                    6.2149,
+                    8.3968,
+                    6.2149,
+                    8.5119,
+                    6.1674,
+                    8.5119
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 990,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "23",
+                  "polygon": [
+                    6.5359,
+                    8.3585,
+                    6.6943,
+                    8.3585,
+                    6.6943,
+                    8.4716,
+                    6.5359,
+                    8.4716
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 992,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "/",
+                  "polygon": [
+                    6.7199,
+                    8.3968,
+                    6.7673,
+                    8.3968,
+                    6.7673,
+                    8.5119,
+                    6.7199,
+                    8.5119
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 995,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "2018",
+                  "polygon": [
+                    7.0358,
+                    8.3585,
+                    7.3644,
+                    8.3585,
+                    7.3644,
+                    8.4715,
+                    7.0358,
+                    8.4715
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 997,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "(must",
+                  "polygon": [
+                    1.7087,
+                    8.6229,
+                    1.9762,
+                    8.6229,
+                    1.9762,
+                    8.727,
+                    1.7087,
+                    8.727
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1002,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "be",
+                  "polygon": [
+                    2.0158,
+                    8.6246,
+                    2.1283,
+                    8.6246,
+                    2.1283,
+                    8.7057,
+                    2.0158,
+                    8.7057
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1008,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "signed",
+                  "polygon": [
+                    2.168,
+                    8.6246,
+                    2.485,
+                    8.6246,
+                    2.485,
+                    8.7284,
+                    2.168,
+                    8.7284
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1011,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "by",
+                  "polygon": [
+                    2.5286,
+                    8.6246,
+                    2.6389,
+                    8.6246,
+                    2.6389,
+                    8.7278,
+                    2.5286,
+                    8.7278
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1018,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "authorized",
+                  "polygon": [
+                    2.6737,
+                    8.6246,
+                    3.1831,
+                    8.6246,
+                    3.1831,
+                    8.7057,
+                    2.6737,
+                    8.7057
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1021,
+                    "length": 10
+                  }
+                },
+                {
+                  "content": "person",
+                  "polygon": [
+                    3.2268,
+                    8.6445,
+                    3.5523,
+                    8.6445,
+                    3.5523,
+                    8.727,
+                    3.2268,
+                    8.727
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1032,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "to",
+                  "polygon": [
+                    3.592,
+                    8.63,
+                    3.6791,
+                    8.63,
+                    3.6791,
+                    8.7056,
+                    3.592,
+                    8.7056
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1039,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "validate)",
+                  "polygon": [
+                    3.7147,
+                    8.6229,
+                    4.1257,
+                    8.6229,
+                    4.1257,
+                    8.727,
+                    3.7147,
+                    8.727
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1042,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "________",
+                  "polygon": [
+                    6.7649,
+                    8.5205,
+                    7.4445,
+                    8.5205,
+                    7.4445,
+                    8.5281,
+                    6.7649,
+                    8.5281
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1052,
+                    "length": 8
+                  }
+                },
+                {
                   "content": "Form",
-                  "boundingBox": [
+                  "polygon": [
                     0.8131,
                     9.1397,
                     1.1463,
@@ -2913,13 +3003,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1035,
+                    "offset": 1061,
                     "length": 4
                   }
                 },
                 {
                   "content": "is",
-                  "boundingBox": [
+                  "polygon": [
                     1.2089,
                     9.1397,
                     1.3033,
@@ -2931,13 +3021,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1040,
+                    "offset": 1066,
                     "length": 2
                   }
                 },
                 {
                   "content": "available",
-                  "boundingBox": [
+                  "polygon": [
                     1.3569,
                     9.1397,
                     1.9478,
@@ -2949,13 +3039,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1043,
+                    "offset": 1069,
                     "length": 9
                   }
                 },
                 {
                   "content": "on",
-                  "boundingBox": [
+                  "polygon": [
                     2.0018,
                     9.1671,
                     2.1563,
@@ -2967,13 +3057,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1053,
+                    "offset": 1079,
                     "length": 2
                   }
                 },
                 {
                   "content": "our",
-                  "boundingBox": [
+                  "polygon": [
                     2.2141,
                     9.1671,
                     2.4292,
@@ -2985,13 +3075,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1056,
+                    "offset": 1082,
                     "length": 3
                   }
                 },
                 {
                   "content": "website:",
-                  "boundingBox": [
+                  "polygon": [
                     2.4732,
                     9.1397,
                     3.0178,
@@ -3003,13 +3093,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1060,
+                    "offset": 1086,
                     "length": 8
                   }
                 },
                 {
                   "content": "www.contoso.com/insurance",
-                  "boundingBox": [
+                  "polygon": [
                     3.1183,
                     9.1368,
                     5.0528,
@@ -3021,13 +3111,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1069,
+                    "offset": 1095,
                     "length": 25
                   }
                 },
                 {
                   "content": "You",
-                  "boundingBox": [
+                  "polygon": [
                     5.1037,
                     9.1397,
                     5.3628,
@@ -3039,13 +3129,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1095,
+                    "offset": 1121,
                     "length": 3
                   }
                 },
                 {
                   "content": "may",
-                  "boundingBox": [
+                  "polygon": [
                     5.4255,
                     9.1671,
                     5.7022,
@@ -3057,13 +3147,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1099,
+                    "offset": 1125,
                     "length": 3
                   }
                 },
                 {
                   "content": "fax",
-                  "boundingBox": [
+                  "polygon": [
                     5.7486,
                     9.1381,
                     5.9485,
@@ -3075,13 +3165,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1103,
+                    "offset": 1129,
                     "length": 3
                   }
                 },
                 {
                   "content": "the",
-                  "boundingBox": [
+                  "polygon": [
                     5.9948,
                     9.1397,
                     6.1987,
@@ -3093,13 +3183,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1107,
+                    "offset": 1133,
                     "length": 3
                   }
                 },
                 {
                   "content": "form",
-                  "boundingBox": [
+                  "polygon": [
                     6.2496,
                     9.1381,
                     6.5429,
@@ -3111,49 +3201,49 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1111,
+                    "offset": 1137,
                     "length": 4
                   }
                 },
                 {
                   "content": "to:",
-                  "boundingBox": [
-                    6.5974,
+                  "polygon": [
+                    6.5975,
                     9.1471,
                     6.7518,
                     9.1471,
                     6.7518,
                     9.2511,
-                    6.5974,
+                    6.5975,
                     9.2511
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1116,
+                    "offset": 1142,
                     "length": 3
                   }
                 },
                 {
                   "content": "650-768-2322",
-                  "boundingBox": [
+                  "polygon": [
                     0.8058,
                     9.3245,
                     1.7423,
                     9.3245,
                     1.7423,
-                    9.4376,
+                    9.4377,
                     0.8058,
-                    9.4376
+                    9.4377
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1120,
+                    "offset": 1146,
                     "length": 12
                   }
                 },
                 {
                   "content": "or",
-                  "boundingBox": [
+                  "polygon": [
                     1.7983,
                     9.3538,
                     1.9285,
@@ -3165,13 +3255,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1133,
+                    "offset": 1159,
                     "length": 2
                   }
                 },
                 {
                   "content": "e-mail",
-                  "boundingBox": [
+                  "polygon": [
                     1.9774,
                     9.3263,
                     2.3769,
@@ -3183,13 +3273,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1136,
+                    "offset": 1162,
                     "length": 6
                   }
                 },
                 {
                   "content": "to:",
-                  "boundingBox": [
+                  "polygon": [
                     2.4319,
                     9.3338,
                     2.5864,
@@ -3201,13 +3291,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1143,
+                    "offset": 1169,
                     "length": 3
                   }
                 },
                 {
                   "content": "insurance@contoso.com",
-                  "boundingBox": [
+                  "polygon": [
                     2.695,
                     9.323,
                     4.3584,
@@ -3219,13 +3309,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1147,
+                    "offset": 1173,
                     "length": 21
                   }
                 },
                 {
                   "content": "OFFICES",
-                  "boundingBox": [
+                  "polygon": [
                     3.2626,
                     9.7731,
                     3.6024,
@@ -3237,13 +3327,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1169,
+                    "offset": 1195,
                     "length": 7
                   }
                 },
                 {
                   "content": "LOCATED",
-                  "boundingBox": [
+                  "polygon": [
                     3.6348,
                     9.775,
                     3.996,
@@ -3255,13 +3345,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1177,
+                    "offset": 1203,
                     "length": 7
                   }
                 },
                 {
                   "content": "AT",
-                  "boundingBox": [
+                  "polygon": [
                     4.0212,
                     9.79,
                     4.1168,
@@ -3273,13 +3363,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1185,
+                    "offset": 1211,
                     "length": 2
                   }
                 },
                 {
                   "content": "24",
-                  "boundingBox": [
+                  "polygon": [
                     4.1421,
                     9.7738,
                     4.2429,
@@ -3291,13 +3381,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1188,
+                    "offset": 1214,
                     "length": 2
                   }
                 },
                 {
                   "content": "Main",
-                  "boundingBox": [
+                  "polygon": [
                     4.2818,
                     9.7741,
                     4.479,
@@ -3309,13 +3399,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1191,
+                    "offset": 1217,
                     "length": 4
                   }
                 },
                 {
                   "content": "Street",
-                  "boundingBox": [
+                  "polygon": [
                     4.5171,
                     9.7729,
                     4.7719,
@@ -3327,13 +3417,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1196,
+                    "offset": 1222,
                     "length": 6
                   }
                 },
                 {
                   "content": "Palo",
-                  "boundingBox": [
+                  "polygon": [
                     4.8071,
                     9.7741,
                     4.9909,
@@ -3345,13 +3435,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1203,
+                    "offset": 1229,
                     "length": 4
                   }
                 },
                 {
                   "content": "Alto",
-                  "boundingBox": [
+                  "polygon": [
                     5.0215,
                     9.7741,
                     5.1857,
@@ -3363,13 +3453,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1208,
+                    "offset": 1234,
                     "length": 4
                   }
                 },
                 {
                   "content": "CA",
-                  "boundingBox": [
+                  "polygon": [
                     5.2212,
                     9.7729,
                     5.3518,
@@ -3381,13 +3471,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1213,
+                    "offset": 1239,
                     "length": 2
                   }
                 },
                 {
                   "content": "842325",
-                  "boundingBox": [
+                  "polygon": [
                     5.3827,
                     9.7738,
                     5.6997,
@@ -3399,13 +3489,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1216,
+                    "offset": 1242,
                     "length": 6
                   }
                 },
                 {
                   "content": "www.contoso.com/insurance",
-                  "boundingBox": [
+                  "polygon": [
                     3.8373,
                     9.8915,
                     5.1228,
@@ -3417,67 +3507,67 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1223,
+                    "offset": 1249,
                     "length": 25
                   }
                 },
                 {
                   "content": "contoso",
-                  "boundingBox": [
-                    0.6733,
-                    0.8498,
-                    2.2492,
-                    0.826,
-                    2.2348,
-                    1.1793,
-                    0.6733,
-                    1.1793
+                  "polygon": [
+                    0.6559,
+                    0.8218,
+                    2.2553,
+                    0.8143,
+                    2.2578,
+                    1.1745,
+                    0.6559,
+                    1.1398
                   ],
-                  "confidence": 0.98,
+                  "confidence": 0.5204381,
                   "span": {
-                    "offset": 1249,
+                    "offset": 1275,
                     "length": 7
                   }
                 },
                 {
                   "content": "CONTOSO",
-                  "boundingBox": [
-                    3.3857,
-                    3.0269,
-                    4.4171,
-                    3.0269,
-                    4.4171,
+                  "polygon": [
+                    3.3877,
+                    3.0237,
+                    4.4165,
+                    3.0283,
+                    4.4213,
                     3.2322,
-                    3.3857,
-                    3.2322
+                    3.3878,
+                    3.2258
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.9967771,
                   "span": {
-                    "offset": 1257,
+                    "offset": 1283,
                     "length": 7
                   }
                 },
                 {
                   "content": "BANK",
-                  "boundingBox": [
-                    4.5413,
-                    3.0269,
-                    5.1334,
-                    3.0269,
-                    5.1382,
-                    3.2227,
-                    4.5461,
+                  "polygon": [
+                    4.5409,
+                    3.0281,
+                    5.1293,
+                    3.0254,
+                    5.1373,
+                    3.2322,
+                    4.5463,
                     3.2322
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.9889253,
                   "span": {
-                    "offset": 1265,
+                    "offset": 1291,
                     "length": 4
                   }
                 },
                 {
                   "content": "Name",
-                  "boundingBox": [
+                  "polygon": [
                     0.8954,
                     5.7101,
                     1.2609,
@@ -3489,13 +3579,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1270,
+                    "offset": 1296,
                     "length": 4
                   }
                 },
                 {
                   "content": "of",
-                  "boundingBox": [
+                  "polygon": [
                     1.3079,
                     5.7088,
                     1.4324,
@@ -3507,13 +3597,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1275,
+                    "offset": 1301,
                     "length": 2
                   }
                 },
                 {
                   "content": "Cardholder:",
-                  "boundingBox": [
+                  "polygon": [
                     1.4782,
                     5.7074,
                     2.2511,
@@ -3525,157 +3615,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1278,
+                    "offset": 1304,
                     "length": 11
                   }
                 },
                 {
-                  "content": "Contact",
-                  "boundingBox": [
-                    5.2305,
-                    5.6912,
-                    5.6874,
-                    5.6912,
-                    5.6874,
-                    5.7856,
-                    5.2305,
-                    5.7856
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1290,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "persons",
-                  "boundingBox": [
-                    5.7333,
-                    5.7151,
-                    6.2073,
-                    5.7151,
-                    6.2073,
-                    5.8091,
-                    5.7333,
-                    5.8091
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1298,
-                    "length": 7
-                  }
-                },
-                {
-                  "content": "phone",
-                  "boundingBox": [
-                    6.2544,
-                    5.6936,
-                    6.6183,
-                    5.6936,
-                    6.6183,
-                    5.8091,
-                    6.2544,
-                    5.8091
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1306,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "#,",
-                  "boundingBox": [
-                    6.6587,
-                    5.6961,
-                    6.7524,
-                    5.6961,
-                    6.7524,
-                    5.8042,
-                    6.6587,
-                    5.8042
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1312,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "if",
-                  "boundingBox": [
-                    6.8042,
-                    5.6925,
-                    6.8703,
-                    5.6925,
-                    6.8703,
-                    5.7833,
-                    6.8042,
-                    5.7833
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1315,
-                    "length": 2
-                  }
-                },
-                {
-                  "content": "questions",
-                  "boundingBox": [
-                    6.9099,
-                    5.6927,
-                    7.4918,
-                    5.6927,
-                    7.4918,
-                    5.8091,
-                    6.9099,
-                    5.8091
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1318,
-                    "length": 9
-                  }
-                },
-                {
-                  "content": "with",
-                  "boundingBox": [
-                    7.5307,
-                    5.6927,
-                    7.7719,
-                    5.6927,
-                    7.7719,
-                    5.784,
-                    7.5307,
-                    5.784
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1328,
-                    "length": 4
-                  }
-                },
-                {
-                  "content": "this",
-                  "boundingBox": [
-                    7.8166,
-                    5.6927,
-                    8.0337,
-                    5.6927,
-                    8.0337,
-                    5.785,
-                    7.8166,
-                    5.785
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1333,
-                    "length": 4
-                  }
-                },
-                {
                   "content": "John",
-                  "boundingBox": [
+                  "polygon": [
                     2.502,
                     5.7621,
                     2.7903,
@@ -3687,13 +3633,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1338,
+                    "offset": 1316,
                     "length": 4
                   }
                 },
                 {
                   "content": "Singer",
-                  "boundingBox": [
+                  "polygon": [
                     2.8449,
                     5.7604,
                     3.2429,
@@ -3705,13 +3651,157 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1343,
+                    "offset": 1321,
                     "length": 6
                   }
                 },
                 {
+                  "content": "Contact",
+                  "polygon": [
+                    5.2305,
+                    5.6912,
+                    5.6875,
+                    5.6912,
+                    5.6875,
+                    5.7856,
+                    5.2305,
+                    5.7856
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1328,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "persons",
+                  "polygon": [
+                    5.7333,
+                    5.7151,
+                    6.2073,
+                    5.7151,
+                    6.2073,
+                    5.8091,
+                    5.7333,
+                    5.8091
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1336,
+                    "length": 7
+                  }
+                },
+                {
+                  "content": "phone",
+                  "polygon": [
+                    6.2544,
+                    5.6936,
+                    6.6183,
+                    5.6936,
+                    6.6183,
+                    5.8091,
+                    6.2544,
+                    5.8091
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1344,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "#,",
+                  "polygon": [
+                    6.6587,
+                    5.6961,
+                    6.7524,
+                    5.6961,
+                    6.7524,
+                    5.8042,
+                    6.6587,
+                    5.8042
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1350,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "if",
+                  "polygon": [
+                    6.8042,
+                    5.6925,
+                    6.8703,
+                    5.6925,
+                    6.8703,
+                    5.7833,
+                    6.8042,
+                    5.7833
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1353,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "questions",
+                  "polygon": [
+                    6.9099,
+                    5.6927,
+                    7.4918,
+                    5.6927,
+                    7.4918,
+                    5.8091,
+                    6.9099,
+                    5.8091
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1356,
+                    "length": 9
+                  }
+                },
+                {
+                  "content": "with",
+                  "polygon": [
+                    7.5307,
+                    5.6927,
+                    7.7719,
+                    5.6927,
+                    7.7719,
+                    5.784,
+                    7.5307,
+                    5.784
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1366,
+                    "length": 4
+                  }
+                },
+                {
+                  "content": "this",
+                  "polygon": [
+                    7.8166,
+                    5.6927,
+                    8.0337,
+                    5.6927,
+                    8.0337,
+                    5.785,
+                    7.8166,
+                    5.785
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1371,
+                    "length": 4
+                  }
+                },
+                {
                   "content": "form.",
-                  "boundingBox": [
+                  "polygon": [
                     5.2262,
                     5.8625,
                     5.5295,
@@ -3723,13 +3813,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1350,
+                    "offset": 1376,
                     "length": 5
                   }
                 },
                 {
                   "content": "Telephone",
-                  "boundingBox": [
+                  "polygon": [
                     5.5744,
                     5.8534,
                     6.2637,
@@ -3741,13 +3831,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1356,
+                    "offset": 1382,
                     "length": 9
                   }
                 },
                 {
                   "content": "#:",
-                  "boundingBox": [
+                  "polygon": [
                     6.3085,
                     5.8562,
                     6.417,
@@ -3759,103 +3849,31 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1366,
+                    "offset": 1392,
                     "length": 2
                   }
                 },
                 {
                   "content": "(",
-                  "boundingBox": [
+                  "polygon": [
                     6.4787,
-                    5.8416,
+                    5.8415,
                     6.5139,
-                    5.8416,
+                    5.8415,
                     6.5139,
-                    5.9847,
+                    5.9848,
                     6.4787,
-                    5.9847
+                    5.9848
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1369,
+                    "offset": 1395,
                     "length": 1
-                  }
-                },
-                {
-                  "content": "425",
-                  "boundingBox": [
-                    6.6237,
-                    5.8542,
-                    6.87,
-                    5.8542,
-                    6.87,
-                    5.9672,
-                    6.6237,
-                    5.9672
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1371,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": ")",
-                  "boundingBox": [
-                    6.9056,
-                    5.8416,
-                    6.9409,
-                    5.8416,
-                    6.9409,
-                    5.9847,
-                    6.9056,
-                    5.9847
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1375,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "779",
-                  "boundingBox": [
-                    7.1288,
-                    5.8542,
-                    7.3693,
-                    5.8542,
-                    7.3693,
-                    5.9672,
-                    7.1288,
-                    5.9672
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1377,
-                    "length": 3
-                  }
-                },
-                {
-                  "content": "3479",
-                  "boundingBox": [
-                    7.4829,
-                    5.8181,
-                    7.809,
-                    5.8181,
-                    7.809,
-                    5.9313,
-                    7.4829,
-                    5.9313
-                  ],
-                  "confidence": 1,
-                  "span": {
-                    "offset": 1381,
-                    "length": 4
                   }
                 },
                 {
                   "content": "-",
-                  "boundingBox": [
+                  "polygon": [
                     7.3783,
                     5.9042,
                     7.4157,
@@ -3867,13 +3885,85 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1386,
+                    "offset": 1397,
                     "length": 1
                   }
                 },
                 {
+                  "content": "425",
+                  "polygon": [
+                    6.6237,
+                    5.8542,
+                    6.87,
+                    5.8542,
+                    6.87,
+                    5.9672,
+                    6.6237,
+                    5.9672
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1399,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": ")",
+                  "polygon": [
+                    6.9056,
+                    5.8415,
+                    6.9409,
+                    5.8415,
+                    6.9409,
+                    5.9848,
+                    6.9056,
+                    5.9848
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1403,
+                    "length": 1
+                  }
+                },
+                {
+                  "content": "779",
+                  "polygon": [
+                    7.1288,
+                    5.8542,
+                    7.3693,
+                    5.8542,
+                    7.3693,
+                    5.9672,
+                    7.1288,
+                    5.9672
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1405,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "3479",
+                  "polygon": [
+                    7.4829,
+                    5.8181,
+                    7.809,
+                    5.8181,
+                    7.809,
+                    5.9313,
+                    7.4829,
+                    5.9313
+                  ],
+                  "confidence": 1,
+                  "span": {
+                    "offset": 1409,
+                    "length": 4
+                  }
+                },
+                {
                   "content": "Email",
-                  "boundingBox": [
+                  "polygon": [
                     0.8964,
                     6.0366,
                     1.2473,
@@ -3885,13 +3975,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1388,
+                    "offset": 1414,
                     "length": 5
                   }
                 },
                 {
                   "content": "Address:",
-                  "boundingBox": [
+                  "polygon": [
                     1.298,
                     6.0376,
                     1.8846,
@@ -3903,13 +3993,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1394,
+                    "offset": 1420,
                     "length": 8
                   }
                 },
                 {
                   "content": "johnsinger@hotmail.com",
-                  "boundingBox": [
+                  "polygon": [
                     1.9261,
                     6.0432,
                     3.4556,
@@ -3921,13 +4011,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1403,
+                    "offset": 1429,
                     "length": 22
                   }
                 },
                 {
                   "content": "Mailing",
-                  "boundingBox": [
+                  "polygon": [
                     0.8954,
                     6.2792,
                     1.357,
@@ -3939,13 +4029,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1426,
+                    "offset": 1452,
                     "length": 7
                   }
                 },
                 {
                   "content": "Address:",
-                  "boundingBox": [
+                  "polygon": [
                     1.4062,
                     6.2801,
                     1.9961,
@@ -3957,13 +4047,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1434,
+                    "offset": 1460,
                     "length": 8
                   }
                 },
                 {
                   "content": "472",
-                  "boundingBox": [
+                  "polygon": [
                     2.1027,
                     6.3155,
                     2.3256,
@@ -3975,13 +4065,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1443,
+                    "offset": 1469,
                     "length": 3
                   }
                 },
                 {
                   "content": "SE",
-                  "boundingBox": [
+                  "polygon": [
                     2.3779,
                     6.3142,
                     2.5497,
@@ -3993,13 +4083,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1447,
+                    "offset": 1473,
                     "length": 2
                   }
                 },
                 {
                   "content": "74th",
-                  "boundingBox": [
+                  "polygon": [
                     2.6024,
                     6.3159,
                     2.8571,
@@ -4011,13 +4101,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1450,
+                    "offset": 1476,
                     "length": 4
                   }
                 },
                 {
                   "content": "ST",
-                  "boundingBox": [
+                  "polygon": [
                     2.9115,
                     6.3142,
                     3.0803,
@@ -4029,13 +4119,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1455,
+                    "offset": 1481,
                     "length": 2
                   }
                 },
                 {
                   "content": "City:",
-                  "boundingBox": [
+                  "polygon": [
                     0.892,
                     6.5399,
                     1.1815,
@@ -4047,13 +4137,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1458,
+                    "offset": 1484,
                     "length": 5
                   }
                 },
                 {
                   "content": "Lakewood",
-                  "boundingBox": [
+                  "polygon": [
                     1.3947,
                     6.5747,
                     2.01,
@@ -4065,13 +4155,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1464,
+                    "offset": 1490,
                     "length": 8
                   }
                 },
                 {
                   "content": "State:",
-                  "boundingBox": [
+                  "polygon": [
                     4.2363,
                     6.5399,
                     4.6048,
@@ -4083,13 +4173,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1473,
+                    "offset": 1499,
                     "length": 6
                   }
                 },
                 {
                   "content": "WA",
-                  "boundingBox": [
+                  "polygon": [
                     4.7452,
                     6.5506,
                     4.9679,
@@ -4101,13 +4191,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1480,
+                    "offset": 1506,
                     "length": 2
                   }
                 },
                 {
                   "content": "Zip",
-                  "boundingBox": [
+                  "polygon": [
                     6.4885,
                     6.5416,
                     6.6893,
@@ -4119,13 +4209,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1483,
+                    "offset": 1509,
                     "length": 3
                   }
                 },
                 {
                   "content": "Code:",
-                  "boundingBox": [
+                  "polygon": [
                     6.7385,
                     6.5399,
                     7.1134,
@@ -4137,13 +4227,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1487,
+                    "offset": 1513,
                     "length": 5
                   }
                 },
                 {
                   "content": "98712",
-                  "boundingBox": [
+                  "polygon": [
                     7.2536,
                     6.5442,
                     7.6275,
@@ -4155,43 +4245,43 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1493,
+                    "offset": 1519,
                     "length": 5
                   }
                 },
                 {
                   "content": "John",
-                  "boundingBox": [
-                    1.9579,
-                    8.2691,
-                    2.4593,
-                    8.2643,
-                    2.4593,
-                    8.5508,
-                    1.9626,
-                    8.5651
+                  "polygon": [
+                    1.933,
+                    8.2616,
+                    2.451,
+                    8.2655,
+                    2.4633,
+                    8.562,
+                    1.9534,
+                    8.5741
                   ],
-                  "confidence": 0.817,
+                  "confidence": 0.9507164,
                   "span": {
-                    "offset": 1499,
+                    "offset": 1525,
                     "length": 4
                   }
                 },
                 {
                   "content": "Singer",
-                  "boundingBox": [
-                    2.5691,
-                    8.2691,
-                    3.2424,
-                    8.3025,
-                    3.2281,
-                    8.5412,
-                    2.5643,
-                    8.546
+                  "polygon": [
+                    2.5677,
+                    8.2682,
+                    3.2346,
+                    8.2925,
+                    3.2346,
+                    8.5348,
+                    2.5781,
+                    8.5586
                   ],
-                  "confidence": 0.983,
+                  "confidence": 0.961087,
                   "span": {
-                    "offset": 1504,
+                    "offset": 1530,
                     "length": 6
                   }
                 }
@@ -4199,7 +4289,7 @@
               "selectionMarks": [
                 {
                   "state": "unselected",
-                  "boundingBox": [
+                  "polygon": [
                     1.6159,
                     5.4302,
                     1.7762,
@@ -4211,13 +4301,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1511,
+                    "offset": 1537,
                     "length": 12
                   }
                 },
                 {
                   "state": "selected",
-                  "boundingBox": [
+                  "polygon": [
                     2.3779,
                     5.4731,
                     2.4454,
@@ -4229,13 +4319,13 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1524,
+                    "offset": 1550,
                     "length": 10
                   }
                 },
                 {
                   "state": "unselected",
-                  "boundingBox": [
+                  "polygon": [
                     3.0846,
                     5.4481,
                     3.2448,
@@ -4247,7 +4337,7 @@
                   ],
                   "confidence": 1,
                   "span": {
-                    "offset": 1535,
+                    "offset": 1561,
                     "length": 12
                   }
                 }
@@ -4255,7 +4345,7 @@
               "lines": [
                 {
                   "content": "STATE OF CALIFORNIA: CONTOSO",
-                  "boundingBox": [
+                  "polygon": [
                     3.2791,
                     0.7167,
                     5.0584,
@@ -4274,7 +4364,7 @@
                 },
                 {
                   "content": "BUREAU OF INSURANCE",
-                  "boundingBox": [
+                  "polygon": [
                     3.4183,
                     0.8618,
                     4.9237,
@@ -4293,7 +4383,7 @@
                 },
                 {
                   "content": "124 Main Street Palo Alto CA 842325",
-                  "boundingBox": [
+                  "polygon": [
                     3.1443,
                     1.0062,
                     5.2024,
@@ -4312,7 +4402,7 @@
                 },
                 {
                   "content": "(650)768-2322",
-                  "boundingBox": [
+                  "polygon": [
                     3.7689,
                     1.1509,
                     4.5703,
@@ -4331,7 +4421,7 @@
                 },
                 {
                   "content": "AUTHORIZATION OF CREDIT CARD PAYMENT",
-                  "boundingBox": [
+                  "polygon": [
                     2.4417,
                     2.2182,
                     6.0557,
@@ -4350,7 +4440,7 @@
                 },
                 {
                   "content": "Fees owed to this Department may be paid by the use of a credit card. If you wish to pay your fee(s)",
-                  "boundingBox": [
+                  "polygon": [
                     0.8106,
                     3.5128,
                     7.4009,
@@ -4369,7 +4459,7 @@
                 },
                 {
                   "content": "with your credit card, please complete this form and send it with your paperwork. Payment through",
-                  "boundingBox": [
+                  "polygon": [
                     0.8014,
                     3.6789,
                     7.373,
@@ -4388,7 +4478,7 @@
                 },
                 {
                   "content": "credit cards will not be processed without this authorization form. Please print or type clearly.",
-                  "boundingBox": [
+                  "polygon": [
                     0.8047,
                     3.8456,
                     7.0271,
@@ -4407,7 +4497,7 @@
                 },
                 {
                   "content": "Name (company/individual for whom payment is being made) (Please Include License # and SSN/FEIN):",
-                  "boundingBox": [
+                  "polygon": [
                     0.8479,
                     4.1881,
                     7.0286,
@@ -4426,7 +4516,7 @@
                 },
                 {
                   "content": "Contoso Insurance 54353T7A, 36-1222985",
-                  "boundingBox": [
+                  "polygon": [
                     0.8942,
                     4.3643,
                     3.6366,
@@ -4445,7 +4535,7 @@
                 },
                 {
                   "content": "Purpose of Payment:",
-                  "boundingBox": [
+                  "polygon": [
                     3.5656,
                     4.9372,
                     4.9313,
@@ -4464,7 +4554,7 @@
                 },
                 {
                   "content": "Balance on Account",
-                  "boundingBox": [
+                  "polygon": [
                     5.0848,
                     4.9313,
                     6.3102,
@@ -4483,7 +4573,7 @@
                 },
                 {
                   "content": "Card Type: \u2751Visa",
-                  "boundingBox": [
+                  "polygon": [
                     0.8258,
                     5.4268,
                     2.1074,
@@ -4502,7 +4592,7 @@
                 },
                 {
                   "content": "\u2751x AMEX",
-                  "boundingBox": [
+                  "polygon": [
                     2.2989,
                     5.4295,
                     2.8924,
@@ -4521,7 +4611,7 @@
                 },
                 {
                   "content": "\u2751Master Card",
-                  "boundingBox": [
+                  "polygon": [
                     3.0846,
                     5.4481,
                     4.0327,
@@ -4540,7 +4630,7 @@
                 },
                 {
                   "content": "I authorize Contoso Department of Professional and Financial Regulation, Bureau of Insurance",
-                  "boundingBox": [
+                  "polygon": [
                     0.8033,
                     6.9573,
                     7.5868,
@@ -4559,7 +4649,7 @@
                 },
                 {
                   "content": "to charge my: Visa",
-                  "boundingBox": [
+                  "polygon": [
                     0.8033,
                     7.1495,
                     2.1348,
@@ -4577,27 +4667,8 @@
                   ]
                 },
                 {
-                  "content": "4872876432425423",
-                  "boundingBox": [
-                    0.8996,
-                    7.8438,
-                    2.2164,
-                    7.8438,
-                    2.2164,
-                    7.9603,
-                    0.8996,
-                    7.9603
-                  ],
-                  "spans": [
-                    {
-                      "offset": 759,
-                      "length": 16
-                    }
-                  ]
-                },
-                {
                   "content": "____________________________",
-                  "boundingBox": [
+                  "polygon": [
                     0.8,
                     8.0223,
                     3.1333,
@@ -4609,109 +4680,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 776,
+                      "offset": 759,
                       "length": 28
                     }
                   ]
                 },
                 {
-                  "content": "Expiration date:",
-                  "boundingBox": [
-                    3.3024,
-                    7.9046,
-                    4.3518,
-                    7.9046,
-                    4.3518,
-                    8.0411,
-                    3.3024,
-                    8.0411
-                  ],
-                  "spans": [
-                    {
-                      "offset": 805,
-                      "length": 16
-                    }
-                  ]
-                },
-                {
-                  "content": "09",
-                  "boundingBox": [
-                    4.442,
-                    7.8916,
-                    4.5825,
-                    7.8916,
-                    4.5825,
-                    7.9982,
-                    4.442,
-                    7.9982
-                  ],
-                  "spans": [
-                    {
-                      "offset": 822,
-                      "length": 2
-                    }
-                  ]
-                },
-                {
-                  "content": "/",
-                  "boundingBox": [
-                    4.6708,
-                    7.9069,
-                    4.7157,
-                    7.9069,
-                    4.7157,
-                    8.012,
-                    4.6708,
-                    8.012
-                  ],
-                  "spans": [
-                    {
-                      "offset": 825,
-                      "length": 1
-                    }
-                  ]
-                },
-                {
-                  "content": "21",
-                  "boundingBox": [
-                    4.7708,
-                    7.8956,
-                    4.9015,
-                    7.8956,
-                    4.9015,
-                    8.0002,
-                    4.7708,
-                    8.0002
-                  ],
-                  "spans": [
-                    {
-                      "offset": 827,
-                      "length": 2
-                    }
-                  ]
-                },
-                {
-                  "content": "in the amount of: $__________________",
-                  "boundingBox": [
-                    5.0592,
-                    7.8956,
-                    7.6702,
-                    7.8956,
-                    7.6702,
-                    8.0289,
-                    5.0592,
-                    8.0289
-                  ],
-                  "spans": [
-                    {
-                      "offset": 830,
-                      "length": 37
-                    }
-                  ]
-                },
-                {
                   "content": "(Card number \u2013 Please print clearly)",
-                  "boundingBox": [
+                  "polygon": [
                     0.806,
                     8.0771,
                     2.6175,
@@ -4723,14 +4699,128 @@
                   ],
                   "spans": [
                     {
-                      "offset": 868,
+                      "offset": 788,
                       "length": 36
                     }
                   ]
                 },
                 {
+                  "content": "4872876432425423",
+                  "polygon": [
+                    0.8996,
+                    7.8438,
+                    2.2164,
+                    7.8438,
+                    2.2164,
+                    7.9603,
+                    0.8996,
+                    7.9603
+                  ],
+                  "spans": [
+                    {
+                      "offset": 825,
+                      "length": 16
+                    }
+                  ]
+                },
+                {
+                  "content": "Expiration date:",
+                  "polygon": [
+                    3.3024,
+                    7.9046,
+                    4.3518,
+                    7.9046,
+                    4.3518,
+                    8.0411,
+                    3.3024,
+                    8.0411
+                  ],
+                  "spans": [
+                    {
+                      "offset": 842,
+                      "length": 16
+                    }
+                  ]
+                },
+                {
+                  "content": "09",
+                  "polygon": [
+                    4.442,
+                    7.8916,
+                    4.5825,
+                    7.8916,
+                    4.5825,
+                    7.9982,
+                    4.442,
+                    7.9982
+                  ],
+                  "spans": [
+                    {
+                      "offset": 859,
+                      "length": 2
+                    }
+                  ]
+                },
+                {
+                  "content": "/",
+                  "polygon": [
+                    4.6708,
+                    7.9069,
+                    4.7157,
+                    7.9069,
+                    4.7157,
+                    8.012,
+                    4.6708,
+                    8.012
+                  ],
+                  "spans": [
+                    {
+                      "offset": 862,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
+                  "content": "21",
+                  "polygon": [
+                    4.7708,
+                    7.8956,
+                    4.9015,
+                    7.8956,
+                    4.9015,
+                    8.0003,
+                    4.7708,
+                    8.0003
+                  ],
+                  "spans": [
+                    {
+                      "offset": 864,
+                      "length": 2
+                    }
+                  ]
+                },
+                {
+                  "content": "in the amount of: $__________________",
+                  "polygon": [
+                    5.0592,
+                    7.8956,
+                    7.6702,
+                    7.8956,
+                    7.6702,
+                    8.0289,
+                    5.0592,
+                    8.0289
+                  ],
+                  "spans": [
+                    {
+                      "offset": 867,
+                      "length": 37
+                    }
+                  ]
+                },
+                {
                   "content": "263.00",
-                  "boundingBox": [
+                  "polygon": [
                     6.5828,
                     7.8896,
                     6.9948,
@@ -4748,13 +4838,13 @@
                   ]
                 },
                 {
-                  "content": "Signature: ___________________________________________",
-                  "boundingBox": [
+                  "content": "Signature: ___________________________________________ Date: ______",
+                  "polygon": [
                     0.8059,
                     8.3968,
-                    5.2429,
+                    6.1697,
                     8.3968,
-                    5.2429,
+                    6.1697,
                     8.5421,
                     0.8059,
                     8.5421
@@ -4762,32 +4852,32 @@
                   "spans": [
                     {
                       "offset": 912,
-                      "length": 54
+                      "length": 67
                     }
                   ]
                 },
                 {
-                  "content": "(must be signed by authorized person to validate)",
-                  "boundingBox": [
-                    1.7087,
-                    8.6229,
-                    4.1257,
-                    8.6229,
-                    4.1257,
-                    8.7284,
-                    1.7087,
-                    8.7284
+                  "content": "______",
+                  "polygon": [
+                    6.2125,
+                    8.5205,
+                    6.7221,
+                    8.5205,
+                    6.7221,
+                    8.5281,
+                    6.2125,
+                    8.5281
                   ],
                   "spans": [
                     {
-                      "offset": 967,
-                      "length": 49
+                      "offset": 980,
+                      "length": 6
                     }
                   ]
                 },
                 {
                   "content": "08",
-                  "boundingBox": [
+                  "polygon": [
                     5.8155,
                     8.3705,
                     5.9721,
@@ -4799,14 +4889,33 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1017,
+                      "offset": 987,
                       "length": 2
                     }
                   ]
                 },
                 {
+                  "content": "/",
+                  "polygon": [
+                    6.1674,
+                    8.3968,
+                    6.2149,
+                    8.3968,
+                    6.2149,
+                    8.5119,
+                    6.1674,
+                    8.5119
+                  ],
+                  "spans": [
+                    {
+                      "offset": 990,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
                   "content": "23",
-                  "boundingBox": [
+                  "polygon": [
                     6.5359,
                     8.3585,
                     6.6943,
@@ -4818,14 +4927,33 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1020,
+                      "offset": 992,
                       "length": 2
                     }
                   ]
                 },
                 {
+                  "content": "/",
+                  "polygon": [
+                    6.7199,
+                    8.3968,
+                    6.7673,
+                    8.3968,
+                    6.7673,
+                    8.5119,
+                    6.7199,
+                    8.5119
+                  ],
+                  "spans": [
+                    {
+                      "offset": 995,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
                   "content": "2018",
-                  "boundingBox": [
+                  "polygon": [
                     7.0358,
                     8.3585,
                     7.3644,
@@ -4837,33 +4965,52 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1023,
+                      "offset": 997,
                       "length": 4
                     }
                   ]
                 },
                 {
-                  "content": "______",
-                  "boundingBox": [
-                    5.66,
+                  "content": "(must be signed by authorized person to validate)",
+                  "polygon": [
+                    1.7087,
+                    8.6229,
+                    4.1257,
+                    8.6229,
+                    4.1257,
+                    8.7284,
+                    1.7087,
+                    8.7284
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1002,
+                      "length": 49
+                    }
+                  ]
+                },
+                {
+                  "content": "________",
+                  "polygon": [
+                    6.7649,
                     8.5205,
-                    6.1697,
+                    7.4445,
                     8.5205,
-                    6.1697,
+                    7.4445,
                     8.5281,
-                    5.66,
+                    6.7649,
                     8.5281
                   ],
                   "spans": [
                     {
-                      "offset": 1028,
-                      "length": 6
+                      "offset": 1052,
+                      "length": 8
                     }
                   ]
                 },
                 {
                   "content": "Form is available on our website: www.contoso.com/insurance You may fax the form to:",
-                  "boundingBox": [
+                  "polygon": [
                     0.8131,
                     9.1368,
                     6.7518,
@@ -4875,14 +5022,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1035,
+                      "offset": 1061,
                       "length": 84
                     }
                   ]
                 },
                 {
                   "content": "650-768-2322 or e-mail to: insurance@contoso.com",
-                  "boundingBox": [
+                  "polygon": [
                     0.8058,
                     9.323,
                     4.3584,
@@ -4894,14 +5041,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1120,
+                      "offset": 1146,
                       "length": 48
                     }
                   ]
                 },
                 {
                   "content": "OFFICES LOCATED AT 24 Main Street Palo Alto CA 842325",
-                  "boundingBox": [
+                  "polygon": [
                     3.2626,
                     9.7729,
                     5.6997,
@@ -4913,14 +5060,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1169,
+                      "offset": 1195,
                       "length": 53
                     }
                   ]
                 },
                 {
                   "content": "www.contoso.com/insurance",
-                  "boundingBox": [
+                  "polygon": [
                     3.8373,
                     9.8915,
                     5.1228,
@@ -4932,52 +5079,52 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1223,
+                      "offset": 1249,
                       "length": 25
                     }
                   ]
                 },
                 {
                   "content": "contoso",
-                  "boundingBox": [
-                    0.6685,
-                    0.8355,
+                  "polygon": [
+                    0.6542,
+                    0.8069,
                     2.3685,
-                    0.8212,
-                    2.3733,
-                    1.1745,
-                    0.6685,
-                    1.1793
+                    0.8069,
+                    2.3638,
+                    1.1697,
+                    0.6542,
+                    1.1554
                   ],
                   "spans": [
                     {
-                      "offset": 1249,
+                      "offset": 1275,
                       "length": 7
                     }
                   ]
                 },
                 {
                   "content": "CONTOSO BANK",
-                  "boundingBox": [
+                  "polygon": [
                     3.3857,
                     3.0221,
-                    5.1764,
+                    5.1812,
                     3.0221,
-                    5.1764,
-                    3.2274,
+                    5.1812,
+                    3.2322,
                     3.3857,
-                    3.2274
+                    3.2227
                   ],
                   "spans": [
                     {
-                      "offset": 1257,
+                      "offset": 1283,
                       "length": 12
                     }
                   ]
                 },
                 {
                   "content": "Name of Cardholder:",
-                  "boundingBox": [
+                  "polygon": [
                     0.8954,
                     5.7074,
                     2.2511,
@@ -4989,33 +5136,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1270,
+                      "offset": 1296,
                       "length": 19
                     }
                   ]
                 },
                 {
-                  "content": "Contact persons phone #, if questions with this",
-                  "boundingBox": [
-                    5.2305,
-                    5.6912,
-                    8.0337,
-                    5.6912,
-                    8.0337,
-                    5.8091,
-                    5.2305,
-                    5.8091
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1290,
-                      "length": 47
-                    }
-                  ]
-                },
-                {
                   "content": "John Singer",
-                  "boundingBox": [
+                  "polygon": [
                     2.502,
                     5.7604,
                     3.2429,
@@ -5027,90 +5155,52 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1338,
+                      "offset": 1316,
                       "length": 11
                     }
                   ]
                 },
                 {
-                  "content": "form. Telephone #: (",
-                  "boundingBox": [
-                    5.2262,
-                    5.8416,
-                    6.5139,
-                    5.8416,
-                    6.5139,
-                    5.9847,
-                    5.2262,
-                    5.9847
+                  "content": "Contact persons phone #, if questions with this",
+                  "polygon": [
+                    5.2305,
+                    5.6912,
+                    8.0337,
+                    5.6912,
+                    8.0337,
+                    5.8091,
+                    5.2305,
+                    5.8091
                   ],
                   "spans": [
                     {
-                      "offset": 1350,
+                      "offset": 1328,
+                      "length": 47
+                    }
+                  ]
+                },
+                {
+                  "content": "form. Telephone #: (",
+                  "polygon": [
+                    5.2262,
+                    5.8415,
+                    6.5139,
+                    5.8415,
+                    6.5139,
+                    5.9848,
+                    5.2262,
+                    5.9848
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1376,
                       "length": 20
                     }
                   ]
                 },
                 {
-                  "content": "425",
-                  "boundingBox": [
-                    6.6237,
-                    5.8542,
-                    6.87,
-                    5.8542,
-                    6.87,
-                    5.9672,
-                    6.6237,
-                    5.9672
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1371,
-                      "length": 3
-                    }
-                  ]
-                },
-                {
-                  "content": ")",
-                  "boundingBox": [
-                    6.9056,
-                    5.8416,
-                    6.9409,
-                    5.8416,
-                    6.9409,
-                    5.9847,
-                    6.9056,
-                    5.9847
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1375,
-                      "length": 1
-                    }
-                  ]
-                },
-                {
-                  "content": "779 3479",
-                  "boundingBox": [
-                    7.1288,
-                    5.8181,
-                    7.809,
-                    5.8181,
-                    7.809,
-                    5.9672,
-                    7.1288,
-                    5.9672
-                  ],
-                  "spans": [
-                    {
-                      "offset": 1377,
-                      "length": 8
-                    }
-                  ]
-                },
-                {
                   "content": "-",
-                  "boundingBox": [
+                  "polygon": [
                     7.3783,
                     5.9042,
                     7.4157,
@@ -5122,14 +5212,71 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1386,
+                      "offset": 1397,
                       "length": 1
                     }
                   ]
                 },
                 {
+                  "content": "425",
+                  "polygon": [
+                    6.6237,
+                    5.8542,
+                    6.87,
+                    5.8542,
+                    6.87,
+                    5.9672,
+                    6.6237,
+                    5.9672
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1399,
+                      "length": 3
+                    }
+                  ]
+                },
+                {
+                  "content": ")",
+                  "polygon": [
+                    6.9056,
+                    5.8415,
+                    6.9409,
+                    5.8415,
+                    6.9409,
+                    5.9848,
+                    6.9056,
+                    5.9848
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1403,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
+                  "content": "779 3479",
+                  "polygon": [
+                    7.1288,
+                    5.8181,
+                    7.809,
+                    5.8181,
+                    7.809,
+                    5.9672,
+                    7.1288,
+                    5.9672
+                  ],
+                  "spans": [
+                    {
+                      "offset": 1405,
+                      "length": 8
+                    }
+                  ]
+                },
+                {
                   "content": "Email Address:",
-                  "boundingBox": [
+                  "polygon": [
                     0.8964,
                     6.0366,
                     1.8846,
@@ -5141,14 +5288,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1388,
+                      "offset": 1414,
                       "length": 14
                     }
                   ]
                 },
                 {
                   "content": "johnsinger@hotmail.com",
-                  "boundingBox": [
+                  "polygon": [
                     1.9261,
                     6.0432,
                     3.4556,
@@ -5160,14 +5307,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1403,
+                      "offset": 1429,
                       "length": 22
                     }
                   ]
                 },
                 {
                   "content": "Mailing Address:",
-                  "boundingBox": [
+                  "polygon": [
                     0.8954,
                     6.2792,
                     1.9961,
@@ -5179,14 +5326,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1426,
+                      "offset": 1452,
                       "length": 16
                     }
                   ]
                 },
                 {
                   "content": "472 SE 74th ST",
-                  "boundingBox": [
+                  "polygon": [
                     2.1027,
                     6.3142,
                     3.0803,
@@ -5198,14 +5345,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1443,
+                      "offset": 1469,
                       "length": 14
                     }
                   ]
                 },
                 {
                   "content": "City:",
-                  "boundingBox": [
+                  "polygon": [
                     0.892,
                     6.5399,
                     1.1815,
@@ -5217,14 +5364,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1458,
+                      "offset": 1484,
                       "length": 5
                     }
                   ]
                 },
                 {
                   "content": "Lakewood",
-                  "boundingBox": [
+                  "polygon": [
                     1.3947,
                     6.5747,
                     2.01,
@@ -5236,14 +5383,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1464,
+                      "offset": 1490,
                       "length": 8
                     }
                   ]
                 },
                 {
                   "content": "State:",
-                  "boundingBox": [
+                  "polygon": [
                     4.2363,
                     6.5399,
                     4.6048,
@@ -5255,14 +5402,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1473,
+                      "offset": 1499,
                       "length": 6
                     }
                   ]
                 },
                 {
                   "content": "WA",
-                  "boundingBox": [
+                  "polygon": [
                     4.7452,
                     6.5506,
                     4.9679,
@@ -5274,14 +5421,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1480,
+                      "offset": 1506,
                       "length": 2
                     }
                   ]
                 },
                 {
                   "content": "Zip Code:",
-                  "boundingBox": [
+                  "polygon": [
                     6.4885,
                     6.5399,
                     7.1134,
@@ -5293,14 +5440,14 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1483,
+                      "offset": 1509,
                       "length": 9
                     }
                   ]
                 },
                 {
                   "content": "98712",
-                  "boundingBox": [
+                  "polygon": [
                     7.2536,
                     6.5442,
                     7.6275,
@@ -5312,26 +5459,26 @@
                   ],
                   "spans": [
                     {
-                      "offset": 1493,
+                      "offset": 1519,
                       "length": 5
                     }
                   ]
                 },
                 {
                   "content": "John Singer",
-                  "boundingBox": [
-                    1.8719,
+                  "polygon": [
+                    1.891,
                     8.2595,
-                    3.2376,
+                    3.2329,
                     8.2595,
-                    3.2376,
-                    8.5603,
-                    1.8719,
-                    8.5603
+                    3.2329,
+                    8.5699,
+                    1.891,
+                    8.5699
                   ],
                   "spans": [
                     {
-                      "offset": 1499,
+                      "offset": 1525,
                       "length": 11
                     }
                   ]
@@ -5340,31 +5487,1224 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 1547
+                  "length": 1573
                 }
-              ]
+              ],
+              "kind": "document"
             }
           ],
           "tables": [],
-          "styles": [
+          "paragraphs": [
             {
-              "isHandwritten": true,
-              "confidence": 0.9,
+              "spans": [
+                {
+                  "offset": 0,
+                  "length": 98
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    3.1443,
+                    0.7167,
+                    5.2024,
+                    0.7167,
+                    5.2024,
+                    1.2694,
+                    3.1443,
+                    1.2694
+                  ]
+                }
+              ],
+              "content": "STATE OF CALIFORNIA: CONTOSO BUREAU OF INSURANCE 124 Main Street Palo Alto CA 842325 (650)768-2322"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 99,
+                  "length": 36
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.4417,
+                    2.2182,
+                    6.0557,
+                    2.2182,
+                    6.0557,
+                    2.333,
+                    2.4417,
+                    2.333
+                  ]
+                }
+              ],
+              "content": "AUTHORIZATION OF CREDIT CARD PAYMENT"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 136,
+                  "length": 296
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8014,
+                    3.5128,
+                    7.4009,
+                    3.5128,
+                    7.4009,
+                    3.9764,
+                    0.8014,
+                    3.9764
+                  ]
+                }
+              ],
+              "content": "Fees owed to this Department may be paid by the use of a credit card. If you wish to pay your fee(s) with your credit card, please complete this form and send it with your paperwork. Payment through credit cards will not be processed without this authorization form. Please print or type clearly."
+            },
+            {
+              "spans": [
+                {
+                  "offset": 433,
+                  "length": 136
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8479,
+                    4.1881,
+                    7.0286,
+                    4.1881,
+                    7.0286,
+                    4.4867,
+                    0.8479,
+                    4.4867
+                  ]
+                }
+              ],
+              "content": "Name (company/individual for whom payment is being made) (Please Include License # and SSN/FEIN): Contoso Insurance 54353T7A, 36-1222985"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 570,
+                  "length": 38
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    3.5651,
+                    4.9372,
+                    6.3102,
+                    4.9266,
+                    6.3108,
+                    5.0627,
+                    3.5656,
+                    5.0732
+                  ]
+                }
+              ],
+              "content": "Purpose of Payment: Balance on Account"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 609,
+                  "length": 16
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8258,
+                    5.4268,
+                    2.1074,
+                    5.4269,
+                    2.1074,
+                    5.5929,
+                    0.8258,
+                    5.5929
+                  ]
+                }
+              ],
+              "content": "Card Type: \u2751Visa"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 626,
+                  "length": 7
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.2989,
+                    5.4295,
+                    2.8924,
+                    5.4295,
+                    2.8924,
+                    5.5922,
+                    2.2989,
+                    5.5922
+                  ]
+                }
+              ],
+              "content": "\u2751x AMEX"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 634,
+                  "length": 12
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    3.0846,
+                    5.4481,
+                    4.0327,
+                    5.4481,
+                    4.0327,
+                    5.6108,
+                    3.0846,
+                    5.6108
+                  ]
+                }
+              ],
+              "content": "\u2751Master Card"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 647,
+                  "length": 111
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8033,
+                    6.9573,
+                    7.5868,
+                    6.9573,
+                    7.5868,
+                    7.2983,
+                    0.8033,
+                    7.2983
+                  ]
+                }
+              ],
+              "content": "I authorize Contoso Department of Professional and Financial Regulation, Bureau of Insurance to charge my: Visa"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 759,
+                  "length": 28
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8,
+                    8.0223,
+                    3.1333,
+                    8.0223,
+                    3.1333,
+                    8.0307,
+                    0.8,
+                    8.0307
+                  ]
+                }
+              ],
+              "content": "____________________________"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 788,
+                  "length": 36
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.806,
+                    8.0771,
+                    2.6175,
+                    8.0771,
+                    2.6175,
+                    8.1896,
+                    0.806,
+                    8.1896
+                  ]
+                }
+              ],
+              "content": "(Card number \u2013 Please print clearly)"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 825,
+                  "length": 16
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8996,
+                    7.8438,
+                    2.2164,
+                    7.8438,
+                    2.2164,
+                    7.9603,
+                    0.8996,
+                    7.9603
+                  ]
+                }
+              ],
+              "content": "4872876432425423"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 842,
+                  "length": 16
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    3.3024,
+                    7.9046,
+                    4.3518,
+                    7.9046,
+                    4.3518,
+                    8.0411,
+                    3.3024,
+                    8.0411
+                  ]
+                }
+              ],
+              "content": "Expiration date:"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 859,
+                  "length": 2
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    4.442,
+                    7.8916,
+                    4.5825,
+                    7.8916,
+                    4.5825,
+                    7.9982,
+                    4.442,
+                    7.9982
+                  ]
+                }
+              ],
+              "content": "09"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 862,
+                  "length": 1
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    4.6708,
+                    7.9069,
+                    4.7157,
+                    7.9069,
+                    4.7157,
+                    8.012,
+                    4.6708,
+                    8.012
+                  ]
+                }
+              ],
+              "content": "/"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 864,
+                  "length": 2
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    4.7708,
+                    7.8956,
+                    4.9015,
+                    7.8956,
+                    4.9015,
+                    8.0003,
+                    4.7708,
+                    8.0003
+                  ]
+                }
+              ],
+              "content": "21"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 867,
+                  "length": 37
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    5.0592,
+                    7.8956,
+                    7.6702,
+                    7.8956,
+                    7.6702,
+                    8.0289,
+                    5.0592,
+                    8.0289
+                  ]
+                }
+              ],
+              "content": "in the amount of: $__________________"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 905,
+                  "length": 6
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.5828,
+                    7.8896,
+                    6.9948,
+                    7.8896,
+                    6.9948,
+                    7.9962,
+                    6.5828,
+                    7.9962
+                  ]
+                }
+              ],
+              "content": "263.00"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 912,
+                  "length": 67
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8059,
+                    8.3968,
+                    6.1697,
+                    8.3968,
+                    6.1697,
+                    8.5421,
+                    0.8059,
+                    8.5421
+                  ]
+                }
+              ],
+              "content": "Signature: ___________________________________________ Date: ______"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 980,
+                  "length": 6
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.2125,
+                    8.5205,
+                    6.7221,
+                    8.5205,
+                    6.7221,
+                    8.5281,
+                    6.2125,
+                    8.5281
+                  ]
+                }
+              ],
+              "content": "______"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 987,
+                  "length": 2
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    5.8155,
+                    8.3705,
+                    5.9721,
+                    8.3705,
+                    5.9721,
+                    8.4835,
+                    5.8155,
+                    8.4835
+                  ]
+                }
+              ],
+              "content": "08"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 990,
+                  "length": 1
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.1674,
+                    8.3968,
+                    6.2149,
+                    8.3968,
+                    6.2149,
+                    8.5119,
+                    6.1674,
+                    8.5119
+                  ]
+                }
+              ],
+              "content": "/"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 992,
+                  "length": 2
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.5359,
+                    8.3585,
+                    6.6943,
+                    8.3585,
+                    6.6943,
+                    8.4716,
+                    6.5359,
+                    8.4716
+                  ]
+                }
+              ],
+              "content": "23"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 995,
+                  "length": 1
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.7199,
+                    8.3968,
+                    6.7673,
+                    8.3968,
+                    6.7673,
+                    8.5119,
+                    6.7199,
+                    8.5119
+                  ]
+                }
+              ],
+              "content": "/"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 997,
+                  "length": 4
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    7.0358,
+                    8.3585,
+                    7.3644,
+                    8.3585,
+                    7.3644,
+                    8.4715,
+                    7.0358,
+                    8.4715
+                  ]
+                }
+              ],
+              "content": "2018"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1002,
+                  "length": 49
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    1.7087,
+                    8.6229,
+                    4.1257,
+                    8.6229,
+                    4.1257,
+                    8.7284,
+                    1.7087,
+                    8.7284
+                  ]
+                }
+              ],
+              "content": "(must be signed by authorized person to validate)"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1052,
+                  "length": 8
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.7649,
+                    8.5205,
+                    7.4445,
+                    8.5205,
+                    7.4445,
+                    8.5281,
+                    6.7649,
+                    8.5281
+                  ]
+                }
+              ],
+              "content": "________"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1061,
+                  "length": 133
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8058,
+                    9.1368,
+                    6.7518,
+                    9.1368,
+                    6.7518,
+                    9.4677,
+                    0.8058,
+                    9.4677
+                  ]
+                }
+              ],
+              "content": "Form is available on our website: www.contoso.com/insurance You may fax the form to: 650-768-2322 or e-mail to: insurance@contoso.com"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1195,
+                  "length": 79
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    3.2626,
+                    9.7729,
+                    5.6997,
+                    9.7729,
+                    5.6997,
+                    9.9709,
+                    3.2626,
+                    9.9709
+                  ]
+                }
+              ],
+              "content": "OFFICES LOCATED AT 24 Main Street Palo Alto CA 842325 www.contoso.com/insurance"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1275,
+                  "length": 7
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.6542,
+                    0.8069,
+                    2.3685,
+                    0.8069,
+                    2.3685,
+                    1.1697,
+                    0.6542,
+                    1.1697
+                  ]
+                }
+              ],
+              "content": "contoso"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1283,
+                  "length": 12
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    3.3857,
+                    3.0221,
+                    5.1812,
+                    3.0221,
+                    5.1812,
+                    3.2322,
+                    3.3857,
+                    3.2322
+                  ]
+                }
+              ],
+              "role": "title",
+              "content": "CONTOSO BANK"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1296,
+                  "length": 19
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8954,
+                    5.7074,
+                    2.2511,
+                    5.7074,
+                    2.2511,
+                    5.8125,
+                    0.8954,
+                    5.8125
+                  ]
+                }
+              ],
+              "content": "Name of Cardholder:"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1316,
+                  "length": 11
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.502,
+                    5.7604,
+                    3.2429,
+                    5.7604,
+                    3.2429,
+                    5.8923,
+                    2.502,
+                    5.8923
+                  ]
+                }
+              ],
+              "content": "John Singer"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1328,
+                  "length": 47
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    5.2305,
+                    5.6912,
+                    8.0337,
+                    5.6912,
+                    8.0337,
+                    5.8091,
+                    5.2305,
+                    5.8091
+                  ]
+                }
+              ],
+              "content": "Contact persons phone #, if questions with this"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1376,
+                  "length": 20
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    5.2262,
+                    5.8415,
+                    6.5139,
+                    5.8415,
+                    6.5139,
+                    5.9848,
+                    5.2262,
+                    5.9848
+                  ]
+                }
+              ],
+              "content": "form. Telephone #: ("
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1397,
+                  "length": 1
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    7.3783,
+                    5.9042,
+                    7.4157,
+                    5.9042,
+                    7.4157,
+                    5.918,
+                    7.3783,
+                    5.918
+                  ]
+                }
+              ],
+              "content": "-"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1399,
+                  "length": 3
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.6237,
+                    5.8542,
+                    6.87,
+                    5.8542,
+                    6.87,
+                    5.9672,
+                    6.6237,
+                    5.9672
+                  ]
+                }
+              ],
+              "content": "425"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1403,
+                  "length": 1
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.9056,
+                    5.8415,
+                    6.9409,
+                    5.8415,
+                    6.9409,
+                    5.9848,
+                    6.9056,
+                    5.9848
+                  ]
+                }
+              ],
+              "content": ")"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1405,
+                  "length": 8
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    7.1288,
+                    5.8181,
+                    7.809,
+                    5.8181,
+                    7.809,
+                    5.9672,
+                    7.1288,
+                    5.9672
+                  ]
+                }
+              ],
+              "content": "779 3479"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1414,
+                  "length": 14
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8964,
+                    6.0366,
+                    1.8846,
+                    6.0366,
+                    1.8846,
+                    6.1393,
+                    0.8964,
+                    6.1393
+                  ]
+                }
+              ],
+              "content": "Email Address:"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1429,
+                  "length": 22
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    1.9261,
+                    6.0432,
+                    3.4556,
+                    6.0432,
+                    3.4556,
+                    6.1753,
+                    1.9261,
+                    6.1753
+                  ]
+                }
+              ],
+              "content": "johnsinger@hotmail.com"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1452,
+                  "length": 16
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.8954,
+                    6.2792,
+                    1.9961,
+                    6.2792,
+                    1.9961,
+                    6.4101,
+                    0.8954,
+                    6.4101
+                  ]
+                }
+              ],
+              "content": "Mailing Address:"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1469,
+                  "length": 14
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    2.1027,
+                    6.3142,
+                    3.0803,
+                    6.3142,
+                    3.0803,
+                    6.4186,
+                    2.1027,
+                    6.4186
+                  ]
+                }
+              ],
+              "content": "472 SE 74th ST"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1484,
+                  "length": 5
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    0.892,
+                    6.5399,
+                    1.1815,
+                    6.5399,
+                    1.1815,
+                    6.6721,
+                    0.892,
+                    6.6721
+                  ]
+                }
+              ],
+              "content": "City:"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1490,
+                  "length": 8
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    1.3947,
+                    6.5747,
+                    2.01,
+                    6.5747,
+                    2.01,
+                    6.6774,
+                    1.3947,
+                    6.6774
+                  ]
+                }
+              ],
+              "content": "Lakewood"
+            },
+            {
               "spans": [
                 {
                   "offset": 1499,
+                  "length": 6
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    4.2363,
+                    6.5399,
+                    4.6048,
+                    6.5399,
+                    4.6048,
+                    6.645,
+                    4.2363,
+                    6.645
+                  ]
+                }
+              ],
+              "content": "State:"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1506,
+                  "length": 2
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    4.7452,
+                    6.5506,
+                    4.9679,
+                    6.5506,
+                    4.9679,
+                    6.6518,
+                    4.7452,
+                    6.6518
+                  ]
+                }
+              ],
+              "content": "WA"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1509,
+                  "length": 9
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    6.4885,
+                    6.5399,
+                    7.1134,
+                    6.5399,
+                    7.1134,
+                    6.6712,
+                    6.4885,
+                    6.6712
+                  ]
+                }
+              ],
+              "content": "Zip Code:"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1519,
+                  "length": 5
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    7.2536,
+                    6.5442,
+                    7.6275,
+                    6.5442,
+                    7.6275,
+                    6.6473,
+                    7.2536,
+                    6.6473
+                  ]
+                }
+              ],
+              "content": "98712"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 1525,
                   "length": 11
                 }
-              ]
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    1.891,
+                    8.2595,
+                    3.2329,
+                    8.2595,
+                    3.2329,
+                    8.5699,
+                    1.891,
+                    8.5699
+                  ]
+                }
+              ],
+              "content": "John Singer"
             }
-          ]
+          ],
+          "styles": []
         }
       }
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com",
-    "RandomSeed": "1775460938"
+    "FORM_RECOGNIZER_ENDPOINT": "https://formrecognizersdk.ppe.cognitiveservices.azure.com/",
+    "RandomSeed": "257368891"
   }
 }

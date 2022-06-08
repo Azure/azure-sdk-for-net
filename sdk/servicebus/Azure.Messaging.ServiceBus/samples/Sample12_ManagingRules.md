@@ -48,9 +48,8 @@ while (true)
 await ruleManager.CreateRuleAsync("price-filter", new SqlRuleFilter("Price < 30000"));
 await ruleManager.DeleteRuleAsync("brand-filter");
 
-// we can also use the rule manager to list the rules on the subscription.
-IReadOnlyList<RuleProperties> rules = await ruleManager.GetRulesAsync();
-foreach (RuleProperties rule in rules)
+// we can also use the rule manager to iterate over the rules on the subscription.
+await foreach (RuleProperties rule in ruleManager.GetRulesAsync())
 {
     // we should only have 1 rule at this point - "price-filter"
     Console.WriteLine(rule.Name);

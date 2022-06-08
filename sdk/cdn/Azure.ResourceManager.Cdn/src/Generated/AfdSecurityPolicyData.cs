@@ -27,7 +27,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the security policy. </param>
-        /// <param name="properties"> object which contains security policy parameters. </param>
+        /// <param name="properties">
+        /// object which contains security policy parameters
+        /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
+        /// </param>
         internal AfdSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecurityPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
@@ -42,7 +46,11 @@ namespace Azure.ResourceManager.Cdn
         public AfdDeploymentStatus? DeploymentStatus { get; }
         /// <summary> The name of the profile which holds the security policy. </summary>
         public string ProfileName { get; }
-        /// <summary> object which contains security policy parameters. </summary>
+        /// <summary>
+        /// object which contains security policy parameters
+        /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
+        /// </summary>
         public SecurityPolicyProperties Properties { get; set; }
     }
 }

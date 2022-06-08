@@ -89,8 +89,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string dataFeedId = DataFeedId;
 
-            var startsOn = DateTimeOffset.Parse("2021-06-01T00:00:00Z");
-            var endsOn = DateTimeOffset.Parse("2021-06-03T00:00:00Z");
+            var startsOn = DateTimeOffset.Parse("2022-03-01T00:00:00Z");
+            var endsOn = DateTimeOffset.Parse("2022-03-03T00:00:00Z");
 
             await adminClient.RefreshDataFeedIngestionAsync(dataFeedId, startsOn, endsOn);
         }

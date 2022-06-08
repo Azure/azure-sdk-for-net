@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ResponseBasedOriginErrorDetectionSettings DeserializeResponseBasedOriginErrorDetectionSettings(JsonElement element)
         {
-            Optional<ResponseBasedDetectedErrorTypes> responseBasedDetectedErrorTypes = default;
+            Optional<ResponseBasedDetectedErrorType> responseBasedDetectedErrorTypes = default;
             Optional<int> responseBasedFailoverThresholdPercentage = default;
             Optional<IList<HttpErrorRange>> httpErrorRanges = default;
             foreach (var property in element.EnumerateObject())
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    responseBasedDetectedErrorTypes = property.Value.GetString().ToResponseBasedDetectedErrorTypes();
+                    responseBasedDetectedErrorTypes = property.Value.GetString().ToResponseBasedDetectedErrorType();
                     continue;
                 }
                 if (property.NameEquals("responseBasedFailoverThresholdPercentage"))

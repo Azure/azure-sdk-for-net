@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             CustomDomains = new ChangeTrackingList<ActivatedResourceReference>();
             RuleSets = new ChangeTrackingList<WritableSubResource>();
-            SupportedProtocols = new ChangeTrackingList<AfdEndpointProtocols>();
+            SupportedProtocols = new ChangeTrackingList<AfdEndpointProtocol>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> rule sets referenced by this endpoint. </summary>
         public IList<WritableSubResource> RuleSets { get; }
         /// <summary> List of supported protocols for this route. </summary>
-        public IList<AfdEndpointProtocols> SupportedProtocols { get; }
+        public IList<AfdEndpointProtocol> SupportedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>
         public IList<string> PatternsToMatch { get; }
         /// <summary> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </summary>
