@@ -42,6 +42,7 @@ rename-rules:
   URI: Uri
   Url: Uri
   URL: Uri
+  AFDDomainHttpsParameters: FrontDoorCustomDomainHttpsContent
   AFDDomain: FrontDoorCustomDomain
   AFD: FrontDoor
   GET: Get
@@ -214,15 +215,6 @@ directive:
   - from: afdx.json
     where: $.definitions
     transform: >
-      for (var key in $) {
-            if (key === 'AFDDomainHttpsParameters')
-            {
-                const newKey = 'FrontDoorCustomDomainHttpsContent'
-                $[newKey] = $[key]
-                delete $[key]
-            }
-        }
-      $.AFDDomainUpdatePropertiesParameters.properties.tlsSettings['$ref'] = '#/definitions/FrontDoorCustomDomainHttpsContent';
       $.ActivatedResourceReference.properties.id['x-ms-format'] = 'arm-id';
       $.Usage.properties.id['x-ms-format'] = 'arm-id';
       $.AfdPurgeParameters['x-ms-client-name'] = 'FrontDoorPurgeParameters';
@@ -256,10 +248,10 @@ directive:
       $.AFDStateProperties.properties.provisioningState['x-ms-enum'].name = 'FrontDoorProvisioningState';
       $.AFDEndpointProtocols['x-ms-enum'].name = 'FrontDoorEndpointProtocol';
       $.ValidateSecretOutput.properties.status['x-ms-enum'].name = 'validationStatus';
-      $.FrontDoorCustomDomainHttpsContent.properties.certificateType['x-ms-enum'].name = 'FrontDoorCertificateType';
-      $.FrontDoorCustomDomainHttpsContent.properties.minimumTlsVersion['x-ms-enum'].name = 'FrontDoorMinimumTlsVersion';
+      $.AFDDomainHttpsParameters.properties.certificateType['x-ms-enum'].name = 'FrontDoorCertificateType';
+      $.AFDDomainHttpsParameters.properties.minimumTlsVersion['x-ms-enum'].name = 'FrontDoorMinimumTlsVersion';
       $.AfdRouteCacheConfiguration.properties.queryStringCachingBehavior['x-ms-enum'].name = 'FrontDoorQueryStringCachingBehavior';
-      $.FrontDoorCustomDomainHttpsContent.properties.secret = {
+      $.AFDDomainHttpsParameters.properties.secret = {
             "description": "Resource reference to the secret. ie. subs/rg/profile/secret",
             "type": "object",
             "properties": {
@@ -282,7 +274,7 @@ directive:
                 }
             }
         }
-      $.FrontDoorCustomDomainHttpsContent.properties.secret['x-nullable'] = true;
+      $.AFDDomainHttpsParameters.properties.secret['x-nullable'] = true;
       $.AFDOriginGroupUpdatePropertiesParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-nullable'] = true;
       $.WafMetricsResponse.properties.series.items.properties.groups['x-nullable'] = true;
       $.AFDOriginUpdatePropertiesParameters.properties.priority['x-nullable'] = true;
