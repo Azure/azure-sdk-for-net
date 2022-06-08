@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Reservations
     /// <summary> A class representing the ReservationOrderResponse data model. </summary>
     public partial class ReservationOrderResponseData : ResourceData
     {
-        /// <summary> Initializes a new instance of ReservationOrderResponseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderResponseData"/>. </summary>
         internal ReservationOrderResponseData()
         {
             Reservations = new ChangeTrackingList<ReservationResponseData>();
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderResponseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderResponseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

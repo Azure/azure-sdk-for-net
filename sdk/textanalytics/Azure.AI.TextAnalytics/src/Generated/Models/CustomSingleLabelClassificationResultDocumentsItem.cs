@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The CustomSingleLabelClassificationResultDocumentsItem. </summary>
     internal partial class CustomSingleLabelClassificationResultDocumentsItem : SingleClassificationDocumentResult
     {
-        /// <summary> Initializes a new instance of CustomSingleLabelClassificationResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="class"></param>
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
         }
 
-        /// <summary> Initializes a new instance of CustomSingleLabelClassificationResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationResultDocumentsItem"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

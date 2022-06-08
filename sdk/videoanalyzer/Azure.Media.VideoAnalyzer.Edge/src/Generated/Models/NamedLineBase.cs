@@ -12,7 +12,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Base class for named lines. </summary>
     public partial class NamedLineBase
     {
-        /// <summary> Initializes a new instance of NamedLineBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedLineBase"/>. </summary>
         /// <param name="name"> Line name. Must be unique within the node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public NamedLineBase(string name)
@@ -25,7 +25,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of NamedLineBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamedLineBase"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="name"> Line name. Must be unique within the node. </param>
         internal NamedLineBase(string type, string name)

@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The AnalyzeTextLanguageDetectionInput. </summary>
     internal partial class AnalyzeTextLanguageDetectionInput : AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextLanguageDetectionInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextLanguageDetectionInput"/>. </summary>
         public AnalyzeTextLanguageDetectionInput()
         {
             Kind = AnalyzeTextTaskKind.LanguageDetection;

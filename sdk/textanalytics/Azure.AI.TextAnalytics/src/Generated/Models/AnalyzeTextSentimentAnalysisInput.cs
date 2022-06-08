@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The AnalyzeTextSentimentAnalysisInput. </summary>
     internal partial class AnalyzeTextSentimentAnalysisInput : AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextSentimentAnalysisInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSentimentAnalysisInput"/>. </summary>
         public AnalyzeTextSentimentAnalysisInput()
         {
             Kind = AnalyzeTextTaskKind.SentimentAnalysis;

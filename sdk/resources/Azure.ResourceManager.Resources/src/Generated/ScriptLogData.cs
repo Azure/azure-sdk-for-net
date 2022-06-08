@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the ScriptLog data model. </summary>
     public partial class ScriptLogData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScriptLogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptLogData"/>. </summary>
         public ScriptLogData()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptLogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptLogData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

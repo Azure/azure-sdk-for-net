@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the PolicyAssignment data model. </summary>
     public partial class PolicyAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentData"/>. </summary>
         public PolicyAssignmentData()
         {
             ExcludedScopes = new ChangeTrackingList<string>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
             NonComplianceMessages = new ChangeTrackingList<NonComplianceMessage>();
         }
 
-        /// <summary> Initializes a new instance of PolicyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

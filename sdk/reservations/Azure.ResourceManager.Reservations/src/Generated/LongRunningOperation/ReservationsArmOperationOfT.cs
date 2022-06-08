@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Reservations
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of ReservationsArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationsArmOperation{T}" /> for mocking. </summary>
         protected ReservationsArmOperation()
         {
         }

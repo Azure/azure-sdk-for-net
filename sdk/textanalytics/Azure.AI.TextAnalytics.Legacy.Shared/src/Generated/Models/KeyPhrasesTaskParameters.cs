@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The KeyPhrasesTaskParameters. </summary>
     internal partial class KeyPhrasesTaskParameters
     {
-        /// <summary> Initializes a new instance of KeyPhrasesTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhrasesTaskParameters"/>. </summary>
         public KeyPhrasesTaskParameters()
         {
         }

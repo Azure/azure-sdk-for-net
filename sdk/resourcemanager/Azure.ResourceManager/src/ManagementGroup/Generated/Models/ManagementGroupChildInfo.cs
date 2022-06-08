@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The child information of a management group. </summary>
     public partial class ManagementGroupChildInfo
     {
-        /// <summary> Initializes a new instance of ManagementGroupChildInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupChildInfo"/>. </summary>
         internal ManagementGroupChildInfo()
         {
             Children = new ChangeTrackingList<ManagementGroupChildInfo>();
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupChildInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupChildInfo"/>. </summary>
         /// <param name="childType"> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </param>
         /// <param name="id"> The fully qualified ID for the child resource (management group or subscription).  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
         /// <param name="name"> The name of the child entity. </param>

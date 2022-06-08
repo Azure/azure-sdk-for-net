@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of ResourcesArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesArmOperation{T}" /> for mocking. </summary>
         protected ResourcesArmOperation()
         {
         }

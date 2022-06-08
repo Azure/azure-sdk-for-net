@@ -10,7 +10,7 @@ namespace Azure.AI.Translation.Document.Models
     /// <summary> The DocumentFilter. </summary>
     internal partial class DocumentFilter
     {
-        /// <summary> Initializes a new instance of DocumentFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFilter"/>. </summary>
         public DocumentFilter()
         {
         }

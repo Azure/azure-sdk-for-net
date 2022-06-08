@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Quota properties for the resource. </summary>
     public partial class QuotaProperties
     {
-        /// <summary> Initializes a new instance of QuotaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaProperties"/>. </summary>
         public QuotaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaProperties"/>. </summary>
         /// <param name="limit"> Quota properties. </param>
         /// <param name="currentValue"> Current usage value for the resource. </param>
         /// <param name="unit"> The limit units, such as **count** and **bytes**. Use the unit field provided in the response of the GET quota operation. </param>

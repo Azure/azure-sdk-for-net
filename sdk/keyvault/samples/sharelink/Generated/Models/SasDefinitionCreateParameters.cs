@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The SAS definition create parameters. </summary>
     internal partial class SasDefinitionCreateParameters
     {
-        /// <summary> Initializes a new instance of SasDefinitionCreateParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionCreateParameters"/>. </summary>
         /// <param name="templateUri"> The SAS definition token template signed with an arbitrary key.  Tokens created according to the SAS definition will have the same properties as the template. </param>
         /// <param name="sasType"> The type of SAS token the SAS definition will create. </param>
         /// <param name="validityPeriod"> The validity period of SAS tokens created according to the SAS definition. </param>

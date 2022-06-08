@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> SKU for the resource. </summary>
     public partial class ArmApplicationSku
     {
-        /// <summary> Initializes a new instance of ArmApplicationSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationSku"/>. </summary>
         /// <param name="name"> The SKU name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ArmApplicationSku(string name)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationSku"/>. </summary>
         /// <param name="name"> The SKU name. </param>
         /// <param name="tier"> The SKU tier. </param>
         /// <param name="size"> The SKU size. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The CalculatePriceResponseProperties. </summary>
     public partial class CalculatePriceResponseProperties
     {
-        /// <summary> Initializes a new instance of CalculatePriceResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResponseProperties"/>. </summary>
         internal CalculatePriceResponseProperties()
         {
             PaymentSchedule = new ChangeTrackingList<PaymentDetail>();
         }
 
-        /// <summary> Initializes a new instance of CalculatePriceResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculatePriceResponseProperties"/>. </summary>
         /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer&apos;s local currency. Tax is not included. </param>
         /// <param name="netTotal"> Net total amount in pricing currency. </param>
         /// <param name="taxTotal"> Tax amount in pricing currency. </param>

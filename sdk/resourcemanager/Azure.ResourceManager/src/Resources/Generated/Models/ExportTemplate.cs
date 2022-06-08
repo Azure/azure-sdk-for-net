@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Export resource group template request parameters. </summary>
     public partial class ExportTemplate
     {
-        /// <summary> Initializes a new instance of ExportTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportTemplate"/>. </summary>
         public ExportTemplate()
         {
             Resources = new ChangeTrackingList<string>();

@@ -13,14 +13,14 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> A particular API error with an error code and a message. </summary>
     public partial class TimeSeriesOperationError
     {
-        /// <summary> Initializes a new instance of TimeSeriesOperationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesOperationError"/>. </summary>
         internal TimeSeriesOperationError()
         {
             Details = new ChangeTrackingList<TimeSeriesOperationErrorDetails>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of TimeSeriesOperationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesOperationError"/>. </summary>
         /// <param name="code"> Language-independent, human-readable string that defines a service-specific error code. This code serves as a more specific indicator for the HTTP error code specified in the response. Can be used to programmatically handle specific error cases. </param>
         /// <param name="message"> Human-readable, language-independent representation of the error. It is intended as an aid to developers and is not suitable for exposure to end users. </param>
         /// <param name="target"> Target of the particular error (for example, the name of the property in error). May be null. </param>

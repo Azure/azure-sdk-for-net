@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Parameters object for a text analysis task using custom models. </summary>
     internal partial class CustomTaskParameters : TaskParameters
     {
-        /// <summary> Initializes a new instance of CustomTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomTaskParameters"/>. </summary>
         /// <param name="projectName"></param>
         /// <param name="deploymentName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Models
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of CustomTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="projectName"></param>
         /// <param name="deploymentName"></param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The OperationResponse. </summary>
     public partial class OperationResponse
     {
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResponse"/>. </summary>
         internal OperationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResponse"/>. </summary>
         /// <param name="name"> Name of the operation. </param>
         /// <param name="isDataAction"> Indicates whether the operation is a data action. </param>
         /// <param name="display"> Display of the operation. </param>

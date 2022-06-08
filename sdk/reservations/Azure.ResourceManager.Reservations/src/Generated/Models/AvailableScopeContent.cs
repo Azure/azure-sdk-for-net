@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Available scope. </summary>
     public partial class AvailableScopeContent
     {
-        /// <summary> Initializes a new instance of AvailableScopeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableScopeContent"/>. </summary>
         public AvailableScopeContent()
         {
         }

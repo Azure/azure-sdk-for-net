@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Managed application policy. </summary>
     public partial class ArmApplicationPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPolicy"/>. </summary>
         public ArmApplicationPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationPolicy"/>. </summary>
         /// <param name="name"> The policy name. </param>
         /// <param name="policyDefinitionId"> The policy definition Id. </param>
         /// <param name="parameters"> The policy parameters. </param>

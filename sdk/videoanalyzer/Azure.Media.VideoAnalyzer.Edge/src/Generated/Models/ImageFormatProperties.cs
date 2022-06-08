@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Base class for image formatting properties. </summary>
     public partial class ImageFormatProperties
     {
-        /// <summary> Initializes a new instance of ImageFormatProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatProperties"/>. </summary>
         public ImageFormatProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageFormatProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatProperties"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         internal ImageFormatProperties(string type)
         {

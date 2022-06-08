@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The ReservationResponsePatch. </summary>
     public partial class ReservationResponsePatch
     {
-        /// <summary> Initializes a new instance of ReservationResponsePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationResponsePatch"/>. </summary>
         public ReservationResponsePatch()
         {
             AppliedScopes = new ChangeTrackingList<string>();

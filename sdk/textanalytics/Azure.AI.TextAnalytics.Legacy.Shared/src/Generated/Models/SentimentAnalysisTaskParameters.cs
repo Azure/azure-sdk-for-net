@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The SentimentAnalysisTaskParameters. </summary>
     internal partial class SentimentAnalysisTaskParameters
     {
-        /// <summary> Initializes a new instance of SentimentAnalysisTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskParameters"/>. </summary>
         public SentimentAnalysisTaskParameters()
         {
         }

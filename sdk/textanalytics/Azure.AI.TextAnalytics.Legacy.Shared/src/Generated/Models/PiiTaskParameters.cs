@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The PiiTaskParameters. </summary>
     internal partial class PiiTaskParameters
     {
-        /// <summary> Initializes a new instance of PiiTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiTaskParameters"/>. </summary>
         public PiiTaskParameters()
         {
             PiiCategories = new ChangeTrackingList<PiiEntityLegacyCategory>();

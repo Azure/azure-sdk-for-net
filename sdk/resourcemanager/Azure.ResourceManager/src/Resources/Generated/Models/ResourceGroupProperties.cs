@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The resource group properties. </summary>
     internal partial class ResourceGroupProperties
     {
-        /// <summary> Initializes a new instance of ResourceGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupProperties"/>. </summary>
         public ResourceGroupProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         internal ResourceGroupProperties(string provisioningState)
         {

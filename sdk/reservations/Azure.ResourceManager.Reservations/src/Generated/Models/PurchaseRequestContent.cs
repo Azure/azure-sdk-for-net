@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The PurchaseRequestContent. </summary>
     public partial class PurchaseRequestContent
     {
-        /// <summary> Initializes a new instance of PurchaseRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchaseRequestContent"/>. </summary>
         public PurchaseRequestContent()
         {
             AppliedScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PurchaseRequestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchaseRequestContent"/>. </summary>
         /// <param name="sku"></param>
         /// <param name="location"> The Azure Region where the reserved resource lives. </param>
         /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>

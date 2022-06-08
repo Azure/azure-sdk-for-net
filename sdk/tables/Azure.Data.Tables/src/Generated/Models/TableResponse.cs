@@ -10,12 +10,12 @@ namespace Azure.Data.Tables.Models
     /// <summary> The response for a single table. </summary>
     internal partial class TableResponse : TableItem
     {
-        /// <summary> Initializes a new instance of TableResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableResponse"/>. </summary>
         internal TableResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of TableResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableResponse"/>. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="odataType"> The odata type of the table. </param>
         /// <param name="odataId"> The id of the table. </param>

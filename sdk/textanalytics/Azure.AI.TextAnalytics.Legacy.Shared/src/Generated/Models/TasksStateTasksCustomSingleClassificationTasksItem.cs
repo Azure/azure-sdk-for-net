@@ -13,14 +13,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The TasksStateTasksCustomSingleClassificationTasksItem. </summary>
     internal partial class TasksStateTasksCustomSingleClassificationTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksCustomSingleClassificationTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksCustomSingleClassificationTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         internal TasksStateTasksCustomSingleClassificationTasksItem(DateTimeOffset lastUpdateDateTime, State status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksCustomSingleClassificationTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksCustomSingleClassificationTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>

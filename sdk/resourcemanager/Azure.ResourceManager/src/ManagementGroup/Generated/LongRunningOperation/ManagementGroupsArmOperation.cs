@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagementGroups
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of ManagementGroupsArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupsArmOperation" /> for mocking. </summary>
         protected ManagementGroupsArmOperation()
         {
         }

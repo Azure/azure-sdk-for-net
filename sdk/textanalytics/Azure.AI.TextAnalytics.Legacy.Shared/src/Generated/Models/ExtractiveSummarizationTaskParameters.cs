@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The ExtractiveSummarizationTaskParameters. </summary>
     internal partial class ExtractiveSummarizationTaskParameters
     {
-        /// <summary> Initializes a new instance of ExtractiveSummarizationTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtractiveSummarizationTaskParameters"/>. </summary>
         public ExtractiveSummarizationTaskParameters()
         {
         }

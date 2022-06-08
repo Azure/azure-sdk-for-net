@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The OperationDisplay. </summary>
     public partial class OperationDisplay
     {
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
         internal OperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationDisplay"/>. </summary>
         /// <param name="provider"></param>
         /// <param name="resource"></param>
         /// <param name="operation"></param>

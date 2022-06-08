@@ -12,10 +12,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the ArmDeploymentScript data model. </summary>
+    /// <summary>
+    /// A class representing the ArmDeploymentScript data model.
+    /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureCliScript"/> and <see cref="AzurePowerShellScript"/>.
+    /// </summary>
     public partial class ArmDeploymentScriptData : ResourceData
     {
-        /// <summary> Initializes a new instance of ArmDeploymentScriptData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptData"/>. </summary>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         public ArmDeploymentScriptData(AzureLocation location)
         {
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.Resources
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentScriptData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

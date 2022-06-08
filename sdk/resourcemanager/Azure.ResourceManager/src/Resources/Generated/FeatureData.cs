@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the Feature data model. </summary>
     public partial class FeatureData : ResourceData
     {
-        /// <summary> Initializes a new instance of FeatureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureData"/>. </summary>
         internal FeatureData()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

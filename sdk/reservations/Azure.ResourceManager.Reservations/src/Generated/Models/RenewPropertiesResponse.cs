@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The RenewPropertiesResponse. </summary>
     public partial class RenewPropertiesResponse
     {
-        /// <summary> Initializes a new instance of RenewPropertiesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewPropertiesResponse"/>. </summary>
         internal RenewPropertiesResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of RenewPropertiesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewPropertiesResponse"/>. </summary>
         /// <param name="purchaseProperties"></param>
         /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </param>
         /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer&apos;s local currency for renewal purchase. Tax is not included. </param>

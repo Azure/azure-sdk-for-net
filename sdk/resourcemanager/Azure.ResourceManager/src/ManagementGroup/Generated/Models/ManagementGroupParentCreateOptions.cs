@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> (Optional) The ID of the parent management group used during creation. </summary>
     public partial class ManagementGroupParentCreateOptions
     {
-        /// <summary> Initializes a new instance of ManagementGroupParentCreateOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupParentCreateOptions"/>. </summary>
         public ManagementGroupParentCreateOptions()
         {
         }

@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Role Assignments filter. </summary>
     internal partial class RoleAssignmentFilter
     {
-        /// <summary> Initializes a new instance of RoleAssignmentFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentFilter"/>. </summary>
         internal RoleAssignmentFilter()
         {
         }

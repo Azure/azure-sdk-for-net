@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The OperationList. </summary>
     internal partial class OperationList
     {
-        /// <summary> Initializes a new instance of OperationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationList"/>. </summary>
         internal OperationList()
         {
             Value = new ChangeTrackingList<OperationResponse>();
         }
 
-        /// <summary> Initializes a new instance of OperationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Url to get the next page of items. </param>
         internal OperationList(IReadOnlyList<OperationResponse> value, string nextLink)

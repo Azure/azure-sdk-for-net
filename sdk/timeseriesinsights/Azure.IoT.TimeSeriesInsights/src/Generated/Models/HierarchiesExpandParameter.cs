@@ -10,7 +10,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Definition of whether to expand hierarchy nodes in the same search instances call. </summary>
     internal partial class HierarchiesExpandParameter
     {
-        /// <summary> Initializes a new instance of HierarchiesExpandParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="HierarchiesExpandParameter"/>. </summary>
         public HierarchiesExpandParameter()
         {
         }

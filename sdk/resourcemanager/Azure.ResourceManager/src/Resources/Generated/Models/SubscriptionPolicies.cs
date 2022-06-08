@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Subscription policies. </summary>
     public partial class SubscriptionPolicies
     {
-        /// <summary> Initializes a new instance of SubscriptionPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionPolicies"/>. </summary>
         internal SubscriptionPolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionPolicies"/>. </summary>
         /// <param name="locationPlacementId"> The subscription location placement ID. The ID indicates which regions are visible for a subscription. For example, a subscription with a location placement Id of Public_2014-09-01 has access to Azure public regions. </param>
         /// <param name="quotaId"> The subscription quota ID. </param>
         /// <param name="spendingLimit"> The subscription spending limit. </param>

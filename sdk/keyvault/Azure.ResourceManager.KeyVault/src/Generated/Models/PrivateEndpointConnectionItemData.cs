@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Private endpoint connection item. </summary>
     public partial class PrivateEndpointConnectionItemData
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionItemData"/>. </summary>
         internal PrivateEndpointConnectionItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionItemData"/>. </summary>
         /// <param name="id"> Id of private endpoint connection. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A class representing the DeletedVault data model. </summary>
     public partial class DeletedVaultData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedVaultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultData"/>. </summary>
         internal DeletedVaultData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedVaultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

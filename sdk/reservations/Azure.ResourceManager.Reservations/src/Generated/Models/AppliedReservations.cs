@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The AppliedReservations. </summary>
     public partial class AppliedReservations : ResourceData
     {
-        /// <summary> Initializes a new instance of AppliedReservations. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliedReservations"/>. </summary>
         internal AppliedReservations()
         {
         }
 
-        /// <summary> Initializes a new instance of AppliedReservations. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliedReservations"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

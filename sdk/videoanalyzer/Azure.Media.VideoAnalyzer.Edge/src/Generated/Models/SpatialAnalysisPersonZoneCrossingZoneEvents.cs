@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The SpatialAnalysisPersonZoneCrossingZoneEvents. </summary>
     public partial class SpatialAnalysisPersonZoneCrossingZoneEvents
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonZoneCrossingZoneEvents. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonZoneCrossingZoneEvents"/>. </summary>
         /// <param name="zone"> The named zone. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zone"/> is null. </exception>
         public SpatialAnalysisPersonZoneCrossingZoneEvents(NamedPolygonBase zone)
@@ -28,7 +28,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Events = new ChangeTrackingList<SpatialAnalysisPersonZoneCrossingEvent>();
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonZoneCrossingZoneEvents. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonZoneCrossingZoneEvents"/>. </summary>
         /// <param name="zone"> The named zone. </param>
         /// <param name="events"> The event configuration. </param>
         internal SpatialAnalysisPersonZoneCrossingZoneEvents(NamedPolygonBase zone, IList<SpatialAnalysisPersonZoneCrossingEvent> events)

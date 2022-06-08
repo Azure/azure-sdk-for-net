@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The EntitiesTaskParameters. </summary>
     internal partial class EntitiesTaskParameters
     {
-        /// <summary> Initializes a new instance of EntitiesTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesTaskParameters"/>. </summary>
         public EntitiesTaskParameters()
         {
         }

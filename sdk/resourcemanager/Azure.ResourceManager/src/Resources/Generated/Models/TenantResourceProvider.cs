@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Resource provider information. </summary>
     public partial class TenantResourceProvider
     {
-        /// <summary> Initializes a new instance of TenantResourceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantResourceProvider"/>. </summary>
         internal TenantResourceProvider()
         {
             ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
         }
 
-        /// <summary> Initializes a new instance of TenantResourceProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantResourceProvider"/>. </summary>
         /// <param name="namespace"> The namespace of the resource provider. </param>
         /// <param name="resourceTypes"> The collection of provider resource types. </param>
         internal TenantResourceProvider(string @namespace, IReadOnlyList<ProviderResourceType> resourceTypes)

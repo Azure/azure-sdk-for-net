@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Resource name provided by the resource provider. Use this property for quotaRequest parameter. </summary>
     public partial class ResourceName
     {
-        /// <summary> Initializes a new instance of ResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceName"/>. </summary>
         public ResourceName()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceName"/>. </summary>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display localized name. </param>
         internal ResourceName(string value, string localizedValue)

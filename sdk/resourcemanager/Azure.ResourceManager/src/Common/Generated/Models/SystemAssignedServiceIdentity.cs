@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class SystemAssignedServiceIdentity
     {
-        /// <summary> Initializes a new instance of SystemAssignedServiceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemAssignedServiceIdentity"/>. </summary>
         /// <param name="systemAssignedServiceIdentityType"> Type of managed service identity (either system assigned, or none). </param>
         [InitializationConstructor]
         public SystemAssignedServiceIdentity(SystemAssignedServiceIdentityType systemAssignedServiceIdentityType)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Models
             SystemAssignedServiceIdentityType = systemAssignedServiceIdentityType;
         }
 
-        /// <summary> Initializes a new instance of SystemAssignedServiceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemAssignedServiceIdentity"/>. </summary>
         /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="systemAssignedServiceIdentityType"> Type of managed service identity (either system assigned, or none). </param>

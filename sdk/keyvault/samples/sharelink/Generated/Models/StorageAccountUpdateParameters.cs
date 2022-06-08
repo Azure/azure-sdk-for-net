@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The storage account update parameters. </summary>
     internal partial class StorageAccountUpdateParameters
     {
-        /// <summary> Initializes a new instance of StorageAccountUpdateParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountUpdateParameters"/>. </summary>
         public StorageAccountUpdateParameters()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

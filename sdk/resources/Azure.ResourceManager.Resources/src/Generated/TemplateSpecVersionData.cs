@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the TemplateSpecVersion data model. </summary>
     public partial class TemplateSpecVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecVersionData"/>. </summary>
         /// <param name="location"> The location of the Template Spec Version. It must match the location of the parent Template Spec. </param>
         public TemplateSpecVersionData(AzureLocation location)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
             LinkedTemplates = new ChangeTrackingList<LinkedTemplateArtifact>();
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

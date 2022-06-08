@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations
     public partial class CurrentQuotaLimitBaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CurrentQuotaLimitBaseResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, string location, string resourceName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, AzureLocation location, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}";
             return new ResourceIdentifier(resourceId);

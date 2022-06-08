@@ -10,12 +10,12 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Supported parameters for a Healthcare task. </summary>
     internal partial class HealthcareTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of HealthcareTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskParameters"/>. </summary>
         public HealthcareTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
         /// <param name="modelVersion"></param>
         /// <param name="fhirVersion"> The FHIR Spec version that the result will use to format the fhirBundle. For additional information see https://www.hl7.org/fhir/overview.html. </param>

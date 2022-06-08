@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The KeyPhraseExtractionLROResult. </summary>
     internal partial class KeyPhraseExtractionLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of KeyPhraseExtractionLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseExtractionLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextLROResultsKind.KeyPhraseExtractionLROResults;
         }
 
-        /// <summary> Initializes a new instance of KeyPhraseExtractionLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseExtractionLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>

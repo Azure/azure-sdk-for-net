@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The SpatialAnalysisPersonLineCrossingLineEvents. </summary>
     public partial class SpatialAnalysisPersonLineCrossingLineEvents
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingLineEvents. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingLineEvents"/>. </summary>
         /// <param name="line"> The named line. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="line"/> is null. </exception>
         public SpatialAnalysisPersonLineCrossingLineEvents(NamedLineBase line)
@@ -28,7 +28,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Events = new ChangeTrackingList<SpatialAnalysisPersonLineCrossingEvent>();
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingLineEvents. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonLineCrossingLineEvents"/>. </summary>
         /// <param name="line"> The named line. </param>
         /// <param name="events"> The event configuration. </param>
         internal SpatialAnalysisPersonLineCrossingLineEvents(NamedLineBase line, IList<SpatialAnalysisPersonLineCrossingEvent> events)
