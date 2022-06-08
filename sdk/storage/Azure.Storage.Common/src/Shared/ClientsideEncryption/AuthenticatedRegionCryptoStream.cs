@@ -229,6 +229,11 @@ namespace Azure.Storage.Cryptography
                 throw new NotSupportedException();
             }
 
+            if (_flushedFinal)
+            {
+                return;
+            }
+
             await FlushIfReadyInternal(async, cancellationToken).ConfigureAwait(false);
 
             // if there is a final partial block, force-flush
@@ -273,6 +278,7 @@ namespace Azure.Storage.Cryptography
 
         protected override void Dispose(bool disposing)
         {
+            FlushFinalInternal(async: false, cancellationToken: default).EnsureCompleted();
             base.Dispose(disposing);
             _transform.Dispose();
             _innerStream?.Dispose();

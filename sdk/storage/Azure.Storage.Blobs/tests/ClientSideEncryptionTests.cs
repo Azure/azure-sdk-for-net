@@ -390,6 +390,54 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [TestCase(ClientSideEncryptionVersion.V1_0, 16, 16)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, 1000)] // unaligned write buffer
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4, 1000)] // unalligned wite buffer and data
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 256 * Constants.KB)] // larger test, increasing likelihood to trigger async extension usage bugs
+        // TODO don't move to recorded tests without making the encryption region size configurable
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, V2.EncryptionRegionDataSize)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1000000, Constants.MB)]
+        [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize, 1000000)] // multiple blocks w/ unallignment
+        [LiveOnly] // cannot seed content encryption key
+        public async Task OpenWriteAsync(ClientSideEncryptionVersion version, long dataSize, int bufferSize)
+        {
+            var plaintext = GetRandomBuffer(dataSize);
+            var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(version)
+                {
+                    KeyEncryptionKey = mockKey,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blobName = GetNewBlobName();
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
+
+                // upload with encryption
+                using (Stream writeStream = await blob.OpenWriteAsync(true, new BlobOpenWriteOptions
+                {
+                    BufferSize = bufferSize,
+                }, s_cancellationToken))
+                {
+                    Stream plaintextStream = new MemoryStream(plaintext);
+                    if (IsAsync)
+                    {
+                        await plaintextStream.CopyToAsync(writeStream);
+                    }
+                    else
+                    {
+                        plaintextStream.CopyTo(writeStream);
+                    }
+                }
+
+                var encryptedData = await DownloadBypassDecryption(blob);
+                byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
+
+                // compare data
+                Assert.AreEqual(expectedEncryptedData, encryptedData);
+            }
+        }
+
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
         [LiveOnly] // cannot seed content encryption key
