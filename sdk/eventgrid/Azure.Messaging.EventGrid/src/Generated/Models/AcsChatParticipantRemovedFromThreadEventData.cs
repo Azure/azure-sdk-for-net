@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadParticipantRemoved event. </summary>
     public partial class AcsChatParticipantRemovedFromThreadEventData : AcsChatEventInThreadBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatParticipantRemovedFromThreadEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadEventData"/>. </summary>
         internal AcsChatParticipantRemovedFromThreadEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatParticipantRemovedFromThreadEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="time"> The time at which the user was removed to the thread. </param>

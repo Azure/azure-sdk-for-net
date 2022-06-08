@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> SSO details from the Dynatrace partner. </summary>
     public partial class SsoDetailsResult
     {
-        /// <summary> Initializes a new instance of SsoDetailsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsoDetailsResult"/>. </summary>
         internal SsoDetailsResult()
         {
             AadDomains = new ChangeTrackingList<string>();
             AdminUsers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SsoDetailsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsoDetailsResult"/>. </summary>
         /// <param name="isSsoEnabled"> Whether the SSO is enabled for this resource or not. </param>
         /// <param name="metadataUri"> URL for Azure AD metadata. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>

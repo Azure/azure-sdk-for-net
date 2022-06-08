@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Response for ElasticSan update request. </summary>
     public partial class ElasticSanPatch
     {
-        /// <summary> Initializes a new instance of ElasticSanPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPatch"/>. </summary>
         public ElasticSanPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -13,14 +13,14 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The result of the bulk registry operation. </summary>
     public partial class BulkRegistryOperationResponse
     {
-        /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkRegistryOperationResponse"/>. </summary>
         internal BulkRegistryOperationResponse()
         {
             Errors = new ChangeTrackingList<DeviceRegistryOperationError>();
             Warnings = new ChangeTrackingList<DeviceRegistryOperationWarning>();
         }
 
-        /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkRegistryOperationResponse"/>. </summary>
         /// <param name="isSuccessful"> The operation result. </param>
         /// <param name="errors"> The device registry operation errors. </param>
         /// <param name="warnings"> The device registry operation warnings. </param>

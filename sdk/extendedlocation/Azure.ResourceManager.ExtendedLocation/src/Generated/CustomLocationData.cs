@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ExtendedLocation
     /// <summary> A class representing the CustomLocation data model. </summary>
     public partial class CustomLocationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CustomLocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CustomLocationData(AzureLocation location) : base(location)
         {
             ClusterExtensionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CustomLocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

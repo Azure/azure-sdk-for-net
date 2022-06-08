@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An image object detected in the page. </summary>
     internal partial class DocumentImage
     {
-        /// <summary> Initializes a new instance of DocumentImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentImage"/>. </summary>
         /// <param name="span"> Location of the image in the reading order concatenated content. </param>
         /// <param name="pageRef"> 0-based index of the global pages array that containing the content of the image. </param>
         /// <param name="confidence"> Confidence of correctly identifying the image. </param>
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentImage"/>. </summary>
         /// <param name="polygon"> Bounding polygon of the image. </param>
         /// <param name="span"> Location of the image in the reading order concatenated content. </param>
         /// <param name="pageRef"> 0-based index of the global pages array that containing the content of the image. </param>

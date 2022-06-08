@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> The resource model definition containing the full set of allowed properties for a resource. Except properties bag, there cannot be a top level property outside of this set. </summary>
     public partial class ResourceModelWithAllowedPropertySet : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ResourceModelWithAllowedPropertySet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceModelWithAllowedPropertySet"/>. </summary>
         /// <param name="location"> The location. </param>
         public ResourceModelWithAllowedPropertySet(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceModelWithAllowedPropertySet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceModelWithAllowedPropertySet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the deleted vault. </summary>
     public partial class DeletedVaultProperties
     {
-        /// <summary> Initializes a new instance of DeletedVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultProperties"/>. </summary>
         internal DeletedVaultProperties()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DeletedVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedVaultProperties"/>. </summary>
         /// <param name="vaultId"> The resource id of the original vault. </param>
         /// <param name="location"> The location of the original vault. </param>
         /// <param name="deletionOn"> The deleted date. </param>

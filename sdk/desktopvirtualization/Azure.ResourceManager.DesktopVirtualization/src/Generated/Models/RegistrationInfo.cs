@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Represents a RegistrationInfo definition. </summary>
     public partial class RegistrationInfo
     {
-        /// <summary> Initializes a new instance of RegistrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationInfo"/>. </summary>
         public RegistrationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RegistrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationInfo"/>. </summary>
         /// <param name="expirationOn"> Expiration time of registration token. </param>
         /// <param name="token"> The registration token base64 encoded string. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>

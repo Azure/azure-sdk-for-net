@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the chat thread participant. </summary>
     public partial class AcsChatThreadParticipantProperties
     {
-        /// <summary> Initializes a new instance of AcsChatThreadParticipantProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadParticipantProperties"/>. </summary>
         internal AcsChatThreadParticipantProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatThreadParticipantProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadParticipantProperties"/>. </summary>
         /// <param name="displayName"> The name of the user. </param>
         /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
         internal AcsChatThreadParticipantProperties(string displayName, CommunicationIdentifierModel participantCommunicationIdentifier)

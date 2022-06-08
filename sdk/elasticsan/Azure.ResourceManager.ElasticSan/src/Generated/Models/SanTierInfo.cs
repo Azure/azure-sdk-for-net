@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> San scalability target. </summary>
     public partial class SanTierInfo
     {
-        /// <summary> Initializes a new instance of SanTierInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SanTierInfo"/>. </summary>
         internal SanTierInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SanTierInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SanTierInfo"/>. </summary>
         /// <param name="maxSizeTiB"> Maximum San account capacity in TiB. </param>
         /// <param name="minSizeTiB"> Minimum San account capacity in TiB. </param>
         /// <param name="minIncrementSizeTiB"> Increment the San capacity in TiB. </param>

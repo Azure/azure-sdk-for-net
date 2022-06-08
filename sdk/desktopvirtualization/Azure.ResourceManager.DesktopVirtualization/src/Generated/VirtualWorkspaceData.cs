@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> A class representing the VirtualWorkspace data model. </summary>
     public partial class VirtualWorkspaceData : ResourceModelWithAllowedPropertySet
     {
-        /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualWorkspaceData(AzureLocation location) : base(location)
         {
             ApplicationGroupReferences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

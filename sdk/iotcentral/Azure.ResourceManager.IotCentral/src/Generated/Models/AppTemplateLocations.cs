@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> IoT Central Application Template Locations. </summary>
     public partial class AppTemplateLocations
     {
-        /// <summary> Initializes a new instance of AppTemplateLocations. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppTemplateLocations"/>. </summary>
         internal AppTemplateLocations()
         {
         }
 
-        /// <summary> Initializes a new instance of AppTemplateLocations. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppTemplateLocations"/>. </summary>
         /// <param name="id"> The ID of the location. </param>
         /// <param name="displayName"> The display name of the location. </param>
         internal AppTemplateLocations(string id, string displayName)

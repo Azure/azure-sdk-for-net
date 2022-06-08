@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Data used when creating a disk. </summary>
     public partial class SourceCreationData
     {
-        /// <summary> Initializes a new instance of SourceCreationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceCreationData"/>. </summary>
         /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
         public SourceCreationData(ElasticSanVolumeCreateOption createSource)
         {
             CreateSource = createSource;
         }
 
-        /// <summary> Initializes a new instance of SourceCreationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceCreationData"/>. </summary>
         /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
         /// <param name="sourceUri"> If createOption is Copy, this is the ARM id of the source snapshot or disk. If createOption is Restore, this is the ARM-like id of the source disk restore point. </param>
         internal SourceCreationData(ElasticSanVolumeCreateOption createSource, Uri sourceUri)

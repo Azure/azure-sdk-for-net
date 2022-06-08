@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Address Properties. </summary>
     public partial class AddressProperties
     {
-        /// <summary> Initializes a new instance of AddressProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressProperties"/>. </summary>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
         public AddressProperties(ContactDetails contactDetails)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ContactDetails = contactDetails;
         }
 
-        /// <summary> Initializes a new instance of AddressProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressProperties"/>. </summary>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>

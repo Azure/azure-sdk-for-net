@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Request for getting all the linkable environments for a user. </summary>
     public partial class LinkableEnvironmentContent
     {
-        /// <summary> Initializes a new instance of LinkableEnvironmentContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentContent"/>. </summary>
         public LinkableEnvironmentContent()
         {
         }

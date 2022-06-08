@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> List Models response object. </summary>
     internal partial class GetModelsResponse
     {
-        /// <summary> Initializes a new instance of GetModelsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetModelsResponse"/>. </summary>
         /// <param name="value"> List of models. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GetModelsResponse(IEnumerable<DocumentModelInfo> value)
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetModelsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetModelsResponse"/>. </summary>
         /// <param name="value"> List of models. </param>
         /// <param name="nextLink"> Link to the next page of models. </param>
         internal GetModelsResponse(IReadOnlyList<DocumentModelInfo> value, string nextLink)

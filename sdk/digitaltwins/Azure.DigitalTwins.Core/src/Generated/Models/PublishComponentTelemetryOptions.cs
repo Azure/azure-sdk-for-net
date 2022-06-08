@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class PublishComponentTelemetryOptions
     {
-        /// <summary> Initializes a new instance of PublishComponentTelemetryOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublishComponentTelemetryOptions"/>. </summary>
         public PublishComponentTelemetryOptions()
         {
         }

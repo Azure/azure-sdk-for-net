@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
     /// <summary> Lists of Custom Locations operations. </summary>
     internal partial class CustomLocationOperationsList
     {
-        /// <summary> Initializes a new instance of CustomLocationOperationsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationOperationsList"/>. </summary>
         /// <param name="value"> Array of customLocationOperation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CustomLocationOperationsList(IEnumerable<CustomLocationOperation> value)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CustomLocationOperationsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationOperationsList"/>. </summary>
         /// <param name="nextLink"> Next page of operations. </param>
         /// <param name="value"> Array of customLocationOperation. </param>
         internal CustomLocationOperationsList(string nextLink, IReadOnlyList<CustomLocationOperation> value)

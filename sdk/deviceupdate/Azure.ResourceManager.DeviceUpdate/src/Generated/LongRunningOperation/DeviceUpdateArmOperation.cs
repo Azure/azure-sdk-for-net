@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DeviceUpdate
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of DeviceUpdateArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateArmOperation" /> for mocking. </summary>
         protected DeviceUpdateArmOperation()
         {
         }

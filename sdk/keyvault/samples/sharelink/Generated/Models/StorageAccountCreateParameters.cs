@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The storage account create parameters. </summary>
     internal partial class StorageAccountCreateParameters
     {
-        /// <summary> Initializes a new instance of StorageAccountCreateParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCreateParameters"/>. </summary>
         /// <param name="resourceId"> Storage account resource id. </param>
         /// <param name="activeKeyName"> Current active storage account key name. </param>
         /// <param name="autoRegenerateKey"> whether keyvault should manage the storage account for the user. </param>

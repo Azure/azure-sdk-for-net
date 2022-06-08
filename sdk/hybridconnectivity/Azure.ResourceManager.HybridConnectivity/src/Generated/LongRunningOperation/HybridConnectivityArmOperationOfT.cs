@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridConnectivity
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of HybridConnectivityArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectivityArmOperation{T}" /> for mocking. </summary>
         protected HybridConnectivityArmOperation()
         {
         }

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Dynatrace
     /// <summary> A class representing the MonitorResource data model. </summary>
     public partial class MonitorResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MonitorResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MonitorResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

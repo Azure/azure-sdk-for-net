@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> The location info. </summary>
     public partial class SkuLocationInfo
     {
-        /// <summary> Initializes a new instance of SkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuLocationInfo"/>. </summary>
         internal SkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuLocationInfo"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones. </param>
         internal SkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones)

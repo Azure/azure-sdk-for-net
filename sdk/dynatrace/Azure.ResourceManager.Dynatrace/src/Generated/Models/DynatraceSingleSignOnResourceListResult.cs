@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> The response of a DynatraceSingleSignOnResource list operation. </summary>
     internal partial class DynatraceSingleSignOnResourceListResult
     {
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnResourceListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="nextLink"/> is null. </exception>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             NextLink = nextLink;
         }
 
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnResourceListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal DynatraceSingleSignOnResourceListResult(IReadOnlyList<DynatraceSingleSignOnResourceData> value, string nextLink)

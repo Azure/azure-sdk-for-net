@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Request payload used to update and existing Accounts. </summary>
     public partial class DeviceUpdateAccountPatch
     {
-        /// <summary> Initializes a new instance of DeviceUpdateAccountPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountPatch"/>. </summary>
         public DeviceUpdateAccountPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

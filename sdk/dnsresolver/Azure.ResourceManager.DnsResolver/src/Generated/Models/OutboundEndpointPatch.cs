@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes an outbound endpoint for a DNS resolver for PATCH operation. </summary>
     public partial class OutboundEndpointPatch
     {
-        /// <summary> Initializes a new instance of OutboundEndpointPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEndpointPatch"/>. </summary>
         public OutboundEndpointPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

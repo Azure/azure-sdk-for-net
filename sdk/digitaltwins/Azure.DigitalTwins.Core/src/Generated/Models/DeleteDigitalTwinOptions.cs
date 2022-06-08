@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class DeleteDigitalTwinOptions
     {
-        /// <summary> Initializes a new instance of DeleteDigitalTwinOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteDigitalTwinOptions"/>. </summary>
         public DeleteDigitalTwinOptions()
         {
         }

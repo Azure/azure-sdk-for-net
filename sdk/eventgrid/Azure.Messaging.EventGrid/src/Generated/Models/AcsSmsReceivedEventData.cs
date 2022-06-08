@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSReceived event. </summary>
     public partial class AcsSmsReceivedEventData : AcsSmsEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsSmsReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
         internal AcsSmsReceivedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsSmsReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
         /// <param name="messageId"> The identity of the SMS message. </param>
         /// <param name="from"> The identity of SMS message sender. </param>
         /// <param name="to"> The identity of SMS message receiver. </param>

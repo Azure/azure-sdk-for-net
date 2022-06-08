@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> An object for an IP range that will be allowed access. </summary>
     public partial class NetworkRuleSetIPRule
     {
-        /// <summary> Initializes a new instance of NetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetIPRule"/>. </summary>
         public NetworkRuleSetIPRule()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetIPRule"/>. </summary>
         /// <param name="filterName"> The readable name of the IP rule. </param>
         /// <param name="ipMask"> The CIDR block defining the IP range. </param>
         internal NetworkRuleSetIPRule(string filterName, string ipMask)

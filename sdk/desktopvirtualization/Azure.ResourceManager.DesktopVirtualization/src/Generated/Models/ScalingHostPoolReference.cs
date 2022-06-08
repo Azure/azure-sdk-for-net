@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Scaling plan reference to hostpool. </summary>
     public partial class ScalingHostPoolReference
     {
-        /// <summary> Initializes a new instance of ScalingHostPoolReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingHostPoolReference"/>. </summary>
         public ScalingHostPoolReference()
         {
         }
 
-        /// <summary> Initializes a new instance of ScalingHostPoolReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingHostPoolReference"/>. </summary>
         /// <param name="hostPoolArmPath"> Arm path of referenced hostpool. </param>
         /// <param name="scalingPlanEnabled"> Is the scaling plan enabled for this hostpool. </param>
         internal ScalingHostPoolReference(string hostPoolArmPath, bool? scalingPlanEnabled)

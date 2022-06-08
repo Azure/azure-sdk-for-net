@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class representing the EventHubNamespace data model. </summary>
     public partial class EventHubNamespaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EventHubNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubNamespaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public EventHubNamespaceData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of EventHubNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

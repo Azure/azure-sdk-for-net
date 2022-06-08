@@ -13,13 +13,13 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The query result. </summary>
     public partial class QueryResult
     {
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         internal QueryResult()
         {
             Items = new ChangeTrackingList<object>();
         }
 
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         /// <param name="type"> The query result type. </param>
         /// <param name="items"> The query result items, as a collection. </param>
         /// <param name="continuationToken"> The continuation token. </param>

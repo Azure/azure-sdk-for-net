@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.FluidRelay
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of FluidRelayArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayArmOperation" /> for mocking. </summary>
         protected FluidRelayArmOperation()
         {
         }

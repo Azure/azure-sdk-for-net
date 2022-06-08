@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Grafana
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
         /// Operation Id: Grafana_Update
         /// </summary>
-        /// <param name="patch"> The ManagedGrafanaPatch to use. </param>
+        /// <param name="patch"> The <see cref="ManagedGrafanaPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ManagedGrafanaResource>> UpdateAsync(ManagedGrafanaPatch patch, CancellationToken cancellationToken = default)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Grafana
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
         /// Operation Id: Grafana_Update
         /// </summary>
-        /// <param name="patch"> The ManagedGrafanaPatch to use. </param>
+        /// <param name="patch"> The <see cref="ManagedGrafanaPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ManagedGrafanaResource> Update(ManagedGrafanaPatch patch, CancellationToken cancellationToken = default)

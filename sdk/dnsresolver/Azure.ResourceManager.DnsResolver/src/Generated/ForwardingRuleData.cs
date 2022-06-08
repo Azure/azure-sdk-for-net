@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary> A class representing the ForwardingRule data model. </summary>
     public partial class ForwardingRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of ForwardingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardingRuleData"/>. </summary>
         public ForwardingRuleData()
         {
             TargetDnsServers = new ChangeTrackingList<TargetDnsServer>();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ForwardingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardingRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

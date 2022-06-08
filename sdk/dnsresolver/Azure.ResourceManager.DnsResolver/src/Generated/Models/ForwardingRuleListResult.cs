@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> The response to an enumeration operation on forwarding rules within a DNS forwarding ruleset. </summary>
     internal partial class ForwardingRuleListResult
     {
-        /// <summary> Initializes a new instance of ForwardingRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardingRuleListResult"/>. </summary>
         internal ForwardingRuleListResult()
         {
             Value = new ChangeTrackingList<ForwardingRuleData>();
         }
 
-        /// <summary> Initializes a new instance of ForwardingRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardingRuleListResult"/>. </summary>
         /// <param name="value"> Enumeration of the forwarding rules. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
         internal ForwardingRuleListResult(IReadOnlyList<ForwardingRuleData> value, string nextLink)

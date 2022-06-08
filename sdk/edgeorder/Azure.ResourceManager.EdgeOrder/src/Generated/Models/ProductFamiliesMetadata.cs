@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Holds details about product family metadata. </summary>
     internal partial class ProductFamiliesMetadata
     {
-        /// <summary> Initializes a new instance of ProductFamiliesMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadata"/>. </summary>
         internal ProductFamiliesMetadata()
         {
             Value = new ChangeTrackingList<ProductFamiliesMetadataDetails>();
         }
 
-        /// <summary> Initializes a new instance of ProductFamiliesMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadata"/>. </summary>
         /// <param name="value"> List of product family metadata details. </param>
         /// <param name="nextLink"> Link for the next set of product families. </param>
         internal ProductFamiliesMetadata(IReadOnlyList<ProductFamiliesMetadataDetails> value, string nextLink)

@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Request body to authorize model copy. </summary>
     internal partial class AuthorizeCopyRequest
     {
-        /// <summary> Initializes a new instance of AuthorizeCopyRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizeCopyRequest"/>. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public AuthorizeCopyRequest(string modelId)

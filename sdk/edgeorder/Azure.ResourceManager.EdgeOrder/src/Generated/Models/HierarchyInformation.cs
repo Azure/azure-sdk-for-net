@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Holds details about product hierarchy information. </summary>
     public partial class HierarchyInformation
     {
-        /// <summary> Initializes a new instance of HierarchyInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="HierarchyInformation"/>. </summary>
         public HierarchyInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of HierarchyInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="HierarchyInformation"/>. </summary>
         /// <param name="productFamilyName"> Represents product family name that uniquely identifies product family. </param>
         /// <param name="productLineName"> Represents product line name that uniquely identifies product line. </param>
         /// <param name="productName"> Represents product name that uniquely identifies product. </param>

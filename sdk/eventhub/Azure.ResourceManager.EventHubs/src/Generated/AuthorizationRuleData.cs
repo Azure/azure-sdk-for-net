@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class representing the AuthorizationRule data model. </summary>
     public partial class AuthorizationRuleData : ProxyResource
     {
-        /// <summary> Initializes a new instance of AuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRuleData"/>. </summary>
         public AuthorizationRuleData()
         {
             Rights = new ChangeTrackingList<AccessRights>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

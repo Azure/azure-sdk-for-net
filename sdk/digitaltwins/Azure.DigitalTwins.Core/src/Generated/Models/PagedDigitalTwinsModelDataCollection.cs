@@ -13,13 +13,13 @@ namespace Azure.DigitalTwins.Core
     /// <summary> A collection of DigitalTwinsModelData objects. </summary>
     internal partial class PagedDigitalTwinsModelDataCollection
     {
-        /// <summary> Initializes a new instance of PagedDigitalTwinsModelDataCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedDigitalTwinsModelDataCollection"/>. </summary>
         internal PagedDigitalTwinsModelDataCollection()
         {
             Value = new ChangeTrackingList<DigitalTwinsModelData>();
         }
 
-        /// <summary> Initializes a new instance of PagedDigitalTwinsModelDataCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedDigitalTwinsModelDataCollection"/>. </summary>
         /// <param name="value"> The DigitalTwinsModelData objects. </param>
         /// <param name="nextLink"> A URI to retrieve the next page of objects. </param>
         internal PagedDigitalTwinsModelDataCollection(IReadOnlyList<DigitalTwinsModelData> value, string nextLink)

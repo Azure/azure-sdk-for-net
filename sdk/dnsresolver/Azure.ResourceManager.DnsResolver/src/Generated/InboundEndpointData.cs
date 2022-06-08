@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary> A class representing the InboundEndpoint data model. </summary>
     public partial class InboundEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of InboundEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         public InboundEndpointData(AzureLocation location) : base(location)
         {
             IPConfigurations = new ChangeTrackingList<IPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of InboundEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Key Vault resource. </summary>
     public partial class KeyVaultResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of KeyVaultResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultResourceData"/>. </summary>
         public KeyVaultResourceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KeyVaultResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

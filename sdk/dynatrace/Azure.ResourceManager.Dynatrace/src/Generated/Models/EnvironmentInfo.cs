@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Dynatrace Environment Information. </summary>
     public partial class EnvironmentInfo
     {
-        /// <summary> Initializes a new instance of EnvironmentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentInfo"/>. </summary>
         public EnvironmentInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of EnvironmentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentInfo"/>. </summary>
         /// <param name="environmentId"> Id of the environment created. </param>
         /// <param name="ingestionKey"> Ingestion key of the environment. </param>
         /// <param name="logsIngestionEndpoint"> Ingestion endpoint used for sending logs. </param>

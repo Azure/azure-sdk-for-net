@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary> A class representing the VirtualNetworkLink data model. </summary>
     public partial class VirtualNetworkLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkData"/>. </summary>
         public VirtualNetworkLinkData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

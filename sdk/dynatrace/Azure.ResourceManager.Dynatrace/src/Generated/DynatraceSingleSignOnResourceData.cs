@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Dynatrace
     /// <summary> A class representing the DynatraceSingleSignOnResource data model. </summary>
     public partial class DynatraceSingleSignOnResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnResourceData"/>. </summary>
         public DynatraceSingleSignOnResourceData()
         {
             AadDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DynatraceSingleSignOnResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

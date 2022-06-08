@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Billing plan information. </summary>
     public partial class PlanData
     {
-        /// <summary> Initializes a new instance of PlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlanData"/>. </summary>
         public PlanData()
         {
         }
 
-        /// <summary> Initializes a new instance of PlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlanData"/>. </summary>
         /// <param name="usageType"> different usage type like PAYG/COMMITTED. this could be enum. </param>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
         /// <param name="planDetails"> plan id as published by Dynatrace. </param>

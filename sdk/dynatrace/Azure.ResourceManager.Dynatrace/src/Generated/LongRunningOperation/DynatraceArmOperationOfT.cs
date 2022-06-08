@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Dynatrace
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of DynatraceArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceArmOperation{T}" /> for mocking. </summary>
         protected DynatraceArmOperation()
         {
         }

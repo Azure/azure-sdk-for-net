@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object representing the location and content of a table footnote. </summary>
     public partial class DocumentFootnote
     {
-        /// <summary> Initializes a new instance of DocumentFootnote. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFootnote"/>. </summary>
         /// <param name="content"> Table footnote content. </param>
         /// <param name="spans"> Location of the table footnote in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentFootnote. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentFootnote"/>. </summary>
         /// <param name="content"> Table footnote content. </param>
         /// <param name="boundingRegions"> Bounding regions covering the table footnote. </param>
         /// <param name="spans"> Location of the table footnote in the reading order concatenated content. </param>

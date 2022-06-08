@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.FluidRelay.Models
     /// <summary> Paged response. </summary>
     internal partial class FluidRelayContainerList
     {
-        /// <summary> Initializes a new instance of FluidRelayContainerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayContainerList"/>. </summary>
         internal FluidRelayContainerList()
         {
             Value = new ChangeTrackingList<FluidRelayContainerData>();
         }
 
-        /// <summary> Initializes a new instance of FluidRelayContainerList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluidRelayContainerList"/>. </summary>
         /// <param name="value"> A sequence of FluidRelay containers. </param>
         /// <param name="nextLink"> A link to the next page of results, if any. </param>
         internal FluidRelayContainerList(IReadOnlyList<FluidRelayContainerData> value, string nextLink)

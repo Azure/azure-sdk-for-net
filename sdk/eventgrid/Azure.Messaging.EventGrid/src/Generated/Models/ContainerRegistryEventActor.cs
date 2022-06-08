@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </summary>
     public partial class ContainerRegistryEventActor
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEventActor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventActor"/>. </summary>
         internal ContainerRegistryEventActor()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEventActor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventActor"/>. </summary>
         /// <param name="name"> The subject or username associated with the request context that generated the event. </param>
         internal ContainerRegistryEventActor(string name)
         {

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Encoder disconnected event data. Schema of the Data property of an EventGridEvent for a Microsoft.Media.LiveEventEncoderDisconnected event. </summary>
     public partial class MediaLiveEventEncoderDisconnectedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventEncoderDisconnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventEncoderDisconnectedEventData"/>. </summary>
         internal MediaLiveEventEncoderDisconnectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventEncoderDisconnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventEncoderDisconnectedEventData"/>. </summary>
         /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
         /// <param name="streamId"> Gets the stream Id. </param>
         /// <param name="encoderIp"> Gets the remote IP. </param>

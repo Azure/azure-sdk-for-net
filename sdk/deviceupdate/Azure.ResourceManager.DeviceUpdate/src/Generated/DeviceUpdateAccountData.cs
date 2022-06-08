@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// <summary> A class representing the DeviceUpdateAccount data model. </summary>
     public partial class DeviceUpdateAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DeviceUpdateAccountData(AzureLocation location) : base(location)
         {
             PrivateEndpointConnections = new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

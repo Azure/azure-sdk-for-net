@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A class representing the OrderItemResource data model. </summary>
     public partial class OrderItemResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of OrderItemResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderItemResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="orderItemDetails"> Represents order item details. </param>
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder
             OrderId = orderId;
         }
 
-        /// <summary> Initializes a new instance of OrderItemResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderItemResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

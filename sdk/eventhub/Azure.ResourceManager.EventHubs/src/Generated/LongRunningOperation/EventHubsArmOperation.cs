@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventHubs
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of EventHubsArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsArmOperation" /> for mocking. </summary>
         protected EventHubsArmOperation()
         {
         }

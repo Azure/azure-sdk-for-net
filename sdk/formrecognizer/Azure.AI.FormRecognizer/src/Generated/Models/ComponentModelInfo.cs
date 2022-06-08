@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A component of a composed model. </summary>
     internal partial class ComponentModelInfo
     {
-        /// <summary> Initializes a new instance of ComponentModelInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentModelInfo"/>. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         public ComponentModelInfo(string modelId)

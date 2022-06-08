@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Dynatrace Account Information. </summary>
     public partial class AccountInfo
     {
-        /// <summary> Initializes a new instance of AccountInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountInfo"/>. </summary>
         public AccountInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AccountInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountInfo"/>. </summary>
         /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
         /// <param name="regionId"> Region in which the account is created. </param>
         internal AccountInfo(string accountId, string regionId)

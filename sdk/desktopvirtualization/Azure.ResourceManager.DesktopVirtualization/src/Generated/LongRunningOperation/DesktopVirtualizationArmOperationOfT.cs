@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of DesktopVirtualizationArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationArmOperation{T}" /> for mocking. </summary>
         protected DesktopVirtualizationArmOperation()
         {
         }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> The parameters used to check the availability of the vault name. </summary>
     public partial class VaultNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of VaultNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The vault name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VaultNameAvailabilityContent(string name)

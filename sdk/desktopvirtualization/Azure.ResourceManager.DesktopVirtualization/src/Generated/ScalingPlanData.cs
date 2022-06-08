@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> A class representing the ScalingPlan data model. </summary>
     public partial class ScalingPlanData : ResourceModelWithAllowedPropertySet
     {
-        /// <summary> Initializes a new instance of ScalingPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ScalingPlanData(AzureLocation location) : base(location)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             HostPoolReferences = new ChangeTrackingList<ScalingHostPoolReference>();
         }
 
-        /// <summary> Initializes a new instance of ScalingPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

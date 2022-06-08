@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A class representing the KeyVaultPrivateEndpointConnection data model. </summary>
     public partial class KeyVaultPrivateEndpointConnectionData : KeyVaultResourceData
     {
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionData"/>. </summary>
         public KeyVaultPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

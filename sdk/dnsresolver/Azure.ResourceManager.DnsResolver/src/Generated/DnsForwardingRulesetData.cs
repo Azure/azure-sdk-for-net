@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary> A class representing the DnsForwardingRuleset data model. </summary>
     public partial class DnsForwardingRulesetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DnsForwardingRulesetData(AzureLocation location) : base(location)
         {
             DnsResolverOutboundEndpoints = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

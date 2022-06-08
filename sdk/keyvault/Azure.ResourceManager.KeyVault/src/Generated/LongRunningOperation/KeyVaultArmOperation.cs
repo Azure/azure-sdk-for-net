@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.KeyVault
     {
         private readonly OperationInternal _operation;
 
-        /// <summary> Initializes a new instance of KeyVaultArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultArmOperation" /> for mocking. </summary>
         protected KeyVaultArmOperation()
         {
         }

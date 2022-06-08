@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Cost information for the product system. </summary>
     public partial class CostInformation
     {
-        /// <summary> Initializes a new instance of CostInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostInformation"/>. </summary>
         internal CostInformation()
         {
             BillingMeterDetails = new ChangeTrackingList<BillingMeterDetails>();
         }
 
-        /// <summary> Initializes a new instance of CostInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostInformation"/>. </summary>
         /// <param name="billingMeterDetails"> Details on the various billing aspects for the product system. </param>
         /// <param name="billingInfoUri"> Default url to display billing information. </param>
         internal CostInformation(IReadOnlyList<BillingMeterDetails> billingMeterDetails, Uri billingInfoUri)

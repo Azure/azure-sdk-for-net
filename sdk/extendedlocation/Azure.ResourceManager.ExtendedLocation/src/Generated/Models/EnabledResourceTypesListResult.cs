@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
     /// <summary> List of EnabledResourceTypes definition. </summary>
     internal partial class EnabledResourceTypesListResult
     {
-        /// <summary> Initializes a new instance of EnabledResourceTypesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledResourceTypesListResult"/>. </summary>
         internal EnabledResourceTypesListResult()
         {
             Value = new ChangeTrackingList<EnabledResourceType>();
         }
 
-        /// <summary> Initializes a new instance of EnabledResourceTypesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledResourceTypesListResult"/>. </summary>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="value"> The list of EnabledResourceTypes available for a customLocation. </param>
         internal EnabledResourceTypesListResult(string nextLink, IReadOnlyList<EnabledResourceType> value)

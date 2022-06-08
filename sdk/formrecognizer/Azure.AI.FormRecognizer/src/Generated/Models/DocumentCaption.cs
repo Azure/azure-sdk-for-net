@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object representing the location and content of a table caption. </summary>
     public partial class DocumentCaption
     {
-        /// <summary> Initializes a new instance of DocumentCaption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentCaption"/>. </summary>
         /// <param name="content"> Table caption content. </param>
         /// <param name="spans"> Location of the table caption in the reading order concatenated content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentCaption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentCaption"/>. </summary>
         /// <param name="content"> Table caption content. </param>
         /// <param name="boundingRegions"> Bounding regions covering the table caption. </param>
         /// <param name="spans"> Location of the table caption in the reading order concatenated content. </param>

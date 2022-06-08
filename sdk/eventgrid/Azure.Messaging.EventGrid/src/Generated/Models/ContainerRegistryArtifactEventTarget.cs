@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The target of the event. </summary>
     public partial class ContainerRegistryArtifactEventTarget
     {
-        /// <summary> Initializes a new instance of ContainerRegistryArtifactEventTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryArtifactEventTarget"/>. </summary>
         internal ContainerRegistryArtifactEventTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryArtifactEventTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryArtifactEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the artifact. </param>
         /// <param name="size"> The size in bytes of the artifact. </param>
         /// <param name="digest"> The digest of the artifact. </param>

@@ -10,7 +10,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class DeleteEventRouteOptions
     {
-        /// <summary> Initializes a new instance of DeleteEventRouteOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteEventRouteOptions"/>. </summary>
         public DeleteEventRouteOptions()
         {
         }

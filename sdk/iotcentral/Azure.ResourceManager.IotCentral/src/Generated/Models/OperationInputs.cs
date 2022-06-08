@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> Input values. </summary>
     public partial class OperationInputs
     {
-        /// <summary> Initializes a new instance of OperationInputs. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationInputs"/>. </summary>
         /// <param name="name"> The name of the IoT Central application instance to check. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public OperationInputs(string name)

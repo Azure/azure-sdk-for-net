@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Updates order item parameters. </summary>
     public partial class OrderItemResourcePatch
     {
-        /// <summary> Initializes a new instance of OrderItemResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderItemResourcePatch"/>. </summary>
         public OrderItemResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

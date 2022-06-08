@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A selection mark object representing check boxes, radio buttons, and other elements indicating a selection. </summary>
     public partial class DocumentSelectionMark
     {
-        /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentSelectionMark"/>. </summary>
         /// <param name="statePrivate"> State of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentSelectionMark"/>. </summary>
         /// <param name="statePrivate"> State of the selection mark. </param>
         /// <param name="polygon"> Bounding polygon of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>

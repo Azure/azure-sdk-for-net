@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ElasticSan
     /// <summary> A class representing the ElasticSanVolumeGroup data model. </summary>
     public partial class ElasticSanVolumeGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ElasticSanVolumeGroupData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

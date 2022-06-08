@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class representing the SchemaGroup data model. </summary>
     public partial class SchemaGroupData : ProxyResource
     {
-        /// <summary> Initializes a new instance of SchemaGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaGroupData"/>. </summary>
         public SchemaGroupData()
         {
             GroupProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SchemaGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

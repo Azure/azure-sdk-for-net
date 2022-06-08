@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Parameter supplied to check Namespace name availability operation. </summary>
     public partial class CheckNameAvailabilityOptions
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityOptions"/>. </summary>
         /// <param name="name"> Name to check the namespace name availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CheckNameAvailabilityOptions(string name)

@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class representing the ConsumerGroup data model. </summary>
     public partial class ConsumerGroupData : ProxyResource
     {
-        /// <summary> Initializes a new instance of ConsumerGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerGroupData"/>. </summary>
         public ConsumerGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumerGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Dynatrace account API Key. </summary>
     public partial class AccountInfoSecure
     {
-        /// <summary> Initializes a new instance of AccountInfoSecure. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountInfoSecure"/>. </summary>
         internal AccountInfoSecure()
         {
         }
 
-        /// <summary> Initializes a new instance of AccountInfoSecure. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountInfoSecure"/>. </summary>
         /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
         /// <param name="apiKey"> API Key of the user account. </param>
         /// <param name="regionId"> Region in which the account is created. </param>

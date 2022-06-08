@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Managed HSM resource. </summary>
     public partial class ManagedHsmTrackedResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedHsmTrackedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmTrackedResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedHsmTrackedResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmTrackedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmTrackedResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

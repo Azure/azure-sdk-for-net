@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Model info. </summary>
     public partial class DocumentModel : DocumentModelInfo
     {
-        /// <summary> Initializes a new instance of DocumentModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModel"/>. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DocTypes = new ChangeTrackingDictionary<string, DocTypeInfo>();
         }
 
-        /// <summary> Initializes a new instance of DocumentModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModel"/>. </summary>
         /// <param name="modelId"> Unique model name. </param>
         /// <param name="description"> Model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
