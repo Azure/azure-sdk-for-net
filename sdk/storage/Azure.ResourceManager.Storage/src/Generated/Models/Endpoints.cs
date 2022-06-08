@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The URIs that are used to perform a retrieval of a public blob, queue, table, web or dfs object. </summary>
     public partial class Endpoints
     {
-        /// <summary> Initializes a new instance of Endpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="Endpoints"/>. </summary>
         internal Endpoints()
         {
         }
 
-        /// <summary> Initializes a new instance of Endpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="Endpoints"/>. </summary>
         /// <param name="blob"> Gets the blob endpoint. </param>
         /// <param name="queue"> Gets the queue endpoint. </param>
         /// <param name="table"> Gets the table endpoint. </param>

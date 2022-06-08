@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Blob index tag based filtering for blob objects. </summary>
     public partial class TagFilter
     {
-        /// <summary> Initializes a new instance of TagFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagFilter"/>. </summary>
         /// <param name="name"> This is the filter tag name, it can have 1 - 128 characters. </param>
         /// <param name="op"> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </param>
         /// <param name="value"> This is the filter tag value field used for tag based filtering, it can have 0 - 256 characters. </param>

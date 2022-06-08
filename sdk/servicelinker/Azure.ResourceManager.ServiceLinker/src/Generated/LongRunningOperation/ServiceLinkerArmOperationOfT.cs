@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceLinker
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of ServiceLinkerArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceLinkerArmOperation{T}" /> for mocking. </summary>
         protected ServiceLinkerArmOperation()
         {
         }

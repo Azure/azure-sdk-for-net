@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Self-hosted integration runtime. </summary>
     public partial class SelfHostedIntegrationRuntime : IntegrationRuntime
     {
-        /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntime"/>. </summary>
         public SelfHostedIntegrationRuntime()
         {
             Type = IntegrationRuntimeType.SelfHosted;
         }
 
-        /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHostedIntegrationRuntime"/>. </summary>
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

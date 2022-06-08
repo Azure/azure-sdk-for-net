@@ -12,12 +12,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The SparkScheduler. </summary>
     public partial class SparkScheduler
     {
-        /// <summary> Initializes a new instance of SparkScheduler. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkScheduler"/>. </summary>
         internal SparkScheduler()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkScheduler. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkScheduler"/>. </summary>
         /// <param name="submittedAt"></param>
         /// <param name="scheduledAt"></param>
         /// <param name="endedAt"></param>

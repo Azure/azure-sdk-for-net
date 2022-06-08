@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Synapse nested object which serves as a compute resource for activities. </summary>
     public partial class IntegrationRuntime
     {
-        /// <summary> Initializes a new instance of IntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntime"/>. </summary>
         public IntegrationRuntime()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntime"/>. </summary>
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

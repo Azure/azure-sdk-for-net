@@ -13,13 +13,13 @@ namespace Azure.Data.SchemaRegistry.Models
     /// <summary> Array received from the registry containing the list of versions for specific schema. </summary>
     internal partial class SchemaVersions
     {
-        /// <summary> Initializes a new instance of SchemaVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaVersions"/>. </summary>
         internal SchemaVersions()
         {
             SchemaVersionsValue = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of SchemaVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaVersions"/>. </summary>
         /// <param name="schemaVersionsValue"> Array of schema groups. </param>
         internal SchemaVersions(IReadOnlyList<int> schemaVersionsValue)
         {

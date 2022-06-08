@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The result of the List Alias(Disaster Recovery configuration) operation. </summary>
     internal partial class DisasterRecoveryListResult
     {
-        /// <summary> Initializes a new instance of DisasterRecoveryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DisasterRecoveryListResult"/>. </summary>
         internal DisasterRecoveryListResult()
         {
             Value = new ChangeTrackingList<DisasterRecoveryData>();
         }
 
-        /// <summary> Initializes a new instance of DisasterRecoveryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DisasterRecoveryListResult"/>. </summary>
         /// <param name="value"> List of Alias(Disaster Recovery configurations). </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Alias(Disaster Recovery configuration). </param>
         internal DisasterRecoveryListResult(IReadOnlyList<DisasterRecoveryData> value, string nextLink)

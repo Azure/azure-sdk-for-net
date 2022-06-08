@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The BlobServiceItems. </summary>
     internal partial class BlobServiceItems
     {
-        /// <summary> Initializes a new instance of BlobServiceItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobServiceItems"/>. </summary>
         internal BlobServiceItems()
         {
             Value = new ChangeTrackingList<BlobServiceData>();
         }
 
-        /// <summary> Initializes a new instance of BlobServiceItems. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobServiceItems"/>. </summary>
         /// <param name="value"> List of blob services returned. </param>
         internal BlobServiceItems(IReadOnlyList<BlobServiceData> value)
         {

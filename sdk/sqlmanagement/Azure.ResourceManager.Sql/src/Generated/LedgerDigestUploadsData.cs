@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the LedgerDigestUploads data model. </summary>
     public partial class LedgerDigestUploadsData : ResourceData
     {
-        /// <summary> Initializes a new instance of LedgerDigestUploadsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LedgerDigestUploadsData"/>. </summary>
         public LedgerDigestUploadsData()
         {
         }
 
-        /// <summary> Initializes a new instance of LedgerDigestUploadsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LedgerDigestUploadsData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

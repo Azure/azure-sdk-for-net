@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Properties to configure keyVault Properties. </summary>
     public partial class KeyVaultProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
         public KeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
         /// <param name="keyName"> Name of the Key from KeyVault. </param>
         /// <param name="keyVaultUri"> Uri of KeyVault. </param>
         /// <param name="keyVersion"> Version of KeyVault. </param>

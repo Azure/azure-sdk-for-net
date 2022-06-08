@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The properties of a security event sql injection additional properties. </summary>
     public partial class SecurityEventSqlInjectionAdditionalProperties
     {
-        /// <summary> Initializes a new instance of SecurityEventSqlInjectionAdditionalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityEventSqlInjectionAdditionalProperties"/>. </summary>
         internal SecurityEventSqlInjectionAdditionalProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityEventSqlInjectionAdditionalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityEventSqlInjectionAdditionalProperties"/>. </summary>
         /// <param name="threatId"> The threat ID. </param>
         /// <param name="statement"> The statement. </param>
         /// <param name="statementHighlightOffset"> The statement highlight offset. </param>

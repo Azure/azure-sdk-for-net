@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get the GitHub access token. </summary>
-        /// <param name="gitHubAccessTokenRequest"> The GitHubAccessTokenRequest to use. </param>
+        /// <param name="gitHubAccessTokenRequest"> The <see cref="GitHubAccessTokenRequest"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessTokenRequest"/> is null. </exception>
         public async Task<Response<GitHubAccessTokenResponse>> GetGitHubAccessTokenAsync(GitHubAccessTokenRequest gitHubAccessTokenRequest, CancellationToken cancellationToken = default)
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         }
 
         /// <summary> Get the GitHub access token. </summary>
-        /// <param name="gitHubAccessTokenRequest"> The GitHubAccessTokenRequest to use. </param>
+        /// <param name="gitHubAccessTokenRequest"> The <see cref="GitHubAccessTokenRequest"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessTokenRequest"/> is null. </exception>
         public Response<GitHubAccessTokenResponse> GetGitHubAccessToken(GitHubAccessTokenRequest gitHubAccessTokenRequest, CancellationToken cancellationToken = default)

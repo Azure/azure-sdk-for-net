@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the DatabaseBlobAuditingPolicy data model. </summary>
     public partial class DatabaseBlobAuditingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseBlobAuditingPolicyData"/>. </summary>
         public DatabaseBlobAuditingPolicyData()
         {
             AuditActionsAndGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

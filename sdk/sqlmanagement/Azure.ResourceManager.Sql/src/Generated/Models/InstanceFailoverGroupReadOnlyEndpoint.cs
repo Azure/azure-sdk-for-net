@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Read-only endpoint of the failover group instance. </summary>
     internal partial class InstanceFailoverGroupReadOnlyEndpoint
     {
-        /// <summary> Initializes a new instance of InstanceFailoverGroupReadOnlyEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupReadOnlyEndpoint"/>. </summary>
         public InstanceFailoverGroupReadOnlyEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of InstanceFailoverGroupReadOnlyEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceFailoverGroupReadOnlyEndpoint"/>. </summary>
         /// <param name="failoverPolicy"> Failover policy of the read-only endpoint for the failover group. </param>
         internal InstanceFailoverGroupReadOnlyEndpoint(ReadOnlyEndpointFailoverPolicy? failoverPolicy)
         {

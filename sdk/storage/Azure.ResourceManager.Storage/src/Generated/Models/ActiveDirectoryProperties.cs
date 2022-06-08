@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Settings properties for Active Directory (AD). </summary>
     public partial class ActiveDirectoryProperties
     {
-        /// <summary> Initializes a new instance of ActiveDirectoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveDirectoryProperties"/>. </summary>
         /// <param name="domainName"> Specifies the primary domain that the AD DNS server is authoritative for. </param>
         /// <param name="netBiosDomainName"> Specifies the NetBIOS domain name. </param>
         /// <param name="forestName"> Specifies the Active Directory forest to get. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage.Models
             AzureStorageSid = azureStorageSid;
         }
 
-        /// <summary> Initializes a new instance of ActiveDirectoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveDirectoryProperties"/>. </summary>
         /// <param name="domainName"> Specifies the primary domain that the AD DNS server is authoritative for. </param>
         /// <param name="netBiosDomainName"> Specifies the NetBIOS domain name. </param>
         /// <param name="forestName"> Specifies the Active Directory forest to get. </param>

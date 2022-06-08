@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The SshPublicKey. </summary>
     public partial class SshPublicKey
     {
-        /// <summary> Initializes a new instance of SshPublicKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshPublicKey"/>. </summary>
         public SshPublicKey()
         {
         }
 
-        /// <summary> Initializes a new instance of SshPublicKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="SshPublicKey"/>. </summary>
         /// <param name="description"> Optional. It is used to store the function/usage of the key. </param>
         /// <param name="key"> Ssh public key base64 encoded. The format should be: &apos;&lt;keyType&gt; &lt;keyData&gt;&apos;, e.g. ssh-rsa AAAABBBB. </param>
         internal SshPublicKey(string description, string key)

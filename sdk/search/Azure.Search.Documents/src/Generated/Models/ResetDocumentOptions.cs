@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> The DocumentKeysOrIds. </summary>
     public partial class ResetDocumentOptions
     {
-        /// <summary> Initializes a new instance of ResetDocumentOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResetDocumentOptions"/>. </summary>
         public ResetDocumentOptions()
         {
             DocumentKeys = new ChangeTrackingList<string>();

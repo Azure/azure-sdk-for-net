@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of server trust groups. </summary>
     internal partial class ServerTrustGroupListResult
     {
-        /// <summary> Initializes a new instance of ServerTrustGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerTrustGroupListResult"/>. </summary>
         internal ServerTrustGroupListResult()
         {
             Value = new ChangeTrackingList<ServerTrustGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ServerTrustGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerTrustGroupListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal ServerTrustGroupListResult(IReadOnlyList<ServerTrustGroupData> value, string nextLink)

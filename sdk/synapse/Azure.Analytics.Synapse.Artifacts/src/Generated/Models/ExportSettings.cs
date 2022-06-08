@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Export command settings. </summary>
     public partial class ExportSettings
     {
-        /// <summary> Initializes a new instance of ExportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportSettings"/>. </summary>
         public ExportSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ExportSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportSettings"/>. </summary>
         /// <param name="type"> The export setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal ExportSettings(string type, IDictionary<string, object> additionalProperties)

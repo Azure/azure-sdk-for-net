@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The properties of an ImmutabilityPolicy of a blob container. </summary>
     public partial class ImmutabilityPolicyProperties
     {
-        /// <summary> Initializes a new instance of ImmutabilityPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImmutabilityPolicyProperties"/>. </summary>
         internal ImmutabilityPolicyProperties()
         {
             UpdateHistory = new ChangeTrackingList<UpdateHistoryProperty>();
         }
 
-        /// <summary> Initializes a new instance of ImmutabilityPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImmutabilityPolicyProperties"/>. </summary>
         /// <param name="etag"> ImmutabilityPolicy Etag. </param>
         /// <param name="updateHistory"> The ImmutabilityPolicy update history of the blob container. </param>
         /// <param name="immutabilityPeriodSinceCreationInDays"> The immutability period for the blobs in the container since the policy creation, in days. </param>

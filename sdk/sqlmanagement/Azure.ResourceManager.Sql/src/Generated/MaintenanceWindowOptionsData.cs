@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the MaintenanceWindowOptions data model. </summary>
     public partial class MaintenanceWindowOptionsData : ResourceData
     {
-        /// <summary> Initializes a new instance of MaintenanceWindowOptionsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowOptionsData"/>. </summary>
         public MaintenanceWindowOptionsData()
         {
             MaintenanceWindowCycles = new ChangeTrackingList<MaintenanceWindowTimeRange>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceWindowOptionsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowOptionsData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

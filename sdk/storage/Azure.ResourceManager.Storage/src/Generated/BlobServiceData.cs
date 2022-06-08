@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class representing the BlobService data model. </summary>
     public partial class BlobServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of BlobServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobServiceData"/>. </summary>
         public BlobServiceData()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

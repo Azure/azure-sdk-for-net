@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of the database&apos;s security alert policies. </summary>
     internal partial class DatabaseSecurityAlertListResult
     {
-        /// <summary> Initializes a new instance of DatabaseSecurityAlertListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseSecurityAlertListResult"/>. </summary>
         internal DatabaseSecurityAlertListResult()
         {
             Value = new ChangeTrackingList<DatabaseSecurityAlertPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseSecurityAlertListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseSecurityAlertListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal DatabaseSecurityAlertListResult(IReadOnlyList<DatabaseSecurityAlertPolicyData> value, string nextLink)

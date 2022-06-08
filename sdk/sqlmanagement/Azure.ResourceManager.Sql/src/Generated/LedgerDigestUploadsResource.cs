@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class LedgerDigestUploadsResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LedgerDigestUploadsResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string ledgerDigestUploads)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, LedgerDigestUploadsName ledgerDigestUploads)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}";
             return new ResourceIdentifier(resourceId);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: LedgerDigestUploads_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The LedgerDigestUploads to use. </param>
+        /// <param name="data"> The <see cref="LedgerDigestUploadsData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LedgerDigestUploadsResource>> UpdateAsync(WaitUntil waitUntil, LedgerDigestUploadsData data, CancellationToken cancellationToken = default)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: LedgerDigestUploads_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The LedgerDigestUploads to use. </param>
+        /// <param name="data"> The <see cref="LedgerDigestUploadsData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LedgerDigestUploadsResource> Update(WaitUntil waitUntil, LedgerDigestUploadsData data, CancellationToken cancellationToken = default)

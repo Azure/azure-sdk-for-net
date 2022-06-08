@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Information of the private link resource. </summary>
     public partial class ServiceBusPrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceBusPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateLinkResource"/>. </summary>
         internal ServiceBusPrivateLinkResource()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceBusPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

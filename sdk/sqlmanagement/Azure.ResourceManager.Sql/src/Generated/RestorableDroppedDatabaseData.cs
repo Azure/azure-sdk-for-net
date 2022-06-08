@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the RestorableDroppedDatabase data model. </summary>
     public partial class RestorableDroppedDatabaseData : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableDroppedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseData"/>. </summary>
         public RestorableDroppedDatabaseData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RestorableDroppedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

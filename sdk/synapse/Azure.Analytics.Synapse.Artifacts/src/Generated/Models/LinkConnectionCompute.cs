@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkConnectionCompute. </summary>
     public partial class LinkConnectionCompute
     {
-        /// <summary> Initializes a new instance of LinkConnectionCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionCompute"/>. </summary>
         public LinkConnectionCompute()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionCompute"/>. </summary>
         /// <param name="coreCount"> Link connection&apos;s compute core count. </param>
         /// <param name="computeType"> Link connection&apos;s compute type. </param>
         internal LinkConnectionCompute(int? coreCount, string computeType)

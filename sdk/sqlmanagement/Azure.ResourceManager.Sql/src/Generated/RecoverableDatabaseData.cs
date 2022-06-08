@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the RecoverableDatabase data model. </summary>
     public partial class RecoverableDatabaseData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecoverableDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseData"/>. </summary>
         public RecoverableDatabaseData()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoverableDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

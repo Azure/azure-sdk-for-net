@@ -10,7 +10,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for rename artifact. </summary>
     public partial class ArtifactRenameRequest
     {
-        /// <summary> Initializes a new instance of ArtifactRenameRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactRenameRequest"/>. </summary>
         public ArtifactRenameRequest()
         {
         }

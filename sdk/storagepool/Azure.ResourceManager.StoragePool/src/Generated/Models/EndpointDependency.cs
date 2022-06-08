@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> A domain name that a service is reached at, including details of the current connection status. </summary>
     public partial class EndpointDependency
     {
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDependency"/>. </summary>
         internal EndpointDependency()
         {
             EndpointDetails = new ChangeTrackingList<EndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of EndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The IP Addresses and Ports used when connecting to DomainName. </param>
         internal EndpointDependency(string domainName, IReadOnlyList<EndpointDetail> endpointDetails)

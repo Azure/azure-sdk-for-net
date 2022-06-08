@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Data Lake Storage Gen2 linked service. </summary>
     public partial class AzureBlobFSLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureBlobFSLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSLinkedService"/>. </summary>
         /// <param name="url"> Endpoint for the Azure Data Lake Storage Gen2 service. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public AzureBlobFSLinkedService(object url)
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureBlobFS";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobFSLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

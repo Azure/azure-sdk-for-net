@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}
         /// Operation Id: LedgerDigestUploads_Get
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The LedgerDigestUploadsName to use. </param>
+        /// <param name="ledgerDigestUploads"> The <see cref="LedgerDigestUploadsName"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response<LedgerDigestUploadsResource>> GetLedgerDigestUploadsAsync(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}
         /// Operation Id: LedgerDigestUploads_Get
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The LedgerDigestUploadsName to use. </param>
+        /// <param name="ledgerDigestUploads"> The <see cref="LedgerDigestUploadsName"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<LedgerDigestUploadsResource> GetLedgerDigestUploads(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
@@ -1975,7 +1975,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: SensitivityLabels_Update
         /// </summary>
-        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="sensitivityLabelUpdateList"> The <see cref="SensitivityLabelUpdateList"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
         public virtual async Task<Response> UpdateSensitivityLabelAsync(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
@@ -2001,7 +2001,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: SensitivityLabels_Update
         /// </summary>
-        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="sensitivityLabelUpdateList"> The <see cref="SensitivityLabelUpdateList"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
         public virtual Response UpdateSensitivityLabel(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
@@ -2117,7 +2117,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: SensitivityLabels_UpdateRecommended
         /// </summary>
-        /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="recommendedSensitivityLabelUpdateList"> The <see cref="RecommendedSensitivityLabelUpdateList"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
         public virtual async Task<Response> UpdateRecommendedSensitivityLabelAsync(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
@@ -2143,7 +2143,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: SensitivityLabels_UpdateRecommended
         /// </summary>
-        /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="recommendedSensitivityLabelUpdateList"> The <see cref="RecommendedSensitivityLabelUpdateList"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
         public virtual Response UpdateRecommendedSensitivityLabel(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)

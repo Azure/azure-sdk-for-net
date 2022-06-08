@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Description of VirtualNetworkRules - NetworkRules resource. </summary>
     public partial class NetworkRuleSetVirtualNetworkRules
     {
-        /// <summary> Initializes a new instance of NetworkRuleSetVirtualNetworkRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetVirtualNetworkRules"/>. </summary>
         public NetworkRuleSetVirtualNetworkRules()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSetVirtualNetworkRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetVirtualNetworkRules"/>. </summary>
         /// <param name="subnet"> Subnet properties. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing VNet Service Endpoint. </param>
         internal NetworkRuleSetVirtualNetworkRules(WritableSubResource subnet, bool? ignoreMissingVnetServiceEndpoint)

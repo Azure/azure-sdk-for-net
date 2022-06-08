@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An update to an Azure SQL job agent. </summary>
     public partial class JobAgentPatch
     {
-        /// <summary> Initializes a new instance of JobAgentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobAgentPatch"/>. </summary>
         public JobAgentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> A private link resource. </summary>
     public partial class StoragePrivateLinkResource : ResourceData
     {
-        /// <summary> Initializes a new instance of StoragePrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResource"/>. </summary>
         public StoragePrivateLinkResource()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StoragePrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

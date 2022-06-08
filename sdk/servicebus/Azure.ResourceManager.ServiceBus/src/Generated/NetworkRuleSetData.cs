@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A class representing the NetworkRuleSet data model. </summary>
     public partial class NetworkRuleSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetData"/>. </summary>
         public NetworkRuleSetData()
         {
             VirtualNetworkRules = new ChangeTrackingList<NetworkRuleSetVirtualNetworkRules>();
             IPRules = new ChangeTrackingList<NetworkRuleSetIPRules>();
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

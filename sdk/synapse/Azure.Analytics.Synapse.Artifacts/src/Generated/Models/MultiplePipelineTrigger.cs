@@ -13,14 +13,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Base class for all triggers that support one to many model for trigger to pipeline. </summary>
     public partial class MultiplePipelineTrigger : Trigger
     {
-        /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiplePipelineTrigger"/>. </summary>
         public MultiplePipelineTrigger()
         {
             Pipelines = new ChangeTrackingList<TriggerPipelineReference>();
             Type = "MultiplePipelineTrigger";
         }
 
-        /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiplePipelineTrigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

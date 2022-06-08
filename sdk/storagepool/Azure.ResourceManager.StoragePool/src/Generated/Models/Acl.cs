@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Access Control List (ACL) for an iSCSI Target; defines LUN masking policy. </summary>
     public partial class Acl
     {
-        /// <summary> Initializes a new instance of Acl. </summary>
+        /// <summary> Initializes a new instance of <see cref="Acl"/>. </summary>
         /// <param name="initiatorIqn"> iSCSI initiator IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:client&quot;. </param>
         /// <param name="mappedLuns"> List of LUN names mapped to the ACL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="initiatorIqn"/> or <paramref name="mappedLuns"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             MappedLuns = mappedLuns.ToList();
         }
 
-        /// <summary> Initializes a new instance of Acl. </summary>
+        /// <summary> Initializes a new instance of <see cref="Acl"/>. </summary>
         /// <param name="initiatorIqn"> iSCSI initiator IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:client&quot;. </param>
         /// <param name="mappedLuns"> List of LUN names mapped to the ACL. </param>
         internal Acl(string initiatorIqn, IList<string> mappedLuns)

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class representing the Table data model. </summary>
     public partial class TableData : ResourceData
     {
-        /// <summary> Initializes a new instance of TableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableData"/>. </summary>
         public TableData()
         {
         }
 
-        /// <summary> Initializes a new instance of TableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

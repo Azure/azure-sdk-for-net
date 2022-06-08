@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> List Disk Pool skus operation response. </summary>
     internal partial class ResourceSkuListResult
     {
-        /// <summary> Initializes a new instance of ResourceSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuListResult"/>. </summary>
         internal ResourceSkuListResult()
         {
             Value = new ChangeTrackingList<ResourceSkuInfo>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuListResult"/>. </summary>
         /// <param name="value"> The list of StoragePool resource skus. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         internal ResourceSkuListResult(IReadOnlyList<ResourceSkuInfo> value, string nextLink)

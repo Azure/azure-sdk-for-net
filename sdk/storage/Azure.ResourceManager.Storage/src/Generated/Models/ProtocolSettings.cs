@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Protocol settings for file service. </summary>
     internal partial class ProtocolSettings
     {
-        /// <summary> Initializes a new instance of ProtocolSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtocolSettings"/>. </summary>
         public ProtocolSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtocolSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtocolSettings"/>. </summary>
         /// <param name="smb"> Setting for SMB protocol. </param>
         internal ProtocolSettings(SmbSetting smb)
         {

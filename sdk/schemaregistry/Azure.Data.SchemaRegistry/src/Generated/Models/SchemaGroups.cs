@@ -13,13 +13,13 @@ namespace Azure.Data.SchemaRegistry.Models
     /// <summary> Array received from the registry containing the list of schema groups. </summary>
     internal partial class SchemaGroups
     {
-        /// <summary> Initializes a new instance of SchemaGroups. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaGroups"/>. </summary>
         internal SchemaGroups()
         {
             SchemaGroupsValue = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SchemaGroups. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaGroups"/>. </summary>
         /// <param name="schemaGroupsValue"> Array of schema groups. </param>
         internal SchemaGroups(IReadOnlyList<string> schemaGroupsValue)
         {

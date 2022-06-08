@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ServerKey data model. </summary>
     public partial class ServerKeyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerKeyData"/>. </summary>
         public ServerKeyData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

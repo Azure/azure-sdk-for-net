@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ManagedInstanceKey data model. </summary>
     public partial class ManagedInstanceKeyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceKeyData"/>. </summary>
         public ManagedInstanceKeyData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

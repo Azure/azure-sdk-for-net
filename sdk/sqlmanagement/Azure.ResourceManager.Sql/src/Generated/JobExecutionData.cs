@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the JobExecution data model. </summary>
     public partial class JobExecutionData : ResourceData
     {
-        /// <summary> Initializes a new instance of JobExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobExecutionData"/>. </summary>
         public JobExecutionData()
         {
         }
 
-        /// <summary> Initializes a new instance of JobExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

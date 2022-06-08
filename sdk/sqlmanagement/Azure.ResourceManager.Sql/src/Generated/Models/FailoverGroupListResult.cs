@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of failover groups. </summary>
     internal partial class FailoverGroupListResult
     {
-        /// <summary> Initializes a new instance of FailoverGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupListResult"/>. </summary>
         internal FailoverGroupListResult()
         {
             Value = new ChangeTrackingList<FailoverGroupData>();
         }
 
-        /// <summary> Initializes a new instance of FailoverGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal FailoverGroupListResult(IReadOnlyList<FailoverGroupData> value, string nextLink)

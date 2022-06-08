@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Capability a resource SKU has. </summary>
     public partial class ResourceSkuCapability
     {
-        /// <summary> Initializes a new instance of ResourceSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuCapability"/>. </summary>
         internal ResourceSkuCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuCapability"/>. </summary>
         /// <param name="name"> Capability name. </param>
         /// <param name="value"> Capability value. </param>
         internal ResourceSkuCapability(string name, string value)

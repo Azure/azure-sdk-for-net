@@ -10,7 +10,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for data flow expression preview. </summary>
     public partial class DataFlowDebugCommandRequest
     {
-        /// <summary> Initializes a new instance of DataFlowDebugCommandRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandRequest"/>. </summary>
         public DataFlowDebugCommandRequest()
         {
         }

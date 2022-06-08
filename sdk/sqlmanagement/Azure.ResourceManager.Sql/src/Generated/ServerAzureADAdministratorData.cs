@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ServerAzureADAdministrator data model. </summary>
     public partial class ServerAzureADAdministratorData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerAzureADAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerAzureADAdministratorData"/>. </summary>
         public ServerAzureADAdministratorData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerAzureADAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerAzureADAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

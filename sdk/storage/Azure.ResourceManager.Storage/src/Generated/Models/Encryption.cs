@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The encryption settings on the storage account. </summary>
     public partial class Encryption
     {
-        /// <summary> Initializes a new instance of Encryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="Encryption"/>. </summary>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault. </param>
         public Encryption(KeySource keySource)
         {
             KeySource = keySource;
         }
 
-        /// <summary> Initializes a new instance of Encryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="Encryption"/>. </summary>
         /// <param name="services"> List of services which support encryption. </param>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault. </param>
         /// <param name="requireInfrastructureEncryption"> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </param>

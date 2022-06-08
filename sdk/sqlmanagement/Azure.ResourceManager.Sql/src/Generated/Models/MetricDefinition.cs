@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A database metric definition. </summary>
     public partial class MetricDefinition
     {
-        /// <summary> Initializes a new instance of MetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
         internal MetricDefinition()
         {
             MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
         }
 
-        /// <summary> Initializes a new instance of MetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="primaryAggregationType"> The primary aggregation type defining how metric values are displayed. </param>
         /// <param name="resourceUri"> The resource uri of the database. </param>

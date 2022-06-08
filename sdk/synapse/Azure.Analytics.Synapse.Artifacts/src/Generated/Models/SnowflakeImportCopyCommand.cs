@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Snowflake import command settings. </summary>
     public partial class SnowflakeImportCopyCommand : ImportSettings
     {
-        /// <summary> Initializes a new instance of SnowflakeImportCopyCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnowflakeImportCopyCommand"/>. </summary>
         public SnowflakeImportCopyCommand()
         {
             AdditionalCopyOptions = new ChangeTrackingDictionary<string, object>();
@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SnowflakeImportCopyCommand";
         }
 
-        /// <summary> Initializes a new instance of SnowflakeImportCopyCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnowflakeImportCopyCommand"/>. </summary>
         /// <param name="type"> The import setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="additionalCopyOptions"> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalCopyOptions&quot;: { &quot;DATE_FORMAT&quot;: &quot;MM/DD/YYYY&quot;, &quot;TIME_FORMAT&quot;: &quot;&apos;HH24:MI:SS.FF&apos;&quot; }. </param>

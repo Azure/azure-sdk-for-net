@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The QueryFormat. </summary>
     internal partial class QueryFormat
     {
-        /// <summary> Initializes a new instance of QueryFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryFormat"/>. </summary>
         /// <param name="type"> The quick query format type. </param>
         public QueryFormat(QueryFormatType type)
         {

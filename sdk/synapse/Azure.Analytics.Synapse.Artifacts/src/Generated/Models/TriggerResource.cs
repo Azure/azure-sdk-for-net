@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Trigger resource type. </summary>
     public partial class TriggerResource : SubResource
     {
-        /// <summary> Initializes a new instance of TriggerResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerResource"/>. </summary>
         /// <param name="properties"> Properties of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TriggerResource(Trigger properties)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of TriggerResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerResource"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>

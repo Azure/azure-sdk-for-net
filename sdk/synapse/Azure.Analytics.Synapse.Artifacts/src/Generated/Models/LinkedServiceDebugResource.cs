@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service debug resource. </summary>
     public partial class LinkedServiceDebugResource : SubResourceDebugResource
     {
-        /// <summary> Initializes a new instance of LinkedServiceDebugResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceDebugResource"/>. </summary>
         /// <param name="properties"> Properties of linked service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public LinkedServiceDebugResource(LinkedService properties)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of LinkedServiceDebugResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceDebugResource"/>. </summary>
         /// <param name="name"> The resource name. </param>
         /// <param name="properties"> Properties of linked service. </param>
         internal LinkedServiceDebugResource(string name, LinkedService properties) : base(name)

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
         /// Operation Id: ManagedInstanceAdministrators_Get
         /// </summary>
-        /// <param name="administratorName"> The AdministratorName to use. </param>
+        /// <param name="administratorName"> The <see cref="AdministratorName"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedInstanceAdministratorResource>> GetManagedInstanceAdministratorAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
         /// Operation Id: ManagedInstanceAdministrators_Get
         /// </summary>
-        /// <param name="administratorName"> The AdministratorName to use. </param>
+        /// <param name="administratorName"> The <see cref="AdministratorName"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<ManagedInstanceAdministratorResource> GetManagedInstanceAdministrator(AdministratorName administratorName, CancellationToken cancellationToken = default)

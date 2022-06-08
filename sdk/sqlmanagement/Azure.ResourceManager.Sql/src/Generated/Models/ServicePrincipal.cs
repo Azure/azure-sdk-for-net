@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The managed instance&apos;s service principal configuration for a resource. </summary>
     public partial class ServicePrincipal
     {
-        /// <summary> Initializes a new instance of ServicePrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipal"/>. </summary>
         public ServicePrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipal"/>. </summary>
         /// <param name="principalId"> The Azure Active Directory application object id. </param>
         /// <param name="clientId"> The Azure Active Directory application client id. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant id. </param>

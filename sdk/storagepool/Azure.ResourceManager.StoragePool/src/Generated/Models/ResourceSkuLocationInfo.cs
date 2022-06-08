@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Zone and capability info for resource sku. </summary>
     public partial class ResourceSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuLocationInfo"/>. </summary>
         internal ResourceSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
             ZoneDetails = new ChangeTrackingList<ResourceSkuZoneDetails>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>

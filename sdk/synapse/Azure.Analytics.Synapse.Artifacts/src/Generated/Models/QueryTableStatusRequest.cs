@@ -10,7 +10,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The QueryTableStatusRequest. </summary>
     public partial class QueryTableStatusRequest
     {
-        /// <summary> Initializes a new instance of QueryTableStatusRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryTableStatusRequest"/>. </summary>
         public QueryTableStatusRequest()
         {
         }

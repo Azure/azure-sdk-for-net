@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Json dataset. </summary>
     public partial class JsonDataset : Dataset
     {
-        /// <summary> Initializes a new instance of JsonDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public JsonDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Json";
         }
 
-        /// <summary> Initializes a new instance of JsonDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Settings for Azure Files identity based authentication. </summary>
     public partial class AzureFilesIdentityBasedAuthentication
     {
-        /// <summary> Initializes a new instance of AzureFilesIdentityBasedAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFilesIdentityBasedAuthentication"/>. </summary>
         /// <param name="directoryServiceOptions"> Indicates the directory service used. </param>
         public AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions directoryServiceOptions)
         {
             DirectoryServiceOptions = directoryServiceOptions;
         }
 
-        /// <summary> Initializes a new instance of AzureFilesIdentityBasedAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFilesIdentityBasedAuthentication"/>. </summary>
         /// <param name="directoryServiceOptions"> Indicates the directory service used. </param>
         /// <param name="activeDirectoryProperties"> Required if choose AD. </param>
         /// <param name="defaultSharePermission"> Default share permission for users using Kerberos authentication if RBAC role is not assigned. </param>

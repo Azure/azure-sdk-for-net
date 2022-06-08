@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The URIs that are used to perform a retrieval of a public blob, file, web or dfs object via a internet routing endpoint. </summary>
     public partial class StorageAccountInternetEndpoints
     {
-        /// <summary> Initializes a new instance of StorageAccountInternetEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountInternetEndpoints"/>. </summary>
         internal StorageAccountInternetEndpoints()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountInternetEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountInternetEndpoints"/>. </summary>
         /// <param name="blob"> Gets the blob endpoint. </param>
         /// <param name="file"> Gets the file endpoint. </param>
         /// <param name="web"> Gets the web endpoint. </param>

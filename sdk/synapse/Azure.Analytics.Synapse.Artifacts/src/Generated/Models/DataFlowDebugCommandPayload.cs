@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Structure of command payload. </summary>
     public partial class DataFlowDebugCommandPayload
     {
-        /// <summary> Initializes a new instance of DataFlowDebugCommandPayload. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandPayload"/>. </summary>
         /// <param name="streamName"> The stream name which is used for preview. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streamName"/> is null. </exception>
         public DataFlowDebugCommandPayload(string streamName)

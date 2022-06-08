@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Dataset debug resource. </summary>
     public partial class DatasetDebugResource : SubResourceDebugResource
     {
-        /// <summary> Initializes a new instance of DatasetDebugResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetDebugResource"/>. </summary>
         /// <param name="properties"> Dataset properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DatasetDebugResource(Dataset properties)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DatasetDebugResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetDebugResource"/>. </summary>
         /// <param name="name"> The resource name. </param>
         /// <param name="properties"> Dataset properties. </param>
         internal DatasetDebugResource(string name, Dataset properties) : base(name)

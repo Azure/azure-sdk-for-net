@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The validation item for a linker. </summary>
     public partial class ValidationResultItem
     {
-        /// <summary> Initializes a new instance of ValidationResultItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationResultItem"/>. </summary>
         internal ValidationResultItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidationResultItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidationResultItem"/>. </summary>
         /// <param name="name"> The validation item name. </param>
         /// <param name="description"> The display name of validation item. </param>
         /// <param name="result"> The result of validation. </param>

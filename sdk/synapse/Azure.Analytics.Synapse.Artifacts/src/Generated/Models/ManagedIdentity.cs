@@ -12,12 +12,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The workspace managed identity. </summary>
     public partial class ManagedIdentity
     {
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         public ManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of the workspace managed identity. </param>
         /// <param name="tenantId"> The tenant ID of the workspace managed identity. </param>
         /// <param name="type"> The type of managed identity for the workspace. </param>

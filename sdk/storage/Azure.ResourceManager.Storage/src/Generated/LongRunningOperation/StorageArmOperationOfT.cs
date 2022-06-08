@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly OperationInternal<T> _operation;
 
-        /// <summary> Initializes a new instance of StorageArmOperation for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageArmOperation{T}" /> for mocking. </summary>
         protected StorageArmOperation()
         {
         }

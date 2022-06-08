@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ServerConnectionPolicy data model. </summary>
     public partial class ServerConnectionPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerConnectionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerConnectionPolicyData"/>. </summary>
         public ServerConnectionPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerConnectionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerConnectionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

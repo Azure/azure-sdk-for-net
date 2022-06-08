@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ReplicationLink data model. </summary>
     public partial class ReplicationLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of ReplicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationLinkData"/>. </summary>
         public ReplicationLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

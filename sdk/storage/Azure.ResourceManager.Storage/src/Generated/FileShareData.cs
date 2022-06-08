@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class representing the FileShare data model. </summary>
     public partial class FileShareData : AzureEntityResource
     {
-        /// <summary> Initializes a new instance of FileShareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareData"/>. </summary>
         public FileShareData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             SignedIdentifiers = new ChangeTrackingList<SignedIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of FileShareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The custom domain assigned to this storage account. This can be set via Update. </summary>
     public partial class CustomDomain
     {
-        /// <summary> Initializes a new instance of CustomDomain. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomain"/>. </summary>
         /// <param name="name"> Gets or sets the custom domain name assigned to the storage account. Name is the CNAME source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CustomDomain(string name)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of CustomDomain. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomain"/>. </summary>
         /// <param name="name"> Gets or sets the custom domain name assigned to the storage account. Name is the CNAME source. </param>
         /// <param name="useSubDomainName"> Indicates whether indirect CName validation is enabled. Default value is false. This should only be set on updates. </param>
         internal CustomDomain(string name, bool? useSubDomainName)

@@ -13,14 +13,14 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> the list of pages. </summary>
     internal partial class PageList
     {
-        /// <summary> Initializes a new instance of PageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PageList"/>. </summary>
         internal PageList()
         {
             PageRange = new ChangeTrackingList<PageRange>();
             ClearRange = new ChangeTrackingList<ClearRange>();
         }
 
-        /// <summary> Initializes a new instance of PageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PageList"/>. </summary>
         /// <param name="pageRange"></param>
         /// <param name="clearRange"></param>
         /// <param name="nextMarker"></param>

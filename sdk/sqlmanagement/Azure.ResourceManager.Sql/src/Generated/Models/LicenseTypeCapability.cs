@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The license type capability. </summary>
     public partial class LicenseTypeCapability
     {
-        /// <summary> Initializes a new instance of LicenseTypeCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="LicenseTypeCapability"/>. </summary>
         internal LicenseTypeCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of LicenseTypeCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="LicenseTypeCapability"/>. </summary>
         /// <param name="name"> License type identifier. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Payload for iSCSI Target create or update requests. </summary>
     public partial class IscsiTargetCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of IscsiTargetCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IscsiTargetCreateOrUpdateContent"/>. </summary>
         /// <param name="aclMode"> Mode for Target connectivity. </param>
         public IscsiTargetCreateOrUpdateContent(IscsiTargetAclMode aclMode)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Luns = new ChangeTrackingList<IscsiLun>();
         }
 
-        /// <summary> Initializes a new instance of IscsiTargetCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IscsiTargetCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

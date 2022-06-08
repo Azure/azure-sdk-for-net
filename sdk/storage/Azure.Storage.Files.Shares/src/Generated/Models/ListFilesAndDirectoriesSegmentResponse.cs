@@ -12,7 +12,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> An enumeration of directories and files. </summary>
     internal partial class ListFilesAndDirectoriesSegmentResponse
     {
-        /// <summary> Initializes a new instance of ListFilesAndDirectoriesSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListFilesAndDirectoriesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="shareName"></param>
         /// <param name="directoryPath"></param>
@@ -55,7 +55,7 @@ namespace Azure.Storage.Files.Shares.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Initializes a new instance of ListFilesAndDirectoriesSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListFilesAndDirectoriesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="shareName"></param>
         /// <param name="shareSnapshot"></param>

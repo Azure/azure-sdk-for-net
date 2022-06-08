@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class representing the ManagedDatabase data model. </summary>
     public partial class ManagedDatabaseData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedDatabaseData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

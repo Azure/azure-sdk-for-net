@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An enumeration of blobs. </summary>
     internal partial class ListBlobsHierarchySegmentResponse
     {
-        /// <summary> Initializes a new instance of ListBlobsHierarchySegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerName"></param>
         /// <param name="segment"></param>
@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.Models
             Segment = segment;
         }
 
-        /// <summary> Initializes a new instance of ListBlobsHierarchySegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerName"></param>
         /// <param name="prefix"></param>

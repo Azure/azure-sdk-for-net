@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Managed Virtual Network Settings. </summary>
     public partial class ManagedVirtualNetworkSettings
     {
-        /// <summary> Initializes a new instance of ManagedVirtualNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedVirtualNetworkSettings"/>. </summary>
         public ManagedVirtualNetworkSettings()
         {
             AllowedAadTenantIdsForLinking = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedVirtualNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedVirtualNetworkSettings"/>. </summary>
         /// <param name="preventDataExfiltration"> Prevent Data Exfiltration. </param>
         /// <param name="linkedAccessCheckOnTargetResource"> Linked Access Check On Target Resource. </param>
         /// <param name="allowedAadTenantIdsForLinking"> Allowed Aad Tenant Ids For Linking. </param>

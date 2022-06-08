@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Dynamics CRM linked service. </summary>
     public partial class DynamicsCrmLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of DynamicsCrmLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmLinkedService"/>. </summary>
         /// <param name="deploymentType"> The deployment type of the Dynamics CRM instance. &apos;Online&apos; for Dynamics CRM Online and &apos;OnPremisesWithIfd&apos; for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to connect to Dynamics CRM server. &apos;Office365&apos; for online scenario, &apos;Ifd&apos; for on-premises with Ifd scenario, &apos;AADServicePrincipal&apos; for Server-To-Server authentication in online scenario. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "DynamicsCrm";
         }
 
-        /// <summary> Initializes a new instance of DynamicsCrmLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

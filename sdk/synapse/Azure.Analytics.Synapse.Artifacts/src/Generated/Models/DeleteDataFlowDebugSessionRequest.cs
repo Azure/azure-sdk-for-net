@@ -10,7 +10,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for deleting data flow debug session. </summary>
     public partial class DeleteDataFlowDebugSessionRequest
     {
-        /// <summary> Initializes a new instance of DeleteDataFlowDebugSessionRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteDataFlowDebugSessionRequest"/>. </summary>
         public DeleteDataFlowDebugSessionRequest()
         {
         }

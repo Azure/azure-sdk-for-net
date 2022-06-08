@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An update request for an Azure SQL Database server. </summary>
     public partial class SqlServerPatch
     {
-        /// <summary> Initializes a new instance of SqlServerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerPatch"/>. </summary>
         public SqlServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();

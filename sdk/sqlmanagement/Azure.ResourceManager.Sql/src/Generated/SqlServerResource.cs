@@ -1312,7 +1312,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/firewallRules
         /// Operation Id: FirewallRules_Replace
         /// </summary>
-        /// <param name="firewallRuleList"> The FirewallRuleList to use. </param>
+        /// <param name="firewallRuleList"> The <see cref="FirewallRuleList"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleList"/> is null. </exception>
         public virtual async Task<Response<FirewallRuleResource>> ReplaceFirewallRuleAsync(FirewallRuleList firewallRuleList, CancellationToken cancellationToken = default)
@@ -1338,7 +1338,7 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/firewallRules
         /// Operation Id: FirewallRules_Replace
         /// </summary>
-        /// <param name="firewallRuleList"> The FirewallRuleList to use. </param>
+        /// <param name="firewallRuleList"> The <see cref="FirewallRuleList"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleList"/> is null. </exception>
         public virtual Response<FirewallRuleResource> ReplaceFirewallRule(FirewallRuleList firewallRuleList, CancellationToken cancellationToken = default)

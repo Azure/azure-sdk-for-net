@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The PermissionScope. </summary>
     public partial class PermissionScope
     {
-        /// <summary> Initializes a new instance of PermissionScope. </summary>
+        /// <summary> Initializes a new instance of <see cref="PermissionScope"/>. </summary>
         /// <param name="permissions"> The permissions for the local user. Possible values include: Read (r), Write (w), Delete (d), List (l), and Create (c). </param>
         /// <param name="service"> The service used by the local user, e.g. blob, file. </param>
         /// <param name="resourceName"> The name of resource, normally the container name or the file share name, used by the local user. </param>

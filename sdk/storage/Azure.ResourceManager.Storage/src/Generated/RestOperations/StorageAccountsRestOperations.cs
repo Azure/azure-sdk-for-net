@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of StorageAccountsRestOperations. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountsRestOperations" />. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>

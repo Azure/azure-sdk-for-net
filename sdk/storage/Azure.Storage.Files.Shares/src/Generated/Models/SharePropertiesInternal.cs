@@ -12,7 +12,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Properties of a share. </summary>
     internal partial class SharePropertiesInternal
     {
-        /// <summary> Initializes a new instance of SharePropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
         /// <param name="quota"></param>
@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.Shares.Models
             Quota = quota;
         }
 
-        /// <summary> Initializes a new instance of SharePropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
         /// <param name="quota"></param>

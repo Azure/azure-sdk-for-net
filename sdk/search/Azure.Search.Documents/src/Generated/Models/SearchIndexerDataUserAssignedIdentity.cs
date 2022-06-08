@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Specifies the identity for a datasource to use. </summary>
     public partial class SearchIndexerDataUserAssignedIdentity : SearchIndexerDataIdentity
     {
-        /// <summary> Initializes a new instance of SearchIndexerDataUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataUserAssignedIdentity"/>. </summary>
         /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form &quot;/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId&quot; that should have been assigned to the search service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userAssignedIdentity"/> is null. </exception>
         public SearchIndexerDataUserAssignedIdentity(string userAssignedIdentity)
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ODataType = "#Microsoft.Azure.Search.SearchIndexerDataUserAssignedIdentity";
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerDataUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataUserAssignedIdentity"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
         /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form &quot;/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId&quot; that should have been assigned to the search service. </param>
         internal SearchIndexerDataUserAssignedIdentity(string oDataType, string userAssignedIdentity) : base(oDataType)

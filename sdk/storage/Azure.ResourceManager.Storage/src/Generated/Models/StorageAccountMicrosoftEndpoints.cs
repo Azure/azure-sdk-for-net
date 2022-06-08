@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The URIs that are used to perform a retrieval of a public blob, queue, table, web or dfs object via a microsoft routing endpoint. </summary>
     public partial class StorageAccountMicrosoftEndpoints
     {
-        /// <summary> Initializes a new instance of StorageAccountMicrosoftEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountMicrosoftEndpoints"/>. </summary>
         internal StorageAccountMicrosoftEndpoints()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountMicrosoftEndpoints. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountMicrosoftEndpoints"/>. </summary>
         /// <param name="blob"> Gets the blob endpoint. </param>
         /// <param name="queue"> Gets the queue endpoint. </param>
         /// <param name="table"> Gets the table endpoint. </param>

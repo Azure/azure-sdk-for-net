@@ -13,13 +13,13 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
     public partial class IndexingParametersConfiguration
     {
-        /// <summary> Initializes a new instance of IndexingParametersConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexingParametersConfiguration"/>. </summary>
         public IndexingParametersConfiguration()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of IndexingParametersConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexingParametersConfiguration"/>. </summary>
         /// <param name="parsingMode"> Represents the parsing mode for indexing from an Azure blob data source. </param>
         /// <param name="excludedFileNameExtensions"> Comma-delimited list of filename extensions to ignore when processing from Azure blob storage.  For example, you could exclude &quot;.png, .mp4&quot; to skip over those files during indexing. </param>
         /// <param name="indexedFileNameExtensions"> Comma-delimited list of filename extensions to select when processing from Azure blob storage.  For example, you could focus indexing on specific application files &quot;.docx, .pptx, .msg&quot; to specifically include those file types. </param>

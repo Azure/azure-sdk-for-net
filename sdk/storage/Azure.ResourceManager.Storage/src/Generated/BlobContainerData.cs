@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class representing the BlobContainer data model. </summary>
     public partial class BlobContainerData : AzureEntityResource
     {
-        /// <summary> Initializes a new instance of BlobContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobContainerData"/>. </summary>
         public BlobContainerData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of BlobContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

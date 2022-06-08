@@ -10,14 +10,22 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> A linker to be updated. </summary>
     public partial class LinkerResourcePatch
     {
-        /// <summary> Initializes a new instance of LinkerResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerResourcePatch"/>. </summary>
         public LinkerResourcePatch()
         {
         }
 
-        /// <summary> The target service properties. </summary>
+        /// <summary>
+        /// The target service properties
+        /// Please note <see cref="TargetServiceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureResource"/>, <see cref="ConfluentBootstrapServer"/> and <see cref="ConfluentSchemaRegistry"/>.
+        /// </summary>
         public TargetServiceBase TargetService { get; set; }
-        /// <summary> The authentication type. </summary>
+        /// <summary>
+        /// The authentication type.
+        /// Please note <see cref="AuthInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecretAuthInfo"/>, <see cref="ServicePrincipalCertificateAuthInfo"/>, <see cref="ServicePrincipalSecretAuthInfo"/>, <see cref="SystemAssignedIdentityAuthInfo"/> and <see cref="UserAssignedIdentityAuthInfo"/>.
+        /// </summary>
         public AuthInfoBase AuthInfo { get; set; }
         /// <summary> The application client type. </summary>
         public ClientType? ClientType { get; set; }

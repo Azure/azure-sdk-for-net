@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Server info for the server trust group. </summary>
     public partial class ServerInfo
     {
-        /// <summary> Initializes a new instance of ServerInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerInfo"/>. </summary>
         /// <param name="serverId"> Server Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverId"/> is null. </exception>
         public ServerInfo(string serverId)

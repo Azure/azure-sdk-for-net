@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Resource SKU Details. </summary>
     public partial class ResourceSkuInfo
     {
-        /// <summary> Initializes a new instance of ResourceSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuInfo"/>. </summary>
         internal ResourceSkuInfo()
         {
             Capabilities = new ChangeTrackingList<ResourceSkuCapability>();
             Restrictions = new ChangeTrackingList<ResourceSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuInfo"/>. </summary>
         /// <param name="apiVersion"> StoragePool RP API version. </param>
         /// <param name="resourceType"> StoragePool resource type. </param>
         /// <param name="capabilities"> List of additional capabilities for StoragePool resource. </param>

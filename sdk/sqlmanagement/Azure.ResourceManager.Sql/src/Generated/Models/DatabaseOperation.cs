@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A database operation. </summary>
     public partial class DatabaseOperation : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseOperation"/>. </summary>
         public DatabaseOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseOperation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

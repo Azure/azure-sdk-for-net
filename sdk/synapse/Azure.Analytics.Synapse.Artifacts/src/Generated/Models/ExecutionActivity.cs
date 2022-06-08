@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Base class for all execution activities. </summary>
     public partial class ExecutionActivity : Activity
     {
-        /// <summary> Initializes a new instance of ExecutionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ExecutionActivity(string name) : base(name)
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Execution";
         }
 
-        /// <summary> Initializes a new instance of ExecutionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
