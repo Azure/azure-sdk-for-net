@@ -128,19 +128,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocTypeInfo(description, buildMode, fieldSchema, fieldConfidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentCaption. </summary>
-        /// <param name="content"> Table caption content. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the table caption. </param>
-        /// <param name="spans"> Location of the table caption in the reading order concatenated content. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentCaption"/> instance for mocking. </returns>
-        public static DocumentCaption DocumentCaption(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
-        {
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentCaption(content, boundingRegions?.ToList(), spans?.ToList());
-        }
-
         /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="description"> Field description. </param>
@@ -368,19 +355,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new DocumentField(DocumentFieldType.Time, null, null, valueTime: value, null, null, null, null, null, null, valueArray, valueObject, null, null, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
         }
 
-        /// <summary> Initializes a new instance of DocumentFootnote. </summary>
-        /// <param name="content"> Table footnote content. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the table footnote. </param>
-        /// <param name="spans"> Location of the table footnote in the reading order concatenated content. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.DocumentFootnote"/> instance for mocking. </returns>
-        public static DocumentFootnote DocumentFootnote(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
-        {
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentFootnote(content, boundingRegions?.ToList(), spans?.ToList());
-        }
-
         /// <summary> Initializes a new instance of DocumentKeyValueElement. </summary>
         /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the key-value element. </param>
@@ -528,19 +502,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="rowCount"> Number of rows in the table. </param>
         /// <param name="columnCount"> Number of columns in the table. </param>
         /// <param name="cells"> Cells contained within the table. </param>
-        /// <param name="caption"> Caption associated with the table. </param>
-        /// <param name="footnotes"> Footnotes associated with the table. </param>
         /// <param name="boundingRegions"> Bounding regions covering the table. </param>
         /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentTable"/> instance for mocking. </returns>
-        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = null, DocumentCaption caption = null, IEnumerable<DocumentFootnote> footnotes = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
+        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null)
         {
             cells ??= new List<DocumentTableCell>();
-            footnotes ??= new List<DocumentFootnote>();
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentTable(rowCount, columnCount, cells?.ToList(), caption, footnotes?.ToList(), boundingRegions?.ToList(), spans?.ToList());
+            return new DocumentTable(rowCount, columnCount, cells?.ToList(), caption: null, footnotes: new List<DocumentFootnote>(), boundingRegions?.ToList(), spans?.ToList());
         }
 
         /// <summary> Initializes a new instance of DocumentTableCell. </summary>

@@ -65,10 +65,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public int ColumnCount { get; }
         /// <summary> Cells contained within the table. </summary>
         public IReadOnlyList<DocumentTableCell> Cells { get; }
-        /// <summary> Caption associated with the table. </summary>
-        public DocumentCaption Caption { get; }
-        /// <summary> Footnotes associated with the table. </summary>
-        public IReadOnlyList<DocumentFootnote> Footnotes { get; }
         /// <summary> Bounding regions covering the table. </summary>
         public IReadOnlyList<BoundingRegion> BoundingRegions { get; }
         /// <summary> Location of the table in the reading order concatenated content. </summary>
