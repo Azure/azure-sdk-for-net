@@ -1906,12 +1906,12 @@ namespace Azure.ResourceManager.Cdn.Models
     }
     public partial class GeoFilter
     {
-        public GeoFilter(string relativePath, Azure.ResourceManager.Cdn.Models.GeoFilterActions action, System.Collections.Generic.IEnumerable<string> countryCodes) { }
-        public Azure.ResourceManager.Cdn.Models.GeoFilterActions Action { get { throw null; } set { } }
+        public GeoFilter(string relativePath, Azure.ResourceManager.Cdn.Models.GeoFilterAction action, System.Collections.Generic.IEnumerable<string> countryCodes) { }
+        public Azure.ResourceManager.Cdn.Models.GeoFilterAction Action { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> CountryCodes { get { throw null; } }
         public string RelativePath { get { throw null; } set { } }
     }
-    public enum GeoFilterActions
+    public enum GeoFilterAction
     {
         Block = 0,
         Allow = 1,
@@ -3494,7 +3494,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.ResourceUsageUnit left, Azure.ResourceManager.Cdn.Models.ResourceUsageUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum ResponseBasedDetectedErrorTypes
+    public enum ResponseBasedDetectedErrorType
     {
         None = 0,
         TcpErrorsOnly = 1,
@@ -3504,7 +3504,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         public ResponseBasedOriginErrorDetectionSettings() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.HttpErrorRange> HttpErrorRanges { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ResponseBasedDetectedErrorTypes? ResponseBasedDetectedErrorTypes { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.ResponseBasedDetectedErrorType? ResponseBasedDetectedErrorTypes { get { throw null; } set { } }
         public int? ResponseBasedFailoverThresholdPercentage { get { throw null; } set { } }
     }
     public partial class RouteCacheCompressionSettings
