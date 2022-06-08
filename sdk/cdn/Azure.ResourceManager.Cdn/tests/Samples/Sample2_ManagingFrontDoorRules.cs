@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Cdn.Tests.Samples
 {
-    public class Sample2_ManagingAfdRules
+    public class Sample2_ManagingFrontDoorRules
     {
         private ResourceGroupResource resourceGroup;
 
