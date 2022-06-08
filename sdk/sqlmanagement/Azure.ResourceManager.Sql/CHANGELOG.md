@@ -1,14 +1,19 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2022-06-08)
 
 ### Features Added
 
+- Add Update methods in resource classes.
+
 ### Breaking Changes
+
+- Rename private endpoint resource names with `Sql` prefix.
+- Rename `PrivateLinkServiceConnectionState` properties to `ConnectionState`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed wrong API version for Databases and ReplicationLinks operations.
 
 ## 1.0.0-beta.4 (2022-04-08)
 
