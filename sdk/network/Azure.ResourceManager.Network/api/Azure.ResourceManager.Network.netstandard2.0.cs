@@ -2728,14 +2728,12 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.PacketCaptureResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.PacketCaptureResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PacketCaptureData
+    public partial class PacketCaptureData : Azure.ResourceManager.Models.ResourceData
     {
         internal PacketCaptureData() { }
         public long? BytesToCapturePerPacket { get { throw null; } }
         public Azure.ETag? Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.PacketCaptureFilter> Filters { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public string Name { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Network.Models.PacketCaptureStorageLocation StorageLocation { get { throw null; } }
         public string Target { get { throw null; } }
