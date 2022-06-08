@@ -1,26 +1,13 @@
 <#
 .SYNOPSIS
-Update unified ToC file for publishing reference docs on docs.microsoft.com
+The script is to generate service level readme if it is missing. 
+For exist ones, we do 2 things here:
+1. Generate the client and mgmt table but not import to the existing service level readme.
+2. Update the metadata of service level readme
 
 .DESCRIPTION
-Given a doc repo location and a location to output the ToC generate a Unified
-Table of Contents:
-
-* Get list of packages onboarded to docs.microsoft.com (domain specific)
-* Get metadata for onboarded packages from metadata CSV
-* Build a sorted list of services
-* Add ToC nodes for the service
-* Add "Core" packages to the bottom of the ToC under "Other"
-
-ToC node layout:
-* Service (service level overview page)
-  * Client Package 1 (package level overview page)
-  * Client Package 2 (package level overview page)
-  ...
-  * Management
-    * Management Package 1
-    * Management Package 2
-    ...
+Given a doc repo location, and the credential for fetching the ms.author. 
+Generate missing service level readme and updating metadata of the existing ones.
 
 .PARAMETER DocRepoLocation
 Location of the documentation repo. This repo may be sparsely checked out
@@ -53,19 +40,6 @@ param(
 . $PSScriptRoot/Helpers/Metadata-Helpers.ps1
 
 Set-StrictMode -Version 3
-
-function GetClientPackageNode($clientPackage) {
-  $packageInfo = &$GetDocsMsTocDataFn `
-    -packageMetadata $clientPackage `
-    -docRepoLocation $DocRepoLocation
-
-  return [PSCustomObject]@{
-    name     = $packageInfo.PackageTocHeader
-    href     = $packageInfo.PackageLevelReadmeHref
-    # This is always one package and it must be an array
-    children = $packageInfo.TocChildren
-  };
-}
 
 function GetPackageKey($pkg) {
   $pkgKey = $pkg.Package
@@ -130,7 +104,7 @@ function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService,
   }
 }
 
-# Update the metadata table on attributes: author, ms.author, ms.service
+# Update the metadata table.
 function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msService)
 {
   $readmePath = Join-Path $readmeFolder -ChildPath $readmeName
@@ -157,8 +131,8 @@ function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moni
       $referenceLink = $pkg.DisplayName
     }
     $githubLink = $GithubUri
-    if ($pkg.PSObject.Members.Name -contains "FileMetadata") {
-      $githubLink = "$GithubUri/blob/main/$($pkg.FileMetadata.DirectoryPath)"
+    if ($pkg.PSObject.Members.Name -contains "DirectoryPath") {
+      $githubLink = "$GithubUri/blob/main/$($pkg.DirectoryPath)"
     }
     $line = "|$referenceLink|[$($pkg.Package)]($repositoryLink/$($pkg.Package))|[Github]($githubLink)|`r`n"
     $tableContent += $line
@@ -198,10 +172,6 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $packageInf
   }
 }
 
-# This criteria is different from criteria used in `Update-DocsMsPackages.ps1`
-# because we need to generate ToCs for packages which are not necessarily "New"
-# in the metadata AND onboard legacy packages (which `Update-DocsMsPackages.ps1`
-# does not do)
 $fullMetadata = Get-CSVMetadata
 $monikers = @("latest", "preview")
 foreach($moniker in $monikers) {
@@ -212,6 +182,19 @@ foreach($moniker in $monikers) {
     if ($metadataEntry.Package -and $metadataEntry.Hide -ne 'true') {
       $pkgKey = GetPackageKey $metadataEntry
       if($metadata.ContainsKey($pkgKey)) {
+        $jsonFileName = $pkgKey.Replace('@azure/', 'azure-')
+        $jsonFilePath = "$DocRepoLocation/metadata/$moniker/$jsonFileName.json"
+        if(!(Test-Path $jsonFilePath)){
+          $csvMetadata += $metadataEntry
+          continue
+        }
+        if (!($metadataEntry.PSObject.Members.Name -contains "DirectoryPath")) {
+          $metadataJsonFile = Get-Content $jsonFilePath -Raw | ConvertFrom-Json
+          Add-Member -InputObject $metadataEntry `
+          -MemberType NoteProperty `
+          -Name DirectoryPath `
+          -Value $metadataJsonFile.DirectoryPath
+        }
         $csvMetadata += $metadataEntry
       }
     }
@@ -241,7 +224,7 @@ foreach($moniker in $monikers) {
   }
   foreach ($service in $services.Keys) {
     Write-Host "Building service: $service"
-    # Client packages get individual entries
+    
     $servicePackages = $packagesForService.Values.Where({ $_.ServiceName -eq $service })
   
   
