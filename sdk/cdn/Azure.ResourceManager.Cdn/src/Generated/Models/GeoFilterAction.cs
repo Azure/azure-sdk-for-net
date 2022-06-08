@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Action of the geo filter, i.e. allow or block access. </summary>
-    public enum GeoFilterActions
+    public enum GeoFilterAction
     {
         /// <summary> Block. </summary>
         Block,

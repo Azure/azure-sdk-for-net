@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Type of response errors for real user requests for which origin will be deemed unhealthy. </summary>
-    public enum ResponseBasedDetectedErrorTypes
+    public enum ResponseBasedDetectedErrorType
     {
         /// <summary> None. </summary>
         None,
