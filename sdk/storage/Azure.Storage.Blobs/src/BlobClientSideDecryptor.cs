@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -190,6 +191,15 @@ namespace Azure.Storage.Blobs
         {
             Argument.AssertNotNull(rawEncryptionData, nameof(rawEncryptionData));
             EncryptionData encryptionData = EncryptionDataSerializer.Deserialize(rawEncryptionData);
+            return GetEncryptedBlobRange(originalRange, encryptionData);
+        }
+
+        internal static HttpRange GetEncryptedBlobRange(HttpRange originalRange, EncryptionData encryptionData)
+        {
+            if (encryptionData == default)
+            {
+                return originalRange;
+            }
 
             switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
@@ -272,7 +282,6 @@ namespace Azure.Storage.Blobs
 
             return new HttpRange(originalRange.Offset - offsetAdjustment, adjustedDownloadCount);
         }
-    }
 
     internal static class EncryptionRangeExtensions
     {

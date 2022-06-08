@@ -558,7 +558,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        // TODO revisit once v2 is implemented for open read
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, Constants.MB)]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 4*Constants.MB)]
