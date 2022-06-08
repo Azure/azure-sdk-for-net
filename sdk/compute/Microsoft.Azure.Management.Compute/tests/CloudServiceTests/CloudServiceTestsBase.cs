@@ -22,8 +22,6 @@ using CM = Microsoft.Azure.Management.Compute.Models;
 namespace Compute.Tests
 {
     public class CloudServiceTestsBase : VMTestBase, IDisposable
-
-
     {
         public string originalLocation;
         public const string MultiRole2Worker1WebRolesPackageSasUri = "TestCloudServiceMultiRole_WorkerRole1(Standard_D2_v2)(1)_WorkerRole2(Standard_D1_v2)(1)_WebRole1(Standard_A2_v2)(2).cspkg";
@@ -43,7 +41,7 @@ namespace Compute.Tests
             Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalLocation);
         }
         public static Extension CreateExtension(string name, string publisher, string type, string version, string forceUpdateTag = null,
-                                                                bool autoUpgrade = false, bool enableAutomaticUpgrade = false, string publicConfig = null, string privateConfig = null, List<string> roleAppliedTo = null)
+                                                bool autoUpgrade = false, bool enableAutomaticUpgrade = false, string publicConfig = null, string privateConfig = null, List<string> roleAppliedTo = null)
         {
             return new Extension
             {
@@ -61,6 +59,11 @@ namespace Compute.Tests
             };
         }
 
+        public static Extension CreateMonitoringExtension(string name)
+        {
+            return CreateExtension(name, "Microsoft.Azure.Security", "Monitoring", "3.1");
+        }
+
         public static Extension CreateRDPExtension(string name)
         {
             string rdpExtensionPublicConfig = "<PublicConfig>" +
@@ -71,7 +74,7 @@ namespace Compute.Tests
                                                   "<Password>VsmrdpTest!</Password>" +
                                                "</PrivateConfig>";
 
-            return CreateExtension(name, "Microsoft.Windows.Azure.Extensions", "RDP", "1.2.1", autoUpgrade: true,
+            return CreateExtension(name, "Microsoft.Windows.Azure.Extensions", "RDP", "1.2", autoUpgrade: true,
                                                                                               publicConfig: rdpExtensionPublicConfig,
                                                                                               privateConfig: rdpExtensionPrivateConfig);
 

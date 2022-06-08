@@ -47,17 +47,7 @@ namespace Compute.Tests
                     /// Create: Create a multi-role CloudService with 2 WorkerRoles, 1 WebRole, and RDP Extension.
                     ///
 
-                    string rdpExtensionPublicConfig = "<PublicConfig>" +
-                                                        "<UserName>adminRdpTest</UserName>" +
-                                                        "<Expiration>2021-10-27T23:59:59</Expiration>" +
-                                                     "</PublicConfig>";
-                    string rdpExtensionPrivateConfig = "<PrivateConfig>" +
-                                                          "<Password>VsmrdpTest!</Password>" +
-                                                       "</PrivateConfig>";
-
-                    Extension rdpExtension = CreateExtension("RDPExtension", "Microsoft.Windows.Azure.Extensions", "RDP", "1.2.1", autoUpgrade: true,
-                                                                                                      publicConfig: rdpExtensionPublicConfig,
-                                                                                                      privateConfig: rdpExtensionPrivateConfig);
+                    Extension rdpExtension = CreateRDPExtension("RDPExtension");
                     // Define Configurations
                     List<string> supportedRoleInstanceSizes = GetSupportedRoleInstanceSizes();
                     Dictionary<string, RoleConfiguration> roleNameToPropertiesMapping = new Dictionary<string, RoleConfiguration>
@@ -97,7 +87,7 @@ namespace Compute.Tests
                     /// Update[1]: Delete RDP Extension, and Add Monitor Extension.
                     ///
 
-                    Extension monitorExtension = CreateExtension("MonitoringExtension", "Microsoft.Azure.Security", "Monitoring", "3.1.0.0");
+                    Extension monitorExtension = CreateMonitoringExtension("MonitoringExtension");
                     cloudService.Properties.ExtensionProfile = new CloudServiceExtensionProfile()
                     {
                         Extensions = new List<Extension>()
@@ -177,17 +167,7 @@ namespace Compute.Tests
                     /// Create: Create a multi-role CloudService with 2 WorkerRoles, 1 WebRole, and RDP Extension.
                     ///
 
-                    string rdpExtensionPublicConfig = "<PublicConfig>" +
-                                                        "<UserName>adminRdpTest</UserName>" +
-                                                        "<Expiration>2021-10-27T23:59:59</Expiration>" +
-                                                     "</PublicConfig>";
-                    string rdpExtensionPrivateConfig = "<PrivateConfig>" +
-                                                          "<Password>VsmrdpTest!</Password>" +
-                                                       "</PrivateConfig>";
-
-                    Extension rdpExtension = CreateExtension("RDPExtension", "Microsoft.Windows.Azure.Extensions", "RDP", "1.2.1", autoUpgrade: true,
-                                                                                                      publicConfig: rdpExtensionPublicConfig,
-                                                                                                      privateConfig: rdpExtensionPrivateConfig);
+                    Extension rdpExtension = CreateRDPExtension("RDPExtension");
                     // Define Configurations
                     List<string> supportedRoleInstanceSizes = GetSupportedRoleInstanceSizes();
                     Dictionary<string, RoleConfiguration> roleNameToPropertiesMapping = new Dictionary<string, RoleConfiguration>
@@ -233,7 +213,7 @@ namespace Compute.Tests
                     ///
 
 
-                    Extension monitorExtension = CreateExtension("MonitoringExtension", "Microsoft.Azure.Security", "Monitoring", "3.1.0.0");
+                    Extension monitorExtension = CreateMonitoringExtension("MonitoringExtension");
                     monitorExtension.Properties.RolesAppliedTo = new List<string>() { "WorkerRole1" };
                     cloudService.Properties.ExtensionProfile.Extensions.Add(monitorExtension);
 
