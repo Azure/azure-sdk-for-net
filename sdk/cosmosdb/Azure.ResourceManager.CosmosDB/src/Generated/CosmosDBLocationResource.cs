@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class CosmosDBLocationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBLocationResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}";
             return new ResourceIdentifier(resourceId);

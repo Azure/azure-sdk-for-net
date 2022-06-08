@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ServerBlobAuditingPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerBlobAuditingPolicyResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string blobAuditingPolicyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, BlobAuditingPolicyName blobAuditingPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/auditingSettings/{blobAuditingPolicyName}";
             return new ResourceIdentifier(resourceId);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder
     public partial class OrderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OrderResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string location, string orderName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}";
             return new ResourceIdentifier(resourceId);

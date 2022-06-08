@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage
     public partial class DeletedAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedAccountResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string deletedAccountName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string deletedAccountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}";
             return new ResourceIdentifier(resourceId);

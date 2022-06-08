@@ -24,13 +24,21 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the storage resource payload. </param>
+        /// <param name="properties">
+        /// Properties of the storage resource payload.
+        /// Please note <see cref="StorageProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="StorageAccount"/>.
+        /// </param>
         internal StorageResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Properties of the storage resource payload. </summary>
+        /// <summary>
+        /// Properties of the storage resource payload.
+        /// Please note <see cref="StorageProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="StorageAccount"/>.
+        /// </summary>
         public StorageProperties Properties { get; set; }
     }
 }
