@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
@@ -48,6 +49,33 @@ namespace Azure.Core.Samples
             // HasValue indicated is operation Value is available, for some operations it can return true even when operation
             // hasn't completed yet.
             Console.WriteLine(operation.HasValue);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task OperationCustomPollingCompletion()
+        {
+            // create a client
+            SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
+
+            #region Snippet:OperationCustomPollingCompletion
+            // Start the operation
+            DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
+
+            while (true)
+            {
+                // there could be more complex logic to control polling interval
+                Thread.Sleep(TimeSpan.FromSeconds(60));
+
+                Response state = await operation.UpdateStatusAsync();
+                Console.WriteLine($"Operation status is {state}");
+
+                if (operation.HasCompleted)
+                {
+                    break;
+                }
+            }
             #endregion
         }
 

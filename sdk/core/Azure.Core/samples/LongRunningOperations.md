@@ -39,6 +39,29 @@ Console.WriteLine(operation.HasCompleted);
 Console.WriteLine(operation.HasValue);
 ```
 
+### Custom polling for completion of operation
+
+By using `UpdateStatusAsync` and `HasCompleted` together, you can customize the polling strategy to wait for operation completion.
+
+```C# Snippet:OperationCustomPollingCompletion
+// Start the operation
+DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
+
+while (true)
+{
+    // there could be more complex logic to control polling interval
+    Thread.Sleep(TimeSpan.FromSeconds(60));
+
+    Response state = await operation.UpdateStatusAsync();
+    Console.WriteLine($"Operation status is {state}");
+
+    if (operation.HasCompleted)
+    {
+        break;
+    }
+}
+```
+
 ## Accessing results for Pageable Operations
 
 A Pageable Operation is use when the service call returns multiple values in pages after the Long Running Operation completes. The results can be access with the `GetValues()`, `GetValuesAsync()` methods which return `Pageable<T>/AsyncPageable<T>` respectively.
