@@ -11,7 +11,7 @@ using Azure;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Generic object modeling results of script execution. </summary>
-    internal partial class ScriptStatus
+    public partial class ScriptStatus
     {
         /// <summary> Initializes a new instance of ScriptStatus. </summary>
         internal ScriptStatus()

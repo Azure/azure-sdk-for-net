@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The environment variable to pass to the script in the container instance. </summary>
-    internal partial class ScriptEnvironmentVariable
+    public partial class ScriptEnvironmentVariable
     {
         /// <summary> Initializes a new instance of ScriptEnvironmentVariable. </summary>
         /// <param name="name"> The name of the environment variable. </param>
