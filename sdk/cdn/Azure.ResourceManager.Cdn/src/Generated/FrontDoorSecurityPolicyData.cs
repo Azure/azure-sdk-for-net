@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the FrontDoorSecurityPolicy data model. </summary>
-    public partial class FrontDoorSecurityPolicyData : ResourceData
+    /// <summary> A class representing the AfdSecurityPolicy data model. </summary>
+    public partial class AfdSecurityPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorSecurityPolicyData. </summary>
-        public FrontDoorSecurityPolicyData()
+        /// <summary> Initializes a new instance of AfdSecurityPolicyData. </summary>
+        public AfdSecurityPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorSecurityPolicyData. </summary>
+        /// <summary> Initializes a new instance of AfdSecurityPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,8 +27,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the security policy. </param>
-        /// <param name="properties"> object which contains security policy parameters. </param>
-        internal FrontDoorSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, string profileName, SecurityPolicyProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="properties">
+        /// object which contains security policy parameters
+        /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
+        /// </param>
+        internal AfdSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecurityPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
@@ -37,12 +41,16 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status. </summary>
-        public FrontDoorProvisioningState? ProvisioningState { get; }
+        public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public FrontDoorDeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
         /// <summary> The name of the profile which holds the security policy. </summary>
         public string ProfileName { get; }
-        /// <summary> object which contains security policy parameters. </summary>
+        /// <summary>
+        /// object which contains security policy parameters
+        /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
+        /// </summary>
         public SecurityPolicyProperties Properties { get; set; }
     }
 }

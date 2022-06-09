@@ -11,15 +11,15 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the FrontDoorSecret data model. </summary>
-    public partial class FrontDoorSecretData : ResourceData
+    /// <summary> A class representing the AfdSecret data model. </summary>
+    public partial class AfdSecretData : ResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorSecretData. </summary>
-        public FrontDoorSecretData()
+        /// <summary> Initializes a new instance of AfdSecretData. </summary>
+        public AfdSecretData()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorSecretData. </summary>
+        /// <summary> Initializes a new instance of AfdSecretData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,8 +27,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the secret. </param>
-        /// <param name="properties"> object which contains secret parameters. </param>
-        internal FrontDoorSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, string profileName, SecretProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="properties">
+        /// object which contains secret parameters
+        /// Please note <see cref="SecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
+        /// </param>
+        internal AfdSecretData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AfdProvisioningState? provisioningState, AfdDeploymentStatus? deploymentStatus, string profileName, SecretProperties properties) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
@@ -37,12 +41,16 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Provisioning status. </summary>
-        public FrontDoorProvisioningState? ProvisioningState { get; }
+        public AfdProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the deployment status. </summary>
-        public FrontDoorDeploymentStatus? DeploymentStatus { get; }
+        public AfdDeploymentStatus? DeploymentStatus { get; }
         /// <summary> The name of the profile which holds the secret. </summary>
         public string ProfileName { get; }
-        /// <summary> object which contains secret parameters. </summary>
+        /// <summary>
+        /// object which contains secret parameters
+        /// Please note <see cref="SecretProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="ManagedCertificateProperties"/> and <see cref="UriSigningKeyProperties"/>.
+        /// </summary>
         public SecretProperties Properties { get; set; }
     }
 }
