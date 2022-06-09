@@ -135,6 +135,16 @@ directive:
       $.CacheExpirationActionParameters.properties.cacheType['x-ms-enum'].name = 'cacheLevel';
       $.CdnCertificateSourceParameters.properties.certificateType['x-ms-enum'].name = 'CdnManagedCertificateType';
       $.ResourceType['x-ms-enum'].name = 'CdnResourceType';
+      $.ResourceType['x-ms-enum'].values = [
+                                {
+                                    "value": "Microsoft.Cdn/Profiles/Endpoints",
+                                    "name": "Endpoints"
+                                },
+                                {
+                                    "value": "Microsoft.Cdn/Profiles/AfdEndpoints",
+                                    "name": "FrontDoorEndpoints"
+                                }
+                            ]
       $.GeoFilter.properties.action['x-ms-enum'].name = 'GeoFilterAction';
       $.ResponseBasedOriginErrorDetectionParameters.properties.responseBasedDetectedErrorTypes['x-ms-enum'].name = 'ResponseBasedDetectedErrorType';
       $.SocketAddrMatchConditionParameters.properties.operator['x-ms-enum'].name = 'SocketAddressOperator';
