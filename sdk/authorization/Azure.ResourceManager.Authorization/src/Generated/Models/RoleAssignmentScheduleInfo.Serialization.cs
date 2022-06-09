@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleAssignmentScheduleRequestPropertiesScheduleInfo : IUtf8JsonSerializable
+    public partial class RoleAssignmentScheduleInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
         }
 
-        internal static RoleAssignmentScheduleRequestPropertiesScheduleInfo DeserializeRoleAssignmentScheduleRequestPropertiesScheduleInfo(JsonElement element)
+        internal static RoleAssignmentScheduleInfo DeserializeRoleAssignmentScheduleInfo(JsonElement element)
         {
             Optional<DateTimeOffset> startDateTime = default;
-            Optional<RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration> expiration = default;
+            Optional<RoleAssignmentScheduleInfoExpiration> expiration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startDateTime"))
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expiration = RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration.DeserializeRoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(property.Value);
+                    expiration = RoleAssignmentScheduleInfoExpiration.DeserializeRoleAssignmentScheduleInfoExpiration(property.Value);
                     continue;
                 }
             }
-            return new RoleAssignmentScheduleRequestPropertiesScheduleInfo(Optional.ToNullable(startDateTime), expiration.Value);
+            return new RoleAssignmentScheduleInfo(Optional.ToNullable(startDateTime), expiration.Value);
         }
     }
 }

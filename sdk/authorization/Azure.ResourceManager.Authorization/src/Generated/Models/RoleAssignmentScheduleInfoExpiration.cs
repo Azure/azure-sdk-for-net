@@ -10,18 +10,18 @@ using System;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Expiration of the role assignment schedule. </summary>
-    public partial class RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration
+    public partial class RoleAssignmentScheduleInfoExpiration
     {
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration. </summary>
-        public RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration()
+        /// <summary> Initializes a new instance of RoleAssignmentScheduleInfoExpiration. </summary>
+        public RoleAssignmentScheduleInfoExpiration()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration. </summary>
+        /// <summary> Initializes a new instance of RoleAssignmentScheduleInfoExpiration. </summary>
         /// <param name="roleAssignmentExpirationType"> Type of the role assignment schedule expiration. </param>
         /// <param name="endOn"> End DateTime of the role assignment schedule. </param>
         /// <param name="duration"> Duration of the role assignment schedule in TimeSpan. </param>
-        internal RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(Type? roleAssignmentExpirationType, DateTimeOffset? endOn, TimeSpan? duration)
+        internal RoleAssignmentScheduleInfoExpiration(Type? roleAssignmentExpirationType, DateTimeOffset? endOn, TimeSpan? duration)
         {
             RoleAssignmentExpirationType = roleAssignmentExpirationType;
             EndOn = endOn;

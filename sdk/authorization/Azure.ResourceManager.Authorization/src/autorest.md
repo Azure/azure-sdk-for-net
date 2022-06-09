@@ -59,4 +59,15 @@ directive:
   - from: common-types.json
     where: $.definitions.RoleManagementPolicyExpirationRule.properties.maximumDuration
     transform: $['x-ms-format'] = 'duration-constant'
+
+  # - from: RoleAssignmentScheduleRequest.json
+  #   where: $.paths['/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}'].put.parameters
+  #   transform: $[0].name = "Content"
+
+  
+
+  - rename-model:
+      from: RoleAssignmentScheduleRequestProperties
+      to: RoleAssignmentSchedule
+      
 ```

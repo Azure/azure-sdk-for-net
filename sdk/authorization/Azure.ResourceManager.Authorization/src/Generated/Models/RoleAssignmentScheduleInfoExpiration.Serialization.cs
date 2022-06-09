@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration : IUtf8JsonSerializable
+    public partial class RoleAssignmentScheduleInfoExpiration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
         }
 
-        internal static RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration DeserializeRoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(JsonElement element)
+        internal static RoleAssignmentScheduleInfoExpiration DeserializeRoleAssignmentScheduleInfoExpiration(JsonElement element)
         {
             Optional<Type> type = default;
             Optional<DateTimeOffset> endDateTime = default;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(Optional.ToNullable(type), Optional.ToNullable(endDateTime), Optional.ToNullable(duration));
+            return new RoleAssignmentScheduleInfoExpiration(Optional.ToNullable(type), Optional.ToNullable(endDateTime), Optional.ToNullable(duration));
         }
     }
 }

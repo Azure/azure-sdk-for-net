@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="createdOn"> DateTime when role assignment schedule request was created. </param>
         /// <param name="requestorId"> Id of the user who created this request. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleAssignmentScheduleRequestData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, RequestType? requestType, Status? status, string approvalId, string targetRoleAssignmentScheduleId, string targetRoleAssignmentScheduleInstanceId, RoleAssignmentScheduleRequestPropertiesScheduleInfo scheduleInfo, string linkedRoleEligibilityScheduleId, string justification, RoleAssignmentScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, string requestorId, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleRequestData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, RequestType? requestType, Status? status, string approvalId, string targetRoleAssignmentScheduleId, string targetRoleAssignmentScheduleInstanceId, RoleAssignmentScheduleInfo scheduleInfo, string linkedRoleEligibilityScheduleId, string justification, RoleAssignmentScheduleTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, string requestorId, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The role assignment schedule instance id being updated. </summary>
         public string TargetRoleAssignmentScheduleInstanceId { get; set; }
         /// <summary> Schedule info of the role assignment schedule. </summary>
-        public RoleAssignmentScheduleRequestPropertiesScheduleInfo ScheduleInfo { get; set; }
+        public RoleAssignmentScheduleInfo ScheduleInfo { get; set; }
         /// <summary> The linked role eligibility schedule id - to activate an eligibility. </summary>
         public string LinkedRoleEligibilityScheduleId { get; set; }
         /// <summary> Justification for the role assignment. </summary>
         public string Justification { get; set; }
         /// <summary> Ticket Info of the role assignment. </summary>
-        public RoleAssignmentScheduleRequestPropertiesTicketInfo TicketInfo { get; set; }
+        public RoleAssignmentScheduleTicketInfo TicketInfo { get; set; }
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
         public string Condition { get; set; }
         /// <summary> Version of the condition. Currently accepted value is &apos;2.0&apos;. </summary>

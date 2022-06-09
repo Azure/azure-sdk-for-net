@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> approvalId = default;
             Optional<string> targetRoleAssignmentScheduleId = default;
             Optional<string> targetRoleAssignmentScheduleInstanceId = default;
-            Optional<RoleAssignmentScheduleRequestPropertiesScheduleInfo> scheduleInfo = default;
+            Optional<RoleAssignmentScheduleInfo> scheduleInfo = default;
             Optional<string> linkedRoleEligibilityScheduleId = default;
             Optional<string> justification = default;
-            Optional<RoleAssignmentScheduleRequestPropertiesTicketInfo> ticketInfo = default;
+            Optional<RoleAssignmentScheduleTicketInfo> ticketInfo = default;
             Optional<string> condition = default;
             Optional<string> conditionVersion = default;
             Optional<DateTimeOffset> createdOn = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            scheduleInfo = RoleAssignmentScheduleRequestPropertiesScheduleInfo.DeserializeRoleAssignmentScheduleRequestPropertiesScheduleInfo(property0.Value);
+                            scheduleInfo = RoleAssignmentScheduleInfo.DeserializeRoleAssignmentScheduleInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("linkedRoleEligibilityScheduleId"))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ticketInfo = RoleAssignmentScheduleRequestPropertiesTicketInfo.DeserializeRoleAssignmentScheduleRequestPropertiesTicketInfo(property0.Value);
+                            ticketInfo = RoleAssignmentScheduleTicketInfo.DeserializeRoleAssignmentScheduleTicketInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("condition"))

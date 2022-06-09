@@ -10,17 +10,17 @@ using System;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Schedule info of the role assignment schedule. </summary>
-    public partial class RoleAssignmentScheduleRequestPropertiesScheduleInfo
+    public partial class RoleAssignmentScheduleInfo
     {
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestPropertiesScheduleInfo. </summary>
-        public RoleAssignmentScheduleRequestPropertiesScheduleInfo()
+        /// <summary> Initializes a new instance of RoleAssignmentScheduleInfo. </summary>
+        public RoleAssignmentScheduleInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestPropertiesScheduleInfo. </summary>
+        /// <summary> Initializes a new instance of RoleAssignmentScheduleInfo. </summary>
         /// <param name="startOn"> Start DateTime of the role assignment schedule. </param>
         /// <param name="expiration"> Expiration of the role assignment schedule. </param>
-        internal RoleAssignmentScheduleRequestPropertiesScheduleInfo(DateTimeOffset? startOn, RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration expiration)
+        internal RoleAssignmentScheduleInfo(DateTimeOffset? startOn, RoleAssignmentScheduleInfoExpiration expiration)
         {
             StartOn = startOn;
             Expiration = expiration;
@@ -29,6 +29,6 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Start DateTime of the role assignment schedule. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Expiration of the role assignment schedule. </summary>
-        public RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration Expiration { get; set; }
+        public RoleAssignmentScheduleInfoExpiration Expiration { get; set; }
     }
 }

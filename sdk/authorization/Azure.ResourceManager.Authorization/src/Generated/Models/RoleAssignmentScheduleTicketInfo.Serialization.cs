@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleAssignmentScheduleRequestPropertiesTicketInfo : IUtf8JsonSerializable
+    public partial class RoleAssignmentScheduleTicketInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
         }
 
-        internal static RoleAssignmentScheduleRequestPropertiesTicketInfo DeserializeRoleAssignmentScheduleRequestPropertiesTicketInfo(JsonElement element)
+        internal static RoleAssignmentScheduleTicketInfo DeserializeRoleAssignmentScheduleTicketInfo(JsonElement element)
         {
             Optional<string> ticketNumber = default;
             Optional<string> ticketSystem = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleAssignmentScheduleRequestPropertiesTicketInfo(ticketNumber.Value, ticketSystem.Value);
+            return new RoleAssignmentScheduleTicketInfo(ticketNumber.Value, ticketSystem.Value);
         }
     }
 }

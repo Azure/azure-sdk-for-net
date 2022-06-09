@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Ticket Info of the role assignment. </summary>
-    public partial class RoleAssignmentScheduleRequestPropertiesTicketInfo
+    public partial class RoleAssignmentScheduleTicketInfo
     {
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestPropertiesTicketInfo. </summary>
-        public RoleAssignmentScheduleRequestPropertiesTicketInfo()
+        /// <summary> Initializes a new instance of RoleAssignmentScheduleTicketInfo. </summary>
+        public RoleAssignmentScheduleTicketInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestPropertiesTicketInfo. </summary>
+        /// <summary> Initializes a new instance of RoleAssignmentScheduleTicketInfo. </summary>
         /// <param name="ticketNumber"> Ticket number for the role assignment. </param>
         /// <param name="ticketSystem"> Ticket system name for the role assignment. </param>
-        internal RoleAssignmentScheduleRequestPropertiesTicketInfo(string ticketNumber, string ticketSystem)
+        internal RoleAssignmentScheduleTicketInfo(string ticketNumber, string ticketSystem)
         {
             TicketNumber = ticketNumber;
             TicketSystem = ticketSystem;
