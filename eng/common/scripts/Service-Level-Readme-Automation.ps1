@@ -54,9 +54,10 @@ function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService,
     $content = "## Management packages - $moniker`r`n"
     $content += "[!INCLUDE [mgmt-packages]($mgmtTableLink)]`r`n"
   }
-  if ($content) {
-    $null = New-Item -Path $readmePath -Force
+  if (!$content) {
+    return
   }
+  $null = New-Item -Path $readmePath -Force
   $lang = $LanguageDisplayName
   $langTitle = "Azure $serviceName SDK for $lang"
   $header = GenerateDocsMsMetadata -language $lang -langTitle $langTitle -serviceName $serviceName `
