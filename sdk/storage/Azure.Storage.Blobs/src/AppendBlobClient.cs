@@ -1434,11 +1434,11 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             await AppendBlockFromUriInternal(
                 sourceUri,
-                options.SourceRange,
-                options.SourceContentHash,
-                options.DestinationConditions,
-                options.SourceConditions,
-                options.SourceAuthentication,
+                options != default ? options.SourceRange : default,
+                options?.SourceContentHash,
+                options?.DestinationConditions,
+                options?.SourceConditions,
+                options?.SourceAuthentication,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
