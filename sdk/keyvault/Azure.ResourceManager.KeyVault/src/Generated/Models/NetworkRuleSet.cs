@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
-        internal NetworkRuleSet(NetworkRuleBypassOptions? bypass, NetworkRuleAction? defaultAction, IList<IPRule> ipRules, IList<VirtualNetworkRule> virtualNetworkRules)
+        internal NetworkRuleSet(NetworkRuleBypassOption? bypass, NetworkRuleAction? defaultAction, IList<IPRule> ipRules, IList<VirtualNetworkRule> virtualNetworkRules)
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Tells what traffic can bypass network rules. This can be &apos;AzureServices&apos; or &apos;None&apos;.  If not specified the default is &apos;AzureServices&apos;. </summary>
-        public NetworkRuleBypassOptions? Bypass { get; set; }
+        public NetworkRuleBypassOption? Bypass { get; set; }
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
         public NetworkRuleAction? DefaultAction { get; set; }
         /// <summary> The list of IP address rules. </summary>
