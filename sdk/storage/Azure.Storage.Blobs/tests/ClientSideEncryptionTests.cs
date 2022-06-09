@@ -441,6 +441,45 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0)]
         [TestCase(ClientSideEncryptionVersion.V2_0)]
         [LiveOnly] // cannot seed content encryption key
+        public async Task OpenWriteAsyncNoOpenWriteOptions(ClientSideEncryptionVersion version)
+        {
+            var plaintext = GetRandomBuffer(Constants.KB);
+            var mockKey = this.GetIKeyEncryptionKey(s_cancellationToken).Object;
+            await using (var disposable = await GetTestContainerEncryptionAsync(
+                new ClientSideEncryptionOptions(version)
+                {
+                    KeyEncryptionKey = mockKey,
+                    KeyWrapAlgorithm = s_algorithmName
+                }))
+            {
+                var blobName = GetNewBlobName();
+                var blob = InstrumentClient(disposable.Container.GetBlobClient(blobName));
+
+                // upload with encryption
+                using (Stream writeStream = await blob.OpenWriteAsync(true, options: default, s_cancellationToken))
+                {
+                    Stream plaintextStream = new MemoryStream(plaintext);
+                    if (IsAsync)
+                    {
+                        await plaintextStream.CopyToAsync(writeStream);
+                    }
+                    else
+                    {
+                        plaintextStream.CopyTo(writeStream);
+                    }
+                }
+
+                var encryptedData = await DownloadBypassDecryption(blob);
+                byte[] expectedEncryptedData = await ReplicateEncryption(plaintext, await blob.GetPropertiesAsync(), mockKey);
+
+                // compare data
+                Assert.AreEqual(expectedEncryptedData, encryptedData);
+            }
+        }
+
+        [TestCase(ClientSideEncryptionVersion.V1_0)]
+        [TestCase(ClientSideEncryptionVersion.V2_0)]
+        [LiveOnly] // cannot seed content encryption key
         public async Task UploadAsync_OverwritesDeliberately_BinaryData(ClientSideEncryptionVersion version)
         {
             var plaintext = GetRandomBuffer(Constants.KB);

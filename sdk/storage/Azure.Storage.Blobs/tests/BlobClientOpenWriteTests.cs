@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Tests
     public class BlobClientOpenWriteTests : BlobBaseClientOpenWriteTests<BlobClient>
     {
         public BlobClientOpenWriteTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
         {
             // Validate every test didn't accidentally use client-side encryption when writing a blob.
             AdditionalAssertions += async (client) =>
@@ -129,6 +129,28 @@ namespace Azure.Storage.Blobs.Tests
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 OpenWriteAsync(client, overwrite: false, maxDataSize: Constants.KB),
                 e => Assert.AreEqual("BlockBlobClient.OpenWrite only supports overwriting", e.Message));
+        }
+
+        [RecordedTest]
+        public async Task OpenWriteAsync_NullOptions()
+        {
+            // Arrange
+            await using IDisposingContainer<BlobContainerClient> disposingContainer = await GetDisposingContainerAsync();
+            BlobClient client = GetResourceClient(disposingContainer.Container);
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            try
+            {
+                using (var writeStream = await client.OpenWriteAsync(true))
+                {
+                    await new MemoryStream(data).CopyToAsync(writeStream);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
         #endregion
     }

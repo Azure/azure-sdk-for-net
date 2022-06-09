@@ -1753,6 +1753,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
+        [ForwardsClientCalls]
         public virtual Stream OpenWrite(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
@@ -1786,6 +1787,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
+        [ForwardsClientCalls]
         public virtual async Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
@@ -1820,14 +1822,14 @@ namespace Azure.Storage.Blobs
                     .ClientSideEncryptionOpenWriteInternal(
                         BlockBlobClient,
                         overwrite,
-                        options.ToBlockBlobOpenWriteOptions(),
+                        options?.ToBlockBlobOpenWriteOptions(),
                         async,
                         cancellationToken).ConfigureAwait(false);
             }
 
             return await BlockBlobClient.OpenWriteInternal(
                 overwrite,
-                options.ToBlockBlobOpenWriteOptions(),
+                options?.ToBlockBlobOpenWriteOptions(),
                 async,
                 cancellationToken).ConfigureAwait(false);
         }

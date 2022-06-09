@@ -86,6 +86,7 @@ namespace Azure.Storage.Blobs
             Stream encryptionWriteStream = await _encryptor.EncryptedOpenWriteInternal(
                 async (encryptiondata, funcAsync, funcCancellationToken) =>
                 {
+                    options ??= new BlockBlobOpenWriteOptions();
                     options.Metadata = TransformMetadata(options.Metadata, encryptiondata);
 
                     return await blobClient.OpenWriteInternal(
