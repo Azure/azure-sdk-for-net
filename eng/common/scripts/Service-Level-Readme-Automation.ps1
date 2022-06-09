@@ -70,7 +70,7 @@ function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService,
   Add-Content -Path $readmePath -Value $content
 }
 
-function CompareAndValidateMetadata ($original, $updated) {
+function CompareAndMergeMetadata ($original, $updated) {
   $originalTable = ConvertFrom-StringData -StringData $original -Delimiter ":"
   $updatedTable = ConvertFrom-StringData -StringData $updated -Delimiter ":"
   foreach ($key in $originalTable.Keys) {
@@ -96,7 +96,7 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
     -msService $msService
   $null = $metadataString -match "---`n*(?<metadata>(.*`n)*)---"
-  $mergedMetadata = CompareAndmergeMetadata -original $orignalMetadata -updated $Matches["metadata"]
+  $mergedMetadata = CompareAndMergeMetadata -original $orignalMetadata -updated $Matches["metadata"]
   Set-Content -Path $readmePath -Value "$mergedMetadata`n$restContent" -NoNewline
 }
 
