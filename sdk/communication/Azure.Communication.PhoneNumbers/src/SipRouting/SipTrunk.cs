@@ -5,13 +5,13 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting
 {
-    /// <summary> Gets or sets SIP signaling port of the trunk. </summary>
+    /// <summary> SIP trunk related properties. </summary>
     [CodeGenClient("Trunk")]
     public partial class SipTrunk
     {
         /// <summary> Initializes a new instance of SipTrunk. </summary>
         /// <param name="fqdn">Name of the trunk</param>
-        /// <param name="sipSignalingPort"> Gets or sets SIP signaling port for the gateway. </param>
+        /// <param name="sipSignalingPort"> SIP signaling port for the gateway. </param>
         public SipTrunk(string fqdn, int sipSignalingPort)
         {
             Fqdn = fqdn;

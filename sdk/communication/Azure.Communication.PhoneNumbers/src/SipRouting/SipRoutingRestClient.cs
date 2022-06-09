@@ -26,12 +26,6 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                 var content = new Utf8JsonRequestContent();
                 body.Write(content.JsonWriter);
                 request.Content = content;
-
-                var testStream = new MemoryStream();
-                content.WriteTo(testStream, new System.Threading.CancellationToken());
-                StreamReader reader = new StreamReader(testStream);
-                testStream.Seek(0, SeekOrigin.Begin);
-                string text = reader.ReadToEnd();
             }
             return message;
         }

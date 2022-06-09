@@ -32,7 +32,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         }
 
         // <summary> Initializes a new instance of SipConfiguration. </summary>
-        /// <param name="writer"></param>
+        /// <param name="writer"> JSON writer to write out the configuration. </param>
         internal void Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
@@ -59,6 +59,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             {
                 writer.WritePropertyName("routes");
                 writer.WriteStartArray();
+
                 foreach (SipTrunkRoute item in Routes)
                 {
                     writer.WriteObjectValue(item);
@@ -105,7 +106,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
+
                     List<SipTrunkRoute> array = new List<SipTrunkRoute>();
+
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(SipTrunkRoute.DeserializeSipTrunkRoute(item));

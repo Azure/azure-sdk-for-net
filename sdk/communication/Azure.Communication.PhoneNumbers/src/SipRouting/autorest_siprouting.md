@@ -1,6 +1,6 @@
 # Azure.Communication.PhoneNumbers.SipRouting
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet msbuild /t:GenerateCode "/p:AutoRestInput=.\SipRouting\autorest_siprouting.md;UseDefaultNamespaceAndOutputFolder=false"` from the project root folder to generate code.
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
@@ -8,7 +8,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-2021-05-01-preview
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/01563419f540c27a96abae75f9feaa3e5e9a1f13/specification/communication/data-plane/SipRouting/readme.md
-output-folder: .\SipRouting\Generated
+output-folder: .\Generated
 namespace: Azure.Communication.PhoneNumbers.SipRouting
 enable-xml: true
 clear-output-folder: true

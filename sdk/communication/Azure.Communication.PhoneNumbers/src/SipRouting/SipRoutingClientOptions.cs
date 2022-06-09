@@ -39,9 +39,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             /// The V1 of the calling configuration service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-#pragma warning disable AZC0016
+#pragma warning disable AZC0016 // All parts of ServiceVersion members' names must begin with a number or uppercase letter and cannot have consecutive underscores
             V2021_05_01_preview1 = 1
-#pragma warning restore AZC0016
+#pragma warning restore AZC0016 // All parts of ServiceVersion members' names must begin with a number or uppercase letter and cannot have consecutive underscores
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
         }

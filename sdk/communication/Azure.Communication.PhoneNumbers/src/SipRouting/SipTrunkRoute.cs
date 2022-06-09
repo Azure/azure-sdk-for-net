@@ -14,9 +14,9 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
     public partial class SipTrunkRoute
     {
         /// <summary> Initializes a new instance of <see cref="SipTrunkRoute"/>. </summary>
-        /// <param name="name"> Gets or sets name of the route. </param>
+        /// <param name="name"> Name of the route. </param>
         /// <param name="numberPattern">
-        /// Gets or sets regex number pattern for routing calls. .NET regex format is supported.
+        /// Regex number pattern for routing calls. .NET regex format is supported.
         /// The regex should match only digits with an optional &apos;+&apos; prefix without spaces.
         /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
         ///<param name="description">Description of the routing setting for the users.</param>
@@ -25,35 +25,26 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="numberPattern"/> is null. </exception>
         public SipTrunkRoute(string name, string numberPattern, string description = default, IEnumerable<string> trunks = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (numberPattern == null)
-            {
-                throw new ArgumentNullException(nameof(numberPattern));
-            }
-
-            Name = name;
-            NumberPattern = numberPattern;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            NumberPattern = numberPattern ?? throw new ArgumentNullException(nameof(numberPattern));
             Description = description;
             Trunks = trunks?.ToList().AsReadOnly() ?? new List<string>().AsReadOnly();
         }
 
-        /// <summary> Gets or sets description of the route. </summary>
+        /// <summary> Description of the route. </summary>
         public string Description { get; }
 
-        /// <summary> Gets or sets name of the route. </summary>
+        /// <summary> Name of the route. </summary>
         public string Name { get; }
 
         /// <summary>
-        /// Gets or sets regex number pattern for routing calls. .NET regex format is supported.
+        /// Regex number pattern for routing calls. .NET regex format is supported.
         /// The regex should match only digits with an optional &apos;+&apos; prefix without spaces.
         /// I.e. &quot;^\+[1-9][0-9]{3,23}$&quot;.
         /// </summary>
         public string NumberPattern { get; }
 
-        /// <summary> Gets or sets list of SIP trunks for routing calls. Trunks are represented as FQDN. </summary>
+        /// <summary> List of SIP trunks for routing calls. Trunks are represented as FQDN. </summary>
         public IReadOnlyList<string> Trunks { get; }
     }
 }
