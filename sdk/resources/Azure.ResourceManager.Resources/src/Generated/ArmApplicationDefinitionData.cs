@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the ArmApplicationDefinition data model. </summary>
-    public partial class ArmApplicationDefinitionData : TrackedResourceData
+    public partial class ArmApplicationDefinitionData : ArmApplicationResourceData
     {
         /// <summary> Initializes a new instance of ArmApplicationDefinitionData. </summary>
         /// <param name="location"> The location. </param>
@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <param name="sku"> The SKU of the resource. </param>
         /// <param name="lockLevel"> The managed application lock level. </param>
         /// <param name="displayName"> The managed application definition display name. </param>
         /// <param name="isEnabled"> A value indicating whether the package is enabled or not. </param>
@@ -48,9 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentPolicy"> The managed application deployment policy. </param>
         /// <param name="managementPolicy"> The managed application management policy that determines publisher&apos;s access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
-        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
-        /// <param name="sku"> The SKU of the resource. </param>
-        internal ArmApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ArmApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ArmApplicationAuthorization> authorizations, IList<ArmApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ArmApplicationNotificationPolicy notificationPolicy, ArmApplicationPackageLockingPolicy lockingPolicy, ArmApplicationDeploymentPolicy deploymentPolicy, ArmApplicationManagementPolicy managementPolicy, IList<ArmApplicationPolicy> policies, string managedBy, ArmApplicationSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal ArmApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ArmApplicationAuthorization> authorizations, IList<ArmApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ArmApplicationNotificationPolicy notificationPolicy, ArmApplicationPackageLockingPolicy lockingPolicy, ArmApplicationDeploymentPolicy deploymentPolicy, ArmApplicationManagementPolicy managementPolicy, IList<ArmApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
             LockLevel = lockLevel;
             DisplayName = displayName;
@@ -66,8 +66,6 @@ namespace Azure.ResourceManager.Resources
             DeploymentPolicy = deploymentPolicy;
             ManagementPolicy = managementPolicy;
             Policies = policies;
-            ManagedBy = managedBy;
-            Sku = sku;
         }
 
         /// <summary> The managed application lock level. </summary>
@@ -129,9 +127,5 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> The managed application provider policies. </summary>
         public IList<ArmApplicationPolicy> Policies { get; }
-        /// <summary> ID of the resource that manages this resource. </summary>
-        public string ManagedBy { get; set; }
-        /// <summary> The SKU of the resource. </summary>
-        public ArmApplicationSku Sku { get; set; }
     }
 }
