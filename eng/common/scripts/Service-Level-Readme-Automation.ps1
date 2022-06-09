@@ -79,7 +79,7 @@ function CompareAndMergeMetadata ($original, $updated) {
       $updatedTable[$key] = $originalTable[$key]
     }
   }
-  return updated
+  return $updated
 }
 
 # Update the metadata table.
@@ -89,7 +89,6 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
   $readmeContent = Get-Content -Path $readmePath -Raw
   $null = $readmeContent -match "---`n*(?<metadata>(.*`n)*)---`n*(?<content>(.*`n)*)"
   $restContent = $Matches["content"]
-
   $lang = $LanguageDisplayName
   $orignalMetadata = $Matches["metadata"]
   $metadataString = GenerateDocsMsMetadata -language $lang -serviceName $serviceName `
@@ -97,7 +96,7 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
     -msService $msService
   $null = $metadataString -match "---`n*(?<metadata>(.*`n)*)---"
   $mergedMetadata = CompareAndMergeMetadata -original $orignalMetadata -updated $Matches["metadata"]
-  Set-Content -Path $readmePath -Value "$mergedMetadata`n$restContent" -NoNewline
+  Set-Content -Path $readmePath -Value "---`n$mergedMetadata---`n$restContent" -NoNewline
 }
 
 function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moniker) {
