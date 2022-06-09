@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class LedgerDigestUploadsResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LedgerDigestUploadsResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string ledgerDigestUploads)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, LedgerDigestUploadsName ledgerDigestUploads)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}";
             return new ResourceIdentifier(resourceId);

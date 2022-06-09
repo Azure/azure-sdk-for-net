@@ -4,124 +4,83 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TelemetryExceptionDetails
     {
-        public const int MaxParsedStackLength = 32768;
-
         /// <summary>
         /// Creates a new instance of ExceptionDetails from a System.Exception and a parent ExceptionDetails.
         /// </summary>
-        internal TelemetryExceptionDetails(Exception exception, string message, TelemetryExceptionDetails parentExceptionDetails) : this(message)
+        internal TelemetryExceptionDetails(Exception exception, string message, TelemetryExceptionDetails parentExceptionDetails)
         {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
             }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
-            Id = exception.GetHashCode();
-            TypeName = exception.GetType().FullName;
+            this.Message = message.Truncate(SchemaConstants.ExceptionDetails_Message_MaxLength);
+            this.Id = exception.GetHashCode();
+            this.TypeName = exception.GetType().FullName.Truncate(SchemaConstants.ExceptionDetails_TypeName_MaxLength);
 
             if (parentExceptionDetails != null)
             {
-                OuterId = parentExceptionDetails.Id;
+                this.OuterId = parentExceptionDetails.Id;
             }
+
+            this.ParsedStack = GetSanitizedStackFrame(exception, out bool hasFullStack);
+            this.HasFullStack = hasFullStack;
+        }
+
+        internal static List<StackFrame> GetSanitizedStackFrame(Exception exception, out bool hasFullStack)
+        {
+            var orderedStackTrace = new List<StackFrame>();
+            hasFullStack = true;
 
             var stack = new StackTrace(exception, true);
-
             var frames = stack.GetFrames();
-            Tuple<List<StackFrame>, bool> sanitizedTuple = SanitizeStackFrame(frames, GetStackFrame, GetStackFrameLength);
-            ParsedStack = sanitizedTuple.Item1;
-            HasFullStack = sanitizedTuple.Item2;
-        }
-
-        /// <summary>
-        /// Converts a System.Diagnostics.StackFrame to a Azure.Monitor.OpenTelemetry.Exporter.Models.StackFrame.
-        /// </summary>
-        internal static StackFrame GetStackFrame(System.Diagnostics.StackFrame stackFrame, int frameId)
-        {
-            var methodInfo = stackFrame.GetMethod();
-            string fullName;
-            string assemblyName;
-
-            if (methodInfo == null)
+            if (frames != null && frames.Any())
             {
-                fullName = "unknown";
-                assemblyName = "unknown";
-            }
-            else
-            {
-                assemblyName = methodInfo.Module.Assembly.FullName;
-                if (methodInfo.DeclaringType != null)
+                int totalLength = 0;
+                for (int counter = 0; counter < frames.Length; counter++)
                 {
-                    fullName = methodInfo.DeclaringType.FullName + "." + methodInfo.Name;
-                }
-                else
-                {
-                    fullName = methodInfo.Name;
-                }
-            }
-
-            var convertedStackFrame = new StackFrame(frameId, fullName);
-
-            convertedStackFrame.Assembly = assemblyName;
-            convertedStackFrame.FileName = stackFrame.GetFileName();
-
-            // 0 means it is unavailable
-            int line = stackFrame.GetFileLineNumber();
-            if (line != 0)
-            {
-                convertedStackFrame.Line = line;
-            }
-
-            return convertedStackFrame;
-        }
-
-        /// <summary>
-        /// Gets the stack frame length for only the strings in the stack frame.
-        /// </summary>
-        internal static int GetStackFrameLength(StackFrame stackFrame)
-        {
-            var stackFrameLength = (stackFrame.Method == null ? 0 : stackFrame.Method.Length)
-                                   + (stackFrame.Assembly == null ? 0 : stackFrame.Assembly.Length)
-                                   + (stackFrame.FileName == null ? 0 : stackFrame.FileName.Length);
-            return stackFrameLength;
-        }
-
-        /// <summary>
-        /// Sanitizing stack to 32k while selecting the initial and end stack trace.
-        /// </summary>
-        private static Tuple<List<TOutput>, bool> SanitizeStackFrame<TInput, TOutput>(
-            IList<TInput> inputList,
-            Func<TInput, int, TOutput> converter,
-            Func<TOutput, int> lengthGetter)
-        {
-            List<TOutput> orderedStackTrace = new List<TOutput>();
-            bool hasFullStack = true;
-            if (inputList != null && inputList.Count > 0)
-            {
-                int currentParsedStackLength = 0;
-                for (int level = 0; level < inputList.Count; level++)
-                {
-                    // Skip middle part of the stack
-                    int current = (level % 2 == 0) ? (inputList.Count - 1 - (level / 2)) : (level / 2);
-
-                    TOutput convertedStackFrame = converter(inputList[current], current);
-                    currentParsedStackLength += lengthGetter(convertedStackFrame);
-
-                    if (currentParsedStackLength > MaxParsedStackLength)
+                    // 1) Check if we have exceeded MaxFrames.
+                    if (orderedStackTrace.Count == SchemaConstants.ExceptionDetails_Stack_MaxFrames)
                     {
                         hasFullStack = false;
                         break;
                     }
 
-                    orderedStackTrace.Insert(orderedStackTrace.Count / 2, convertedStackFrame);
+                    // 2) Skip middle part of the stack.
+                    // This algorithm will select FRAMES from beginning and end of the collection.
+                    // Once the LENGTH exceeds max, any remaining FRAMES in the middle of the collection will be ignored.
+                    // Example: Assuming frames.Length == 10
+                    // counter: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+                    // index:   9, 0, 8, 1, 7, 2, 6, 3, 5, 4
+                    int index = (counter % 2 == 0) ? (frames.Length - 1 - (counter / 2)) : (counter / 2);
+
+                    var convertedStackFrame = new StackFrame(frames[index], index);
+                    totalLength += convertedStackFrame.GetStackFrameLength();
+
+                    if (totalLength > SchemaConstants.ExceptionDetails_Stack_MaxLength)
+                    {
+                        hasFullStack = false;
+                        break;
+                    }
+                    else
+                    {
+                        // Always insert FRAMES in the middle of the new collection to preserve original order.
+                        orderedStackTrace.Insert(orderedStackTrace.Count / 2, convertedStackFrame);
+                    }
                 }
             }
 
-            return new Tuple<List<TOutput>, bool>(orderedStackTrace, hasFullStack);
+            return orderedStackTrace;
         }
     }
 }

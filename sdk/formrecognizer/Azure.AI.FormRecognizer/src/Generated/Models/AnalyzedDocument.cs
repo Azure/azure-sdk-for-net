@@ -18,10 +18,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
-        /// <param name="fields"> Dictionary of named field values. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="docType"/>, <paramref name="spans"/> or <paramref name="fields"/> is null. </exception>
-        internal AnalyzedDocument(string docType, IEnumerable<DocumentSpan> spans, IReadOnlyDictionary<string, DocumentField> fields, float confidence)
+        /// <exception cref="ArgumentNullException"> <paramref name="docType"/> or <paramref name="spans"/> is null. </exception>
+        internal AnalyzedDocument(string docType, IEnumerable<DocumentSpan> spans, float confidence)
         {
             if (docType == null)
             {
@@ -31,15 +30,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 throw new ArgumentNullException(nameof(spans));
             }
-            if (fields == null)
-            {
-                throw new ArgumentNullException(nameof(fields));
-            }
 
             DocType = docType;
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = spans.ToList();
-            Fields = fields;
+            Fields = new ChangeTrackingDictionary<string, DocumentField>();
             Confidence = confidence;
         }
 

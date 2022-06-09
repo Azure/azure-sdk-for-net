@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KeyVault
         protected DeletedManagedHsmResource() { }
         public virtual Azure.ResourceManager.KeyVault.DeletedManagedHsmData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string name) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string name) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.DeletedManagedHsmResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.DeletedManagedHsmResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation PurgeDeleted(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault
         protected DeletedVaultResource() { }
         public virtual Azure.ResourceManager.KeyVault.DeletedVaultData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string vaultName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string vaultName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.DeletedVaultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.DeletedVaultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation PurgeDeleted(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.KeyVault
     }
     public static partial class KeyVaultExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.KeyVault.Models.CheckNameAvailabilityResult> CheckKeyVaultNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.KeyVault.Models.VaultCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.CheckNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.KeyVault.Models.VaultCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.KeyVault.Models.VaultNameAvailabilityResult> CheckVaultNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.KeyVault.Models.VaultNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.VaultNameAvailabilityResult>> CheckVaultNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.KeyVault.Models.VaultNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.KeyVault.DeletedManagedHsmResource> GetDeletedManagedHsm(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.DeletedManagedHsmResource>> GetDeletedManagedHsmAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.KeyVault.DeletedManagedHsmResource GetDeletedManagedHsmResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -347,13 +347,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.CertificatePermission left, Azure.ResourceManager.KeyVault.Models.CertificatePermission right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CheckNameAvailabilityResult
-    {
-        internal CheckNameAvailabilityResult() { }
-        public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.NameAvailabilityReason? Reason { get { throw null; } }
-    }
     public enum CreateMode
     {
         Default = 0,
@@ -534,7 +527,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class ManagedHsmNetworkRuleSet
     {
         public ManagedHsmNetworkRuleSet() { }
-        public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions? Bypass { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
@@ -635,27 +628,27 @@ namespace Azure.ResourceManager.KeyVault.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkRuleBypassOptions : System.IEquatable<Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions>
+    public readonly partial struct NetworkRuleBypassOption : System.IEquatable<Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public NetworkRuleBypassOptions(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions AzureServices { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions other) { throw null; }
+        public NetworkRuleBypassOption(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption AzureServices { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions left, Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions left, Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption left, Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption left, Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class NetworkRuleSet
     {
         public NetworkRuleSet() { }
-        public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOptions? Bypass { get { throw null; } set { } }
+        public Azure.ResourceManager.KeyVault.Models.NetworkRuleBypassOption? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.KeyVault.Models.NetworkRuleAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.IPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
@@ -763,12 +756,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public VaultAccessPolicyProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> accessPolicies) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.KeyVault.Models.AccessPolicyEntry> AccessPolicies { get { throw null; } }
     }
-    public partial class VaultCheckNameAvailabilityContent
-    {
-        public VaultCheckNameAvailabilityContent(string name) { }
-        public string Name { get { throw null; } }
-        public Azure.Core.ResourceType ResourceType { get { throw null; } }
-    }
     public enum VaultCreateMode
     {
         Default = 0,
@@ -780,6 +767,19 @@ namespace Azure.ResourceManager.KeyVault.Models
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.KeyVault.Models.VaultProperties Properties { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class VaultNameAvailabilityContent
+    {
+        public VaultNameAvailabilityContent(string name) { }
+        public string Name { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
+    }
+    public partial class VaultNameAvailabilityResult
+    {
+        internal VaultNameAvailabilityResult() { }
+        public string Message { get { throw null; } }
+        public bool? NameAvailable { get { throw null; } }
+        public Azure.ResourceManager.KeyVault.Models.NameAvailabilityReason? Reason { get { throw null; } }
     }
     public partial class VaultPatch
     {

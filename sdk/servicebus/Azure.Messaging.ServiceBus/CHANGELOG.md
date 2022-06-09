@@ -1,6 +1,6 @@
 # Release History
 
-## 7.9.0-beta.1 (Unreleased)
+## 7.9.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 7.9.0-beta.1 (2022-06-06)
+
+### Features Added
+
+- Added `ServiceBusRuleManager` for managing rules.
+
+### Bugs Fixed
+
+- Updated behavior of `ServiceBusSessionReceiver.IsClosed` to return `true` if the underlying link was closed.
+
+### Other Changes
+
+- Include lock token in additional event source logs.
 
 ## 7.8.1 (2022-05-16)
 
