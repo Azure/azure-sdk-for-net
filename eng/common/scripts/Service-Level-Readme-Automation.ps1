@@ -38,45 +38,9 @@ param(
 )
 . $PSScriptRoot/common.ps1
 . $PSScriptRoot/Helpers/Metadata-Helpers.ps1
+. $PSScriptRoot/Helpers/Package-Helpers.ps1
 
 Set-StrictMode -Version 3
-
-function GetPackageKey($pkg) {
-  $pkgKey = $pkg.Package
-  $groupId = $null
-
-  if ($pkg.PSObject.Members.Name -contains "GroupId") {
-    $groupId = $pkg.GroupId
-  }
-
-  if ($groupId) {
-    $pkgKey = "${groupId}:${pkgKey}"
-  }
-
-  return $pkgKey
-}
-
-function GetPackageLookup($packageList) {
-  $packageLookup = @{}
-
-  foreach ($pkg in $packageList) {
-    $pkgKey = GetPackageKey $pkg
-
-    # We want to prefer updating non-hidden packages but if there is only
-    # a hidden entry then we will return that
-    if (!$packageLookup.ContainsKey($pkgKey) -or $packageLookup[$pkgKey].Hide -eq "true") {
-      $packageLookup[$pkgKey] = $pkg
-    }
-    else {
-      # Warn if there are more then one non-hidden package
-      if ($pkg.Hide -ne "true") {
-        Write-Host "Found more than one package entry for $($pkg.Package) selecting the first non-hidden one."
-      }
-    }
-  }
-
-  return $packageLookup
-}
 
 function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService, $clientTableLink, $mgmtTableLink, $serviceName)
 {
@@ -109,16 +73,11 @@ function CompareAndValidateMetadata ($original, $updated) {
   $updatedTable = ConvertFrom-StringData -StringData $updated -Delimiter ":"
   foreach ($key in $originalTable.Keys) {
     if (!($updatedTable.ContainsKey($key))) {
-      Write-Warning "New metadata missed the entry: $key"
+      Write-Warning "New metadata missed the entry: $key. Adding back."
+      $updatedTable[$key] = $originalTable[$key]
     }
-    if ($updatedTable[$key] -ne $originalTable[$key]) {
-      Write-Warning "Will update metadata from old value $($originalTable[$key]) to new value $($updatedTable[$key])"
-    }
-    $updatedTable.Remove($key)
   }
-  foreach ($key in $updatedTable.Keys) {
-    Write-Host "Will update new entry $key with value $updatedTable[$key]"
-  }
+  return updated
 }
 
 # Update the metadata table.
@@ -135,8 +94,8 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
     -msService $msService
   $null = $metadataString -match "---`n*(?<metadata>(.*`n)*)---"
-  CompareAndValidateMetadata -original $orignalMetadata -updated $Matches["metadata"]
-  Set-Content -Path $readmePath -Value "$metadataString`n$restContent" -NoNewline
+  $mergedMetadata = CompareAndmergeMetadata -original $orignalMetadata -updated $Matches["metadata"]
+  Set-Content -Path $readmePath -Value "$mergedMetadata`n$restContent" -NoNewline
 }
 
 function generate-markdown-table($readmeFolder, $readmeName, $packageInfo, $moniker) {
@@ -257,3 +216,4 @@ foreach($moniker in $monikers) {
       -packageInfos $servicePackages -serviceName $service -moniker $moniker
   }
 }
+
