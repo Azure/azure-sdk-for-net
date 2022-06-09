@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupSubnetId DeserializeContainerGroupSubnetId(JsonElement element)
         {
-            string id = default;
+            ResourceIdentifier id = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))

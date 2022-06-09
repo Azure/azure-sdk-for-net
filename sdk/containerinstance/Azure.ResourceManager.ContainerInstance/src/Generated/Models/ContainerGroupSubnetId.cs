@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerGroupSubnetId. </summary>
         /// <param name="id"> Resource ID of virtual network and subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ContainerGroupSubnetId(string id)
+        public ContainerGroupSubnetId(ResourceIdentifier id)
         {
             if (id == null)
             {
@@ -28,14 +29,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerGroupSubnetId. </summary>
         /// <param name="id"> Resource ID of virtual network and subnet. </param>
         /// <param name="name"> Friendly name for the subnet. </param>
-        internal ContainerGroupSubnetId(string id, string name)
+        internal ContainerGroupSubnetId(ResourceIdentifier id, string name)
         {
             Id = id;
             Name = name;
         }
 
         /// <summary> Resource ID of virtual network and subnet. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Friendly name for the subnet. </summary>
         public string Name { get; set; }
     }

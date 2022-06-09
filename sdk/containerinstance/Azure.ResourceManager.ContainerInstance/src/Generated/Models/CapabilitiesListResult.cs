@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of CapabilitiesListResult. </summary>
         internal CapabilitiesListResult()
         {
-            Value = new ChangeTrackingList<Capabilities>();
+            Value = new ChangeTrackingList<ContainerInstanceCapabilities>();
         }
 
         /// <summary> Initializes a new instance of CapabilitiesListResult. </summary>
         /// <param name="value"> The list of capabilities. </param>
         /// <param name="nextLink"> The URI to fetch the next page of capabilities. </param>
-        internal CapabilitiesListResult(IReadOnlyList<Capabilities> value, string nextLink)
+        internal CapabilitiesListResult(IReadOnlyList<ContainerInstanceCapabilities> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of capabilities. </summary>
-        public IReadOnlyList<Capabilities> Value { get; }
+        public IReadOnlyList<ContainerInstanceCapabilities> Value { get; }
         /// <summary> The URI to fetch the next page of capabilities. </summary>
         public string NextLink { get; }
     }

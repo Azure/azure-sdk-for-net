@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The init container definition. </summary>
-    public partial class InitContainerDefinition
+    public partial class InitContainerDefinitionContent
     {
-        /// <summary> Initializes a new instance of InitContainerDefinition. </summary>
+        /// <summary> Initializes a new instance of InitContainerDefinitionContent. </summary>
         /// <param name="name"> The name for the init container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public InitContainerDefinition(string name)
+        public InitContainerDefinitionContent(string name)
         {
             if (name == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             VolumeMounts = new ChangeTrackingList<VolumeMount>();
         }
 
-        /// <summary> Initializes a new instance of InitContainerDefinition. </summary>
+        /// <summary> Initializes a new instance of InitContainerDefinitionContent. </summary>
         /// <param name="name"> The name for the init container. </param>
         /// <param name="image"> The image of the init container. </param>
         /// <param name="command"> The command to execute within the init container in exec form. </param>
         /// <param name="environmentVariables"> The environment variables to set in the init container. </param>
         /// <param name="instanceView"> The instance view of the init container. Only valid in response. </param>
         /// <param name="volumeMounts"> The volume mounts available to the init container. </param>
-        internal InitContainerDefinition(string name, string image, IList<string> command, IList<EnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IList<VolumeMount> volumeMounts)
+        internal InitContainerDefinitionContent(string name, string image, IList<string> command, IList<EnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IList<VolumeMount> volumeMounts)
         {
             Name = name;
             Image = image;

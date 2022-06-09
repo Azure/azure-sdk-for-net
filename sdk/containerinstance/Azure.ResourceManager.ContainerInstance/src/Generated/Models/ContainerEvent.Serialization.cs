@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class Event
+    public partial class ContainerEvent
     {
-        internal static Event DeserializeEvent(JsonElement element)
+        internal static ContainerEvent DeserializeContainerEvent(JsonElement element)
         {
             Optional<int> count = default;
             Optional<DateTimeOffset> firstTimestamp = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new Event(Optional.ToNullable(count), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), name.Value, message.Value, type.Value);
+            return new ContainerEvent(Optional.ToNullable(count), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), name.Value, message.Value, type.Value);
         }
     }
 }

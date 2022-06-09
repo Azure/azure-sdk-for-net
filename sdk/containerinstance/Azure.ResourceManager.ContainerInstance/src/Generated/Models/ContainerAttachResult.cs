@@ -10,17 +10,17 @@ using System;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The information for the output stream from container attach. </summary>
-    public partial class ContainerAttachResponse
+    public partial class ContainerAttachResult
     {
-        /// <summary> Initializes a new instance of ContainerAttachResponse. </summary>
-        internal ContainerAttachResponse()
+        /// <summary> Initializes a new instance of ContainerAttachResult. </summary>
+        internal ContainerAttachResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAttachResponse. </summary>
+        /// <summary> Initializes a new instance of ContainerAttachResult. </summary>
         /// <param name="webSocketUri"> The uri for the output stream from the attach. </param>
         /// <param name="password"> The password to the output stream from the attach. Send as an Authorization header value when connecting to the websocketUri. </param>
-        internal ContainerAttachResponse(Uri webSocketUri, string password)
+        internal ContainerAttachResult(Uri webSocketUri, string password)
         {
             WebSocketUri = webSocketUri;
             Password = password;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerGroupPropertiesInstanceView DeserializeContainerGroupPropertiesInstanceView(JsonElement element)
         {
-            Optional<IReadOnlyList<Event>> events = default;
+            Optional<IReadOnlyList<ContainerEvent>> events = default;
             Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Event> array = new List<Event>();
+                    List<ContainerEvent> array = new List<ContainerEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Event.DeserializeEvent(item));
+                        array.Add(ContainerEvent.DeserializeContainerEvent(item));
                     }
                     events = array;
                     continue;

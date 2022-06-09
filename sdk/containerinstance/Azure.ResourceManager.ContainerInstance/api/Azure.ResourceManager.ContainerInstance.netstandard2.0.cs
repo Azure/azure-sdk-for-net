@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ContainerInstance
     }
     public partial class ContainerGroupData : Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPatch
     {
-        public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.Container> containers, Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes osType) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.Container> Containers { get { throw null; } }
+        public ContainerGroupData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> containers, Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes osType) : base (default(Azure.Core.AzureLocation)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceContainer> Containers { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.LogAnalytics DiagnosticsLogAnalytics { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.DnsConfiguration DnsConfig { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.EncryptionProperties EncryptionProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ImageRegistryCredential> ImageRegistryCredentials { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinition> InitContainers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.InitContainerDefinitionContent> InitContainers { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupPropertiesInstanceView InstanceView { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.IPAddress IPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes OSType { get { throw null; } set { } }
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupRestartPolicy? RestartPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSku? Sku { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerGroupSubnetId> SubnetIds { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.Volume> Volumes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceVolume> Volumes { get { throw null; } }
     }
     public partial class ContainerGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.ContainerInstance
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.Models.ContainerAttachResponse> AttachContainer(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.Models.ContainerAttachResponse>> AttachContainerAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.Models.ContainerAttachResult> AttachContainer(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.Models.ContainerAttachResult>> AttachContainerAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerGroupName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.Models.ContainerExecResponse> ExecuteCommandContainer(string containerName, Azure.ResourceManager.ContainerInstance.Models.ContainerExecContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.Models.ContainerExecResponse>> ExecuteCommandContainerAsync(string containerName, Azure.ResourceManager.ContainerInstance.Models.ContainerExecContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.Models.ContainerExecResult> ExecuteCommandContainer(string containerName, Azure.ResourceManager.ContainerInstance.Models.ContainerExecContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.Models.ContainerExecResult>> ExecuteCommandContainerAsync(string containerName, Azure.ResourceManager.ContainerInstance.Models.ContainerExecContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.Models.Logs> GetLogsContainer(string containerName, int? tail = default(int?), bool? timestamps = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.Models.Logs>> GetLogsContainerAsync(string containerName, int? tail = default(int?), bool? timestamps = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.Models.ContainerLogs> GetLogsContainer(string containerName, int? tail = default(int?), bool? timestamps = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.Models.ContainerLogs>> GetLogsContainerAsync(string containerName, int? tail = default(int?), bool? timestamps = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<string> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<string> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -70,18 +70,18 @@ namespace Azure.ResourceManager.ContainerInstance
     }
     public static partial class ContainerInstanceExtensions
     {
-        public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesLocations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesLocationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.Capabilities> GetCapabilitiesLocations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.Capabilities> GetCapabilitiesLocationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceCapabilities> GetCapabilitiesWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceCapabilities> GetCapabilitiesWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> GetContainerGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string containerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>> GetContainerGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string containerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.ContainerGroupResource GetContainerGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.ContainerGroupCollection GetContainerGroups(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> GetContainerGroups(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> GetContainerGroupsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage> GetUsageLocations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage> GetUsageLocationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage> GetUsageWithLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.ContainerInstanceUsage> GetUsageWithLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -121,41 +121,28 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Image { get { throw null; } }
         public string OSType { get { throw null; } }
     }
-    public partial class Capabilities : Azure.ResourceManager.Models.ResourceData
+    public partial class Capabilities
     {
         internal Capabilities() { }
-        public Azure.ResourceManager.ContainerInstance.Models.CapabilitiesCapabilities CapabilitiesValue { get { throw null; } }
-        public string Gpu { get { throw null; } }
-        public string IPAddressType { get { throw null; } }
-        public string Location { get { throw null; } }
-        public string OSType { get { throw null; } }
-    }
-    public partial class CapabilitiesCapabilities
-    {
-        internal CapabilitiesCapabilities() { }
         public float? MaxCpu { get { throw null; } }
         public float? MaxGpuCount { get { throw null; } }
         public float? MaxMemoryInGB { get { throw null; } }
     }
-    public partial class Container
+    public partial class ContainerAttachResult
     {
-        public Container(string name, string image, Azure.ResourceManager.ContainerInstance.Models.ResourceRequirements resources) { }
-        public System.Collections.Generic.IList<string> Command { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
-        public string Image { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerInstance.Models.ContainerPropertiesInstanceView InstanceView { get { throw null; } }
-        public Azure.ResourceManager.ContainerInstance.Models.ContainerProbe LivenessProbe { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerPort> Ports { get { throw null; } }
-        public Azure.ResourceManager.ContainerInstance.Models.ContainerProbe ReadinessProbe { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerInstance.Models.ResourceRequirements Resources { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.VolumeMount> VolumeMounts { get { throw null; } }
-    }
-    public partial class ContainerAttachResponse
-    {
-        internal ContainerAttachResponse() { }
+        internal ContainerAttachResult() { }
         public string Password { get { throw null; } }
         public System.Uri WebSocketUri { get { throw null; } }
+    }
+    public partial class ContainerEvent
+    {
+        internal ContainerEvent() { }
+        public string ContainerEventType { get { throw null; } }
+        public int? Count { get { throw null; } }
+        public System.DateTimeOffset? FirstTimestamp { get { throw null; } }
+        public System.DateTimeOffset? LastTimestamp { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Name { get { throw null; } }
     }
     public partial class ContainerExecContent
     {
@@ -169,9 +156,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public int? Cols { get { throw null; } set { } }
         public int? Rows { get { throw null; } set { } }
     }
-    public partial class ContainerExecResponse
+    public partial class ContainerExecResult
     {
-        internal ContainerExecResponse() { }
+        internal ContainerExecResult() { }
         public string Password { get { throw null; } }
         public System.Uri WebSocketUri { get { throw null; } }
     }
@@ -199,8 +186,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ContainerGroupNetworkProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol TCP { get { throw null; } }
-        public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol UDP { get { throw null; } }
+        public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol Tcp { get { throw null; } }
+        public static Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerGroupNetworkProtocol other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -219,7 +206,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public partial class ContainerGroupPropertiesInstanceView
     {
         internal ContainerGroupPropertiesInstanceView() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerInstance.Models.Event> Events { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerInstance.Models.ContainerEvent> Events { get { throw null; } }
         public string State { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -261,8 +248,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class ContainerGroupSubnetId
     {
-        public ContainerGroupSubnetId(string id) { }
-        public string Id { get { throw null; } set { } }
+        public ContainerGroupSubnetId(Azure.Core.ResourceIdentifier id) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     public partial class ContainerHttpGet
@@ -273,6 +260,29 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public int Port { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerInstance.Models.Scheme? Scheme { get { throw null; } set { } }
     }
+    public partial class ContainerInstanceCapabilities : Azure.ResourceManager.Models.ResourceData
+    {
+        internal ContainerInstanceCapabilities() { }
+        public Azure.ResourceManager.ContainerInstance.Models.Capabilities Capabilities { get { throw null; } }
+        public string Gpu { get { throw null; } }
+        public string IPAddressType { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public string OSType { get { throw null; } }
+    }
+    public partial class ContainerInstanceContainer
+    {
+        public ContainerInstanceContainer(string name, string image, Azure.ResourceManager.ContainerInstance.Models.ResourceRequirements resources) { }
+        public System.Collections.Generic.IList<string> Command { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
+        public string Image { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.ContainerPropertiesInstanceView InstanceView { get { throw null; } }
+        public Azure.ResourceManager.ContainerInstance.Models.ContainerProbe LivenessProbe { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.ContainerPort> Ports { get { throw null; } }
+        public Azure.ResourceManager.ContainerInstance.Models.ContainerProbe ReadinessProbe { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.ResourceRequirements Resources { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.VolumeMount> VolumeMounts { get { throw null; } }
+    }
     public partial class ContainerInstanceUsage
     {
         internal ContainerInstanceUsage() { }
@@ -281,14 +291,28 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public Azure.ResourceManager.ContainerInstance.Models.UsageName Name { get { throw null; } }
         public string Unit { get { throw null; } }
     }
+    public partial class ContainerInstanceVolume
+    {
+        public ContainerInstanceVolume(string name) { }
+        public Azure.ResourceManager.ContainerInstance.Models.AzureFileVolume AzureFile { get { throw null; } set { } }
+        public System.BinaryData EmptyDir { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerInstance.Models.GitRepoVolume GitRepo { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Secret { get { throw null; } }
+    }
+    public partial class ContainerLogs
+    {
+        internal ContainerLogs() { }
+        public string Content { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerNetworkProtocol : System.IEquatable<Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ContainerNetworkProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol TCP { get { throw null; } }
-        public static Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol UDP { get { throw null; } }
+        public static Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol Tcp { get { throw null; } }
+        public static Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerInstance.Models.ContainerNetworkProtocol other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -320,7 +344,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal ContainerPropertiesInstanceView() { }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerState CurrentState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerInstance.Models.Event> Events { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerInstance.Models.ContainerEvent> Events { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerState PreviousState { get { throw null; } }
         public int? RestartCount { get { throw null; } }
     }
@@ -353,16 +377,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Name { get { throw null; } set { } }
         public string SecureValue { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
-    }
-    public partial class Event
-    {
-        internal Event() { }
-        public int? Count { get { throw null; } }
-        public string EventType { get { throw null; } }
-        public System.DateTimeOffset? FirstTimestamp { get { throw null; } }
-        public System.DateTimeOffset? LastTimestamp { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Name { get { throw null; } }
     }
     public partial class GitRepoVolume
     {
@@ -411,9 +425,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Server { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
-    public partial class InitContainerDefinition
+    public partial class InitContainerDefinitionContent
     {
-        public InitContainerDefinition(string name) { }
+        public InitContainerDefinitionContent(string name) { }
         public System.Collections.Generic.IList<string> Command { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerInstance.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
         public string Image { get { throw null; } set { } }
@@ -425,7 +439,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal InitContainerPropertiesDefinitionInstanceView() { }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerState CurrentState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerInstance.Models.Event> Events { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerInstance.Models.ContainerEvent> Events { get { throw null; } }
         public Azure.ResourceManager.ContainerInstance.Models.ContainerState PreviousState { get { throw null; } }
         public int? RestartCount { get { throw null; } }
     }
@@ -441,10 +455,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     }
     public partial class LogAnalytics
     {
-        public LogAnalytics(string workspaceId, string workspaceKey) { }
+        public LogAnalytics(Azure.Core.ResourceIdentifier workspaceId, string workspaceKey) { }
         public Azure.ResourceManager.ContainerInstance.Models.LogAnalyticsLogType? LogType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
-        public string WorkspaceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier WorkspaceId { get { throw null; } set { } }
         public string WorkspaceKey { get { throw null; } set { } }
         public string WorkspaceResourceId { get { throw null; } set { } }
     }
@@ -465,11 +479,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static implicit operator Azure.ResourceManager.ContainerInstance.Models.LogAnalyticsLogType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerInstance.Models.LogAnalyticsLogType left, Azure.ResourceManager.ContainerInstance.Models.LogAnalyticsLogType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class Logs
-    {
-        internal Logs() { }
-        public string Content { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperatingSystemTypes : System.IEquatable<Azure.ResourceManager.ContainerInstance.Models.OperatingSystemTypes>
@@ -538,15 +547,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         internal UsageName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
-    }
-    public partial class Volume
-    {
-        public Volume(string name) { }
-        public Azure.ResourceManager.ContainerInstance.Models.AzureFileVolume AzureFile { get { throw null; } set { } }
-        public System.BinaryData EmptyDir { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerInstance.Models.GitRepoVolume GitRepo { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Secret { get { throw null; } }
     }
     public partial class VolumeMount
     {

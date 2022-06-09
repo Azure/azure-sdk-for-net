@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<int> restartCount = default;
             Optional<ContainerState> currentState = default;
             Optional<ContainerState> previousState = default;
-            Optional<IReadOnlyList<Event>> events = default;
+            Optional<IReadOnlyList<ContainerEvent>> events = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restartCount"))
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Event> array = new List<Event>();
+                    List<ContainerEvent> array = new List<ContainerEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Event.DeserializeEvent(item));
+                        array.Add(ContainerEvent.DeserializeContainerEvent(item));
                     }
                     events = array;
                     continue;

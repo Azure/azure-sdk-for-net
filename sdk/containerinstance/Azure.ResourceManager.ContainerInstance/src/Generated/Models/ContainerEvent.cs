@@ -10,28 +10,28 @@ using System;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> A container group or container instance event. </summary>
-    public partial class Event
+    public partial class ContainerEvent
     {
-        /// <summary> Initializes a new instance of Event. </summary>
-        internal Event()
+        /// <summary> Initializes a new instance of ContainerEvent. </summary>
+        internal ContainerEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of Event. </summary>
+        /// <summary> Initializes a new instance of ContainerEvent. </summary>
         /// <param name="count"> The count of the event. </param>
         /// <param name="firstTimestamp"> The date-time of the earliest logged event. </param>
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>
         /// <param name="name"> The event name. </param>
         /// <param name="message"> The event message. </param>
-        /// <param name="eventType"> The event type. </param>
-        internal Event(int? count, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, string name, string message, string eventType)
+        /// <param name="containerEventType"> The event type. </param>
+        internal ContainerEvent(int? count, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, string name, string message, string containerEventType)
         {
             Count = count;
             FirstTimestamp = firstTimestamp;
             LastTimestamp = lastTimestamp;
             Name = name;
             Message = message;
-            EventType = eventType;
+            ContainerEventType = containerEventType;
         }
 
         /// <summary> The count of the event. </summary>
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The event message. </summary>
         public string Message { get; }
         /// <summary> The event type. </summary>
-        public string EventType { get; }
+        public string ContainerEventType { get; }
     }
 }

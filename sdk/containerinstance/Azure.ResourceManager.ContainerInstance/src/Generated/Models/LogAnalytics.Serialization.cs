@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static LogAnalytics DeserializeLogAnalytics(JsonElement element)
         {
-            string workspaceId = default;
+            ResourceIdentifier workspaceId = default;
             string workspaceKey = default;
             Optional<LogAnalyticsLogType> logType = default;
             Optional<IDictionary<string, string>> metadata = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 if (property.NameEquals("workspaceId"))
                 {
-                    workspaceId = property.Value.GetString();
+                    workspaceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("workspaceKey"))

@@ -12,14 +12,14 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> A container instance. </summary>
-    public partial class Container
+    public partial class ContainerInstanceContainer
     {
-        /// <summary> Initializes a new instance of Container. </summary>
+        /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
         /// <param name="image"> The name of the image used to create the container instance. </param>
         /// <param name="resources"> The resource requirements of the container instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="image"/> or <paramref name="resources"/> is null. </exception>
-        public Container(string name, string image, ResourceRequirements resources)
+        public ContainerInstanceContainer(string name, string image, ResourceRequirements resources)
         {
             if (name == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             VolumeMounts = new ChangeTrackingList<VolumeMount>();
         }
 
-        /// <summary> Initializes a new instance of Container. </summary>
+        /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
         /// <param name="image"> The name of the image used to create the container instance. </param>
         /// <param name="command"> The commands to execute within the container instance in exec form. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="volumeMounts"> The volume mounts available to the container instance. </param>
         /// <param name="livenessProbe"> The liveness probe. </param>
         /// <param name="readinessProbe"> The readiness probe. </param>
-        internal Container(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<EnvironmentVariable> environmentVariables, ContainerPropertiesInstanceView instanceView, ResourceRequirements resources, IList<VolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe)
+        internal ContainerInstanceContainer(string name, string image, IList<string> command, IList<ContainerPort> ports, IList<EnvironmentVariable> environmentVariables, ContainerPropertiesInstanceView instanceView, ResourceRequirements resources, IList<VolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe)
         {
             Name = name;
             Image = image;

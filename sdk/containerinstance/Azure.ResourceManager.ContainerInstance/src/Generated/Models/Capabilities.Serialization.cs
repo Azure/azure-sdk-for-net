@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -15,69 +14,43 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static Capabilities DeserializeCapabilities(JsonElement element)
         {
-            Optional<string> osType = default;
-            Optional<string> location = default;
-            Optional<string> ipAddressType = default;
-            Optional<string> gpu = default;
-            Optional<CapabilitiesCapabilities> capabilities = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
+            Optional<float> maxMemoryInGB = default;
+            Optional<float> maxCpu = default;
+            Optional<float> maxGpuCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osType"))
-                {
-                    osType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ipAddressType"))
-                {
-                    ipAddressType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("gpu"))
-                {
-                    gpu = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("capabilities"))
+                if (property.NameEquals("maxMemoryInGB"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capabilities = CapabilitiesCapabilities.DeserializeCapabilitiesCapabilities(property.Value);
+                    maxMemoryInGB = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("maxCpu"))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    maxCpu = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("maxGpuCount"))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    maxGpuCount = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new Capabilities(id, name, type, systemData, osType.Value, location.Value, ipAddressType.Value, gpu.Value, capabilities.Value);
+            return new Capabilities(Optional.ToNullable(maxMemoryInGB), Optional.ToNullable(maxCpu), Optional.ToNullable(maxGpuCount));
         }
     }
 }

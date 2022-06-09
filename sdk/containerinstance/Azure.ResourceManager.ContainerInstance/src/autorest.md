@@ -32,5 +32,39 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  TCP: Tcp
+  UDP: Udp
 
+override-operation-name:
+  Location_ListCachedImages: GetCachedImagesWithLocation
+  Location_ListCapabilities: GetCapabilitiesWithLocation
+  Location_ListUsage: GetUsageWithLocation
+
+directive:
+  - rename-model:
+      from: Container
+      to: ContainerInstanceContainer
+  - rename-model:
+      from: Volume
+      to: ContainerInstanceVolume
+  - rename-model:
+      from: Logs
+      to: ContainerLogs
+  - rename-model:
+      from: Event
+      to: ContainerEvent
+      
+  - from: containerInstance.json
+    where: $.definitions
+    transform: >
+      $.ContainerAttachResponse["x-ms-client-name"] = "ContainerAttachResult";
+      $.ContainerExecResponse["x-ms-client-name"] = "ContainerExecResult";
+      $.Capabilities["x-ms-client-name"] = "ContainerInstanceCapabilities";
+      $.Capabilities.properties.location["x-ms-format"] = "azure-location";
+      $.ContainerGroupSubnetId.properties.id["x-ms-format"] = "arm-id";
+      $.InitContainerDefinition["x-ms-client-name"] = "InitContainerDefinitionContent";
+      $.LogAnalytics.properties.workspaceId["x-ms-format"] = "arm-id";
+  - from: swagger-document
+    where: $.definitions.ContainerHttpGet.scheme["x-ms-enum"]
+    transform: $["name"] = "ContainerInstanceScheme"
 ```

@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerGroupPropertiesInstanceView. </summary>
         internal ContainerGroupPropertiesInstanceView()
         {
-            Events = new ChangeTrackingList<Event>();
+            Events = new ChangeTrackingList<ContainerEvent>();
         }
 
         /// <summary> Initializes a new instance of ContainerGroupPropertiesInstanceView. </summary>
         /// <param name="events"> The events of this container group. </param>
         /// <param name="state"> The state of the container group. Only valid in response. </param>
-        internal ContainerGroupPropertiesInstanceView(IReadOnlyList<Event> events, string state)
+        internal ContainerGroupPropertiesInstanceView(IReadOnlyList<ContainerEvent> events, string state)
         {
             Events = events;
             State = state;
         }
 
         /// <summary> The events of this container group. </summary>
-        public IReadOnlyList<Event> Events { get; }
+        public IReadOnlyList<ContainerEvent> Events { get; }
         /// <summary> The state of the container group. Only valid in response. </summary>
         public string State { get; }
     }

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TCPValue = "TCP";
-        private const string UDPValue = "UDP";
+        private const string TcpValue = "TCP";
+        private const string UdpValue = "UDP";
 
         /// <summary> TCP. </summary>
-        public static ContainerGroupNetworkProtocol TCP { get; } = new ContainerGroupNetworkProtocol(TCPValue);
+        public static ContainerGroupNetworkProtocol Tcp { get; } = new ContainerGroupNetworkProtocol(TcpValue);
         /// <summary> UDP. </summary>
-        public static ContainerGroupNetworkProtocol UDP { get; } = new ContainerGroupNetworkProtocol(UDPValue);
+        public static ContainerGroupNetworkProtocol Udp { get; } = new ContainerGroupNetworkProtocol(UdpValue);
         /// <summary> Determines if two <see cref="ContainerGroupNetworkProtocol"/> values are the same. </summary>
         public static bool operator ==(ContainerGroupNetworkProtocol left, ContainerGroupNetworkProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupNetworkProtocol"/> values are not the same. </summary>

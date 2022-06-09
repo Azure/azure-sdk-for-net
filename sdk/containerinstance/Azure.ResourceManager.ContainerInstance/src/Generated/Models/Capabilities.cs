@@ -5,13 +5,10 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.ResourceManager.Models;
-
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The regional capabilities. </summary>
-    public partial class Capabilities : ResourceData
+    /// <summary> The supported capabilities. </summary>
+    public partial class Capabilities
     {
         /// <summary> Initializes a new instance of Capabilities. </summary>
         internal Capabilities()
@@ -19,33 +16,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Initializes a new instance of Capabilities. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="osType"> The OS type that this capability describes. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="ipAddressType"> The ip address type that this capability describes. </param>
-        /// <param name="gpu"> The GPU sku that this capability describes. </param>
-        /// <param name="capabilitiesValue"> The supported capabilities. </param>
-        internal Capabilities(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string osType, string location, string ipAddressType, string gpu, CapabilitiesCapabilities capabilitiesValue) : base(id, name, resourceType, systemData)
+        /// <param name="maxMemoryInGB"> The maximum allowed memory request in GB. </param>
+        /// <param name="maxCpu"> The maximum allowed CPU request in cores. </param>
+        /// <param name="maxGpuCount"> The maximum allowed GPU count. </param>
+        internal Capabilities(float? maxMemoryInGB, float? maxCpu, float? maxGpuCount)
         {
-            OSType = osType;
-            Location = location;
-            IPAddressType = ipAddressType;
-            Gpu = gpu;
-            CapabilitiesValue = capabilitiesValue;
+            MaxMemoryInGB = maxMemoryInGB;
+            MaxCpu = maxCpu;
+            MaxGpuCount = maxGpuCount;
         }
 
-        /// <summary> The OS type that this capability describes. </summary>
-        public string OSType { get; }
-        /// <summary> The resource location. </summary>
-        public string Location { get; }
-        /// <summary> The ip address type that this capability describes. </summary>
-        public string IPAddressType { get; }
-        /// <summary> The GPU sku that this capability describes. </summary>
-        public string Gpu { get; }
-        /// <summary> The supported capabilities. </summary>
-        public CapabilitiesCapabilities CapabilitiesValue { get; }
+        /// <summary> The maximum allowed memory request in GB. </summary>
+        public float? MaxMemoryInGB { get; }
+        /// <summary> The maximum allowed CPU request in cores. </summary>
+        public float? MaxCpu { get; }
+        /// <summary> The maximum allowed GPU count. </summary>
+        public float? MaxGpuCount { get; }
     }
 }

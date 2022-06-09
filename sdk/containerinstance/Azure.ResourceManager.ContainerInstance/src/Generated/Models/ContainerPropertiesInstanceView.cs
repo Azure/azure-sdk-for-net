@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerPropertiesInstanceView. </summary>
         internal ContainerPropertiesInstanceView()
         {
-            Events = new ChangeTrackingList<Event>();
+            Events = new ChangeTrackingList<ContainerEvent>();
         }
 
         /// <summary> Initializes a new instance of ContainerPropertiesInstanceView. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="currentState"> Current container instance state. </param>
         /// <param name="previousState"> Previous container instance state. </param>
         /// <param name="events"> The events of the container instance. </param>
-        internal ContainerPropertiesInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, IReadOnlyList<Event> events)
+        internal ContainerPropertiesInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, IReadOnlyList<ContainerEvent> events)
         {
             RestartCount = restartCount;
             CurrentState = currentState;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Previous container instance state. </summary>
         public ContainerState PreviousState { get; }
         /// <summary> The events of the container instance. </summary>
-        public IReadOnlyList<Event> Events { get; }
+        public IReadOnlyList<ContainerEvent> Events { get; }
     }
 }

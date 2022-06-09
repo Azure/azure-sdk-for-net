@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerAttachResponse
+    public partial class ContainerExecResult
     {
-        internal static ContainerAttachResponse DeserializeContainerAttachResponse(JsonElement element)
+        internal static ContainerExecResult DeserializeContainerExecResult(JsonElement element)
         {
             Optional<Uri> webSocketUri = default;
             Optional<string> password = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerAttachResponse(webSocketUri.Value, password.Value);
+            return new ContainerExecResult(webSocketUri.Value, password.Value);
         }
     }
 }

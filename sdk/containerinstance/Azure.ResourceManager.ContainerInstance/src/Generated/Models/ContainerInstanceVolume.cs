@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The properties of the volume. </summary>
-    public partial class Volume
+    public partial class ContainerInstanceVolume
     {
-        /// <summary> Initializes a new instance of Volume. </summary>
+        /// <summary> Initializes a new instance of ContainerInstanceVolume. </summary>
         /// <param name="name"> The name of the volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Volume(string name)
+        public ContainerInstanceVolume(string name)
         {
             if (name == null)
             {
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Secret = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of Volume. </summary>
+        /// <summary> Initializes a new instance of ContainerInstanceVolume. </summary>
         /// <param name="name"> The name of the volume. </param>
         /// <param name="azureFile"> The Azure File volume. </param>
         /// <param name="emptyDir"> The empty directory volume. </param>
         /// <param name="secret"> The secret volume. </param>
         /// <param name="gitRepo"> The git repo volume. </param>
-        internal Volume(string name, AzureFileVolume azureFile, BinaryData emptyDir, IDictionary<string, string> secret, GitRepoVolume gitRepo)
+        internal ContainerInstanceVolume(string name, AzureFileVolume azureFile, BinaryData emptyDir, IDictionary<string, string> secret, GitRepoVolume gitRepo)
         {
             Name = name;
             AzureFile = azureFile;

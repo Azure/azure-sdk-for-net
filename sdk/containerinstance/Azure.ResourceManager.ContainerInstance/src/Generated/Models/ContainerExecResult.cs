@@ -10,17 +10,17 @@ using System;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The information for the container exec command. </summary>
-    public partial class ContainerExecResponse
+    public partial class ContainerExecResult
     {
-        /// <summary> Initializes a new instance of ContainerExecResponse. </summary>
-        internal ContainerExecResponse()
+        /// <summary> Initializes a new instance of ContainerExecResult. </summary>
+        internal ContainerExecResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerExecResponse. </summary>
+        /// <summary> Initializes a new instance of ContainerExecResult. </summary>
         /// <param name="webSocketUri"> The uri for the exec websocket. </param>
         /// <param name="password"> The password to start the exec command. </param>
-        internal ContainerExecResponse(Uri webSocketUri, string password)
+        internal ContainerExecResult(Uri webSocketUri, string password)
         {
             WebSocketUri = webSocketUri;
             Password = password;

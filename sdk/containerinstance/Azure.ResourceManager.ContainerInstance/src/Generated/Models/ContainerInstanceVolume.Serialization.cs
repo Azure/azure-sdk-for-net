@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class Volume : IUtf8JsonSerializable
+    public partial class ContainerInstanceVolume : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteEndObject();
         }
 
-        internal static Volume DeserializeVolume(JsonElement element)
+        internal static ContainerInstanceVolume DeserializeContainerInstanceVolume(JsonElement element)
         {
             string name = default;
             Optional<AzureFileVolume> azureFile = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new Volume(name, azureFile.Value, emptyDir.Value, Optional.ToDictionary(secret), gitRepo.Value);
+            return new ContainerInstanceVolume(name, azureFile.Value, emptyDir.Value, Optional.ToDictionary(secret), gitRepo.Value);
         }
     }
 }
