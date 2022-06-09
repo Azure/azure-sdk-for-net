@@ -1,396 +1,5 @@
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class AfdCustomDomainCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdCustomDomainResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdCustomDomainResource>, System.Collections.IEnumerable
-    {
-        protected AfdCustomDomainCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdCustomDomainResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string customDomainName, Azure.ResourceManager.Cdn.AfdCustomDomainData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdCustomDomainResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string customDomainName, Azure.ResourceManager.Cdn.AfdCustomDomainData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdCustomDomainResource> Get(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdCustomDomainResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdCustomDomainResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdCustomDomainResource>> GetAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.AfdCustomDomainResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdCustomDomainResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.AfdCustomDomainResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdCustomDomainResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AfdCustomDomainData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AfdCustomDomainData() { }
-        public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public Azure.Core.ResourceIdentifier DnsZoneId { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.DomainValidationState? DomainValidationState { get { throw null; } }
-        public string HostName { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier PreValidatedCustomDomainResourceId { get { throw null; } set { } }
-        public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.AfdCustomDomainHttpsContent TlsSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.DomainValidationProperties ValidationProperties { get { throw null; } }
-    }
-    public partial class AfdCustomDomainResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AfdCustomDomainResource() { }
-        public virtual Azure.ResourceManager.Cdn.AfdCustomDomainData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string customDomainName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdCustomDomainResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdCustomDomainResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation RefreshValidationToken(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RefreshValidationTokenAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdCustomDomainResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdCustomDomainPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdCustomDomainResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdCustomDomainPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AfdEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdEndpointResource>, System.Collections.IEnumerable
-    {
-        protected AfdEndpointCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdEndpointResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.Cdn.AfdEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdEndpointResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.Cdn.AfdEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource> Get(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdEndpointResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdEndpointResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource>> GetAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.AfdEndpointResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdEndpointResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.AfdEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdEndpointResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AfdEndpointData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public AfdEndpointData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.Cdn.Models.DomainNameLabelScope? AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
-        public string HostName { get { throw null; } }
-        public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
-    }
-    public partial class AfdEndpointResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AfdEndpointResource() { }
-        public virtual Azure.ResourceManager.Cdn.AfdEndpointData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRouteResource> GetAfdRoute(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdRouteResource>> GetAfdRouteAsync(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.AfdRouteCollection GetAfdRoutes() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation PurgeContent(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdPurgeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PurgeContentAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdPurgeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdEndpointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdEndpointPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdEndpointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdEndpointPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateCustomDomainResult> ValidateCustomDomain(Azure.ResourceManager.Cdn.Models.ValidateCustomDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateCustomDomainResult>> ValidateCustomDomainAsync(Azure.ResourceManager.Cdn.Models.ValidateCustomDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AfdOriginCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdOriginResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdOriginResource>, System.Collections.IEnumerable
-    {
-        protected AfdOriginCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdOriginResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string originName, Azure.ResourceManager.Cdn.AfdOriginData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdOriginResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string originName, Azure.ResourceManager.Cdn.AfdOriginData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdOriginResource> Get(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdOriginResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdOriginResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdOriginResource>> GetAsync(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.AfdOriginResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdOriginResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.AfdOriginResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdOriginResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AfdOriginData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AfdOriginData() { }
-        public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
-        public bool? EnforceCertificateNameCheck { get { throw null; } set { } }
-        public string HostName { get { throw null; } set { } }
-        public int? HttpPort { get { throw null; } set { } }
-        public int? HttpsPort { get { throw null; } set { } }
-        public string OriginGroupName { get { throw null; } }
-        public string OriginHostHeader { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier OriginId { get { throw null; } set { } }
-        public int? Priority { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get { throw null; } set { } }
-        public int? Weight { get { throw null; } set { } }
-    }
-    public partial class AfdOriginGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdOriginGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdOriginGroupResource>, System.Collections.IEnumerable
-    {
-        protected AfdOriginGroupCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdOriginGroupResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string originGroupName, Azure.ResourceManager.Cdn.AfdOriginGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdOriginGroupResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string originGroupName, Azure.ResourceManager.Cdn.AfdOriginGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdOriginGroupResource> Get(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdOriginGroupResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdOriginGroupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdOriginGroupResource>> GetAsync(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.AfdOriginGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdOriginGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.AfdOriginGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdOriginGroupResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AfdOriginGroupData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AfdOriginGroupData() { }
-        public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.HealthProbeSettings HealthProbeSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.LoadBalancingSettings LoadBalancingSettings { get { throw null; } set { } }
-        public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.EnabledState? SessionAffinityState { get { throw null; } set { } }
-        public int? TrafficRestorationTimeInMinutes { get { throw null; } set { } }
-    }
-    public partial class AfdOriginGroupResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AfdOriginGroupResource() { }
-        public virtual Azure.ResourceManager.Cdn.AfdOriginGroupData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string originGroupName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdOriginGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdOriginResource> GetAfdOrigin(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdOriginResource>> GetAfdOriginAsync(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.AfdOriginCollection GetAfdOrigins() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdOriginGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdOriginGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdOriginGroupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdOriginGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdOriginGroupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AfdOriginResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AfdOriginResource() { }
-        public virtual Azure.ResourceManager.Cdn.AfdOriginData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdOriginResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdOriginResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdOriginResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdOriginPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdOriginResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdOriginPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AfdRouteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdRouteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdRouteResource>, System.Collections.IEnumerable
-    {
-        protected AfdRouteCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRouteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string routeName, Azure.ResourceManager.Cdn.AfdRouteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRouteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string routeName, Azure.ResourceManager.Cdn.AfdRouteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRouteResource> Get(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdRouteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdRouteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdRouteResource>> GetAsync(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.AfdRouteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdRouteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.AfdRouteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdRouteResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AfdRouteData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AfdRouteData() { }
-        public Azure.ResourceManager.Cdn.Models.AfdRouteCacheConfiguration CacheConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ActivatedResourceReference> CustomDomains { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
-        public string EndpointName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ForwardingProtocol? ForwardingProtocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.HttpsRedirect? HttpsRedirect { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain? LinkToDefaultDomain { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier OriginGroupId { get { throw null; } set { } }
-        public string OriginPath { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RuleSets { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol> SupportedProtocols { get { throw null; } }
-    }
-    public partial class AfdRouteResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AfdRouteResource() { }
-        public virtual Azure.ResourceManager.Cdn.AfdRouteData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRouteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdRouteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRouteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdRoutePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRouteResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdRoutePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AfdRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdRuleResource>, System.Collections.IEnumerable
-    {
-        protected AfdRuleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleName, Azure.ResourceManager.Cdn.AfdRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleName, Azure.ResourceManager.Cdn.AfdRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRuleResource> Get(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdRuleResource>> GetAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.AfdRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.AfdRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdRuleResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AfdRuleData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AfdRuleData() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleAction> Actions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition> Conditions { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior? MatchProcessingBehavior { get { throw null; } set { } }
-        public int? Order { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
-        public string RuleSetName { get { throw null; } }
-    }
-    public partial class AfdRuleResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AfdRuleResource() { }
-        public virtual Azure.ResourceManager.Cdn.AfdRuleData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, string ruleName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AfdRuleSetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdRuleSetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdRuleSetResource>, System.Collections.IEnumerable
-    {
-        protected AfdRuleSetCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRuleSetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRuleSetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRuleSetResource> Get(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdRuleSetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdRuleSetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdRuleSetResource>> GetAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.AfdRuleSetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdRuleSetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.AfdRuleSetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdRuleSetResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AfdRuleSetData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AfdRuleSetData() { }
-        public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
-    }
-    public partial class AfdRuleSetResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AfdRuleSetResource() { }
-        public virtual Azure.ResourceManager.Cdn.AfdRuleSetData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRuleSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRuleResource> GetAfdRule(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdRuleResource>> GetAfdRuleAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.AfdRuleCollection GetAfdRules() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdRuleSetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRuleSetResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdRuleSetResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AfdSecretCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdSecretResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdSecretResource>, System.Collections.IEnumerable
-    {
-        protected AfdSecretCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdSecretResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string secretName, Azure.ResourceManager.Cdn.AfdSecretData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdSecretResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string secretName, Azure.ResourceManager.Cdn.AfdSecretData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdSecretResource> Get(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdSecretResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdSecretResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdSecretResource>> GetAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.AfdSecretResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdSecretResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.AfdSecretResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdSecretResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AfdSecretData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AfdSecretData() { }
-        public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SecretProperties Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
-    }
-    public partial class AfdSecretResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AfdSecretResource() { }
-        public virtual Azure.ResourceManager.Cdn.AfdSecretData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string secretName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdSecretResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdSecretResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdSecretResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.AfdSecretData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdSecretResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.AfdSecretData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AfdSecurityPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource>, System.Collections.IEnumerable
-    {
-        protected AfdSecurityPolicyCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string securityPolicyName, Azure.ResourceManager.Cdn.AfdSecurityPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string securityPolicyName, Azure.ResourceManager.Cdn.AfdSecurityPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource> Get(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource>> GetAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AfdSecurityPolicyData : Azure.ResourceManager.Models.ResourceData
-    {
-        public AfdSecurityPolicyData() { }
-        public Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus? DeploymentStatus { get { throw null; } }
-        public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties Properties { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.AfdProvisioningState? ProvisioningState { get { throw null; } }
-    }
-    public partial class AfdSecurityPolicyResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AfdSecurityPolicyResource() { }
-        public virtual Azure.ResourceManager.Cdn.AfdSecurityPolicyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdSecurityPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.AfdSecurityPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class CdnCustomDomainCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.CdnCustomDomainResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.CdnCustomDomainResource>, System.Collections.IEnumerable
     {
         protected CdnCustomDomainCollection() { }
@@ -523,15 +132,6 @@ namespace Azure.ResourceManager.Cdn
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityResult> CheckEndpointNameAvailability(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Cdn.AfdCustomDomainResource GetAfdCustomDomainResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Cdn.AfdEndpointResource GetAfdEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Cdn.AfdOriginGroupResource GetAfdOriginGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Cdn.AfdOriginResource GetAfdOriginResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Cdn.AfdRouteResource GetAfdRouteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Cdn.AfdRuleResource GetAfdRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Cdn.AfdRuleSetResource GetAfdRuleSetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Cdn.AfdSecretResource GetAfdSecretResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Cdn.AfdSecurityPolicyResource GetAfdSecurityPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnCustomDomainResource GetCdnCustomDomainResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnEndpointResource GetCdnEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Cdn.CdnOriginGroupResource GetCdnOriginGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -542,6 +142,15 @@ namespace Azure.ResourceManager.Cdn
         public static Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyResource GetCdnWebApplicationFirewallPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Cdn.Models.EdgeNode> GetEdgeNodes(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.EdgeNode> GetEdgeNodesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource GetFrontDoorCustomDomainResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorEndpointResource GetFrontDoorEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource GetFrontDoorOriginGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorOriginResource GetFrontDoorOriginResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorRouteResource GetFrontDoorRouteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorRuleResource GetFrontDoorRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorRuleSetResource GetFrontDoorRuleSetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorSecretResource GetFrontDoorSecretResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSets(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Cdn.ProfileResource> GetProfile(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -689,6 +298,397 @@ namespace Azure.ResourceManager.Cdn
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CdnWebApplicationFirewallPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.CdnWebApplicationFirewallPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class FrontDoorCustomDomainCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorCustomDomainCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string customDomainName, Azure.ResourceManager.Cdn.FrontDoorCustomDomainData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string customDomainName, Azure.ResourceManager.Cdn.FrontDoorCustomDomainData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource> Get(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource>> GetAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorCustomDomainData : Azure.ResourceManager.Models.ResourceData
+    {
+        public FrontDoorCustomDomainData() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public Azure.Core.ResourceIdentifier DnsZoneId { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.DomainValidationState? DomainValidationState { get { throw null; } }
+        public string HostName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PreValidatedCustomDomainResourceId { get { throw null; } set { } }
+        public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsContent TlsSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.DomainValidationProperties ValidationProperties { get { throw null; } }
+    }
+    public partial class FrontDoorCustomDomainResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorCustomDomainResource() { }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorCustomDomainData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string customDomainName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation RefreshValidationToken(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RefreshValidationTokenAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FrontDoorEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorEndpointCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.Cdn.FrontDoorEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string endpointName, Azure.ResourceManager.Cdn.FrontDoorEndpointData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> Get(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>> GetAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorEndpointData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public FrontDoorEndpointData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.Cdn.Models.DomainNameLabelScope? AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
+        public string HostName { get { throw null; } }
+        public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public partial class FrontDoorEndpointResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorEndpointResource() { }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorEndpointData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRouteResource> GetFrontDoorRoute(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRouteResource>> GetFrontDoorRouteAsync(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorRouteCollection GetFrontDoorRoutes() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation PurgeContent(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorPurgeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PurgeContentAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorPurgeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorEndpointPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorEndpointPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateCustomDomainResult> ValidateCustomDomain(Azure.ResourceManager.Cdn.Models.ValidateCustomDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateCustomDomainResult>> ValidateCustomDomainAsync(Azure.ResourceManager.Cdn.Models.ValidateCustomDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FrontDoorOriginCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorOriginResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorOriginResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorOriginCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorOriginResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string originName, Azure.ResourceManager.Cdn.FrontDoorOriginData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorOriginResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string originName, Azure.ResourceManager.Cdn.FrontDoorOriginData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginResource> Get(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.FrontDoorOriginResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.FrontDoorOriginResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginResource>> GetAsync(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.FrontDoorOriginResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorOriginResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.FrontDoorOriginResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorOriginResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorOriginData : Azure.ResourceManager.Models.ResourceData
+    {
+        public FrontDoorOriginData() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
+        public bool? EnforceCertificateNameCheck { get { throw null; } set { } }
+        public string HostName { get { throw null; } set { } }
+        public int? HttpPort { get { throw null; } set { } }
+        public int? HttpsPort { get { throw null; } set { } }
+        public string OriginGroupName { get { throw null; } }
+        public string OriginHostHeader { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier OriginId { get { throw null; } set { } }
+        public int? Priority { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get { throw null; } set { } }
+        public int? Weight { get { throw null; } set { } }
+    }
+    public partial class FrontDoorOriginGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorOriginGroupCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string originGroupName, Azure.ResourceManager.Cdn.FrontDoorOriginGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string originGroupName, Azure.ResourceManager.Cdn.FrontDoorOriginGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource> Get(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource>> GetAsync(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorOriginGroupData : Azure.ResourceManager.Models.ResourceData
+    {
+        public FrontDoorOriginGroupData() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.HealthProbeSettings HealthProbeSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.LoadBalancingSettings LoadBalancingSettings { get { throw null; } set { } }
+        public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.EnabledState? SessionAffinityState { get { throw null; } set { } }
+        public int? TrafficRestorationTimeInMinutes { get { throw null; } set { } }
+    }
+    public partial class FrontDoorOriginGroupResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorOriginGroupResource() { }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorOriginGroupData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string originGroupName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginResource> GetFrontDoorOrigin(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginResource>> GetFrontDoorOriginAsync(string originName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorOriginCollection GetFrontDoorOrigins() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FrontDoorOriginResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorOriginResource() { }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorOriginData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorOriginResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorOriginPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorOriginResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorOriginPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FrontDoorRouteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorRouteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorRouteResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorRouteCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRouteResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string routeName, Azure.ResourceManager.Cdn.FrontDoorRouteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRouteResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string routeName, Azure.ResourceManager.Cdn.FrontDoorRouteData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRouteResource> Get(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.FrontDoorRouteResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.FrontDoorRouteResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRouteResource>> GetAsync(string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.FrontDoorRouteResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorRouteResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.FrontDoorRouteResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorRouteResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorRouteData : Azure.ResourceManager.Models.ResourceData
+    {
+        public FrontDoorRouteData() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorRouteCacheConfiguration CacheConfiguration { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ActivatedResourceReference> CustomDomains { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
+        public string EndpointName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.ForwardingProtocol? ForwardingProtocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.HttpsRedirect? HttpsRedirect { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain? LinkToDefaultDomain { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier OriginGroupId { get { throw null; } set { } }
+        public string OriginPath { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RuleSets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol> SupportedProtocols { get { throw null; } }
+    }
+    public partial class FrontDoorRouteResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorRouteResource() { }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorRouteData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string routeName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRouteResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRouteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRouteResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorRoutePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRouteResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorRoutePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FrontDoorRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorRuleResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorRuleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleName, Azure.ResourceManager.Cdn.FrontDoorRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleName, Azure.ResourceManager.Cdn.FrontDoorRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleResource> Get(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.FrontDoorRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.FrontDoorRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleResource>> GetAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.FrontDoorRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.FrontDoorRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorRuleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorRuleData : Azure.ResourceManager.Models.ResourceData
+    {
+        public FrontDoorRuleData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleAction> Actions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition> Conditions { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior? MatchProcessingBehavior { get { throw null; } set { } }
+        public int? Order { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+        public string RuleSetName { get { throw null; } }
+    }
+    public partial class FrontDoorRuleResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorRuleResource() { }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName, string ruleName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FrontDoorRuleSetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorRuleSetCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource> Get(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource>> GetAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorRuleSetData : Azure.ResourceManager.Models.ResourceData
+    {
+        public FrontDoorRuleSetData() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public partial class FrontDoorRuleSetResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorRuleSetResource() { }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorRuleSetData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string ruleSetName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleResource> GetFrontDoorRule(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleResource>> GetFrontDoorRuleAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorRuleCollection GetFrontDoorRules() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FrontDoorSecretCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorSecretResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorSecretResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorSecretCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorSecretResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string secretName, Azure.ResourceManager.Cdn.FrontDoorSecretData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorSecretResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string secretName, Azure.ResourceManager.Cdn.FrontDoorSecretData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecretResource> Get(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.FrontDoorSecretResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.FrontDoorSecretResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecretResource>> GetAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.FrontDoorSecretResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorSecretResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.FrontDoorSecretResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorSecretResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorSecretData : Azure.ResourceManager.Models.ResourceData
+    {
+        public FrontDoorSecretData() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.SecretProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public partial class FrontDoorSecretResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorSecretResource() { }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorSecretData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string secretName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecretResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecretResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorSecretResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.FrontDoorSecretData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorSecretResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.FrontDoorSecretData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FrontDoorSecurityPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorSecurityPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string securityPolicyName, Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string securityPolicyName, Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource> Get(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource>> GetAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorSecurityPolicyData : Azure.ResourceManager.Models.ResourceData
+    {
+        public FrontDoorSecurityPolicyData() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus? DeploymentStatus { get { throw null; } }
+        public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public partial class FrontDoorSecurityPolicyResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorSecurityPolicyResource() { }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string securityPolicyName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorSecurityPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Cdn.Models.FrontDoorSecurityPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class ProfileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Cdn.ProfileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.ProfileResource>, System.Collections.IEnumerable
     {
         protected ProfileCollection() { }
@@ -722,38 +722,38 @@ namespace Azure.ResourceManager.Cdn
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.ProfileResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.ProfileResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult> CheckAfdProfileHostNameAvailability(Azure.ResourceManager.Cdn.Models.HostNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult>> CheckAfdProfileHostNameAvailabilityAsync(Azure.ResourceManager.Cdn.Models.HostNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult> CheckFrontDoorProfileHostNameAvailability(Azure.ResourceManager.Cdn.Models.HostNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult>> CheckFrontDoorProfileHostNameAvailabilityAsync(Azure.ResourceManager.Cdn.Models.HostNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.SsoUri> GenerateSsoUri(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.SsoUri>> GenerateSsoUriAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.ProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdCustomDomainResource> GetAfdCustomDomain(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdCustomDomainResource>> GetAfdCustomDomainAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.AfdCustomDomainCollection GetAfdCustomDomains() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource> GetAfdEndpoint(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdEndpointResource>> GetAfdEndpointAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.AfdEndpointCollection GetAfdEndpoints() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdOriginGroupResource> GetAfdOriginGroup(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdOriginGroupResource>> GetAfdOriginGroupAsync(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.AfdOriginGroupCollection GetAfdOriginGroups() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetAfdProfileResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetAfdProfileResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdRuleSetResource> GetAfdRuleSet(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdRuleSetResource>> GetAfdRuleSetAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.AfdRuleSetCollection GetAfdRuleSets() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdSecretResource> GetAfdSecret(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdSecretResource>> GetAfdSecretAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Cdn.AfdSecretCollection GetAfdSecrets() { throw null; }
-        public virtual Azure.ResourceManager.Cdn.AfdSecurityPolicyCollection GetAfdSecurityPolicies() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource> GetAfdSecurityPolicy(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.AfdSecurityPolicyResource>> GetAfdSecurityPolicyAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.ProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.CdnEndpointResource> GetCdnEndpoint(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.CdnEndpointResource>> GetCdnEndpointAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.CdnEndpointCollection GetCdnEndpoints() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource> GetFrontDoorCustomDomain(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorCustomDomainResource>> GetFrontDoorCustomDomainAsync(string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorCustomDomainCollection GetFrontDoorCustomDomains() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource> GetFrontDoorEndpoint(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorEndpointResource>> GetFrontDoorEndpointAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorEndpointCollection GetFrontDoorEndpoints() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource> GetFrontDoorOriginGroup(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorOriginGroupResource>> GetFrontDoorOriginGroupAsync(string originGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorOriginGroupCollection GetFrontDoorOriginGroups() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetFrontDoorProfileResourceUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Cdn.Models.CdnUsage> GetFrontDoorProfileResourceUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource> GetFrontDoorRuleSet(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorRuleSetResource>> GetFrontDoorRuleSetAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorRuleSetCollection GetFrontDoorRuleSets() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecretResource> GetFrontDoorSecret(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecretResource>> GetFrontDoorSecretAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorSecretCollection GetFrontDoorSecrets() { throw null; }
+        public virtual Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyCollection GetFrontDoorSecurityPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource> GetFrontDoorSecurityPolicy(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource>> GetFrontDoorSecurityPolicyAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.ContinentsResponse> GetLogAnalyticsLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.ContinentsResponse>> GetLogAnalyticsLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.MetricsResponse> GetLogAnalyticsMetrics(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.LogMetric> metrics, System.DateTimeOffset dateTimeBegin, System.DateTimeOffset dateTimeEnd, Azure.ResourceManager.Cdn.Models.LogMetricsGranularity granularity, System.Collections.Generic.IEnumerable<string> customDomains, System.Collections.Generic.IEnumerable<string> protocols, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.LogMetricsGroupBy> groupBy = null, System.Collections.Generic.IEnumerable<string> continents = null, System.Collections.Generic.IEnumerable<string> countryOrRegions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -805,198 +805,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public ActivatedResourceReference() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public bool? IsActive { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AfdCertificateType : System.IEquatable<Azure.ResourceManager.Cdn.Models.AfdCertificateType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AfdCertificateType(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdCertificateType AzureFirstPartyManagedCertificate { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCertificateType CustomerCertificate { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdCertificateType ManagedCertificate { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.AfdCertificateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.AfdCertificateType left, Azure.ResourceManager.Cdn.Models.AfdCertificateType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.AfdCertificateType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.AfdCertificateType left, Azure.ResourceManager.Cdn.Models.AfdCertificateType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AfdCustomDomainHttpsContent
-    {
-        public AfdCustomDomainHttpsContent(Azure.ResourceManager.Cdn.Models.AfdCertificateType certificateType) { }
-        public Azure.ResourceManager.Cdn.Models.AfdCertificateType CertificateType { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.AfdMinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SecretId { get { throw null; } set { } }
-    }
-    public partial class AfdCustomDomainPatch
-    {
-        public AfdCustomDomainPatch() { }
-        public Azure.Core.ResourceIdentifier DnsZoneId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier PreValidatedCustomDomainResourceId { get { throw null; } set { } }
-        public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.AfdCustomDomainHttpsContent TlsSettings { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AfdDeploymentStatus : System.IEquatable<Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AfdDeploymentStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus NotStarted { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus left, Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus left, Azure.ResourceManager.Cdn.Models.AfdDeploymentStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AfdEndpointPatch
-    {
-        public AfdEndpointPatch() { }
-        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
-        public string ProfileName { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AfdEndpointProtocol : System.IEquatable<Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AfdEndpointProtocol(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol Http { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol Https { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol left, Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol left, Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public enum AfdMinimumTlsVersion
-    {
-        Tls1_0 = 0,
-        Tls1_2 = 1,
-    }
-    public partial class AfdOriginGroupPatch
-    {
-        public AfdOriginGroupPatch() { }
-        public Azure.ResourceManager.Cdn.Models.HealthProbeSettings HealthProbeSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.LoadBalancingSettings LoadBalancingSettings { get { throw null; } set { } }
-        public string ProfileName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.EnabledState? SessionAffinityState { get { throw null; } set { } }
-        public int? TrafficRestorationTimeInMinutes { get { throw null; } set { } }
-    }
-    public partial class AfdOriginPatch
-    {
-        public AfdOriginPatch() { }
-        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
-        public bool? EnforceCertificateNameCheck { get { throw null; } set { } }
-        public string HostName { get { throw null; } set { } }
-        public int? HttpPort { get { throw null; } set { } }
-        public int? HttpsPort { get { throw null; } set { } }
-        public string OriginGroupName { get { throw null; } }
-        public string OriginHostHeader { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier OriginId { get { throw null; } set { } }
-        public int? Priority { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get { throw null; } set { } }
-        public int? Weight { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AfdProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.AfdProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AfdProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.AfdProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.AfdProvisioningState left, Azure.ResourceManager.Cdn.Models.AfdProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.AfdProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.AfdProvisioningState left, Azure.ResourceManager.Cdn.Models.AfdProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AfdPurgeContent
-    {
-        public AfdPurgeContent(System.Collections.Generic.IEnumerable<string> contentPaths) { }
-        public System.Collections.Generic.IList<string> ContentPaths { get { throw null; } }
-        public System.Collections.Generic.IList<string> Domains { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AfdQueryStringCachingBehavior : System.IEquatable<Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AfdQueryStringCachingBehavior(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior IgnoreQueryString { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior IgnoreSpecifiedQueryStrings { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior IncludeSpecifiedQueryStrings { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior UseQueryString { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior left, Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior left, Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AfdRouteCacheConfiguration
-    {
-        public AfdRouteCacheConfiguration() { }
-        public Azure.ResourceManager.Cdn.Models.RouteCacheCompressionSettings CompressionSettings { get { throw null; } set { } }
-        public string QueryParameters { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.AfdQueryStringCachingBehavior? QueryStringCachingBehavior { get { throw null; } set { } }
-    }
-    public partial class AfdRoutePatch
-    {
-        public AfdRoutePatch() { }
-        public Azure.ResourceManager.Cdn.Models.AfdRouteCacheConfiguration CacheConfiguration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ActivatedResourceReference> CustomDomains { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
-        public string EndpointName { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.ForwardingProtocol? ForwardingProtocol { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.HttpsRedirect? HttpsRedirect { get { throw null; } set { } }
-        public Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain? LinkToDefaultDomain { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier OriginGroupId { get { throw null; } set { } }
-        public string OriginPath { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RuleSets { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.AfdEndpointProtocol> SupportedProtocols { get { throw null; } }
-    }
-    public partial class AfdRulePatch
-    {
-        public AfdRulePatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleAction> Actions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition> Conditions { get { throw null; } }
-        public Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior? MatchProcessingBehavior { get { throw null; } set { } }
-        public int? Order { get { throw null; } set { } }
-        public string RuleSetName { get { throw null; } }
-    }
-    public partial class AfdSecurityPolicyPatch
-    {
-        public AfdSecurityPolicyPatch() { }
-        public Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties Properties { get { throw null; } set { } }
     }
     public partial class AzureFirstPartyManagedCertificateProperties : Azure.ResourceManager.Cdn.Models.SecretProperties
     {
@@ -1208,8 +1016,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CdnResourceType(string value) { throw null; }
-        public static Azure.ResourceManager.Cdn.Models.CdnResourceType MicrosoftCdnProfilesAfdEndpoints { get { throw null; } }
-        public static Azure.ResourceManager.Cdn.Models.CdnResourceType MicrosoftCdnProfilesEndpoints { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnResourceType Endpoints { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.CdnResourceType FrontDoorEndpoints { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Cdn.Models.CdnResourceType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1903,6 +1711,198 @@ namespace Azure.ResourceManager.Cdn.Models
         public static implicit operator Azure.ResourceManager.Cdn.Models.ForwardingProtocol (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.ForwardingProtocol left, Azure.ResourceManager.Cdn.Models.ForwardingProtocol right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorCertificateType : System.IEquatable<Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorCertificateType(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType AzureFirstPartyManagedCertificate { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType CustomerCertificate { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType ManagedCertificate { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType left, Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType left, Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorCustomDomainHttpsContent
+    {
+        public FrontDoorCustomDomainHttpsContent(Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType certificateType) { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorCertificateType CertificateType { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorMinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SecretId { get { throw null; } set { } }
+    }
+    public partial class FrontDoorCustomDomainPatch
+    {
+        public FrontDoorCustomDomainPatch() { }
+        public Azure.Core.ResourceIdentifier DnsZoneId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PreValidatedCustomDomainResourceId { get { throw null; } set { } }
+        public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorCustomDomainHttpsContent TlsSettings { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorDeploymentStatus : System.IEquatable<Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorDeploymentStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus NotStarted { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus left, Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus left, Azure.ResourceManager.Cdn.Models.FrontDoorDeploymentStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorEndpointPatch
+    {
+        public FrontDoorEndpointPatch() { }
+        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
+        public string ProfileName { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorEndpointProtocol : System.IEquatable<Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorEndpointProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol Http { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol Https { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol left, Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol left, Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public enum FrontDoorMinimumTlsVersion
+    {
+        Tls1_0 = 0,
+        Tls1_2 = 1,
+    }
+    public partial class FrontDoorOriginGroupPatch
+    {
+        public FrontDoorOriginGroupPatch() { }
+        public Azure.ResourceManager.Cdn.Models.HealthProbeSettings HealthProbeSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.LoadBalancingSettings LoadBalancingSettings { get { throw null; } set { } }
+        public string ProfileName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.EnabledState? SessionAffinityState { get { throw null; } set { } }
+        public int? TrafficRestorationTimeInMinutes { get { throw null; } set { } }
+    }
+    public partial class FrontDoorOriginPatch
+    {
+        public FrontDoorOriginPatch() { }
+        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
+        public bool? EnforceCertificateNameCheck { get { throw null; } set { } }
+        public string HostName { get { throw null; } set { } }
+        public int? HttpPort { get { throw null; } set { } }
+        public int? HttpsPort { get { throw null; } set { } }
+        public string OriginGroupName { get { throw null; } }
+        public string OriginHostHeader { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier OriginId { get { throw null; } set { } }
+        public int? Priority { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get { throw null; } set { } }
+        public int? Weight { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorProvisioningState : System.IEquatable<Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState left, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState left, Azure.ResourceManager.Cdn.Models.FrontDoorProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorPurgeContent
+    {
+        public FrontDoorPurgeContent(System.Collections.Generic.IEnumerable<string> contentPaths) { }
+        public System.Collections.Generic.IList<string> ContentPaths { get { throw null; } }
+        public System.Collections.Generic.IList<string> Domains { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorQueryStringCachingBehavior : System.IEquatable<Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorQueryStringCachingBehavior(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior IgnoreQueryString { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior IgnoreSpecifiedQueryStrings { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior IncludeSpecifiedQueryStrings { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior UseQueryString { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior left, Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior left, Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorRouteCacheConfiguration
+    {
+        public FrontDoorRouteCacheConfiguration() { }
+        public Azure.ResourceManager.Cdn.Models.RouteCacheCompressionSettings CompressionSettings { get { throw null; } set { } }
+        public string QueryParameters { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorQueryStringCachingBehavior? QueryStringCachingBehavior { get { throw null; } set { } }
+    }
+    public partial class FrontDoorRoutePatch
+    {
+        public FrontDoorRoutePatch() { }
+        public Azure.ResourceManager.Cdn.Models.FrontDoorRouteCacheConfiguration CacheConfiguration { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ActivatedResourceReference> CustomDomains { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.EnabledState? EnabledState { get { throw null; } set { } }
+        public string EndpointName { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.ForwardingProtocol? ForwardingProtocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.HttpsRedirect? HttpsRedirect { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.LinkToDefaultDomain? LinkToDefaultDomain { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier OriginGroupId { get { throw null; } set { } }
+        public string OriginPath { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> RuleSets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.FrontDoorEndpointProtocol> SupportedProtocols { get { throw null; } }
+    }
+    public partial class FrontDoorRulePatch
+    {
+        public FrontDoorRulePatch() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleAction> Actions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition> Conditions { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.MatchProcessingBehavior? MatchProcessingBehavior { get { throw null; } set { } }
+        public int? Order { get { throw null; } set { } }
+        public string RuleSetName { get { throw null; } }
+    }
+    public partial class FrontDoorSecurityPolicyPatch
+    {
+        public FrontDoorSecurityPolicyPatch() { }
+        public Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties Properties { get { throw null; } set { } }
     }
     public partial class GeoFilter
     {

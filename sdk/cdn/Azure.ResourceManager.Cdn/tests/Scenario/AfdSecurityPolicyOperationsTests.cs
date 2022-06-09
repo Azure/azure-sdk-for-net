@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
+            FrontDoorEndpointResource afdEndpointInstance = await CreateAfdEndpoint(afdProfile, afdEndpointName);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
-            AfdSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
+            FrontDoorSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance, afdSecurityPolicyName);
             await afdSecurityPolicy.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdSecurityPolicy.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdEndpointName1 = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpointResource afdEndpointInstance1 = await CreateAfdEndpoint(afdProfile, afdEndpointName1);
+            FrontDoorEndpointResource afdEndpointInstance1 = await CreateAfdEndpoint(afdProfile, afdEndpointName1);
             string afdSecurityPolicyName = Recording.GenerateAssetName("AFDSecurityPolicy-");
-            AfdSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance1, afdSecurityPolicyName);
+            FrontDoorSecurityPolicyResource afdSecurityPolicy = await CreateAfdSecurityPolicy(afdProfile, afdEndpointInstance1, afdSecurityPolicyName);
             string afdEndpointName2 = Recording.GenerateAssetName("AFDEndpoint-");
-            AfdEndpointResource afdEndpointInstance2 = await CreateAfdEndpoint(afdProfile, afdEndpointName2);
-            AfdSecurityPolicyPatch updateOptions = new AfdSecurityPolicyPatch
+            FrontDoorEndpointResource afdEndpointInstance2 = await CreateAfdEndpoint(afdProfile, afdEndpointName2);
+            FrontDoorSecurityPolicyPatch updateOptions = new FrontDoorSecurityPolicyPatch
             {
                 Properties = new SecurityPolicyWebApplicationFirewall
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             securityPolicyWebApplicationFirewallAssociation.PatternsToMatch.Add("/*");
             ((SecurityPolicyWebApplicationFirewall)updateOptions.Properties).Associations.Add(securityPolicyWebApplicationFirewallAssociation);
             var lro = await afdSecurityPolicy.UpdateAsync(WaitUntil.Completed, updateOptions);
-            AfdSecurityPolicyResource updatedSecurityPolicy = lro.Value;
+            FrontDoorSecurityPolicyResource updatedSecurityPolicy = lro.Value;
             ResourceDataHelper.AssertAfdSecurityPolicyUpdate(updatedSecurityPolicy, updateOptions);
         }
     }

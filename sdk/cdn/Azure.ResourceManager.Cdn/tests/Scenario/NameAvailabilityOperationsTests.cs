@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
                 string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
-                CdnNameAvailabilityContent checkNameAvailabilityInput = new CdnNameAvailabilityContent(cdnEndpointName, CdnResourceType.MicrosoftCdnProfilesEndpoints);
+                CdnNameAvailabilityContent checkNameAvailabilityInput = new CdnNameAvailabilityContent(cdnEndpointName, CdnResourceType.Endpoints);
                 CdnNameAvailabilityResult checkNameAvailabilityOutput = await tenant.CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput);
                 Assert.True(checkNameAvailabilityOutput.NameAvailable);
                 ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Tests
                 ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
                 cdnEndpointName = Recording.GenerateAssetName("endpoint-");
                 CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
-                CdnNameAvailabilityContent checkNameAvailabilityInput2 = new CdnNameAvailabilityContent(cdnEndpoint.Data.Name, CdnResourceType.MicrosoftCdnProfilesEndpoints);
+                CdnNameAvailabilityContent checkNameAvailabilityInput2 = new CdnNameAvailabilityContent(cdnEndpoint.Data.Name, CdnResourceType.Endpoints);
                 checkNameAvailabilityOutput = await tenant.CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput2);
                 Assert.False(checkNameAvailabilityOutput.NameAvailable);
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
-            CdnNameAvailabilityContent checkNameAvailabilityInput = new CdnNameAvailabilityContent(cdnEndpointName, CdnResourceType.MicrosoftCdnProfilesEndpoints);
+            CdnNameAvailabilityContent checkNameAvailabilityInput = new CdnNameAvailabilityContent(cdnEndpointName, CdnResourceType.Endpoints);
             CdnNameAvailabilityResult checkNameAvailabilityOutput  = await subscription.CheckCdnNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput);
             Assert.True(checkNameAvailabilityOutput.NameAvailable);
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
-            CdnNameAvailabilityContent checkNameAvailabilityInput2 = new CdnNameAvailabilityContent(cdnEndpoint.Data.Name, CdnResourceType.MicrosoftCdnProfilesEndpoints);
+            CdnNameAvailabilityContent checkNameAvailabilityInput2 = new CdnNameAvailabilityContent(cdnEndpoint.Data.Name, CdnResourceType.Endpoints);
             checkNameAvailabilityOutput = await subscription.CheckCdnNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput2);
             Assert.False(checkNameAvailabilityOutput.NameAvailable);
         }

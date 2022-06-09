@@ -42,8 +42,9 @@ rename-rules:
   URI: Uri
   Url: Uri
   URL: Uri
-  AFDDomain: AfdCustomDomain
-  AFD: Afd
+  AFDDomainHttpsParameters: FrontDoorCustomDomainHttpsContent
+  AFDDomain: FrontDoorCustomDomain
+  AFD: FrontDoor
   GET: Get
   PUT: Put
   SHA256: Sha256
@@ -53,12 +54,12 @@ no-property-type-replacement:
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
-  - AfdCustomDomainHttpsContentSecret
-  - AfdCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
+  - FrontDoorCustomDomainHttpsContentSecret
+  - FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId
 override-operation-name:
   CheckNameAvailability: CheckCdnNameAvailability
   CheckNameAvailabilityWithSubscription: CheckCdnNameAvailabilityWithSubscription
-  AfdProfiles_CheckHostNameAvailability: CheckAfdProfileHostNameAvailability
+  FrontDoorProfiles_CheckHostNameAvailability: CheckFrontDoorProfileHostNameAvailability
   LogAnalytics_GetLogAnalyticsMetrics: GetLogAnalyticsMetrics
   LogAnalytics_GetLogAnalyticsRankings: GetLogAnalyticsRankings
   LogAnalytics_GetLogAnalyticsResources: GetLogAnalyticsResources
@@ -67,10 +68,10 @@ override-operation-name:
   LogAnalytics_GetWafLogAnalyticsRankings: GetWafLogAnalyticsRankings
   Profiles_ListResourceUsage: GetResourceUsages
   CdnEndpoints_ListResourceUsage: GetResourceUsages
-  AfdProfiles_ListResourceUsage: GetAfdProfileResourceUsages
-  AfdEndpoints_ListResourceUsage: GetResourceUsages
-  AfdOriginGroups_ListResourceUsage: GetResourceUsages
-  AfdRuleSets_ListResourceUsage: GetResourceUsages
+  FrontDoorProfiles_ListResourceUsage: GetFrontDoorProfileResourceUsages
+  FrontDoorEndpoints_ListResourceUsage: GetResourceUsages
+  FrontDoorOriginGroups_ListResourceUsage: GetResourceUsages
+  FrontDoorRuleSets_ListResourceUsage: GetResourceUsages
 directive:
   - from: swagger-document
     where: $.definitions..parameters
@@ -134,6 +135,16 @@ directive:
       $.CacheExpirationActionParameters.properties.cacheType['x-ms-enum'].name = 'cacheLevel';
       $.CdnCertificateSourceParameters.properties.certificateType['x-ms-enum'].name = 'CdnManagedCertificateType';
       $.ResourceType['x-ms-enum'].name = 'CdnResourceType';
+      $.ResourceType['x-ms-enum'].values = [
+                                {
+                                    "value": "Microsoft.Cdn/Profiles/Endpoints",
+                                    "name": "Endpoints"
+                                },
+                                {
+                                    "value": "Microsoft.Cdn/Profiles/AfdEndpoints",
+                                    "name": "FrontDoorEndpoints"
+                                }
+                            ]
       $.GeoFilter.properties.action['x-ms-enum'].name = 'GeoFilterAction';
       $.ResponseBasedOriginErrorDetectionParameters.properties.responseBasedDetectedErrorTypes['x-ms-enum'].name = 'ResponseBasedDetectedErrorType';
       $.SocketAddrMatchConditionParameters.properties.operator['x-ms-enum'].name = 'SocketAddressOperator';
@@ -214,22 +225,15 @@ directive:
   - from: afdx.json
     where: $.definitions
     transform: >
-      for (var key in $) {
-            if (key === 'AFDDomainHttpsParameters')
-            {
-                const newKey = 'AfdCustomDomainHttpsContent'
-                $[newKey] = $[key]
-                delete $[key]
-            }
-        }
-      $.AFDDomainUpdatePropertiesParameters.properties.tlsSettings['$ref'] = '#/definitions/AfdCustomDomainHttpsContent';
       $.ActivatedResourceReference.properties.id['x-ms-format'] = 'arm-id';
       $.Usage.properties.id['x-ms-format'] = 'arm-id';
-      $.Route['x-ms-client-name'] = 'AfdRoute';
-      $.RuleSet['x-ms-client-name'] = 'AfdRuleSet';
-      $.Rule['x-ms-client-name'] = 'AfdRule';
-      $.SecurityPolicy['x-ms-client-name'] = 'AfdSecurityPolicy';
-      $.Secret['x-ms-client-name'] = 'AfdSecret';
+      $.AfdPurgeParameters['x-ms-client-name'] = 'FrontDoorPurgeParameters';
+      $.AfdRouteCacheConfiguration['x-ms-client-name'] = 'FrontDoorRouteCacheConfiguration';
+      $.Route['x-ms-client-name'] = 'FrontDoorRoute';
+      $.RuleSet['x-ms-client-name'] = 'FrontDoorRuleSet';
+      $.Rule['x-ms-client-name'] = 'FrontDoorRule';
+      $.SecurityPolicy['x-ms-client-name'] = 'FrontDoorSecurityPolicy';
+      $.Secret['x-ms-client-name'] = 'FrontDoorSecret';
       $.ValidateSecretOutput['x-ms-client-name'] = 'ValidateSecretResult';
       $.LoadBalancingSettingsParameters['x-ms-client-name'] = 'LoadBalancingSettings';
       $.CompressionSettings['x-ms-client-name'] = 'RouteCacheCompressionSettings';
@@ -250,10 +254,14 @@ directive:
       $.AFDOriginUpdatePropertiesParameters.properties.azureOrigin['x-ms-client-name'] = 'origin';
       $.AFDOriginGroupUpdatePropertiesParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-ms-client-name'] = 'trafficRestorationTimeInMinutes';
       $.AutoGeneratedDomainNameLabelScope['x-ms-enum'].name = 'DomainNameLabelScope';
-      $.AFDStateProperties.properties.deploymentStatus['x-ms-enum'].name = 'AfdDeploymentStatus';
-      $.AFDEndpointProtocols['x-ms-enum'].name = 'AfdEndpointProtocol';
+      $.AFDStateProperties.properties.deploymentStatus['x-ms-enum'].name = 'FrontDoorDeploymentStatus';
+      $.AFDStateProperties.properties.provisioningState['x-ms-enum'].name = 'FrontDoorProvisioningState';
+      $.AFDEndpointProtocols['x-ms-enum'].name = 'FrontDoorEndpointProtocol';
       $.ValidateSecretOutput.properties.status['x-ms-enum'].name = 'validationStatus';
-      $.AfdCustomDomainHttpsContent.properties.secret = {
+      $.AFDDomainHttpsParameters.properties.certificateType['x-ms-enum'].name = 'FrontDoorCertificateType';
+      $.AFDDomainHttpsParameters.properties.minimumTlsVersion['x-ms-enum'].name = 'FrontDoorMinimumTlsVersion';
+      $.AfdRouteCacheConfiguration.properties.queryStringCachingBehavior['x-ms-enum'].name = 'FrontDoorQueryStringCachingBehavior';
+      $.AFDDomainHttpsParameters.properties.secret = {
             "description": "Resource reference to the secret. ie. subs/rg/profile/secret",
             "type": "object",
             "properties": {
@@ -276,7 +284,7 @@ directive:
                 }
             }
         }
-      $.AfdCustomDomainHttpsContent.properties.secret['x-nullable'] = true;
+      $.AFDDomainHttpsParameters.properties.secret['x-nullable'] = true;
       $.AFDOriginGroupUpdatePropertiesParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-nullable'] = true;
       $.WafMetricsResponse.properties.series.items.properties.groups['x-nullable'] = true;
       $.AFDOriginUpdatePropertiesParameters.properties.priority['x-nullable'] = true;
@@ -293,11 +301,11 @@ directive:
           for (var method in $[key]) {
               const oldOperationId = $[key][method]['operationId']
               if (oldOperationId.startsWith('AFD')) {
-                  const newOperationId = oldOperationId.replace('AFD', 'Afd')
+                  const newOperationId = oldOperationId.replace('AFD', 'FrontDoor')
                   $[key][method]['operationId'] = newOperationId
               }
               if (oldOperationId.startsWith('Routes') || oldOperationId.startsWith('RuleSets') || oldOperationId.startsWith('Rules') || oldOperationId.startsWith('SecurityPolicies') || oldOperationId.startsWith('Secrets')) {
-                  const newOperationId = 'Afd' + oldOperationId
+                  const newOperationId = 'FrontDoor' + oldOperationId
                   $[key][method]['operationId'] = newOperationId
               }
           }
