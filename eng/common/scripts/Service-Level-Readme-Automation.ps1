@@ -105,14 +105,14 @@ function create-metadata-table($readmeFolder, $readmeName, $moniker, $msService,
 }
 
 function CompareAndValidateMetadata ($original, $updated) {
-  $originalTable = ConvertFrom-StringData -StringData $original
-  $updatedTable = ConvertFrom-StringData -StringData $original
+  $originalTable = ConvertFrom-StringData -StringData $original -Delimiter ":"
+  $updatedTable = ConvertFrom-StringData -StringData $updated -Delimiter ":"
   foreach ($key in $originalTable.Keys) {
     if (!($updatedTable.ContainsKey($key))) {
       Write-Warning "New metadata missed the entry: $key"
     }
     if ($updatedTable[$key] -ne $originalTable[$key]) {
-      Write-Warning "Will update metadata from old value $originalTable[$key] to new value $updatedTable[$key]"
+      Write-Warning "Will update metadata from old value $($originalTable[$key]) to new value $($updatedTable[$key])"
     }
     $updatedTable.Remove($key)
   }
@@ -134,7 +134,8 @@ function update-metadata-table($readmeFolder, $readmeName, $serviceName, $msServ
   $metadataString = GenerateDocsMsMetadata -language $lang -serviceName $serviceName `
     -tenantId $TenantId -clientId $ClientId -clientSecret $ClientSecret `
     -msService $msService
-  CompareAndValidateMetadata($orignalMetadata, $metadataString) 
+  $null = $metadataString -match "---`n*(?<metadata>(.*`n)*)---"
+  CompareAndValidateMetadata -original $orignalMetadata -updated $Matches["metadata"]
   Set-Content -Path $readmePath -Value "$metadataString`n$restContent" -NoNewline
 }
 
@@ -256,4 +257,3 @@ foreach($moniker in $monikers) {
       -packageInfos $servicePackages -serviceName $service -moniker $moniker
   }
 }
-
