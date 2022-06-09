@@ -79,6 +79,7 @@ directive:
       $.ManagedHsmProperties.properties.provisioningState['x-ms-enum']['name'] = 'HsmProvisioningState';
       $.MHSMVirtualNetworkRule.properties.id['x-ms-client-name'] = 'SubnetId';
       $.MHSMVirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
+      $.MHSMNetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'NetworkRuleBypassOption';
   - from: keyvault.json
     where: '$.definitions'
     transform: >
@@ -103,6 +104,7 @@ directive:
       $.PrivateLinkServiceConnectionState.properties.actionsRequired['x-ms-enum']['name'] = 'ActionsRequiredMessage';
       $.VaultCheckNameAvailabilityParameters.properties.type['x-ms-format'] = 'resource-type';
       $.VaultCheckNameAvailabilityParameters['x-ms-client-name'] = 'VaultNameAvailabilityParameters';
+      $.NetworkRuleSet.properties.bypass['x-ms-enum']['name'] = 'NetworkRuleBypassOption';
   - rename-model:
       from: MHSMIPRule
       to: MhsmIPRule
