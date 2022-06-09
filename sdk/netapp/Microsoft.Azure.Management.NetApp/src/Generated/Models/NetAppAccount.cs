@@ -11,7 +11,6 @@
 namespace Microsoft.Azure.Management.NetApp.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -22,7 +21,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
     /// NetApp account resource
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class NetAppAccount : IResource
+    public partial class NetAppAccount : TrackedResource
     {
         /// <summary>
         /// Initializes a new instance of the NetAppAccount class.
@@ -35,30 +34,29 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <summary>
         /// Initializes a new instance of the NetAppAccount class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
+        /// <param name="tags">Resource tags.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="activeDirectories">Active Directories</param>
         /// <param name="encryption">Encryption settings</param>
-        /// <param name="systemData">The system meta data relating to this
-        /// resource.</param>
-        public NetAppAccount(string location, string id = default(string), string name = default(string), string etag = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>), AccountEncryption encryption = default(AccountEncryption), SystemData systemData = default(SystemData))
+        public NetAppAccount(string location, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>), AccountEncryption encryption = default(AccountEncryption))
+            : base(location, id, name, type, systemData, tags)
         {
-            Location = location;
-            Id = id;
-            Name = name;
             Etag = etag;
-            Type = type;
-            Tags = tags;
             ProvisioningState = provisioningState;
             ActiveDirectories = activeDirectories;
             Encryption = encryption;
-            SystemData = systemData;
             CustomInit();
         }
 
@@ -68,41 +66,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource location
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets resource Id
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets resource name
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
-
-        /// <summary>
-        /// Gets resource type
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets or sets resource tags
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets azure lifecycle management
@@ -123,23 +91,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public AccountEncryption Encryption { get; set; }
 
         /// <summary>
-        /// Gets the system meta data relating to this resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
+            base.Validate();
             if (ActiveDirectories != null)
             {
                 foreach (var element in ActiveDirectories)
