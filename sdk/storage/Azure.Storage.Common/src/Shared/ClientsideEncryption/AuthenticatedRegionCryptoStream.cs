@@ -278,7 +278,10 @@ namespace Azure.Storage.Cryptography
 
         protected override void Dispose(bool disposing)
         {
-            FlushFinalInternal(async: false, cancellationToken: default).EnsureCompleted();
+            if (CanWrite)
+            {
+                FlushFinalInternal(async: false, cancellationToken: default).EnsureCompleted();
+            }
             base.Dispose(disposing);
             _transform.Dispose();
             _innerStream?.Dispose();
