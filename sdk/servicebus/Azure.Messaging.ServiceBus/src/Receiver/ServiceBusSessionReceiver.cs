@@ -32,6 +32,19 @@ namespace Azure.Messaging.ServiceBus
         public virtual string SessionId => InnerReceiver.SessionId;
 
         /// <summary>
+        /// Indicates whether or not this <see cref="ServiceBusSessionReceiver"/> has been closed by the user, or whether the underlying
+        /// session link was closed due to either losing the session lock or having the link disconnected. If this is <c>true</c>, the
+        /// receiver cannot be used for any more operations. If this is <c>false</c>, it is still possible that the session lock has been lost
+        /// so it is important to still handle <see cref="ServiceBusException" /> with <see cref="ServiceBusException.Reason" /> equal to
+        /// <see cref="ServiceBusFailureReason.SessionLockLost"/>.
+        /// </summary>
+        ///
+        /// <value>
+        /// <c>true</c> if the session receiver was closed by the user or if the underlying link was closed; otherwise, <c>false</c>.
+        /// </value>
+        public override bool IsClosed => IsDisposed || InnerReceiver.IsSessionLinkClosed;
+
+        /// <summary>
         /// Gets the <see cref="DateTimeOffset"/> that the receiver's session is locked until.
         /// </summary>
         public virtual DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
@@ -127,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
         /// </exception>
         public virtual async Task<BinaryData> GetSessionStateAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSessionReceiver));
             _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.GetSessionStateStart(Identifier, SessionId);
@@ -171,7 +184,7 @@ namespace Azure.Messaging.ServiceBus
             BinaryData sessionState,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSessionReceiver));
             _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SetSessionStateStart(Identifier, SessionId);
@@ -216,7 +229,7 @@ namespace Azure.Messaging.ServiceBus
         /// </exception>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSessionReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewSessionLockStart(Identifier, SessionId);
             using DiagnosticScope scope = ScopeFactory.CreateScope(

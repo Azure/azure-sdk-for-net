@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> The unit used by the width, height, and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </summary>
+    /// <summary> The unit used by the width, height, and polygon properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </summary>
     internal readonly partial struct V3LengthUnit : IEquatable<V3LengthUnit>
     {
         private readonly string _value;

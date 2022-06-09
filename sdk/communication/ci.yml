@@ -21,7 +21,7 @@ pr:
     - sdk/communication/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: communication
     ArtifactName: packages
@@ -32,10 +32,15 @@ extends:
       safeName: AzureCommunicationChat
     - name: Azure.Communication.Common
       safeName: AzureCommunicationCommon
+    - name: Azure.Communication.Email
+      safeName: AzureCommunicationEmail
     - name: Azure.Communication.Sms
       safeName: AzureCommunicationSms
     - name: Azure.Communication.Identity
       safeName: AzureCommunicationIdentity
+    - name: Azure.Communication.MediaComposition
+      safeName: AzureCommunicationMediaComposition
+      skipReleaseStage: true
     - name: Azure.Communication.NetworkTraversal
       safeName: AzureCommunicationNetworkTraversal
     - name: Azure.Communication.PhoneNumbers

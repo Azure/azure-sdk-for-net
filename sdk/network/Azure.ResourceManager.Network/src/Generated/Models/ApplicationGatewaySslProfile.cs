@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
         /// <param name="clientAuthConfiguration"> Client authentication configuration of the application gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        internal ApplicationGatewaySslProfile(ResourceIdentifier id, string name, ResourceType? resourceType, string etag, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewaySslProfile(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             Etag = etag;
             TrustedClientCertificates = trustedClientCertificates;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Array of references to application gateway trusted client certificates. </summary>
         public IList<WritableSubResource> TrustedClientCertificates { get; }
         /// <summary> SSL policy of the application gateway resource. </summary>

@@ -40,13 +40,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     _storage = new FileStorage(options.StorageDirectory);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     // TODO:
-                    // log exception
                     // Remove this when we add an option to disable offline storage.
                     // So if someone opts in for storage and we cannot initialize, we can throw.
                     // Change needed on persistent storage side to throw if not able to create storage directory.
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToInitializePersistentStorage", ex);
                 }
             }
         }
@@ -79,10 +79,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 {
                     result = HandleFailures(httpMessage);
                 }
+                else
+                {
+                    AzureMonitorExporterEventSource.Log.WriteInformational("TransmissionSuccess", "Successfully transmitted a batch of telemetry Items.");
+                }
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToTransmit{EventLevelSuffix.Error}", ex.LogAsyncException());
+                AzureMonitorExporterEventSource.Log.WriteError("FailedToTransmit", ex);
             }
 
             return result;
@@ -119,6 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         if (result == ExportResult.Success)
                         {
                             blob.Delete();
+                            AzureMonitorExporterEventSource.Log.WriteInformational("TransmitFromStorageSuccess", "Successfully transmitted a blob from storage.");
                         }
                         else
                         {
@@ -128,7 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.Write($"FailedToTransmitFromStorage{EventLevelSuffix.Error}", ex.LogAsyncException());
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToTransmitFromStorage", ex);
                 }
 
                 files--;
@@ -148,6 +153,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private ExportResult HandleFailures(HttpMessage httpMessage)
         {
             ExportResult result = ExportResult.Failure;
+            int statusCode = 0;
             byte[] content;
             int retryInterval;
 
@@ -159,7 +165,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             else
             {
-                switch (httpMessage.Response.Status)
+                statusCode = httpMessage.Response.Status;
+                switch (statusCode)
                 {
                     case ResponseStatusCodes.PartialSuccess:
                         // Parse retry-after header
@@ -195,12 +202,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
             }
 
+            if (result == ExportResult.Success)
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is stored offline for retry");
+            }
+            else
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmit", $"Error code is {statusCode}: Telemetry is dropped");
+            }
+
             return result;
         }
 
         private void HandleFailures(HttpMessage httpMessage, IPersistentBlob blob)
         {
             int retryInterval;
+            int statusCode = 0;
+            bool shouldRetry = true;
 
             if (!httpMessage.HasResponse)
             {
@@ -210,7 +228,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
             else
             {
-                switch (httpMessage.Response.Status)
+                statusCode = httpMessage.Response.Status;
+                switch (statusCode)
                 {
                     case ResponseStatusCodes.PartialSuccess:
                         // Parse retry-after header
@@ -243,8 +262,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     default:
                         // Log Non-Retriable Status and don't retry or store;
                         // File will be cleared by maintenance job
+                        shouldRetry = false;
                         break;
                 }
+            }
+
+            if (shouldRetry)
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is stored offline for retry");
+            }
+            else
+            {
+                AzureMonitorExporterEventSource.Log.WriteWarning("FailedToTransmitFromStorage", $"Error code is {statusCode}: Telemetry is dropped");
             }
         }
     }
