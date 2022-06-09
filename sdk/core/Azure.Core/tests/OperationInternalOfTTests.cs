@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
     public class OperationInternalOfTTests
     {
         private static readonly string DiagnosticNamespace = "Azure.Core.Tests";
-        private static readonly ClientDiagnostics ClientDiagnostics = new(new TestClientOptions());
+        private static readonly ClientDiagnostics ClientDiagnostics = new(new TestClientOptions(), true);
         private static readonly RequestFailedException OriginalException = new("");
         private static readonly StackOverflowException CustomException = new();
         private static readonly MockResponse InitialResponse = new(200);
@@ -247,7 +247,7 @@ namespace Azure.Core.Tests
                 ? await operationInternal.WaitForCompletionAsync(CancellationToken.None)
                 : operationInternal.WaitForCompletion(CancellationToken.None);
 
-            testListener.AssertScope($"{expectedTypeName}.WaitForCompletionResponse", expectedAttributes);
+            testListener.AssertScope($"{expectedTypeName}.WaitForCompletion", expectedAttributes);
         }
 
         [Test]

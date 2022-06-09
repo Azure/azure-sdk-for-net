@@ -174,10 +174,7 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public async ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken)
-        {
-            var rawResponse = await WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(Value, rawResponse);
-        }
+            => await WaitForCompletionAsync(async: true, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
@@ -198,10 +195,7 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public async ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
-        {
-            var rawResponse = await WaitForCompletionResponseAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(Value, rawResponse);
-        }
+            => await WaitForCompletionAsync(async: true, pollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes.
@@ -220,10 +214,7 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public Response<T> WaitForCompletion(CancellationToken cancellationToken)
-        {
-            var rawResponse = WaitForCompletionResponse(cancellationToken);
-            return Response.FromValue(Value, rawResponse);
-        }
+            => WaitForCompletionAsync(async: false, null, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes. The interval
@@ -244,9 +235,28 @@ namespace Azure.Core
         /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
         /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
         public Response<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken)
+            => WaitForCompletionAsync(async: false, pollingInterval, cancellationToken).EnsureCompleted();
+
+        private async ValueTask<Response<T>> WaitForCompletionAsync(bool async, TimeSpan? pollingInterval, CancellationToken cancellationToken)
         {
-            var rawResponse = WaitForCompletionResponse(pollingInterval, cancellationToken);
-            return Response.FromValue(Value, rawResponse);
+            if (TryGetResponseValue(out var rawResponse))
+            {
+                return Response.FromValue(Value, rawResponse!);
+            }
+
+            using var scope = CreateScope(_waitForCompletionScopeName!);
+            try
+            {
+                rawResponse = async
+                    ? await WaitForCompletionResponseAsync(async: true, pollingInterval, cancellationToken).ConfigureAwait(false)
+                    : WaitForCompletionResponseAsync(async: false, pollingInterval, cancellationToken).EnsureCompleted();
+                return Response.FromValue(Value, rawResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
@@ -260,7 +270,7 @@ namespace Azure.Core
                 return GetResponseFromState(asyncLock.Value);
             }
 
-            using var scope = CreateScope(string.IsNullOrEmpty(_operationTypeName) ? string.Empty : $"{_operationTypeName}.UpdateStatus");
+            using var scope = CreateScope(_updateStatusScopeName!);
             try
             {
                 var state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);

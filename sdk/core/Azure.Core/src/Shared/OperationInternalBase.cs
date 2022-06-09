@@ -19,12 +19,13 @@ namespace Azure.Core
         private readonly DelayStrategy? _fallbackStrategy;
         private readonly AsyncLockWithValue<Response> _responseLock;
 
-        protected readonly string _operationTypeName;
+        private readonly string? _waitForCompletionResponseScopeName;
+        protected readonly string? _updateStatusScopeName;
+        protected readonly string? _waitForCompletionScopeName;
 
         protected OperationInternalBase(Response rawResponse)
         {
             _diagnostics = new ClientDiagnostics(ClientOptions.Default);
-            _operationTypeName = string.Empty;
             _scopeAttributes = default;
             _fallbackStrategy = default;
             _responseLock = new AsyncLockWithValue<Response>(rawResponse);
@@ -33,7 +34,9 @@ namespace Azure.Core
         protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)
         {
             _diagnostics = clientDiagnostics;
-            _operationTypeName = operationTypeName;
+            _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
+            _waitForCompletionResponseScopeName = $"{operationTypeName}.WaitForCompletionResponse";
+            _waitForCompletionScopeName = $"{operationTypeName}.WaitForCompletion";
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             _fallbackStrategy = fallbackStrategy;
             _responseLock = new AsyncLockWithValue<Response>();
@@ -179,7 +182,7 @@ namespace Azure.Core
         public Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken)
             => WaitForCompletionResponseAsync(async: false, pollingInterval, cancellationToken).EnsureCompleted();
 
-        private async ValueTask<Response> WaitForCompletionResponseAsync(bool async, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+        protected async ValueTask<Response> WaitForCompletionResponseAsync(bool async, TimeSpan? pollingInterval, CancellationToken cancellationToken)
         {
             // If _responseLock has the value, lockOrValue will contain that value, and no lock is acquired.
             // If _responseLock doesn't have the value, GetLockOrValueAsync will acquire the lock that will be released when lockOrValue is disposed
@@ -189,7 +192,7 @@ namespace Azure.Core
                 return lockOrValue.Value;
             }
 
-            using var scope = CreateScope(string.IsNullOrEmpty(_operationTypeName) ? string.Empty : $"{_operationTypeName}.WaitForCompletionResponse");
+            using var scope = CreateScope(_waitForCompletionResponseScopeName!);
             try
             {
                 var poller = new OperationPoller(_fallbackStrategy);
@@ -228,5 +231,10 @@ namespace Azure.Core
         protected async ValueTask<RequestFailedException> CreateException(bool async, Response response) => async
             ? await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
             : _diagnostics.CreateRequestFailedException(response);
+
+        protected bool TryGetResponseValue(out Response? value)
+        {
+            return _responseLock.TryGetValue(out value);
+        }
     }
 }
