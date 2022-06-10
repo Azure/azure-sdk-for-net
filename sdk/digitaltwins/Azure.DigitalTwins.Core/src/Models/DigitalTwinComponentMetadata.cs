@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core
     public class DigitalTwinComponentMetadata : IDictionary<string, DigitalTwinPropertyMetadata>
     {
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public DigitalTwinPropertyMetadata this[string key] { get => PropertyMetadata[key]; set => PropertyMetadata[key] = value; }
 
@@ -38,27 +38,27 @@ namespace Azure.DigitalTwins.Core
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public ICollection<string> Keys => PropertyMetadata.Keys;
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public ICollection<DigitalTwinPropertyMetadata> Values => PropertyMetadata.Values;
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public int Count => PropertyMetadata.Count;
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public bool IsReadOnly => PropertyMetadata.IsReadOnly;
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public void Add(string key, DigitalTwinPropertyMetadata value)
         {
@@ -66,7 +66,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public void Add(KeyValuePair<string, DigitalTwinPropertyMetadata> item)
         {
@@ -74,7 +74,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public void Clear()
         {
@@ -82,7 +82,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public bool Contains(KeyValuePair<string, DigitalTwinPropertyMetadata> item)
         {
@@ -90,7 +90,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public bool ContainsKey(string key)
         {
@@ -98,7 +98,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public void CopyTo(KeyValuePair<string, DigitalTwinPropertyMetadata>[] array, int arrayIndex)
         {
@@ -106,7 +106,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public IEnumerator<KeyValuePair<string, DigitalTwinPropertyMetadata>> GetEnumerator()
         {
@@ -114,7 +114,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public bool Remove(string key)
         {
@@ -122,7 +122,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public bool Remove(KeyValuePair<string, DigitalTwinPropertyMetadata> item)
         {
@@ -130,7 +130,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         public bool TryGetValue(string key, out DigitalTwinPropertyMetadata value)
         {
@@ -138,7 +138,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// TODO
+        /// Part of implementation of IDictionary interface. Added for backwards compatibility.
         /// </summary>
         IEnumerator IEnumerable.GetEnumerator()
         {

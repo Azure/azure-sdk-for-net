@@ -1,17 +1,17 @@
 # Release History
 
-## 2.0.0 (2022-06-02)
+## 2.0.0 (2022-06-30)
 
 ### New Features
 
 - Updated service API version to use API version 2022-05-31 by default.
 - Added support for the new, writeable property metadata `SourceTime` to `DigitalTwinPropertyMetadata`.
 - Added a new class `DigitalTwinComponentMetadata` for deserializing component metadata.
-- Added support for `LastUpdatedTime` for digital twins and components to `DigitalTwinMetadata` and `DigitalTwinComponentMetadata`.
+- Added support for `LastUpdatedOn` for digital twins and components to `DigitalTwinMetadata` and `DigitalTwinComponentMetadata`.
 
 ### Fixes and improvements
 
-- Updated samples to illustrate usage of `SourceTime`, `LastUpdatedTime` at digital twin and component metadata level, and use of `DigitalTwinComponentMetadata`.
+- Updated samples to illustrate usage of `SourceTime`, `LastUpdatedOn` at digital twin and component metadata level, and use of `DigitalTwinComponentMetadata`.
 
 ## 1.2.2 (2021-04-12)
 
