@@ -6,10 +6,10 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Placeholder response from job reclassification.
     /// </summary>
-    public class ReclassifyJobResponse: EmptyPlaceholderObject
+    public class ReclassifyJobResult: EmptyPlaceholderObject
     {
         /// <inheritdoc />
-        public ReclassifyJobResponse(object value) : base(value)
+        public ReclassifyJobResult(object value) : base(value)
         {
         }
     }

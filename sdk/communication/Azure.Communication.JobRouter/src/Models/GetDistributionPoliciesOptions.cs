@@ -8,13 +8,9 @@ using System.Text;
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// Response received after declining job offer.
+    /// Options for filtering while retrieving distribution policies.
     /// </summary>
-    public class DeclineJobOfferResponse: EmptyPlaceholderObject
+    public class GetDistributionPoliciesOptions
     {
-        /// <inheritdoc />
-        public DeclineJobOfferResponse(object value) : base(value)
-        {
-        }
     }
 }

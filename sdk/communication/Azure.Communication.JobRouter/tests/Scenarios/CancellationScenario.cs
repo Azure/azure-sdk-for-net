@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -25,10 +23,32 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
 
             var dispositionCode = "dispositionCode";
             var note = "note";
-            var channelResponse = await client.SetChannelAsync($"{IdPrefix}-channel", "test");
-            var distributionPolicyResponse = await client.SetDistributionPolicyAsync($"{IdPrefix}-dist-policy", TimeSpan.FromMinutes(10), new LongestIdleMode(1, 1), "test");
-            var queueResponse = await client.SetQueueAsync($"{IdPrefix}-queue", distributionPolicyResponse.Value.Id, "test");
-            var createJob = await client.CreateJobAsync(channelResponse.Value.Id, queueResponse.Value.Id, 1);
+            var channelResponse = GenerateUniqueId($"Channel-{IdPrefix}-{nameof(CancellationScenario)}");
+            var distributionPolicyResponse = await client.CreateDistributionPolicyAsync(
+                $"{IdPrefix}-dist-policy",
+                10 * 60,
+                new LongestIdleMode(1, 1),
+                new CreateDistributionPolicyOptions()
+                {
+                    Name = "test",
+                });
+            var queueResponse = await client.CreateQueueAsync(
+                $"{IdPrefix}-queue",
+                distributionPolicyResponse.Value.Id,
+                new CreateQueueOptions()
+                {
+                    Name = "test",
+                });
+
+            var jobId = $"JobId-{nameof(CancellationScenario)}";
+            var createJob = await client.CreateJobAsync(
+                id: jobId,
+                channelId: channelResponse,
+                queueId: queueResponse.Value.Id,
+                new CreateJobOptions()
+                {
+                    Priority = 1,
+                });
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.JobStatus == JobStatus.Queued,

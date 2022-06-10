@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class AcceptJobOfferResponse
+    public partial class AcceptJobOfferResult
     {
-        internal static AcceptJobOfferResponse DeserializeAcceptJobOfferResponse(JsonElement element)
+        internal static AcceptJobOfferResult DeserializeAcceptJobOfferResult(JsonElement element)
         {
             string assignmentId = default;
             string jobId = default;
@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new AcceptJobOfferResponse(assignmentId, jobId, workerId);
+            return new AcceptJobOfferResult(assignmentId, jobId, workerId);
         }
     }
 }

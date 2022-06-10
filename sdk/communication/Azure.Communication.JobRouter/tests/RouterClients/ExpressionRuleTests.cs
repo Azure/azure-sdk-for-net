@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Communication.JobRouter.Models;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients

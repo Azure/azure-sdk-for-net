@@ -1595,7 +1595,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="offerId"> Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
-        public async Task<Response<AcceptJobOfferResponse>> AcceptJobActionAsync(string workerId, string offerId, CancellationToken cancellationToken = default)
+        public async Task<Response<AcceptJobOfferResult>> AcceptJobActionAsync(string workerId, string offerId, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
@@ -1612,9 +1612,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        AcceptJobOfferResponse value = default;
+                        AcceptJobOfferResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AcceptJobOfferResponse.DeserializeAcceptJobOfferResponse(document.RootElement);
+                        value = AcceptJobOfferResult.DeserializeAcceptJobOfferResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1627,7 +1627,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="offerId"> Id of the offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
-        public Response<AcceptJobOfferResponse> AcceptJobAction(string workerId, string offerId, CancellationToken cancellationToken = default)
+        public Response<AcceptJobOfferResult> AcceptJobAction(string workerId, string offerId, CancellationToken cancellationToken = default)
         {
             if (workerId == null)
             {
@@ -1644,9 +1644,9 @@ namespace Azure.Communication.JobRouter
             {
                 case 200:
                     {
-                        AcceptJobOfferResponse value = default;
+                        AcceptJobOfferResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AcceptJobOfferResponse.DeserializeAcceptJobOfferResponse(document.RootElement);
+                        value = AcceptJobOfferResult.DeserializeAcceptJobOfferResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
