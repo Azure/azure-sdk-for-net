@@ -4,12 +4,16 @@
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class MetricHelperTests
     {

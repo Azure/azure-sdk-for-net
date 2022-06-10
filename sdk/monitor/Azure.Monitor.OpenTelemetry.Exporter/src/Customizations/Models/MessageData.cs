@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models

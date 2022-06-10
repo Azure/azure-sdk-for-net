@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 using Azure.Core.Shared;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     [EventSource(Name = EventSourceName)]
     internal sealed class AzureMonitorExporterEventSource : EventSource

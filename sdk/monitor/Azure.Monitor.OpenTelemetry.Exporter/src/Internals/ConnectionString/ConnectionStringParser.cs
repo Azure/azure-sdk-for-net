@@ -7,7 +7,7 @@ using System.Linq;
 // This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Core" which doesn't exist.
 using AzureCoreConnectionString = Azure.Core.ConnectionString;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
 {
     internal static class ConnectionStringParser
     {

@@ -3,6 +3,9 @@
 
 using System;
 using System.Net;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using OpenTelemetry.Resources;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
