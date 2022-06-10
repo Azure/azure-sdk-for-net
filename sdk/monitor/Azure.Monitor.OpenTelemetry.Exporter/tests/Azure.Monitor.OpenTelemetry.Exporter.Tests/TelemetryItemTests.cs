@@ -8,6 +8,7 @@ using System.Net;
 using Xunit;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {

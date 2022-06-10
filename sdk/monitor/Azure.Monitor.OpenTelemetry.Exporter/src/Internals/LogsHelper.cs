@@ -8,12 +8,15 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
+
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using Microsoft.Extensions.Logging;
+
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal class LogsHelper
     {

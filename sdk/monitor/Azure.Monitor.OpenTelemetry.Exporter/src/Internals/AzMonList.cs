@@ -6,7 +6,7 @@ using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal readonly struct AzMonList : IEnumerable
     {
@@ -81,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             int lengthTagNames = tagNames.Length;
             int lengthList = list.Length;
-            object[] values = new object[(int)lengthTagNames];
+            object[] values = new object[lengthTagNames];
 
             for (int i = 0; i < lengthList; i++)
             {

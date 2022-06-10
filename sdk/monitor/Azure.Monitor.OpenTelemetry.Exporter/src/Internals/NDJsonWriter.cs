@@ -5,16 +5,16 @@ using System;
 using System.IO;
 using System.Text.Json;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class NDJsonWriter: IDisposable
+    internal class NDJsonWriter : IDisposable
     {
-        private static readonly byte[] s_separator = { (byte)'\n'};
+        private static readonly byte[] s_separator = { (byte)'\n' };
 
         public NDJsonWriter()
         {
             Stream = new MemoryStream();
-            JsonWriter = new Utf8JsonWriter(Stream, new JsonWriterOptions(){ SkipValidation = true });
+            JsonWriter = new Utf8JsonWriter(Stream, new JsonWriterOptions() { SkipValidation = true });
         }
 
         private MemoryStream Stream { get; }

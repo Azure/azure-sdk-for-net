@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal class MetricHelper
     {
