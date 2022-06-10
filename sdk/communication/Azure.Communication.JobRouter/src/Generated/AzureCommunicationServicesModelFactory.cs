@@ -206,14 +206,14 @@ namespace Azure.Communication.JobRouter
             return new JobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTimeMinutes);
         }
 
-        /// <summary> Initializes a new instance of AcceptJobOfferResponse. </summary>
+        /// <summary> Initializes a new instance of AcceptJobOfferResult. </summary>
         /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> The Id of the job assigned. </param>
         /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
-        /// <returns> A new <see cref="JobRouter.AcceptJobOfferResponse"/> instance for mocking. </returns>
-        public static AcceptJobOfferResponse AcceptJobOfferResponse(string assignmentId = null, string jobId = null, string workerId = null)
+        /// <returns> A new <see cref="JobRouter.AcceptJobOfferResult"/> instance for mocking. </returns>
+        public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null)
         {
-            return new AcceptJobOfferResponse(assignmentId, jobId, workerId);
+            return new AcceptJobOfferResult(assignmentId, jobId, workerId);
         }
 
         /// <summary> Initializes a new instance of QueueCollection. </summary>

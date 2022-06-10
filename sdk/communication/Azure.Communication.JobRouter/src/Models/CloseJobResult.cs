@@ -8,12 +8,12 @@ using System.Text;
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// Response received after successful job completion.
+    /// Response received after successful job closure.
     /// </summary>
-    public class CompleteJobResponse: EmptyPlaceholderObject
+    public class CloseJobResult: EmptyPlaceholderObject
     {
         /// <inheritdoc />
-        public CompleteJobResponse(object value) : base(value)
+        public CloseJobResult(object value) : base(value)
         {
         }
     }

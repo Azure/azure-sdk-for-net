@@ -6,10 +6,10 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Response received after successful job cancellation.
     /// </summary>
-    public class CancelJobResponse: EmptyPlaceholderObject
+    public class CancelJobResult: EmptyPlaceholderObject
     {
         /// <inheritdoc />
-        public CancelJobResponse(object value) : base(value)
+        public CancelJobResult(object value) : base(value)
         {
         }
     }

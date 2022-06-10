@@ -10,14 +10,14 @@ using System;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Response containing Id&apos;s for the worker, job, and assignment from an accepted offer. </summary>
-    public partial class AcceptJobOfferResponse
+    public partial class AcceptJobOfferResult
     {
-        /// <summary> Initializes a new instance of AcceptJobOfferResponse. </summary>
+        /// <summary> Initializes a new instance of AcceptJobOfferResult. </summary>
         /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
         /// <param name="jobId"> The Id of the job assigned. </param>
         /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/>, <paramref name="jobId"/> or <paramref name="workerId"/> is null. </exception>
-        internal AcceptJobOfferResponse(string assignmentId, string jobId, string workerId)
+        internal AcceptJobOfferResult(string assignmentId, string jobId, string workerId)
         {
             if (assignmentId == null)
             {

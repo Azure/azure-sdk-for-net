@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter

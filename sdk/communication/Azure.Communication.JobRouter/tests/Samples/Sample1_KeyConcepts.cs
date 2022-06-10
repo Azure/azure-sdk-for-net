@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 #region Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
@@ -28,49 +27,53 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D
-            var distributionPolicy = routerClient.SetDistributionPolicy(
+            var distributionPolicy = routerClient.CreateDistributionPolicy(
                 id: "distribution-policy-1",
-                name: "My Distribution Policy",
                 offerTtlSeconds: 24 * 60 * 60,
                 mode: new LongestIdleMode()
             );
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue
-            var queue = routerClient.SetQueue(
+            var queue = routerClient.CreateQueue(
                 id: "queue-1",
-                name: "My Queue",
                 distributionPolicyId: distributionPolicy.Value.Id
             );
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign
-            var job = routerClient.SetJob(
+            var job = routerClient.CreateJob(
                 id: "jobId-2",
                 channelId: "my-channel",
-                channelReference: "12345",
                 queueId: queue.Value.Id,
-                priority: 1,
-                workerSelectors: new List<WorkerSelector>
+                new CreateJobOptions()
                 {
-                    new WorkerSelector("Some-Skill", LabelOperator.GreaterThan, 10)
+                    ChannelReference = "12345",
+                    Priority = 1,
+                    RequestedWorkerSelectors = new List<WorkerSelector>
+                    {
+                        new WorkerSelector("Some-Skill", LabelOperator.GreaterThan, 10)
+                    },
                 });
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker
-            var worker = routerClient.SetWorker(
+            var worker = routerClient.CreateWorker(
                 id: "worker-1",
-                queueIds: new[] { queue.Value.Id },
                 totalCapacity: 1,
-                labels: new LabelCollection()
+                new CreateWorkerOptions()
                 {
-                    ["Some-Skill"] = 11
-                },
-                channelConfigurations: new Dictionary<string, ChannelConfiguration>()
-                {
-                    ["my-channel"] = new ChannelConfiguration(1)
-                },
-                availableForOffers: true
+                    QueueIds = new[] { queue.Value.Id },
+                    Labels = new LabelCollection()
+                    {
+                        ["Some-Skill"] = 11
+                    },
+                    ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+                    {
+                        ["my-channel"] = new ChannelConfiguration(1)
+                    },
+                    AvailableForOffers = true,
+                }
             );
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker
 

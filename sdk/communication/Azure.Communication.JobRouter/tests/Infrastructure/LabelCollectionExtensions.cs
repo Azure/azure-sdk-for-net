@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Linq;
-using Azure.Communication.JobRouter.Models;
 
 namespace Azure.Communication.JobRouter.Tests.Infrastructure
 {

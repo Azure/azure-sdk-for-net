@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
 
@@ -18,7 +14,13 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
     {
         public const string LiveTestAzureFunctionRouterRuleConnectionStringEnvironmentVariable = "COMMUNICATION_LIVETEST_ROUTER_AZURE_FUNCTION_RULE_CONTAINER";
 
-        public string LiveTestAzureFunctionRouterRuleUrl => GetRecordedVariable(LiveTestAzureFunctionRouterRuleConnectionStringEnvironmentVariable);
+        public string LiveTestAzureFunctionRouterRuleUrl => GetRecordedVariable(
+            LiveTestAzureFunctionRouterRuleConnectionStringEnvironmentVariable,
+            options =>
+            {
+                options.HasSecretConnectionStringParameter("accessKey", SanitizedValue.Base64);
+                options.HasSecretConnectionStringParameter("functionKey", SanitizedValue.Base64);
+            });
 
         public Uri LiveTestAzureFunctionRuleEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestAzureFunctionRouterRuleUrl).GetRequired("endpoint"));
 

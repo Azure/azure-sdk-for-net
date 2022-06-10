@@ -1,120 +1,178 @@
-﻿# README.md template
+# Azure Communication JobRouter client library for .NET
 
-Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See [Azure.Template/README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/README.md) for an example following this template.
+This package contains a C# SDK for Azure Communication Services for JobRouter.
 
-**Title**: The H1 of your README should be in the format: `# [Product Name] client library for [Language]`
+[Source code][source] | [Package (NuGet)][package] | [Product documentation][product_docs]
 
-* All headings, including the H1, should use **sentence-style capitalization**. Refer to the [Microsoft Style Guide][style-guide-msft] and [Microsoft Cloud Style Guide][style-guide-cloud] for more information.
-* Example: `# Azure Batch client library for Python`
-
-# Azure Template client library for .NET
-
-**Introduction**: The introduction appears directly under the title (H1) of your README.
-
-* **DO NOT** use an "Introduction" or "Overview" heading (H2) for this section.
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
-* Include this single line of links targeting your product's content at the bottom of the introduction, making any adjustments as necessary (for example, NuGet instead of PyPi):
-
-  [Source code](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/batch/azure-batch) | [Package (PyPi)](https://pypi.org/project/azure-batch/) | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/batch?view=azure-python) | [Product documentation](https://docs.microsoft.com/azure/batch/)
-
-> TIP: Your README should be as **brief** as possible but **no more brief** than necessary to get a developer new to Azure, the service, or the package up and running quickly. Keep it brief, but include everything a developer needs to make their first API call successfully.
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
-
 ### Install the package
+Install the Azure Communication JobRouter client library for .NET with [NuGet][nuget]:
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `pip install package-name`, but should enable a developer to successfully install the package from NuGet, pip, npm, Maven, or even cloning a GitHub repository.
+```dotnetcli
+dotnet add package Azure.Communication.JobRouter 
+``` 
 
 ### Prerequisites
+You need an [Azure subscription][azure_sub] and a [Communication Service Resource][communication_resource_docs] to use this package.
 
-Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
-
-> You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+To create a new Communication Service, you can use the [Azure Portal][communication_resource_create_portal], the [Azure PowerShell][communication_resource_create_power_shell], or the [.NET management client library][communication_resource_create_net].
 
 ### Authenticate the client
 
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
+### Using statements
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
+using Azure.Communication.JobRouter;
+```
 
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+### Create a JobRouter Client
+
+This will allow you to interact with the JobRouter Service
+```C#
+var routerClient new RouterClient("<Communication Service Connection String>");
+```
+
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+### Job
+A Job represents the unit of work, which needs to be routed to an available Worker. 
+A real-world example of this may be an incoming call or chat in the context of a call center.
 
-Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+### Worker
+A Worker represents the supply available to handle a Job. Each worker registers with with or more queues to receive jobs.
+A real-world example of this may be an agent working in a call center.
 
-### Thread safety
-We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+### Queue
+A Queue represents an ordered list of jobs waiting to be served by a worker.  Workers will register with a queue to receive work from it.
+A real-world example of this may be a call queue in a call center.
 
-### Additional concepts
-<!-- CLIENT COMMON BAR -->
-[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
-[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
-[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
-[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
-[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
-[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
-<!-- CLIENT COMMON BAR -->
+## Channel
+A Channel represents a grouping of jobs by some type.  When a worker registers to receive work, they must also specify for which channels they can handle work, and how much of each can they handle concurrently.
+A real-world example of this may be `voice calls` or `chats` in a call center.
 
-## Examples
+### Offer
+An Offer is extended by JobRouter to a worker to handle a particular job when it determines a match, this notification is normally delivered via [EventGrid][subscribe_events].  The worker can either accept or decline the offer using th JobRouter API, or it will expire according to the time to live configured on the distribution policy.
+A real-world example of this may be the ringing of an agent in a call center.
 
-Include code snippets and short descriptions for each task you listed in the [Introduction](#introduction) (the bulleted list). Briefly explain each operation, but include enough clarity to explain complex or otherwise tricky operations.
+### Distribution Policy
+A Distribution Policy represents a configuration set that governs how jobs in a queue are distributed to workers registered with that queue.
+This configuration includes how long an Offer is valid before it expires and the dsitribution mode, which define the order in which workers are picked when there are multiple available.
 
-If possible, use the same example snippets that your in-code documentation uses. For example, use the snippets in your `examples.py` that Sphinx ingests via its [literalinclude](https://www.sphinx-doc.org/en/1.5/markup/code.html?highlight=code%20examples#includes) directive. The `examples.py` file containing the snippets should reside alongside your package's code, and should be tested in an automated fashion.
+#### Distribution Mode
+The 3 types of modes are
+- **Round Robin**: Workers are ordered by `Id` and the next worker after the previous one that got an offer is picked.
+- **Longest Idle**: The worker that has not been working on a job for the longest.
+- **Best Worker**: You can specify an expression to compare 2 workers to determine which one to pick.
 
-Each example in the *Examples* section starts with an H3 that describes the example. At the top of this section, just under the *Examples* H2, add a bulleted list linking to each example H3. Each example should deep-link to the types and/or members used in the example.
+### Labels
+You can attach labels to workers, jobs and queues.  These are key value pairs that can be of `string`, `number` or `boolean` data types.
+A real-world example of this may be the skill level of a particular worker or the team or geographic location.
 
-* [Create the thing](#create-the-thing)
-* [Get the thing](#get-the-thing)
-* [List the things](#list-the-things)
+### Label Selectors
+Label selectors can be attached to a job in order to target a subset of workers serving the queue.
+A real-world example of this may be a condition on an incoming call that the agent must have a minimum level of knowledge of a particular product.
 
-### Create the thing
+### Classification policy
+A classification policy can be used to dynamically select a queue, determine job priority and attach worker label selectors to a job by leveraging a rules engine.
 
-Use the `create_thing` method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call `Thing.save`.
+### Exception policy
+An exception policy controls the behavior of a Job based on a trigger and executes a desired action. The exception policy is attached to a Queue so it can control the behavior of Jobs in the Queue.
 
-```Python
-thing = client.create_thing(id, name)
-thing.save()
+
+## Example
+
+### Distribution Policy
+Before we can create a Queue, we need a Distribution Policy.
+
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
+var distributionPolicy = await routerClient.SetDistributionPolicyAsync(
+    id: "distribution-policy-1",
+    name: "My Distribution Policy",
+    offerTTL: TimeSpan.FromDays(1),
+    mode: new LongestIdleMode()
+);
 ```
 
-### Get the thing
-
-The `get_thing` method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
-
-```C# Snippet:GetSecret
-var client = new MiniSecretClient(new Uri(endpoint), new DefaultAzureCredential());
-
-SecretBundle secret = client.GetSecret("TestSecret");
-
-Console.WriteLine(secret.Value);
-```Python
-things = client.list_things()
+### Queue
+Next, we can create the queue.
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
+var queue = await routerClient.SetQueueAsync(
+    id: "queue-1",
+    name: "My Queue",
+    distributionPolicyId: distributionPolicy.Value.Id
+);
 ```
 
-## Troubleshooting
+### Job
+Now, we can submit a job directly to that queue, with a worker selector the requires the worker to have the label `Some-Skill` greater than 10.
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign_Async
+var job = await routerClient.CreateJobAsync(
+    channelId: "my-channel",
+    channelReference: "12345",
+    queueId: queue.Value.Id,
+    priority: 1,
+    workerSelectors: new List<LabelSelector>
+    {
+        new LabelSelector("Some-Skill", LabelOperator.GreaterThan, 10)
+    });
+```
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+### Worker
+Now, we register a worker to receive work from that queue, with a label of `Some-Skill` equal to 11.
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
+var worker = await routerClient.RegisterWorkerAsync(
+    id: "worker-1",
+    queueIds: new[] { queue.Value.Id },
+    totalCapacity: 1,
+    labels: new LabelCollection()
+    {
+        ["Some-Skill"] = 11
+    },
+    channelConfigurations: new List<ChannelConfiguration>
+    {
+        new ChannelConfiguration("my-channel", 1)
+    }
+);
+```
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
-
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+### Offer
+We should get a [RouterWorkerOfferIssued][offer_issued_event_schema] from our [EventGrid subscription][subscribe_events].
+However, we could also wait a few seconds and then query the worker directly against the JobRouter API to see if an offer was issued to it.
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker_Async
+var result = await routerClient.GetWorkerAsync(worker.Value.Id);
+foreach (var offer in result.Value.Offers)
+{
+    Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
+}
+```
 
 ## Next steps
-
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+[Read more about JobRouter in Azure Communication Services][nextsteps]
 
 ## Contributing
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+[azure_sub]: https://azure.microsoft.com/free/dotnet/
+[cla]: https://cla.microsoft.com
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[coc_contact]: mailto:opencode@microsoft.com
+[nuget]: https://www.nuget.org/
+[netstandars2mappings]:https://github.com/dotnet/standard/blob/master/docs/versions.md
+[useraccesstokens]:https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
+[communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
+[communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[nextsteps]:https://docs.microsoft.com/en-us/azure/communication-services/concepts/router/concepts
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.JobRouter/src
+[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
+[package]: https://www.nuget.org/packages/Azure.Communication.JobRouter
+[classification_concepts]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/router/classification-concepts
+[subscribe_events]: https://docs.microsoft.com/en-us/azure/communication-services/how-tos/router-sdk/subscribe-events
+[offer_issued_event_schema]: https://docs.microsoft.com/en-us/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued

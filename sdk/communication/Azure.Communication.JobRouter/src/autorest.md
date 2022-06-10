@@ -86,3 +86,12 @@ directive:
   transform: >
     $["x-ms-client-name"] = "JobRouterError";
 ```
+
+### Rename AcceptJobOfferResponse to AcceptJobOfferResult
+```yaml
+directive:
+  from: swagger-document
+  where: '$.definitions.AcceptJobOfferResponse'
+  transform: >
+    $["x-ms-client-name"] = "AcceptJobOfferResult";
+```
