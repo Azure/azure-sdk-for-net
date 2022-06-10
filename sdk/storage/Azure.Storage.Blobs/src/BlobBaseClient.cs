@@ -961,7 +961,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash,
                 progressHandler: default,
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
-                bypassClientSideEncryption: false,
+                ignoreClientSideEncryption: false,
                 async,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1209,7 +1209,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash,
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-                bypassClientSideEncryption: false,
+                ignoreClientSideEncryption: false,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1301,7 +1301,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash,
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
-                bypassClientSideEncryption: false,
+                ignoreClientSideEncryption: false,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1421,9 +1421,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="operationName">
         /// operation name of the calling API.
         /// </param>
-        /// <param name="bypassClientSideEncryption">
-        /// Whether to bypass client-side encryption, letting the caller handle
-        /// all necessary steps.
+        /// <param name="ignoreClientSideEncryption">
+        /// Whether to skip client-side encryption steps, generally for optimization purposes.
+        /// Caller assumes responsibility for potential decryption when set to true.
         /// </param>
         /// <param name="async">
         /// Whether to operate asynchronously.
@@ -1438,7 +1438,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool rangeGetContentHash,
             IProgress<long> progressHandler,
             string operationName,
-            bool bypassClientSideEncryption,
+            bool ignoreClientSideEncryption,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1459,7 +1459,7 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
-                    if (UsingClientSideEncryption && !bypassClientSideEncryption)
+                    if (UsingClientSideEncryption && !ignoreClientSideEncryption)
                     {
                         // TODO #27253
                         //options = BlobDownloadOptions.CloneOrDefault(options) ?? new BlobDownloadOptions();
@@ -1549,7 +1549,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     // if using clientside encryption, wrap the auto-retry stream in a decryptor
                     // we already return a nonseekable stream; returning a crypto stream is fine
-                    if (UsingClientSideEncryption && !bypassClientSideEncryption)
+                    if (UsingClientSideEncryption && !ignoreClientSideEncryption)
                     {
                         stream = await new BlobClientSideDecryptor(
                             new ClientSideDecryptor(ClientSideEncryption)).DecryptInternal(
@@ -2099,7 +2099,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash: default,
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
-                bypassClientSideEncryption: false,
+                ignoreClientSideEncryption: false,
                 async: async,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -3050,7 +3050,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 rangeGetContentHash: default,
                                 progressHandler: default,
                                 operationName,
-                                bypassClientSideEncryption: true,
+                                ignoreClientSideEncryption: true,
                                 async,
                                 cancellationToken).ConfigureAwait(false);
 

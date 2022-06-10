@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.Storage.Cryptography.Models
 {
     /// <summary>
-    /// Transformation mode for a give <see cref="IAuthenticatedCryptographicTransform"/>.
+    /// Transformation mode for a given <see cref="IAuthenticatedCryptographicTransform"/>.
     /// </summary>
     internal enum TransformMode
     {

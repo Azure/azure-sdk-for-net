@@ -132,7 +132,7 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        bypassClientSideEncryption: true,
+                        ignoreClientSideEncryption: true,
                         async: true,
                         cancellationToken);
 
@@ -149,7 +149,7 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        bypassClientSideEncryption: true,
+                        ignoreClientSideEncryption: true,
                         async: true,
                         cancellationToken)
                         .ConfigureAwait(false);
@@ -189,19 +189,7 @@ namespace Azure.Storage.Blobs
                         cancellationToken)
                         .ConfigureAwait(false);
 
-                    // Writing to a crypto stream requires a "flush final" invocation
-                    if (_client.UsingClientSideEncryption)
-                    {
-                        if (destination is System.Security.Cryptography.CryptoStream cryptoStream)
-                        {
-                            cryptoStream.FlushFinalBlock();
-                        }
-                        else if (destination is Azure.Storage.Cryptography.AuthenticatedRegionCryptoStream authRegionCryptoStream)
-                        {
-                            await authRegionCryptoStream.FlushFinalInternal(async: true, cancellationToken).ConfigureAwait(false);
-                        }
-                    }
-
+                    await FlushFinalIfNecessaryInternal(destination, async: true, cancellationToken).ConfigureAwait(false);
                     return initialResponse.GetRawResponse();
                 }
 
@@ -235,7 +223,7 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        bypassClientSideEncryption: true,
+                        ignoreClientSideEncryption: true,
                         async: true,
                         cancellationToken));
 
@@ -258,19 +246,7 @@ namespace Azure.Storage.Blobs
                     await ConsumeQueuedTask().ConfigureAwait(false);
                 }
 
-                // Writing to a crypto stream requires a "flush final" invocation
-                if (_client.UsingClientSideEncryption)
-                {
-                    if (destination is System.Security.Cryptography.CryptoStream cryptoStream)
-                    {
-                        cryptoStream.FlushFinalBlock();
-                    }
-                    else if (destination is Azure.Storage.Cryptography.AuthenticatedRegionCryptoStream authRegionCryptoStream)
-                    {
-                        await authRegionCryptoStream.FlushFinalInternal(async: true, cancellationToken).ConfigureAwait(false);
-                    }
-                }
-
+                await FlushFinalIfNecessaryInternal(destination, async: true, cancellationToken).ConfigureAwait(false);
                 return initialResponse.GetRawResponse();
 
                 // Wait for the first segment in the queue of tasks to complete
@@ -331,7 +307,7 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        bypassClientSideEncryption: true,
+                        ignoreClientSideEncryption: true,
                         async: false,
                         cancellationToken).EnsureCompleted();
                 }
@@ -343,7 +319,7 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        bypassClientSideEncryption: true,
+                        ignoreClientSideEncryption: true,
                         async: false,
                         cancellationToken).EnsureCompleted();
                 }
@@ -378,18 +354,7 @@ namespace Azure.Storage.Blobs
                 long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
-                    // Writing to a crypto stream requires a "flush final" invocation
-                    if (_client.UsingClientSideEncryption)
-                    {
-                        if (destination is System.Security.Cryptography.CryptoStream cryptoStream)
-                        {
-                            cryptoStream.FlushFinalBlock();
-                        }
-                        else if (destination is Azure.Storage.Cryptography.AuthenticatedRegionCryptoStream authRegionCryptoStream)
-                        {
-                            authRegionCryptoStream.FlushFinalInternal(async: false, cancellationToken).EnsureCompleted();
-                        }
-                    }
+                    FlushFinalIfNecessaryInternal(destination, async: false, cancellationToken).EnsureCompleted();
                     return initialResponse.GetRawResponse();
                 }
 
@@ -411,24 +376,13 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        bypassClientSideEncryption: true,
+                        ignoreClientSideEncryption: true,
                         async: false,
                         cancellationToken).EnsureCompleted();
                     CopyTo(result.Value, destination, cancellationToken);
                 }
 
-                // Writing to a crypto stream requires a "flush final" invocation
-                if (_client.UsingClientSideEncryption)
-                {
-                    if (destination is System.Security.Cryptography.CryptoStream cryptoStream)
-                    {
-                        cryptoStream.FlushFinalBlock();
-                    }
-                    else if (destination is Azure.Storage.Cryptography.AuthenticatedRegionCryptoStream authRegionCryptoStream)
-                    {
-                        authRegionCryptoStream.FlushFinalInternal(async: false, cancellationToken).EnsureCompleted();
-                    }
-                }
+                FlushFinalIfNecessaryInternal(destination, async: false, cancellationToken).EnsureCompleted();
 
                 return initialResponse.GetRawResponse();
             }
@@ -490,6 +444,37 @@ namespace Azure.Storage.Blobs
             for (long offset = initialLength; offset < totalLength; offset += _rangeSize)
             {
                 yield return new HttpRange(offset, Math.Min(totalLength - offset, _rangeSize));
+            }
+        }
+
+        /// <summary>
+        /// Writing to a crypto stream requires a "flush final" invocation, as the stream needs to treat
+        /// the final cipher block differently.
+        /// </summary>
+        /// <param name="destination">
+        /// Destination stream this downloader is writing to.
+        /// </param>
+        /// <param name="async">
+        /// Whether to operate asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellationtoken for the operation.
+        /// </param>
+        /// <returns>
+        /// Task for completion status of the operation.
+        /// </returns>
+        private async Task FlushFinalIfNecessaryInternal(Stream destination, bool async, CancellationToken cancellationToken)
+        {
+            if (_client.UsingClientSideEncryption)
+            {
+                if (destination is System.Security.Cryptography.CryptoStream cryptoStream)
+                {
+                    cryptoStream.FlushFinalBlock();
+                }
+                else if (destination is Azure.Storage.Cryptography.AuthenticatedRegionCryptoStream authRegionCryptoStream)
+                {
+                    await authRegionCryptoStream.FlushFinalInternal(async: async, cancellationToken).ConfigureAwait(false);
+                }
             }
         }
     }
