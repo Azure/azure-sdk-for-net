@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
