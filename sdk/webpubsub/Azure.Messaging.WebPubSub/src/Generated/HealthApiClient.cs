@@ -55,6 +55,15 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Get service health status. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetServiceStatusAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new HealthApiClient(endpoint, credential);
+        /// Response response = await client.GetServiceStatusAsync();
+        /// </code>
+        /// </example>
         public virtual async Task<Response> GetServiceStatusAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
@@ -73,6 +82,15 @@ namespace Azure.Messaging.WebPubSub
 
         /// <summary> Get service health status. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetServiceStatus.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new HealthApiClient(endpoint, credential);
+        /// Response response = client.GetServiceStatus();
+        /// </code>
+        /// </example>
         public virtual Response GetServiceStatus(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");

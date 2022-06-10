@@ -72,6 +72,21 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeviceClassAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeviceClassAsync("deviceClassId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("compatProperties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("bestCompatibleUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("bestCompatibleUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("bestCompatibleUpdateId").GetProperty("version").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -126,6 +141,21 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeviceClass.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeviceClass("deviceClassId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("compatProperties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("bestCompatibleUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("bestCompatibleUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("bestCompatibleUpdateId").GetProperty("version").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -180,6 +210,41 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeviceAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeviceAsync("deviceId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
+        /// Console.WriteLine(result.GetProperty("model").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultDetails").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -256,6 +321,41 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDevice.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDevice("deviceId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
+        /// Console.WriteLine(result.GetProperty("model").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultDetails").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -333,6 +433,41 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeviceModuleAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeviceModuleAsync("deviceId", "moduleId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
+        /// Console.WriteLine(result.GetProperty("model").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultDetails").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -411,6 +546,41 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceId"/> or <paramref name="moduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeviceModule.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeviceModule("deviceId", "moduleId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("manufacturer").ToString());
+        /// Console.WriteLine(result.GetProperty("model").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("lastAttemptedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("installedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("onLatestUpdate").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultDetails").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -485,6 +655,20 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetUpdateComplianceAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetUpdateComplianceAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("onLatestUpdateDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -531,6 +715,20 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets the breakdown of how many devices are on their latest update, have new updates available, or are in progress receiving new updates. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetUpdateCompliance.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetUpdateCompliance();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("onLatestUpdateDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -580,6 +778,18 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeviceTagAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeviceTagAsync("tagName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("tagName").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceCount").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -629,6 +839,18 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tagName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeviceTag.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeviceTag("tagName");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("tagName").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceCount").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -678,6 +900,23 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGroupAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetGroupAsync("groupId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("groupType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -732,6 +971,23 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGroup.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetGroup("groupId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("groupType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -787,6 +1043,56 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateGroupAsync with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     groupId = "GroupId",
+        ///     groupType = "DeviceClassIdAndIoTHubTag",
+        ///     tags = new[] {
+        ///         "GroupTagsItem"
+        ///     },
+        ///     createdDateTime = "GroupCreatedDateTime",
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateGroupAsync("groupId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("groupType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdateGroupAsync with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     groupId = "GroupId",
+        ///     groupType = "DeviceClassIdAndIoTHubTag",
+        ///     tags = new[] {
+        ///         "GroupTagsItem"
+        ///     },
+        ///     createdDateTime = "GroupCreatedDateTime",
+        ///     deviceCount = 1234,
+        ///     deploymentId = "GroupDeploymentId",
+        ///     deviceClassId = "GroupDeviceClassId",
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateGroupAsync("groupId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("groupType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -854,6 +1160,56 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateGroup with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     groupId = "GroupId",
+        ///     groupType = "DeviceClassIdAndIoTHubTag",
+        ///     tags = new[] {
+        ///         "GroupTagsItem"
+        ///     },
+        ///     createdDateTime = "GroupCreatedDateTime",
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateGroup("groupId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("groupType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdateGroup with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     groupId = "GroupId",
+        ///     groupType = "DeviceClassIdAndIoTHubTag",
+        ///     tags = new[] {
+        ///         "GroupTagsItem"
+        ///     },
+        ///     createdDateTime = "GroupCreatedDateTime",
+        ///     deviceCount = 1234,
+        ///     deploymentId = "GroupDeploymentId",
+        ///     deviceClassId = "GroupDeviceClassId",
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateGroup("groupId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("groupType").ToString());
+        /// Console.WriteLine(result.GetProperty("tags").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceClassId").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -920,6 +1276,15 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteGroupAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.DeleteGroupAsync("groupId");
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -963,6 +1328,15 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteGroup.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.DeleteGroup("groupId");
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1006,6 +1380,20 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGroupUpdateComplianceAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetGroupUpdateComplianceAsync("groupId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("onLatestUpdateDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1057,6 +1445,20 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetGroupUpdateCompliance.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetGroupUpdateCompliance("groupId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("totalDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("onLatestUpdateDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("newUpdatesAvailableDeviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("updatesInProgressDeviceCount").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1109,6 +1511,24 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeploymentAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeploymentAsync("groupId", "deploymentId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("isCanceled").ToString());
+        /// Console.WriteLine(result.GetProperty("isRetried").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1168,6 +1588,24 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeployment.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeployment("groupId", "deploymentId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("isCanceled").ToString());
+        /// Console.WriteLine(result.GetProperty("isRetried").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1228,6 +1666,62 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateDeploymentAsync with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     deploymentId = "DeploymentId",
+        ///     startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     updateId = new {
+        ///         provider = "UpdateIdProvider",
+        ///         name = "UpdateIdName",
+        ///         version = "UpdateIdVersion",
+        ///     },
+        ///     groupId = "DeploymentGroupId",
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateDeploymentAsync("groupId", "deploymentId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdateDeploymentAsync with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     deploymentId = "DeploymentId",
+        ///     startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     updateId = new {
+        ///         provider = "UpdateIdProvider",
+        ///         name = "UpdateIdName",
+        ///         version = "UpdateIdVersion",
+        ///     },
+        ///     groupId = "DeploymentGroupId",
+        ///     isCanceled = true,
+        ///     isRetried = true,
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateDeploymentAsync("groupId", "deploymentId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("isCanceled").ToString());
+        /// Console.WriteLine(result.GetProperty("isRetried").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1303,6 +1797,62 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateDeployment with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     deploymentId = "DeploymentId",
+        ///     startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     updateId = new {
+        ///         provider = "UpdateIdProvider",
+        ///         name = "UpdateIdName",
+        ///         version = "UpdateIdVersion",
+        ///     },
+        ///     groupId = "DeploymentGroupId",
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateDeployment("groupId", "deploymentId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// </code>
+        /// This sample shows how to call CreateOrUpdateDeployment with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     deploymentId = "DeploymentId",
+        ///     startDateTime = "2022-05-10T14:57:31.2311892-04:00",
+        ///     updateId = new {
+        ///         provider = "UpdateIdProvider",
+        ///         name = "UpdateIdName",
+        ///         version = "UpdateIdVersion",
+        ///     },
+        ///     groupId = "DeploymentGroupId",
+        ///     isCanceled = true,
+        ///     isRetried = true,
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateDeployment("groupId", "deploymentId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("isCanceled").ToString());
+        /// Console.WriteLine(result.GetProperty("isRetried").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1377,6 +1927,15 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteDeploymentAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.DeleteDeploymentAsync("groupId", "deploymentId");
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1422,6 +1981,15 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call DeleteDeployment.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.DeleteDeployment("groupId", "deploymentId");
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1467,6 +2035,22 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeploymentStatusAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeploymentStatusAsync("groupId", "deploymentId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentState").ToString());
+        /// Console.WriteLine(result.GetProperty("totalDevices").ToString());
+        /// Console.WriteLine(result.GetProperty("devicesInProgressCount").ToString());
+        /// Console.WriteLine(result.GetProperty("devicesCompletedFailedCount").ToString());
+        /// Console.WriteLine(result.GetProperty("devicesCompletedSucceededCount").ToString());
+        /// Console.WriteLine(result.GetProperty("devicesCanceledCount").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1522,6 +2106,22 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeploymentStatus.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeploymentStatus("groupId", "deploymentId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentState").ToString());
+        /// Console.WriteLine(result.GetProperty("totalDevices").ToString());
+        /// Console.WriteLine(result.GetProperty("devicesInProgressCount").ToString());
+        /// Console.WriteLine(result.GetProperty("devicesCompletedFailedCount").ToString());
+        /// Console.WriteLine(result.GetProperty("devicesCompletedSucceededCount").ToString());
+        /// Console.WriteLine(result.GetProperty("devicesCanceledCount").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1577,6 +2177,48 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetOperationAsync with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetOperationAsync("operationId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// </code>
+        /// This sample shows how to call GetOperationAsync with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetOperationAsync("operationId", null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("errorDetail").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("occurredDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("occurredDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("traceId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("etag").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1644,6 +2286,48 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetOperation with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetOperation("operationId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// </code>
+        /// This sample shows how to call GetOperation with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetOperation("operationId", null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("errorDetail").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("details").Item[0].GetProperty("occurredDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("occurredDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("traceId").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("etag").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1711,6 +2395,54 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CollectLogsAsync with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     deviceList = new[] {
+        ///         new {
+        ///             deviceId = "DeviceUpdateAgentIdDeviceId",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CollectLogsAsync("operationId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
+        /// </code>
+        /// This sample shows how to call CollectLogsAsync with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     operationId = "LogCollectionOperationId",
+        ///     deviceList = new[] {
+        ///         new {
+        ///             deviceId = "DeviceUpdateAgentIdDeviceId",
+        ///             moduleId = "DeviceUpdateAgentIdModuleId",
+        ///         }
+        ///     },
+        ///     description = "LogCollectionOperationDescription",
+        ///     createdDateTime = "LogCollectionOperationCreatedDateTime",
+        ///     lastActionDateTime = "LogCollectionOperationLastActionDateTime",
+        ///     status = "Undefined",
+        /// };
+        /// 
+        /// Response response = await client.CollectLogsAsync("operationId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1786,6 +2518,54 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call CollectLogs with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     deviceList = new[] {
+        ///         new {
+        ///             deviceId = "DeviceUpdateAgentIdDeviceId",
+        ///         }
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CollectLogs("operationId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
+        /// </code>
+        /// This sample shows how to call CollectLogs with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = new {
+        ///     operationId = "LogCollectionOperationId",
+        ///     deviceList = new[] {
+        ///         new {
+        ///             deviceId = "DeviceUpdateAgentIdDeviceId",
+        ///             moduleId = "DeviceUpdateAgentIdModuleId",
+        ///         }
+        ///     },
+        ///     description = "LogCollectionOperationDescription",
+        ///     createdDateTime = "LogCollectionOperationCreatedDateTime",
+        ///     lastActionDateTime = "LogCollectionOperationLastActionDateTime",
+        ///     status = "Undefined",
+        /// };
+        /// 
+        /// Response response = client.CollectLogs("operationId", RequestContent.Create(data));
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1860,6 +2640,23 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetLogCollectionOperationAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetLogCollectionOperationAsync("operationId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1918,6 +2715,23 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetLogCollectionOperation.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetLogCollectionOperation("operationId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1976,6 +2790,27 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetLogCollectionOperationDetailedStatusAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetLogCollectionOperationDetailedStatusAsync("operationId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("logLocation").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2038,6 +2873,27 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetLogCollectionOperationDetailedStatus.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetLogCollectionOperationDetailedStatus("operationId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("deviceStatus").Item[0].GetProperty("logLocation").ToString());
+        /// Console.WriteLine(result.GetProperty("description").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2102,6 +2958,24 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call StopDeploymentAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.StopDeploymentAsync("groupId", "deploymentId", "action");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("isCanceled").ToString());
+        /// Console.WriteLine(result.GetProperty("isRetried").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2163,6 +3037,24 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call StopDeployment.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.StopDeployment("groupId", "deploymentId", "action");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("isCanceled").ToString());
+        /// Console.WriteLine(result.GetProperty("isRetried").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2224,6 +3116,24 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call RetryDeploymentAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.RetryDeploymentAsync("groupId", "deploymentId", "action");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("isCanceled").ToString());
+        /// Console.WriteLine(result.GetProperty("isRetried").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2285,6 +3195,24 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/>, <paramref name="deploymentId"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call RetryDeployment.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.RetryDeployment("groupId", "deploymentId", "action");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("isCanceled").ToString());
+        /// Console.WriteLine(result.GetProperty("isRetried").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2341,6 +3269,22 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetDeviceClassesAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeviceClassesAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("compatProperties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2401,6 +3345,22 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetDeviceClasses.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeviceClasses();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("compatProperties").GetProperty("test").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("bestCompatibleUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2464,6 +3424,20 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetInstallableUpdatesForDeviceClassesAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetInstallableUpdatesForDeviceClassesAsync("deviceClassId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2525,6 +3499,20 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetInstallableUpdatesForDeviceClasses.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetInstallableUpdatesForDeviceClasses("deviceClassId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2584,6 +3572,55 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
         /// <param name="filter"> Restricts the set of devices returned. You can filter on device GroupId or DeviceClassId. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetDevicesAsync with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDevicesAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
+        /// </code>
+        /// This sample shows how to call GetDevicesAsync with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDevicesAsync(null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultDetails").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2667,6 +3704,55 @@ namespace Azure.IoT.DeviceUpdate
         /// <summary> Gets a list of devices connected to Device Update for IoT Hub. </summary>
         /// <param name="filter"> Restricts the set of devices returned. You can filter on device GroupId or DeviceClassId. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetDevices with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDevices();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
+        /// </code>
+        /// This sample shows how to call GetDevices with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDevices(null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("manufacturer").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("model").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastAttemptedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("installedUpdateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("onLatestUpdate").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastDeploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("resultDetails").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("extendedResultCode").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastInstallResult").GetProperty("stepResults").Item[0].GetProperty("resultDetails").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2749,6 +3835,19 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of available group device tags for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetDeviceTagsAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeviceTagsAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tagName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2804,6 +3903,19 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of available group device tags for all devices connected to Device Update for IoT Hub. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetDeviceTags.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeviceTags();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tagName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2859,6 +3971,24 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of all device groups. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetGroupsAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetGroupsAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tags").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2919,6 +4049,24 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Gets a list of all device groups. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetGroups.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetGroups();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("tags").Item[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceClassId").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2983,6 +4131,33 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetBestUpdatesForGroupsAsync with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetBestUpdatesForGroupsAsync("groupId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// </code>
+        /// This sample shows how to call GetBestUpdatesForGroupsAsync with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetBestUpdatesForGroupsAsync("groupId", null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3048,6 +4223,33 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetBestUpdatesForGroups with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetBestUpdatesForGroups("groupId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// </code>
+        /// This sample shows how to call GetBestUpdatesForGroups with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetBestUpdatesForGroups("groupId", null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3113,6 +4315,39 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeploymentsForGroupsAsync with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeploymentsForGroupsAsync("groupId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// </code>
+        /// This sample shows how to call GetDeploymentsForGroupsAsync with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeploymentsForGroupsAsync("groupId", null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isCanceled").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isRetried").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3182,6 +4417,39 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeploymentsForGroups with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeploymentsForGroups("groupId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// </code>
+        /// This sample shows how to call GetDeploymentsForGroups with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeploymentsForGroups("groupId", null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deploymentId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("startDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("provider").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isCanceled").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("isRetried").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3252,6 +4520,34 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeploymentDevicesAsync with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeploymentDevicesAsync("groupId", "deploymentId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
+        /// </code>
+        /// This sample shows how to call GetDeploymentDevicesAsync with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetDeploymentDevicesAsync("groupId", "deploymentId", null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3318,6 +4614,34 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <example>
+        /// This sample shows how to call GetDeploymentDevices with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeploymentDevices("groupId", "deploymentId");
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
+        /// </code>
+        /// This sample shows how to call GetDeploymentDevices with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetDeploymentDevices("groupId", "deploymentId", null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("retryCount").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3381,6 +4705,49 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetOperationsAsync with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetOperationsAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// </code>
+        /// This sample shows how to call GetOperationsAsync with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetOperationsAsync(null, null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("errorDetail").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("occurredDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("occurredDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("traceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("etag").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3455,6 +4822,49 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetOperations with required parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetOperations();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// </code>
+        /// This sample shows how to call GetOperations with all parameters and properties.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetOperations(null, null);
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("target").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("innererror").GetProperty("errorDetail").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("details").Item[0].GetProperty("occurredDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("innererror").GetProperty("errorDetail").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("error").GetProperty("occurredDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("traceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("etag").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3527,6 +4937,24 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get all device diagnostics log collection operations. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetLogCollectionOperationsAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = await client.GetLogCollectionOperationsAsync();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3591,6 +5019,24 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get all device diagnostics log collection operations. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <example>
+        /// This sample shows how to call GetLogCollectionOperations.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// Response response = client.GetLogCollectionOperations();
+        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("operationId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("deviceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceList").Item[0].GetProperty("moduleId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("createdDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("lastActionDateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("nextLink").ToString());
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3659,6 +5105,17 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call ImportDevicesAsync.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = "Devices";
+        /// 
+        /// Response response = await client.ImportDevicesAsync(0, "action", RequestContent.Create(data));
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -3704,6 +5161,17 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="content"/> is null. </exception>
+        /// <example>
+        /// This sample shows how to call ImportDevices.
+        /// <code>
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("https://my-account-name.azure.com");
+        /// var client = new DeviceManagementClient(endpoint, credential);
+        /// var data = "Devices";
+        /// 
+        /// Response response = client.ImportDevices(0, "action", RequestContent.Create(data));
+        /// </code>
+        /// </example>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
