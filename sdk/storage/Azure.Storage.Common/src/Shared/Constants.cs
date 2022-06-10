@@ -430,7 +430,7 @@ namespace Azure.Storage
                 public const string ContainerVersion = "containerVersion";
                 public const string BlobTier = "blobTier";
                 public const string BlockBlob = "BlockBlob";
-                public const string PageBlob = "pageBlob";
+                public const string PageBlob = "PageBlob";
                 public const string AppendBlob = "AppendBlob";
                 public const string ContentOffset = "contentOffset";
                 public const string DestinationUrl = "destinationUrl";
