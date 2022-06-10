@@ -2,15 +2,9 @@
 
 ## 1.1.0-beta.4 (2022-06-10)
 
-### Features Added
-
 ### Breaking Changes
 
 - Rename plenty of classes and property names.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0-beta.3 (2022-04-08)
 
