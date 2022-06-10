@@ -28,44 +28,6 @@ namespace Azure.ResourceManager.Authorization
             );
         }
 
-        /// <summary> Gets a collection of RoleDefinitionByIdResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleDefinitionByIdResources and their operations over a RoleDefinitionByIdResource. </returns>
-        public static RoleDefinitionByIdCollection GetRoleDefinitionByIds(this TenantResource tenantResource)
-        {
-            return GetExtensionClient(tenantResource).GetRoleDefinitionByIds();
-        }
-
-        /// <summary>
-        /// Gets a role definition by ID.
-        /// Request Path: /{roleDefinitionId}
-        /// Operation Id: RoleDefinitions_GetById
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="roleDefinitionId"> The fully qualified role definition ID. Use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for subscription level role definitions, or /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for tenant level role definitions. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleDefinitionByIdResource>> GetRoleDefinitionByIdAsync(this TenantResource tenantResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetRoleDefinitionByIds().GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a role definition by ID.
-        /// Request Path: /{roleDefinitionId}
-        /// Operation Id: RoleDefinitions_GetById
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="roleDefinitionId"> The fully qualified role definition ID. Use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for subscription level role definitions, or /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for tenant level role definitions. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleDefinitionByIdResource> GetRoleDefinitionById(this TenantResource tenantResource, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetRoleDefinitionByIds().Get(roleDefinitionId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of ProviderOperationsMetadataResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ProviderOperationsMetadataResources and their operations over a ProviderOperationsMetadataResource. </returns>
@@ -106,44 +68,6 @@ namespace Azure.ResourceManager.Authorization
         public static Response<ProviderOperationsMetadataResource> GetProviderOperationsMetadata(this TenantResource tenantResource, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             return tenantResource.GetAllProviderOperationsMetadata().Get(resourceProviderNamespace, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RoleAssignmentByIdResources in the TenantResource. </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoleAssignmentByIdResources and their operations over a RoleAssignmentByIdResource. </returns>
-        public static RoleAssignmentByIdCollection GetRoleAssignmentByIds(this TenantResource tenantResource)
-        {
-            return GetExtensionClient(tenantResource).GetRoleAssignmentByIds();
-        }
-
-        /// <summary>
-        /// Gets a role assignment by ID.
-        /// Request Path: /{roleAssignmentId}
-        /// Operation Id: RoleAssignments_GetById
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment, including the scope, resource name and resource type. Use the format, /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/{subId}/resourcegroups/{rgname}//providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RoleAssignmentByIdResource>> GetRoleAssignmentByIdAsync(this TenantResource tenantResource, ResourceIdentifier roleAssignmentId, CancellationToken cancellationToken = default)
-        {
-            return await tenantResource.GetRoleAssignmentByIds().GetAsync(roleAssignmentId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a role assignment by ID.
-        /// Request Path: /{roleAssignmentId}
-        /// Operation Id: RoleAssignments_GetById
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment, including the scope, resource name and resource type. Use the format, /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/{subId}/resourcegroups/{rgname}//providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<RoleAssignmentByIdResource> GetRoleAssignmentById(this TenantResource tenantResource, ResourceIdentifier roleAssignmentId, CancellationToken cancellationToken = default)
-        {
-            return tenantResource.GetRoleAssignmentByIds().Get(roleAssignmentId, cancellationToken);
         }
 
         /// <summary>
@@ -716,25 +640,6 @@ namespace Azure.ResourceManager.Authorization
         }
         #endregion
 
-        #region RoleDefinitionByIdResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleDefinitionByIdResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleDefinitionByIdResource.CreateResourceIdentifier" /> to create a <see cref="RoleDefinitionByIdResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleDefinitionByIdResource" /> object. </returns>
-        public static RoleDefinitionByIdResource GetRoleDefinitionByIdResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleDefinitionByIdResource.ValidateResourceId(id);
-                return new RoleDefinitionByIdResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region ProviderOperationsMetadataResource
         /// <summary>
         /// Gets an object representing a <see cref="ProviderOperationsMetadataResource" /> along with the instance operations that can be performed on it but with no data.
@@ -768,25 +673,6 @@ namespace Azure.ResourceManager.Authorization
             {
                 RoleAssignmentResource.ValidateResourceId(id);
                 return new RoleAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region RoleAssignmentByIdResource
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentByIdResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentByIdResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentByIdResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentByIdResource" /> object. </returns>
-        public static RoleAssignmentByIdResource GetRoleAssignmentByIdResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                RoleAssignmentByIdResource.ValidateResourceId(id);
-                return new RoleAssignmentByIdResource(client, id);
             }
             );
         }

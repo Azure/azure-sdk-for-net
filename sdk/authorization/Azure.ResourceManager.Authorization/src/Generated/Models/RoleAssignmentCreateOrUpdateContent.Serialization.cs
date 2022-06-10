@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleAssignmentCreateParameters : IUtf8JsonSerializable
+    public partial class RoleAssignmentCreateOrUpdateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

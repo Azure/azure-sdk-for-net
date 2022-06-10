@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string scope, string roleAssignmentName, RoleAssignmentCreateParameters roleAssignmentCreateParameters)
+        internal HttpMessage CreateCreateRequest(string scope, string roleAssignmentName, RoleAssignmentCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.Authorization
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(roleAssignmentCreateParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -320,17 +320,17 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Creates a role assignment. </summary>
         /// <param name="scope"> The scope of the role assignment to create. The scope can be any REST resource instance. For example, use &apos;/subscriptions/{subscription-id}/&apos; for a subscription, &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}&apos; for a resource group, and &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}&apos; for a resource. </param>
         /// <param name="roleAssignmentName"> A GUID for the role assignment to create. The name must be unique and different for each role assignment. </param>
-        /// <param name="roleAssignmentCreateParameters"> Parameters for the role assignment. </param>
+        /// <param name="content"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleAssignmentName"/> or <paramref name="roleAssignmentCreateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleAssignmentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoleAssignmentData>> CreateAsync(string scope, string roleAssignmentName, RoleAssignmentCreateParameters roleAssignmentCreateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleAssignmentData>> CreateAsync(string scope, string roleAssignmentName, RoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
-            Argument.AssertNotNull(roleAssignmentCreateParameters, nameof(roleAssignmentCreateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(scope, roleAssignmentName, roleAssignmentCreateParameters);
+            using var message = CreateCreateRequest(scope, roleAssignmentName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -349,17 +349,17 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Creates a role assignment. </summary>
         /// <param name="scope"> The scope of the role assignment to create. The scope can be any REST resource instance. For example, use &apos;/subscriptions/{subscription-id}/&apos; for a subscription, &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}&apos; for a resource group, and &apos;/subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}&apos; for a resource. </param>
         /// <param name="roleAssignmentName"> A GUID for the role assignment to create. The name must be unique and different for each role assignment. </param>
-        /// <param name="roleAssignmentCreateParameters"> Parameters for the role assignment. </param>
+        /// <param name="content"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleAssignmentName"/> or <paramref name="roleAssignmentCreateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleAssignmentName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoleAssignmentData> Create(string scope, string roleAssignmentName, RoleAssignmentCreateParameters roleAssignmentCreateParameters, CancellationToken cancellationToken = default)
+        public Response<RoleAssignmentData> Create(string scope, string roleAssignmentName, RoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
-            Argument.AssertNotNull(roleAssignmentCreateParameters, nameof(roleAssignmentCreateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(scope, roleAssignmentName, roleAssignmentCreateParameters);
+            using var message = CreateCreateRequest(scope, roleAssignmentName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -434,214 +434,6 @@ namespace Azure.ResourceManager.Authorization
             Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
 
             using var message = CreateGetRequest(scope, roleAssignmentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((RoleAssignmentData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateDeleteByIdRequest(string roleAssignmentId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(roleAssignmentId, false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes a role assignment. </summary>
-        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment, including the scope, resource name and resource type. Use the format, /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/{subId}/resourcegroups/{rgname}//providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
-        public async Task<Response<RoleAssignmentData>> DeleteByIdAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
-
-            using var message = CreateDeleteByIdRequest(roleAssignmentId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 204:
-                    return Response.FromValue((RoleAssignmentData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a role assignment. </summary>
-        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment, including the scope, resource name and resource type. Use the format, /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/{subId}/resourcegroups/{rgname}//providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
-        public Response<RoleAssignmentData> DeleteById(string roleAssignmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
-
-            using var message = CreateDeleteByIdRequest(roleAssignmentId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 204:
-                    return Response.FromValue((RoleAssignmentData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCreateByIdRequest(string roleAssignmentId, RoleAssignmentCreateParameters roleAssignmentCreateParameters)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(roleAssignmentId, false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(roleAssignmentCreateParameters);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Creates a role assignment by ID. </summary>
-        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment, including the scope, resource name and resource type. Use the format, /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/{subId}/resourcegroups/{rgname}//providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. </param>
-        /// <param name="roleAssignmentCreateParameters"> Parameters for the role assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="roleAssignmentCreateParameters"/> is null. </exception>
-        public async Task<Response<RoleAssignmentData>> CreateByIdAsync(string roleAssignmentId, RoleAssignmentCreateParameters roleAssignmentCreateParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
-            Argument.AssertNotNull(roleAssignmentCreateParameters, nameof(roleAssignmentCreateParameters));
-
-            using var message = CreateCreateByIdRequest(roleAssignmentId, roleAssignmentCreateParameters);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        RoleAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates a role assignment by ID. </summary>
-        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment, including the scope, resource name and resource type. Use the format, /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/{subId}/resourcegroups/{rgname}//providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. </param>
-        /// <param name="roleAssignmentCreateParameters"> Parameters for the role assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="roleAssignmentCreateParameters"/> is null. </exception>
-        public Response<RoleAssignmentData> CreateById(string roleAssignmentId, RoleAssignmentCreateParameters roleAssignmentCreateParameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
-            Argument.AssertNotNull(roleAssignmentCreateParameters, nameof(roleAssignmentCreateParameters));
-
-            using var message = CreateCreateByIdRequest(roleAssignmentId, roleAssignmentCreateParameters);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        RoleAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetByIdRequest(string roleAssignmentId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(roleAssignmentId, false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets a role assignment by ID. </summary>
-        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment, including the scope, resource name and resource type. Use the format, /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/{subId}/resourcegroups/{rgname}//providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
-        public async Task<Response<RoleAssignmentData>> GetByIdAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
-
-            using var message = CreateGetByIdRequest(roleAssignmentId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleAssignmentData.DeserializeRoleAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((RoleAssignmentData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a role assignment by ID. </summary>
-        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment, including the scope, resource name and resource type. Use the format, /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/{subId}/resourcegroups/{rgname}//providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
-        public Response<RoleAssignmentData> GetById(string roleAssignmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
-
-            using var message = CreateGetByIdRequest(roleAssignmentId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

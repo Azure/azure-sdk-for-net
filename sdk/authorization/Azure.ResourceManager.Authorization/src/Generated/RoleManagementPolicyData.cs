@@ -34,8 +34,16 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="isOrganizationDefault"> The role management policy is default policy. </param>
         /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
         /// <param name="lastModifiedOn"> The last modified date time. </param>
-        /// <param name="rules"> The rule applied to the policy. </param>
-        /// <param name="effectiveRules"> The readonly computed rule applied to the policy. </param>
+        /// <param name="rules">
+        /// The rule applied to the policy.
+        /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
+        /// </param>
+        /// <param name="effectiveRules">
+        /// The readonly computed rule applied to the policy.
+        /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
+        /// </param>
         /// <param name="policyProperties"> Additional properties of scope. </param>
         internal RoleManagementPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string scope, string displayName, string description, bool? isOrganizationDefault, Principal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyProperties policyProperties) : base(id, name, resourceType, systemData)
         {
@@ -62,9 +70,17 @@ namespace Azure.ResourceManager.Authorization
         public Principal LastModifiedBy { get; }
         /// <summary> The last modified date time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> The rule applied to the policy. </summary>
+        /// <summary>
+        /// The rule applied to the policy.
+        /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
+        /// </summary>
         public IList<RoleManagementPolicyRule> Rules { get; }
-        /// <summary> The readonly computed rule applied to the policy. </summary>
+        /// <summary>
+        /// The readonly computed rule applied to the policy.
+        /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
+        /// </summary>
         public IReadOnlyList<RoleManagementPolicyRule> EffectiveRules { get; }
         /// <summary> Additional properties of scope. </summary>
         internal PolicyProperties PolicyProperties { get; }

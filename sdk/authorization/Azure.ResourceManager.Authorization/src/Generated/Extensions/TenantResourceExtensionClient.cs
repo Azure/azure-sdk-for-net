@@ -42,25 +42,11 @@ namespace Azure.ResourceManager.Authorization
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of RoleDefinitionByIdResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of RoleDefinitionByIdResources and their operations over a RoleDefinitionByIdResource. </returns>
-        public virtual RoleDefinitionByIdCollection GetRoleDefinitionByIds()
-        {
-            return GetCachedClient(Client => new RoleDefinitionByIdCollection(Client, Id));
-        }
-
         /// <summary> Gets a collection of ProviderOperationsMetadataResources in the TenantResource. </summary>
         /// <returns> An object representing collection of ProviderOperationsMetadataResources and their operations over a ProviderOperationsMetadataResource. </returns>
         public virtual ProviderOperationsMetadataCollection GetAllProviderOperationsMetadata()
         {
             return GetCachedClient(Client => new ProviderOperationsMetadataCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of RoleAssignmentByIdResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of RoleAssignmentByIdResources and their operations over a RoleAssignmentByIdResource. </returns>
-        public virtual RoleAssignmentByIdCollection GetRoleAssignmentByIds()
-        {
-            return GetCachedClient(Client => new RoleAssignmentByIdCollection(Client, Id));
         }
 
         /// <summary>

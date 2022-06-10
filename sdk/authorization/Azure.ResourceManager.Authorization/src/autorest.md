@@ -48,26 +48,46 @@ directive:
   - from: RoleAssignmentScheduleRequest.json
     where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.duration
     transform: $['x-ms-format'] = 'duration-constant'
-    
   - from: RoleEligibilityScheduleRequest.json
     where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
     transform: $['x-ms-client-name'] = 'RoleEligibilityExpirationType' 
   - from: RoleEligibilityScheduleRequest.json
     where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.duration
     transform: $['x-ms-format'] = 'duration-constant'
-
   - from: common-types.json
     where: $.definitions.RoleManagementPolicyExpirationRule.properties.maximumDuration
     transform: $['x-ms-format'] = 'duration-constant'
 
-  # - from: RoleAssignmentScheduleRequest.json
-  #   where: $.paths['/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}'].put.parameters
-  #   transform: $[0].name = "Content"
-
-  
-
   - rename-model:
       from: RoleAssignmentScheduleRequestProperties
       to: RoleAssignmentSchedule
-      
+  # change single class name
+  # # - from: common-types.json
+  # #   where: $.definitions.Permission
+  # #   transform: $['x-ms-client-name'] = "AzurePermission"
+  # - from: common-types.json
+  #   where: $.definitions.Principal
+  #   transform: $['x-ms-client-name'] = "AzurePrincipal"
+  # # - from: RoleAssignmentScheduleRequest.json
+  # #   where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
+  # #   transform: $['x-ms-client-name'] = "ExpirationType"
+  # - from: RoleAssignmentSchedule.json
+  #   where: $.definitions.RoleAssignmentScheduleProperties.properties.status
+  #   transform: $['x-ms-enum'].name = "RoleAssignmentScheduleStatus"
+
+  # - from: authorization-RoleAssignmentsCalls.json
+  #   where: $.definitions.RoleAssignmentCreateParameters
+  #   transform: $['x-ms-client-name'] = "RoleAssignmentCreateOrUpdateContent"
+
+  # remove all ById Path
+  - from: authorization-RoleAssignmentsCalls.json
+    where: $.paths['/{roleAssignmentId}']
+    transform: $ = {}
+  - from: authorization-RoleDefinitionsCalls.json
+    where: $.paths['/{roleDefinitionId}']
+    transform: $ = {}
+
+
+
+
 ```

@@ -10,12 +10,12 @@ using System;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Role assignment create parameters. </summary>
-    public partial class RoleAssignmentCreateParameters
+    public partial class RoleAssignmentCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of RoleAssignmentCreateParameters. </summary>
+        /// <summary> Initializes a new instance of RoleAssignmentCreateOrUpdateContent. </summary>
         /// <param name="properties"> Role assignment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public RoleAssignmentCreateParameters(RoleAssignmentProperties properties)
+        public RoleAssignmentCreateOrUpdateContent(RoleAssignmentProperties properties)
         {
             if (properties == null)
             {

@@ -193,18 +193,18 @@ namespace Azure.ResourceManager.Authorization
         /// Operation Id: RoleAssignments_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="roleAssignmentCreateParameters"> Parameters for the role assignment. </param>
+        /// <param name="content"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentCreateParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<RoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, RoleAssignmentCreateParameters roleAssignmentCreateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<RoleAssignmentResource>> UpdateAsync(WaitUntil waitUntil, RoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(roleAssignmentCreateParameters, nameof(roleAssignmentCreateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _roleAssignmentRestClient.CreateAsync(Id.Parent, Id.Name, roleAssignmentCreateParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _roleAssignmentRestClient.CreateAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.Authorization
         /// Operation Id: RoleAssignments_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="roleAssignmentCreateParameters"> Parameters for the role assignment. </param>
+        /// <param name="content"> Parameters for the role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentCreateParameters"/> is null. </exception>
-        public virtual ArmOperation<RoleAssignmentResource> Update(WaitUntil waitUntil, RoleAssignmentCreateParameters roleAssignmentCreateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<RoleAssignmentResource> Update(WaitUntil waitUntil, RoleAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(roleAssignmentCreateParameters, nameof(roleAssignmentCreateParameters));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _roleAssignmentClientDiagnostics.CreateScope("RoleAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = _roleAssignmentRestClient.Create(Id.Parent, Id.Name, roleAssignmentCreateParameters, cancellationToken);
+                var response = _roleAssignmentRestClient.Create(Id.Parent, Id.Name, content, cancellationToken);
                 var operation = new AuthorizationArmOperation<RoleAssignmentResource>(Response.FromValue(new RoleAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
