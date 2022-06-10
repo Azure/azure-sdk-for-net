@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Azure.Messaging.EventHubs.Primitives
 {
-    internal partial class BlobCheckpointStoreInternal
+    public partial class BlobCheckpointStoreInternal
     {
         private readonly string _functionId;
         private readonly ILogger _logger;

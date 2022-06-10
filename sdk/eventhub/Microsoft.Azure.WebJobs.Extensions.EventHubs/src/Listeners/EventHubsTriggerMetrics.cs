@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
-    internal class EventHubsTriggerMetrics : ScaleMetrics
+    public class EventHubsTriggerMetrics : ScaleMetrics
     {
         /// <summary>
         /// The total number of unprocessed events across all partitions.
