@@ -16,14 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Management;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of PolicyDefinition and their operations over its parent. </summary>
-    public partial class ManagementGroupPolicyDefinitionCollection : ArmCollection, IEnumerable<ManagementGroupPolicyDefinition>, IAsyncEnumerable<ManagementGroupPolicyDefinition>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagementGroupPolicyDefinitionResource" /> and their operations.
+    /// Each <see cref="ManagementGroupPolicyDefinitionResource" /> in the collection will belong to the same instance of <see cref="ManagementGroupResource" />.
+    /// To get a <see cref="ManagementGroupPolicyDefinitionCollection" /> instance call the GetManagementGroupPolicyDefinitions method from an instance of <see cref="ManagementGroupResource" />.
+    /// </summary>
+    public partial class ManagementGroupPolicyDefinitionCollection : ArmCollection, IEnumerable<ManagementGroupPolicyDefinitionResource>, IAsyncEnumerable<ManagementGroupPolicyDefinitionResource>
     {
         private readonly ClientDiagnostics _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics;
         private readonly PolicyDefinitionsRestOperations _managementGroupPolicyDefinitionPolicyDefinitionsRestClient;
@@ -38,9 +40,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagementGroupPolicyDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ManagementGroupPolicyDefinition.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagementGroupPolicyDefinition.ResourceType, out string managementGroupPolicyDefinitionPolicyDefinitionsApiVersion);
-            _managementGroupPolicyDefinitionPolicyDefinitionsRestClient = new PolicyDefinitionsRestOperations(_managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementGroupPolicyDefinitionPolicyDefinitionsApiVersion);
+            _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ManagementGroupPolicyDefinitionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagementGroupPolicyDefinitionResource.ResourceType, out string managementGroupPolicyDefinitionPolicyDefinitionsApiVersion);
+            _managementGroupPolicyDefinitionPolicyDefinitionsRestClient = new PolicyDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupPolicyDefinitionPolicyDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,35 +50,33 @@ namespace Azure.ResourceManager.Resources
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagementGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ManagementGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagementGroupResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
-        /// OperationId: PolicyDefinitions_CreateOrUpdateAtManagementGroup
-        /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// This operation creates or updates a policy definition in the given management group with the given name.
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// Operation Id: PolicyDefinitions_CreateOrUpdateAtManagementGroup
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
-        /// <param name="parameters"> The policy definition properties. </param>
+        /// <param name="data"> The policy definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagementGroupPolicyDefinitionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagementGroupPolicyDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateOrUpdateAtManagementGroupAsync(Id.Name, policyDefinitionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementGroupPolicyDefinitionCreateOrUpdateOperation(Client, response);
-                if (waitForCompletion)
+                var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateOrUpdateAtManagementGroupAsync(Id.Name, policyDefinitionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<ManagementGroupPolicyDefinitionResource>(Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -87,31 +87,29 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
-        /// OperationId: PolicyDefinitions_CreateOrUpdateAtManagementGroup
-        /// <summary> This operation creates or updates a policy definition in the given management group with the given name. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// This operation creates or updates a policy definition in the given management group with the given name.
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// Operation Id: PolicyDefinitions_CreateOrUpdateAtManagementGroup
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyDefinitionName"> The name of the policy definition to create. </param>
-        /// <param name="parameters"> The policy definition properties. </param>
+        /// <param name="data"> The policy definition properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ManagementGroupPolicyDefinitionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string policyDefinitionName, PolicyDefinitionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ManagementGroupPolicyDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateOrUpdateAtManagementGroup(Id.Name, policyDefinitionName, parameters, cancellationToken);
-                var operation = new ManagementGroupPolicyDefinitionCreateOrUpdateOperation(Client, response);
-                if (waitForCompletion)
+                var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.CreateOrUpdateAtManagementGroup(Id.Name, policyDefinitionName, data, cancellationToken);
+                var operation = new ResourcesArmOperation<ManagementGroupPolicyDefinitionResource>(Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -122,15 +120,16 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
-        /// OperationId: PolicyDefinitions_GetAtManagementGroup
-        /// <summary> This operation retrieves the policy definition in the given management group with the given name. </summary>
+        /// <summary>
+        /// This operation retrieves the policy definition in the given management group with the given name.
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// Operation Id: PolicyDefinitions_GetAtManagementGroup
+        /// </summary>
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroupPolicyDefinition>> GetAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupPolicyDefinitionResource>> GetAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
@@ -140,8 +139,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroupAsync(Id.Name, policyDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagementGroupPolicyDefinition(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,15 +149,16 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
-        /// OperationId: PolicyDefinitions_GetAtManagementGroup
-        /// <summary> This operation retrieves the policy definition in the given management group with the given name. </summary>
+        /// <summary>
+        /// This operation retrieves the policy definition in the given management group with the given name.
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// Operation Id: PolicyDefinitions_GetAtManagementGroup
+        /// </summary>
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public virtual Response<ManagementGroupPolicyDefinition> Get(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupPolicyDefinitionResource> Get(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroup(Id.Name, policyDefinitionName, cancellationToken);
                 if (response.Value == null)
-                    throw _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupPolicyDefinition(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,24 +178,25 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
-        /// OperationId: PolicyDefinitions_ListByManagementGroup
-        /// <summary> This operation retrieves a list of all the policy definitions in a given management group that match the optional given $filter. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy definitions associated with the management group, including those that apply directly or from management groups that contain the given management group. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given management group. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
+        /// <summary>
+        /// This operation retrieves a list of all the policy definitions in a given management group that match the optional given $filter. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy definitions associated with the management group, including those that apply directly or from management groups that contain the given management group. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given management group. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy definitions whose category match the {value}.
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions
+        /// Operation Id: PolicyDefinitions_ListByManagementGroup
+        /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementGroupPolicyDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagementGroupPolicyDefinition> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagementGroupPolicyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagementGroupPolicyDefinitionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagementGroupPolicyDefinition>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagementGroupPolicyDefinitionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.ListByManagementGroupAsync(Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupPolicyDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -203,14 +204,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<ManagementGroupPolicyDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagementGroupPolicyDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.ListByManagementGroupNextPageAsync(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupPolicyDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -221,24 +222,25 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
-        /// OperationId: PolicyDefinitions_ListByManagementGroup
-        /// <summary> This operation retrieves a list of all the policy definitions in a given management group that match the optional given $filter. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy definitions associated with the management group, including those that apply directly or from management groups that contain the given management group. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given management group. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy definitions whose category match the {value}. </summary>
+        /// <summary>
+        /// This operation retrieves a list of all the policy definitions in a given management group that match the optional given $filter. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, the unfiltered list includes all policy definitions associated with the management group, including those that apply directly or from management groups that contain the given management group. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given management group. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy definitions whose category match the {value}.
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions
+        /// Operation Id: PolicyDefinitions_ListByManagementGroup
+        /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagementGroupPolicyDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagementGroupPolicyDefinition> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagementGroupPolicyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagementGroupPolicyDefinitionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagementGroupPolicyDefinition> FirstPageFunc(int? pageSizeHint)
+            Page<ManagementGroupPolicyDefinitionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.ListByManagementGroup(Id.Name, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupPolicyDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -246,14 +248,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<ManagementGroupPolicyDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagementGroupPolicyDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.ListByManagementGroupNextPage(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupPolicyDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -264,15 +266,16 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
-        /// OperationId: PolicyDefinitions_GetAtManagementGroup
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// Operation Id: PolicyDefinitions_GetAtManagementGroup
+        /// </summary>
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
@@ -280,7 +283,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(policyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroupAsync(Id.Name, policyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -290,13 +293,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
-        /// OperationId: PolicyDefinitions_GetAtManagementGroup
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
+        /// Operation Id: PolicyDefinitions_GetAtManagementGroup
+        /// </summary>
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -306,7 +310,7 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var response = GetIfExists(policyDefinitionName, cancellationToken: cancellationToken);
+                var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroup(Id.Name, policyDefinitionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,63 +320,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
-        /// OperationId: PolicyDefinitions_GetAtManagementGroup
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public async virtual Task<Response<ManagementGroupPolicyDefinition>> GetIfExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroupAsync(Id.Name, policyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ManagementGroupPolicyDefinition>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupPolicyDefinition(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
-        /// ContextualPath: /providers/Microsoft.Management/managementGroups/{managementGroupId}
-        /// OperationId: PolicyDefinitions_GetAtManagementGroup
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public virtual Response<ManagementGroupPolicyDefinition> GetIfExists(string policyDefinitionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroup(Id.Name, policyDefinitionName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ManagementGroupPolicyDefinition>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupPolicyDefinition(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<ManagementGroupPolicyDefinition> IEnumerable<ManagementGroupPolicyDefinition>.GetEnumerator()
+        IEnumerator<ManagementGroupPolicyDefinitionResource> IEnumerable<ManagementGroupPolicyDefinitionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -382,7 +330,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagementGroupPolicyDefinition> IAsyncEnumerable<ManagementGroupPolicyDefinition>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagementGroupPolicyDefinitionResource> IAsyncEnumerable<ManagementGroupPolicyDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

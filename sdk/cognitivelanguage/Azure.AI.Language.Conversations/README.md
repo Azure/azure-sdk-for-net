@@ -1,6 +1,11 @@
 # Azure Cognitive Language Services Conversations client library for .NET
 
-Azure Conversations - the new version of Language Understanding (LUIS) - is a cloud-based conversational AI service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning; and pulls out relevant, detailed information. The service utilizes state-of-the-art technology to create and utilize natively multilingual models, which means that users would be able to train their models in one language but predict in others.
+Conversational Language Understanding - aka CLU for short - is a cloud-based conversational AI service which provides many language understanding capabilities like:
+
+- Conversation App: It's used in extracting intents and entities in conversations
+- Workflow app: Acts like an orchestrator to select the best candidate to analyze conversations to get best response from apps like Qna, Luis, and Conversation App
+- Conversational Issue Summarization: Used to summarize conversations in the form of issues, and final resolutions
+- Conversational PII: Used to extract and redact personally-identifiable info (PII)
 
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Product documentation][conversationanalysis_docs] | [Samples][conversationanalysis_samples]
 
@@ -17,9 +22,7 @@ dotnet add package Azure.AI.Language.Conversations --prerelease
 ### Prerequisites
 
 * An [Azure subscription][azure_subscription]
-* An existing Text Analytics resource
-
-> Note: the new unified Cognitive Language Services are not currently available for deployment.
+* An existing Azure Language Service Resource
 
 ### Authenticate the client
 
@@ -76,55 +79,504 @@ The following examples show common scenarios using the `client` [created above](
 
 ### Analyze a conversation
 
-To analyze a conversation, we can then call the `client.AnalyzeConversation()` method which takes a Conversations project and an utterance as parameters.
+To analyze a conversation, you can call the `client.AnalyzeConversation()` method which takes a `TextConversationItem` and `ConversationsProject` as parameters.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
 ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
 
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "We'll have 2 plates of seared salmon nigiri.",
+Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+    "Send an email to Carol about the tomorrow's demo.",
     conversationsProject);
 
-Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
+
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
+
+Console.WriteLine("Intents:");
+foreach (ConversationIntent intent in conversationPrediction.Intents)
+{
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
+    Console.WriteLine();
+}
+
+Console.WriteLine("Entities:");
+foreach (ConversationEntity entity in conversationPrediction.Entities)
+{
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
+    Console.WriteLine();
+
+    foreach (BaseResolution resolution in entity.Resolutions)
+    {
+        if (resolution is DateTimeResolution dateTimeResolution)
+        {
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
+        }
+    }
+}
 ```
 
-The specified parameters can also be used to initialize a `ConversationAnalysisOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
+The specified parameters can also be used to initialize a `AnalyzeConversationOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
+
+You can also set the verbose parameter in the `AnalyzeConversation()` method.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
-ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+TextConversationItem input = new TextConversationItem(
+    participantId: "1",
+    id: "1",
+    text: "Send an email to Carol about the tomorrow's demo.");
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(input)
 {
-    IsLoggingEnabled = true,
-    Verbose = true,
+    Verbose = true
 };
 
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "We'll have 2 plates of seared salmon nigiri.",
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+
+Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+    "Send an email to Carol about the tomorrow's demo.",
     conversationsProject,
     options);
 
-Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
+
+Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
+
+Console.WriteLine("Intents:");
+foreach (ConversationIntent intent in conversationPrediction.Intents)
+{
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
+    Console.WriteLine();
+}
+
+Console.WriteLine("Entities:");
+foreach (ConversationEntity entity in conversationPrediction.Entities)
+{
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
+    Console.WriteLine();
+
+    foreach (BaseResolution resolution in entity.Resolutions)
+    {
+        if (resolution is DateTimeResolution dateTimeResolution)
+        {
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
+        }
+    }
+}
 ```
 
 ### Analyze a conversation in a different language
 
-The language property in the `ConversationAnalysisOptions` can be used to specify the language of the conversation.
+The language property in the `TextConversationItem` can be used to specify the language of the conversation.
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
-AnalyzeConversationOptions options = new AnalyzeConversationOptions()
+TextConversationItem input = new TextConversationItem(
+    participantId: "1",
+    id: "1",
+    text: "Tendremos 2 platos de nigiri de salmón braseado.")
 {
     Language = "es"
 };
-Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-    "Tendremos 2 platos de nigiri de salmón braseado.",
+AnalyzeConversationOptions options = new AnalyzeConversationOptions(input);
+
+ConversationsProject conversationsProject = new ConversationsProject("Menu", "production");
+
+Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+    textConversationItem,
     conversationsProject,
     options);
 
-Console.WriteLine($"Top intent: {response.Value.Prediction.TopIntent}");
+CustomConversationalTaskResult customConversationalTaskResult = response.Value as CustomConversationalTaskResult;
+ConversationPrediction conversationPrediction = customConversationalTaskResult.Result.Prediction as ConversationPrediction;
+
+Console.WriteLine($"Project Kind: {customConversationalTaskResult.Result.Prediction.ProjectKind}");
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
+
+Console.WriteLine("Intents:");
+foreach (ConversationIntent intent in conversationPrediction.Intents)
+{
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
+    Console.WriteLine();
+}
+
+Console.WriteLine("Entities:");
+foreach (ConversationEntity entity in conversationPrediction.Entities)
+{
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
+    Console.WriteLine();
+
+    foreach (BaseResolution resolution in entity.Resolutions)
+    {
+        if (resolution is DateTimeResolution dateTimeResolution)
+        {
+            Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+            Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+            Console.WriteLine($"Value: {dateTimeResolution.Value}");
+            Console.WriteLine();
+        }
+    }
+}
 ```
 
 Other optional properties can be set such as verbosity and whether service logging is enabled.
+
+### Analyze a conversation - Orchestration Project
+To analyze a conversation using an orchestration project, you can then call the `client.AnalyzeConversation()` just like the conversation project. But you have to cast the prediction to `OrchestratorPrediction`. Also, you have to cast the intent type into the one you need.
+
+### Orchestration Project - Conversation Prediction
+```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
+string respondingProjectName = orchestratorPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Conversation)
+{
+    ConversationTargetIntentResult cluTargetIntentResult = targetIntentResult as ConversationTargetIntentResult;
+
+    ConversationResult conversationResult = cluTargetIntentResult.Result;
+    ConversationPrediction conversationPrediction = conversationResult.Prediction;
+
+    Console.WriteLine($"Top Intent: {conversationResult.Prediction.TopIntent}");
+    Console.WriteLine($"Intents:");
+    foreach (ConversationIntent intent in conversationPrediction.Intents)
+    {
+        Console.WriteLine($"Intent Category: {intent.Category}");
+        Console.WriteLine($"Confidence: {intent.Confidence}");
+        Console.WriteLine();
+    }
+
+    Console.WriteLine($"Entities:");
+    foreach (ConversationEntity entity in conversationPrediction.Entities)
+    {
+        Console.WriteLine($"Entity Text: {entity.Text}");
+        Console.WriteLine($"Entity Category: {entity.Category}");
+        Console.WriteLine($"Confidence: {entity.Confidence}");
+        Console.WriteLine($"Starting Position: {entity.Offset}");
+        Console.WriteLine($"Length: {entity.Length}");
+        Console.WriteLine();
+
+        foreach (BaseResolution resolution in entity.Resolutions)
+        {
+            if (resolution is DateTimeResolution dateTimeResolution)
+            {
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
+                Console.WriteLine();
+            }
+        }
+    }
+}
+```
+
+### Orchestration Project - QuestionAnswering Prediction
+```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
+string respondingProjectName = orchestratorPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.QuestionAnswering)
+{
+    Console.WriteLine($"Top intent: {respondingProjectName}");
+
+    QuestionAnsweringTargetIntentResult qnaTargetIntentResult = targetIntentResult as QuestionAnsweringTargetIntentResult;
+
+    BinaryData questionAnsweringResponse = qnaTargetIntentResult.Result;
+    Console.WriteLine($"Qustion Answering Response: {questionAnsweringResponse.ToString()}");
+}
+```
+
+### Orchestration Project - Luis Prediction
+```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionLuis
+string respondingProjectName = orchestratorPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestratorPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult.TargetProjectKind == TargetProjectKind.Luis)
+{
+    LuisTargetIntentResult luisTargetIntentResult = targetIntentResult as LuisTargetIntentResult;
+    BinaryData luisResponse = luisTargetIntentResult.Result;
+
+    Console.WriteLine($"LUIS Response: {luisResponse.ToString()}");
+}
+```
+
+### Analyze a conversation - Conversation Summarization
+
+First, you should prepare the input:
+
+```C# Snippet:StartAnalyzeConversation_ConversationSummarization_Input
+var textConversationItems = new List<TextConversationItem>()
+{
+    new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
+    new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
+    new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions."),
+};
+
+var input = new List<TextConversation>()
+{
+    new TextConversation("1", "en", textConversationItems)
+};
+
+var conversationSummarizationTaskParameters = new ConversationSummarizationTaskParameters(new List<SummaryAspect>() { SummaryAspect.Issue, SummaryAspect.Resolution });
+
+var tasks = new List<AnalyzeConversationLROTask>()
+{
+    new AnalyzeConversationSummarizationTask("1", AnalyzeConversationLROTaskKind.ConversationalSummarizationTask, conversationSummarizationTaskParameters),
+};
+```
+
+Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+
+## Synchronous
+
+```C# Snippet:StartAnalyzeConversation_StartAnalayzing
+var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
+analyzeConversationOperation.WaitForCompletion();
+```
+
+## Asynchronous
+
+```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
+var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+await analyzeConversationOperation.WaitForCompletionAsync();
+```
+
+You can finally print the results:
+
+```C# Snippet:StartAnalyzeConversation_ConversationSummarization_Results
+var jobResults = analyzeConversationOperation.Value;
+foreach (var result in jobResults.Tasks.Items)
+{
+    var analyzeConversationSummarization = result as AnalyzeConversationSummarizationResult;
+
+    var results = analyzeConversationSummarization.Results;
+
+    Console.WriteLine("Conversations:");
+    foreach (var conversation in results.Conversations)
+    {
+        Console.WriteLine($"Conversation #:{conversation.Id}");
+        Console.WriteLine("Summaries:");
+        foreach (var summary in conversation.Summaries)
+        {
+            Console.WriteLine($"Text: {summary.Text}");
+            Console.WriteLine($"Aspect: {summary.Aspect}");
+        }
+        Console.WriteLine();
+    }
+}
+```
+
+### Analyze a conversation - Conversation PII - Text Input
+
+First, you should prepare the input:
+
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Input
+var textConversationItems = new List<TextConversationItem>()
+{
+    new TextConversationItem("1", "0", "Hi, I am John Doe."),
+    new TextConversationItem("2", "1", "Hi John, how are you doing today?"),
+    new TextConversationItem("3", "0", "Pretty good."),
+};
+
+var input = new List<TextConversation>()
+{
+    new TextConversation("1", "en", textConversationItems)
+};
+
+var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, null);
+
+var tasks = new List<AnalyzeConversationLROTask>()
+{
+    new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters),
+};
+```
+
+Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+
+## Synchronous
+
+```C# Snippet:StartAnalyzeConversation_StartAnalayzing
+var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
+analyzeConversationOperation.WaitForCompletion();
+```
+
+## Asynchronous
+
+```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
+var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+await analyzeConversationOperation.WaitForCompletionAsync();
+```
+
+You can finally print the results:
+
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Results
+var jobResults = analyzeConversationOperation.Value;
+foreach (var result in jobResults.Tasks.Items)
+{
+    var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
+
+    var results = analyzeConversationPIIResult.Results;
+
+    Console.WriteLine("Conversations:");
+    foreach (var conversation in results.Conversations)
+    {
+        Console.WriteLine($"Conversation #:{conversation.Id}");
+        Console.WriteLine("Conversation Items: ");
+        foreach (var conversationItem in conversation.ConversationItems)
+        {
+            Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
+
+            Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
+
+            Console.WriteLine("Entities:");
+            foreach (var entity in conversationItem.Entities)
+            {
+                Console.WriteLine($"Text: {entity.Text}");
+                Console.WriteLine($"Offset: {entity.Offset}");
+                Console.WriteLine($"Category: {entity.Category}");
+                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                Console.WriteLine($"Length: {entity.Length}");
+                Console.WriteLine();
+            }
+        }
+        Console.WriteLine();
+    }
+}
+```
+
+### Analyze a conversation - Conversation PII - Transcript Input
+
+First, you should prepare the input:
+
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Input
+var transciprtConversationItemOne = new TranscriptConversationItem(
+   id: "1",
+   participantId: "speaker",
+   itn: "hi",
+   maskedItn: "hi",
+   text: "Hi",
+   lexical: "hi");
+transciprtConversationItemOne.AudioTimings.Add(new WordLevelTiming(4500000, 2800000, "hi"));
+
+var transciprtConversationItemTwo = new TranscriptConversationItem(
+   id: "2",
+   participantId: "speaker",
+   itn: "jane doe",
+   maskedItn: "jane doe",
+   text: "Jane doe",
+   lexical: "jane doe");
+transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(7100000, 4800000, "jane"));
+transciprtConversationItemTwo.AudioTimings.Add(new WordLevelTiming(12000000, 1700000, "jane"));
+
+var transciprtConversationItemThree = new TranscriptConversationItem(
+    id: "3",
+    participantId: "agent",
+    itn: "hi jane what's your phone number",
+    maskedItn: "hi jane what's your phone number",
+    text: "Hi Jane, what's your phone number?",
+    lexical: "hi jane what's your phone number");
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(7700000, 3100000, "hi"));
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(10900000, 5700000, "jane"));
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(17300000, 2600000, "what's"));
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(20000000, 1600000, "your"));
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(21700000, 1700000, "phone"));
+transciprtConversationItemThree.AudioTimings.Add(new WordLevelTiming(23500000, 2300000, "number"));
+
+var transcriptConversationItems = new List<TranscriptConversationItem>()
+{
+    transciprtConversationItemOne,
+    transciprtConversationItemTwo,
+    transciprtConversationItemThree,
+};
+
+var input = new List<TranscriptConversation>()
+{
+    new TranscriptConversation("1", "en", transcriptConversationItems)
+};
+
+var conversationPIITaskParameters = new ConversationPIITaskParameters(false, "2022-05-15-preview", new List<ConversationPIICategory>() { ConversationPIICategory.All }, false, TranscriptContentType.Lexical);
+
+var tasks = new List<AnalyzeConversationLROTask>()
+{
+    new AnalyzeConversationPIITask("analyze", AnalyzeConversationLROTaskKind.ConversationalPIITask, conversationPIITaskParameters),
+};
+```
+
+Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+
+## Synchronous
+
+```C# Snippet:StartAnalyzeConversation_StartAnalayzing
+var analyzeConversationOperation = client.StartAnalyzeConversation(input, tasks);
+analyzeConversationOperation.WaitForCompletion();
+```
+
+## Asynchronous
+
+```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
+var analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+await analyzeConversationOperation.WaitForCompletionAsync();
+```
+
+You can finally print the results:
+
+```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Results
+var jobResults = analyzeConversationOperation.Value;
+foreach (var result in jobResults.Tasks.Items)
+{
+    var analyzeConversationPIIResult = result as AnalyzeConversationPIIResult;
+
+    var results = analyzeConversationPIIResult.Results;
+
+    Console.WriteLine("Conversations:");
+    foreach (var conversation in results.Conversations)
+    {
+        Console.WriteLine($"Conversation #:{conversation.Id}");
+        Console.WriteLine("Conversation Items: ");
+        foreach (var conversationItem in conversation.ConversationItems)
+        {
+            Console.WriteLine($"Conversation Item #:{conversationItem.Id}");
+
+            Console.WriteLine($"Redacted Text: {conversationItem.RedactedContent.Text}");
+            Console.WriteLine($"Redacted Lexical: {conversationItem.RedactedContent.Lexical}");
+            Console.WriteLine($"Redacted AudioTimings: {conversationItem.RedactedContent.AudioTimings}");
+            Console.WriteLine($"Redacted MaskedItn: {conversationItem.RedactedContent.MaskedItn}");
+
+            Console.WriteLine("Entities:");
+            foreach (var entity in conversationItem.Entities)
+            {
+                Console.WriteLine($"Text: {entity.Text}");
+                Console.WriteLine($"Offset: {entity.Offset}");
+                Console.WriteLine($"Category: {entity.Category}");
+                Console.WriteLine($"Confidence Score: {entity.ConfidenceScore}");
+                Console.WriteLine($"Length: {entity.Length}");
+                Console.WriteLine();
+            }
+        }
+        Console.WriteLine();
+    }
+}
+```
 
 ## Troubleshooting
 
@@ -138,8 +590,8 @@ For example, if you submit a utterance to a non-existant project, a `400` error 
 try
 {
     ConversationsProject conversationsProject = new ConversationsProject("invalid-project", "production");
-    Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-        "We'll have 2 plates of seared salmon nigiri.",
+    Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+        "Send an email to Carol about the tomorrow's demo",
         conversationsProject);
 }
 catch (RequestFailedException ex)

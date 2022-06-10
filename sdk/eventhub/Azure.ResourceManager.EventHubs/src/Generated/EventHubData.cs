@@ -25,21 +25,21 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of EventHubData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="partitionIds"> Current number of shards on the Event Hub. </param>
-        /// <param name="createdAt"> Exact time the Event Hub was created. </param>
-        /// <param name="updatedAt"> The exact time the message was updated. </param>
+        /// <param name="createdOn"> Exact time the Event Hub was created. </param>
+        /// <param name="updatedOn"> The exact time the message was updated. </param>
         /// <param name="messageRetentionInDays"> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </param>
         /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
-        internal EventHubData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, IReadOnlyList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, type, systemData, location)
+        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, resourceType, systemData, location)
         {
             PartitionIds = partitionIds;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
             MessageRetentionInDays = messageRetentionInDays;
             PartitionCount = partitionCount;
             Status = status;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Current number of shards on the Event Hub. </summary>
         public IReadOnlyList<string> PartitionIds { get; }
         /// <summary> Exact time the Event Hub was created. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The exact time the message was updated. </summary>
-        public DateTimeOffset? UpdatedAt { get; }
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </summary>
         public long? MessageRetentionInDays { get; set; }
         /// <summary> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </summary>

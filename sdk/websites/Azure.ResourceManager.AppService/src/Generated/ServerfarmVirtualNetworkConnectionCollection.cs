@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of VnetInfoResource and their operations over its parent. </summary>
-    public partial class ServerfarmVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<ServerfarmVirtualNetworkConnection>, IAsyncEnumerable<ServerfarmVirtualNetworkConnection>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerfarmVirtualNetworkConnectionResource" /> and their operations.
+    /// Each <see cref="ServerfarmVirtualNetworkConnectionResource" /> in the collection will belong to the same instance of <see cref="AppServicePlanResource" />.
+    /// To get a <see cref="ServerfarmVirtualNetworkConnectionCollection" /> instance call the GetServerfarmVirtualNetworkConnections method from an instance of <see cref="AppServicePlanResource" />.
+    /// </summary>
+    public partial class ServerfarmVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<ServerfarmVirtualNetworkConnectionResource>, IAsyncEnumerable<ServerfarmVirtualNetworkConnectionResource>
     {
         private readonly ClientDiagnostics _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics;
         private readonly AppServicePlansRestOperations _serverfarmVirtualNetworkConnectionAppServicePlansRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerfarmVirtualNetworkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ServerfarmVirtualNetworkConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerfarmVirtualNetworkConnection.ResourceType, out string serverfarmVirtualNetworkConnectionAppServicePlansApiVersion);
-            _serverfarmVirtualNetworkConnectionAppServicePlansRestClient = new AppServicePlansRestOperations(_serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverfarmVirtualNetworkConnectionAppServicePlansApiVersion);
+            _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ServerfarmVirtualNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerfarmVirtualNetworkConnectionResource.ResourceType, out string serverfarmVirtualNetworkConnectionAppServicePlansApiVersion);
+            _serverfarmVirtualNetworkConnectionAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverfarmVirtualNetworkConnectionAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,19 +49,20 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AppServicePlan.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServicePlan.ResourceType), nameof(id));
+            if (id.ResourceType != AppServicePlanResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppServicePlanResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// OperationId: AppServicePlans_GetVnetFromServerFarm
-        /// <summary> Description for Get a Virtual Network associated with an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get a Virtual Network associated with an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public async virtual Task<Response<ServerfarmVirtualNetworkConnection>> GetAsync(string vnetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerfarmVirtualNetworkConnectionResource>> GetAsync(string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
@@ -68,8 +72,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerfarmVirtualNetworkConnection(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerfarmVirtualNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -78,15 +82,16 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// OperationId: AppServicePlans_GetVnetFromServerFarm
-        /// <summary> Description for Get a Virtual Network associated with an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get a Virtual Network associated with an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public virtual Response<ServerfarmVirtualNetworkConnection> Get(string vnetName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerfarmVirtualNetworkConnectionResource> Get(string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
@@ -96,8 +101,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken);
                 if (response.Value == null)
-                    throw _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerfarmVirtualNetworkConnection(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerfarmVirtualNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,22 +111,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// OperationId: AppServicePlans_ListVnets
-        /// <summary> Description for Get all Virtual Networks associated with an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get all Virtual Networks associated with an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections
+        /// Operation Id: AppServicePlans_ListVnets
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerfarmVirtualNetworkConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerfarmVirtualNetworkConnection> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerfarmVirtualNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerfarmVirtualNetworkConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerfarmVirtualNetworkConnection>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerfarmVirtualNetworkConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.ListVnetsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new ServerfarmVirtualNetworkConnection(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => new ServerfarmVirtualNetworkConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,22 +138,23 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// OperationId: AppServicePlans_ListVnets
-        /// <summary> Description for Get all Virtual Networks associated with an App Service plan. </summary>
+        /// <summary>
+        /// Description for Get all Virtual Networks associated with an App Service plan.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections
+        /// Operation Id: AppServicePlans_ListVnets
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerfarmVirtualNetworkConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerfarmVirtualNetworkConnection> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerfarmVirtualNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerfarmVirtualNetworkConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ServerfarmVirtualNetworkConnection> FirstPageFunc(int? pageSizeHint)
+            Page<ServerfarmVirtualNetworkConnectionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.ListVnets(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new ServerfarmVirtualNetworkConnection(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => new ServerfarmVirtualNetworkConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -158,15 +165,16 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// OperationId: AppServicePlans_GetVnetFromServerFarm
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string vnetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
@@ -174,7 +182,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -184,13 +192,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// OperationId: AppServicePlans_GetVnetFromServerFarm
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: AppServicePlans_GetVnetFromServerFarm
+        /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
         public virtual Response<bool> Exists(string vnetName, CancellationToken cancellationToken = default)
         {
@@ -200,7 +209,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(vnetName, cancellationToken: cancellationToken);
+                var response = _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -210,63 +219,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// OperationId: AppServicePlans_GetVnetFromServerFarm
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public async virtual Task<Response<ServerfarmVirtualNetworkConnection>> GetIfExistsAsync(string vnetName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-
-            using var scope = _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarmAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServerfarmVirtualNetworkConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerfarmVirtualNetworkConnection(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
-        /// OperationId: AppServicePlans_GetVnetFromServerFarm
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
-        public virtual Response<ServerfarmVirtualNetworkConnection> GetIfExists(string vnetName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
-
-            using var scope = _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics.CreateScope("ServerfarmVirtualNetworkConnectionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _serverfarmVirtualNetworkConnectionAppServicePlansRestClient.GetVnetFromServerFarm(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vnetName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ServerfarmVirtualNetworkConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerfarmVirtualNetworkConnection(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<ServerfarmVirtualNetworkConnection> IEnumerable<ServerfarmVirtualNetworkConnection>.GetEnumerator()
+        IEnumerator<ServerfarmVirtualNetworkConnectionResource> IEnumerable<ServerfarmVirtualNetworkConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -276,7 +229,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerfarmVirtualNetworkConnection> IAsyncEnumerable<ServerfarmVirtualNetworkConnection>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServerfarmVirtualNetworkConnectionResource> IAsyncEnumerable<ServerfarmVirtualNetworkConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

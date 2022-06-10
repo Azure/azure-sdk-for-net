@@ -16,13 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of HostNameBinding and their operations over its parent. </summary>
-    public partial class SiteSlotHostNameBindingCollection : ArmCollection, IEnumerable<SiteSlotHostNameBinding>, IAsyncEnumerable<SiteSlotHostNameBinding>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotHostNameBindingResource" /> and their operations.
+    /// Each <see cref="SiteSlotHostNameBindingResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="SiteSlotHostNameBindingCollection" /> instance call the GetSiteSlotHostNameBindings method from an instance of <see cref="SiteSlotResource" />.
+    /// </summary>
+    public partial class SiteSlotHostNameBindingCollection : ArmCollection, IEnumerable<SiteSlotHostNameBindingResource>, IAsyncEnumerable<SiteSlotHostNameBindingResource>
     {
         private readonly ClientDiagnostics _siteSlotHostNameBindingWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteSlotHostNameBindingWebAppsRestClient;
@@ -37,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotHostNameBindingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotHostNameBindingWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHostNameBinding.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotHostNameBinding.ResourceType, out string siteSlotHostNameBindingWebAppsApiVersion);
-            _siteSlotHostNameBindingWebAppsRestClient = new WebAppsRestOperations(_siteSlotHostNameBindingWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotHostNameBindingWebAppsApiVersion);
+            _siteSlotHostNameBindingWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHostNameBindingResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSlotHostNameBindingResource.ResourceType, out string siteSlotHostNameBindingWebAppsApiVersion);
+            _siteSlotHostNameBindingWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotHostNameBindingWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,35 +49,33 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteSlot.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+            if (id.ResourceType != SiteSlotResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_CreateOrUpdateHostNameBindingSlot
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Creates a hostname binding for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
+        /// Operation Id: WebApps_CreateOrUpdateHostNameBindingSlot
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
-        /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
+        /// <param name="data"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
-        public async virtual Task<SiteSlotHostNameBindingCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SiteSlotHostNameBindingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostName, HostNameBindingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
-            if (hostNameBinding == null)
-            {
-                throw new ArgumentNullException(nameof(hostNameBinding));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteSlotHostNameBindingWebAppsRestClient.CreateOrUpdateHostNameBindingSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, hostNameBinding, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotHostNameBindingCreateOrUpdateOperation(Client, response);
-                if (waitForCompletion)
+                var response = await _siteSlotHostNameBindingWebAppsRestClient.CreateOrUpdateHostNameBindingSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteSlotHostNameBindingResource>(Response.FromValue(new SiteSlotHostNameBindingResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -86,31 +86,29 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_CreateOrUpdateHostNameBindingSlot
-        /// <summary> Description for Creates a hostname binding for an app. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Creates a hostname binding for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
+        /// Operation Id: WebApps_CreateOrUpdateHostNameBindingSlot
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
-        /// <param name="hostNameBinding"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
+        /// <param name="data"> Binding details. This is the JSON representation of a HostNameBinding object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="hostNameBinding"/> is null. </exception>
-        public virtual SiteSlotHostNameBindingCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string hostName, HostNameBindingData hostNameBinding, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SiteSlotHostNameBindingResource> CreateOrUpdate(WaitUntil waitUntil, string hostName, HostNameBindingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
-            if (hostNameBinding == null)
-            {
-                throw new ArgumentNullException(nameof(hostNameBinding));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteSlotHostNameBindingWebAppsRestClient.CreateOrUpdateHostNameBindingSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, hostNameBinding, cancellationToken);
-                var operation = new SiteSlotHostNameBindingCreateOrUpdateOperation(Client, response);
-                if (waitForCompletion)
+                var response = _siteSlotHostNameBindingWebAppsRestClient.CreateOrUpdateHostNameBindingSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteSlotHostNameBindingResource>(Response.FromValue(new SiteSlotHostNameBindingResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -121,15 +119,16 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetHostNameBindingSlot
-        /// <summary> Description for Get the named hostname binding for an app (or deployment slot, if specified). </summary>
+        /// <summary>
+        /// Description for Get the named hostname binding for an app (or deployment slot, if specified).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
+        /// Operation Id: WebApps_GetHostNameBindingSlot
+        /// </summary>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotHostNameBinding>> GetAsync(string hostName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotHostNameBindingResource>> GetAsync(string hostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
@@ -139,8 +138,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotHostNameBindingWebAppsRestClient.GetHostNameBindingSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotHostNameBinding(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotHostNameBindingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,15 +148,16 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetHostNameBindingSlot
-        /// <summary> Description for Get the named hostname binding for an app (or deployment slot, if specified). </summary>
+        /// <summary>
+        /// Description for Get the named hostname binding for an app (or deployment slot, if specified).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
+        /// Operation Id: WebApps_GetHostNameBindingSlot
+        /// </summary>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public virtual Response<SiteSlotHostNameBinding> Get(string hostName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotHostNameBindingResource> Get(string hostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotHostNameBindingWebAppsRestClient.GetHostNameBindingSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHostNameBinding(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotHostNameBindingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,22 +177,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_ListHostNameBindingsSlot
-        /// <summary> Description for Get hostname bindings for an app or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get hostname bindings for an app or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings
+        /// Operation Id: WebApps_ListHostNameBindingsSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotHostNameBinding" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotHostNameBinding> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSlotHostNameBindingResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotHostNameBindingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotHostNameBinding>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteSlotHostNameBindingResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotHostNameBindingWebAppsRestClient.ListHostNameBindingsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBinding(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBindingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -200,14 +201,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteSlotHostNameBinding>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteSlotHostNameBindingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotHostNameBindingWebAppsRestClient.ListHostNameBindingsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBinding(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBindingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -218,22 +219,23 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_ListHostNameBindingsSlot
-        /// <summary> Description for Get hostname bindings for an app or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get hostname bindings for an app or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings
+        /// Operation Id: WebApps_ListHostNameBindingsSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotHostNameBinding" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotHostNameBinding> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteSlotHostNameBindingResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotHostNameBindingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotHostNameBinding> FirstPageFunc(int? pageSizeHint)
+            Page<SiteSlotHostNameBindingResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotHostNameBindingWebAppsRestClient.ListHostNameBindingsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBinding(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBindingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +243,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteSlotHostNameBinding> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteSlotHostNameBindingResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotHostNameBindingWebAppsRestClient.ListHostNameBindingsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBinding(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotHostNameBindingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -259,15 +261,16 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetHostNameBindingSlot
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
+        /// Operation Id: WebApps_GetHostNameBindingSlot
+        /// </summary>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string hostName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string hostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
@@ -275,7 +278,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotHostNameBindingWebAppsRestClient.GetHostNameBindingSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -285,13 +288,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetHostNameBindingSlot
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
+        /// Operation Id: WebApps_GetHostNameBindingSlot
+        /// </summary>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual Response<bool> Exists(string hostName, CancellationToken cancellationToken = default)
         {
@@ -301,7 +305,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(hostName, cancellationToken: cancellationToken);
+                var response = _siteSlotHostNameBindingWebAppsRestClient.GetHostNameBindingSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -311,63 +315,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetHostNameBindingSlot
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="hostName"> Hostname in the hostname binding. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotHostNameBinding>> GetIfExistsAsync(string hostName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
-
-            using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotHostNameBindingWebAppsRestClient.GetHostNameBindingSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotHostNameBinding>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHostNameBinding(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetHostNameBindingSlot
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="hostName"> Hostname in the hostname binding. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
-        public virtual Response<SiteSlotHostNameBinding> GetIfExists(string hostName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
-
-            using var scope = _siteSlotHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteSlotHostNameBindingCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _siteSlotHostNameBindingWebAppsRestClient.GetHostNameBindingSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, hostName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotHostNameBinding>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHostNameBinding(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<SiteSlotHostNameBinding> IEnumerable<SiteSlotHostNameBinding>.GetEnumerator()
+        IEnumerator<SiteSlotHostNameBindingResource> IEnumerable<SiteSlotHostNameBindingResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -377,7 +325,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteSlotHostNameBinding> IAsyncEnumerable<SiteSlotHostNameBinding>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteSlotHostNameBindingResource> IAsyncEnumerable<SiteSlotHostNameBindingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

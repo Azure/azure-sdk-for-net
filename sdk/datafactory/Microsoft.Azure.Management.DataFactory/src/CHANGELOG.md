@@ -1,5 +1,32 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 6.2.0
+###  Feature Additions
+- Added globalParameters apis into ADF
+- Added support for running staging on multiple sources in parallel
+- Added purview configuration into ADF
+- Added support rejected data linked service in dataflow sink
+
+## Version 6.1.0
+###  Feature Additions
+- Added Dataworld, AppFigures, Asana, Twilio connectors in ADF
+- Added PrivateEndpoint property Into PrivateLinkConnectionApprovalRequest
+
+## Version 6.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Expression mode for SqlServerStoredProcedureActivity
+- Added Policy property into ExecutePipelineActivity
+
+## Version 5.4.0
+###  Feature Additions
+- Added Web Activity disable cert validation
+
+## Version 5.3.0
+###  Feature Additions
+- Added ScriptActivity in ADF
+- Added TeamDesk, Quickbase, Smartsheet, Zendesk connectors in ADF
+
 ## Version 5.2.0
 ###  Feature Additions
 - Added FailActivity in ADF

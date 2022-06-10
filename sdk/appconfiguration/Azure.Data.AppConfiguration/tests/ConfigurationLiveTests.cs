@@ -512,10 +512,6 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task GetRevisions()
         {
-            // The service keeps revision history even after the key was removed
-            // Avoid reusing ids
-            Recording.DisableIdReuse();
-
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
@@ -565,10 +561,6 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task GetRevisionsByKeyAndLabel()
         {
-            // The service keeps revision history even after the key was removed
-            // Avoid reusing ids
-            Recording.DisableIdReuse();
-
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 

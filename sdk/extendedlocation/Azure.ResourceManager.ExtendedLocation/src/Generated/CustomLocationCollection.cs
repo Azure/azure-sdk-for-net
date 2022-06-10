@@ -16,14 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.ExtendedLocation.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ExtendedLocation
 {
-    /// <summary> A class representing collection of CustomLocation and their operations over its parent. </summary>
-    public partial class CustomLocationCollection : ArmCollection, IEnumerable<CustomLocation>, IAsyncEnumerable<CustomLocation>
+    /// <summary>
+    /// A class representing a collection of <see cref="CustomLocationResource" /> and their operations.
+    /// Each <see cref="CustomLocationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="CustomLocationCollection" /> instance call the GetCustomLocations method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class CustomLocationCollection : ArmCollection, IEnumerable<CustomLocationResource>, IAsyncEnumerable<CustomLocationResource>
     {
         private readonly ClientDiagnostics _customLocationClientDiagnostics;
         private readonly CustomLocationsRestOperations _customLocationRestClient;
@@ -38,9 +40,9 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CustomLocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _customLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocation", CustomLocation.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(CustomLocation.ResourceType, out string customLocationApiVersion);
-            _customLocationRestClient = new CustomLocationsRestOperations(_customLocationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, customLocationApiVersion);
+            _customLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocation", CustomLocationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CustomLocationResource.ResourceType, out string customLocationApiVersion);
+            _customLocationRestClient = new CustomLocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, customLocationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,35 +50,33 @@ namespace Azure.ResourceManager.ExtendedLocation
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_CreateOrUpdate
-        /// <summary> Creates or updates a Custom Location in the specified Subscription and Resource Group. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a Custom Location in the specified Subscription and Resource Group
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
-        /// <param name="parameters"> Parameters supplied to create or update a Custom Location. </param>
+        /// <param name="data"> Parameters supplied to create or update a Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<CustomLocationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string resourceName, CustomLocationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<CustomLocationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, CustomLocationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _customLocationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomLocationCreateOrUpdateOperation(Client, _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _customLocationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ExtendedLocationArmOperation<CustomLocationResource>(new CustomLocationOperationSource(Client), _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -87,31 +87,29 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_CreateOrUpdate
-        /// <summary> Creates or updates a Custom Location in the specified Subscription and Resource Group. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a Custom Location in the specified Subscription and Resource Group
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
-        /// <param name="parameters"> Parameters supplied to create or update a Custom Location. </param>
+        /// <param name="data"> Parameters supplied to create or update a Custom Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual CustomLocationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string resourceName, CustomLocationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<CustomLocationResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, CustomLocationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _customLocationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters, cancellationToken);
-                var operation = new CustomLocationCreateOrUpdateOperation(Client, _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = _customLocationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
+                var operation = new ExtendedLocationArmOperation<CustomLocationResource>(new CustomLocationOperationSource(Client), _customLocationClientDiagnostics, Pipeline, _customLocationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -122,15 +120,16 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Gets the details of the customLocation with a specified resource group and name. </summary>
+        /// <summary>
+        /// Gets the details of the customLocation with a specified resource group and name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public async virtual Task<Response<CustomLocation>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomLocationResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
@@ -140,8 +139,8 @@ namespace Azure.ResourceManager.ExtendedLocation
             {
                 var response = await _customLocationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _customLocationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new CustomLocation(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,15 +149,16 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Gets the details of the customLocation with a specified resource group and name. </summary>
+        /// <summary>
+        /// Gets the details of the customLocation with a specified resource group and name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual Response<CustomLocation> Get(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<CustomLocationResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.ExtendedLocation
             {
                 var response = _customLocationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
-                    throw _customLocationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomLocation(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new CustomLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,22 +178,23 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_ListByResourceGroup
-        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </summary>
+        /// <summary>
+        /// Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations
+        /// Operation Id: CustomLocations_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CustomLocation> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CustomLocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CustomLocation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CustomLocationResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _customLocationRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +202,14 @@ namespace Azure.ResourceManager.ExtendedLocation
                     throw;
                 }
             }
-            async Task<Page<CustomLocation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CustomLocationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _customLocationRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -219,22 +220,23 @@ namespace Azure.ResourceManager.ExtendedLocation
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_ListByResourceGroup
-        /// <summary> Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location. </summary>
+        /// <summary>
+        /// Gets a list of Custom Locations in the specified subscription and resource group. The operation returns properties of each Custom Location.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations
+        /// Operation Id: CustomLocations_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomLocation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CustomLocation> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CustomLocationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CustomLocation> FirstPageFunc(int? pageSizeHint)
+            Page<CustomLocationResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _customLocationRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -242,14 +244,14 @@ namespace Azure.ResourceManager.ExtendedLocation
                     throw;
                 }
             }
-            Page<CustomLocation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CustomLocationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _customLocationRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CustomLocationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -260,15 +262,16 @@ namespace Azure.ResourceManager.ExtendedLocation
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
@@ -276,7 +279,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _customLocationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -286,13 +289,14 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
+        /// Operation Id: CustomLocations_Get
+        /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
@@ -302,7 +306,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             scope.Start();
             try
             {
-                var response = GetIfExists(resourceName, cancellationToken: cancellationToken);
+                var response = _customLocationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,63 +316,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceName"> Custom Locations name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public async virtual Task<Response<CustomLocation>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _customLocationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<CustomLocation>(null, response.GetRawResponse());
-                return Response.FromValue(new CustomLocation(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: CustomLocations_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="resourceName"> Custom Locations name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual Response<CustomLocation> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _customLocationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<CustomLocation>(null, response.GetRawResponse());
-                return Response.FromValue(new CustomLocation(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<CustomLocation> IEnumerable<CustomLocation>.GetEnumerator()
+        IEnumerator<CustomLocationResource> IEnumerable<CustomLocationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -378,7 +326,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CustomLocation> IAsyncEnumerable<CustomLocation>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CustomLocationResource> IAsyncEnumerable<CustomLocationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -28,8 +28,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             try
             {
                 ConversationsProject conversationsProject = new ConversationsProject("invalid-project", "production");
-                Response<AnalyzeConversationResult> response = client.AnalyzeConversation(
-                    "We'll have 2 plates of seared salmon nigiri.",
+                Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
+                    "Send an email to Carol about the tomorrow's demo",
                     conversationsProject);
             }
             catch (RequestFailedException ex)

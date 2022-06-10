@@ -19,7 +19,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="videoName"> Name of a new or existing Video Analyzer video resource used for the media recording. </param>
         /// <param name="localMediaCachePath"> Path to a local file system directory for caching of temporary media files. This will also be used to store content which cannot be immediately uploaded to Azure due to Internet connectivity issues. </param>
         /// <param name="localMediaCacheMaximumSizeMiB"> Maximum amount of disk space that can be used for caching of temporary media files. Once this limit is reached, the oldest segments of the media archive will be continuously deleted in order to make space for new media, thus leading to gaps in the cloud recorded content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="videoName"/>, <paramref name="localMediaCachePath"/>, or <paramref name="localMediaCacheMaximumSizeMiB"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="videoName"/>, <paramref name="localMediaCachePath"/> or <paramref name="localMediaCacheMaximumSizeMiB"/> is null. </exception>
         public VideoSink(string name, IEnumerable<NodeInput> inputs, string videoName, string localMediaCachePath, string localMediaCacheMaximumSizeMiB) : base(name, inputs)
         {
             if (name == null)

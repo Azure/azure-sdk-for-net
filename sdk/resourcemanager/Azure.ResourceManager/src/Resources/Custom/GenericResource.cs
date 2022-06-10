@@ -9,8 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
 
 [assembly: CodeGenSuppressType("GenericResourceFilter")]
 [assembly: CodeGenSuppressType("GenericResource")]
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _resourcesRestClient;
         private readonly GenericResourceData _data;
-        private readonly ProviderCollection _providerCollection;
+        private readonly ResourceProviderCollection _providerCollection;
 
         /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class for mocking. </summary>
         protected GenericResource()
@@ -49,10 +47,10 @@ namespace Azure.ResourceManager.Resources
             {
                 throw new ArgumentException("Only resource in a subscription is supported");
             }
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Id.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Id.ResourceType, out string apiVersion);
-            _resourcesRestClient = new ResourcesRestOperations(_clientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(Client.GetSubscription(subscription));
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Id.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(Id.ResourceType, out string apiVersion);
+            _resourcesRestClient = new ResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiVersion);
+            _providerCollection = new ResourceProviderCollection(Client.GetSubscriptionResource(subscription));
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -70,7 +68,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+#pragma warning disable CA1801 // Review unused parameters
         internal static void ValidateResourceId(ResourceIdentifier id)
+#pragma warning restore CA1801 // Review unused parameters
         {
             //no op but here for code generation
         }
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{resourceId}
         /// OperationId: Resources_DeleteById
         /// <summary> Deletes a resource by ID. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<GenericResourceDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public async virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
             scope.Start();
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.DeleteByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
-                var operation = new GenericResourceDeleteOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, response);
-                if (waitForCompletion)
+                var operation = new ResourcesArmOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{resourceId}
         /// OperationId: Resources_DeleteById
         /// <summary> Deletes a resource by ID. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual GenericResourceDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("GenericResource.Delete");
             scope.Start();
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var apiVersion = GetApiVersion(cancellationToken);
                 var response = _resourcesRestClient.DeleteById(Id, apiVersion, cancellationToken);
-                var operation = new GenericResourceDeleteOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, response);
-                if (waitForCompletion)
+                var operation = new ResourcesArmOperation(_clientDiagnostics, Pipeline, _resourcesRestClient.CreateDeleteByIdRequest(Id, apiVersion).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagValues[key] = value;
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagValues[key] = value;
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -251,10 +251,10 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagValues.ReplaceWith(tags);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                TagResource.Delete(true, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagValues.ReplaceWith(tags);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -311,9 +311,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.Properties.TagValues.Remove(key);
+                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalTags = GetTagResource().Get(cancellationToken);
+                originalTags.Value.Data.Properties.TagValues.Remove(key);
+                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
                 return Response.FromValue(new GenericResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -357,15 +357,15 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{resourceId}
         /// OperationId: Resources_UpdateById
         /// <summary> Updates a resource by ID. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> Update resource parameters. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<GenericResourceUpdateOperation> UpdateAsync(bool waitForCompletion, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async virtual Task<ArmOperation<GenericResource>> UpdateAsync(WaitUntil waitUntil, GenericResourceData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(data));
             }
 
             using var scope = _clientDiagnostics.CreateScope("GenericResource.Update");
@@ -373,9 +373,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
-                var response = await _resourcesRestClient.UpdateByIdAsync(Id, apiVersion, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new GenericResourceUpdateOperation(Client, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _resourcesRestClient.UpdateByIdAsync(Id, apiVersion, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceOperationSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -390,15 +390,15 @@ namespace Azure.ResourceManager.Resources
         /// ContextualPath: /{resourceId}
         /// OperationId: Resources_UpdateById
         /// <summary> Updates a resource by ID. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="parameters"> Update resource parameters. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Update resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual GenericResourceUpdateOperation Update(bool waitForCompletion, GenericResourceData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<GenericResource> Update(WaitUntil waitUntil, GenericResourceData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            if (data == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(data));
             }
 
             using var scope = _clientDiagnostics.CreateScope("GenericResource.Update");
@@ -406,9 +406,9 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var apiVersion = GetApiVersion(cancellationToken);
-                var response = _resourcesRestClient.UpdateById(Id, apiVersion, parameters, cancellationToken);
-                var operation = new GenericResourceUpdateOperation(Client, _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, parameters).Request, response);
-                if (waitForCompletion)
+                var response = _resourcesRestClient.UpdateById(Id, apiVersion, data, cancellationToken);
+                var operation = new ResourcesArmOperation<GenericResource>(new GenericResourceOperationSource(Client), _clientDiagnostics, Pipeline, _resourcesRestClient.CreateUpdateByIdRequest(Id, apiVersion, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

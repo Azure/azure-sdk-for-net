@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing the Snapshot data model. </summary>
-    public partial class SnapshotData : TrackedResource
+    public partial class SnapshotData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SnapshotData. </summary>
         /// <param name="location"> The location. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of SnapshotData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sku"> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </param>
         /// <param name="extendedLocation"> The extended location where the snapshot will be created. Extended location cannot be changed. </param>
         /// <param name="timeCreated"> The time when the snapshot was created. </param>
-        /// <param name="oSType"> The Operating System type. </param>
+        /// <param name="osType"> The Operating System type. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="purchasePlan"> Purchase plan information for the image from which the source disk for the snapshot was originally created. </param>
         /// <param name="supportedCapabilities"> List of supported capabilities (like Accelerated Networking) for the image from which the source disk from the snapshot was originally created. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="diskSizeBytes"> The size of the disk in bytes. This field is read only. </param>
         /// <param name="diskState"> The state of the snapshot. </param>
         /// <param name="uniqueId"> Unique Guid identifying the resource. </param>
-        /// <param name="encryptionSettingsCollection"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
+        /// <param name="encryptionSettingGroup"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
         /// <param name="provisioningState"> The disk provisioning state. </param>
         /// <param name="incremental"> Whether a snapshot is incremental. Incremental snapshots on the same disk occupy less space than full snapshots and can be diffed. </param>
         /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="supportsHibernation"> Indicates the OS on a snapshot supports hibernation. </param>
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
         /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
-        internal SnapshotData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, SnapshotSku sku, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? oSType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, bool? incremental, Encryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, PublicNetworkAccess? publicNetworkAccess, float? completionPercent) : base(id, name, type, systemData, tags, location)
+        internal SnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, SnapshotSku sku, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, DiskCreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingGroup encryptionSettingGroup, string provisioningState, bool? incremental, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, PublicNetworkAccess? publicNetworkAccess, float? completionPercent) : base(id, name, resourceType, systemData, tags, location)
         {
             ManagedBy = managedBy;
             Sku = sku;
             ExtendedLocation = extendedLocation;
             TimeCreated = timeCreated;
-            OSType = oSType;
+            OSType = osType;
             HyperVGeneration = hyperVGeneration;
             PurchasePlan = purchasePlan;
             SupportedCapabilities = supportedCapabilities;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
             DiskSizeBytes = diskSizeBytes;
             DiskState = diskState;
             UniqueId = uniqueId;
-            EncryptionSettingsCollection = encryptionSettingsCollection;
+            EncryptionSettingGroup = encryptionSettingGroup;
             ProvisioningState = provisioningState;
             Incremental = incremental;
             Encryption = encryption;
@@ -94,9 +94,21 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Purchase plan information for the image from which the source disk for the snapshot was originally created. </summary>
         public DiskPurchasePlan PurchasePlan { get; set; }
         /// <summary> List of supported capabilities (like Accelerated Networking) for the image from which the source disk from the snapshot was originally created. </summary>
-        public SupportedCapabilities SupportedCapabilities { get; set; }
+        internal SupportedCapabilities SupportedCapabilities { get; set; }
+        /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
+        public bool? AcceleratedNetwork
+        {
+            get => SupportedCapabilities is null ? default : SupportedCapabilities.AcceleratedNetwork;
+            set
+            {
+                if (SupportedCapabilities is null)
+                    SupportedCapabilities = new SupportedCapabilities();
+                SupportedCapabilities.AcceleratedNetwork = value;
+            }
+        }
+
         /// <summary> Disk source information. CreationData information cannot be changed after the disk has been created. </summary>
-        public CreationData CreationData { get; set; }
+        public DiskCreationData CreationData { get; set; }
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> The size of the disk in bytes. This field is read only. </summary>
@@ -106,17 +118,17 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Unique Guid identifying the resource. </summary>
         public string UniqueId { get; }
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsCollection EncryptionSettingsCollection { get; set; }
+        public EncryptionSettingGroup EncryptionSettingGroup { get; set; }
         /// <summary> The disk provisioning state. </summary>
         public string ProvisioningState { get; }
         /// <summary> Whether a snapshot is incremental. Incremental snapshots on the same disk occupy less space than full snapshots and can be diffed. </summary>
         public bool? Incremental { get; set; }
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public Encryption Encryption { get; set; }
+        public DiskEncryption Encryption { get; set; }
         /// <summary> Policy for accessing the disk via network. </summary>
         public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public string DiskAccessId { get; set; }
+        public ResourceIdentifier DiskAccessId { get; set; }
         /// <summary> Contains the security related information for the resource. </summary>
         public DiskSecurityProfile SecurityProfile { get; set; }
         /// <summary> Indicates the OS on a snapshot supports hibernation. </summary>

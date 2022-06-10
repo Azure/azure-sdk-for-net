@@ -109,10 +109,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         {
             var receiver = CreateReceiver();
 
-            Assert.That(receiver.IsClosed, Is.False, "The receiver should not be closed on creation");
+            Assert.That(receiver.WasClosedExplicitly, Is.False, "The receiver should not be closed on creation");
 
             await receiver.CloseAsync(CancellationToken.None);
-            Assert.That(receiver.IsClosed, Is.True, "The receiver should be marked as closed after closing");
+            Assert.That(receiver.WasClosedExplicitly, Is.True, "The receiver should be marked as closed after closing");
         }
 
         /// <summary>

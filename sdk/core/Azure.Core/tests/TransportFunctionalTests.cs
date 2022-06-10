@@ -878,9 +878,11 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Retry(3)] // Sometimes is a victim of timeouts on CI, but usually runs sub 100ms
         public Task ThrowsTaskCanceledExceptionWhenCancelled() => ThrowsTaskCanceledExceptionWhenCancelled(false);
 
         [Test]
+        [Retry(3)] // Sometimes is a victim of timeouts on CI, but usually runs sub 100ms
         public Task ThrowsTaskCanceledExceptionWhenCancelledHttps() => ThrowsTaskCanceledExceptionWhenCancelled(true);
 
         private async Task ThrowsTaskCanceledExceptionWhenCancelled(bool https)

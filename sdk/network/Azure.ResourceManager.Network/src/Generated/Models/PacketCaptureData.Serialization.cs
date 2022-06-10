@@ -7,7 +7,9 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -16,31 +18,48 @@ namespace Azure.ResourceManager.Network
     {
         internal static PacketCaptureData DeserializePacketCaptureData(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> target = default;
             Optional<long> bytesToCapturePerPacket = default;
             Optional<long> totalBytesPerSession = default;
             Optional<int> timeLimitInSeconds = default;
             Optional<PacketCaptureStorageLocation> storageLocation = default;
             Optional<IReadOnlyList<PacketCaptureFilter>> filters = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("type"))
                 {
-                    id = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("systemData"))
                 {
-                    etag = property.Value.GetString();
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -119,14 +138,14 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PacketCaptureData(name.Value, id.Value, etag.Value, target.Value, Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState));
+            return new PacketCaptureData(id, name, type, systemData, Optional.ToNullable(etag), target.Value, Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -16,13 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of LocalUser and their operations over its parent. </summary>
-    public partial class LocalUserCollection : ArmCollection, IEnumerable<LocalUser>, IAsyncEnumerable<LocalUser>
+    /// <summary>
+    /// A class representing a collection of <see cref="LocalUserResource" /> and their operations.
+    /// Each <see cref="LocalUserResource" /> in the collection will belong to the same instance of <see cref="StorageAccountResource" />.
+    /// To get a <see cref="LocalUserCollection" /> instance call the GetLocalUsers method from an instance of <see cref="StorageAccountResource" />.
+    /// </summary>
+    public partial class LocalUserCollection : ArmCollection, IEnumerable<LocalUserResource>, IAsyncEnumerable<LocalUserResource>
     {
         private readonly ClientDiagnostics _localUserClientDiagnostics;
         private readonly LocalUsersRestOperations _localUserRestClient;
@@ -37,9 +39,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal LocalUserCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _localUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", LocalUser.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(LocalUser.ResourceType, out string localUserApiVersion);
-            _localUserRestClient = new LocalUsersRestOperations(_localUserClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, localUserApiVersion);
+            _localUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", LocalUserResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(LocalUserResource.ResourceType, out string localUserApiVersion);
+            _localUserRestClient = new LocalUsersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, localUserApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,32 +49,33 @@ namespace Azure.ResourceManager.Storage
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != StorageAccount.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StorageAccount.ResourceType), nameof(id));
+            if (id.ResourceType != StorageAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StorageAccountResource.ResourceType), nameof(id));
         }
 
-        /// <summary> Create or update the properties of a local user associated with the storage account. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Create or update the properties of a local user associated with the storage account
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
-        /// <param name="properties"> The local user associated with a storage account. </param>
+        /// <param name="data"> The local user associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="properties"/> is null. </exception>
-        public async virtual Task<LocalUserCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<LocalUserResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string username, LocalUserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _localUserClientDiagnostics.CreateScope("LocalUserCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _localUserRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, properties, cancellationToken).ConfigureAwait(false);
-                var operation = new LocalUserCreateOrUpdateOperation(Client, response);
-                if (waitForCompletion)
+                var response = await _localUserRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, data, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageArmOperation<LocalUserResource>(Response.FromValue(new LocalUserResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -83,28 +86,29 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Create or update the properties of a local user associated with the storage account. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Create or update the properties of a local user associated with the storage account
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
-        /// <param name="properties"> The local user associated with a storage account. </param>
+        /// <param name="data"> The local user associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="properties"/> is null. </exception>
-        public virtual LocalUserCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string username, LocalUserData properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<LocalUserResource> CreateOrUpdate(WaitUntil waitUntil, string username, LocalUserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _localUserClientDiagnostics.CreateScope("LocalUserCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _localUserRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, properties, cancellationToken);
-                var operation = new LocalUserCreateOrUpdateOperation(Client, response);
-                if (waitForCompletion)
+                var response = _localUserRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, data, cancellationToken);
+                var operation = new StorageArmOperation<LocalUserResource>(Response.FromValue(new LocalUserResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -115,12 +119,16 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Get the local user of the storage account by username. </summary>
+        /// <summary>
+        /// Get the local user of the storage account by username.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public async virtual Task<Response<LocalUser>> GetAsync(string username, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocalUserResource>> GetAsync(string username, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
 
@@ -130,8 +138,8 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _localUserRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _localUserClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LocalUser(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LocalUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,12 +148,16 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Get the local user of the storage account by username. </summary>
+        /// <summary>
+        /// Get the local user of the storage account by username.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public virtual Response<LocalUser> Get(string username, CancellationToken cancellationToken = default)
+        public virtual Response<LocalUserResource> Get(string username, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
 
@@ -155,8 +167,8 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _localUserRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken);
                 if (response.Value == null)
-                    throw _localUserClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LocalUser(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LocalUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,19 +177,23 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> List the local users associated with the storage account. </summary>
+        /// <summary>
+        /// List the local users associated with the storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers
+        /// Operation Id: LocalUsers_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocalUser" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LocalUser> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LocalUserResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LocalUserResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LocalUser>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<LocalUserResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _localUserClientDiagnostics.CreateScope("LocalUserCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _localUserRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocalUser(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LocalUserResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -188,19 +204,23 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> List the local users associated with the storage account. </summary>
+        /// <summary>
+        /// List the local users associated with the storage account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers
+        /// Operation Id: LocalUsers_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocalUser" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LocalUser> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LocalUserResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LocalUserResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<LocalUser> FirstPageFunc(int? pageSizeHint)
+            Page<LocalUserResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _localUserClientDiagnostics.CreateScope("LocalUserCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _localUserRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LocalUser(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new LocalUserResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,12 +231,16 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string username, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string username, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(username, nameof(username));
 
@@ -224,7 +248,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(username, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _localUserRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -234,10 +258,14 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}
+        /// Operation Id: LocalUsers_Get
+        /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public virtual Response<bool> Exists(string username, CancellationToken cancellationToken = default)
         {
@@ -247,7 +275,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = GetIfExists(username, cancellationToken: cancellationToken);
+                var response = _localUserRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,57 +285,7 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public async virtual Task<Response<LocalUser>> GetIfExistsAsync(string username, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(username, nameof(username));
-
-            using var scope = _localUserClientDiagnostics.CreateScope("LocalUserCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _localUserRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<LocalUser>(null, response.GetRawResponse());
-                return Response.FromValue(new LocalUser(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="username"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public virtual Response<LocalUser> GetIfExists(string username, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(username, nameof(username));
-
-            using var scope = _localUserClientDiagnostics.CreateScope("LocalUserCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _localUserRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, username, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<LocalUser>(null, response.GetRawResponse());
-                return Response.FromValue(new LocalUser(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<LocalUser> IEnumerable<LocalUser>.GetEnumerator()
+        IEnumerator<LocalUserResource> IEnumerable<LocalUserResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -317,7 +295,7 @@ namespace Azure.ResourceManager.Storage
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<LocalUser> IAsyncEnumerable<LocalUser>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<LocalUserResource> IAsyncEnumerable<LocalUserResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

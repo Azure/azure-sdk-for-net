@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageUri"> Storage Uri. </param>
         /// <param name="administratorLogin"> Administrator login name. </param>
         /// <param name="administratorLoginPassword"> Administrator login password. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageKey"/>, <paramref name="storageUri"/>, <paramref name="administratorLogin"/>, or <paramref name="administratorLoginPassword"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageKey"/>, <paramref name="storageUri"/>, <paramref name="administratorLogin"/> or <paramref name="administratorLoginPassword"/> is null. </exception>
         public ImportExistingDatabaseDefinition(StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword)
         {
             if (storageKey == null)

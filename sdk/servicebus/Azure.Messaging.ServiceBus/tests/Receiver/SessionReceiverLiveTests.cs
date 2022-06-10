@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 // send the messages
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
                 IEnumerable<ServiceBusMessage> sentMessages = ServiceBusTestUtilities.AddMessages(batch, messageCt, sessionId, sessionId)
-                    .AsEnumerable<ServiceBusMessage>();
+                    .AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var sessionId = "sessionId1";
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<ServiceBusMessage>();
                 await sender.SendMessagesAsync(batch);
 
                 ServiceBusReceiver receiver = await client.AcceptNextSessionAsync(
@@ -244,7 +244,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.ThrowsAsync<TaskCanceledException>(async () => await receiver.ReceiveMessagesAsync(1, cancellationToken: cancellationTokenSource.Token));
                 var stop = DateTime.UtcNow;
 
-                Assert.That(stop - start,  Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(3)));
+                Assert.That(stop - start,  Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(5)));
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -301,7 +301,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -348,7 +348,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -389,7 +389,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -446,7 +446,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -511,7 +511,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
                 var topicName = scope.TopicName;
@@ -587,7 +587,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 var sessionId = "sessionId1";
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, sessionId).AsReadOnly<ServiceBusMessage>();
 
                 await sender.SendMessagesAsync(batch);
 
@@ -697,6 +697,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(receiver.SessionId, message.SessionId);
                 var sessionId = receiver.SessionId;
                 await Task.Delay((receiver.SessionLockedUntil - DateTime.UtcNow) + TimeSpan.FromSeconds(5));
+
+                Assert.IsTrue(receiver.IsClosed);
 
                 Assert.That(async () => await receiver.ReceiveMessageAsync(),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
@@ -955,7 +957,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = ServiceBusTestUtilities.AddMessages(batch, messageCount, "sessionId").AsReadOnly<ServiceBusMessage>();
                 await sender.SendMessagesAsync(batch);
                 var receiver = await client.AcceptSessionAsync(
                     scope.QueueName,
@@ -1014,7 +1016,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.AreEqual(1, msg.DeliveryCount);
                 var end = DateTime.UtcNow;
                 Assert.NotNull(msg);
-                Assert.Less(end - start, TimeSpan.FromSeconds(5));
+                Assert.Less(end - start, TimeSpan.FromSeconds(10));
+            }
+        }
+
+        [Test]
+        public async Task LinkCloseCausesIsClosedToBeTrue()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+
+                var receiver = await client.AcceptSessionAsync(scope.QueueName, "sessionId");
+                Assert.IsFalse(receiver.IsClosed);
+
+                SimulateNetworkFailure(client);
+                Assert.IsTrue(receiver.IsClosed);
             }
         }
     }

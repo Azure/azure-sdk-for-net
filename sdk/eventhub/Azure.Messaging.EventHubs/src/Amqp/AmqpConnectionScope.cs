@@ -301,7 +301,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 EventHubsEventSource.Log.AmqpManagementLinkCreateStart(EventHubName);
 
                 var stopWatch = ValueStopwatch.StartNew();
-                var connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+
+                if (!ActiveConnection.TryGetOpenedObject(out var connection))
+                {
+                    connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+                }
+
                 var link = await CreateManagementLinkAsync(connection, operationTimeout, linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
 
                 await OpenAmqpObjectAsync(link, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -363,7 +368,11 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 var stopWatch = ValueStopwatch.StartNew();
                 var consumerEndpoint = new Uri(ServiceEndpoint, string.Format(CultureInfo.InvariantCulture, ConsumerPathSuffixMask, EventHubName, consumerGroup, partitionId));
-                var connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+
+                if (!ActiveConnection.TryGetOpenedObject(out var connection))
+                {
+                    connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+                }
 
                 if (string.IsNullOrEmpty(linkIdentifier))
                 {
@@ -414,7 +423,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         public virtual async Task<SendingAmqpLink> OpenProducerLinkAsync(string partitionId,
                                                                          TransportProducerFeatures features,
-                                                                         PartitionPublishingOptionsInternal options,
+                                                                         PartitionPublishingOptions options,
                                                                          TimeSpan operationTimeout,
                                                                          TimeSpan linkTimeout,
                                                                          string linkIdentifier,
@@ -432,7 +441,11 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var stopWatch = ValueStopwatch.StartNew();
                 var path = (string.IsNullOrEmpty(partitionId)) ? EventHubName : string.Format(CultureInfo.InvariantCulture, PartitionProducerPathSuffixMask, EventHubName, partitionId);
                 var producerEndpoint = new Uri(ServiceEndpoint, path);
-                var connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+
+                if (!ActiveConnection.TryGetOpenedObject(out var connection))
+                {
+                    connection = await ActiveConnection.GetOrCreateAsync(linkTimeout, cancellationToken).ConfigureAwait(false);
+                }
 
                 if (string.IsNullOrEmpty(linkIdentifier))
                 {
@@ -757,7 +770,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         protected virtual async Task<SendingAmqpLink> CreateSendingLinkAsync(AmqpConnection connection,
                                                                              Uri endpoint,
                                                                              TransportProducerFeatures features,
-                                                                             PartitionPublishingOptionsInternal options,
+                                                                             PartitionPublishingOptions options,
                                                                              TimeSpan operationTimeout,
                                                                              TimeSpan linkTimeout,
                                                                              string linkIdentifier,

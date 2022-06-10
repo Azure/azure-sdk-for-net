@@ -6,38 +6,36 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Sku = Azure.ResourceManager.Storage.Models.Sku;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests.Samples
 {
     public class Sample1_ManagingBlobContainers
     {
-        private ResourceGroup resourceGroup;
-        private StorageAccount storageAccount;
-        private BlobService blobService;
+        private ResourceGroupResource resourceGroup;
+        private StorageAccountResource storageAccount;
+        private BlobServiceResource blobService;
         [SetUp]
         public async Task createStorageAccountAndGetBlobContainerCollection()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroupCreateOrUpdateOperation operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = operation.Value;
+            ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = operation.Value;
             this.resourceGroup = resourceGroup;
-            Sku sku = new Sku(SkuName.StandardGRS);
-            Kind kind = Kind.Storage;
+            StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
+            StorageKind kind = StorageKind.Storage;
             string locationStr = "westus2";
-            StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, locationStr);
+            StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, kind, locationStr);
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
-            StorageAccountCreateOrUpdateOperation accountCreateOperation = await accountCollection.CreateOrUpdateAsync(false, accountName, parameters);
+            ArmOperation<StorageAccountResource> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Started, accountName, parameters);
             storageAccount = await accountCreateOperation.WaitForCompletionAsync();
             #region Snippet:Managing_BlobContainers_GetBlobService
-            BlobService blobService = storageAccount.GetBlobService();
+            BlobServiceResource blobService = storageAccount.GetBlobService();
             #endregion
             this.blobService = blobService;
         }
@@ -49,8 +47,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
             string blobContainerName = "myBlobContainer";
             BlobContainerData blobContainerData = new BlobContainerData();
-            BlobContainerCreateOrUpdateOperation blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(true, blobContainerName, blobContainerData);
-            BlobContainer blobContainer = blobContainerCreateOperation.Value;
+            ArmOperation<BlobContainerResource> blobContainerCreateOperation = await blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, blobContainerName, blobContainerData);
+            BlobContainerResource blobContainer = blobContainerCreateOperation.Value;
             #endregion
         }
         [Test]
@@ -59,8 +57,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_BlobContainers_ListBlobContainers
             BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-            AsyncPageable<BlobContainer> response = blobContainerCollection.GetAllAsync();
-            await foreach (BlobContainer blobContainer in response)
+            AsyncPageable<BlobContainerResource> response = blobContainerCollection.GetAllAsync();
+            await foreach (BlobContainerResource blobContainer in response)
             {
                 Console.WriteLine(blobContainer.Id.Name);
             }
@@ -72,25 +70,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_BlobContainers_GetBlobContainer
             BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-            BlobContainer blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
+            BlobContainerResource blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
             Console.WriteLine(blobContainer.Id.Name);
-            #endregion
-        }
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExist()
-        {
-            #region Snippet:Managing_BlobContainers_GetBlobContainerIfExists
-            BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-            BlobContainer blobContainer = await blobContainerCollection.GetIfExistsAsync("foo");
-            if (blobContainer != null)
-            {
-                Console.WriteLine(blobContainer.Id.Name);
-            }
-            if (await blobContainerCollection.ExistsAsync("bar"))
-            {
-                Console.WriteLine("blob container 'bar' exists");
-            }
             #endregion
         }
         [Test]
@@ -99,8 +80,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_BlobContainers_DeleteBlobContainer
             BlobContainerCollection blobContainerCollection = blobService.GetBlobContainers();
-            BlobContainer blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
-            await blobContainer.DeleteAsync(true);
+            BlobContainerResource blobContainer = await blobContainerCollection.GetAsync("myBlobContainer");
+            await blobContainer.DeleteAsync(WaitUntil.Completed);
             #endregion
         }
     }

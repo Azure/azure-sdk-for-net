@@ -1,8 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics.Tracing;
+using System.Runtime.CompilerServices;
 using Azure.Core.Diagnostics;
+using Azure.Messaging.EventHubs.Primitives;
 
 namespace Azure.Messaging.EventHubs.Processor.Diagnostics
 {
@@ -11,7 +14,8 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
     /// </summary>
     ///
     /// <remarks>
-    ///   When defining Start/Stop tasks, the StopEvent.Id must be exactly StartEvent.Id + 1.
+    ///   When defining Start/Stop tasks, it is strongly recommended that the StopEvent.Id be
+    ///   exactly StartEvent.Id + 1.
     ///
     ///   Do not explicitly include the Guid here, since EventSource has a mechanism to automatically
     ///   map to an EventSource Guid based on the Name (Azure-Messaging-EventHubs-Processor-BlobEventStore).
@@ -40,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that a <see cref="BlobsCheckpointStore" /> was created.
+        ///   Indicates that a <see cref="BlobCheckpointStoreInternal" /> was created.
         /// </summary>
         ///
         /// <param name="typeName">The type name for the checkpoint store.</param>
@@ -239,67 +243,6 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an attempt to retrieve a list of checkpoints has started.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoints are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub the checkpoints are associated with, relative to the Event Hubs namespace that contains it.</param>
-        /// <param name="consumerGroup">The name of the consumer group the checkpoints are associated with.</param>
-        ///
-        [Event(29, Level = EventLevel.Verbose, Message = "Starting to list checkpoints for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'.")]
-        public virtual void ListCheckpointsStart(string fullyQualifiedNamespace,
-                                                 string eventHubName,
-                                                 string consumerGroup)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(29, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
-            }
-        }
-
-        /// <summary>
-        ///   Indicates that an attempt to retrieve a list of checkpoints has completed.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoints are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub the checkpoints are associated with, relative to the Event Hubs namespace that contains it.</param>
-        /// <param name="consumerGroup">The name of the consumer group the checkpoints are associated with.</param>
-        /// <param name="checkpointCount">The amount of checkpoints received from the storage service.</param>
-        ///
-        [Event(30, Level = EventLevel.Verbose, Message = "Completed listing checkpoints for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'.  There were '{3}' checkpoints found.")]
-        public virtual void ListCheckpointsComplete(string fullyQualifiedNamespace,
-                                                    string eventHubName,
-                                                    string consumerGroup,
-                                                    int checkpointCount)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(30, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, checkpointCount);
-            }
-        }
-
-        /// <summary>
-        ///   Indicates that an unhandled exception was encountered while retrieving a list of checkpoints.
-        /// </summary>
-        ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoints are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub the checkpoints are associated with, relative to the Event Hubs namespace that contains it.</param>
-        /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
-        /// <param name="errorMessage">The message for the exception that occurred.</param>
-        ///
-        [Event(31, Level = EventLevel.Error, Message = "An exception occurred when listing checkpoints for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; ErrorMessage: '{3}'.")]
-        public virtual void ListCheckpointsError(string fullyQualifiedNamespace,
-                                                 string eventHubName,
-                                                 string consumerGroup,
-                                                 string errorMessage)
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(31, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
-            }
-        }
-
-        /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
         /// </summary>
         ///
@@ -396,9 +339,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [Event(36, Level = EventLevel.Verbose, Message = "Starting to retrieve checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'.")]
         public virtual void GetCheckpointStart(string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        string consumerGroup,
-                                        string partitionId)
+                                               string eventHubName,
+                                               string consumerGroup,
+                                               string partitionId)
         {
             if (IsEnabled())
             {
@@ -417,9 +360,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [Event(37, Level = EventLevel.Verbose, Message = "Completed retrieving checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'. PartitionId: '{3}'.")]
         public virtual void GetCheckpointComplete(string fullyQualifiedNamespace,
-                                                    string eventHubName,
-                                                    string consumerGroup,
-                                                    string partitionId)
+                                                  string eventHubName,
+                                                  string consumerGroup,
+                                                  string partitionId)
         {
             if (IsEnabled())
             {
@@ -439,14 +382,199 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [Event(38, Level = EventLevel.Error, Message = "An exception occurred when retrieving checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'; ErrorMessage: '{4}'.")]
         public virtual void GetCheckpointError(string fullyQualifiedNamespace,
-                                                 string eventHubName,
-                                                 string consumerGroup,
-                                                 string partitionId,
-                                                 string errorMessage)
+                                               string eventHubName,
+                                               string consumerGroup,
+                                               string partitionId,
+                                               string errorMessage)
         {
             if (IsEnabled())
             {
                 WriteEvent(38, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with three string arguments and a value type argument into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent<TValue1>(int eventId,
+                                                string arg1,
+                                                string arg2,
+                                                string arg3,
+                                                TValue1 arg4)
+            where TValue1 : struct
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = Unsafe.SizeOf<TValue1>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg4);
+
+                WriteEventCore(eventId, 4, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with four string arguments into a stack allocated <see cref="EventSource.EventData"/> struct
+        ///   to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            {
+                var eventPayload = stackalloc EventData[4];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                WriteEventCore(eventId, 4, eventPayload);
+            }
+        }
+        /// <summary>
+        ///   Writes an event with five string arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            {
+                var eventPayload = stackalloc EventData[5];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                WriteEventCore(eventId, 5, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with six string arguments into a stack allocated <see cref="EventSource.EventData"/> struct
+        ///   to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6)
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            fixed (char* arg6Ptr = arg6)
+            {
+                var eventPayload = stackalloc EventData[6];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
+                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
+
+                WriteEventCore(eventId, 6, eventPayload);
             }
         }
     }

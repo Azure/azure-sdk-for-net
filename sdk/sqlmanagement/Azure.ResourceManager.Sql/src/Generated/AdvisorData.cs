@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the Advisor data model. </summary>
-    public partial class AdvisorData : Resource
+    public partial class AdvisorData : ResourceData
     {
         /// <summary> Initializes a new instance of AdvisorData. </summary>
         public AdvisorData()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of AdvisorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Resource kind. </param>
         /// <param name="location"> Resource location. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="recommendationsStatus"> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, &apos;Ok&apos; (Recommendations available),LowActivity (not enough workload to analyze), &apos;DbSeemsTuned&apos; (Database is doing well), etc. </param>
         /// <param name="lastChecked"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
-        internal AdvisorData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string location, AdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastChecked, IReadOnlyList<RecommendedActionData> recommendedActions) : base(id, name, type, systemData)
+        internal AdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string location, AdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastChecked, IReadOnlyList<RecommendedActionData> recommendedActions) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;

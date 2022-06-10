@@ -28,10 +28,11 @@ pr:
     - sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SDKType: client
     ServiceDirectory: servicebus
+    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.ServiceBus

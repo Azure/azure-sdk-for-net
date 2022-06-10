@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("hyperVGeneration");
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Optional.IsDefined(EndOfLifeDate))
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate");
-                writer.WriteStringValue(EndOfLifeDate.Value, "O");
+                writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             if (Optional.IsDefined(Identifier))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                privacyStatementUri = null;
                                 continue;
                             }
                             privacyStatementUri = new Uri(property0.Value.GetString());
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                releaseNoteUri = null;
                                 continue;
                             }
                             releaseNoteUri = new Uri(property0.Value.GetString());

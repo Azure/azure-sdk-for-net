@@ -11,24 +11,35 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentSelectionMark
     {
         /// <summary>
-        /// The quadrilateral bounding box that outlines this selection mark. Units are in pixels for
-        /// images and inches for PDF. The <see cref="LengthUnit"/> type of a recognized page can be found
-        /// at <see cref="DocumentPage.Unit"/>.
+        /// Initializes a new instance of DocumentSelectionMark. Used by the <see cref="DocumentAnalysisModelFactory"/>.
         /// </summary>
-        public BoundingBox BoundingBox { get; private set; }
+        internal DocumentSelectionMark(SelectionMarkState state, BoundingPolygon boundingPolygon, DocumentSpan span, float confidence)
+        {
+            State = state;
+            BoundingPolygon = boundingPolygon;
+            Span = span;
+            Confidence = confidence;
+        }
+
+        /// <summary>
+        /// The polygon that outlines the content of this selection mark. Coordinates are specified relative to the
+        /// top-left of the page, and points are ordered clockwise from the left relative to the selection mark
+        /// orientation. Units are in pixels for images and inches for PDF. The <see cref="LengthUnit"/>
+        /// type of a recognized page can be found at <see cref="DocumentPage.Unit"/>.
+        /// </summary>
+        public BoundingPolygon BoundingPolygon { get; private set; }
 
         /// <summary>
         /// Selection mark state value, like Selected or Unselected.
         /// </summary>
         public SelectionMarkState State { get; private set; }
 
-        [CodeGenMember("BoundingBox")]
-        private IReadOnlyList<float> BoundingBoxPrivate
+        private IReadOnlyList<float> Polygon
         {
             get => throw new InvalidOperationException();
             set
             {
-                BoundingBox = new BoundingBox(value);
+                BoundingPolygon = new BoundingPolygon(value);
             }
         }
 

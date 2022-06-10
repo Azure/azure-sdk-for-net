@@ -16,13 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of BgpConnection and their operations over its parent. </summary>
-    public partial class BgpConnectionCollection : ArmCollection, IEnumerable<BgpConnection>, IAsyncEnumerable<BgpConnection>
+    /// <summary>
+    /// A class representing a collection of <see cref="BgpConnectionResource" /> and their operations.
+    /// Each <see cref="BgpConnectionResource" /> in the collection will belong to the same instance of <see cref="VirtualHubResource" />.
+    /// To get a <see cref="BgpConnectionCollection" /> instance call the GetBgpConnections method from an instance of <see cref="VirtualHubResource" />.
+    /// </summary>
+    public partial class BgpConnectionCollection : ArmCollection, IEnumerable<BgpConnectionResource>, IAsyncEnumerable<BgpConnectionResource>
     {
         private readonly ClientDiagnostics _bgpConnectionVirtualHubBgpConnectionClientDiagnostics;
         private readonly VirtualHubBgpConnectionRestOperations _bgpConnectionVirtualHubBgpConnectionRestClient;
@@ -39,12 +41,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BgpConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _bgpConnectionVirtualHubBgpConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", BgpConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(BgpConnection.ResourceType, out string bgpConnectionVirtualHubBgpConnectionApiVersion);
-            _bgpConnectionVirtualHubBgpConnectionRestClient = new VirtualHubBgpConnectionRestOperations(_bgpConnectionVirtualHubBgpConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, bgpConnectionVirtualHubBgpConnectionApiVersion);
-            _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", BgpConnection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(BgpConnection.ResourceType, out string bgpConnectionVirtualHubBgpConnectionsApiVersion);
-            _bgpConnectionVirtualHubBgpConnectionsRestClient = new VirtualHubBgpConnectionsRestOperations(_bgpConnectionVirtualHubBgpConnectionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, bgpConnectionVirtualHubBgpConnectionsApiVersion);
+            _bgpConnectionVirtualHubBgpConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", BgpConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BgpConnectionResource.ResourceType, out string bgpConnectionVirtualHubBgpConnectionApiVersion);
+            _bgpConnectionVirtualHubBgpConnectionRestClient = new VirtualHubBgpConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, bgpConnectionVirtualHubBgpConnectionApiVersion);
+            _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", BgpConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BgpConnectionResource.ResourceType, out string bgpConnectionVirtualHubBgpConnectionsApiVersion);
+            _bgpConnectionVirtualHubBgpConnectionsRestClient = new VirtualHubBgpConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, bgpConnectionVirtualHubBgpConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,32 +54,33 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VirtualHub.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualHub.ResourceType), nameof(id));
+            if (id.ResourceType != VirtualHubResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualHubResource.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates a VirtualHubBgpConnection resource if it doesn&apos;t exist else updates the existing VirtualHubBgpConnection. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates a VirtualHubBgpConnection resource if it doesn&apos;t exist else updates the existing VirtualHubBgpConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}
+        /// Operation Id: VirtualHubBgpConnection_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="connectionName"> The name of the connection. </param>
-        /// <param name="parameters"> Parameters of Bgp connection. </param>
+        /// <param name="data"> Parameters of Bgp connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<BgpConnectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string connectionName, BgpConnectionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<BgpConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionName, BgpConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _bgpConnectionVirtualHubBgpConnectionClientDiagnostics.CreateScope("BgpConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _bgpConnectionVirtualHubBgpConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new BgpConnectionCreateOrUpdateOperation(Client, _bgpConnectionVirtualHubBgpConnectionClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _bgpConnectionVirtualHubBgpConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<BgpConnectionResource>(new BgpConnectionOperationSource(Client), _bgpConnectionVirtualHubBgpConnectionClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,28 +91,29 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates a VirtualHubBgpConnection resource if it doesn&apos;t exist else updates the existing VirtualHubBgpConnection. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates a VirtualHubBgpConnection resource if it doesn&apos;t exist else updates the existing VirtualHubBgpConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}
+        /// Operation Id: VirtualHubBgpConnection_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="connectionName"> The name of the connection. </param>
-        /// <param name="parameters"> Parameters of Bgp connection. </param>
+        /// <param name="data"> Parameters of Bgp connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual BgpConnectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string connectionName, BgpConnectionData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<BgpConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string connectionName, BgpConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _bgpConnectionVirtualHubBgpConnectionClientDiagnostics.CreateScope("BgpConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _bgpConnectionVirtualHubBgpConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, parameters, cancellationToken);
-                var operation = new BgpConnectionCreateOrUpdateOperation(Client, _bgpConnectionVirtualHubBgpConnectionClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = _bgpConnectionVirtualHubBgpConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken);
+                var operation = new NetworkArmOperation<BgpConnectionResource>(new BgpConnectionOperationSource(Client), _bgpConnectionVirtualHubBgpConnectionClientDiagnostics, Pipeline, _bgpConnectionVirtualHubBgpConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -120,12 +124,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a Virtual Hub Bgp Connection. </summary>
+        /// <summary>
+        /// Retrieves the details of a Virtual Hub Bgp Connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}
+        /// Operation Id: VirtualHubBgpConnection_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<BgpConnection>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BgpConnectionResource>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
@@ -135,8 +143,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _bgpConnectionVirtualHubBgpConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _bgpConnectionVirtualHubBgpConnectionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new BgpConnection(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new BgpConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,12 +153,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a Virtual Hub Bgp Connection. </summary>
+        /// <summary>
+        /// Retrieves the details of a Virtual Hub Bgp Connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}
+        /// Operation Id: VirtualHubBgpConnection_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public virtual Response<BgpConnection> Get(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<BgpConnectionResource> Get(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
@@ -160,8 +172,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _bgpConnectionVirtualHubBgpConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
-                    throw _bgpConnectionVirtualHubBgpConnectionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BgpConnection(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new BgpConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -170,19 +182,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of all VirtualHubBgpConnections. </summary>
+        /// <summary>
+        /// Retrieves the details of all VirtualHubBgpConnections.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections
+        /// Operation Id: VirtualHubBgpConnections_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BgpConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BgpConnection> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BgpConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BgpConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BgpConnection>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BgpConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _bgpConnectionVirtualHubBgpConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BgpConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BgpConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -190,14 +206,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<BgpConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<BgpConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _bgpConnectionVirtualHubBgpConnectionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BgpConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BgpConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,19 +224,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Retrieves the details of all VirtualHubBgpConnections. </summary>
+        /// <summary>
+        /// Retrieves the details of all VirtualHubBgpConnections.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections
+        /// Operation Id: VirtualHubBgpConnections_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BgpConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BgpConnection> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BgpConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BgpConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BgpConnection> FirstPageFunc(int? pageSizeHint)
+            Page<BgpConnectionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _bgpConnectionVirtualHubBgpConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BgpConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BgpConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -228,14 +248,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<BgpConnection> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<BgpConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _bgpConnectionVirtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _bgpConnectionVirtualHubBgpConnectionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BgpConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BgpConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -246,12 +266,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}
+        /// Operation Id: VirtualHubBgpConnection_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
@@ -259,7 +283,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _bgpConnectionVirtualHubBgpConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -269,10 +293,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/bgpConnections/{connectionName}
+        /// Operation Id: VirtualHubBgpConnection_Get
+        /// </summary>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -282,7 +310,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(connectionName, cancellationToken: cancellationToken);
+                var response = _bgpConnectionVirtualHubBgpConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,57 +320,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="connectionName"> The name of the connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<BgpConnection>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-
-            using var scope = _bgpConnectionVirtualHubBgpConnectionClientDiagnostics.CreateScope("BgpConnectionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _bgpConnectionVirtualHubBgpConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<BgpConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new BgpConnection(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="connectionName"> The name of the connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public virtual Response<BgpConnection> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-
-            using var scope = _bgpConnectionVirtualHubBgpConnectionClientDiagnostics.CreateScope("BgpConnectionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _bgpConnectionVirtualHubBgpConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<BgpConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new BgpConnection(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<BgpConnection> IEnumerable<BgpConnection>.GetEnumerator()
+        IEnumerator<BgpConnectionResource> IEnumerable<BgpConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -352,7 +330,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<BgpConnection> IAsyncEnumerable<BgpConnection>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<BgpConnectionResource> IAsyncEnumerable<BgpConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

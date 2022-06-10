@@ -4,12 +4,11 @@
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 using System;
-using System.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
-    /// test
+    /// Extension methods to simplify registering of Azure Monitor Trace Exporter.
     /// </summary>
     public static class AzureMonitorExporterHelperExtensions
     {
@@ -29,9 +28,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            // TODO: Allow disabling offline storage.
             // TODO: Fallback to default location if location provided via options does not work.
-            if (options.StorageDirectory == null)
+            if (!options.DisableOfflineStorage && options.StorageDirectory == null)
             {
                 options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
             }

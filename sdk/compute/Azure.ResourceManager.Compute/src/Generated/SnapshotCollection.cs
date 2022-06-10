@@ -16,14 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of Snapshot and their operations over its parent. </summary>
-    public partial class SnapshotCollection : ArmCollection, IEnumerable<Snapshot>, IAsyncEnumerable<Snapshot>
+    /// <summary>
+    /// A class representing a collection of <see cref="SnapshotResource" /> and their operations.
+    /// Each <see cref="SnapshotResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="SnapshotCollection" /> instance call the GetSnapshots method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class SnapshotCollection : ArmCollection, IEnumerable<SnapshotResource>, IAsyncEnumerable<SnapshotResource>
     {
         private readonly ClientDiagnostics _snapshotClientDiagnostics;
         private readonly SnapshotsRestOperations _snapshotRestClient;
@@ -38,9 +40,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", Snapshot.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(Snapshot.ResourceType, out string snapshotApiVersion);
-            _snapshotRestClient = new SnapshotsRestOperations(_snapshotClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, snapshotApiVersion);
+            _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SnapshotResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SnapshotResource.ResourceType, out string snapshotApiVersion);
+            _snapshotRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, snapshotApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,32 +50,33 @@ namespace Azure.ResourceManager.Compute
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a snapshot. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
-        /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
+        /// <param name="data"> Snapshot object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
-        public async virtual Task<SnapshotCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SnapshotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string snapshotName, SnapshotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-            if (snapshot == null)
-            {
-                throw new ArgumentNullException(nameof(snapshot));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, snapshot, cancellationToken).ConfigureAwait(false);
-                var operation = new SnapshotCreateOrUpdateOperation(Client, _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, snapshot).Request, response);
-                if (waitForCompletion)
+                var response = await _snapshotRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<SnapshotResource>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -84,28 +87,29 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Creates or updates a snapshot. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
-        /// <param name="snapshot"> Snapshot object supplied in the body of the Put disk operation. </param>
+        /// <param name="data"> Snapshot object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="snapshot"/> is null. </exception>
-        public virtual SnapshotCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string snapshotName, SnapshotData snapshot, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SnapshotResource> CreateOrUpdate(WaitUntil waitUntil, string snapshotName, SnapshotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-            if (snapshot == null)
-            {
-                throw new ArgumentNullException(nameof(snapshot));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, snapshot, cancellationToken);
-                var operation = new SnapshotCreateOrUpdateOperation(Client, _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, snapshot).Request, response);
-                if (waitForCompletion)
+                var response = _snapshotRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, data, cancellationToken);
+                var operation = new ComputeArmOperation<SnapshotResource>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -116,12 +120,16 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets information about a snapshot. </summary>
+        /// <summary>
+        /// Gets information about a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public async virtual Task<Response<Snapshot>> GetAsync(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SnapshotResource>> GetAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
@@ -131,8 +139,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _snapshotClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Snapshot(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,12 +149,16 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets information about a snapshot. </summary>
+        /// <summary>
+        /// Gets information about a snapshot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public virtual Response<Snapshot> Get(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual Response<SnapshotResource> Get(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
@@ -156,8 +168,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken);
                 if (response.Value == null)
-                    throw _snapshotClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Snapshot(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -166,19 +178,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Lists snapshots under a resource group. </summary>
+        /// <summary>
+        /// Lists snapshots under a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots
+        /// Operation Id: Snapshots_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Snapshot> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SnapshotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Snapshot>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SnapshotResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _snapshotRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -186,14 +202,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<Snapshot>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SnapshotResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _snapshotRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -204,19 +220,23 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Lists snapshots under a resource group. </summary>
+        /// <summary>
+        /// Lists snapshots under a resource group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots
+        /// Operation Id: Snapshots_ListByResourceGroup
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Snapshot" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Snapshot> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SnapshotResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<Snapshot> FirstPageFunc(int? pageSizeHint)
+            Page<SnapshotResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _snapshotRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -224,14 +244,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<Snapshot> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SnapshotResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _snapshotRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Snapshot(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -242,12 +262,16 @@ namespace Azure.ResourceManager.Compute
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
@@ -255,7 +279,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -265,10 +289,14 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
+        /// Operation Id: Snapshots_Get
+        /// </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotName, CancellationToken cancellationToken = default)
         {
@@ -278,7 +306,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = GetIfExists(snapshotName, cancellationToken: cancellationToken);
+                var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -288,57 +316,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public async virtual Task<Response<Snapshot>> GetIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<Snapshot>(null, response.GetRawResponse());
-                return Response.FromValue(new Snapshot(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public virtual Response<Snapshot> GetIfExists(string snapshotName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<Snapshot>(null, response.GetRawResponse());
-                return Response.FromValue(new Snapshot(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<Snapshot> IEnumerable<Snapshot>.GetEnumerator()
+        IEnumerator<SnapshotResource> IEnumerable<SnapshotResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -348,7 +326,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<Snapshot> IAsyncEnumerable<Snapshot>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SnapshotResource> IAsyncEnumerable<SnapshotResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

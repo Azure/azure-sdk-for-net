@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString) : this(consumerGroup, connectionString, null, null)
@@ -161,7 +161,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -183,7 +183,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -206,7 +206,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -696,7 +696,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             var options = readOptions?.Clone() ?? new ReadEventOptions();
             var startingPosition = startReadingAtEarliestEvent ? EventPosition.Earliest : EventPosition.Latest;
 
-            using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, CancellationToken.None);
 
             try
             {

@@ -259,7 +259,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: perCallPolicies,
-                perRetryPolicies: new[] { new BearerTokenAuthenticationPolicy(tokenCredential, TableConstants.StorageScope) },
+                perRetryPolicies: new[] { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
                 new ResponseClassifier());
 
             _version = options.VersionString;
@@ -327,7 +327,7 @@ namespace Azure.Data.Tables
             TableAccountSasResourceTypes resourceTypes,
             DateTimeOffset expiresOn)
         {
-            return new TableAccountSasBuilder(permissions, resourceTypes, expiresOn) { Version = _version };
+            return new TableAccountSasBuilder(permissions, resourceTypes, expiresOn);
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableAccountSasBuilder"/>.</returns>
         public virtual TableAccountSasBuilder GetSasBuilder(string rawPermissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
-            return new TableAccountSasBuilder(rawPermissions, resourceTypes, expiresOn) { Version = _version };
+            return new TableAccountSasBuilder(rawPermissions, resourceTypes, expiresOn);
         }
 
         /// <summary>

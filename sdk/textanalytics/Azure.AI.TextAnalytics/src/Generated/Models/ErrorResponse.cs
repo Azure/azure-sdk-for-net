@@ -9,13 +9,13 @@ using System;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The ErrorResponse. </summary>
+    /// <summary> Error response. </summary>
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        /// <param name="error"> Document Error. </param>
+        /// <param name="error"> The error object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal ErrorResponse(TextAnalyticsErrorInternal error)
+        internal ErrorResponse(Error error)
         {
             if (error == null)
             {
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Models
             Error = error;
         }
 
-        /// <summary> Document Error. </summary>
-        public TextAnalyticsErrorInternal Error { get; }
+        /// <summary> The error object. </summary>
+        public Error Error { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the GremlinDatabase data model. </summary>
-    public partial class GremlinDatabaseData : TrackedResource
+    public partial class GremlinDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GremlinDatabaseData. </summary>
         /// <param name="location"> The location. </param>
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of GremlinDatabaseData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal GremlinDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GremlinDatabasePropertiesResource resource, GremlinDatabasePropertiesOptions options) : base(id, name, type, systemData, tags, location)
+        internal GremlinDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GremlinDatabasePropertiesResource resource, GremlinDatabasePropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;

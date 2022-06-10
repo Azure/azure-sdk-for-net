@@ -11,14 +11,9 @@ namespace Azure.Analytics.Purview.Account.Tests
 {
     public class AccountsClientTestBase : RecordedTestBase<PurviewAccountTestEnvironment>
     {
-        public AccountsClientTestBase(bool isAsync) : base(isAsync)
+        public AccountsClientTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new PurviewRecordedTestSanitizer();
-        }
-
-        public AccountsClientTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
-        {
-            Sanitizer = new PurviewRecordedTestSanitizer();
+            this.AddPurviewSanitizers();
         }
 
         public PurviewAccountClient GetAccountClient()

@@ -54,7 +54,7 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, DiagnosticScope.ActivityKind.Client);
+            using var scope = new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
             scope.AddAttribute("http.method", message.Request.Method.Method);
             scope.AddAttribute("http.url", _sanitizer.SanitizeUrl(message.Request.Uri.ToString()));
             scope.AddAttribute("requestId", message.Request.ClientRequestId);

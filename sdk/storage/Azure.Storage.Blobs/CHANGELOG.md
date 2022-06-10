@@ -1,14 +1,26 @@
 # Release History
 
-## 12.11.0-beta.4 (Unreleased)
+## 12.13.0-beta.1 (Unreleased)
+- Added support for service version 2021-08-06.
+- Fixed bug where calling AppendBlockFromUri() without AppendBlobAppendBlockFromUriOptions throws a null exception error
 
-### Features Added
+## 12.12.0 (2022-05-02)
+- Includes all features from 12.12.0-beta.1.
 
-### Breaking Changes
+## 12.12.0-beta.1 (2022-04-12)
+- Added support for service version 2021-06-08.
+- Added pageable versions of PageBlobClient.GetPageRanges() and .GetPageRangesAsync().
+- Added ability to copy source blob tags for BlobBaseClient.SyncCopyFromUri() and .SyncCopyFromUriAsync().
+- Fixed a bug where CopyFromUriOperation was throwing an Exception when the status of the blob copy was aborted or failed.
 
-### Bugs Fixed
-
-### Other Changes
+## 12.11.0 (2022-03-10)
+- Includes all features from 12.11.0-beta.1, 12.11.0-beta.2, and 12.11.0-beta.3 except SDK-calculated transactional checksums on data transfer.
+- Added support for progress reporting with DownloadToAsync().
+- Fixed a bug where BlobBaseClient.DownloadTo() would result in an ObjectDisposedException on .NET Framework in certain network conditions.
+- Added nullable version of `BlobProperties.CopyStatus` called `BlobCopyStatus`, allowing a null value when Storage doesn't return a value.
+- Fixed a bug where BlobContainerClient.GetProperties() would throw an ArgumentNullException when the AccessPolicy was null
+- Removed preview support for SDK-calculated transactional checksums on data transfer.
+- Fixed a bug where BlobUriBuilder was case sensitive for parameter names.
 
 ## 12.11.0-beta.3 (2022-02-07)
 - Added support for service version 2021-04-10.

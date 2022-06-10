@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Information about the status of continuous backups. </summary>
-    public partial class ContinuousBackupInformation
+    internal partial class ContinuousBackupInformation
     {
         /// <summary> Initializes a new instance of ContinuousBackupInformation. </summary>
         internal ContinuousBackupInformation()

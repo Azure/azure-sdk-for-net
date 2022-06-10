@@ -16,14 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SourceControl and their operations over its parent. </summary>
-    public partial class SourceControlCollection : ArmCollection, IEnumerable<SourceControl>, IAsyncEnumerable<SourceControl>
+    /// <summary>
+    /// A class representing a collection of <see cref="SourceControlResource" /> and their operations.
+    /// Each <see cref="SourceControlResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
+    /// To get a <see cref="SourceControlCollection" /> instance call the GetSourceControls method from an instance of <see cref="TenantResource" />.
+    /// </summary>
+    public partial class SourceControlCollection : ArmCollection, IEnumerable<SourceControlResource>, IAsyncEnumerable<SourceControlResource>
     {
         private readonly ClientDiagnostics _sourceControlClientDiagnostics;
         private readonly WebSiteManagementRestOperations _sourceControlRestClient;
@@ -38,9 +40,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SourceControlCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SourceControl.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SourceControl.ResourceType, out string sourceControlApiVersion);
-            _sourceControlRestClient = new WebSiteManagementRestOperations(_sourceControlClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sourceControlApiVersion);
+            _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SourceControlResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SourceControlResource.ResourceType, out string sourceControlApiVersion);
+            _sourceControlRestClient = new WebSiteManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sourceControlApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,35 +50,33 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Tenant.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+            if (id.ResourceType != TenantResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /
-        /// OperationId: UpdateSourceControl
-        /// <summary> Description for Updates source control token. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Updates source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: UpdateSourceControl
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sourceControlType"> Type of source control. </param>
-        /// <param name="requestMessage"> Source control token information. </param>
+        /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="requestMessage"/> is null. </exception>
-        public async virtual Task<SourceControlCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sourceControlType, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
-            if (requestMessage == null)
-            {
-                throw new ArgumentNullException(nameof(requestMessage));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sourceControlRestClient.UpdateSourceControlAsync(sourceControlType, requestMessage, cancellationToken).ConfigureAwait(false);
-                var operation = new SourceControlCreateOrUpdateOperation(Client, response);
-                if (waitForCompletion)
+                var response = await _sourceControlRestClient.UpdateSourceControlAsync(sourceControlType, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SourceControlResource>(Response.FromValue(new SourceControlResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -87,31 +87,29 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /
-        /// OperationId: UpdateSourceControl
-        /// <summary> Description for Updates source control token. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Updates source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: UpdateSourceControl
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sourceControlType"> Type of source control. </param>
-        /// <param name="requestMessage"> Source control token information. </param>
+        /// <param name="data"> Source control token information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="requestMessage"/> is null. </exception>
-        public virtual SourceControlCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string sourceControlType, SourceControlData requestMessage, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SourceControlResource> CreateOrUpdate(WaitUntil waitUntil, string sourceControlType, SourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
-            if (requestMessage == null)
-            {
-                throw new ArgumentNullException(nameof(requestMessage));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sourceControlRestClient.UpdateSourceControl(sourceControlType, requestMessage, cancellationToken);
-                var operation = new SourceControlCreateOrUpdateOperation(Client, response);
-                if (waitForCompletion)
+                var response = _sourceControlRestClient.UpdateSourceControl(sourceControlType, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SourceControlResource>(Response.FromValue(new SourceControlResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -122,15 +120,16 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /
-        /// OperationId: GetSourceControl
-        /// <summary> Description for Gets source control token. </summary>
+        /// <summary>
+        /// Description for Gets source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: GetSourceControl
+        /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
-        public async virtual Task<Response<SourceControl>> GetAsync(string sourceControlType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SourceControlResource>> GetAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
 
@@ -140,8 +139,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _sourceControlRestClient.GetSourceControlAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sourceControlClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SourceControl(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,15 +149,16 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /
-        /// OperationId: GetSourceControl
-        /// <summary> Description for Gets source control token. </summary>
+        /// <summary>
+        /// Description for Gets source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: GetSourceControl
+        /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
-        public virtual Response<SourceControl> Get(string sourceControlType, CancellationToken cancellationToken = default)
+        public virtual Response<SourceControlResource> Get(string sourceControlType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
 
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _sourceControlRestClient.GetSourceControl(sourceControlType, cancellationToken);
                 if (response.Value == null)
-                    throw _sourceControlClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SourceControl(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SourceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,22 +178,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols
-        /// ContextualPath: /
-        /// OperationId: ListSourceControls
-        /// <summary> Description for Gets the source controls available for Azure websites. </summary>
+        /// <summary>
+        /// Description for Gets the source controls available for Azure websites.
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols
+        /// Operation Id: ListSourceControls
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SourceControl" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SourceControl> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SourceControlResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SourceControlResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SourceControl>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SourceControlResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _sourceControlRestClient.ListSourceControlsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SourceControl(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +202,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SourceControl>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SourceControlResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _sourceControlRestClient.ListSourceControlsNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SourceControl(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -219,22 +220,23 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols
-        /// ContextualPath: /
-        /// OperationId: ListSourceControls
-        /// <summary> Description for Gets the source controls available for Azure websites. </summary>
+        /// <summary>
+        /// Description for Gets the source controls available for Azure websites.
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols
+        /// Operation Id: ListSourceControls
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SourceControl" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SourceControl> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SourceControlResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SourceControlResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SourceControl> FirstPageFunc(int? pageSizeHint)
+            Page<SourceControlResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _sourceControlRestClient.ListSourceControls(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SourceControl(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -242,14 +244,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SourceControl> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SourceControlResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _sourceControlRestClient.ListSourceControlsNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SourceControl(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -260,15 +262,16 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /
-        /// OperationId: GetSourceControl
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: GetSourceControl
+        /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string sourceControlType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
 
@@ -276,7 +279,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(sourceControlType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sourceControlRestClient.GetSourceControlAsync(sourceControlType, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -286,13 +289,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /
-        /// OperationId: GetSourceControl
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: GetSourceControl
+        /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         public virtual Response<bool> Exists(string sourceControlType, CancellationToken cancellationToken = default)
         {
@@ -302,7 +306,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(sourceControlType, cancellationToken: cancellationToken);
+                var response = _sourceControlRestClient.GetSourceControl(sourceControlType, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -312,63 +316,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /
-        /// OperationId: GetSourceControl
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="sourceControlType"> Type of source control. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
-        public async virtual Task<Response<SourceControl>> GetIfExistsAsync(string sourceControlType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
-
-            using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _sourceControlRestClient.GetSourceControlAsync(sourceControlType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SourceControl>(null, response.GetRawResponse());
-                return Response.FromValue(new SourceControl(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
-        /// ContextualPath: /
-        /// OperationId: GetSourceControl
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="sourceControlType"> Type of source control. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
-        public virtual Response<SourceControl> GetIfExists(string sourceControlType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
-
-            using var scope = _sourceControlClientDiagnostics.CreateScope("SourceControlCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _sourceControlRestClient.GetSourceControl(sourceControlType, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SourceControl>(null, response.GetRawResponse());
-                return Response.FromValue(new SourceControl(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<SourceControl> IEnumerable<SourceControl>.GetEnumerator()
+        IEnumerator<SourceControlResource> IEnumerable<SourceControlResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -378,7 +326,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SourceControl> IAsyncEnumerable<SourceControl>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SourceControlResource> IAsyncEnumerable<SourceControlResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

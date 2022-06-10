@@ -88,6 +88,7 @@ namespace Microsoft.Extensions.Azure
             var credentialType = configuration["credential"];
             var clientId = configuration["clientId"];
             var tenantId = configuration["tenantId"];
+            var resourceId = configuration["UserAssignedManagedIdentityResourceId"];
             var clientSecret = configuration["clientSecret"];
             var certificate = configuration["clientCertificate"];
             var certificateStoreName = configuration["clientCertificateStoreName"];
@@ -95,6 +96,16 @@ namespace Microsoft.Extensions.Azure
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
             {
+                if (!string.IsNullOrWhiteSpace(clientId) && !string.IsNullOrWhiteSpace(resourceId))
+                {
+                    throw new ArgumentException("Cannot specify both 'clientId' and 'UserAssignedManagedIdentityResourceId'");
+                }
+
+                if (!string.IsNullOrWhiteSpace(resourceId))
+                {
+                    return new ManagedIdentityCredential(new ResourceIdentifier(resourceId));
+                }
+
                 return new ManagedIdentityCredential(clientId);
             }
 
@@ -317,6 +328,11 @@ namespace Microsoft.Extensions.Azure
             if (parameterType == typeof(Uri))
             {
                 return TryConvertFromString(configuration, parameterName, s => new Uri(s), out value);
+            }
+
+            if (parameterType == typeof(Guid))
+            {
+                return TryConvertFromString(configuration, parameterName, s => Guid.Parse(s), out value);
             }
 
             return TryCreateObject(parameterType, configuration.GetSection(parameterName), out value);

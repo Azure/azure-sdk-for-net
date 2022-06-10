@@ -16,6 +16,15 @@ namespace Azure.Identity.Tests
         public UsernamePasswordCredentialTests(bool isAsync) : base(isAsync)
         { }
 
+        public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
+        {
+            var pwOptions = new UsernamePasswordCredentialOptions
+            {
+                Diagnostics = { IsAccountIdentifierLoggingEnabled = options.Diagnostics.IsAccountIdentifierLoggingEnabled }
+            };
+            return InstrumentClient(new UsernamePasswordCredential("user", "password", TenantId, ClientId, pwOptions, null, mockPublicMsalClient));
+        }
+
         [Test]
         public async Task VerifyMsalClientExceptionAsync()
         {

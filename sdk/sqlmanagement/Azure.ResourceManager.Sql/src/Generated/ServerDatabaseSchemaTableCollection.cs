@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of DatabaseTable and their operations over its parent. </summary>
-    public partial class ServerDatabaseSchemaTableCollection : ArmCollection, IEnumerable<ServerDatabaseSchemaTable>, IAsyncEnumerable<ServerDatabaseSchemaTable>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerDatabaseSchemaTableResource" /> and their operations.
+    /// Each <see cref="ServerDatabaseSchemaTableResource" /> in the collection will belong to the same instance of <see cref="ServerDatabaseSchemaResource" />.
+    /// To get a <see cref="ServerDatabaseSchemaTableCollection" /> instance call the GetServerDatabaseSchemaTables method from an instance of <see cref="ServerDatabaseSchemaResource" />.
+    /// </summary>
+    public partial class ServerDatabaseSchemaTableCollection : ArmCollection, IEnumerable<ServerDatabaseSchemaTableResource>, IAsyncEnumerable<ServerDatabaseSchemaTableResource>
     {
         private readonly ClientDiagnostics _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics;
         private readonly DatabaseTablesRestOperations _serverDatabaseSchemaTableDatabaseTablesRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerDatabaseSchemaTableCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTable.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ServerDatabaseSchemaTable.ResourceType, out string serverDatabaseSchemaTableDatabaseTablesApiVersion);
-            _serverDatabaseSchemaTableDatabaseTablesRestClient = new DatabaseTablesRestOperations(_serverDatabaseSchemaTableDatabaseTablesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableDatabaseTablesApiVersion);
+            _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerDatabaseSchemaTableResource.ResourceType, out string serverDatabaseSchemaTableDatabaseTablesApiVersion);
+            _serverDatabaseSchemaTableDatabaseTablesRestClient = new DatabaseTablesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverDatabaseSchemaTableDatabaseTablesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,19 +49,20 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServerDatabaseSchema.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerDatabaseSchema.ResourceType), nameof(id));
+            if (id.ResourceType != ServerDatabaseSchemaResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerDatabaseSchemaResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
-        /// OperationId: DatabaseTables_Get
-        /// <summary> Get database table. </summary>
+        /// <summary>
+        /// Get database table
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
+        /// Operation Id: DatabaseTables_Get
+        /// </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public async virtual Task<Response<ServerDatabaseSchemaTable>> GetAsync(string tableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerDatabaseSchemaTableResource>> GetAsync(string tableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
@@ -68,8 +72,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverDatabaseSchemaTableDatabaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerDatabaseSchemaTable(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -78,15 +82,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
-        /// OperationId: DatabaseTables_Get
-        /// <summary> Get database table. </summary>
+        /// <summary>
+        /// Get database table
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
+        /// Operation Id: DatabaseTables_Get
+        /// </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public virtual Response<ServerDatabaseSchemaTable> Get(string tableName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerDatabaseSchemaTableResource> Get(string tableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
@@ -96,8 +101,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverDatabaseSchemaTableDatabaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken);
                 if (response.Value == null)
-                    throw _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchemaTable(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,23 +111,24 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
-        /// OperationId: DatabaseTables_ListBySchema
-        /// <summary> List database tables. </summary>
+        /// <summary>
+        /// List database tables
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables
+        /// Operation Id: DatabaseTables_ListBySchema
+        /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerDatabaseSchemaTable" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerDatabaseSchemaTable> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerDatabaseSchemaTableResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerDatabaseSchemaTableResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerDatabaseSchemaTable>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaTableResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaTableDatabaseTablesRestClient.ListBySchemaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -130,14 +136,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ServerDatabaseSchemaTable>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaTableResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaTableDatabaseTablesRestClient.ListBySchemaNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -148,23 +154,24 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
-        /// OperationId: DatabaseTables_ListBySchema
-        /// <summary> List database tables. </summary>
+        /// <summary>
+        /// List database tables
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables
+        /// Operation Id: DatabaseTables_ListBySchema
+        /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerDatabaseSchemaTable" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerDatabaseSchemaTable> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerDatabaseSchemaTableResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerDatabaseSchemaTableResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ServerDatabaseSchemaTable> FirstPageFunc(int? pageSizeHint)
+            Page<ServerDatabaseSchemaTableResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaTableDatabaseTablesRestClient.ListBySchema(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -172,14 +179,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ServerDatabaseSchemaTable> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServerDatabaseSchemaTableResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaTableDatabaseTablesRestClient.ListBySchemaNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -190,15 +197,16 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
-        /// OperationId: DatabaseTables_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
+        /// Operation Id: DatabaseTables_Get
+        /// </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
@@ -206,7 +214,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverDatabaseSchemaTableDatabaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -216,13 +224,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
-        /// OperationId: DatabaseTables_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
+        /// Operation Id: DatabaseTables_Get
+        /// </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
@@ -232,7 +241,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(tableName, cancellationToken: cancellationToken);
+                var response = _serverDatabaseSchemaTableDatabaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,63 +251,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
-        /// OperationId: DatabaseTables_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public async virtual Task<Response<ServerDatabaseSchemaTable>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-
-            using var scope = _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _serverDatabaseSchemaTableDatabaseTablesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ServerDatabaseSchemaTable>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchemaTable(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
-        /// OperationId: DatabaseTables_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="tableName"> The name of the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
-        public virtual Response<ServerDatabaseSchemaTable> GetIfExists(string tableName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-
-            using var scope = _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics.CreateScope("ServerDatabaseSchemaTableCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _serverDatabaseSchemaTableDatabaseTablesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ServerDatabaseSchemaTable>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchemaTable(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<ServerDatabaseSchemaTable> IEnumerable<ServerDatabaseSchemaTable>.GetEnumerator()
+        IEnumerator<ServerDatabaseSchemaTableResource> IEnumerable<ServerDatabaseSchemaTableResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -308,7 +261,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerDatabaseSchemaTable> IAsyncEnumerable<ServerDatabaseSchemaTable>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServerDatabaseSchemaTableResource> IAsyncEnumerable<ServerDatabaseSchemaTableResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -197,6 +197,27 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="clientConfiguration">
+        /// <see cref="ShareClientConfiguration"/>
+        /// </param>
+        internal ShareServiceClient(
+            Uri directoryUri,
+            ShareClientConfiguration clientConfiguration)
+        {
+            _uri = directoryUri;
+            _clientConfiguration = clientConfiguration;
+            _serviceRestClient = BuildServiceRestClient();
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ShareServiceClient"/>
         /// class.
         /// </summary>

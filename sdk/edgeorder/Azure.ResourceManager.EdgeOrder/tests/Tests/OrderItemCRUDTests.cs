@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
                 GetDefaultOrderItemDetails(), addressDetails, orderId);
 
             // Create
-            var createOrderItemOperation = await _orderItemResourceCollection.CreateOrUpdateAsync(true, orderItemName, orderItemResourceData);
+            var createOrderItemOperation = await _orderItemResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, orderItemName, orderItemResourceData);
             await createOrderItemOperation.WaitForCompletionAsync();
             Assert.IsTrue(createOrderItemOperation.HasCompleted);
             Assert.IsTrue(createOrderItemOperation.HasValue);
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
 
             // Update
             addressProperties.ContactDetails.ContactName = "Updated contact name";
-            OrderItemUpdateParameter orderItemUpdateParameter = new()
+            OrderItemResourcePatch orderItemUpdateParameter = new()
             {
                 ForwardAddress = addressProperties
             };
-            var updateOrderItemOperation = await orderItemResource.UpdateAsync(true, orderItemUpdateParameter);
+            var updateOrderItemOperation = await orderItemResource.UpdateAsync(WaitUntil.Completed, orderItemUpdateParameter);
             await updateOrderItemOperation.WaitForCompletionAsync();
             Assert.IsTrue(updateOrderItemOperation.HasCompleted);
             Assert.IsTrue(updateOrderItemOperation.HasValue);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             Assert.IsNotNull(orderItemResource);
 
             // Delete
-            var deleteOrderItemByNameOperation = await orderItemResource.DeleteAsync(true);
+            var deleteOrderItemByNameOperation = await orderItemResource.DeleteAsync(WaitUntil.Completed);
             await deleteOrderItemByNameOperation.WaitForCompletionResponseAsync();
             Assert.IsTrue(deleteOrderItemByNameOperation.HasCompleted);
         }

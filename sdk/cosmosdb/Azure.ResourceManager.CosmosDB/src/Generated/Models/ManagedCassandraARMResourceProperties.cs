@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The core properties of ARM resources. </summary>
-    public partial class ManagedCassandraARMResourceProperties : TrackedResource
+    public partial class ManagedCassandraARMResourceProperties : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedCassandraARMResourceProperties. </summary>
         /// <param name="location"> The location. </param>
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ManagedCassandraARMResourceProperties. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal ManagedCassandraARMResourceProperties(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SystemAssignedServiceIdentity identity) : base(id, name, type, systemData, tags, location)
+        internal ManagedCassandraARMResourceProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SystemAssignedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
         }

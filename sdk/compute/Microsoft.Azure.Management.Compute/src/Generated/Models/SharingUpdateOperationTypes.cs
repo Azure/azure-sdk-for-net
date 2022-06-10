@@ -19,5 +19,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string Add = "Add";
         public const string Remove = "Remove";
         public const string Reset = "Reset";
+        public const string EnableCommunity = "EnableCommunity";
     }
 }

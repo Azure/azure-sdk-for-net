@@ -6,10 +6,10 @@ This extension provides functionality for accessing Azure Tables in Azure Functi
 
 ### Install the package
 
-Install the Storage Blobs extension with [NuGet][nuget]:
+Install the Tables extension with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.WebJobs.Extensions.Tables --prerelease
+dotnet add package Microsoft.Azure.WebJobs.Extensions.Tables
 ```
 
 ### Prerequisites
@@ -165,7 +165,7 @@ public class OutputSingle
         [HttpTrigger(AuthorizationLevel.Anonymous, "GET")] HttpRequest request,
         [Table("MyTable")] out TableEntity entity)
     {
-        entity = new TableEntity("<PartitionKey>", "<PartitionKey>")
+        entity = new TableEntity("<PartitionKey>", "<RowKey>")
         {
             ["Text"] = "Hello"
         };
@@ -265,7 +265,7 @@ public class BindTableClient
         [HttpTrigger(AuthorizationLevel.Anonymous, "POST")] HttpRequest request,
         [Table("MyTable")] TableClient client)
     {
-        await client.AddEntityAsync(new TableEntity("<PartitionKey>", "<PartitionKey>")
+        await client.AddEntityAsync(new TableEntity("<PartitionKey>", "<RowKey>")
         {
             ["Text"] = request.GetEncodedPathAndQuery()
         });

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2022-03-30)
+### Features Added
+- Added environment variable `AZURE_USERAGENT_OVERRIDE`, that overrides the HTTP header `x-ms-useragent` on the tests
+
+### Other Changes
+- 'Deprecates' (read discourage) the use of PhoneNumbersModelFactory.PhoneNumberCost(double amount, string currencyCode, string billingFrequency)
 
 ## 1.1.0-beta.1 (2022-01-24)
 ### Features Added

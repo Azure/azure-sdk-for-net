@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the JitRequest data model. </summary>
-    public partial class JitRequestData : TrackedResource
+    public partial class JitRequestData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of JitRequestData. </summary>
         /// <param name="location"> The location. </param>
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of JitRequestData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestState"> The JIT request state. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal JitRequestData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ProvisioningState? provisioningState, JitRequestState? jitRequestState, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, systemData, tags, location)
+        internal JitRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, Guid? publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ResourcesProvisioningState? provisioningState, JitRequestState? jitRequestState, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location)
         {
             ApplicationResourceId = applicationResourceId;
             PublisherTenantId = publisherTenantId;
@@ -52,18 +53,18 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The parent application id. </summary>
         public string ApplicationResourceId { get; set; }
         /// <summary> The publisher tenant id. </summary>
-        public string PublisherTenantId { get; }
+        public Guid? PublisherTenantId { get; }
         /// <summary> The JIT authorization policies. </summary>
         public IList<JitAuthorizationPolicies> JitAuthorizationPolicies { get; }
         /// <summary> The JIT request properties. </summary>
         public JitSchedulingPolicy JitSchedulingPolicy { get; set; }
         /// <summary> The JIT request provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResourcesProvisioningState? ProvisioningState { get; }
         /// <summary> The JIT request state. </summary>
         public JitRequestState? JitRequestState { get; }
         /// <summary> The client entity that created the JIT request. </summary>
-        public ApplicationClientDetails CreatedBy { get; }
+        public ArmApplicationDetails CreatedBy { get; }
         /// <summary> The client entity that last updated the JIT request. </summary>
-        public ApplicationClientDetails UpdatedBy { get; }
+        public ArmApplicationDetails UpdatedBy { get; }
     }
 }

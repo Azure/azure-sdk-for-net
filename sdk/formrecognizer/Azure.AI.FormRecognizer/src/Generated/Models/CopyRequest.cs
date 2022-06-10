@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="targetResourceId"> Azure Resource Id of the target Form Recognizer resource where the model is copied to. </param>
         /// <param name="targetResourceRegion"> Location of the target Azure resource. A valid Azure region name supported by Cognitive Services. </param>
         /// <param name="copyAuthorization"> Entity that encodes claims to authorize the copy request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="targetResourceRegion"/>, or <paramref name="copyAuthorization"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/>, <paramref name="targetResourceRegion"/> or <paramref name="copyAuthorization"/> is null. </exception>
         public CopyRequest(string targetResourceId, string targetResourceRegion, CopyAuthorizationResult copyAuthorization)
         {
             if (targetResourceId == null)

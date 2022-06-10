@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserWhitelistedIpRanges))
+            if (Optional.IsCollectionDefined(UserWhitelistedIPRanges))
             {
                 writer.WritePropertyName("userWhitelistedIpRanges");
                 writer.WriteStartArray();
-                foreach (var item in UserWhitelistedIpRanges)
+                foreach (var item in UserWhitelistedIPRanges)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

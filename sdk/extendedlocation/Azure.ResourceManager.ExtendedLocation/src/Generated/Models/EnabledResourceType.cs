@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ExtendedLocation.Models
 {
     /// <summary> EnabledResourceType definition. </summary>
-    public partial class EnabledResourceType : Resource
+    public partial class EnabledResourceType : ResourceData
     {
         /// <summary> Initializes a new instance of EnabledResourceType. </summary>
         public EnabledResourceType()
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ExtendedLocation.Models
         /// <summary> Initializes a new instance of EnabledResourceType. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="clusterExtensionId"> Cluster Extension ID. </param>
         /// <param name="extensionType"> Cluster Extension Type. </param>
         /// <param name="typesMetadata"> Metadata of the Resource Type. </param>
-        internal EnabledResourceType(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string clusterExtensionId, string extensionType, IList<EnabledResourceTypePropertiesTypesMetadataItem> typesMetadata) : base(id, name, type, systemData)
+        internal EnabledResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string clusterExtensionId, string extensionType, IList<EnabledResourceTypePropertiesTypesMetadataItem> typesMetadata) : base(id, name, resourceType, systemData)
         {
             ClusterExtensionId = clusterExtensionId;
             ExtensionType = extensionType;

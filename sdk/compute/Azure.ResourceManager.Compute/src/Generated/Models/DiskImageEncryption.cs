@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the disk image encryption base class. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of DiskImageEncryption. </summary>
         /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
-        internal DiskImageEncryption(string diskEncryptionSetId)
+        internal DiskImageEncryption(ResourceIdentifier diskEncryptionSetId)
         {
             DiskEncryptionSetId = diskEncryptionSetId;
         }
 
         /// <summary> A relative URI containing the resource ID of the disk encryption set. </summary>
-        public string DiskEncryptionSetId { get; set; }
+        public ResourceIdentifier DiskEncryptionSetId { get; set; }
     }
 }

@@ -16,11 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of StaticSiteBuildARMResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="StaticSiteBuildARMResource" /> and their operations.
+    /// Each <see cref="StaticSiteBuildARMResource" /> in the collection will belong to the same instance of <see cref="StaticSiteARMResource" />.
+    /// To get a <see cref="StaticSiteBuildARMResourceCollection" /> instance call the GetStaticSiteBuildARMResources method from an instance of <see cref="StaticSiteARMResource" />.
+    /// </summary>
     public partial class StaticSiteBuildARMResourceCollection : ArmCollection, IEnumerable<StaticSiteBuildARMResource>, IAsyncEnumerable<StaticSiteBuildARMResource>
     {
         private readonly ClientDiagnostics _staticSiteBuildARMResourceStaticSitesClientDiagnostics;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal StaticSiteBuildARMResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _staticSiteBuildARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildARMResource.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(StaticSiteBuildARMResource.ResourceType, out string staticSiteBuildARMResourceStaticSitesApiVersion);
-            _staticSiteBuildARMResourceStaticSitesRestClient = new StaticSitesRestOperations(_staticSiteBuildARMResourceStaticSitesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteBuildARMResourceStaticSitesApiVersion);
+            _staticSiteBuildARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildARMResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StaticSiteBuildARMResource.ResourceType, out string staticSiteBuildARMResourceStaticSitesApiVersion);
+            _staticSiteBuildARMResourceStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBuildARMResourceStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -50,15 +53,16 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteARMResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// OperationId: StaticSites_GetStaticSiteBuild
-        /// <summary> Description for Gets the details of a static site build. </summary>
+        /// <summary>
+        /// Description for Gets the details of a static site build.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
+        /// Operation Id: StaticSites_GetStaticSiteBuild
+        /// </summary>
         /// <param name="environmentName"> The stage site identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        public async virtual Task<Response<StaticSiteBuildARMResource>> GetAsync(string environmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteBuildARMResource>> GetAsync(string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _staticSiteBuildARMResourceStaticSitesRestClient.GetStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StaticSiteBuildARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -78,13 +82,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// OperationId: StaticSites_GetStaticSiteBuild
-        /// <summary> Description for Gets the details of a static site build. </summary>
+        /// <summary>
+        /// Description for Gets the details of a static site build.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
+        /// Operation Id: StaticSites_GetStaticSiteBuild
+        /// </summary>
         /// <param name="environmentName"> The stage site identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response<StaticSiteBuildARMResource> Get(string environmentName, CancellationToken cancellationToken = default)
         {
@@ -96,7 +101,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _staticSiteBuildARMResourceStaticSitesRestClient.GetStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken);
                 if (response.Value == null)
-                    throw _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new StaticSiteBuildARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -106,10 +111,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// OperationId: StaticSites_GetStaticSiteBuilds
-        /// <summary> Description for Gets all static site builds for a particular static site. </summary>
+        /// <summary>
+        /// Description for Gets all static site builds for a particular static site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds
+        /// Operation Id: StaticSites_GetStaticSiteBuilds
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StaticSiteBuildARMResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteBuildARMResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -147,10 +153,11 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// OperationId: StaticSites_GetStaticSiteBuilds
-        /// <summary> Description for Gets all static site builds for a particular static site. </summary>
+        /// <summary>
+        /// Description for Gets all static site builds for a particular static site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds
+        /// Operation Id: StaticSites_GetStaticSiteBuilds
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StaticSiteBuildARMResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteBuildARMResource> GetAll(CancellationToken cancellationToken = default)
@@ -188,15 +195,16 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// OperationId: StaticSites_GetStaticSiteBuild
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
+        /// Operation Id: StaticSites_GetStaticSiteBuild
+        /// </summary>
         /// <param name="environmentName"> The stage site identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string environmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string environmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
@@ -204,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(environmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _staticSiteBuildARMResourceStaticSitesRestClient.GetStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,13 +222,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// OperationId: StaticSites_GetStaticSiteBuild
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
+        /// Operation Id: StaticSites_GetStaticSiteBuild
+        /// </summary>
         /// <param name="environmentName"> The stage site identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string environmentName, CancellationToken cancellationToken = default)
         {
@@ -230,64 +239,8 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(environmentName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// OperationId: StaticSites_GetStaticSiteBuild
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="environmentName"> The stage site identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        public async virtual Task<Response<StaticSiteBuildARMResource>> GetIfExistsAsync(string environmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-
-            using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _staticSiteBuildARMResourceStaticSitesRestClient.GetStaticSiteBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<StaticSiteBuildARMResource>(null, response.GetRawResponse());
-                return Response.FromValue(new StaticSiteBuildARMResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
-        /// OperationId: StaticSites_GetStaticSiteBuild
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="environmentName"> The stage site identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
-        public virtual Response<StaticSiteBuildARMResource> GetIfExists(string environmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
-
-            using var scope = _staticSiteBuildARMResourceStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildARMResourceCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _staticSiteBuildARMResourceStaticSitesRestClient.GetStaticSiteBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<StaticSiteBuildARMResource>(null, response.GetRawResponse());
-                return Response.FromValue(new StaticSiteBuildARMResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

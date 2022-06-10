@@ -5,15 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Management
+namespace Azure.ResourceManager.ManagementGroups
 {
     /// <summary> A class representing the ManagementGroup data model. </summary>
-    public partial class ManagementGroupData : Resource
+    public partial class ManagementGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagementGroupData. </summary>
         internal ManagementGroupData()
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.Management
         /// <summary> Initializes a new instance of ManagementGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tenantId"> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </param>
         /// <param name="displayName"> The friendly name of the management group. </param>
         /// <param name="details"> The details of a management group. </param>
         /// <param name="children"> The list of children. </param>
-        internal ManagementGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string tenantId, string displayName, ManagementGroupDetails details, IReadOnlyList<ManagementGroupChildInfo> children) : base(id, name, type, systemData)
+        internal ManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, ManagementGroupInfo details, IReadOnlyList<ManagementGroupChildInfo> children) : base(id, name, resourceType, systemData)
         {
             TenantId = tenantId;
             DisplayName = displayName;
@@ -39,11 +40,11 @@ namespace Azure.ResourceManager.Management
         }
 
         /// <summary> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> The friendly name of the management group. </summary>
         public string DisplayName { get; }
         /// <summary> The details of a management group. </summary>
-        public ManagementGroupDetails Details { get; }
+        public ManagementGroupInfo Details { get; }
         /// <summary> The list of children. </summary>
         public IReadOnlyList<ManagementGroupChildInfo> Children { get; }
     }

@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -16,15 +17,15 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -59,35 +60,50 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ServiceAssociationLink DeserializeServiceAssociationLink(JsonElement element)
         {
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> etag = default;
-            Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceType> type = default;
             Optional<string> linkedResourceType = default;
             Optional<string> link = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> allowDelete = default;
-            Optional<IList<string>> locations = default;
+            Optional<IList<AzureLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -116,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("allowDelete"))
@@ -136,10 +152,10 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<AzureLocation> array = new List<AzureLocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(new AzureLocation(item.GetString()));
                             }
                             locations = array;
                             continue;
@@ -148,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ServiceAssociationLink(id.Value, name.Value, etag.Value, type.Value, linkedResourceType.Value, link.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(allowDelete), Optional.ToList(locations));
+            return new ServiceAssociationLink(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), linkedResourceType.Value, link.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(allowDelete), Optional.ToList(locations));
         }
     }
 }

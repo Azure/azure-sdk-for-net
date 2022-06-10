@@ -16,13 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualHubRouteTableV2 and their operations over its parent. </summary>
-    public partial class VirtualHubRouteTableV2Collection : ArmCollection, IEnumerable<VirtualHubRouteTableV2>, IAsyncEnumerable<VirtualHubRouteTableV2>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualHubRouteTableV2Resource" /> and their operations.
+    /// Each <see cref="VirtualHubRouteTableV2Resource" /> in the collection will belong to the same instance of <see cref="VirtualHubResource" />.
+    /// To get a <see cref="VirtualHubRouteTableV2Collection" /> instance call the GetVirtualHubRouteTableV2s method from an instance of <see cref="VirtualHubResource" />.
+    /// </summary>
+    public partial class VirtualHubRouteTableV2Collection : ArmCollection, IEnumerable<VirtualHubRouteTableV2Resource>, IAsyncEnumerable<VirtualHubRouteTableV2Resource>
     {
         private readonly ClientDiagnostics _virtualHubRouteTableV2ClientDiagnostics;
         private readonly VirtualHubRouteTableV2SRestOperations _virtualHubRouteTableV2RestClient;
@@ -37,9 +39,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualHubRouteTableV2Collection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualHubRouteTableV2ClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualHubRouteTableV2.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(VirtualHubRouteTableV2.ResourceType, out string virtualHubRouteTableV2ApiVersion);
-            _virtualHubRouteTableV2RestClient = new VirtualHubRouteTableV2SRestOperations(_virtualHubRouteTableV2ClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualHubRouteTableV2ApiVersion);
+            _virtualHubRouteTableV2ClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualHubRouteTableV2Resource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualHubRouteTableV2Resource.ResourceType, out string virtualHubRouteTableV2ApiVersion);
+            _virtualHubRouteTableV2RestClient = new VirtualHubRouteTableV2SRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualHubRouteTableV2ApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,32 +49,33 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VirtualHub.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualHub.ResourceType), nameof(id));
+            if (id.ResourceType != VirtualHubResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualHubResource.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates a VirtualHubRouteTableV2 resource if it doesn&apos;t exist else updates the existing VirtualHubRouteTableV2. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates a VirtualHubRouteTableV2 resource if it doesn&apos;t exist else updates the existing VirtualHubRouteTableV2.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// Operation Id: VirtualHubRouteTableV2s_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
-        /// <param name="virtualHubRouteTableV2Parameters"> Parameters supplied to create or update VirtualHubRouteTableV2. </param>
+        /// <param name="data"> Parameters supplied to create or update VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="virtualHubRouteTableV2Parameters"/> is null. </exception>
-        public async virtual Task<VirtualHubRouteTableV2CreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<VirtualHubRouteTableV2Resource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeTableName, VirtualHubRouteTableV2Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
-            if (virtualHubRouteTableV2Parameters == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHubRouteTableV2Parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualHubRouteTableV2RestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualHubRouteTableV2CreateOrUpdateOperation(Client, _virtualHubRouteTableV2ClientDiagnostics, Pipeline, _virtualHubRouteTableV2RestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _virtualHubRouteTableV2RestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<VirtualHubRouteTableV2Resource>(new VirtualHubRouteTableV2OperationSource(Client), _virtualHubRouteTableV2ClientDiagnostics, Pipeline, _virtualHubRouteTableV2RestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -83,28 +86,29 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates a VirtualHubRouteTableV2 resource if it doesn&apos;t exist else updates the existing VirtualHubRouteTableV2. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates a VirtualHubRouteTableV2 resource if it doesn&apos;t exist else updates the existing VirtualHubRouteTableV2.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// Operation Id: VirtualHubRouteTableV2s_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
-        /// <param name="virtualHubRouteTableV2Parameters"> Parameters supplied to create or update VirtualHubRouteTableV2. </param>
+        /// <param name="data"> Parameters supplied to create or update VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="virtualHubRouteTableV2Parameters"/> is null. </exception>
-        public virtual VirtualHubRouteTableV2CreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string routeTableName, VirtualHubRouteTableV2Data virtualHubRouteTableV2Parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<VirtualHubRouteTableV2Resource> CreateOrUpdate(WaitUntil waitUntil, string routeTableName, VirtualHubRouteTableV2Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
-            if (virtualHubRouteTableV2Parameters == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHubRouteTableV2Parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualHubRouteTableV2RestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters, cancellationToken);
-                var operation = new VirtualHubRouteTableV2CreateOrUpdateOperation(Client, _virtualHubRouteTableV2ClientDiagnostics, Pipeline, _virtualHubRouteTableV2RestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, virtualHubRouteTableV2Parameters).Request, response);
-                if (waitForCompletion)
+                var response = _virtualHubRouteTableV2RestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, data, cancellationToken);
+                var operation = new NetworkArmOperation<VirtualHubRouteTableV2Resource>(new VirtualHubRouteTableV2OperationSource(Client), _virtualHubRouteTableV2ClientDiagnostics, Pipeline, _virtualHubRouteTableV2RestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -115,12 +119,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
+        /// <summary>
+        /// Retrieves the details of a VirtualHubRouteTableV2.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// Operation Id: VirtualHubRouteTableV2s_Get
+        /// </summary>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public async virtual Task<Response<VirtualHubRouteTableV2>> GetAsync(string routeTableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualHubRouteTableV2Resource>> GetAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
@@ -130,8 +138,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _virtualHubRouteTableV2RestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualHubRouteTableV2ClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualHubRouteTableV2(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualHubRouteTableV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,12 +148,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
+        /// <summary>
+        /// Retrieves the details of a VirtualHubRouteTableV2.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// Operation Id: VirtualHubRouteTableV2s_Get
+        /// </summary>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public virtual Response<VirtualHubRouteTableV2> Get(string routeTableName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualHubRouteTableV2Resource> Get(string routeTableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
@@ -155,8 +167,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _virtualHubRouteTableV2RestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualHubRouteTableV2ClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualHubRouteTableV2(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualHubRouteTableV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,19 +177,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Retrieves the details of all VirtualHubRouteTableV2s. </summary>
+        /// <summary>
+        /// Retrieves the details of all VirtualHubRouteTableV2s.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables
+        /// Operation Id: VirtualHubRouteTableV2s_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualHubRouteTableV2" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualHubRouteTableV2> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualHubRouteTableV2Resource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualHubRouteTableV2Resource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualHubRouteTableV2>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualHubRouteTableV2Resource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _virtualHubRouteTableV2RestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubRouteTableV2(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubRouteTableV2Resource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -185,14 +201,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<VirtualHubRouteTableV2>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualHubRouteTableV2Resource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _virtualHubRouteTableV2RestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubRouteTableV2(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubRouteTableV2Resource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -203,19 +219,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Retrieves the details of all VirtualHubRouteTableV2s. </summary>
+        /// <summary>
+        /// Retrieves the details of all VirtualHubRouteTableV2s.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables
+        /// Operation Id: VirtualHubRouteTableV2s_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualHubRouteTableV2" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualHubRouteTableV2> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualHubRouteTableV2Resource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualHubRouteTableV2Resource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VirtualHubRouteTableV2> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualHubRouteTableV2Resource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _virtualHubRouteTableV2RestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubRouteTableV2(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubRouteTableV2Resource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,14 +243,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<VirtualHubRouteTableV2> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualHubRouteTableV2Resource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _virtualHubRouteTableV2RestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubRouteTableV2(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualHubRouteTableV2Resource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,12 +261,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// Operation Id: VirtualHubRouteTableV2s_Get
+        /// </summary>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
@@ -254,7 +278,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(routeTableName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _virtualHubRouteTableV2RestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -264,10 +288,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeTables/{routeTableName}
+        /// Operation Id: VirtualHubRouteTableV2s_Get
+        /// </summary>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
         public virtual Response<bool> Exists(string routeTableName, CancellationToken cancellationToken = default)
         {
@@ -277,7 +305,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(routeTableName, cancellationToken: cancellationToken);
+                var response = _virtualHubRouteTableV2RestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -287,57 +315,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public async virtual Task<Response<VirtualHubRouteTableV2>> GetIfExistsAsync(string routeTableName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
-
-            using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _virtualHubRouteTableV2RestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualHubRouteTableV2>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualHubRouteTableV2(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public virtual Response<VirtualHubRouteTableV2> GetIfExists(string routeTableName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
-
-            using var scope = _virtualHubRouteTableV2ClientDiagnostics.CreateScope("VirtualHubRouteTableV2Collection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _virtualHubRouteTableV2RestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routeTableName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualHubRouteTableV2>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualHubRouteTableV2(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<VirtualHubRouteTableV2> IEnumerable<VirtualHubRouteTableV2>.GetEnumerator()
+        IEnumerator<VirtualHubRouteTableV2Resource> IEnumerable<VirtualHubRouteTableV2Resource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -347,7 +325,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VirtualHubRouteTableV2> IAsyncEnumerable<VirtualHubRouteTableV2>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VirtualHubRouteTableV2Resource> IAsyncEnumerable<VirtualHubRouteTableV2Resource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

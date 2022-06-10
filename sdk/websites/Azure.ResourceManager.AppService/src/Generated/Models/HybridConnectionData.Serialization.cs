@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                relayArmUri = null;
                                 continue;
                             }
                             relayArmUri = new Uri(property0.Value.GetString());

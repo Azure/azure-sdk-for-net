@@ -498,7 +498,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='authorizationRuleName'>
             /// The connection string of the namespace for the specified authorizationRule.
             /// </param>
-            public static SharedAccessAuthorizationRuleListResult ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
+            public static ResourceListKeys ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
                 return operations.ListKeysAsync(resourceGroupName, namespaceName, authorizationRuleName).GetAwaiter().GetResult();
             }
@@ -521,7 +521,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SharedAccessAuthorizationRuleListResult> ListKeysAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceListKeys> ListKeysAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
                 {

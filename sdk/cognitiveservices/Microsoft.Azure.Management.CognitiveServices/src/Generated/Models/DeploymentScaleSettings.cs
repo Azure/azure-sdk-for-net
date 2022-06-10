@@ -30,12 +30,16 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// Initializes a new instance of the DeploymentScaleSettings class.
         /// </summary>
         /// <param name="scaleType">Deployment scale type. Possible values
-        /// include: 'Manual'</param>
+        /// include: 'Standard', 'Manual'</param>
         /// <param name="capacity">Deployment capacity.</param>
-        public DeploymentScaleSettings(string scaleType = default(string), int? capacity = default(int?))
+        /// <param name="activeCapacity">Deployment active capacity. This value
+        /// might be different from `capacity` if customer recently updated
+        /// `capacity`.</param>
+        public DeploymentScaleSettings(string scaleType = default(string), int? capacity = default(int?), int? activeCapacity = default(int?))
         {
             ScaleType = scaleType;
             Capacity = capacity;
+            ActiveCapacity = activeCapacity;
             CustomInit();
         }
 
@@ -46,7 +50,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets deployment scale type. Possible values include:
-        /// 'Manual'
+        /// 'Standard', 'Manual'
         /// </summary>
         [JsonProperty(PropertyName = "scaleType")]
         public string ScaleType { get; set; }
@@ -56,6 +60,13 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }
+
+        /// <summary>
+        /// Gets deployment active capacity. This value might be different from
+        /// `capacity` if customer recently updated `capacity`.
+        /// </summary>
+        [JsonProperty(PropertyName = "activeCapacity")]
+        public int? ActiveCapacity { get; private set; }
 
     }
 }

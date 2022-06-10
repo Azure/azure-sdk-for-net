@@ -10,16 +10,12 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
-    /// <summary>
-    /// Describes an automation rule condition that evaluates a property's
-    /// value
-    /// </summary>
-    [Newtonsoft.Json.JsonObject("Property")]
-    public partial class AutomationRulePropertyValuesCondition : AutomationRuleCondition
+    public partial class AutomationRulePropertyValuesCondition
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -34,11 +30,34 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// Initializes a new instance of the
         /// AutomationRulePropertyValuesCondition class.
         /// </summary>
-        /// <param name="conditionProperties">The configuration of the
-        /// automation rule condition</param>
-        public AutomationRulePropertyValuesCondition(AutomationRulePropertyValuesConditionConditionProperties conditionProperties)
+        /// <param name="propertyName">Possible values include:
+        /// 'IncidentTitle', 'IncidentDescription', 'IncidentSeverity',
+        /// 'IncidentStatus', 'IncidentRelatedAnalyticRuleIds',
+        /// 'IncidentTactics', 'IncidentLabel', 'IncidentProviderName',
+        /// 'AccountAadTenantId', 'AccountAadUserId', 'AccountName',
+        /// 'AccountNTDomain', 'AccountPUID', 'AccountSid',
+        /// 'AccountObjectGuid', 'AccountUPNSuffix', 'AlertProductNames',
+        /// 'AzureResourceResourceId', 'AzureResourceSubscriptionId',
+        /// 'CloudApplicationAppId', 'CloudApplicationAppName',
+        /// 'DNSDomainName', 'FileDirectory', 'FileName', 'FileHashValue',
+        /// 'HostAzureID', 'HostName', 'HostNetBiosName', 'HostNTDomain',
+        /// 'HostOSVersion', 'IoTDeviceId', 'IoTDeviceName', 'IoTDeviceType',
+        /// 'IoTDeviceVendor', 'IoTDeviceModel', 'IoTDeviceOperatingSystem',
+        /// 'IPAddress', 'MailboxDisplayName', 'MailboxPrimaryAddress',
+        /// 'MailboxUPN', 'MailMessageDeliveryAction',
+        /// 'MailMessageDeliveryLocation', 'MailMessageRecipient',
+        /// 'MailMessageSenderIP', 'MailMessageSubject', 'MailMessageP1Sender',
+        /// 'MailMessageP2Sender', 'MalwareCategory', 'MalwareName',
+        /// 'ProcessCommandLine', 'ProcessId', 'RegistryKey',
+        /// 'RegistryValueData', 'Url'</param>
+        /// <param name="operatorProperty">Possible values include: 'Equals',
+        /// 'NotEquals', 'Contains', 'NotContains', 'StartsWith',
+        /// 'NotStartsWith', 'EndsWith', 'NotEndsWith'</param>
+        public AutomationRulePropertyValuesCondition(string propertyName = default(string), string operatorProperty = default(string), IList<string> propertyValues = default(IList<string>))
         {
-            ConditionProperties = conditionProperties;
+            PropertyName = propertyName;
+            OperatorProperty = operatorProperty;
+            PropertyValues = propertyValues;
             CustomInit();
         }
 
@@ -48,23 +67,41 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the configuration of the automation rule condition
+        /// Gets or sets possible values include: 'IncidentTitle',
+        /// 'IncidentDescription', 'IncidentSeverity', 'IncidentStatus',
+        /// 'IncidentRelatedAnalyticRuleIds', 'IncidentTactics',
+        /// 'IncidentLabel', 'IncidentProviderName', 'AccountAadTenantId',
+        /// 'AccountAadUserId', 'AccountName', 'AccountNTDomain',
+        /// 'AccountPUID', 'AccountSid', 'AccountObjectGuid',
+        /// 'AccountUPNSuffix', 'AlertProductNames', 'AzureResourceResourceId',
+        /// 'AzureResourceSubscriptionId', 'CloudApplicationAppId',
+        /// 'CloudApplicationAppName', 'DNSDomainName', 'FileDirectory',
+        /// 'FileName', 'FileHashValue', 'HostAzureID', 'HostName',
+        /// 'HostNetBiosName', 'HostNTDomain', 'HostOSVersion', 'IoTDeviceId',
+        /// 'IoTDeviceName', 'IoTDeviceType', 'IoTDeviceVendor',
+        /// 'IoTDeviceModel', 'IoTDeviceOperatingSystem', 'IPAddress',
+        /// 'MailboxDisplayName', 'MailboxPrimaryAddress', 'MailboxUPN',
+        /// 'MailMessageDeliveryAction', 'MailMessageDeliveryLocation',
+        /// 'MailMessageRecipient', 'MailMessageSenderIP',
+        /// 'MailMessageSubject', 'MailMessageP1Sender', 'MailMessageP2Sender',
+        /// 'MalwareCategory', 'MalwareName', 'ProcessCommandLine',
+        /// 'ProcessId', 'RegistryKey', 'RegistryValueData', 'Url'
         /// </summary>
-        [JsonProperty(PropertyName = "conditionProperties")]
-        public AutomationRulePropertyValuesConditionConditionProperties ConditionProperties { get; set; }
+        [JsonProperty(PropertyName = "propertyName")]
+        public string PropertyName { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets possible values include: 'Equals', 'NotEquals',
+        /// 'Contains', 'NotContains', 'StartsWith', 'NotStartsWith',
+        /// 'EndsWith', 'NotEndsWith'
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ConditionProperties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ConditionProperties");
-            }
-        }
+        [JsonProperty(PropertyName = "operator")]
+        public string OperatorProperty { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "propertyValues")]
+        public IList<string> PropertyValues { get; set; }
+
     }
 }

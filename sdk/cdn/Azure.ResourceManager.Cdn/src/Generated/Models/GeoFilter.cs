@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of GeoFilter. </summary>
         /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. &apos;/mypictures&apos;, &apos;/mypicture/kitty.jpg&apos;, and etc.). </param>
         /// <param name="action"> Action of the geo filter, i.e. allow or block access. </param>
-        /// <param name="countryCodes"> Two letter country codes defining user country access in a geo filter, e.g. AU, MX, US. </param>
+        /// <param name="countryCodes"> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="relativePath"/> or <paramref name="countryCodes"/> is null. </exception>
-        public GeoFilter(string relativePath, GeoFilterActions action, IEnumerable<string> countryCodes)
+        public GeoFilter(string relativePath, GeoFilterAction action, IEnumerable<string> countryCodes)
         {
             if (relativePath == null)
             {
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of GeoFilter. </summary>
         /// <param name="relativePath"> Relative path applicable to geo filter. (e.g. &apos;/mypictures&apos;, &apos;/mypicture/kitty.jpg&apos;, and etc.). </param>
         /// <param name="action"> Action of the geo filter, i.e. allow or block access. </param>
-        /// <param name="countryCodes"> Two letter country codes defining user country access in a geo filter, e.g. AU, MX, US. </param>
-        internal GeoFilter(string relativePath, GeoFilterActions action, IList<string> countryCodes)
+        /// <param name="countryCodes"> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </param>
+        internal GeoFilter(string relativePath, GeoFilterAction action, IList<string> countryCodes)
         {
             RelativePath = relativePath;
             Action = action;
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Relative path applicable to geo filter. (e.g. &apos;/mypictures&apos;, &apos;/mypicture/kitty.jpg&apos;, and etc.). </summary>
         public string RelativePath { get; set; }
         /// <summary> Action of the geo filter, i.e. allow or block access. </summary>
-        public GeoFilterActions Action { get; set; }
-        /// <summary> Two letter country codes defining user country access in a geo filter, e.g. AU, MX, US. </summary>
+        public GeoFilterAction Action { get; set; }
+        /// <summary> Two letter country or region codes defining user country or region access in a geo filter, e.g. AU, MX, US. </summary>
         public IList<string> CountryCodes { get; }
     }
 }

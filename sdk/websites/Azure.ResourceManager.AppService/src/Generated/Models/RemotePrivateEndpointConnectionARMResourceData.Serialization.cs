@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("privateLinkServiceConnectionState");
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses");
                 writer.WriteStartArray();
-                foreach (var item in IpAddresses)
+                foreach (var item in IPAddresses)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

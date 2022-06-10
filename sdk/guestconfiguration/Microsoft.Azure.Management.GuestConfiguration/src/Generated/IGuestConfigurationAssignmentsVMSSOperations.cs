@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <param name='resourceGroupName'>
         /// The resource group name.
         /// </param>
-        /// <param name='name'>
-        /// The guest configuration assignment name.
-        /// </param>
         /// <param name='vmssName'>
         /// The name of the virtual machine scale set.
+        /// </param>
+        /// <param name='name'>
+        /// The guest configuration assignment name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,18 +50,18 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<GuestConfigurationAssignment>> GetWithHttpMessagesAsync(string resourceGroupName, string name, string vmssName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GuestConfigurationAssignment>> GetWithHttpMessagesAsync(string resourceGroupName, string vmssName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a guest configuration assignment for VMSS
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name.
         /// </param>
-        /// <param name='name'>
-        /// The guest configuration assignment name.
-        /// </param>
         /// <param name='vmssName'>
         /// The name of the virtual machine scale set.
+        /// </param>
+        /// <param name='name'>
+        /// The guest configuration assignment name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.GuestConfiguration
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<GuestConfigurationAssignment>> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, string vmssName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<GuestConfigurationAssignment>> DeleteWithHttpMessagesAsync(string resourceGroupName, string vmssName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all guest configuration assignments for VMSS.
         /// </summary>

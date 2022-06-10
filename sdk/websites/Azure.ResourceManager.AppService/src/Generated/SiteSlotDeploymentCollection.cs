@@ -16,13 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of Deployment and their operations over its parent. </summary>
-    public partial class SiteSlotDeploymentCollection : ArmCollection, IEnumerable<SiteSlotDeployment>, IAsyncEnumerable<SiteSlotDeployment>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotDeploymentResource" /> and their operations.
+    /// Each <see cref="SiteSlotDeploymentResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="SiteSlotDeploymentCollection" /> instance call the GetSiteSlotDeployments method from an instance of <see cref="SiteSlotResource" />.
+    /// </summary>
+    public partial class SiteSlotDeploymentCollection : ArmCollection, IEnumerable<SiteSlotDeploymentResource>, IAsyncEnumerable<SiteSlotDeploymentResource>
     {
         private readonly ClientDiagnostics _siteSlotDeploymentWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteSlotDeploymentWebAppsRestClient;
@@ -37,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotDeploymentWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDeployment.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteSlotDeployment.ResourceType, out string siteSlotDeploymentWebAppsApiVersion);
-            _siteSlotDeploymentWebAppsRestClient = new WebAppsRestOperations(_siteSlotDeploymentWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDeploymentWebAppsApiVersion);
+            _siteSlotDeploymentWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDeploymentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSlotDeploymentResource.ResourceType, out string siteSlotDeploymentWebAppsApiVersion);
+            _siteSlotDeploymentWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDeploymentWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,35 +49,33 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteSlot.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+            if (id.ResourceType != SiteSlotResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_CreateDeploymentSlot
-        /// <summary> Description for Create a deployment for an app, or a deployment slot. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Create a deployment for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
+        /// Operation Id: WebApps_CreateDeploymentSlot
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="id"> ID of an existing deployment. </param>
-        /// <param name="deployment"> Deployment details. </param>
+        /// <param name="data"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
-        public async virtual Task<SiteSlotDeploymentCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SiteSlotDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, DeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            if (deployment == null)
-            {
-                throw new ArgumentNullException(nameof(deployment));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteSlotDeploymentWebAppsRestClient.CreateDeploymentSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, deployment, cancellationToken).ConfigureAwait(false);
-                var operation = new SiteSlotDeploymentCreateOrUpdateOperation(Client, response);
-                if (waitForCompletion)
+                var response = await _siteSlotDeploymentWebAppsRestClient.CreateDeploymentSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<SiteSlotDeploymentResource>(Response.FromValue(new SiteSlotDeploymentResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -86,31 +86,29 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_CreateDeploymentSlot
-        /// <summary> Description for Create a deployment for an app, or a deployment slot. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Description for Create a deployment for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
+        /// Operation Id: WebApps_CreateDeploymentSlot
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="id"> ID of an existing deployment. </param>
-        /// <param name="deployment"> Deployment details. </param>
+        /// <param name="data"> Deployment details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="deployment"/> is null. </exception>
-        public virtual SiteSlotDeploymentCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string id, DeploymentData deployment, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SiteSlotDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string id, DeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            if (deployment == null)
-            {
-                throw new ArgumentNullException(nameof(deployment));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteSlotDeploymentWebAppsRestClient.CreateDeploymentSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, deployment, cancellationToken);
-                var operation = new SiteSlotDeploymentCreateOrUpdateOperation(Client, response);
-                if (waitForCompletion)
+                var response = _siteSlotDeploymentWebAppsRestClient.CreateDeploymentSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, data, cancellationToken);
+                var operation = new AppServiceArmOperation<SiteSlotDeploymentResource>(Response.FromValue(new SiteSlotDeploymentResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -121,15 +119,16 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDeploymentSlot
-        /// <summary> Description for Get a deployment by its ID for an app, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get a deployment by its ID for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
+        /// Operation Id: WebApps_GetDeploymentSlot
+        /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotDeployment>> GetAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDeploymentResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
@@ -139,8 +138,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotDeploymentWebAppsRestClient.GetDeploymentSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotDeploymentWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteSlotDeployment(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,15 +148,16 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDeploymentSlot
-        /// <summary> Description for Get a deployment by its ID for an app, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for Get a deployment by its ID for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
+        /// Operation Id: WebApps_GetDeploymentSlot
+        /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual Response<SiteSlotDeployment> Get(string id, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotDeploymentResource> Get(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotDeploymentWebAppsRestClient.GetDeploymentSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotDeploymentWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDeployment(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -177,22 +177,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_ListDeploymentsSlot
-        /// <summary> Description for List deployments for an app, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for List deployments for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments
+        /// Operation Id: WebApps_ListDeploymentsSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotDeployment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotDeployment> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSlotDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotDeploymentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotDeployment>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteSlotDeploymentResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotDeploymentWebAppsRestClient.ListDeploymentsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDeployment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -200,14 +201,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteSlotDeployment>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteSlotDeploymentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotDeploymentWebAppsRestClient.ListDeploymentsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDeployment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -218,22 +219,23 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_ListDeploymentsSlot
-        /// <summary> Description for List deployments for an app, or a deployment slot. </summary>
+        /// <summary>
+        /// Description for List deployments for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments
+        /// Operation Id: WebApps_ListDeploymentsSlot
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotDeployment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotDeployment> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteSlotDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotDeploymentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotDeployment> FirstPageFunc(int? pageSizeHint)
+            Page<SiteSlotDeploymentResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotDeploymentWebAppsRestClient.ListDeploymentsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDeployment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +243,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteSlotDeployment> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteSlotDeploymentResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotDeploymentWebAppsRestClient.ListDeploymentsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDeployment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -259,15 +261,16 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDeploymentSlot
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
+        /// Operation Id: WebApps_GetDeploymentSlot
+        /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
@@ -275,7 +278,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotDeploymentWebAppsRestClient.GetDeploymentSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -285,13 +288,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDeploymentSlot
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
+        /// Operation Id: WebApps_GetDeploymentSlot
+        /// </summary>
         /// <param name="id"> Deployment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
@@ -301,7 +305,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(id, cancellationToken: cancellationToken);
+                var response = _siteSlotDeploymentWebAppsRestClient.GetDeploymentSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -311,63 +315,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDeploymentSlot
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="id"> Deployment ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotDeployment>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteSlotDeploymentWebAppsRestClient.GetDeploymentSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotDeployment>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDeployment(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
-        /// OperationId: WebApps_GetDeploymentSlot
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="id"> Deployment ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public virtual Response<SiteSlotDeployment> GetIfExists(string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            using var scope = _siteSlotDeploymentWebAppsClientDiagnostics.CreateScope("SiteSlotDeploymentCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _siteSlotDeploymentWebAppsRestClient.GetDeploymentSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteSlotDeployment>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDeployment(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<SiteSlotDeployment> IEnumerable<SiteSlotDeployment>.GetEnumerator()
+        IEnumerator<SiteSlotDeploymentResource> IEnumerable<SiteSlotDeploymentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -377,7 +325,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteSlotDeployment> IAsyncEnumerable<SiteSlotDeployment>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteSlotDeploymentResource> IAsyncEnumerable<SiteSlotDeploymentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

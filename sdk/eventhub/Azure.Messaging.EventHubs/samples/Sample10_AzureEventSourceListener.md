@@ -2,6 +2,19 @@
 
 The Event Hubs client library is instrumented using the .NET [`EventSource`](https://docs.microsoft.com/dotnet/api/system.diagnostics.tracing.eventsource) mechanism for logging. When instrumenting or diagnosing issues with applications that consume the library, it is often helpful to have access to the Event Hubs logs.  The following scenarios demonstrate how to use the [`AzureEventSourceListener`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) from the `Azure.Core` package to capture logs emitted by the Event Hubs client library.
 
+## Table of contents
+
+- [Azure Event Source Listener lifetime](#azure-event-source-listener-lifetime)
+- [Capture all events and write them in to the console](#capture-all-events-and-write-them-in-to-the-console)
+- [Capture all events and write them to `Trace`](#capture-all-events-and-write-them-to-trace)
+- [Apply filtering logic to logs](#apply-filtering-logic-to-logs)
+- [Capture filtered logs to a file](#capture-filtered-logs-to-a-file)
+- [Finding the desired events](#finding-the-desired-events)
+    - [Event Source: "Azure-Messaging-EventHubs"](#event-source-"azure-messaging-eventhubs")
+    - [Event Source: "Azure-Messaging-EventHubs-Processor-EventProcessorClient"](#event-source-"azure-messaging-eventhubs-processor-eventprocessorclient")
+    - [Event Source: "Azure-Messaging-EventHubs-Processor-BlobEventStore"](#event-source-"azure-messaging-eventhubs-processor-blobeventstore")
+    - [Event Source: "Azure-Messaging-EventHubs-Processor-PartitionLoadBalancer"](#event-source-"azure-messaging-eventhubs-processor-partitionloadbalancer")
+
 ## Azure Event Source Listener lifetime
 
 In order for the `AzureEventSourceListener` to collect logs, it must be in scope and active while the client library is in use.  If the listener is disposed or otherwise out of scope, logs cannot be collected.  Generally, we recommend creating the listener as a top-level member of the class where the Event Hubs client being inspected is used.

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of JIT requests. </summary>
-    public partial class JitRequestListResult
+    internal partial class JitRequestListResult
     {
         /// <summary> Initializes a new instance of JitRequestListResult. </summary>
         internal JitRequestListResult()

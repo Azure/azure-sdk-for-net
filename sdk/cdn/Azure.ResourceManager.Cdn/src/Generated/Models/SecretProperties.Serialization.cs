@@ -15,12 +15,33 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters");
-                writer.WriteObjectValue(Parameters);
-            }
+            writer.WritePropertyName("type");
+            writer.WriteStringValue(SecretType.ToString());
             writer.WriteEndObject();
+        }
+
+        internal static SecretProperties DeserializeSecretProperties(JsonElement element)
+        {
+            if (element.TryGetProperty("type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureFirstPartyManagedCertificate": return AzureFirstPartyManagedCertificateProperties.DeserializeAzureFirstPartyManagedCertificateProperties(element);
+                    case "CustomerCertificate": return CustomerCertificateProperties.DeserializeCustomerCertificateProperties(element);
+                    case "ManagedCertificate": return ManagedCertificateProperties.DeserializeManagedCertificateProperties(element);
+                    case "UrlSigningKey": return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element);
+                }
+            }
+            SecretType type = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"))
+                {
+                    type = new SecretType(property.Value.GetString());
+                    continue;
+                }
+            }
+            return new SecretProperties(type);
         }
     }
 }

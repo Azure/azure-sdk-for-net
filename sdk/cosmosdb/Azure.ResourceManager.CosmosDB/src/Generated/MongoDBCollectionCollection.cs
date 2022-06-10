@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of MongoDBCollection and their operations over its parent. </summary>
-    public partial class MongoDBCollectionCollection : ArmCollection, IEnumerable<MongoDBCollection>, IAsyncEnumerable<MongoDBCollection>
+    /// <summary>
+    /// A class representing a collection of <see cref="MongoDBCollectionResource" /> and their operations.
+    /// Each <see cref="MongoDBCollectionResource" /> in the collection will belong to the same instance of <see cref="MongoDBDatabaseResource" />.
+    /// To get a <see cref="MongoDBCollectionCollection" /> instance call the GetMongoDBCollections method from an instance of <see cref="MongoDBDatabaseResource" />.
+    /// </summary>
+    public partial class MongoDBCollectionCollection : ArmCollection, IEnumerable<MongoDBCollectionResource>, IAsyncEnumerable<MongoDBCollectionResource>
     {
         private readonly ClientDiagnostics _mongoDBCollectionMongoDBResourcesClientDiagnostics;
         private readonly MongoDBResourcesRestOperations _mongoDBCollectionMongoDBResourcesRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MongoDBCollectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mongoDBCollectionMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoDBCollection.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(MongoDBCollection.ResourceType, out string mongoDBCollectionMongoDBResourcesApiVersion);
-            _mongoDBCollectionMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, mongoDBCollectionMongoDBResourcesApiVersion);
+            _mongoDBCollectionMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoDBCollectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MongoDBCollectionResource.ResourceType, out string mongoDBCollectionMongoDBResourcesApiVersion);
+            _mongoDBCollectionMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBCollectionMongoDBResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,32 +50,33 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != MongoDBDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MongoDBDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != MongoDBDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MongoDBDatabaseResource.ResourceType), nameof(id));
         }
 
-        /// <summary> Create or update an Azure Cosmos DB MongoDB Collection. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB MongoDB Collection
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}
+        /// Operation Id: MongoDBResources_CreateUpdateMongoDBCollection
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
-        /// <param name="createUpdateMongoDBCollectionParameters"> The parameters to provide for the current MongoDB Collection. </param>
+        /// <param name="content"> The parameters to provide for the current MongoDB Collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
-        public async virtual Task<MongoDBCollectionCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MongoDBCollectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectionName, MongoDBCollectionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-            if (createUpdateMongoDBCollectionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateMongoDBCollectionParameters));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _mongoDBCollectionMongoDBResourcesRestClient.CreateUpdateMongoDBCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new MongoDBCollectionCreateOrUpdateOperation(Client, _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBCollectionMongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters).Request, response);
-                if (waitForCompletion)
+                var response = await _mongoDBCollectionMongoDBResourcesRestClient.CreateUpdateMongoDBCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<MongoDBCollectionResource>(new MongoDBCollectionOperationSource(Client), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBCollectionMongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -83,28 +87,29 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Create or update an Azure Cosmos DB MongoDB Collection. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Create or update an Azure Cosmos DB MongoDB Collection
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}
+        /// Operation Id: MongoDBResources_CreateUpdateMongoDBCollection
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
-        /// <param name="createUpdateMongoDBCollectionParameters"> The parameters to provide for the current MongoDB Collection. </param>
+        /// <param name="content"> The parameters to provide for the current MongoDB Collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="createUpdateMongoDBCollectionParameters"/> is null. </exception>
-        public virtual MongoDBCollectionCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string collectionName, MongoDBCollectionCreateUpdateOptions createUpdateMongoDBCollectionParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MongoDBCollectionResource> CreateOrUpdate(WaitUntil waitUntil, string collectionName, MongoDBCollectionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-            if (createUpdateMongoDBCollectionParameters == null)
-            {
-                throw new ArgumentNullException(nameof(createUpdateMongoDBCollectionParameters));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _mongoDBCollectionMongoDBResourcesRestClient.CreateUpdateMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters, cancellationToken);
-                var operation = new MongoDBCollectionCreateOrUpdateOperation(Client, _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBCollectionMongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, createUpdateMongoDBCollectionParameters).Request, response);
-                if (waitForCompletion)
+                var response = _mongoDBCollectionMongoDBResourcesRestClient.CreateUpdateMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, content, cancellationToken);
+                var operation = new CosmosDBArmOperation<MongoDBCollectionResource>(new MongoDBCollectionOperationSource(Client), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBCollectionMongoDBResourcesRestClient.CreateCreateUpdateMongoDBCollectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -115,12 +120,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the MongoDB collection under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Gets the MongoDB collection under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}
+        /// Operation Id: MongoDBResources_GetMongoDBCollection
+        /// </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public async virtual Task<Response<MongoDBCollection>> GetAsync(string collectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MongoDBCollectionResource>> GetAsync(string collectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
@@ -130,8 +139,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new MongoDBCollection(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new MongoDBCollectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,12 +149,16 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Gets the MongoDB collection under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Gets the MongoDB collection under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}
+        /// Operation Id: MongoDBResources_GetMongoDBCollection
+        /// </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public virtual Response<MongoDBCollection> Get(string collectionName, CancellationToken cancellationToken = default)
+        public virtual Response<MongoDBCollectionResource> Get(string collectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
@@ -155,8 +168,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken);
                 if (response.Value == null)
-                    throw _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MongoDBCollection(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new MongoDBCollectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,19 +178,23 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Lists the MongoDB collection under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the MongoDB collection under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections
+        /// Operation Id: MongoDBResources_ListMongoDBCollections
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MongoDBCollection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MongoDBCollection> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MongoDBCollectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MongoDBCollectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MongoDBCollection>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MongoDBCollectionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _mongoDBCollectionMongoDBResourcesRestClient.ListMongoDBCollectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MongoDBCollection(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MongoDBCollectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -188,19 +205,23 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Lists the MongoDB collection under an existing Azure Cosmos DB database account. </summary>
+        /// <summary>
+        /// Lists the MongoDB collection under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections
+        /// Operation Id: MongoDBResources_ListMongoDBCollections
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoDBCollection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MongoDBCollection> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MongoDBCollectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MongoDBCollectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MongoDBCollection> FirstPageFunc(int? pageSizeHint)
+            Page<MongoDBCollectionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _mongoDBCollectionMongoDBResourcesRestClient.ListMongoDBCollections(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MongoDBCollection(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MongoDBCollectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,12 +232,16 @@ namespace Azure.ResourceManager.CosmosDB
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}
+        /// Operation Id: MongoDBResources_GetMongoDBCollection
+        /// </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string collectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string collectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
 
@@ -224,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(collectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -234,10 +259,14 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}
+        /// Operation Id: MongoDBResources_GetMongoDBCollection
+        /// </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string collectionName, CancellationToken cancellationToken = default)
         {
@@ -247,7 +276,7 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                var response = GetIfExists(collectionName, cancellationToken: cancellationToken);
+                var response = _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,57 +286,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="collectionName"> Cosmos DB collection name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public async virtual Task<Response<MongoDBCollection>> GetIfExistsAsync(string collectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-
-            using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<MongoDBCollection>(null, response.GetRawResponse());
-                return Response.FromValue(new MongoDBCollection(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="collectionName"> Cosmos DB collection name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public virtual Response<MongoDBCollection> GetIfExists(string collectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-
-            using var scope = _mongoDBCollectionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBCollectionCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _mongoDBCollectionMongoDBResourcesRestClient.GetMongoDBCollection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, collectionName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<MongoDBCollection>(null, response.GetRawResponse());
-                return Response.FromValue(new MongoDBCollection(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<MongoDBCollection> IEnumerable<MongoDBCollection>.GetEnumerator()
+        IEnumerator<MongoDBCollectionResource> IEnumerable<MongoDBCollectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -317,7 +296,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MongoDBCollection> IAsyncEnumerable<MongoDBCollection>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MongoDBCollectionResource> IAsyncEnumerable<MongoDBCollectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

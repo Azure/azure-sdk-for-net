@@ -10,7 +10,7 @@ tag: package-2021-08
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/409af02e5ca217c7e7ec2acf50f4976c053496f8/specification/storage/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
-modelerfour:
+modelerfour: # we need to remove these two configurations
   lenient-model-deduplication: true
   seal-single-value-enum-by-default: true
 
@@ -22,6 +22,29 @@ override-operation-name:
 
 request-path-to-singleton-resource:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}: managementPolicies/default
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+  SAS: Sas
   
 directive:
   - rename-model:
@@ -45,4 +68,7 @@ directive:
   - from: swagger-document
     where: $.definitions.ListQueueResource.properties.value.items["$ref"]
     transform: return "#/definitions/StorageQueue"
+  - from: swagger-document
+    where: $.definitions.Multichannel.properties.enabled
+    transform: $['x-ms-client-name'] = 'IsMultiChannelEnabled'
 ```

@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WritePropertyName("status");
                 writer.WriteStringValue(Status);
             }
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -34,12 +37,12 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             Optional<string> eTag = default;
             Optional<RemotePrivateEndpoint> remotePrivateEndpoint = default;
-            Optional<PrivateEndpointConnectionProxyProvisioningState> provisioningState = default;
             Optional<string> status = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            Optional<PrivateEndpointConnectionProxyProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"))
@@ -55,16 +58,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                         continue;
                     }
                     remotePrivateEndpoint = RemotePrivateEndpoint.DeserializeRemotePrivateEndpoint(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    provisioningState = new PrivateEndpointConnectionProxyProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"))
@@ -84,7 +77,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -92,8 +85,30 @@ namespace Azure.ResourceManager.DeviceUpdate
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("provisioningState"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = new PrivateEndpointConnectionProxyProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
             }
-            return new PrivateEndpointConnectionProxyData(id, name, type, systemData, eTag.Value, remotePrivateEndpoint.Value, Optional.ToNullable(provisioningState), status.Value);
+            return new PrivateEndpointConnectionProxyData(id, name, type, systemData, Optional.ToNullable(provisioningState), eTag.Value, remotePrivateEndpoint.Value, status.Value);
         }
     }
 }

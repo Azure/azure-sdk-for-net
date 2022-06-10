@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("thread_count");
                 writer.WriteNumberValue(ThreadCount.Value);
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(TotalCpuTime))
             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

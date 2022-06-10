@@ -13,7 +13,7 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> A class representing the LocalUser data model. </summary>
-    public partial class LocalUserData : Resource
+    public partial class LocalUserData : ResourceData
     {
         /// <summary> Initializes a new instance of LocalUserData. </summary>
         public LocalUserData()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of LocalUserData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="permissionScopes"> The permission scopes of the local user. </param>
         /// <param name="homeDirectory"> Optional, local user home directory. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="hasSharedKey"> Indicates whether shared key exists. Set it to false to remove existing shared key. </param>
         /// <param name="hasSshKey"> Indicates whether ssh key exists. Set it to false to remove existing SSH key. </param>
         /// <param name="hasSshPassword"> Indicates whether ssh password exists. Set it to false to remove existing SSH password. </param>
-        internal LocalUserData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IList<PermissionScope> permissionScopes, string homeDirectory, IList<SshPublicKey> sshAuthorizedKeys, string sid, bool? hasSharedKey, bool? hasSshKey, bool? hasSshPassword) : base(id, name, type, systemData)
+        internal LocalUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<PermissionScope> permissionScopes, string homeDirectory, IList<SshPublicKey> sshAuthorizedKeys, string sid, bool? hasSharedKey, bool? hasSshKey, bool? hasSshPassword) : base(id, name, resourceType, systemData)
         {
             PermissionScopes = permissionScopes;
             HomeDirectory = homeDirectory;

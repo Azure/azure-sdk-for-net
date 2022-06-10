@@ -3,7 +3,6 @@
 
 using System;
 using System.Net;
-using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Messaging.EventHubs.Processor;
@@ -339,7 +338,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
             var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
 
-            var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 #else
@@ -513,7 +512,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             Assert.That(options, Is.Not.Null);
         }
 
-#if NETCOREAPP || SNIPPET
         /// <summary>
         ///   Performs basic smoke test validation of the contained snippet.
         /// </summary>
@@ -533,7 +531,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             Assert.That(options, Is.Not.Null);
         }
-#endif
 
         #region Snippet:EventHubs_Processor_Sample02_CustomRetryPolicy
 
@@ -563,5 +560,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         }
 
         #endregion
+
+        /// <summary>
+        ///   Serves as a shim to allow the illustration of using
+        ///   the DefaultProxy, which is supported on .NET Core and later,
+        ///   across all target frameworks.
+        /// </summary>
+        ///
+        public static class HttpClient
+        {
+            public static WebProxy DefaultProxy { get; set; }
+        }
     }
 }

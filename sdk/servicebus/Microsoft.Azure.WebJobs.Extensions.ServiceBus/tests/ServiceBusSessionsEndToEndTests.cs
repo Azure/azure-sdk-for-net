@@ -444,7 +444,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
          * Helper functions
          */
 
-        private IHost BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true, bool enableCrossEntityTransaction = false)
+        private IHost BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true, bool enableCrossEntityTransaction = false, int? maxMessages = default)
         {
             return BuildHost<T>(builder =>
                 builder.ConfigureWebJobs(b =>
@@ -455,6 +455,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         sbOptions.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
                         sbOptions.MaxConcurrentSessions = 1;
                         sbOptions.EnableCrossEntityTransactions = enableCrossEntityTransaction;
+                        if (maxMessages != null)
+                        {
+                            sbOptions.MaxMessageBatchSize = maxMessages.Value;
+                        }
                     }))
                 .ConfigureServices(services =>
                 {
@@ -514,6 +518,79 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_ReleaseSession()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session2");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session2");
+            var host = BuildSessionHost<TestSingleReleaseSession>();
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestMultiple_ReleaseSession()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session2");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session2");
+            var host = BuildSessionHost<TestMultipleReleaseSession>(maxMessages: 1);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_ReceiveFromFunction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            var host = BuildHost<TestReceiveFromFunction>();
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                // Delay to make sure function is done executing
+                await Task.Delay(500);
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction.ReceiveActions.ReceiveMessagesAsync(1));
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestBatch_ReceiveFromFunction()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "session1");
+            var host = BuildHost<TestReceiveFromFunction_Batch>();
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                // Delay to make sure function is done executing
+                await Task.Delay(500);
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveMessagesAsync(1));
+                Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    await TestReceiveFromFunction_Batch.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
                 await host.StopAsync();
             }
         }
@@ -620,6 +697,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task QueueWithSessions(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                 ServiceBusReceivedMessage msg,
+                string sessionId,
                 ServiceBusMessageActions messageActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
@@ -627,8 +705,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 logger.LogInformation(
                     $"DrainModeValidationFunctions.QueueWithSessions: message data {msg.Body} with session id {msg.SessionId}");
                 Assert.AreEqual(_drainModeSessionId, msg.SessionId);
+                Assert.AreEqual(msg.SessionId, sessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellation(cancellationToken);
+                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
                 await messageActions.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
@@ -648,7 +727,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     $"DrainModeValidationFunctions.TopicWithSessions: message data {msg.Body} with session id {msg.SessionId}");
                 Assert.AreEqual(_drainModeSessionId, msg.SessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellation(cancellationToken);
+                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
                 await messageSession.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
@@ -660,7 +739,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static async Task QueueWithSessionsBatch(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                 ServiceBusReceivedMessage[] array,
-                ServiceBusMessageActions messageActions,
+                string[] sessionIdArray,
+                ServiceBusSessionMessageActions sessionActions,
                 CancellationToken cancellationToken,
                 ILogger logger)
             {
@@ -669,11 +749,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     $"DrainModeTestJobBatch.QueueWithSessionsBatch: received {array.Length} messages with session id {array[0].SessionId}");
                 Assert.AreEqual(_drainModeSessionId, array[0].SessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellation(cancellationToken);
+                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
+                int index = 0;
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
-                    await messageActions.CompleteMessageAsync(msg);
+                    Assert.AreEqual(msg.SessionId, sessionIdArray[index++]);
+                    // validate that manual lock renewal works
+                    var initialLockedUntil = sessionActions.SessionLockedUntil;
+                    await sessionActions.RenewSessionLockAsync();
+                    Assert.Greater(sessionActions.SessionLockedUntil, initialLockedUntil);
+
+                    await sessionActions.CompleteMessageAsync(msg);
                 }
 
                 _drainValidationPostDelay.Set();
@@ -694,7 +781,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     $"DrainModeTestJobBatch.TopicWithSessionsBatch: received {array.Length} messages with session id {array[0].SessionId}");
                 Assert.AreEqual(_drainModeSessionId, array[0].SessionId);
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellation(cancellationToken);
+                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
                 Assert.True(cancellationToken.IsCancellationRequested);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
@@ -702,22 +789,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
 
                 _drainValidationPostDelay.Set();
-            }
-        }
-
-        public class DrainModeHelper
-        {
-            public static async Task WaitForCancellation(CancellationToken cancellationToken)
-            {
-                // Wait until the drain operation begins, signalled by the cancellation token
-                int elapsedTimeMills = 0;
-                while (elapsedTimeMills < DrainWaitTimeoutMills && !cancellationToken.IsCancellationRequested)
-                {
-                    await Task.Delay(elapsedTimeMills += 500);
-                }
-
-                // Allow some time for the Service Bus SDK to start draining before returning
-                await Task.Delay(DrainSleepMills);
             }
         }
 
@@ -818,7 +889,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sessionActions.CompleteMessageAsync(message);
-                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    var sender = client.CreateSender(SecondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage() { SessionId = "sessionId" });
                     ts.Complete();
                 }
@@ -827,7 +898,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Assert.IsNull(receiver1);
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(_secondQueueScope.QueueName);
+                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(SecondQueueScope.QueueName);
                 Assert.IsNotNull(receiver2);
                 _waitHandle1.Set();
             }
@@ -844,7 +915,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sessionActions.CompleteMessageAsync(messages.First());
-                    var sender = client.CreateSender(_secondQueueScope.QueueName);
+                    var sender = client.CreateSender(SecondQueueScope.QueueName);
                     await sender.SendMessageAsync(new ServiceBusMessage() { SessionId = "sessionId" });
                     ts.Complete();
                 }
@@ -853,9 +924,66 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // Assert.IsNull(receiver1);
                 // need to use a separate client here to do the assertions
                 var noTxClient = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(_secondQueueScope.QueueName);
+                ServiceBusReceiver receiver2 = await noTxClient.AcceptNextSessionAsync(SecondQueueScope.QueueName);
                 Assert.IsNotNull(receiver2);
                 _waitHandle1.Set();
+            }
+        }
+
+        public class TestSingleReleaseSession
+        {
+            private static int count = 0;
+            public static void RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage message,
+                ServiceBusSessionMessageActions sessionActions)
+            {
+                switch (count)
+                {
+                    case 0:
+                        Assert.AreEqual("session1", message.SessionId);
+                        sessionActions.ReleaseSession();
+                        break;
+                    case 1:
+                    case 2:
+                        Assert.AreEqual("session2", message.SessionId);
+                        break;
+                    case 3:
+                        Assert.AreEqual("session1", message.SessionId);
+                        _waitHandle1.Set();
+                        break;
+                }
+
+                count++;
+            }
+        }
+
+        public class TestMultipleReleaseSession
+        {
+            private static int count = 0;
+            public static void RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage[] messages,
+                ServiceBusSessionMessageActions sessionActions)
+            {
+                var message = messages.Single();
+                switch (count)
+                {
+                    case 0:
+                        Assert.AreEqual("session1", message.SessionId);
+                        sessionActions.ReleaseSession();
+                        break;
+                    case 1:
+                    case 2:
+                        Assert.AreEqual("session2", message.SessionId);
+                        break;
+                    case 3:
+                        Assert.AreEqual("session1", message.SessionId);
+                        _waitHandle1.Set();
+                        break;
+                }
+
+                count++;
             }
         }
 
@@ -881,7 +1009,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // override the options computed from ServiceBusOptions
                 options.SessionIdleTimeout = TimeSpan.FromSeconds(90);
                 options.MaxConcurrentSessions = 1;
-                if (entityPath == _firstQueueScope.QueueName)
+                if (entityPath == FirstQueueScope.QueueName)
                 {
                     processor = client.CreateSessionProcessor(entityPath, options);
                 }
@@ -936,6 +1064,52 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await Task.Delay(250);
 
                 Interlocked.Increment(ref InvocationCount);
+            }
+        }
+
+        public class TestReceiveFromFunction
+        {
+            public static ServiceBusReceiveActions ReceiveActions { get; private set; }
+
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions,
+                ServiceBusReceiveActions receiveActions)
+            {
+                ReceiveActions = receiveActions;
+                await messageActions.DeferMessageAsync(message);
+
+                var receiveDeferred = await receiveActions.ReceiveDeferredMessagesAsync(
+                    new[] { message.SequenceNumber });
+
+                var received = await receiveActions.ReceiveMessagesAsync(1);
+                Assert.IsNotNull(received);
+
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestReceiveFromFunction_Batch
+        {
+            public static ServiceBusReceiveActions ReceiveActions { get; private set; }
+
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
+                ServiceBusReceivedMessage[] messages,
+                ServiceBusMessageActions messageActions,
+                ServiceBusReceiveActions receiveActions)
+            {
+                ReceiveActions = receiveActions;
+                await messageActions.DeferMessageAsync(messages.First());
+
+                var receiveDeferred = await receiveActions.ReceiveDeferredMessagesAsync(
+                    new[] { messages.First().SequenceNumber });
+
+                var received = await receiveActions.ReceiveMessagesAsync(1);
+                Assert.IsNotNull(received);
+
+                _waitHandle1.Set();
             }
         }
     }

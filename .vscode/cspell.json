@@ -27,7 +27,6 @@
     "*.sln",
     "*.user",
     ".vscode/cspell.json",
-
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -52,6 +51,7 @@
     "azsdk",
     "blazor",
     "contoso",
+    "cref",
     "deduplication",
     "deserializable",
     "deserializes",
@@ -98,6 +98,13 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/appplatform/**/*.cs",
+      "words": [
+        "dynatrace",
+        "fqdns"
+      ]
+    },
+    {
       "filename": "**/sdk/azurestackhci/**/*.cs",
       "words": [
         "cref",
@@ -134,7 +141,9 @@
       "words": [
         "apim",
         "nigiri",
-        "qnas"
+        "qnas",
+        "petabit",
+        "Picometer"
       ]
     },
     {
@@ -154,8 +163,40 @@
       ]
     },
     {
+      "filename": "**/sdk/containerapps/**/*",
+      "words": [
+        "dapr",
+        "grpc",
+        "proto"
+      ]
+    },
+    {
+      "filename": "**/sdk/desktopvirtualization/**/*.cs",
+      "words": [
+        "adfs",
+        "fslogix",
+        "msix",
+        "sso",
+        "unhide"
+      ]
+    },
+    {
       "filename": "**/sdk/deviceupdate/**/*.cs",
       "words": ["Fqdns"]
+    },
+    {
+      "filename": "**/sdk/dynatrace/**/*.cs",
+      "words": [
+        "Dynatrace",
+        "Liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/elasticsan/**/*.cs",
+      "words": [
+        "iscsi",
+        "mbps"
+      ]
     },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
@@ -206,6 +247,13 @@
         "setsas",
         "mhsm",
         "mhsmip"
+      ]
+    },
+    {
+      "filename": "**/sdk/reservations/**/*.cs",
+      "words": [
+        "msrp",
+        "hana"
       ]
     },
     {
@@ -267,7 +315,7 @@
     {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
-        "Iscsi"
+        "iscsi"
       ]
     },
     {
@@ -313,6 +361,7 @@
         "Idrg",
         "Esdni",
         "Eugps",
+        "Fhir",
         "Plregon",
         "Usuk"
       ]
@@ -329,6 +378,15 @@
         "Guage",
         "Plex",
         "Vstsrm"
+      ]
+    },
+	{
+      "filename": "**/sdk/workloads/**/*.cs",
+      "words": [
+        "ascs",
+        "hana",
+        "ssdlrs",
+        "vmss"
       ]
     }
   ],

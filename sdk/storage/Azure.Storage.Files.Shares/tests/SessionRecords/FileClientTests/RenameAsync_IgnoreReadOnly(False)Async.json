@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "fede1db7-720f-b286-2ab8-fcea0304fe63",
         "x-ms-date": "Tue, 30 Nov 2021 19:31:26 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -25,7 +25,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "fede1db7-720f-b286-2ab8-fcea0304fe63",
         "x-ms-request-id": "fe9f84df-b01a-0009-7c20-e63c4a000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -66,7 +66,7 @@
         "x-ms-file-permission-key": "10156757773834485186*23892369358363523",
         "x-ms-request-id": "fe9f84e1-b01a-0009-7d20-e63c4a000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -90,7 +90,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -109,7 +109,7 @@
         "x-ms-file-permission-key": "16312887433045634277*23892369358363523",
         "x-ms-request-id": "fe9f84e2-b01a-0009-7e20-e63c4a000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -133,7 +133,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -152,7 +152,7 @@
         "x-ms-file-permission-key": "16312887433045634277*23892369358363523",
         "x-ms-request-id": "fe9f84e3-b01a-0009-7f20-e63c4a000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -171,9 +171,9 @@
         "x-ms-date": "Tue, 30 Nov 2021 19:31:26 GMT",
         "x-ms-file-rename-ignore-readonly": "false",
         "x-ms-file-rename-replace-if-exists": "true",
-        "x-ms-file-rename-source": "https%3A%2F%2Ffp8xscnapby3pev24a.file.preprod.core.windows.net%2Ftest-share-7c5e7eb6-4a32-be61-6023-1176446e6185%2Ftest-directory-9d7ba656-ee11-5194-d966-b43d592b164e%2Ftest-file-97e0ada1-d745-f3d3-307f-f3dd3032e81f=",
+        "x-ms-file-rename-source": "https://fp8xscnapby3pev24a.file.preprod.core.windows.net/test-share-7c5e7eb6-4a32-be61-6023-1176446e6185/test-directory-9d7ba656-ee11-5194-d966-b43d592b164e/test-file-97e0ada1-d745-f3d3-307f-f3dd3032e81f",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 409,
@@ -184,7 +184,7 @@
         "x-ms-client-request-id": "f3f09e4e-7c71-cccd-34b7-663d66be7643",
         "x-ms-error-code": "ReadOnlyAttribute",
         "x-ms-request-id": "fe9f84e4-b01a-0009-8020-e63c4a000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EReadOnlyAttribute\u003C/Code\u003E\u003CMessage\u003EThe specified resource is read-only and cannot be modified at this time.\n",
@@ -207,7 +207,7 @@
         "x-ms-date": "Tue, 30 Nov 2021 19:31:26 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -216,7 +216,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "fd3873eb-f03e-ba7a-a00a-c1fbc1a81100",
         "x-ms-request-id": "fe9f84e5-b01a-0009-0120-e63c4a000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

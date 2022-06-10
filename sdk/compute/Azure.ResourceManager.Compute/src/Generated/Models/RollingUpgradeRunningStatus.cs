@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of RollingUpgradeRunningStatus. </summary>
         /// <param name="code"> Code indicating the current status of the upgrade. </param>
-        /// <param name="startTime"> Start time of the upgrade. </param>
+        /// <param name="startOn"> Start time of the upgrade. </param>
         /// <param name="lastAction"> The last action performed on the rolling upgrade. </param>
-        /// <param name="lastActionTime"> Last action time of the upgrade. </param>
-        internal RollingUpgradeRunningStatus(RollingUpgradeStatusCode? code, DateTimeOffset? startTime, RollingUpgradeActionType? lastAction, DateTimeOffset? lastActionTime)
+        /// <param name="lastActionOn"> Last action time of the upgrade. </param>
+        internal RollingUpgradeRunningStatus(RollingUpgradeStatusCode? code, DateTimeOffset? startOn, RollingUpgradeActionType? lastAction, DateTimeOffset? lastActionOn)
         {
             Code = code;
-            StartTime = startTime;
+            StartOn = startOn;
             LastAction = lastAction;
-            LastActionTime = lastActionTime;
+            LastActionOn = lastActionOn;
         }
 
         /// <summary> Code indicating the current status of the upgrade. </summary>
         public RollingUpgradeStatusCode? Code { get; }
         /// <summary> Start time of the upgrade. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The last action performed on the rolling upgrade. </summary>
         public RollingUpgradeActionType? LastAction { get; }
         /// <summary> Last action time of the upgrade. </summary>
-        public DateTimeOffset? LastActionTime { get; }
+        public DateTimeOffset? LastActionOn { get; }
     }
 }

@@ -14,7 +14,7 @@ Azure Cognitive Services Document Translation is a cloud service that translates
 Install the Azure Document Translation client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.AI.Translation.Document --prerelease
+dotnet add package Azure.AI.Translation.Document
 ```
 
 > Note: This version of the client library defaults to the `v1.0` version of the service.
@@ -89,8 +89,8 @@ Create a [custom subdomain][custom_subdomain] for your resource in order to use 
 
 To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
 
-```PowerShell
-Install-Package Azure.Identity
+```dotnetcli
+dotnet add package Azure.Identity
 ```
 
 You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to your Translator resource by assigning the `"Cognitive Services User"` role to your service principal.
@@ -155,7 +155,7 @@ Note that documents written to a target container must have unique names. So you
 
 ### Long-Running Operations
 
-Document Translation is implemented as a [**long-running operation**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed successfully or failed.
+Document Translation is implemented as a [**long-running operation**][dotnet_lro].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed successfully or failed.
 
 For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns a `PageableOperation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#start-translation-asynchronously).
 
@@ -459,7 +459,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [single_service]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account?tabs=singleservice%2Cwindows
 [azure_portal_create_DT_resource]: https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesTextTranslation
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
-[dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
+[dotnet_lro]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt
 [source_containers]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#create-your-azure-blob-storage-containers
 [custom_model]: https://docs.microsoft.com/azure/cognitive-services/translator/custom-translator/quickstart-build-deploy-custom-model
 [glossary]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview#supported-glossary-formats

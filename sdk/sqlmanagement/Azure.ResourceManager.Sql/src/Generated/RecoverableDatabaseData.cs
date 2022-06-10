@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the RecoverableDatabase data model. </summary>
-    public partial class RecoverableDatabaseData : Resource
+    public partial class RecoverableDatabaseData : ResourceData
     {
         /// <summary> Initializes a new instance of RecoverableDatabaseData. </summary>
         public RecoverableDatabaseData()
@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of RecoverableDatabaseData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="edition"> The edition of the database. </param>
         /// <param name="serviceLevelObjective"> The service level objective name of the database. </param>
         /// <param name="elasticPoolName"> The elastic pool name of the database. </param>
-        /// <param name="lastAvailableBackupDate"> The last available backup date of the database (ISO8601 format). </param>
-        internal RecoverableDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string edition, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? lastAvailableBackupDate) : base(id, name, type, systemData)
+        /// <param name="lastAvailableBackupOn"> The last available backup date of the database (ISO8601 format). </param>
+        internal RecoverableDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string edition, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? lastAvailableBackupOn) : base(id, name, resourceType, systemData)
         {
             Edition = edition;
             ServiceLevelObjective = serviceLevelObjective;
             ElasticPoolName = elasticPoolName;
-            LastAvailableBackupDate = lastAvailableBackupDate;
+            LastAvailableBackupOn = lastAvailableBackupOn;
         }
 
         /// <summary> The edition of the database. </summary>
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The elastic pool name of the database. </summary>
         public string ElasticPoolName { get; }
         /// <summary> The last available backup date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? LastAvailableBackupDate { get; }
+        public DateTimeOffset? LastAvailableBackupOn { get; }
     }
 }

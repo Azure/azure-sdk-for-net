@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> An Azure Cosmos DB SQL container event. </summary>
-    public partial class RestorableSqlContainer : Resource
+    public partial class RestorableSqlContainer : ResourceData
     {
         /// <summary> Initializes a new instance of RestorableSqlContainer. </summary>
         internal RestorableSqlContainer()
@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of RestorableSqlContainer. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB SQL container event. </param>
-        internal RestorableSqlContainer(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, RestorableSqlContainerPropertiesResource resource) : base(id, name, type, systemData)
+        internal RestorableSqlContainer(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestorableSqlContainerPropertiesResource resource) : base(id, name, resourceType, systemData)
         {
             Resource = resource;
         }

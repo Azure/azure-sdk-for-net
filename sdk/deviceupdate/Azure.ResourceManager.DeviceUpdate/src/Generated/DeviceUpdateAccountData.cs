@@ -13,31 +13,34 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing the DeviceUpdateAccount data model. </summary>
-    public partial class DeviceUpdateAccountData : TrackedResource
+    public partial class DeviceUpdateAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
         /// <param name="location"> The location. </param>
         public DeviceUpdateAccountData(AzureLocation location) : base(location)
         {
+            PrivateEndpointConnections = new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The type of identity used for the resource. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="hostName"> API host name. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
-        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, systemData, tags, location)
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the account. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the account. </param>
+        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
             HostName = hostName;
             PublicNetworkAccess = publicNetworkAccess;
+            PrivateEndpointConnections = privateEndpointConnections;
         }
 
         /// <summary> The type of identity used for the resource. </summary>
@@ -46,7 +49,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> API host name. </summary>
         public string HostName { get; }
-        /// <summary> Whether or not public network access is allowed for the container registry. </summary>
+        /// <summary> Whether or not public network access is allowed for the account. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> List of private endpoint connections associated with the account. </summary>
+        public IList<DeviceUpdatePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

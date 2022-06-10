@@ -24,10 +24,10 @@ namespace Azure.AI.Translation.Document
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(StorageType))
+            if (Optional.IsDefined(StorageUriKind))
             {
                 writer.WritePropertyName("storageType");
-                writer.WriteStringValue(StorageType.Value.ToSerialString());
+                writer.WriteStringValue(StorageUriKind.Value.ToSerialString());
             }
             writer.WriteEndObject();
         }

@@ -5,9 +5,11 @@ using OpenTelemetry.Trace;
 using System;
 using System.Reflection;
 
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class AzureMonitorTraceExporterTests
     {
@@ -33,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             GetInternalFields(exporter, out string ikey, out string endpoint);
             Assert.Equal(testIkey, ikey);
-            Assert.Equal(ConnectionString.Constants.DefaultIngestionEndpoint, endpoint);
+            Assert.Equal(Constants.DefaultIngestionEndpoint, endpoint);
         }
 
         [Fact]
@@ -64,20 +66,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // endpoint: AzureMonitorTraceExporter.AzureMonitorTransmitter.ServiceRestClient.endpoint
 
             ikey = typeof(AzureMonitorTraceExporter)
-                .GetField("instrumentationKey", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("_instrumentationKey", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(exporter)
                 .ToString();
 
             var transmitter = typeof(AzureMonitorTraceExporter)
-                .GetField("Transmitter", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("_transmitter", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(exporter);
 
             var serviceRestClient = typeof(AzureMonitorTransmitter)
-                .GetField("applicationInsightsRestClient", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("_applicationInsightsRestClient", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(transmitter);
 
             endpoint = typeof(ApplicationInsightsRestClient)
-                .GetField("host", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("_host", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(serviceRestClient)
                 .ToString();
         }

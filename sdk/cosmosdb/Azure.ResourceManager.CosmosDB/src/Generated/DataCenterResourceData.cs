@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the DataCenterResource data model. </summary>
-    public partial class DataCenterResourceData : Resource
+    public partial class DataCenterResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of DataCenterResourceData. </summary>
         public DataCenterResourceData()
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of DataCenterResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of a managed Cassandra data center. </param>
-        internal DataCenterResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DataCenterResourceProperties properties) : base(id, name, type, systemData)
+        internal DataCenterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCenterResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

@@ -19,6 +19,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace Compute.Tests
@@ -118,7 +119,8 @@ namespace Compute.Tests
 
                 IPage<GalleryImage> listGalleryImagesResult = m_CrpClient.GalleryImages.ListByGallery(rgName, galleryName);
                 Assert.Single(listGalleryImagesResult);
-                Assert.Null(listGalleryImagesResult.NextPageLink);
+                Assert.Equal(1, listGalleryImagesResult.Count());
+                //Assert.Null(listGalleryImagesResult.NextPageLink);
 
                 m_CrpClient.GalleryImages.Delete(rgName, galleryName, galleryImageName);
                 listGalleryImagesResult = m_CrpClient.GalleryImages.ListByGallery(rgName, galleryName);
@@ -193,13 +195,13 @@ namespace Compute.Tests
                     IPage<GalleryImageVersion> listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
                         ListByGalleryImage(rgName, galleryName, galleryImageName);
                     Assert.Single(listGalleryImageVersionsResult);
-                    Assert.Null(listGalleryImageVersionsResult.NextPageLink);
+                    Assert.Equal(1, listGalleryImageVersionsResult.Count());
+                    //Assert.Null(listGalleryImageVersionsResult.NextPageLink);
 
                     m_CrpClient.GalleryImageVersions.Delete(rgName, galleryName, galleryImageName, galleryImageVersionName);
                     listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
                         ListByGalleryImage(rgName, galleryName, galleryImageName);
                     Assert.Empty(listGalleryImageVersionsResult);
-                    Assert.Null(listGalleryImageVersionsResult.NextPageLink);
                     Trace.TraceInformation(string.Format("Deleted the gallery image version: {0} in gallery image: {1}",
                         galleryImageVersionName, galleryImageName));
 
@@ -230,7 +232,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string location = ComputeManagementTestUtilities.DefaultLocation;
+                string location = galleryHomeLocation;
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
 
@@ -275,13 +277,14 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string location = ComputeManagementTestUtilities.DefaultLocation;
+                string location = galleryHomeLocation;
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
                 string applicationName = ComputeManagementTestUtilities.GenerateName("psTestSourceApplication");
                 string galleryName = ComputeManagementTestUtilities.GenerateName(GalleryNamePrefix);
                 string galleryApplicationName = ComputeManagementTestUtilities.GenerateName(GalleryApplicationNamePrefix);
+                string galleryApplicationVersionName = "1.0.0";
 
                 try
                 {
@@ -300,7 +303,6 @@ namespace Compute.Tests
                     Trace.TraceInformation(string.Format("Created the gallery application: {0} in gallery: {1}", galleryApplicationName,
                         galleryName));
 
-                    string galleryApplicationVersionName = "1.0.0";
                     GalleryApplicationVersion inputApplicationVersion = GetTestInputGalleryApplicationVersion(applicationMediaLink);
                     m_CrpClient.GalleryApplicationVersions.CreateOrUpdate(rgName, galleryName, galleryApplicationName,
                         galleryApplicationVersionName, inputApplicationVersion);
@@ -332,6 +334,7 @@ namespace Compute.Tests
                     m_CrpClient.GalleryApplicationVersions.Delete(rgName, galleryName, galleryApplicationName, galleryApplicationVersionName);
                     Trace.TraceInformation(string.Format("Deleted the gallery application version: {0} in gallery application: {1}",
                         galleryApplicationVersionName, galleryApplicationName));
+                    ComputeManagementTestUtilities.WaitSeconds(300);
 
                     m_CrpClient.GalleryApplications.Delete(rgName, galleryName, galleryApplicationName);
                     Trace.TraceInformation("Deleted the gallery application.");
@@ -347,70 +350,140 @@ namespace Compute.Tests
 
 
         [Fact]
-        public void Gallery_WithSharingProfile_CRUD_Tests()
+        public void Gallery_SharingToSubscriptionAndTenant_CRUD_Tests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
 
-                m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = galleryHomeLocation });
-                Trace.TraceInformation("Created the resource group: " + rgName);
-
-                string galleryName = ComputeManagementTestUtilities.GenerateName(GalleryNamePrefix);
-                Gallery galleryIn = GetTestInputSharedGallery();
-                m_CrpClient.Galleries.CreateOrUpdate(rgName, galleryName, galleryIn);
-                Trace.TraceInformation(string.Format("Created the  shared gallery: {0} in resource group: {1} with sharing profile permission: {2}",
-                    galleryName, rgName, galleryIn.SharingProfile.Permissions));
-
-                Gallery galleryOut = m_CrpClient.Galleries.Get(rgName, galleryName);
-                Trace.TraceInformation("Got the gallery.");
-                Assert.NotNull(galleryOut);
-                ValidateGallery(galleryIn, galleryOut);
-
-                Trace.TraceInformation("Update the sharing profile via post, add the sharing profile groups.");
-                string newTenantId = "583d66a9-0041-4999-8838-75baece101d5";
-                SharingProfileGroup tenantGroups = new SharingProfileGroup()
+                try
                 {
-                    Type = "AADTenants",
-                    Ids = new List<string> { newTenantId }
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = galleryHomeLocation });
+                    Trace.TraceInformation("Created the resource group: " + rgName);
 
-                };
+                    string galleryName = ComputeManagementTestUtilities.GenerateName(GalleryNamePrefix);
+                    Gallery galleryIn = GetTestInputSharedGallery();
+                    m_CrpClient.Galleries.CreateOrUpdate(rgName, galleryName, galleryIn);
+                    Trace.TraceInformation(string.Format("Created the  shared gallery: {0} in resource group: {1} with sharing profile permission: {2}",
+                        galleryName, rgName, galleryIn.SharingProfile.Permissions));
 
-                string newSubId = "640c5810-13bf-4b82-b94d-f38c2565e3bc";
-                SharingProfileGroup subGroups = new SharingProfileGroup()
+                    Gallery galleryOut = m_CrpClient.Galleries.Get(rgName, galleryName);
+                    Trace.TraceInformation("Got the gallery.");
+                    Assert.NotNull(galleryOut);
+                    ValidateGallery(galleryIn, galleryOut);
+                    Assert.Equal("Groups", galleryOut.SharingProfile.Permissions);
+
+                    Trace.TraceInformation("Update the sharing profile via post, add the sharing profile groups.");
+                    string newTenantId = "583d66a9-0041-4999-8838-75baece101d5";
+                    SharingProfileGroup tenantGroups = new SharingProfileGroup()
+                    {
+                        Type = "AADTenants",
+                        Ids = new List<string> { newTenantId }
+
+                    };
+
+                    string newSubId = "640c5810-13bf-4b82-b94d-f38c2565e3bc";
+                    SharingProfileGroup subGroups = new SharingProfileGroup()
+                    {
+                        Type = "Subscriptions",
+                        Ids = new List<string> { newSubId }
+
+                    };
+
+                    List<SharingProfileGroup> groups = new List<SharingProfileGroup> { tenantGroups, subGroups };
+                    SharingUpdate sharingUpdate = new SharingUpdate()
+                    {
+                        OperationType = SharingUpdateOperationTypes.Add,
+                        Groups = groups
+                    };
+
+                    m_CrpClient.GallerySharingProfile.Update(rgName, galleryName, sharingUpdate);
+
+                    Gallery galleryOutWithSharingProfile = m_CrpClient.Galleries.Get(rgName, galleryName, SelectPermissions.Permissions);
+                    Trace.TraceInformation("Got the gallery");
+                    Assert.NotNull(galleryOutWithSharingProfile);
+
+                    ValidateSharingProfile(galleryIn, galleryOutWithSharingProfile, groups);
+
+                    Trace.TraceInformation("Reset this gallery to private before deleting it.");
+                    SharingUpdate resetPrivateUpdate = new SharingUpdate()
+                    {
+                        OperationType = SharingUpdateOperationTypes.Reset,
+                        Groups = null
+                    };
+
+                    m_CrpClient.GallerySharingProfile.Update(rgName, galleryName, resetPrivateUpdate);
+
+                    Trace.TraceInformation("Deleting this gallery.");
+                    m_CrpClient.Galleries.Delete(rgName, galleryName);
+                }
+                finally
                 {
-                    Type = "Subscriptions",
-                    Ids = new List<string> { newSubId }
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
 
-                };
+                // resource groups cleanup is taken cared by MockContext.Dispose() method.
+            }
+        }
 
-                List<SharingProfileGroup> groups = new List<SharingProfileGroup> { tenantGroups, subGroups };
-                SharingUpdate sharingUpdate = new SharingUpdate()
+        [Fact]
+        public void Gallery_SharingToCommunity_CRUD_Tests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+                string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
+
+                try
                 {
-                    OperationType = SharingUpdateOperationTypes.Add,
-                    Groups = groups
-                };
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = galleryHomeLocation });
+                    Trace.TraceInformation("Created the resource group: " + rgName);
 
-                m_CrpClient.GallerySharingProfile.Update(rgName, galleryName,sharingUpdate);
+                    string galleryName = ComputeManagementTestUtilities.GenerateName(GalleryNamePrefix);
+                    Gallery galleryIn = GetTestInputCommunityGallery();
+                    m_CrpClient.Galleries.CreateOrUpdate(rgName, galleryName, galleryIn);
+                    Trace.TraceInformation(string.Format("Created the community gallery: {0} in resource group: {1} with sharing profile permission: {2}",
+                        galleryName, rgName, galleryIn.SharingProfile.Permissions));
 
-                Gallery galleryOutWithSharingProfile = m_CrpClient.Galleries.Get(rgName, galleryName, SelectPermissions.Permissions);
-                Trace.TraceInformation("Got the gallery");
-                Assert.NotNull(galleryOut);
+                    Gallery galleryOut = m_CrpClient.Galleries.Get(rgName, galleryName);
+                    Trace.TraceInformation("Got the gallery.");
+                    Assert.NotNull(galleryOut);
+                    ValidateGallery(galleryIn, galleryOut);
+                    Assert.NotNull(galleryOut.SharingProfile);
+                    Assert.NotNull(galleryOut.SharingProfile.CommunityGalleryInfo);
+                    Assert.Equal("Community", galleryOut.SharingProfile.Permissions);
 
-                ValidateSharingProfile(galleryIn, galleryOutWithSharingProfile, groups);
+                    Trace.TraceInformation("Enable sharing to the public via post");
 
-                Trace.TraceInformation("Reset this gallery to private before deleting it.");
-                SharingUpdate resetPrivateUpdate = new SharingUpdate()
+                    SharingUpdate sharingUpdate = new SharingUpdate()
+                    {
+                        OperationType = SharingUpdateOperationTypes.EnableCommunity
+                    };
+
+                    m_CrpClient.GallerySharingProfile.Update(rgName, galleryName, sharingUpdate);
+
+                    Gallery galleryOutWithSharingProfile = m_CrpClient.Galleries.Get(rgName, galleryName, SelectPermissions.Permissions);
+                    Trace.TraceInformation("Got the gallery");
+                    Assert.NotNull(galleryOutWithSharingProfile);
+                    CommunityGalleryInfo communityGalleryInfo = JsonConvert.DeserializeObject<CommunityGalleryInfo>(galleryOutWithSharingProfile.SharingProfile.CommunityGalleryInfo.ToString());
+                    Assert.True(communityGalleryInfo.CommunityGalleryEnabled);
+
+                    Trace.TraceInformation("Reset this gallery to private before deleting it.");
+                    SharingUpdate resetPrivateUpdate = new SharingUpdate()
+                    {
+                        OperationType = SharingUpdateOperationTypes.Reset
+                    };
+
+                    m_CrpClient.GallerySharingProfile.Update(rgName, galleryName, resetPrivateUpdate);
+
+                    Trace.TraceInformation("Deleting this gallery.");
+                    m_CrpClient.Galleries.Delete(rgName, galleryName);
+                }
+                finally
                 {
-                    OperationType = SharingUpdateOperationTypes.Reset,
-                    Groups = null
-                };
-
-                m_CrpClient.GallerySharingProfile.Update(rgName, galleryName, resetPrivateUpdate);
-                
-                Trace.TraceInformation("Deleting this gallery.");
-                m_CrpClient.Galleries.Delete(rgName, galleryName);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
                 // resource groups cleanup is taken cared by MockContext.Dispose() method.
             }
         }
@@ -547,6 +620,26 @@ namespace Compute.Tests
             };
         }
 
+        private Gallery GetTestInputCommunityGallery()
+        {
+            return new Gallery
+            {
+                Location = galleryHomeLocation,
+                Description = "This is a sample gallery description",
+                SharingProfile = new SharingProfile
+                {
+                    Permissions = "Community",
+                    CommunityGalleryInfo = new CommunityGalleryInfo()
+                    {
+                        PublicNamePrefix = "PsTestCg",
+                        Eula = "PsEual",
+                        PublisherUri = "PsTestUri",
+                        PublisherContact = "SIG@microsoft.com"
+                    }
+                }
+            };
+        }
+
         private GalleryImage GetTestInputGalleryImage()
         {
             return new GalleryImage
@@ -667,7 +760,7 @@ namespace Compute.Tests
             return new GalleryApplication
             {
                 Eula = "This is the gallery application EULA.",
-                Location = ComputeManagementTestUtilities.DefaultLocation,
+                Location = galleryHomeLocation,
                 SupportedOSType = OperatingSystemTypes.Windows,
                 PrivacyStatementUri = "www.privacystatement.com",
                 ReleaseNoteUri = "www.releasenote.com",
@@ -679,7 +772,7 @@ namespace Compute.Tests
         {
             return new GalleryApplicationVersion
             {
-                Location = ComputeManagementTestUtilities.DefaultLocation,
+                Location = galleryHomeLocation,
                 PublishingProfile = new GalleryApplicationVersionPublishingProfile
                 {
                     Source = new UserArtifactSource
@@ -691,10 +784,20 @@ namespace Compute.Tests
                         Install = "powershell -command \"Expand-Archive -Path test.zip -DestinationPath C:\\package\"",
                         Remove = "del C:\\package "
                     },
+                    Settings = new UserArtifactSettings
+                    {
+                        PackageFileName = "test.zip",
+                        ConfigFileName = "config.cfg"
+                    },
+                    AdvancedSettings = new Dictionary<string, string>()
+                    {
+                        { "cacheLimit", "500" },
+                        { "user", "root"}
+                    },
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
                     TargetRegions = new List<TargetRegion> {
-                        new TargetRegion { Name = ComputeManagementTestUtilities.DefaultLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
+                        new TargetRegion { Name = galleryHomeLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
                     },
                     EndOfLifeDate = DateTime.Today.AddDays(10).Date
                 }
@@ -739,6 +842,16 @@ namespace Compute.Tests
             Assert.NotNull(applicationVersionOut.PublishingProfile.EndOfLifeDate);
             Assert.NotNull(applicationVersionOut.PublishingProfile.PublishedDate);
             Assert.NotNull(applicationVersionOut.Id);
+            Assert.Equal(applicationVersionIn.PublishingProfile.Settings.PackageFileName, applicationVersionOut.PublishingProfile.Settings.PackageFileName);
+            Assert.Equal(applicationVersionIn.PublishingProfile.Settings.ConfigFileName, applicationVersionOut.PublishingProfile.Settings.ConfigFileName);
+            IDictionary<string, string> advancedSettingsIn = applicationVersionIn.PublishingProfile.AdvancedSettings;
+            IDictionary<string, string> advancedSettingsOut = applicationVersionOut.PublishingProfile.AdvancedSettings;
+            Assert.Equal(advancedSettingsIn.Count, advancedSettingsOut.Count);
+            foreach (KeyValuePair<string, string> kvp in advancedSettingsIn)
+            {
+                Assert.True(advancedSettingsOut.ContainsKey(kvp.Key));
+                Assert.Equal(kvp.Value, advancedSettingsOut[kvp.Key]);
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     [ClientTestFixture(
-    DocumentAnalysisClientOptions.ServiceVersion.V2022_01_30_preview)]
+    DocumentAnalysisClientOptions.ServiceVersion.V2022_06_30_preview)]
     public class DocumentAnalysisLiveTestBase : RecordedTestBase<DocumentAnalysisTestEnvironment>
     {
         /// <summary>
@@ -19,10 +19,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         private readonly DocumentAnalysisClientOptions.ServiceVersion _serviceVersion;
 
         public DocumentAnalysisLiveTestBase(bool isAsync, DocumentAnalysisClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, useLegacyTransport: true)
+            : base(isAsync)
         {
             _serviceVersion = serviceVersion;
-            Sanitizer = new DocumentAnalysisRecordedTestSanitizer();
+            JsonPathSanitizers.Add("$..accessToken");
+            JsonPathSanitizers.Add("$..containerUrl");
+            SanitizedHeaders.Add(Constants.AuthorizationHeader);
         }
 
         /// <summary>

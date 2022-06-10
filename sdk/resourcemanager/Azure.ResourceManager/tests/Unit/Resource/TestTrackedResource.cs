@@ -4,7 +4,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Tests
 {
-    public class TestTrackedResource : TrackedResource
+    public class TestTrackedResource : TrackedResourceData
     {
         public TestTrackedResource(ResourceIdentifier id) : this(id, AzureLocation.WestUS)
         {

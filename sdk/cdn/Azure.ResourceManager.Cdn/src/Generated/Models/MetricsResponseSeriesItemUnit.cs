@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CountValue = "count";
         private const string BytesValue = "bytes";
         private const string BitsPerSecondValue = "bitsPerSecond";
+        private const string MilliSecondsValue = "milliSeconds";
 
         /// <summary> count. </summary>
         public static MetricsResponseSeriesItemUnit Count { get; } = new MetricsResponseSeriesItemUnit(CountValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Cdn.Models
         public static MetricsResponseSeriesItemUnit Bytes { get; } = new MetricsResponseSeriesItemUnit(BytesValue);
         /// <summary> bitsPerSecond. </summary>
         public static MetricsResponseSeriesItemUnit BitsPerSecond { get; } = new MetricsResponseSeriesItemUnit(BitsPerSecondValue);
+        /// <summary> milliSeconds. </summary>
+        public static MetricsResponseSeriesItemUnit MilliSeconds { get; } = new MetricsResponseSeriesItemUnit(MilliSecondsValue);
         /// <summary> Determines if two <see cref="MetricsResponseSeriesItemUnit"/> values are the same. </summary>
         public static bool operator ==(MetricsResponseSeriesItemUnit left, MetricsResponseSeriesItemUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricsResponseSeriesItemUnit"/> values are not the same. </summary>

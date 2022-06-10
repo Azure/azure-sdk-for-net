@@ -21,7 +21,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -33,15 +36,23 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Initializes a new instance of RoleAssignmentsClient. </summary>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public RoleAssignmentsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AccessControlClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of RoleAssignmentsClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public RoleAssignmentsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options = null)
+        public RoleAssignmentsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AccessControlClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
@@ -50,6 +61,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
@@ -103,9 +115,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -113,7 +123,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, context);
+                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -125,6 +135,7 @@ namespace Azure.Analytics.Synapse.AccessControl
 
         /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
@@ -178,9 +189,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response CheckPrincipalAccess(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual Response CheckPrincipalAccess(RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -188,7 +197,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, context);
+                using HttpMessage message = CreateCheckPrincipalAccessRequest(content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -237,9 +246,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
             scope0.Start();
@@ -294,9 +301,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
             scope0.Start();
@@ -315,8 +320,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -353,18 +360,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, context);
+                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -377,8 +382,10 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Create role assignment. </summary>
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;text/json&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -415,18 +422,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, context);
+                using HttpMessage message = CreateCreateRoleAssignmentRequest(roleAssignmentId, content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -440,6 +445,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -468,11 +474,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
             scope0.Start();
@@ -492,6 +496,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="roleAssignmentId"> The ID of the role assignment. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -520,11 +525,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
             scope0.Start();
@@ -545,6 +548,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -564,11 +568,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
             scope0.Start();
@@ -589,6 +591,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -608,11 +611,9 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
             scope0.Start();
@@ -628,9 +629,9 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        internal HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content, ContentType contentType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -639,15 +640,14 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetRoleAssignmentsRequest(string roleId, string principalId, string scope, string continuationToken, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -672,13 +672,12 @@ namespace Azure.Analytics.Synapse.AccessControl
                 request.Headers.Add("x-ms-continuation", continuationToken);
             }
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateCreateRoleAssignmentRequest(string roleAssignmentId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRoleAssignmentRequest(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -688,15 +687,14 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetRoleAssignmentByIdRequest(string roleAssignmentId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -706,13 +704,12 @@ namespace Azure.Analytics.Synapse.AccessControl
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteRoleAssignmentByIdRequest(string roleAssignmentId, string scope, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -726,36 +723,12 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
-            message.ResponseClassifier = ResponseClassifier200204.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier200204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier200204;
+        private static ResponseClassifier ResponseClassifier200204 => _responseClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
     }
 }

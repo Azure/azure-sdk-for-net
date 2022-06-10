@@ -6,10 +6,13 @@ using System;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal static class AzureMonitorExporterMetricExtensions
+    /// <summary>
+    /// Extension methods to simplify registering of Azure Monitor Metrics Exporter.
+    /// </summary>
+    public static class AzureMonitorExporterMetricExtensions
     {
         /// <summary>
-        /// Adds Azure monitor metrics exporter.
+        /// Adds Azure Monitor Metric exporter.
         /// </summary>
         /// <param name="builder"><see cref="MeterProviderBuilder"/> builder to use.</param>
         /// <param name="configure">Exporter configuration options.</param>
@@ -20,9 +23,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
+            // TODO: Fallback to default location if location provided via options does not work.
+            if (!options.DisableOfflineStorage && options.StorageDirectory == null)
+            {
+                options.StorageDirectory = StorageHelper.GetDefaultStorageDirectory();
+            }
+
             var exporter = new AzureMonitorMetricExporter(options);
 
-            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)));
+            return builder.AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(options))
+            { TemporalityPreference = MetricReaderTemporalityPreference.Delta });
         }
     }
 }

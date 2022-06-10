@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the DataMaskingPolicy data model. </summary>
-    public partial class DataMaskingPolicyData : Resource
+    public partial class DataMaskingPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of DataMaskingPolicyData. </summary>
         public DataMaskingPolicyData()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of DataMaskingPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the data masking policy. </param>
         /// <param name="kind"> The kind of data masking policy. Metadata, used for Azure portal. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="exemptPrincipals"> The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries. </param>
         /// <param name="applicationPrincipals"> The list of the application principals. This is a legacy parameter and is no longer used. </param>
         /// <param name="maskingLevel"> The masking level. This is a legacy parameter and is no longer used. </param>
-        internal DataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, string kind, DataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel) : base(id, name, type, systemData)
+        internal DataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, string kind, DataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;

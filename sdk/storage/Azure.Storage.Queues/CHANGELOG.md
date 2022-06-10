@@ -1,14 +1,16 @@
 # Release History
 
-## 12.9.0-beta.4 (Unreleased)
+## 12.11.0-beta.1 (Unreleased)
+- This release contains bug fixes to improve quality.
 
-### Features Added
+## 12.10.0 (2022-05-02)
+- Includes all features from 12.10.0-beta.1.
 
-### Breaking Changes
+## 12.10.0-beta.1 (2022-04-12)
+- This release contains bug fixes to improve quality.
 
-### Bugs Fixed
-
-### Other Changes
+## 12.9.0 (2022-03-10)
+- Includes all features from 12.9.0-beta.1, 12.9.0-beta.2, and 12.9.0-beta.3.
 
 ## 12.9.0-beta.3 (2022-02-07)
 - This release contains bug fixes to improve quality.

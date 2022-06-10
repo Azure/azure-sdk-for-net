@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                blobUri = null;
                                 continue;
                             }
                             blobUri = new Uri(property0.Value.GetString());

@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of SwiftVirtualNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="subnetResourceId"> The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
         /// <param name="swiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
-        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string subnetResourceId, bool? swiftSupported) : base(id, name, type, systemData, kind)
+        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string subnetResourceId, bool? swiftSupported) : base(id, name, resourceType, systemData, kind)
         {
             SubnetResourceId = subnetResourceId;
             SwiftSupported = swiftSupported;

@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of RestorableDroppedManagedDatabase and their operations over its parent. </summary>
-    public partial class RestorableDroppedManagedDatabaseCollection : ArmCollection, IEnumerable<RestorableDroppedManagedDatabase>, IAsyncEnumerable<RestorableDroppedManagedDatabase>
+    /// <summary>
+    /// A class representing a collection of <see cref="RestorableDroppedManagedDatabaseResource" /> and their operations.
+    /// Each <see cref="RestorableDroppedManagedDatabaseResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
+    /// To get a <see cref="RestorableDroppedManagedDatabaseCollection" /> instance call the GetRestorableDroppedManagedDatabases method from an instance of <see cref="ManagedInstanceResource" />.
+    /// </summary>
+    public partial class RestorableDroppedManagedDatabaseCollection : ArmCollection, IEnumerable<RestorableDroppedManagedDatabaseResource>, IAsyncEnumerable<RestorableDroppedManagedDatabaseResource>
     {
         private readonly ClientDiagnostics _restorableDroppedManagedDatabaseClientDiagnostics;
         private readonly RestorableDroppedManagedDatabasesRestOperations _restorableDroppedManagedDatabaseRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RestorableDroppedManagedDatabaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _restorableDroppedManagedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RestorableDroppedManagedDatabase.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(RestorableDroppedManagedDatabase.ResourceType, out string restorableDroppedManagedDatabaseApiVersion);
-            _restorableDroppedManagedDatabaseRestClient = new RestorableDroppedManagedDatabasesRestOperations(_restorableDroppedManagedDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorableDroppedManagedDatabaseApiVersion);
+            _restorableDroppedManagedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RestorableDroppedManagedDatabaseResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RestorableDroppedManagedDatabaseResource.ResourceType, out string restorableDroppedManagedDatabaseApiVersion);
+            _restorableDroppedManagedDatabaseRestClient = new RestorableDroppedManagedDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, restorableDroppedManagedDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,19 +49,20 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedInstance.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedInstanceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: RestorableDroppedManagedDatabases_Get
-        /// <summary> Gets a restorable dropped managed database. </summary>
+        /// <summary>
+        /// Gets a restorable dropped managed database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
+        /// Operation Id: RestorableDroppedManagedDatabases_Get
+        /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        public async virtual Task<Response<RestorableDroppedManagedDatabase>> GetAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorableDroppedManagedDatabaseResource>> GetAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
 
@@ -68,8 +72,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _restorableDroppedManagedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _restorableDroppedManagedDatabaseClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new RestorableDroppedManagedDatabase(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RestorableDroppedManagedDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -78,15 +82,16 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: RestorableDroppedManagedDatabases_Get
-        /// <summary> Gets a restorable dropped managed database. </summary>
+        /// <summary>
+        /// Gets a restorable dropped managed database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
+        /// Operation Id: RestorableDroppedManagedDatabases_Get
+        /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        public virtual Response<RestorableDroppedManagedDatabase> Get(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
+        public virtual Response<RestorableDroppedManagedDatabaseResource> Get(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
 
@@ -96,8 +101,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _restorableDroppedManagedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, cancellationToken);
                 if (response.Value == null)
-                    throw _restorableDroppedManagedDatabaseClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RestorableDroppedManagedDatabase(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new RestorableDroppedManagedDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,22 +111,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: RestorableDroppedManagedDatabases_ListByInstance
-        /// <summary> Gets a list of restorable dropped managed databases. </summary>
+        /// <summary>
+        /// Gets a list of restorable dropped managed databases.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases
+        /// Operation Id: RestorableDroppedManagedDatabases_ListByInstance
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableDroppedManagedDatabase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableDroppedManagedDatabase> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorableDroppedManagedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableDroppedManagedDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RestorableDroppedManagedDatabase>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RestorableDroppedManagedDatabaseResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _restorableDroppedManagedDatabaseClientDiagnostics.CreateScope("RestorableDroppedManagedDatabaseCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _restorableDroppedManagedDatabaseRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDroppedManagedDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDroppedManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -129,14 +135,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<RestorableDroppedManagedDatabase>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RestorableDroppedManagedDatabaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _restorableDroppedManagedDatabaseClientDiagnostics.CreateScope("RestorableDroppedManagedDatabaseCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _restorableDroppedManagedDatabaseRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDroppedManagedDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDroppedManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -147,22 +153,23 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: RestorableDroppedManagedDatabases_ListByInstance
-        /// <summary> Gets a list of restorable dropped managed databases. </summary>
+        /// <summary>
+        /// Gets a list of restorable dropped managed databases.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases
+        /// Operation Id: RestorableDroppedManagedDatabases_ListByInstance
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableDroppedManagedDatabase" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableDroppedManagedDatabase> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableDroppedManagedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableDroppedManagedDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RestorableDroppedManagedDatabase> FirstPageFunc(int? pageSizeHint)
+            Page<RestorableDroppedManagedDatabaseResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _restorableDroppedManagedDatabaseClientDiagnostics.CreateScope("RestorableDroppedManagedDatabaseCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _restorableDroppedManagedDatabaseRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDroppedManagedDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDroppedManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -170,14 +177,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<RestorableDroppedManagedDatabase> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RestorableDroppedManagedDatabaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _restorableDroppedManagedDatabaseClientDiagnostics.CreateScope("RestorableDroppedManagedDatabaseCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _restorableDroppedManagedDatabaseRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDroppedManagedDatabase(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDroppedManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -188,15 +195,16 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: RestorableDroppedManagedDatabases_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
+        /// Operation Id: RestorableDroppedManagedDatabases_Get
+        /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
 
@@ -204,7 +212,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(restorableDroppedDatabaseId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _restorableDroppedManagedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,13 +222,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: RestorableDroppedManagedDatabases_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
+        /// Operation Id: RestorableDroppedManagedDatabases_Get
+        /// </summary>
         /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public virtual Response<bool> Exists(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
         {
@@ -230,7 +239,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(restorableDroppedDatabaseId, cancellationToken: cancellationToken);
+                var response = _restorableDroppedManagedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,63 +249,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: RestorableDroppedManagedDatabases_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        public async virtual Task<Response<RestorableDroppedManagedDatabase>> GetIfExistsAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
-
-            using var scope = _restorableDroppedManagedDatabaseClientDiagnostics.CreateScope("RestorableDroppedManagedDatabaseCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _restorableDroppedManagedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<RestorableDroppedManagedDatabase>(null, response.GetRawResponse());
-                return Response.FromValue(new RestorableDroppedManagedDatabase(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: RestorableDroppedManagedDatabases_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
-        public virtual Response<RestorableDroppedManagedDatabase> GetIfExists(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
-
-            using var scope = _restorableDroppedManagedDatabaseClientDiagnostics.CreateScope("RestorableDroppedManagedDatabaseCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _restorableDroppedManagedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<RestorableDroppedManagedDatabase>(null, response.GetRawResponse());
-                return Response.FromValue(new RestorableDroppedManagedDatabase(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<RestorableDroppedManagedDatabase> IEnumerable<RestorableDroppedManagedDatabase>.GetEnumerator()
+        IEnumerator<RestorableDroppedManagedDatabaseResource> IEnumerable<RestorableDroppedManagedDatabaseResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -306,7 +259,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RestorableDroppedManagedDatabase> IAsyncEnumerable<RestorableDroppedManagedDatabase>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RestorableDroppedManagedDatabaseResource> IAsyncEnumerable<RestorableDroppedManagedDatabaseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

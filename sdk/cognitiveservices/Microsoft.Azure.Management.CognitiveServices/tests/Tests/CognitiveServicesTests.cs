@@ -121,6 +121,8 @@ namespace CognitiveServices.Tests
                 account = cognitiveServicesMgmtClient.DeletedAccounts.Get(TestHelper.DefaultLocation, rgname, accountName);
                 Assert.Equal(accountName, account.Name);
                 Assert.Equal(accountName, account.Properties.CustomSubDomainName);
+                Assert.False(string.IsNullOrWhiteSpace(account.Properties.ScheduledPurgeDate));
+                Assert.False(string.IsNullOrWhiteSpace(account.Properties.DeletionDate));
 
                 account.Properties.Restore = true;
                 account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, account);
@@ -266,23 +268,16 @@ namespace CognitiveServices.Tests
                 var accounts = ListAll(cognitiveServicesMgmtClient.Accounts);
 
                 Assert.True(accounts.Count() >= 2);
-
-                var account1 = accounts.First(
-                    t => StringComparer.OrdinalIgnoreCase.Equals(t.Name, accountName1));
-                TestHelper.VerifyAccountProperties(account1, true);
-
-                var account2 = accounts.First(
-                    t => StringComparer.OrdinalIgnoreCase.Equals(t.Name, accountName2));
-                TestHelper.VerifyAccountProperties(account2, true);
             }
         }
 
-        private List<Account> ListAll(IAccountsOperations accountsOperations)
+        private List<Account> ListAll(IAccountsOperations accountsOperations, int maxPages = 10)
         {
             var accounts = new List<Account>();
             var page = accountsOperations.List();
-            while (!string.IsNullOrWhiteSpace(page.NextPageLink)) {
+            while (!string.IsNullOrWhiteSpace(page.NextPageLink) && maxPages > 0) {
                 accounts.AddRange(page);
+                maxPages = maxPages - 1;
                 page = accountsOperations.ListNext(page.NextPageLink);
             }
 
@@ -1186,7 +1181,7 @@ namespace CognitiveServices.Tests
                     string accountName = TestUtilities.GenerateName("csa");
                     var parameters = new Account
                     {
-                        Location = "CENTRALUS",
+                        Location = "EASTUS",
                         Tags = TestHelper.DefaultTags,
                         Sku = new Sku { Name = "S0" },
                         Kind = "OpenAI",
@@ -1230,6 +1225,92 @@ namespace CognitiveServices.Tests
                     cognitiveServicesMgmtClient.Deployments.Delete(rgname, accountName, "deployment");
                     dpysResp = cognitiveServicesMgmtClient.Deployments.List(rgname, accountName);
                     Assert.True(dpysResp.Count() == 0);
+                }
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesAccountModelsTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = TestHelper.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = TestHelper.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = TestHelper.CreateResourceGroup(resourcesClient);
+
+                {
+                    string accountName = TestUtilities.GenerateName("csa");
+                    var parameters = new Account
+                    {
+                        Location = "EASTUS",
+                        Tags = TestHelper.DefaultTags,
+                        Sku = new Sku { Name = "S0" },
+                        Kind = "OpenAI",
+                        Properties = new AccountProperties(),
+                    };
+                    // Create cognitive services account
+                    var account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
+
+                    // verify
+                    Assert.NotNull(account?.Properties?.Capabilities);
+                    Assert.True(account?.Properties?.Capabilities.Count > 0);
+                    Assert.True(account?.Properties?.Capabilities[0].Name.Length > 0);
+
+                    var dpy = new Deployment();
+                    dpy.Properties = new DeploymentProperties();
+                    dpy.Properties.Model = new DeploymentModel();
+                    dpy.Properties.Model.Format = "OpenAI";
+                    dpy.Properties.Model.Name = "ada";
+                    dpy.Properties.Model.Version = "1";
+                    dpy.Properties.ScaleSettings = new DeploymentScaleSettings();
+                    dpy.Properties.ScaleSettings.Capacity = 1;
+                    dpy.Properties.ScaleSettings.ScaleType = "Manual";
+
+                    var modelsResp = cognitiveServicesMgmtClient.Accounts.ListModels(rgname, accountName);
+                    Assert.True(modelsResp.Count() >= 0);
+                }
+            }
+        }
+
+
+        [Fact]
+        public void CognitiveServicesAccountDynamicThrottlingEnabledTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = TestHelper.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = TestHelper.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = TestHelper.CreateResourceGroup(resourcesClient);
+
+                {
+                    string accountName = TestUtilities.GenerateName("csa");
+                    var parameters = new Account
+                    {
+                        Location = "CENTRALUSEUAP",
+                        Tags = TestHelper.DefaultTags,
+                        Sku = new Sku { Name = "S" },
+                        Kind = "TextAnalytics",
+                        Properties = new AccountProperties(),
+                    };
+                    // Create cognitive services account
+                    var account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
+
+                    Assert.Null(account.Properties.DynamicThrottlingEnabled);
+
+                    parameters.Properties.DynamicThrottlingEnabled = false;
+
+                    account = cognitiveServicesMgmtClient.Accounts.Update(rgname, accountName, parameters);
+                    Assert.False(account.Properties.DynamicThrottlingEnabled);
+
+                    // Currently no Kind has DynamicThrottlingEnabled.
                 }
             }
         }

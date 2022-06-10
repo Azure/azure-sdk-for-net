@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> A class representing collection of PrivateLink and their operations over its parent. </summary>
-    public partial class PrivateLinkCollection : ArmCollection, IEnumerable<PrivateLink>, IAsyncEnumerable<PrivateLink>
+    /// <summary>
+    /// A class representing a collection of <see cref="PrivateLinkResource" /> and their operations.
+    /// Each <see cref="PrivateLinkResource" /> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource" />.
+    /// To get a <see cref="PrivateLinkCollection" /> instance call the GetPrivateLinks method from an instance of <see cref="DeviceUpdateAccountResource" />.
+    /// </summary>
+    public partial class PrivateLinkCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinkPrivateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResourcesRestOperations _privateLinkPrivateLinkResourcesRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PrivateLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinkPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", PrivateLink.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(PrivateLink.ResourceType, out string privateLinkPrivateLinkResourcesApiVersion);
-            _privateLinkPrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_privateLinkPrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkPrivateLinkResourcesApiVersion);
+            _privateLinkPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", PrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PrivateLinkResource.ResourceType, out string privateLinkPrivateLinkResourcesApiVersion);
+            _privateLinkPrivateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkPrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,19 +49,20 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DeviceUpdateAccount.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DeviceUpdateAccount.ResourceType), nameof(id));
+            if (id.ResourceType != DeviceUpdateAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DeviceUpdateAccountResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: PrivateLinkResources_Get
-        /// <summary> Get the specified private link resource associated with the device update account. </summary>
+        /// <summary>
+        /// Get the specified private link resource associated with the device update account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async virtual Task<Response<PrivateLink>> GetAsync(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResource>> GetAsync(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -68,8 +72,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 var response = await _privateLinkPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _privateLinkPrivateLinkResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new PrivateLink(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -78,15 +82,16 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: PrivateLinkResources_Get
-        /// <summary> Get the specified private link resource associated with the device update account. </summary>
+        /// <summary>
+        /// Get the specified private link resource associated with the device update account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<PrivateLink> Get(string groupId, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkResource> Get(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -96,8 +101,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 var response = _privateLinkPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken);
                 if (response.Value == null)
-                    throw _privateLinkPrivateLinkResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateLink(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,22 +111,23 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: PrivateLinkResources_ListByAccount
-        /// <summary> List all private link resources in a device update account. </summary>
+        /// <summary>
+        /// List all private link resources in a device update account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources
+        /// Operation Id: PrivateLinkResources_ListByAccount
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLink> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLink>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkPrivateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _privateLinkPrivateLinkResourcesRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLink(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,22 +138,23 @@ namespace Azure.ResourceManager.DeviceUpdate
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: PrivateLinkResources_ListByAccount
-        /// <summary> List all private link resources in a device update account. </summary>
+        /// <summary>
+        /// List all private link resources in a device update account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources
+        /// Operation Id: PrivateLinkResources_ListByAccount
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLink> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLink> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateLinkPrivateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _privateLinkPrivateLinkResourcesRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLink(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -158,15 +165,16 @@ namespace Azure.ResourceManager.DeviceUpdate
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: PrivateLinkResources_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -174,7 +182,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _privateLinkPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -184,13 +192,14 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: PrivateLinkResources_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<bool> Exists(string groupId, CancellationToken cancellationToken = default)
         {
@@ -200,7 +209,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             scope.Start();
             try
             {
-                var response = GetIfExists(groupId, cancellationToken: cancellationToken);
+                var response = _privateLinkPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -210,63 +219,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: PrivateLinkResources_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="groupId"> The group ID of the private link resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public async virtual Task<Response<PrivateLink>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            using var scope = _privateLinkPrivateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _privateLinkPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<PrivateLink>(null, response.GetRawResponse());
-                return Response.FromValue(new PrivateLink(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}/privateLinkResources/{groupId}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
-        /// OperationId: PrivateLinkResources_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="groupId"> The group ID of the private link resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<PrivateLink> GetIfExists(string groupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-
-            using var scope = _privateLinkPrivateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _privateLinkPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<PrivateLink>(null, response.GetRawResponse());
-                return Response.FromValue(new PrivateLink(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<PrivateLink> IEnumerable<PrivateLink>.GetEnumerator()
+        IEnumerator<PrivateLinkResource> IEnumerable<PrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -276,7 +229,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<PrivateLink> IAsyncEnumerable<PrivateLink>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PrivateLinkResource> IAsyncEnumerable<PrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class RestorableDroppedManagedDatabaseTests : SqlManagementClientBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         public RestorableDroppedManagedDatabaseTests(bool isAsync)
             : base(isAsync)
@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }
@@ -33,11 +33,12 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [Test]
         [RecordedTest]
+        [Ignore("Re-record before GA")]
         public async Task GetAll()
         {
             string managedInstanceName = Recording.GenerateAssetName("managed-instance-");
@@ -80,8 +81,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             Assert.IsNotNull(getDatabase);
 
             // 4.GetIfExist
-            var existDatabase = await collection.GetIfExistsAsync(databaseId);
-            Assert.IsNotNull(existDatabase);
+            Assert.IsTrue(await collection.ExistsAsync(databaseId));
         }
     }
 }

@@ -20,6 +20,8 @@
     <IsTestSupportProject Condition="'$(IsTestSupportProject)' == '' and '$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
     <IsShippingLibrary Condition="'$(IsShippingLibrary)' == '' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingLibrary>
     <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'">true</IsShippingClientLibrary>
+
+    <IncludeOperationsSharedSource Condition="'$(IncludeOperationsSharedSource)' == '' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsPerfProject)' != 'true'">true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <!-- Setup default project properties -->
@@ -85,6 +87,7 @@
     <InheritDocTrimLevel>private</InheritDocTrimLevel>
     <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
+    <DefineConstants Condition="'$(BuildSnippets)' == 'true'">$(DefineConstants);SNIPPET</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
@@ -124,7 +127,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">
-    <ProjectReference Include="$(MSBuildThisFileDirectory)/../sdk/resourcemanager/Azure.ResourceManager/src/Azure.ResourceManager.csproj" />
+    <PackageReference Include="Azure.ResourceManager" />
   </ItemGroup>
 
   <PropertyGroup>

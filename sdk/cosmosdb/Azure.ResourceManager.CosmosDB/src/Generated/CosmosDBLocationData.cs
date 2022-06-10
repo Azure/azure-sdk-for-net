@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the CosmosDBLocation data model. </summary>
-    public partial class CosmosDBLocationData : Resource
+    public partial class CosmosDBLocationData : ResourceData
     {
         /// <summary> Initializes a new instance of CosmosDBLocationData. </summary>
         public CosmosDBLocationData()
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of CosmosDBLocationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Cosmos DB location metadata. </param>
-        internal CosmosDBLocationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, LocationProperties properties) : base(id, name, type, systemData)
+        internal CosmosDBLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LocationProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

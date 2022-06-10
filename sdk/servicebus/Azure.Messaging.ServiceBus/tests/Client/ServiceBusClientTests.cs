@@ -406,6 +406,67 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             Assert.IsFalse(client.IsClosed);
         }
 
+        [Test]
+        [TestCase("queue1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=queue1")]
+        [TestCase("queue1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];")]
+        [TestCase("topic1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1/Subscriptions/sub1")]
+        public void ValidateEntityNameAllowsValidPaths(string entityName, string connectionString)
+        {
+            var client = new ServiceBusClient(connectionString);
+            Assert.That(
+                () => client.ValidateEntityName(entityName),
+                Throws.Nothing);
+        }
+
+        [Test]
+        [TestCase("queue1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=queue2")]
+        [TestCase("topic1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic2")]
+        [TestCase("topic1/Subscriptions", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1")]
+        [TestCase("topic1/Subscriptions/", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1")]
+        [TestCase("/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=sub1")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1/Subscriptions")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic2")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic1/Subscriptions/sub2")]
+        [TestCase("topic1/Subscriptions/sub1", "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=topic2/Subscriptions/sub1")]
+        public void ValidateEntityNameThrowsForInvalidPaths(string entityName, string connectionString)
+        {
+            var client = new ServiceBusClient(connectionString);
+            Assert.That(
+                () => client.ValidateEntityName(entityName),
+                Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void CanMockMetricsProperty()
+        {
+            var mockClient = new Mock<ServiceBusClient>();
+            mockClient.Setup(
+                client => client.GetTransportMetrics()).Returns(new Mock<ServiceBusTransportMetrics>().Object);
+            var metrics = mockClient.Object.GetTransportMetrics();
+            Assert.IsNotNull(metrics);
+        }
+
+        [Test]
+        public void MetricsPropertyThrowsWhenNotEnabled()
+        {
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
+            var client = new ServiceBusClient(fakeConnection);
+            Assert.That(
+                () => client.GetTransportMetrics(),
+                Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public void MetricsPropertyDoesNotThrowWhenEnabled()
+        {
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
+            var client = new ServiceBusClient(fakeConnection, new ServiceBusClientOptions {EnableTransportMetrics = true});
+            Assert.IsNotNull(client.GetTransportMetrics());
+        }
+
         /// <summary>
         ///   Allows for the options used by the client to be exposed for testing purposes.
         /// </summary>

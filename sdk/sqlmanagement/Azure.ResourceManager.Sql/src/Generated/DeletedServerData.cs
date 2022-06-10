@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the DeletedServer data model. </summary>
-    public partial class DeletedServerData : Resource
+    public partial class DeletedServerData : ResourceData
     {
         /// <summary> Initializes a new instance of DeletedServerData. </summary>
         public DeletedServerData()
@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of DeletedServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="version"> The version of the deleted server. </param>
-        /// <param name="deletionTime"> The deletion time of the deleted server. </param>
+        /// <param name="deletionOn"> The deletion time of the deleted server. </param>
         /// <param name="originalId"> The original ID of the server before deletion. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
-        internal DeletedServerData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string version, DateTimeOffset? deletionTime, string originalId, string fullyQualifiedDomainName) : base(id, name, type, systemData)
+        internal DeletedServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, DateTimeOffset? deletionOn, string originalId, string fullyQualifiedDomainName) : base(id, name, resourceType, systemData)
         {
             Version = version;
-            DeletionTime = deletionTime;
+            DeletionOn = deletionOn;
             OriginalId = originalId;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The version of the deleted server. </summary>
         public string Version { get; }
         /// <summary> The deletion time of the deleted server. </summary>
-        public DateTimeOffset? DeletionTime { get; }
+        public DateTimeOffset? DeletionOn { get; }
         /// <summary> The original ID of the server before deletion. </summary>
         public string OriginalId { get; }
         /// <summary> The fully qualified domain name of the server. </summary>

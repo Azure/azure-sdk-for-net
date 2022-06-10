@@ -21,20 +21,20 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 The source client that contains the custom model we want to copy.
 
 ```C# Snippet:FormRecognizerSampleCreateCopySourceClient
-string endpoint = "<source_endpoint>";
-string apiKey = "<source_apiKey>";
-var sourcecredential = new AzureKeyCredential(apiKey);
-var sourceClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+string sourceEndpoint = "<source_endpoint>";
+string sourceApiKey = "<source_apiKey>";
+var sourcecredential = new AzureKeyCredential(sourceApiKey);
+var sourceClient = new DocumentModelAdministrationClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceApiKey));
 ```
 
 ### Target client
 The target client where we want to copy the custom model to.
 
 ```C# Snippet:FormRecognizerSampleCreateCopyTargetClient
-string endpoint = "<target_endpoint>";
-string apiKey = "<target_apiKey>";
-var targetCredential = new AzureKeyCredential(apiKey);
-var targetClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+string targetEndpoint = "<target_endpoint>";
+string targetApiKey = "<target_apiKey>";
+var targetCredential = new AzureKeyCredential(targetApiKey);
+var targetClient = new DocumentModelAdministrationClient(new Uri(targetEndpoint), new AzureKeyCredential(targetApiKey));
 ```
 
 ### Authorize the copy
@@ -48,7 +48,7 @@ Now that we have authorization from the target Form Recognizer resource, we exec
 
 ```C# Snippet:FormRecognizerSampleCreateCopyModel
 string modelId = "<source_modelId>";
-CopyModelOperation newModelOperation = await sourceClient.StartCopyModelAsync(modelId, targetAuth);
+CopyModelOperation newModelOperation = await sourceClient.StartCopyModelToAsync(modelId, targetAuth);
 await newModelOperation.WaitForCompletionAsync();
 DocumentModel newModel = newModelOperation.Value;
 

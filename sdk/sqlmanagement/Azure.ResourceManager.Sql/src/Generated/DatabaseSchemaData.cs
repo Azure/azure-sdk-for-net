@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the DatabaseSchema data model. </summary>
-    public partial class DatabaseSchemaData : Resource
+    public partial class DatabaseSchemaData : ResourceData
     {
         /// <summary> Initializes a new instance of DatabaseSchemaData. </summary>
         public DatabaseSchemaData()
@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of DatabaseSchemaData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        internal DatabaseSchemaData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData) : base(id, name, type, systemData)
+        internal DatabaseSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData) : base(id, name, resourceType, systemData)
         {
         }
     }

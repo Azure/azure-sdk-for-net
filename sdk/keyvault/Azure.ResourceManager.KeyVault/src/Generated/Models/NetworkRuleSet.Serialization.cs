@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WritePropertyName("defaultAction");
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules");
                 writer.WriteStartArray();
-                foreach (var item in IpRules)
+                foreach (var item in IPRules)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
         {
-            Optional<NetworkRuleBypassOptions> bypass = default;
+            Optional<NetworkRuleBypassOption> bypass = default;
             Optional<NetworkRuleAction> defaultAction = default;
             Optional<IList<IPRule>> ipRules = default;
             Optional<IList<VirtualNetworkRule>> virtualNetworkRules = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    bypass = new NetworkRuleBypassOptions(property.Value.GetString());
+                    bypass = new NetworkRuleBypassOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultAction"))

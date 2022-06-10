@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceRecommendation. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="creationTime"> Timestamp when this instance was created. </param>
+        /// <param name="creationOn"> Timestamp when this instance was created. </param>
         /// <param name="recommendationId"> A GUID value that each recommendation object is associated with. </param>
         /// <param name="resourceId"> Full ARM resource ID string that this recommendation object is associated with. </param>
         /// <param name="resourceScope"> Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site. </param>
@@ -41,19 +41,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="actionName"> Name of action recommended by this object. </param>
         /// <param name="enabled"> True if this recommendation is still valid (i.e. &quot;actionable&quot;). False if it is invalid. </param>
         /// <param name="states"> The list of states of this recommendation. If it&apos;s null then it should be considered &quot;Active&quot;. </param>
-        /// <param name="startTime"> The beginning time in UTC of a range that the recommendation refers to. </param>
-        /// <param name="endTime"> The end time in UTC of a range that the recommendation refers to. </param>
-        /// <param name="nextNotificationTime"> When to notify this recommendation next in UTC. Null means that this will never be notified anymore. </param>
-        /// <param name="notificationExpirationTime"> Date and time in UTC when this notification expires. </param>
-        /// <param name="notifiedTime"> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn&apos;t been notified yet. </param>
+        /// <param name="startOn"> The beginning time in UTC of a range that the recommendation refers to. </param>
+        /// <param name="endOn"> The end time in UTC of a range that the recommendation refers to. </param>
+        /// <param name="nextNotificationOn"> When to notify this recommendation next in UTC. Null means that this will never be notified anymore. </param>
+        /// <param name="notificationExpirationOn"> Date and time in UTC when this notification expires. </param>
+        /// <param name="notifiedOn"> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn&apos;t been notified yet. </param>
         /// <param name="score"> A metric value measured by the rule. </param>
         /// <param name="isDynamic"> True if this is associated with a dynamically added rule. </param>
         /// <param name="extensionName"> Extension name of the portal if exists. </param>
         /// <param name="bladeName"> Deep link to a blade on the portal. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
-        internal AppServiceRecommendation(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, DateTimeOffset? creationTime, Guid? recommendationId, string resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startTime, DateTimeOffset? endTime, DateTimeOffset? nextNotificationTime, DateTimeOffset? notificationExpirationTime, DateTimeOffset? notifiedTime, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink) : base(id, name, type, systemData, kind)
+        internal AppServiceRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, DateTimeOffset? creationOn, Guid? recommendationId, string resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink) : base(id, name, resourceType, systemData, kind)
         {
-            CreationTime = creationTime;
+            CreationOn = creationOn;
             RecommendationId = recommendationId;
             ResourceId = resourceId;
             ResourceScope = resourceScope;
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.AppService.Models
             ActionName = actionName;
             Enabled = enabled;
             States = states;
-            StartTime = startTime;
-            EndTime = endTime;
-            NextNotificationTime = nextNotificationTime;
-            NotificationExpirationTime = notificationExpirationTime;
-            NotifiedTime = notifiedTime;
+            StartOn = startOn;
+            EndOn = endOn;
+            NextNotificationOn = nextNotificationOn;
+            NotificationExpirationOn = notificationExpirationOn;
+            NotifiedOn = notifiedOn;
             Score = score;
             IsDynamic = isDynamic;
             ExtensionName = extensionName;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Timestamp when this instance was created. </summary>
-        public DateTimeOffset? CreationTime { get; set; }
+        public DateTimeOffset? CreationOn { get; set; }
         /// <summary> A GUID value that each recommendation object is associated with. </summary>
         public Guid? RecommendationId { get; set; }
         /// <summary> Full ARM resource ID string that this recommendation object is associated with. </summary>
@@ -105,15 +105,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The list of states of this recommendation. If it&apos;s null then it should be considered &quot;Active&quot;. </summary>
         public IList<string> States { get; }
         /// <summary> The beginning time in UTC of a range that the recommendation refers to. </summary>
-        public DateTimeOffset? StartTime { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end time in UTC of a range that the recommendation refers to. </summary>
-        public DateTimeOffset? EndTime { get; set; }
+        public DateTimeOffset? EndOn { get; set; }
         /// <summary> When to notify this recommendation next in UTC. Null means that this will never be notified anymore. </summary>
-        public DateTimeOffset? NextNotificationTime { get; set; }
+        public DateTimeOffset? NextNotificationOn { get; set; }
         /// <summary> Date and time in UTC when this notification expires. </summary>
-        public DateTimeOffset? NotificationExpirationTime { get; set; }
+        public DateTimeOffset? NotificationExpirationOn { get; set; }
         /// <summary> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn&apos;t been notified yet. </summary>
-        public DateTimeOffset? NotifiedTime { get; set; }
+        public DateTimeOffset? NotifiedOn { get; set; }
         /// <summary> A metric value measured by the rule. </summary>
         public double? Score { get; set; }
         /// <summary> True if this is associated with a dynamically added rule. </summary>

@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ApiKeyVaultReference and their operations over its parent. </summary>
-    public partial class SiteConfigConnectionStringCollection : ArmCollection, IEnumerable<SiteConfigConnectionString>, IAsyncEnumerable<SiteConfigConnectionString>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteConfigConnectionStringResource" /> and their operations.
+    /// Each <see cref="SiteConfigConnectionStringResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteConfigConnectionStringCollection" /> instance call the GetSiteConfigConnectionStrings method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
+    public partial class SiteConfigConnectionStringCollection : ArmCollection, IEnumerable<SiteConfigConnectionStringResource>, IAsyncEnumerable<SiteConfigConnectionStringResource>
     {
         private readonly ClientDiagnostics _siteConfigConnectionStringWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteConfigConnectionStringWebAppsRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteConfigConnectionStringCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteConfigConnectionStringWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteConfigConnectionString.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SiteConfigConnectionString.ResourceType, out string siteConfigConnectionStringWebAppsApiVersion);
-            _siteConfigConnectionStringWebAppsRestClient = new WebAppsRestOperations(_siteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigConnectionStringWebAppsApiVersion);
+            _siteConfigConnectionStringWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteConfigConnectionStringResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteConfigConnectionStringResource.ResourceType, out string siteConfigConnectionStringWebAppsApiVersion);
+            _siteConfigConnectionStringWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteConfigConnectionStringWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,19 +49,20 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSite.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
+            if (id.ResourceType != WebSiteResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReference
-        /// <summary> Description for Gets the config reference and status of an app. </summary>
+        /// <summary>
+        /// Description for Gets the config reference and status of an app
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
+        /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReference
+        /// </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public async virtual Task<Response<SiteConfigConnectionString>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteConfigConnectionStringResource>> GetAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
@@ -68,8 +72,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteConfigConnectionStringWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteConfigConnectionString(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteConfigConnectionStringResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -78,15 +82,16 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReference
-        /// <summary> Description for Gets the config reference and status of an app. </summary>
+        /// <summary>
+        /// Description for Gets the config reference and status of an app
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
+        /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReference
+        /// </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public virtual Response<SiteConfigConnectionString> Get(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual Response<SiteConfigConnectionStringResource> Get(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
@@ -96,8 +101,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken);
                 if (response.Value == null)
-                    throw _siteConfigConnectionStringWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteConfigConnectionString(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteConfigConnectionStringResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,22 +111,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReferences
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary>
+        /// Description for Gets the config reference app settings and status of an app
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings
+        /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferences
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteConfigConnectionString" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteConfigConnectionString> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteConfigConnectionStringResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteConfigConnectionStringResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteConfigConnectionString>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteConfigConnectionStringResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("SiteConfigConnectionStringCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigConnectionString(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -129,14 +135,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteConfigConnectionString>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteConfigConnectionStringResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("SiteConfigConnectionStringCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigConnectionString(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -147,22 +153,23 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReferences
-        /// <summary> Description for Gets the config reference app settings and status of an app. </summary>
+        /// <summary>
+        /// Description for Gets the config reference app settings and status of an app
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings
+        /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReferences
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteConfigConnectionString" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteConfigConnectionString> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteConfigConnectionStringResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteConfigConnectionStringResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteConfigConnectionString> FirstPageFunc(int? pageSizeHint)
+            Page<SiteConfigConnectionStringResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("SiteConfigConnectionStringCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferences(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigConnectionString(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -170,14 +177,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteConfigConnectionString> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteConfigConnectionStringResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("SiteConfigConnectionStringCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferencesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigConnectionString(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteConfigConnectionStringResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -188,15 +195,16 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReference
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
+        /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReference
+        /// </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
 
@@ -204,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,13 +222,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReference
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
+        /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReference
+        /// </summary>
         /// <param name="connectionStringKey"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionStringKey, CancellationToken cancellationToken = default)
         {
@@ -230,7 +239,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = GetIfExists(connectionStringKey, cancellationToken: cancellationToken);
+                var response = _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,63 +249,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReference
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="connectionStringKey"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public async virtual Task<Response<SiteConfigConnectionString>> GetIfExistsAsync(string connectionStringKey, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
-
-            using var scope = _siteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("SiteConfigConnectionStringCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReferenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SiteConfigConnectionString>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteConfigConnectionString(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
-        /// OperationId: WebApps_GetSiteConnectionStringKeyVaultReference
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="connectionStringKey"> The String to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
-        public virtual Response<SiteConfigConnectionString> GetIfExists(string connectionStringKey, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(connectionStringKey, nameof(connectionStringKey));
-
-            using var scope = _siteConfigConnectionStringWebAppsClientDiagnostics.CreateScope("SiteConfigConnectionStringCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _siteConfigConnectionStringWebAppsRestClient.GetSiteConnectionStringKeyVaultReference(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionStringKey, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SiteConfigConnectionString>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteConfigConnectionString(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<SiteConfigConnectionString> IEnumerable<SiteConfigConnectionString>.GetEnumerator()
+        IEnumerator<SiteConfigConnectionStringResource> IEnumerable<SiteConfigConnectionStringResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -306,7 +259,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteConfigConnectionString> IAsyncEnumerable<SiteConfigConnectionString>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteConfigConnectionStringResource> IAsyncEnumerable<SiteConfigConnectionStringResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

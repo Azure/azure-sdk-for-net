@@ -13,13 +13,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of DdosCustomPolicy and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DdosCustomPolicyResource" /> and their operations.
+    /// Each <see cref="DdosCustomPolicyResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="DdosCustomPolicyCollection" /> instance call the GetDdosCustomPolicies method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class DdosCustomPolicyCollection : ArmCollection
     {
         private readonly ClientDiagnostics _ddosCustomPolicyClientDiagnostics;
@@ -35,9 +37,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DdosCustomPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ddosCustomPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DdosCustomPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DdosCustomPolicy.ResourceType, out string ddosCustomPolicyApiVersion);
-            _ddosCustomPolicyRestClient = new DdosCustomPoliciesRestOperations(_ddosCustomPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ddosCustomPolicyApiVersion);
+            _ddosCustomPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DdosCustomPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DdosCustomPolicyResource.ResourceType, out string ddosCustomPolicyApiVersion);
+            _ddosCustomPolicyRestClient = new DdosCustomPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ddosCustomPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -45,32 +47,33 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a DDoS custom policy. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a DDoS custom policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+        /// Operation Id: DdosCustomPolicies_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<DdosCustomPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string ddosCustomPolicyName, DdosCustomPolicyData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DdosCustomPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ddosCustomPolicyName, DdosCustomPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _ddosCustomPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new DdosCustomPolicyCreateOrUpdateOperation(Client, _ddosCustomPolicyClientDiagnostics, Pipeline, _ddosCustomPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _ddosCustomPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<DdosCustomPolicyResource>(new DdosCustomPolicyOperationSource(Client), _ddosCustomPolicyClientDiagnostics, Pipeline, _ddosCustomPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -81,28 +84,29 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a DDoS custom policy. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a DDoS custom policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+        /// Operation Id: DdosCustomPolicies_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
-        /// <param name="parameters"> Parameters supplied to the create or update operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual DdosCustomPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string ddosCustomPolicyName, DdosCustomPolicyData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DdosCustomPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string ddosCustomPolicyName, DdosCustomPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _ddosCustomPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters, cancellationToken);
-                var operation = new DdosCustomPolicyCreateOrUpdateOperation(Client, _ddosCustomPolicyClientDiagnostics, Pipeline, _ddosCustomPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = _ddosCustomPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, data, cancellationToken);
+                var operation = new NetworkArmOperation<DdosCustomPolicyResource>(new DdosCustomPolicyOperationSource(Client), _ddosCustomPolicyClientDiagnostics, Pipeline, _ddosCustomPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -113,12 +117,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets information about the specified DDoS custom policy. </summary>
+        /// <summary>
+        /// Gets information about the specified DDoS custom policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+        /// Operation Id: DdosCustomPolicies_Get
+        /// </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
-        public async virtual Task<Response<DdosCustomPolicy>> GetAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DdosCustomPolicyResource>> GetAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
 
@@ -128,8 +136,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _ddosCustomPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _ddosCustomPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DdosCustomPolicy(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DdosCustomPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -138,12 +146,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets information about the specified DDoS custom policy. </summary>
+        /// <summary>
+        /// Gets information about the specified DDoS custom policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+        /// Operation Id: DdosCustomPolicies_Get
+        /// </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
-        public virtual Response<DdosCustomPolicy> Get(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<DdosCustomPolicyResource> Get(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
 
@@ -153,8 +165,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _ddosCustomPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken);
                 if (response.Value == null)
-                    throw _ddosCustomPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DdosCustomPolicy(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DdosCustomPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -163,12 +175,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+        /// Operation Id: DdosCustomPolicies_Get
+        /// </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
 
@@ -176,7 +192,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(ddosCustomPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _ddosCustomPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -186,10 +202,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
+        /// Operation Id: DdosCustomPolicies_Get
+        /// </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
@@ -199,58 +219,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(ddosCustomPolicyName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
-        public async virtual Task<Response<DdosCustomPolicy>> GetIfExistsAsync(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
-
-            using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _ddosCustomPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<DdosCustomPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new DdosCustomPolicy(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
-        public virtual Response<DdosCustomPolicy> GetIfExists(string ddosCustomPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(ddosCustomPolicyName, nameof(ddosCustomPolicyName));
-
-            using var scope = _ddosCustomPolicyClientDiagnostics.CreateScope("DdosCustomPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
                 var response = _ddosCustomPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ddosCustomPolicyName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<DdosCustomPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new DdosCustomPolicy(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {

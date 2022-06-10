@@ -19,6 +19,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
+    [IgnoreServiceError(200, "3014", Message = "Generic error during training.", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28913")]
     public class FormTrainingClientLiveTests : FormRecognizerLiveTestBase
     {
         /// <summary>
@@ -317,7 +318,6 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false, true)]
         [TestCase(true, false)]
         [TestCase(false, false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/24552")]
         public async Task TrainingOps(bool labeled, bool useTokenCredential)
         {
             var client = CreateFormTrainingClient(useTokenCredential);

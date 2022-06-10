@@ -14,6 +14,79 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Model factory for read-only models. </summary>
     public static partial class ArtifactsModelFactory
     {
+        /// <summary> Initializes a new instance of CloudError. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="target"> Property name/path in request associated with error. </param>
+        /// <param name="details"> Array with additional error details. </param>
+        /// <returns> A new <see cref="Models.CloudError"/> instance for mocking. </returns>
+        public static CloudError CloudError(string code = null, string message = null, string target = null, IEnumerable<CloudError> details = null)
+        {
+            details ??= new List<CloudError>();
+
+            return new CloudError(code, message, target, details?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of LinkConnectionDetailedStatus. </summary>
+        /// <param name="id"> Link connection id. </param>
+        /// <param name="name"> Link connection name. </param>
+        /// <param name="isApplyingChanges"> Is link connection applying changes. </param>
+        /// <param name="isPartiallyFailed"> Is link connection partially failed. </param>
+        /// <param name="startTime"> Link connection start time. </param>
+        /// <param name="stopTime"> Link connection stop time. </param>
+        /// <param name="status"> Link connection status. </param>
+        /// <param name="continuousRunId"> Link connection&apos;s corresponding continuous run id. </param>
+        /// <param name="error"> Link connection error. </param>
+        /// <returns> A new <see cref="Models.LinkConnectionDetailedStatus"/> instance for mocking. </returns>
+        public static LinkConnectionDetailedStatus LinkConnectionDetailedStatus(string id = null, string name = null, bool? isApplyingChanges = null, bool? isPartiallyFailed = null, object startTime = null, object stopTime = null, string status = null, string continuousRunId = null, object error = null)
+        {
+            return new LinkConnectionDetailedStatus(id, name, isApplyingChanges, isPartiallyFailed, startTime, stopTime, status, continuousRunId, error);
+        }
+
+        /// <summary> Initializes a new instance of LinkTableListResponse. </summary>
+        /// <param name="value"> List link table value. </param>
+        /// <returns> A new <see cref="Models.LinkTableListResponse"/> instance for mocking. </returns>
+        public static LinkTableListResponse LinkTableListResponse(IEnumerable<LinkTableResource> value = null)
+        {
+            value ??= new List<LinkTableResource>();
+
+            return new LinkTableListResponse(value?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of LinkTableResource. </summary>
+        /// <param name="id"> Link table id. </param>
+        /// <param name="name"> Link table name. </param>
+        /// <param name="source"> Source table properties for link table request. </param>
+        /// <param name="target"> Target table properties for link table request. </param>
+        /// <returns> A new <see cref="Models.LinkTableResource"/> instance for mocking. </returns>
+        public static LinkTableResource LinkTableResource(string id = null, string name = null, LinkTableRequestSource source = null, LinkTableRequestTarget target = null)
+        {
+            return new LinkTableResource(id, name, source, target);
+        }
+
+        /// <summary> Initializes a new instance of LinkConnectionQueryTableStatus. </summary>
+        /// <param name="value"> Link tables&apos; status. </param>
+        /// <param name="continuationToken"> Continuation token to query table status. </param>
+        /// <returns> A new <see cref="Models.LinkConnectionQueryTableStatus"/> instance for mocking. </returns>
+        public static LinkConnectionQueryTableStatus LinkConnectionQueryTableStatus(IEnumerable<LinkTableStatus> value = null, object continuationToken = null)
+        {
+            value ??= new List<LinkTableStatus>();
+
+            return new LinkConnectionQueryTableStatus(value?.ToList(), continuationToken);
+        }
+
+        /// <summary> Initializes a new instance of LinkTableStatus. </summary>
+        /// <param name="id"> Link table id. </param>
+        /// <param name="status"> Link table status. </param>
+        /// <param name="errorMessage"> Link table error message. </param>
+        /// <param name="startTime"> Link table start time. </param>
+        /// <param name="stopTime"> Link table stop time. </param>
+        /// <returns> A new <see cref="Models.LinkTableStatus"/> instance for mocking. </returns>
+        public static LinkTableStatus LinkTableStatus(string id = null, string status = null, string errorMessage = null, object startTime = null, object stopTime = null)
+        {
+            return new LinkTableStatus(id, status, errorMessage, startTime, stopTime);
+        }
+
         /// <summary> Initializes a new instance of MetastoreRegistrationResponse. </summary>
         /// <param name="status"> Enumerates possible request statuses. </param>
         /// <returns> A new <see cref="Models.MetastoreRegistrationResponse"/> instance for mocking. </returns>
@@ -127,19 +200,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LibraryInfo(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
         }
 
-        /// <summary> Initializes a new instance of CloudErrorAutoGenerated. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="target"> Property name/path in request associated with error. </param>
-        /// <param name="details"> Array with additional error details. </param>
-        /// <returns> A new <see cref="Models.CloudErrorAutoGenerated"/> instance for mocking. </returns>
-        public static CloudErrorAutoGenerated CloudErrorAutoGenerated(string code = null, string message = null, string target = null, IEnumerable<CloudErrorAutoGenerated> details = null)
-        {
-            details ??= new List<CloudErrorAutoGenerated>();
-
-            return new CloudErrorAutoGenerated(code, message, target, details?.ToList());
-        }
-
         /// <summary> Initializes a new instance of CreateDataFlowDebugSessionResponse. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <returns> A new <see cref="Models.CreateDataFlowDebugSessionResponse"/> instance for mocking. </returns>
@@ -240,9 +300,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="target"> Property name/path in request associated with error. </param>
         /// <param name="details"> Array with additional error details. </param>
         /// <returns> A new <see cref="Models.OperationResult"/> instance for mocking. </returns>
-        public static OperationResult OperationResult(string status = null, string code = null, string message = null, string target = null, IEnumerable<CloudErrorAutoGenerated> details = null)
+        public static OperationResult OperationResult(string status = null, string code = null, string message = null, string target = null, IEnumerable<CloudError> details = null)
         {
-            details ??= new List<CloudErrorAutoGenerated>();
+            details ??= new List<CloudError>();
 
             return new OperationResult(status, code, message, target, details?.ToList());
         }
@@ -571,12 +631,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="privateEndpoint"> The private endpoint which the connection belongs to. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnection"/> instance for mocking. </returns>
-        public static PrivateEndpointConnection PrivateEndpointConnection(string id = null, string name = null, string type = null, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, string provisioningState = null)
+        public static PrivateEndpointConnection PrivateEndpointConnection(string id = null, string name = null, string type = null, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new PrivateEndpointConnection(id, name, type, privateEndpoint, privateLinkServiceConnectionState, provisioningState);
+            return new PrivateEndpointConnection(id, name, type, privateEndpoint, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>

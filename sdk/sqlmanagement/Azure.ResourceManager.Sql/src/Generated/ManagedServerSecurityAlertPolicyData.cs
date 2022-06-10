@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedServerSecurityAlertPolicy data model. </summary>
-    public partial class ManagedServerSecurityAlertPolicyData : Resource
+    public partial class ManagedServerSecurityAlertPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedServerSecurityAlertPolicyData. </summary>
         public ManagedServerSecurityAlertPolicyData()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedServerSecurityAlertPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="state"> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </param>
         /// <param name="disabledAlerts"> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </param>
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
         /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
         /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
-        /// <param name="creationTime"> Specifies the UTC creation time of the policy. </param>
-        internal ManagedServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, SecurityAlertsPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? emailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? creationTime) : base(id, name, type, systemData)
+        /// <param name="creationOn"> Specifies the UTC creation time of the policy. </param>
+        internal ManagedServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertsPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? emailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? creationOn) : base(id, name, resourceType, systemData)
         {
             State = state;
             DisabledAlerts = disabledAlerts;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
             RetentionDays = retentionDays;
-            CreationTime = creationTime;
+            CreationOn = creationOn;
         }
 
         /// <summary> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </summary>
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Specifies the number of days to keep in the Threat Detection audit logs. </summary>
         public int? RetentionDays { get; set; }
         /// <summary> Specifies the UTC creation time of the policy. </summary>
-        public DateTimeOffset? CreationTime { get; }
+        public DateTimeOffset? CreationOn { get; }
     }
 }

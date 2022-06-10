@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             };
 
             // Create
-            var createAddressOperation = await addressResourceCollection.CreateOrUpdateAsync(true, addressName, addressResourceData);
+            var createAddressOperation = await addressResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, addressName, addressResourceData);
             await createAddressOperation.WaitForCompletionAsync();
             Assert.IsTrue(createAddressOperation.HasCompleted);
             Assert.IsTrue(createAddressOperation.HasValue);
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
 
             // Update
             contactDetails.ContactName = "Updated contact name";
-            AddressUpdateParameter addressUpdateParameter = new()
+            AddressResourcePatch addressUpdateParameter = new()
             {
                 ShippingAddress = shippingAddress,
                 ContactDetails = contactDetails
             };
-            var updateAddressOperation = await addressResource.UpdateAsync(true, addressUpdateParameter);
+            var updateAddressOperation = await addressResource.UpdateAsync(WaitUntil.Completed, addressUpdateParameter);
             Assert.IsTrue(updateAddressOperation.HasCompleted);
             Assert.IsTrue(updateAddressOperation.HasValue);
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             Assert.IsTrue(string.Equals(addressResource.Data.ContactDetails.ContactName, "Updated contact name"));
 
             // Delete
-            var deleteAddressOperation = await addressResource.DeleteAsync(true);
+            var deleteAddressOperation = await addressResource.DeleteAsync(WaitUntil.Completed);
             await deleteAddressOperation.WaitForCompletionResponseAsync();
             Assert.IsTrue(deleteAddressOperation.HasCompleted);
         }

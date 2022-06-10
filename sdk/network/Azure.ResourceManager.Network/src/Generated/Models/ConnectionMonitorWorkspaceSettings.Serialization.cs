@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorWorkspaceSettings : IUtf8JsonSerializable
+    internal partial class ConnectionMonitorWorkspaceSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,12 +25,17 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorWorkspaceSettings DeserializeConnectionMonitorWorkspaceSettings(JsonElement element)
         {
-            Optional<string> workspaceResourceId = default;
+            Optional<ResourceIdentifier> workspaceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceResourceId"))
                 {
-                    workspaceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    workspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

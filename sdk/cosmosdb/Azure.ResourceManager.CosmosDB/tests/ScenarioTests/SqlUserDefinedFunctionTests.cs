@@ -11,22 +11,22 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 {
     public class SqlUserDefinedFunctionTests : CosmosDBManagementClientBase
     {
-        private DatabaseAccount _databaseAccount;
-        private SqlDatabase _sqlDatabase;
+        private DatabaseAccountResource _databaseAccount;
+        private SqlDatabaseResource _sqlDatabase;
         private ResourceIdentifier _sqlContainerId;
-        private SqlContainer _sqlContainer;
+        private SqlContainerResource _sqlContainer;
         private string _userDefinedFunctionName;
 
         public SqlUserDefinedFunctionTests(bool isAsync) : base(isAsync)
         {
         }
 
-        protected SqlUserDefinedFunctionCollection SqlUserDefinedFunctionCollection { get => _sqlContainer.GetSqlUserDefinedFunctions(); }
+        protected SqlUserDefinedFunctionCollection SqlUserDefinedFunctionCollection => _sqlContainer.GetSqlUserDefinedFunctions();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            _resourceGroup = await GlobalClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB);
 
@@ -40,24 +40,26 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _sqlContainer.Delete(true);
-            _sqlDatabase.Delete(true);
-            _databaseAccount.Delete(true);
+            _sqlContainer.Delete(WaitUntil.Completed);
+            _sqlDatabase.Delete(WaitUntil.Completed);
+            _databaseAccount.Delete(WaitUntil.Completed);
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            _sqlContainer = await ArmClient.GetSqlContainer(_sqlContainerId).GetAsync();
+            _sqlContainer = await ArmClient.GetSqlContainerResource(_sqlContainerId).GetAsync();
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            SqlUserDefinedFunction userDefinedFunction = await SqlUserDefinedFunctionCollection.GetIfExistsAsync(_userDefinedFunctionName);
-            if (userDefinedFunction != null)
+            if (await SqlUserDefinedFunctionCollection.ExistsAsync(_userDefinedFunctionName))
             {
-                await userDefinedFunction.DeleteAsync(true);
+                var id = SqlUserDefinedFunctionCollection.Id;
+                id = SqlUserDefinedFunctionResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _userDefinedFunctionName);
+                SqlUserDefinedFunctionResource userDefinedFunction = this.ArmClient.GetSqlUserDefinedFunctionResource(id);
+                await userDefinedFunction.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -74,15 +76,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             bool ifExists = await SqlUserDefinedFunctionCollection.ExistsAsync(_userDefinedFunctionName);
             Assert.True(ifExists);
 
-            SqlUserDefinedFunction userDefinedFunction2 = await SqlUserDefinedFunctionCollection.GetAsync(_userDefinedFunctionName);
+            SqlUserDefinedFunctionResource userDefinedFunction2 = await SqlUserDefinedFunctionCollection.GetAsync(_userDefinedFunctionName);
             Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction2.Data.Resource.Id);
 
             VerifySqlUserDefinedFunctions(userDefinedFunction, userDefinedFunction2);
 
-            SqlUserDefinedFunctionCreateUpdateOptions updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(userDefinedFunction.Id, _userDefinedFunctionName, userDefinedFunction.Data.Type, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, userDefinedFunction.Data.Resource, new CreateUpdateOptions());
-            updateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(AzureLocation.WestUS, new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
+            var updateOptions = new SqlUserDefinedFunctionCreateOrUpdateContent(AzureLocation.WestUS, new Models.SqlUserDefinedFunctionResource(_userDefinedFunctionName)
             {
                 Body = @"function () { var updatetext = getContext();
     var response = context.getResponse();
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 }"
             });
 
-            userDefinedFunction = (await SqlUserDefinedFunctionCollection.CreateOrUpdateAsync(true, _userDefinedFunctionName, updateOptions)).Value;
+            userDefinedFunction = (await SqlUserDefinedFunctionCollection.CreateOrUpdateAsync(WaitUntil.Completed, _userDefinedFunctionName, updateOptions)).Value;
             Assert.AreEqual(_userDefinedFunctionName, userDefinedFunction.Data.Resource.Id);
             Assert.That(userDefinedFunction.Data.Resource.Body, Contains.Substring("Second Hello World"));
 
@@ -116,17 +115,17 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlUserDefinedFunctionDelete()
         {
             var userDefinedFunction = await CreateSqlUserDefinedFunction(null);
-            await userDefinedFunction.DeleteAsync(true);
+            await userDefinedFunction.DeleteAsync(WaitUntil.Completed);
 
-            userDefinedFunction = await SqlUserDefinedFunctionCollection.GetIfExistsAsync(_userDefinedFunctionName);
-            Assert.Null(userDefinedFunction);
+            bool exists = await SqlUserDefinedFunctionCollection.ExistsAsync(_userDefinedFunctionName);
+            Assert.IsFalse(exists);
         }
 
-        protected async Task<SqlUserDefinedFunction> CreateSqlUserDefinedFunction(AutoscaleSettings autoscale)
+        internal async Task<SqlUserDefinedFunctionResource> CreateSqlUserDefinedFunction(AutoscaleSettings autoscale)
         {
             _userDefinedFunctionName = Recording.GenerateAssetName("sql-stored-procedure-");
-            SqlUserDefinedFunctionCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateUpdateOptions(AzureLocation.WestUS,
-                new SqlUserDefinedFunctionResource(_userDefinedFunctionName)
+            var sqlDatabaseCreateUpdateOptions = new SqlUserDefinedFunctionCreateOrUpdateContent(AzureLocation.WestUS,
+                new Models.SqlUserDefinedFunctionResource(_userDefinedFunctionName)
                 {
                     Body = @"function () {
     var updatetext = getContext();
@@ -137,11 +136,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var sqlContainerLro = await SqlUserDefinedFunctionCollection.CreateOrUpdateAsync(true, _userDefinedFunctionName, sqlDatabaseCreateUpdateOptions);
+            var sqlContainerLro = await SqlUserDefinedFunctionCollection.CreateOrUpdateAsync(WaitUntil.Completed, _userDefinedFunctionName, sqlDatabaseCreateUpdateOptions);
             return sqlContainerLro.Value;
         }
 
-        private void VerifySqlUserDefinedFunctions(SqlUserDefinedFunction expectedValue, SqlUserDefinedFunction actualValue)
+        private void VerifySqlUserDefinedFunctions(SqlUserDefinedFunctionResource expectedValue, SqlUserDefinedFunctionResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager resource with an etag. </summary>
-    public partial class AzureEntityResource : Resource
+    public partial class AzureEntityResource : ResourceData
     {
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
         public AzureEntityResource()
@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of AzureEntityResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal AzureEntityResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string etag) : base(id, name, type, systemData)
+        internal AzureEntityResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
         }

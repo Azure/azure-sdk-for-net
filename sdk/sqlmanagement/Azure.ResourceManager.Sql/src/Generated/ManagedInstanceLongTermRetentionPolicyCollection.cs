@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceLongTermRetentionPolicy and their operations over its parent. </summary>
-    public partial class ManagedInstanceLongTermRetentionPolicyCollection : ArmCollection, IEnumerable<ManagedInstanceLongTermRetentionPolicy>, IAsyncEnumerable<ManagedInstanceLongTermRetentionPolicy>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstanceLongTermRetentionPolicyResource" /> and their operations.
+    /// Each <see cref="ManagedInstanceLongTermRetentionPolicyResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource" />.
+    /// To get a <see cref="ManagedInstanceLongTermRetentionPolicyCollection" /> instance call the GetManagedInstanceLongTermRetentionPolicies method from an instance of <see cref="ManagedDatabaseResource" />.
+    /// </summary>
+    public partial class ManagedInstanceLongTermRetentionPolicyCollection : ArmCollection, IEnumerable<ManagedInstanceLongTermRetentionPolicyResource>, IAsyncEnumerable<ManagedInstanceLongTermRetentionPolicyResource>
     {
         private readonly ClientDiagnostics _managedInstanceLongTermRetentionPolicyClientDiagnostics;
         private readonly ManagedInstanceLongTermRetentionPoliciesRestOperations _managedInstanceLongTermRetentionPolicyRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedInstanceLongTermRetentionPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceLongTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceLongTermRetentionPolicy.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstanceLongTermRetentionPolicy.ResourceType, out string managedInstanceLongTermRetentionPolicyApiVersion);
-            _managedInstanceLongTermRetentionPolicyRestClient = new ManagedInstanceLongTermRetentionPoliciesRestOperations(_managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceLongTermRetentionPolicyApiVersion);
+            _managedInstanceLongTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceLongTermRetentionPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedInstanceLongTermRetentionPolicyResource.ResourceType, out string managedInstanceLongTermRetentionPolicyApiVersion);
+            _managedInstanceLongTermRetentionPolicyRestClient = new ManagedInstanceLongTermRetentionPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceLongTermRetentionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,33 +50,31 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabaseResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedInstanceLongTermRetentionPolicies_CreateOrUpdate
-        /// <summary> Sets a managed database&apos;s long term retention policy. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Sets a managed database&apos;s long term retention policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
+        /// Operation Id: ManagedInstanceLongTermRetentionPolicies_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="data"> The long term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstanceLongTermRetentionPolicyCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, ManagedInstanceLongTermRetentionPolicyName policyName, ManagedInstanceLongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedInstanceLongTermRetentionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ManagedInstanceLongTermRetentionPolicyName policyName, ManagedInstanceLongTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedInstanceLongTermRetentionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceLongTermRetentionPolicyCreateOrUpdateOperation(Client, _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, _managedInstanceLongTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _managedInstanceLongTermRetentionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ManagedInstanceLongTermRetentionPolicyResource>(new ManagedInstanceLongTermRetentionPolicyOperationSource(Client), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, _managedInstanceLongTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -84,29 +85,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedInstanceLongTermRetentionPolicies_CreateOrUpdate
-        /// <summary> Sets a managed database&apos;s long term retention policy. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Sets a managed database&apos;s long term retention policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
+        /// Operation Id: ManagedInstanceLongTermRetentionPolicies_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="parameters"> The long term retention policy info. </param>
+        /// <param name="data"> The long term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstanceLongTermRetentionPolicyCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, ManagedInstanceLongTermRetentionPolicyName policyName, ManagedInstanceLongTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ManagedInstanceLongTermRetentionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, ManagedInstanceLongTermRetentionPolicyName policyName, ManagedInstanceLongTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedInstanceLongTermRetentionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken);
-                var operation = new ManagedInstanceLongTermRetentionPolicyCreateOrUpdateOperation(Client, _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, _managedInstanceLongTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = _managedInstanceLongTermRetentionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data, cancellationToken);
+                var operation = new SqlArmOperation<ManagedInstanceLongTermRetentionPolicyResource>(new ManagedInstanceLongTermRetentionPolicyOperationSource(Client), _managedInstanceLongTermRetentionPolicyClientDiagnostics, Pipeline, _managedInstanceLongTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -117,13 +116,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedInstanceLongTermRetentionPolicies_Get
-        /// <summary> Gets a managed database&apos;s long term retention policy. </summary>
+        /// <summary>
+        /// Gets a managed database&apos;s long term retention policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
+        /// Operation Id: ManagedInstanceLongTermRetentionPolicies_Get
+        /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagedInstanceLongTermRetentionPolicy>> GetAsync(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceLongTermRetentionPolicyResource>> GetAsync(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.Get");
             scope.Start();
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _managedInstanceLongTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,13 +141,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedInstanceLongTermRetentionPolicies_Get
-        /// <summary> Gets a managed database&apos;s long term retention policy. </summary>
+        /// <summary>
+        /// Gets a managed database&apos;s long term retention policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
+        /// Operation Id: ManagedInstanceLongTermRetentionPolicies_Get
+        /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedInstanceLongTermRetentionPolicy> Get(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceLongTermRetentionPolicyResource> Get(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.Get");
             scope.Start();
@@ -155,8 +156,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedInstanceLongTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken);
                 if (response.Value == null)
-                    throw _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,22 +166,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedInstanceLongTermRetentionPolicies_ListByDatabase
-        /// <summary> Gets a database&apos;s long term retention policy. </summary>
+        /// <summary>
+        /// Gets a database&apos;s long term retention policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies
+        /// Operation Id: ManagedInstanceLongTermRetentionPolicies_ListByDatabase
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionPolicy> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstanceLongTermRetentionPolicy>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedInstanceLongTermRetentionPolicyResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedInstanceLongTermRetentionPolicyRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceLongTermRetentionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceLongTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -188,14 +190,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ManagedInstanceLongTermRetentionPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedInstanceLongTermRetentionPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedInstanceLongTermRetentionPolicyRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceLongTermRetentionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceLongTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -206,22 +208,23 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedInstanceLongTermRetentionPolicies_ListByDatabase
-        /// <summary> Gets a database&apos;s long term retention policy. </summary>
+        /// <summary>
+        /// Gets a database&apos;s long term retention policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies
+        /// Operation Id: ManagedInstanceLongTermRetentionPolicies_ListByDatabase
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceLongTermRetentionPolicy> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceLongTermRetentionPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceLongTermRetentionPolicy> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedInstanceLongTermRetentionPolicyResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedInstanceLongTermRetentionPolicyRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceLongTermRetentionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceLongTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,14 +232,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedInstanceLongTermRetentionPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedInstanceLongTermRetentionPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedInstanceLongTermRetentionPolicyRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceLongTermRetentionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceLongTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,19 +250,20 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedInstanceLongTermRetentionPolicies_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
+        /// Operation Id: ManagedInstanceLongTermRetentionPolicies_Get
+        /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceLongTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -269,10 +273,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedInstanceLongTermRetentionPolicies_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
+        /// Operation Id: ManagedInstanceLongTermRetentionPolicies_Get
+        /// </summary>
         /// <param name="policyName"> The policy name. Should always be Default. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
@@ -281,7 +286,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(policyName, cancellationToken: cancellationToken);
+                var response = _managedInstanceLongTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,55 +296,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedInstanceLongTermRetentionPolicies_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagedInstanceLongTermRetentionPolicy>> GetIfExistsAsync(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _managedInstanceLongTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceLongTermRetentionPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/backupLongTermRetentionPolicies/{policyName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}
-        /// OperationId: ManagedInstanceLongTermRetentionPolicies_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="policyName"> The policy name. Should always be Default. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedInstanceLongTermRetentionPolicy> GetIfExists(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceLongTermRetentionPolicyClientDiagnostics.CreateScope("ManagedInstanceLongTermRetentionPolicyCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _managedInstanceLongTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceLongTermRetentionPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceLongTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<ManagedInstanceLongTermRetentionPolicy> IEnumerable<ManagedInstanceLongTermRetentionPolicy>.GetEnumerator()
+        IEnumerator<ManagedInstanceLongTermRetentionPolicyResource> IEnumerable<ManagedInstanceLongTermRetentionPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -349,7 +306,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagedInstanceLongTermRetentionPolicy> IAsyncEnumerable<ManagedInstanceLongTermRetentionPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagedInstanceLongTermRetentionPolicyResource> IAsyncEnumerable<ManagedInstanceLongTermRetentionPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceAdministrator and their operations over its parent. </summary>
-    public partial class ManagedInstanceAdministratorCollection : ArmCollection, IEnumerable<ManagedInstanceAdministrator>, IAsyncEnumerable<ManagedInstanceAdministrator>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstanceAdministratorResource" /> and their operations.
+    /// Each <see cref="ManagedInstanceAdministratorResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
+    /// To get a <see cref="ManagedInstanceAdministratorCollection" /> instance call the GetManagedInstanceAdministrators method from an instance of <see cref="ManagedInstanceResource" />.
+    /// </summary>
+    public partial class ManagedInstanceAdministratorCollection : ArmCollection, IEnumerable<ManagedInstanceAdministratorResource>, IAsyncEnumerable<ManagedInstanceAdministratorResource>
     {
         private readonly ClientDiagnostics _managedInstanceAdministratorClientDiagnostics;
         private readonly ManagedInstanceAdministratorsRestOperations _managedInstanceAdministratorRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedInstanceAdministratorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceAdministratorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceAdministrator.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstanceAdministrator.ResourceType, out string managedInstanceAdministratorApiVersion);
-            _managedInstanceAdministratorRestClient = new ManagedInstanceAdministratorsRestOperations(_managedInstanceAdministratorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceAdministratorApiVersion);
+            _managedInstanceAdministratorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceAdministratorResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedInstanceAdministratorResource.ResourceType, out string managedInstanceAdministratorApiVersion);
+            _managedInstanceAdministratorRestClient = new ManagedInstanceAdministratorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceAdministratorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,33 +50,31 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedInstance.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedInstanceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAdministrators_CreateOrUpdate
-        /// <summary> Creates or updates a managed instance administrator. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a managed instance administrator.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
+        /// Operation Id: ManagedInstanceAdministrators_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="administratorName"> The AdministratorName to use. </param>
-        /// <param name="parameters"> The requested administrator parameters. </param>
+        /// <param name="data"> The requested administrator parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstanceAdministratorCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, AdministratorName administratorName, ManagedInstanceAdministratorData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedInstanceAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AdministratorName administratorName, ManagedInstanceAdministratorData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedInstanceAdministratorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceAdministratorCreateOrUpdateOperation(Client, _managedInstanceAdministratorClientDiagnostics, Pipeline, _managedInstanceAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _managedInstanceAdministratorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ManagedInstanceAdministratorResource>(new ManagedInstanceAdministratorOperationSource(Client), _managedInstanceAdministratorClientDiagnostics, Pipeline, _managedInstanceAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -84,29 +85,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAdministrators_CreateOrUpdate
-        /// <summary> Creates or updates a managed instance administrator. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a managed instance administrator.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
+        /// Operation Id: ManagedInstanceAdministrators_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="administratorName"> The AdministratorName to use. </param>
-        /// <param name="parameters"> The requested administrator parameters. </param>
+        /// <param name="data"> The requested administrator parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstanceAdministratorCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, AdministratorName administratorName, ManagedInstanceAdministratorData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ManagedInstanceAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, AdministratorName administratorName, ManagedInstanceAdministratorData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedInstanceAdministratorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters, cancellationToken);
-                var operation = new ManagedInstanceAdministratorCreateOrUpdateOperation(Client, _managedInstanceAdministratorClientDiagnostics, Pipeline, _managedInstanceAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = _managedInstanceAdministratorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data, cancellationToken);
+                var operation = new SqlArmOperation<ManagedInstanceAdministratorResource>(new ManagedInstanceAdministratorOperationSource(Client), _managedInstanceAdministratorClientDiagnostics, Pipeline, _managedInstanceAdministratorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -117,13 +116,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAdministrators_Get
-        /// <summary> Gets a managed instance administrator. </summary>
+        /// <summary>
+        /// Gets a managed instance administrator.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
+        /// Operation Id: ManagedInstanceAdministrators_Get
+        /// </summary>
         /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagedInstanceAdministrator>> GetAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceAdministratorResource>> GetAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Get");
             scope.Start();
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _managedInstanceAdministratorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _managedInstanceAdministratorClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceAdministrator(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceAdministratorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,13 +141,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAdministrators_Get
-        /// <summary> Gets a managed instance administrator. </summary>
+        /// <summary>
+        /// Gets a managed instance administrator.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
+        /// Operation Id: ManagedInstanceAdministrators_Get
+        /// </summary>
         /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedInstanceAdministrator> Get(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceAdministratorResource> Get(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Get");
             scope.Start();
@@ -155,8 +156,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedInstanceAdministratorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken);
                 if (response.Value == null)
-                    throw _managedInstanceAdministratorClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAdministrator(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceAdministratorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,22 +166,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAdministrators_ListByInstance
-        /// <summary> Gets a list of managed instance administrators. </summary>
+        /// <summary>
+        /// Gets a list of managed instance administrators.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators
+        /// Operation Id: ManagedInstanceAdministrators_ListByInstance
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceAdministrator" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceAdministrator> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceAdministratorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceAdministratorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstanceAdministrator>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedInstanceAdministratorResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedInstanceAdministratorRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministratorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -188,14 +190,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ManagedInstanceAdministrator>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedInstanceAdministratorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedInstanceAdministratorRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministratorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -206,22 +208,23 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAdministrators_ListByInstance
-        /// <summary> Gets a list of managed instance administrators. </summary>
+        /// <summary>
+        /// Gets a list of managed instance administrators.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators
+        /// Operation Id: ManagedInstanceAdministrators_ListByInstance
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceAdministrator" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceAdministrator> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceAdministratorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceAdministratorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceAdministrator> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedInstanceAdministratorResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedInstanceAdministratorRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministratorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,14 +232,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedInstanceAdministrator> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedInstanceAdministratorResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedInstanceAdministratorRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministrator(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAdministratorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,19 +250,20 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAdministrators_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
+        /// Operation Id: ManagedInstanceAdministrators_Get
+        /// </summary>
         /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.Exists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceAdministratorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -269,10 +273,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAdministrators_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
+        /// Operation Id: ManagedInstanceAdministrators_Get
+        /// </summary>
         /// <param name="administratorName"> The AdministratorName to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AdministratorName administratorName, CancellationToken cancellationToken = default)
@@ -281,7 +286,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(administratorName, cancellationToken: cancellationToken);
+                var response = _managedInstanceAdministratorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,55 +296,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAdministrators_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="administratorName"> The AdministratorName to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagedInstanceAdministrator>> GetIfExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _managedInstanceAdministratorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceAdministrator>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAdministrator(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAdministrators_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="administratorName"> The AdministratorName to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedInstanceAdministrator> GetIfExists(AdministratorName administratorName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceAdministratorClientDiagnostics.CreateScope("ManagedInstanceAdministratorCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _managedInstanceAdministratorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, administratorName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceAdministrator>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAdministrator(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<ManagedInstanceAdministrator> IEnumerable<ManagedInstanceAdministrator>.GetEnumerator()
+        IEnumerator<ManagedInstanceAdministratorResource> IEnumerable<ManagedInstanceAdministratorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -349,7 +306,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagedInstanceAdministrator> IAsyncEnumerable<ManagedInstanceAdministrator>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagedInstanceAdministratorResource> IAsyncEnumerable<ManagedInstanceAdministratorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -29,7 +30,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The DDoS custom policy associated with the public IP. </summary>
-        public WritableSubResource DdosCustomPolicy { get; set; }
+        internal WritableSubResource DdosCustomPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DdosCustomPolicyId
+        {
+            get => DdosCustomPolicy is null ? default : DdosCustomPolicy.Id;
+            set
+            {
+                if (DdosCustomPolicy is null)
+                    DdosCustomPolicy = new WritableSubResource();
+                DdosCustomPolicy.Id = value;
+            }
+        }
+
         /// <summary> The DDoS protection policy customizability of the public IP. Only standard coverage will have the ability to be customized. </summary>
         public DdosSettingsProtectionCoverage? ProtectionCoverage { get; set; }
         /// <summary> Enables DDoS protection on the public IP. </summary>

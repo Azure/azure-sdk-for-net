@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("dnsSettings");
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations");
                 writer.WriteStartArray();
-                foreach (var item in IpConfigurations)
+                foreach (var item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineScaleSetUpdateNetworkConfiguration DeserializeVirtualMachineScaleSetUpdateNetworkConfiguration(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<bool> primary = default;
             Optional<bool> enableAcceleratedNetworking = default;
             Optional<bool> enableFpga = default;
@@ -99,7 +99,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

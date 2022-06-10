@@ -20,7 +20,8 @@ namespace NetApp.Tests.ResourceTests
     {
         private const int delay = 10000;
 
-        [Fact(Skip = "Service side bug not released yet")]        
+        //[Fact(Skip = "Service side bug not released yet")]
+        [Fact]
         public void CreateDeleteVolumeGroup()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
@@ -43,7 +44,7 @@ namespace NetApp.Tests.ResourceTests
                 {
                     poolName = volumeGroupVolume.CapacityPoolResourceId;
                     var volumeName = volumeGroupVolume.Name.Split(@"/").Last();
-                    netAppMgmtClient.Volumes.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, poolName, volumeName);
+                    netAppMgmtClient.Volumes.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, volumeName);
                 }
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {
@@ -55,7 +56,7 @@ namespace NetApp.Tests.ResourceTests
                 {
                     Thread.Sleep(delay);
                 }
-                netAppMgmtClient.Pools.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, poolName);
+                netAppMgmtClient.Pools.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
                 netAppMgmtClient.Accounts.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
             }
         }

@@ -16,13 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of SecurityRule and their operations over its parent. </summary>
-    public partial class SecurityRuleCollection : ArmCollection, IEnumerable<SecurityRule>, IAsyncEnumerable<SecurityRule>
+    /// <summary>
+    /// A class representing a collection of <see cref="SecurityRuleResource" /> and their operations.
+    /// Each <see cref="SecurityRuleResource" /> in the collection will belong to the same instance of <see cref="NetworkSecurityGroupResource" />.
+    /// To get a <see cref="SecurityRuleCollection" /> instance call the GetSecurityRules method from an instance of <see cref="NetworkSecurityGroupResource" />.
+    /// </summary>
+    public partial class SecurityRuleCollection : ArmCollection, IEnumerable<SecurityRuleResource>, IAsyncEnumerable<SecurityRuleResource>
     {
         private readonly ClientDiagnostics _securityRuleClientDiagnostics;
         private readonly SecurityRulesRestOperations _securityRuleRestClient;
@@ -37,9 +39,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SecurityRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SecurityRule.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(SecurityRule.ResourceType, out string securityRuleApiVersion);
-            _securityRuleRestClient = new SecurityRulesRestOperations(_securityRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, securityRuleApiVersion);
+            _securityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SecurityRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityRuleResource.ResourceType, out string securityRuleApiVersion);
+            _securityRuleRestClient = new SecurityRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,32 +49,33 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != NetworkSecurityGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkSecurityGroup.ResourceType), nameof(id));
+            if (id.ResourceType != NetworkSecurityGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkSecurityGroupResource.ResourceType), nameof(id));
         }
 
-        /// <summary> Creates or updates a security rule in the specified network security group. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a security rule in the specified network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="securityRuleName"> The name of the security rule. </param>
-        /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update network security rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
-        public async virtual Task<SecurityRuleCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SecurityRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securityRuleName, SecurityRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
-            if (securityRuleParameters == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleParameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityRuleClientDiagnostics.CreateScope("SecurityRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, securityRuleParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityRuleCreateOrUpdateOperation(Client, _securityRuleClientDiagnostics, Pipeline, _securityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, securityRuleParameters).Request, response);
-                if (waitForCompletion)
+                var response = await _securityRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<SecurityRuleResource>(new SecurityRuleOperationSource(Client), _securityRuleClientDiagnostics, Pipeline, _securityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -83,28 +86,29 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Creates or updates a security rule in the specified network security group. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a security rule in the specified network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="securityRuleName"> The name of the security rule. </param>
-        /// <param name="securityRuleParameters"> Parameters supplied to the create or update network security rule operation. </param>
+        /// <param name="data"> Parameters supplied to the create or update network security rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="securityRuleParameters"/> is null. </exception>
-        public virtual SecurityRuleCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string securityRuleName, SecurityRuleData securityRuleParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SecurityRuleResource> CreateOrUpdate(WaitUntil waitUntil, string securityRuleName, SecurityRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
-            if (securityRuleParameters == null)
-            {
-                throw new ArgumentNullException(nameof(securityRuleParameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityRuleClientDiagnostics.CreateScope("SecurityRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, securityRuleParameters, cancellationToken);
-                var operation = new SecurityRuleCreateOrUpdateOperation(Client, _securityRuleClientDiagnostics, Pipeline, _securityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, securityRuleParameters).Request, response);
-                if (waitForCompletion)
+                var response = _securityRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, data, cancellationToken);
+                var operation = new NetworkArmOperation<SecurityRuleResource>(new SecurityRuleOperationSource(Client), _securityRuleClientDiagnostics, Pipeline, _securityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -115,12 +119,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Get the specified network security rule. </summary>
+        /// <summary>
+        /// Get the specified network security rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_Get
+        /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
-        public async virtual Task<Response<SecurityRule>> GetAsync(string securityRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityRuleResource>> GetAsync(string securityRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
 
@@ -130,8 +138,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _securityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _securityRuleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SecurityRule(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SecurityRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,12 +148,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Get the specified network security rule. </summary>
+        /// <summary>
+        /// Get the specified network security rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_Get
+        /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
-        public virtual Response<SecurityRule> Get(string securityRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityRuleResource> Get(string securityRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
 
@@ -155,8 +167,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _securityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken);
                 if (response.Value == null)
-                    throw _securityRuleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityRule(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SecurityRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,19 +177,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets all security rules in a network security group. </summary>
+        /// <summary>
+        /// Gets all security rules in a network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules
+        /// Operation Id: SecurityRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityRule> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityRule>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SecurityRuleResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _securityRuleClientDiagnostics.CreateScope("SecurityRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _securityRuleRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -185,14 +201,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<SecurityRule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SecurityRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _securityRuleClientDiagnostics.CreateScope("SecurityRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _securityRuleRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -203,19 +219,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets all security rules in a network security group. </summary>
+        /// <summary>
+        /// Gets all security rules in a network security group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules
+        /// Operation Id: SecurityRules_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityRule> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SecurityRule> FirstPageFunc(int? pageSizeHint)
+            Page<SecurityRuleResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _securityRuleClientDiagnostics.CreateScope("SecurityRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _securityRuleRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,14 +243,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<SecurityRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SecurityRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _securityRuleClientDiagnostics.CreateScope("SecurityRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _securityRuleRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,12 +261,16 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_Get
+        /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string securityRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string securityRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
 
@@ -254,7 +278,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(securityRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -264,10 +288,14 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
+        /// Operation Id: SecurityRules_Get
+        /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string securityRuleName, CancellationToken cancellationToken = default)
         {
@@ -277,7 +305,7 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = GetIfExists(securityRuleName, cancellationToken: cancellationToken);
+                var response = _securityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -287,57 +315,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="securityRuleName"> The name of the security rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
-        public async virtual Task<Response<SecurityRule>> GetIfExistsAsync(string securityRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
-
-            using var scope = _securityRuleClientDiagnostics.CreateScope("SecurityRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _securityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<SecurityRule>(null, response.GetRawResponse());
-                return Response.FromValue(new SecurityRule(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="securityRuleName"> The name of the security rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
-        public virtual Response<SecurityRule> GetIfExists(string securityRuleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(securityRuleName, nameof(securityRuleName));
-
-            using var scope = _securityRuleClientDiagnostics.CreateScope("SecurityRuleCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _securityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityRuleName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<SecurityRule>(null, response.GetRawResponse());
-                return Response.FromValue(new SecurityRule(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<SecurityRule> IEnumerable<SecurityRule>.GetEnumerator()
+        IEnumerator<SecurityRuleResource> IEnumerable<SecurityRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -347,7 +325,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SecurityRule> IAsyncEnumerable<SecurityRule>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SecurityRuleResource> IAsyncEnumerable<SecurityRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

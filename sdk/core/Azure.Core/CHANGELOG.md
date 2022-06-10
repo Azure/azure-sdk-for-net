@@ -1,8 +1,32 @@
 # Release History
 
-## 1.23.0-beta.1 (Unreleased)
+## 1.25.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.24.0 (2022-04-04)
+
+### Features Added
+
+- Added the `MessageContent` type which represents a message containing a content type and data.
+- Sub classes of `ClientOptions` are now able to create sub class implementations of `DiagnosticsOptions` and set it as the implementation for the `Diagnostics` property of `ClientOptions` via a new constructor overload.
+
+## 1.23.0 (2022-03-21)
+
+### Features Added
+
+- Added the `TelemetryDetails` type which enables customization of UserAgent header values on a per-request basis based on a specified `Assembly` and an optional application Id string.
+- Added `AddClassifier` methods to `RequestContext`. These methods allow callers to change the response classification behavior for a given method invocation.
+- Added a new `StatusCodeClassifier` type that will be used as the default `ResponseClassifier` for some libraries.
+- Added an extension method to `BinaryData` called `ToObjectFromJson` which converts the json value represented by `BinaryData` to an object of a specific type.
+- Additional data center locations were added to `AzureLocation`.
+- Added `WaitUntil` enum to allow callers to set whether a method invoking a long running operation should return when the operation starts or once it has completed.
 
 ### Breaking Changes
 
@@ -12,10 +36,6 @@
     <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.HttpClientTransport.EnableCookies" Value="true" />
   </ItemGroup>
 ```
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.22.0 (2022-01-11)
 

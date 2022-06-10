@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceAzureADOnlyAuthentication and their operations over its parent. </summary>
-    public partial class ManagedInstanceAzureADOnlyAuthenticationCollection : ArmCollection, IEnumerable<ManagedInstanceAzureADOnlyAuthentication>, IAsyncEnumerable<ManagedInstanceAzureADOnlyAuthentication>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> and their operations.
+    /// Each <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
+    /// To get a <see cref="ManagedInstanceAzureADOnlyAuthenticationCollection" /> instance call the GetManagedInstanceAzureADOnlyAuthentications method from an instance of <see cref="ManagedInstanceResource" />.
+    /// </summary>
+    public partial class ManagedInstanceAzureADOnlyAuthenticationCollection : ArmCollection, IEnumerable<ManagedInstanceAzureADOnlyAuthenticationResource>, IAsyncEnumerable<ManagedInstanceAzureADOnlyAuthenticationResource>
     {
         private readonly ClientDiagnostics _managedInstanceAzureADOnlyAuthenticationClientDiagnostics;
         private readonly ManagedInstanceAzureADOnlyAuthenticationsRestOperations _managedInstanceAzureADOnlyAuthenticationRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedInstanceAzureADOnlyAuthenticationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceAzureADOnlyAuthenticationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceAzureADOnlyAuthentication.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ManagedInstanceAzureADOnlyAuthentication.ResourceType, out string managedInstanceAzureADOnlyAuthenticationApiVersion);
-            _managedInstanceAzureADOnlyAuthenticationRestClient = new ManagedInstanceAzureADOnlyAuthenticationsRestOperations(_managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceAzureADOnlyAuthenticationApiVersion);
+            _managedInstanceAzureADOnlyAuthenticationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceAzureADOnlyAuthenticationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedInstanceAzureADOnlyAuthenticationResource.ResourceType, out string managedInstanceAzureADOnlyAuthenticationApiVersion);
+            _managedInstanceAzureADOnlyAuthenticationRestClient = new ManagedInstanceAzureADOnlyAuthenticationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceAzureADOnlyAuthenticationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,33 +50,31 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedInstance.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedInstanceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAzureADOnlyAuthentications_CreateOrUpdate
-        /// <summary> Sets Server Active Directory only authentication property or updates an existing server Active Directory only authentication property. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Sets Server Active Directory only authentication property or updates an existing server Active Directory only authentication property.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
+        /// Operation Id: ManagedInstanceAzureADOnlyAuthentications_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
-        /// <param name="parameters"> The required parameters for creating or updating an Active Directory only authentication property. </param>
+        /// <param name="data"> The required parameters for creating or updating an Active Directory only authentication property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, AuthenticationName authenticationName, ManagedInstanceAzureADOnlyAuthenticationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedInstanceAzureADOnlyAuthenticationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AuthenticationName authenticationName, ManagedInstanceAzureADOnlyAuthenticationData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedInstanceAzureADOnlyAuthenticationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation(Client, _managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, _managedInstanceAzureADOnlyAuthenticationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = await _managedInstanceAzureADOnlyAuthenticationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<ManagedInstanceAzureADOnlyAuthenticationResource>(new ManagedInstanceAzureADOnlyAuthenticationOperationSource(Client), _managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, _managedInstanceAzureADOnlyAuthenticationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -84,29 +85,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAzureADOnlyAuthentications_CreateOrUpdate
-        /// <summary> Sets Server Active Directory only authentication property or updates an existing server Active Directory only authentication property. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Sets Server Active Directory only authentication property or updates an existing server Active Directory only authentication property.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
+        /// Operation Id: ManagedInstanceAzureADOnlyAuthentications_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
-        /// <param name="parameters"> The required parameters for creating or updating an Active Directory only authentication property. </param>
+        /// <param name="data"> The required parameters for creating or updating an Active Directory only authentication property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, AuthenticationName authenticationName, ManagedInstanceAzureADOnlyAuthenticationData parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ManagedInstanceAzureADOnlyAuthenticationResource> CreateOrUpdate(WaitUntil waitUntil, AuthenticationName authenticationName, ManagedInstanceAzureADOnlyAuthenticationData data, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedInstanceAzureADOnlyAuthenticationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, parameters, cancellationToken);
-                var operation = new ManagedInstanceAzureADOnlyAuthenticationCreateOrUpdateOperation(Client, _managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, _managedInstanceAzureADOnlyAuthenticationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, parameters).Request, response);
-                if (waitForCompletion)
+                var response = _managedInstanceAzureADOnlyAuthenticationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data, cancellationToken);
+                var operation = new SqlArmOperation<ManagedInstanceAzureADOnlyAuthenticationResource>(new ManagedInstanceAzureADOnlyAuthenticationOperationSource(Client), _managedInstanceAzureADOnlyAuthenticationClientDiagnostics, Pipeline, _managedInstanceAzureADOnlyAuthenticationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -117,13 +116,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAzureADOnlyAuthentications_Get
-        /// <summary> Gets a specific Azure Active Directory only authentication property. </summary>
+        /// <summary>
+        /// Gets a specific Azure Active Directory only authentication property.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
+        /// Operation Id: ManagedInstanceAzureADOnlyAuthentications_Get
+        /// </summary>
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagedInstanceAzureADOnlyAuthentication>> GetAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceAzureADOnlyAuthenticationResource>> GetAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.Get");
             scope.Start();
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _managedInstanceAzureADOnlyAuthenticationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstanceAzureADOnlyAuthentication(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceAzureADOnlyAuthenticationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,13 +141,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAzureADOnlyAuthentications_Get
-        /// <summary> Gets a specific Azure Active Directory only authentication property. </summary>
+        /// <summary>
+        /// Gets a specific Azure Active Directory only authentication property.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
+        /// Operation Id: ManagedInstanceAzureADOnlyAuthentications_Get
+        /// </summary>
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedInstanceAzureADOnlyAuthentication> Get(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceAzureADOnlyAuthenticationResource> Get(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.Get");
             scope.Start();
@@ -155,8 +156,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedInstanceAzureADOnlyAuthenticationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken);
                 if (response.Value == null)
-                    throw _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAzureADOnlyAuthentication(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceAzureADOnlyAuthenticationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -165,22 +166,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAzureADOnlyAuthentications_ListByInstance
-        /// <summary> Gets a list of server Azure Active Directory only authentications. </summary>
+        /// <summary>
+        /// Gets a list of server Azure Active Directory only authentications.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications
+        /// Operation Id: ManagedInstanceAzureADOnlyAuthentications_ListByInstance
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceAzureADOnlyAuthentication" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceAzureADOnlyAuthentication> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceAzureADOnlyAuthenticationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstanceAzureADOnlyAuthentication>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedInstanceAzureADOnlyAuthenticationResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedInstanceAzureADOnlyAuthenticationRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthentication(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -188,14 +190,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ManagedInstanceAzureADOnlyAuthentication>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedInstanceAzureADOnlyAuthenticationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedInstanceAzureADOnlyAuthenticationRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthentication(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -206,22 +208,23 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAzureADOnlyAuthentications_ListByInstance
-        /// <summary> Gets a list of server Azure Active Directory only authentications. </summary>
+        /// <summary>
+        /// Gets a list of server Azure Active Directory only authentications.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications
+        /// Operation Id: ManagedInstanceAzureADOnlyAuthentications_ListByInstance
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceAzureADOnlyAuthentication" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceAzureADOnlyAuthentication> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceAzureADOnlyAuthenticationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceAzureADOnlyAuthentication> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedInstanceAzureADOnlyAuthenticationResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedInstanceAzureADOnlyAuthenticationRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthentication(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,14 +232,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedInstanceAzureADOnlyAuthentication> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedInstanceAzureADOnlyAuthenticationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedInstanceAzureADOnlyAuthenticationRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthentication(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceAzureADOnlyAuthenticationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,19 +250,20 @@ namespace Azure.ResourceManager.Sql
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAzureADOnlyAuthentications_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
+        /// Operation Id: ManagedInstanceAzureADOnlyAuthentications_Get
+        /// </summary>
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(authenticationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managedInstanceAzureADOnlyAuthenticationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -269,10 +273,11 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAzureADOnlyAuthentications_Get
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
+        /// Operation Id: ManagedInstanceAzureADOnlyAuthentications_Get
+        /// </summary>
         /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
@@ -281,7 +286,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = GetIfExists(authenticationName, cancellationToken: cancellationToken);
+                var response = _managedInstanceAzureADOnlyAuthenticationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,55 +296,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAzureADOnlyAuthentications_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ManagedInstanceAzureADOnlyAuthentication>> GetIfExistsAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _managedInstanceAzureADOnlyAuthenticationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceAzureADOnlyAuthentication>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAzureADOnlyAuthentication(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/azureADOnlyAuthentications/{authenticationName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
-        /// OperationId: ManagedInstanceAzureADOnlyAuthentications_Get
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedInstanceAzureADOnlyAuthentication> GetIfExists(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managedInstanceAzureADOnlyAuthenticationClientDiagnostics.CreateScope("ManagedInstanceAzureADOnlyAuthenticationCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _managedInstanceAzureADOnlyAuthenticationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceAzureADOnlyAuthentication>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceAzureADOnlyAuthentication(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        IEnumerator<ManagedInstanceAzureADOnlyAuthentication> IEnumerable<ManagedInstanceAzureADOnlyAuthentication>.GetEnumerator()
+        IEnumerator<ManagedInstanceAzureADOnlyAuthenticationResource> IEnumerable<ManagedInstanceAzureADOnlyAuthenticationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -349,7 +306,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagedInstanceAzureADOnlyAuthentication> IAsyncEnumerable<ManagedInstanceAzureADOnlyAuthentication>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagedInstanceAzureADOnlyAuthenticationResource> IAsyncEnumerable<ManagedInstanceAzureADOnlyAuthenticationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

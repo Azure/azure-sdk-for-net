@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -21,7 +22,10 @@ namespace Azure.Analytics.Purview.Catalog
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
@@ -30,6 +34,21 @@ namespace Azure.Analytics.Purview.Catalog
         {
         }
 
+        /// <summary> Initializes a new instance of PurviewGlossaries. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        internal PurviewGlossaries(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _apiVersion = apiVersion;
+        }
+
         /// <summary> Get all glossaries registered with Atlas. </summary>
         /// <param name="limit"> The page size - by default there is no paging. </param>
         /// <param name="offset"> The offset for pagination purpose. </param>
@@ -98,9 +117,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
@@ -184,9 +201,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
@@ -320,9 +335,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateGlossaryAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -458,9 +471,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateGlossary(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -604,9 +615,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateGlossaryCategoriesAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -750,9 +759,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateGlossaryCategories(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -896,9 +903,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateGlossaryCategoryAsync(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1042,9 +1047,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateGlossaryCategory(RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1066,6 +1069,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1132,11 +1136,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
@@ -1156,6 +1158,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1222,11 +1225,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetGlossaryCategory(string categoryGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategory");
             scope.Start();
@@ -1247,6 +1248,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1369,11 +1371,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> UpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
@@ -1395,6 +1395,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1517,11 +1518,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response UpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryCategory");
@@ -1542,6 +1541,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1552,11 +1552,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
@@ -1576,6 +1574,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="categoryGuid"> The globally unique identifier of the category. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1586,11 +1585,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteGlossaryCategory(string categoryGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryCategory");
             scope.Start();
@@ -1611,6 +1608,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1677,11 +1675,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> PartialUpdateGlossaryCategoryAsync(string categoryGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
@@ -1703,6 +1699,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1769,11 +1766,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response PartialUpdateGlossaryCategory(string categoryGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryCategory");
@@ -1797,6 +1792,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1816,11 +1812,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
@@ -1843,6 +1837,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1862,11 +1857,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetRelatedCategories(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedCategories");
             scope.Start();
@@ -1889,6 +1882,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1911,11 +1905,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
@@ -1938,6 +1930,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1960,11 +1953,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(categoryGuid, nameof(categoryGuid));
+            Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetCategoryTerms");
             scope.Start();
@@ -2197,9 +2188,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateGlossaryTermAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2434,9 +2423,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateGlossaryTerm(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -2457,8 +2444,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="excludeRelationshipTypeList"> An array of relationship types which need to be excluded. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2570,17 +2559,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, IEnumerable<string> excludeRelationshipTypeList = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, context);
+                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, excludeRelationshipTypeList, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2593,8 +2580,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Get a specific glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
+        /// <param name="excludeRelationshipTypeList"> An array of relationship types which need to be excluded. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2706,17 +2695,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, IEnumerable<string> excludeRelationshipTypeList = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerm");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, context);
+                using HttpMessage message = CreateGetGlossaryTermRequest(termGuid, includeTermHierarchy, excludeRelationshipTypeList, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2729,8 +2716,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2943,18 +2932,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual async Task<Response> UpdateGlossaryTermAsync(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, context);
+                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2967,8 +2954,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Update the given glossary term by its GUID. </summary>
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3181,18 +3170,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual Response UpdateGlossaryTerm(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossaryTerm");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, context);
+                using HttpMessage message = CreateUpdateGlossaryTermRequest(termGuid, content, includeTermHierarchy, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3206,6 +3193,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -3216,11 +3204,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteGlossaryTermAsync(string termGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
@@ -3240,6 +3226,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="termGuid"> The globally unique identifier for glossary term. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -3250,11 +3237,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteGlossaryTerm(string termGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossaryTerm");
             scope.Start();
@@ -3276,6 +3261,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3387,11 +3373,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> PartialUpdateGlossaryTermAsync(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
@@ -3414,6 +3398,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3525,11 +3510,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response PartialUpdateGlossaryTerm(string termGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossaryTerm");
@@ -3763,9 +3746,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> CreateGlossaryTermsAsync(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -4000,9 +3981,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response CreateGlossaryTerms(RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -4027,6 +4006,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4054,11 +4034,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
@@ -4081,6 +4059,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4108,11 +4087,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetEntitiesAssignedWithTerm");
             scope.Start();
@@ -4133,6 +4110,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4160,11 +4138,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> AssignTermToEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
@@ -4186,6 +4162,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4213,11 +4190,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response AssignTermToEntities(string termGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.AssignTermToEntities");
@@ -4239,6 +4214,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4266,11 +4242,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> RemoveTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
@@ -4292,6 +4266,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4319,11 +4294,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response RemoveTermAssignmentFromEntities(string termGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.RemoveTermAssignmentFromEntities");
@@ -4345,6 +4318,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4372,11 +4346,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
@@ -4398,6 +4370,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4425,11 +4398,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteTermAssignmentFromEntities(string termGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteTermAssignmentFromEntities");
@@ -4453,6 +4424,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4475,11 +4447,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
@@ -4502,6 +4472,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4524,11 +4495,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetRelatedTerms(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(termGuid, nameof(termGuid));
+            Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetRelatedTerms");
             scope.Start();
@@ -4548,6 +4517,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4610,11 +4580,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
@@ -4634,6 +4602,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4696,11 +4665,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetGlossary(string glossaryGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossary");
             scope.Start();
@@ -4721,6 +4688,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4835,11 +4803,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> UpdateGlossaryAsync(string glossaryGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
@@ -4861,6 +4827,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -4975,11 +4942,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response UpdateGlossary(string glossaryGuid, RequestContent content, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.UpdateGlossary");
@@ -5000,6 +4965,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -5010,11 +4976,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> DeleteGlossaryAsync(string glossaryGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
@@ -5034,6 +4998,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -5044,11 +5009,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response DeleteGlossary(string glossaryGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.DeleteGlossary");
             scope.Start();
@@ -5071,6 +5034,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5137,11 +5101,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
@@ -5164,6 +5126,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5230,11 +5193,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategories");
             scope.Start();
@@ -5257,6 +5218,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5276,11 +5238,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
@@ -5303,6 +5263,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5322,11 +5283,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryCategoriesHeaders");
             scope.Start();
@@ -5347,6 +5306,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5411,11 +5371,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
@@ -5436,6 +5394,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5500,11 +5459,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetDetailedGlossary");
             scope.Start();
@@ -5526,6 +5483,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5588,11 +5546,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> PartialUpdateGlossaryAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
@@ -5615,6 +5571,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5677,11 +5634,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response PartialUpdateGlossary(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.PartialUpdateGlossary");
@@ -5706,6 +5661,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5817,11 +5773,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
@@ -5845,6 +5799,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -5956,11 +5911,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTerms");
             scope.Start();
@@ -5983,6 +5936,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6005,11 +5959,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
@@ -6032,6 +5984,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6054,11 +6007,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaryTermHeaders");
             scope.Start();
@@ -6078,6 +6029,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6104,11 +6056,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationGuid, nameof(operationGuid));
+            Argument.AssertNotNullOrEmpty(operationGuid, nameof(operationGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
@@ -6128,6 +6078,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="operationGuid"> The globally unique identifier for async operation/job. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6154,11 +6105,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(operationGuid, nameof(operationGuid));
+            Argument.AssertNotNullOrEmpty(operationGuid, nameof(operationGuid));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetImportCsvOperationStatus");
             scope.Start();
@@ -6180,11 +6129,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
@@ -6207,11 +6155,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
-#pragma warning disable AZC0002
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ExportGlossaryTermsAsCsv");
@@ -6235,6 +6182,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6346,11 +6294,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
@@ -6373,6 +6319,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6484,11 +6431,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
         {
-            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetTermsByGlossaryName");
             scope.Start();
@@ -6505,12 +6450,13 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6537,11 +6483,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(bool waitForCompletion, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(WaitUntil waitUntil, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
@@ -6549,7 +6493,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6559,12 +6503,13 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6591,11 +6536,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(bool waitForCompletion, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(WaitUntil waitUntil, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(glossaryGuid, nameof(glossaryGuid));
+            Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsv");
@@ -6603,7 +6546,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -6613,12 +6556,13 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6645,11 +6589,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(bool waitForCompletion, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil waitUntil, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
@@ -6657,7 +6599,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion).ConfigureAwait(false);
+                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -6667,12 +6609,13 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Import Glossary Terms from local csv file by glossaryName. </summary>
-        /// <param name="waitForCompletion"> true if the method should wait to return until the long-running operation has completed on the service; false if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -6699,11 +6642,9 @@ namespace Azure.Analytics.Purview.Catalog
         /// </code>
         /// 
         /// </remarks>
-#pragma warning disable AZC0002
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(bool waitForCompletion, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
-#pragma warning restore AZC0002
+        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil waitUntil, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
-            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
+            Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName");
@@ -6711,7 +6652,7 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitForCompletion);
+                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -6722,7 +6663,7 @@ namespace Azure.Analytics.Purview.Catalog
 
         internal HttpMessage CreateGetGlossariesRequest(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6747,13 +6688,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateGlossaryRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6764,13 +6704,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateGlossaryCategoriesRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6781,13 +6720,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateGlossaryCategoryRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6798,13 +6736,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetGlossaryCategoryRequest(string categoryGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6814,13 +6751,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(categoryGuid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6832,13 +6768,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteGlossaryCategoryRequest(string categoryGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -6848,13 +6783,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(categoryGuid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreatePartialUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6867,13 +6801,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetRelatedCategoriesRequest(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6896,13 +6829,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetCategoryTermsRequest(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6925,13 +6857,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateGlossaryTermRequest(RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -6946,13 +6877,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy, RequestContext context)
+        internal HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy, IEnumerable<string> excludeRelationshipTypeList, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -6964,15 +6894,21 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
+            if (excludeRelationshipTypeList != null)
+            {
+                foreach (var param in excludeRelationshipTypeList)
+                {
+                    uri.AppendQuery("excludeRelationshipTypes", param, true);
+                }
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        internal HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -6980,17 +6916,20 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termGuid, true);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteGlossaryTermRequest(string termGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -7000,13 +6939,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(termGuid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -7023,13 +6961,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateCreateGlossaryTermsRequest(RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -7044,13 +6981,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetEntitiesAssignedWithTermRequest(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7073,13 +7009,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateAssignTermToEntitiesRequest(string termGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -7092,13 +7027,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateRemoveTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -7111,13 +7045,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -7130,13 +7063,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetRelatedTermsRequest(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7159,13 +7091,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetGlossaryRequest(string glossaryGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7175,13 +7106,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(glossaryGuid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateUpdateGlossaryRequest(string glossaryGuid, RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -7193,13 +7123,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateDeleteGlossaryRequest(string glossaryGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -7209,13 +7138,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath(glossaryGuid, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier204.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetGlossaryCategoriesRequest(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7238,13 +7166,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetGlossaryCategoriesHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7267,13 +7194,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetDetailedGlossaryRequest(string glossaryGuid, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7288,13 +7214,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -7311,13 +7236,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetGlossaryTermsRequest(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7344,13 +7268,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetGlossaryTermHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7373,13 +7296,12 @@ namespace Azure.Analytics.Purview.Catalog
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateImportGlossaryTermsViaCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -7397,13 +7319,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(string glossaryName, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -7421,13 +7342,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier202.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetImportCsvOperationStatusRequest(string operationGuid, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7438,13 +7358,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateExportGlossaryTermsAsCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -7462,13 +7381,12 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Accept", "text/csv");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
         internal HttpMessage CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -7492,48 +7410,14 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.ResponseClassifier = ResponseClassifier200.Instance;
             return message;
         }
 
-        private sealed class ResponseClassifier200 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier200();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    200 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier204 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier204();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    204 => false,
-                    _ => true
-                };
-            }
-        }
-        private sealed class ResponseClassifier202 : ResponseClassifier
-        {
-            private static ResponseClassifier _instance;
-            public static ResponseClassifier Instance => _instance ??= new ResponseClassifier202();
-            public override bool IsErrorResponse(HttpMessage message)
-            {
-                return message.Response.Status switch
-                {
-                    202 => false,
-                    _ => true
-                };
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
     }
 }

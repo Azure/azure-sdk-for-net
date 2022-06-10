@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt:analyze?stringIndexType=utf16CodeUnit\u0026api-version=2022-06-30-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "154",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-94437678f73dd84d8151103ac07bae34-3819a64e67dedb47-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "b02822f4ab9cb4cd1372496951a165e9",
+        "traceparent": "00-7b6cd85677fbbe4e94d68941eec3db7b-1275cab9aa46954c-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220603.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c9b46f5b3c5f5acbe0a6c4deaccec830",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,148 +18,175 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "0bd40825-db96-4590-845f-c10fd5fa6536",
+        "apim-request-id": "8fa931c8-1fe4-4350-9eee-a7f342c79c81",
         "Content-Length": "0",
-        "Date": "Tue, 28 Sep 2021 14:22:58 GMT",
-        "Operation-Location": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/0bd40825-db96-4590-845f-c10fd5fa6536?api-version=2021-09-30-preview",
+        "Date": "Fri, 03 Jun 2022 18:44:47 GMT",
+        "Operation-Location": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8fa931c8-1fe4-4350-9eee-a7f342c79c81?api-version=2022-06-30-preview",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "604"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "298"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/0bd40825-db96-4590-845f-c10fd5fa6536?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8fa931c8-1fe4-4350-9eee-a7f342c79c81?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "9eb617b0077ef2349ed5dd1513e9c378",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220603.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "3af84be31d6615a17a0e42a893e9f7c6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "94ebe336-4fea-4611-83af-ba04b4a8f5f9",
+        "apim-request-id": "3e0990e8-2325-4fa9-9313-c89ac13abb6a",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:22:58 GMT",
+        "Date": "Fri, 03 Jun 2022 18:44:47 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "68"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:22:58Z",
-        "lastUpdatedDateTime": "2021-09-28T14:22:58Z"
+        "createdDateTime": "2022-06-03T18:44:46Z",
+        "lastUpdatedDateTime": "2022-06-03T18:44:46Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/0bd40825-db96-4590-845f-c10fd5fa6536?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8fa931c8-1fe4-4350-9eee-a7f342c79c81?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "1a0f9c9863d01061e6a6cfc0d24f3a42",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220603.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "87d34827925405c787b999168b359696",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cb6e33cd-e7b1-49b9-88c5-05c2dc1db369",
+        "apim-request-id": "b35e9574-e6cb-4d5f-9230-5bac64e675c2",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:23:00 GMT",
+        "Date": "Fri, 03 Jun 2022 18:44:48 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "64"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:22:58Z",
-        "lastUpdatedDateTime": "2021-09-28T14:22:58Z"
+        "createdDateTime": "2022-06-03T18:44:46Z",
+        "lastUpdatedDateTime": "2022-06-03T18:44:46Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/0bd40825-db96-4590-845f-c10fd5fa6536?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8fa931c8-1fe4-4350-9eee-a7f342c79c81?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "0d89e11aaa80edc0ed3512c7ceb7a12a",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220603.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "c70b03755c613dfdcd9f4e50f922c6f6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "8b8b9197-4142-468f-ac69-a494fdcd92a9",
+        "apim-request-id": "17d70bc5-4037-45ff-a6c9-7d258ecb2b46",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:23:01 GMT",
+        "Date": "Fri, 03 Jun 2022 18:44:49 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "69"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2021-09-28T14:22:58Z",
-        "lastUpdatedDateTime": "2021-09-28T14:22:58Z"
+        "createdDateTime": "2022-06-03T18:44:46Z",
+        "lastUpdatedDateTime": "2022-06-03T18:44:46Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-canary.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/0bd40825-db96-4590-845f-c10fd5fa6536?api-version=2021-09-30-preview",
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8fa931c8-1fe4-4350-9eee-a7f342c79c81?api-version=2022-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20210928.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "b4d1d0ae4b914d18b5a6b8d73874204e",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220603.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "64b7feaf40fa51db83f2b3ad848a8945",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "033163c7-cda9-44b6-958d-fce7cdaf2939",
+        "apim-request-id": "04346d11-5cb2-42b1-a57e-1df10998eefc",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Sep 2021 14:23:02 GMT",
+        "Date": "Fri, 03 Jun 2022 18:44:50 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "141"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2022-06-03T18:44:46Z",
+        "lastUpdatedDateTime": "2022-06-03T18:44:46Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/formrecognizer/documentModels/prebuilt-receipt/analyzeResults/8fa931c8-1fe4-4350-9eee-a7f342c79c81?api-version=2022-06-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/4.0.0-alpha.20220603.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "9033ac772fdeca654b95b9b544760b64",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "523f0312-9139-4055-b548-af67d48b49a7",
+        "Content-Length": "44202",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 03 Jun 2022 18:44:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "52"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2021-09-28T14:22:58Z",
-        "lastUpdatedDateTime": "2021-09-28T14:23:02Z",
+        "createdDateTime": "2022-06-03T18:44:46Z",
+        "lastUpdatedDateTime": "2022-06-03T18:44:50Z",
         "analyzeResult": {
-          "apiVersion": "2021-09-30-preview",
+          "apiVersion": "2022-06-30-preview",
           "modelId": "prebuilt-receipt",
           "stringIndexType": "utf16CodeUnit",
-          "content": "Contoso\nContoso\n123 Main Street\nRedmond, WA 98052\n123-456-7890\n6/10/2019 13:59\nSales Associate: Paul\n1 Surface Pro 6\n256GB / Intel Core i5 /\n8GB RAM (Black)\n999.00\n1 SurfacePen\n99.99\n- -\nSub-Total\nTax\nTotal\n$ 1098.99\n104.40\n$ 1203.39",
+          "content": "Contoso\nContoso 123 Main Street Redmond, WA 98052\n123-456-7890\n6/10/2019 13:59\nSales Associate: Paul\n1 Surface Pro 6\n256GB /Intel Core i5 /\n8GB RAM (Black)\n1 SurfacePen $ 99.99\n------ -\nSub-Total\nTax\nTotal\n-- - --- --\n999.00\n------\n1098.99\n104.40\n1203.39",
           "pages": [
             {
               "pageNumber": 1,
-              "angle": 0.3673,
+              "angle": 0,
               "width": 1688,
               "height": 3000,
               "unit": "pixel",
               "words": [
                 {
                   "content": "Contoso",
-                  "boundingBox": [
-                    620,
-                    293,
-                    1024,
-                    290,
-                    1026,
-                    380,
-                    623,
-                    389
+                  "polygon": [
+                    618,
+                    282,
+                    1035,
+                    273,
+                    1038,
+                    381,
+                    621,
+                    401
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.995,
                   "span": {
                     "offset": 0,
                     "length": 7
@@ -167,17 +194,17 @@
                 },
                 {
                   "content": "Contoso",
-                  "boundingBox": [
-                    328,
-                    590,
-                    497,
-                    601,
-                    494,
-                    651,
-                    324,
+                  "polygon": [
+                    325,
+                    592,
+                    499,
+                    600,
+                    496,
+                    652,
+                    322,
                     640
                   ],
-                  "confidence": 0.988,
+                  "confidence": 0.969,
                   "span": {
                     "offset": 8,
                     "length": 7
@@ -185,17 +212,17 @@
                 },
                 {
                   "content": "123",
-                  "boundingBox": [
-                    318,
-                    690,
-                    382,
+                  "polygon": [
+                    323,
+                    692,
+                    380,
                     693,
                     378,
-                    752,
-                    314,
-                    748
+                    754,
+                    319,
+                    753
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 16,
                     "length": 3
@@ -203,17 +230,17 @@
                 },
                 {
                   "content": "Main",
-                  "boundingBox": [
-                    393,
-                    694,
-                    493,
-                    697,
-                    491,
-                    754,
+                  "polygon": [
+                    392,
+                    693,
+                    494,
+                    695,
+                    492,
+                    755,
                     389,
-                    752
+                    754
                   ],
-                  "confidence": 0.991,
+                  "confidence": 0.98,
                   "span": {
                     "offset": 20,
                     "length": 4
@@ -221,15 +248,15 @@
                 },
                 {
                   "content": "Street",
-                  "boundingBox": [
-                    505,
+                  "polygon": [
+                    506,
+                    695,
+                    648,
                     697,
-                    650,
-                    697,
-                    649,
-                    751,
-                    502,
-                    754
+                    648,
+                    754,
+                    504,
+                    755
                   ],
                   "confidence": 0.997,
                   "span": {
@@ -239,17 +266,17 @@
                 },
                 {
                   "content": "Redmond,",
-                  "boundingBox": [
-                    313,
+                  "polygon": [
+                    315,
                     796,
-                    519,
-                    799,
-                    518,
-                    856,
-                    311,
-                    851
+                    521,
+                    800,
+                    520,
+                    857,
+                    313,
+                    852
                   ],
-                  "confidence": 0.989,
+                  "confidence": 0.993,
                   "span": {
                     "offset": 32,
                     "length": 8
@@ -257,17 +284,17 @@
                 },
                 {
                   "content": "WA",
-                  "boundingBox": [
-                    529,
+                  "polygon": [
+                    532,
+                    800,
+                    596,
                     799,
-                    591,
-                    799,
-                    591,
-                    855,
-                    529,
-                    856
+                    596,
+                    857,
+                    532,
+                    857
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 41,
                     "length": 2
@@ -275,17 +302,17 @@
                 },
                 {
                   "content": "98052",
-                  "boundingBox": [
-                    601,
+                  "polygon": [
+                    607,
                     799,
-                    749,
-                    797,
-                    750,
-                    848,
-                    601,
-                    855
+                    751,
+                    795,
+                    752,
+                    852,
+                    607,
+                    857
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 44,
                     "length": 5
@@ -293,17 +320,17 @@
                 },
                 {
                   "content": "123-456-7890",
-                  "boundingBox": [
-                    308,
+                  "polygon": [
+                    309,
                     1005,
-                    620,
+                    615,
                     1012,
-                    616,
-                    1068,
-                    306,
-                    1063
+                    615,
+                    1070,
+                    308,
+                    1066
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.991,
                   "span": {
                     "offset": 50,
                     "length": 12
@@ -311,17 +338,17 @@
                 },
                 {
                   "content": "6/10/2019",
-                  "boundingBox": [
+                  "polygon": [
                     302,
-                    1223,
+                    1220,
                     495,
-                    1224,
-                    494,
-                    1290,
-                    302,
-                    1289
+                    1221,
+                    493,
+                    1293,
+                    299,
+                    1291
                   ],
-                  "confidence": 0.993,
+                  "confidence": 0.992,
                   "span": {
                     "offset": 63,
                     "length": 9
@@ -329,17 +356,17 @@
                 },
                 {
                   "content": "13:59",
-                  "boundingBox": [
+                  "polygon": [
+                    509,
+                    1221,
+                    628,
+                    1223,
+                    627,
+                    1295,
                     507,
-                    1224,
-                    632,
-                    1228,
-                    631,
-                    1290,
-                    507,
-                    1290
+                    1293
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 73,
                     "length": 5
@@ -347,17 +374,17 @@
                 },
                 {
                   "content": "Sales",
-                  "boundingBox": [
-                    301,
+                  "polygon": [
+                    298,
                     1336,
-                    407,
+                    409,
                     1336,
-                    407,
-                    1393,
-                    301,
-                    1393
+                    408,
+                    1396,
+                    298,
+                    1395
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 79,
                     "length": 5
@@ -365,15 +392,15 @@
                 },
                 {
                   "content": "Associate:",
-                  "boundingBox": [
-                    419,
+                  "polygon": [
+                    421,
                     1336,
-                    646,
+                    643,
                     1337,
-                    645,
-                    1396,
-                    418,
-                    1393
+                    643,
+                    1398,
+                    420,
+                    1397
                   ],
                   "confidence": 0.994,
                   "span": {
@@ -383,17 +410,17 @@
                 },
                 {
                   "content": "Paul",
-                  "boundingBox": [
-                    658,
-                    1338,
+                  "polygon": [
+                    655,
+                    1337,
                     767,
                     1338,
-                    766,
-                    1397,
-                    657,
-                    1396
+                    768,
+                    1398,
+                    655,
+                    1398
                   ],
-                  "confidence": 0.991,
+                  "confidence": 0.987,
                   "span": {
                     "offset": 96,
                     "length": 4
@@ -401,17 +428,17 @@
                 },
                 {
                   "content": "1",
-                  "boundingBox": [
+                  "polygon": [
+                    336,
+                    1559,
+                    351,
+                    1559,
+                    350,
+                    1623,
                     334,
-                    1560,
-                    349,
-                    1561,
-                    348,
-                    1619,
-                    333,
-                    1619
+                    1623
                   ],
-                  "confidence": 0.952,
+                  "confidence": 0.994,
                   "span": {
                     "offset": 101,
                     "length": 1
@@ -419,17 +446,17 @@
                 },
                 {
                   "content": "Surface",
-                  "boundingBox": [
-                    361,
-                    1561,
-                    537,
-                    1562,
-                    536,
-                    1620,
-                    360,
-                    1619
+                  "polygon": [
+                    364,
+                    1559,
+                    538,
+                    1560,
+                    538,
+                    1623,
+                    362,
+                    1623
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.996,
                   "span": {
                     "offset": 103,
                     "length": 7
@@ -437,17 +464,17 @@
                 },
                 {
                   "content": "Pro",
-                  "boundingBox": [
-                    549,
-                    1562,
+                  "polygon": [
+                    550,
+                    1560,
                     625,
-                    1563,
-                    624,
-                    1621,
-                    547,
-                    1620
+                    1561,
+                    625,
+                    1622,
+                    550,
+                    1623
                   ],
-                  "confidence": 0.992,
+                  "confidence": 0.995,
                   "span": {
                     "offset": 111,
                     "length": 3
@@ -455,17 +482,17 @@
                 },
                 {
                   "content": "6",
-                  "boundingBox": [
+                  "polygon": [
                     637,
-                    1563,
+                    1561,
                     671,
-                    1563,
-                    670,
-                    1621,
-                    636,
-                    1621
+                    1562,
+                    672,
+                    1622,
+                    638,
+                    1622
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 115,
                     "length": 1
@@ -473,415 +500,469 @@
                 },
                 {
                   "content": "256GB",
-                  "boundingBox": [
-                    370,
-                    1673,
-                    501,
-                    1673,
+                  "polygon": [
+                    371,
+                    1669,
                     500,
-                    1737,
-                    370,
-                    1734
+                    1670,
+                    501,
+                    1740,
+                    371,
+                    1740
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.997,
                   "span": {
                     "offset": 117,
                     "length": 5
                   }
                 },
                 {
-                  "content": "/",
-                  "boundingBox": [
+                  "content": "/Intel",
+                  "polygon": [
                     514,
-                    1673,
-                    526,
-                    1673,
-                    526,
-                    1737,
-                    513,
-                    1737
+                    1670,
+                    640,
+                    1670,
+                    641,
+                    1741,
+                    515,
+                    1740
                   ],
-                  "confidence": 0.914,
+                  "confidence": 0.904,
                   "span": {
                     "offset": 123,
-                    "length": 1
-                  }
-                },
-                {
-                  "content": "Intel",
-                  "boundingBox": [
-                    539,
-                    1673,
-                    641,
-                    1673,
-                    639,
-                    1739,
-                    538,
-                    1738
-                  ],
-                  "confidence": 0.959,
-                  "span": {
-                    "offset": 125,
-                    "length": 5
+                    "length": 6
                   }
                 },
                 {
                   "content": "Core",
-                  "boundingBox": [
-                    653,
-                    1673,
-                    750,
-                    1674,
+                  "polygon": [
+                    654,
+                    1670,
                     748,
-                    1739,
-                    652,
-                    1739
+                    1670,
+                    748,
+                    1742,
+                    655,
+                    1741
                   ],
                   "confidence": 0.991,
                   "span": {
-                    "offset": 131,
+                    "offset": 130,
                     "length": 4
                   }
                 },
                 {
                   "content": "i5",
-                  "boundingBox": [
-                    763,
-                    1674,
-                    801,
-                    1674,
+                  "polygon": [
+                    762,
+                    1670,
                     799,
-                    1739,
-                    761,
-                    1739
+                    1670,
+                    799,
+                    1743,
+                    762,
+                    1742
                   ],
-                  "confidence": 0.985,
+                  "confidence": 0.971,
                   "span": {
-                    "offset": 136,
+                    "offset": 135,
                     "length": 2
                   }
                 },
                 {
                   "content": "/",
-                  "boundingBox": [
-                    814,
-                    1674,
-                    844,
-                    1674,
-                    841,
-                    1739,
-                    812,
-                    1739
+                  "polygon": [
+                    813,
+                    1670,
+                    843,
+                    1670,
+                    843,
+                    1743,
+                    813,
+                    1743
                   ],
-                  "confidence": 0.915,
+                  "confidence": 0.98,
                   "span": {
-                    "offset": 139,
+                    "offset": 138,
                     "length": 1
                   }
                 },
                 {
                   "content": "8GB",
-                  "boundingBox": [
-                    368,
-                    1785,
-                    442,
-                    1785,
+                  "polygon": [
+                    367,
+                    1784,
+                    444,
+                    1783,
                     443,
-                    1849,
-                    369,
-                    1847
+                    1852,
+                    366,
+                    1850
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.985,
                   "span": {
-                    "offset": 141,
+                    "offset": 140,
                     "length": 3
                   }
                 },
                 {
                   "content": "RAM",
-                  "boundingBox": [
-                    455,
-                    1785,
+                  "polygon": [
+                    458,
+                    1783,
                     555,
-                    1785,
-                    555,
-                    1852,
-                    456,
-                    1849
+                    1783,
+                    554,
+                    1855,
+                    457,
+                    1853
                   ],
-                  "confidence": 0.998,
+                  "confidence": 0.997,
                   "span": {
-                    "offset": 145,
+                    "offset": 144,
                     "length": 3
                   }
                 },
                 {
                   "content": "(Black)",
-                  "boundingBox": [
+                  "polygon": [
+                    569,
+                    1783,
+                    727,
+                    1784,
+                    726,
+                    1856,
                     568,
-                    1785,
-                    728,
-                    1785,
-                    728,
-                    1854,
-                    568,
-                    1852
+                    1855
                   ],
                   "confidence": 0.993,
                   "span": {
-                    "offset": 149,
+                    "offset": 148,
                     "length": 7
                   }
                 },
                 {
-                  "content": "999.00",
-                  "boundingBox": [
-                    977,
-                    1796,
-                    1128,
-                    1800,
-                    1127,
-                    1854,
-                    977,
-                    1849
+                  "content": "1",
+                  "polygon": [
+                    322,
+                    2018,
+                    338,
+                    2017,
+                    339,
+                    2084,
+                    323,
+                    2084
                   ],
                   "confidence": 0.994,
                   "span": {
-                    "offset": 157,
-                    "length": 6
-                  }
-                },
-                {
-                  "content": "1",
-                  "boundingBox": [
-                    317,
-                    2021,
-                    333,
-                    2020,
-                    336,
-                    2080,
-                    320,
-                    2080
-                  ],
-                  "confidence": 0.995,
-                  "span": {
-                    "offset": 164,
+                    "offset": 156,
                     "length": 1
                   }
                 },
                 {
                   "content": "SurfacePen",
-                  "boundingBox": [
-                    345,
-                    2020,
+                  "polygon": [
+                    351,
+                    2017,
                     625,
-                    2014,
+                    2012,
                     626,
-                    2075,
-                    348,
-                    2080
+                    2076,
+                    351,
+                    2083
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 166,
+                    "offset": 158,
                     "length": 10
                   }
                 },
                 {
-                  "content": "99.99",
-                  "boundingBox": [
-                    1004,
-                    2031,
-                    1128,
-                    2031,
-                    1128,
-                    2091,
-                    1004,
-                    2090
+                  "content": "$",
+                  "polygon": [
+                    960,
+                    2029,
+                    986,
+                    2029,
+                    988,
+                    2094,
+                    961,
+                    2095
                   ],
                   "confidence": 0.994,
                   "span": {
-                    "offset": 177,
-                    "length": 5
-                  }
-                },
-                {
-                  "content": "-",
-                  "boundingBox": [
-                    279,
-                    2168,
-                    287,
-                    2169,
-                    287,
-                    2182,
-                    278,
-                    2182
-                  ],
-                  "confidence": 0.696,
-                  "span": {
-                    "offset": 183,
+                    "offset": 169,
                     "length": 1
                   }
                 },
                 {
-                  "content": "-",
-                  "boundingBox": [
-                    300,
-                    2169,
-                    308,
-                    2169,
-                    308,
-                    2181,
-                    300,
+                  "content": "99.99",
+                  "polygon": [
+                    1000,
+                    2029,
+                    1128,
+                    2029,
+                    1130,
+                    2091,
+                    1001,
+                    2094
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 171,
+                    "length": 5
+                  }
+                },
+                {
+                  "content": "------",
+                  "polygon": [
+                    277,
+                    2170,
+                    411,
+                    2165,
+                    411,
+                    2175,
+                    277,
                     2181
                   ],
-                  "confidence": 0.996,
+                  "confidence": 0.846,
                   "span": {
-                    "offset": 185,
+                    "offset": 177,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "-",
+                  "polygon": [
+                    430,
+                    2164,
+                    435,
+                    2164,
+                    435,
+                    2173,
+                    430,
+                    2173
+                  ],
+                  "confidence": 0.857,
+                  "span": {
+                    "offset": 184,
                     "length": 1
                   }
                 },
                 {
                   "content": "Sub-Total",
-                  "boundingBox": [
-                    471,
-                    2243,
-                    695,
+                  "polygon": [
+                    474,
                     2245,
-                    693,
+                    698,
+                    2246,
+                    696,
                     2307,
-                    472,
+                    474,
                     2305
                   ],
-                  "confidence": 0.848,
+                  "confidence": 0.904,
                   "span": {
-                    "offset": 187,
+                    "offset": 186,
                     "length": 9
                   }
                 },
                 {
                   "content": "Tax",
-                  "boundingBox": [
-                    564,
-                    2354,
-                    653,
-                    2358,
+                  "polygon": [
+                    568,
+                    2356,
+                    651,
+                    2357,
                     650,
-                    2415,
-                    562,
-                    2411
+                    2416,
+                    567,
+                    2414
                   ],
-                  "confidence": 0.994,
+                  "confidence": 0.997,
                   "span": {
-                    "offset": 197,
+                    "offset": 196,
                     "length": 3
                   }
                 },
                 {
                   "content": "Total",
-                  "boundingBox": [
+                  "polygon": [
                     546,
-                    2594,
-                    665,
-                    2589,
-                    668,
-                    2647,
-                    548,
-                    2652
+                    2595,
+                    663,
+                    2590,
+                    666,
+                    2645,
+                    547,
+                    2651
                   ],
-                  "confidence": 0.612,
+                  "confidence": 0.794,
                   "span": {
-                    "offset": 201,
+                    "offset": 200,
                     "length": 5
                   }
                 },
                 {
-                  "content": "$",
-                  "boundingBox": [
-                    926,
-                    2269,
-                    944,
-                    2267,
-                    947,
-                    2317,
-                    929,
-                    2316
+                  "content": "--",
+                  "polygon": [
+                    874,
+                    1481,
+                    903,
+                    1479,
+                    902,
+                    1488,
+                    873,
+                    1489
                   ],
-                  "confidence": 0.738,
+                  "confidence": 0.938,
                   "span": {
-                    "offset": 207,
+                    "offset": 206,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "-",
+                  "polygon": [
+                    922,
+                    1479,
+                    927,
+                    1479,
+                    928,
+                    1488,
+                    922,
+                    1488
+                  ],
+                  "confidence": 0.837,
+                  "span": {
+                    "offset": 209,
                     "length": 1
                   }
                 },
                 {
-                  "content": "1098.99",
-                  "boundingBox": [
-                    955,
-                    2266,
-                    1134,
-                    2256,
-                    1136,
-                    2316,
-                    958,
-                    2317
+                  "content": "---",
+                  "polygon": [
+                    995,
+                    1478,
+                    1052,
+                    1477,
+                    1051,
+                    1488,
+                    995,
+                    1487
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.776,
                   "span": {
-                    "offset": 209,
+                    "offset": 211,
+                    "length": 3
+                  }
+                },
+                {
+                  "content": "--",
+                  "polygon": [
+                    1078,
+                    1477,
+                    1100,
+                    1477,
+                    1099,
+                    1488,
+                    1078,
+                    1487
+                  ],
+                  "confidence": 0.671,
+                  "span": {
+                    "offset": 215,
+                    "length": 2
+                  }
+                },
+                {
+                  "content": "999.00",
+                  "polygon": [
+                    979,
+                    1794,
+                    1126,
+                    1798,
+                    1124,
+                    1856,
+                    978,
+                    1852
+                  ],
+                  "confidence": 0.993,
+                  "span": {
+                    "offset": 218,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "------",
+                  "polygon": [
+                    969,
+                    2178,
+                    1099,
+                    2175,
+                    1100,
+                    2186,
+                    969,
+                    2187
+                  ],
+                  "confidence": 0.83,
+                  "span": {
+                    "offset": 225,
+                    "length": 6
+                  }
+                },
+                {
+                  "content": "1098.99",
+                  "polygon": [
+                    964,
+                    2262,
+                    1125,
+                    2256,
+                    1127,
+                    2315,
+                    966,
+                    2321
+                  ],
+                  "confidence": 0.991,
+                  "span": {
+                    "offset": 232,
                     "length": 7
                   }
                 },
                 {
                   "content": "104.40",
-                  "boundingBox": [
-                    980,
+                  "polygon": [
+                    984,
                     2372,
-                    1128,
+                    1123,
                     2370,
-                    1129,
-                    2427,
-                    981,
-                    2429
+                    1124,
+                    2431,
+                    985,
+                    2432
                   ],
-                  "confidence": 0.995,
+                  "confidence": 0.994,
                   "span": {
-                    "offset": 217,
+                    "offset": 240,
                     "length": 6
                   }
                 },
                 {
-                  "content": "$",
-                  "boundingBox": [
-                    909,
-                    2594,
-                    937,
-                    2596,
-                    934,
-                    2653,
-                    907,
-                    2650
-                  ],
-                  "confidence": 0.969,
-                  "span": {
-                    "offset": 224,
-                    "length": 1
-                  }
-                },
-                {
                   "content": "1203.39",
-                  "boundingBox": [
-                    948,
-                    2596,
-                    1126,
-                    2613,
+                  "polygon": [
+                    958,
+                    2595,
                     1120,
+                    2614,
+                    1112,
                     2674,
-                    945,
+                    951,
                     2654
                   ],
-                  "confidence": 0.997,
+                  "confidence": 0.991,
                   "span": {
-                    "offset": 226,
+                    "offset": 247,
                     "length": 7
                   }
                 }
@@ -889,15 +970,15 @@
               "lines": [
                 {
                   "content": "Contoso",
-                  "boundingBox": [
+                  "polygon": [
+                    618,
+                    281,
+                    1040,
+                    273,
+                    1044,
+                    385,
                     620,
-                    291,
-                    1048,
-                    288,
-                    1049,
-                    384,
-                    621,
-                    389
+                    400
                   ],
                   "spans": [
                     {
@@ -908,15 +989,15 @@
                 },
                 {
                   "content": "Contoso",
-                  "boundingBox": [
-                    326,
-                    589,
+                  "polygon": [
+                    325,
+                    592,
                     499,
-                    601,
-                    496,
+                    600,
+                    497,
                     651,
-                    323,
-                    640
+                    322,
+                    641
                   ],
                   "spans": [
                     {
@@ -927,15 +1008,15 @@
                 },
                 {
                   "content": "123 Main Street",
-                  "boundingBox": [
-                    314,
-                    690,
-                    650,
+                  "polygon": [
+                    319,
+                    691,
+                    647,
                     694,
-                    649,
-                    754,
-                    314,
-                    751
+                    647,
+                    755,
+                    319,
+                    752
                   ],
                   "spans": [
                     {
@@ -946,15 +1027,15 @@
                 },
                 {
                   "content": "Redmond, WA 98052",
-                  "boundingBox": [
-                    311,
-                    796,
+                  "polygon": [
+                    312,
+                    795,
                     751,
-                    796,
+                    795,
                     751,
-                    854,
-                    311,
-                    855
+                    856,
+                    312,
+                    856
                   ],
                   "spans": [
                     {
@@ -965,15 +1046,15 @@
                 },
                 {
                   "content": "123-456-7890",
-                  "boundingBox": [
-                    307,
+                  "polygon": [
+                    309,
                     1004,
-                    619,
+                    617,
                     1010,
-                    618,
-                    1068,
-                    306,
-                    1061
+                    615,
+                    1070,
+                    308,
+                    1064
                   ],
                   "spans": [
                     {
@@ -984,15 +1065,15 @@
                 },
                 {
                   "content": "6/10/2019 13:59",
-                  "boundingBox": [
-                    301,
+                  "polygon": [
+                    299,
+                    1219,
+                    629,
                     1222,
-                    631,
-                    1224,
-                    630,
-                    1290,
-                    301,
-                    1287
+                    628,
+                    1294,
+                    299,
+                    1290
                   ],
                   "spans": [
                     {
@@ -1003,15 +1084,15 @@
                 },
                 {
                   "content": "Sales Associate: Paul",
-                  "boundingBox": [
-                    301,
+                  "polygon": [
+                    298,
                     1335,
+                    770,
+                    1337,
                     769,
-                    1338,
-                    768,
-                    1396,
-                    300,
-                    1393
+                    1398,
+                    297,
+                    1395
                   ],
                   "spans": [
                     {
@@ -1022,15 +1103,15 @@
                 },
                 {
                   "content": "1 Surface Pro 6",
-                  "boundingBox": [
-                    333,
-                    1560,
-                    674,
-                    1562,
-                    674,
-                    1620,
-                    332,
-                    1618
+                  "polygon": [
+                    334,
+                    1559,
+                    673,
+                    1559,
+                    673,
+                    1622,
+                    334,
+                    1622
                   ],
                   "spans": [
                     {
@@ -1040,230 +1121,344 @@
                   ]
                 },
                 {
-                  "content": "256GB / Intel Core i5 /",
-                  "boundingBox": [
-                    369,
-                    1672,
-                    846,
-                    1674,
-                    846,
-                    1739,
-                    369,
-                    1736
+                  "content": "256GB /Intel Core i5 /",
+                  "polygon": [
+                    370,
+                    1668,
+                    845,
+                    1670,
+                    845,
+                    1742,
+                    370,
+                    1739
                   ],
                   "spans": [
                     {
                       "offset": 117,
-                      "length": 23
+                      "length": 22
                     }
                   ]
                 },
                 {
                   "content": "8GB RAM (Black)",
-                  "boundingBox": [
-                    368,
+                  "polygon": [
+                    366,
+                    1782,
+                    728,
                     1784,
-                    731,
-                    1784,
-                    730,
-                    1853,
-                    368,
-                    1849
+                    727,
+                    1855,
+                    365,
+                    1852
                   ],
                   "spans": [
                     {
-                      "offset": 141,
+                      "offset": 140,
                       "length": 15
                     }
                   ]
                 },
                 {
-                  "content": "999.00",
-                  "boundingBox": [
-                    977,
-                    1796,
-                    1130,
-                    1800,
-                    1128,
-                    1854,
-                    977,
-                    1849
-                  ],
-                  "spans": [
-                    {
-                      "offset": 157,
-                      "length": 6
-                    }
-                  ]
-                },
-                {
                   "content": "1 SurfacePen",
-                  "boundingBox": [
-                    317,
-                    2018,
+                  "polygon": [
+                    322,
+                    2017,
+                    625,
+                    2012,
                     627,
-                    2013,
-                    628,
-                    2074,
-                    318,
-                    2080
+                    2076,
+                    323,
+                    2083
                   ],
                   "spans": [
                     {
-                      "offset": 164,
+                      "offset": 156,
                       "length": 12
                     }
                   ]
                 },
                 {
-                  "content": "99.99",
-                  "boundingBox": [
-                    1004,
-                    2031,
-                    1130,
-                    2031,
+                  "content": "$ 99.99",
+                  "polygon": [
+                    957,
+                    2029,
                     1129,
-                    2091,
-                    1004,
-                    2089
+                    2029,
+                    1129,
+                    2088,
+                    958,
+                    2095
                   ],
                   "spans": [
                     {
-                      "offset": 177,
-                      "length": 5
+                      "offset": 169,
+                      "length": 7
                     }
                   ]
                 },
                 {
-                  "content": "- -",
-                  "boundingBox": [
-                    278,
+                  "content": "------",
+                  "polygon": [
+                    276,
                     2168,
-                    321,
-                    2168,
-                    322,
-                    2180,
-                    278,
+                    426,
+                    2164,
+                    427,
+                    2175,
+                    276,
                     2181
                   ],
                   "spans": [
                     {
-                      "offset": 183,
-                      "length": 3
+                      "offset": 177,
+                      "length": 6
+                    }
+                  ]
+                },
+                {
+                  "content": "-",
+                  "polygon": [
+                    429,
+                    2164,
+                    451,
+                    2164,
+                    452,
+                    2173,
+                    429,
+                    2173
+                  ],
+                  "spans": [
+                    {
+                      "offset": 184,
+                      "length": 1
                     }
                   ]
                 },
                 {
                   "content": "Sub-Total",
-                  "boundingBox": [
-                    471,
-                    2243,
+                  "polygon": [
+                    474,
+                    2244,
                     698,
-                    2245,
+                    2246,
                     697,
-                    2307,
-                    471,
+                    2306,
+                    473,
                     2304
                   ],
                   "spans": [
                     {
-                      "offset": 187,
+                      "offset": 186,
                       "length": 9
                     }
                   ]
                 },
                 {
                   "content": "Tax",
-                  "boundingBox": [
-                    565,
-                    2354,
-                    657,
-                    2361,
+                  "polygon": [
+                    568,
+                    2356,
+                    654,
+                    2359,
                     652,
-                    2414,
-                    562,
-                    2412
+                    2415,
+                    567,
+                    2415
                   ],
                   "spans": [
                     {
-                      "offset": 197,
+                      "offset": 196,
                       "length": 3
                     }
                   ]
                 },
                 {
                   "content": "Total",
-                  "boundingBox": [
+                  "polygon": [
                     546,
-                    2594,
-                    669,
-                    2589,
-                    670,
-                    2647,
-                    549,
+                    2595,
+                    666,
+                    2590,
+                    668,
+                    2645,
+                    547,
                     2652
                   ],
                   "spans": [
                     {
-                      "offset": 201,
+                      "offset": 200,
                       "length": 5
                     }
                   ]
                 },
                 {
-                  "content": "$ 1098.99",
-                  "boundingBox": [
-                    926,
-                    2262,
-                    1135,
-                    2255,
-                    1137,
-                    2314,
-                    927,
-                    2318
+                  "content": "--",
+                  "polygon": [
+                    872,
+                    1480,
+                    917,
+                    1478,
+                    917,
+                    1487,
+                    872,
+                    1489
                   ],
                   "spans": [
                     {
-                      "offset": 207,
-                      "length": 9
+                      "offset": 206,
+                      "length": 2
                     }
                   ]
                 },
                 {
-                  "content": "104.40",
-                  "boundingBox": [
-                    977,
-                    2374,
-                    1132,
-                    2370,
-                    1131,
-                    2428,
-                    980,
-                    2428
+                  "content": "-",
+                  "polygon": [
+                    920,
+                    1479,
+                    941,
+                    1478,
+                    939,
+                    1487,
+                    919,
+                    1488
                   ],
                   "spans": [
                     {
-                      "offset": 217,
+                      "offset": 209,
+                      "length": 1
+                    }
+                  ]
+                },
+                {
+                  "content": "---",
+                  "polygon": [
+                    994,
+                    1477,
+                    1056,
+                    1477,
+                    1056,
+                    1487,
+                    994,
+                    1488
+                  ],
+                  "spans": [
+                    {
+                      "offset": 211,
+                      "length": 3
+                    }
+                  ]
+                },
+                {
+                  "content": "--",
+                  "polygon": [
+                    1077,
+                    1477,
+                    1112,
+                    1477,
+                    1112,
+                    1487,
+                    1077,
+                    1487
+                  ],
+                  "spans": [
+                    {
+                      "offset": 215,
+                      "length": 2
+                    }
+                  ]
+                },
+                {
+                  "content": "999.00",
+                  "polygon": [
+                    980,
+                    1794,
+                    1127,
+                    1798,
+                    1125,
+                    1856,
+                    978,
+                    1852
+                  ],
+                  "spans": [
+                    {
+                      "offset": 218,
                       "length": 6
                     }
                   ]
                 },
                 {
-                  "content": "$ 1203.39",
-                  "boundingBox": [
-                    909,
-                    2593,
-                    1128,
-                    2611,
-                    1121,
-                    2673,
-                    907,
-                    2650
+                  "content": "------",
+                  "polygon": [
+                    968,
+                    2177,
+                    1113,
+                    2174,
+                    1113,
+                    2186,
+                    968,
+                    2188
                   ],
                   "spans": [
                     {
-                      "offset": 224,
-                      "length": 9
+                      "offset": 225,
+                      "length": 6
+                    }
+                  ]
+                },
+                {
+                  "content": "1098.99",
+                  "polygon": [
+                    964,
+                    2262,
+                    1129,
+                    2256,
+                    1131,
+                    2315,
+                    966,
+                    2321
+                  ],
+                  "spans": [
+                    {
+                      "offset": 232,
+                      "length": 7
+                    }
+                  ]
+                },
+                {
+                  "content": "104.40",
+                  "polygon": [
+                    982,
+                    2374,
+                    1128,
+                    2370,
+                    1128,
+                    2431,
+                    983,
+                    2431
+                  ],
+                  "spans": [
+                    {
+                      "offset": 240,
+                      "length": 6
+                    }
+                  ]
+                },
+                {
+                  "content": "1203.39",
+                  "polygon": [
+                    958,
+                    2595,
+                    1123,
+                    2614,
+                    1116,
+                    2675,
+                    951,
+                    2652
+                  ],
+                  "spans": [
+                    {
+                      "offset": 247,
+                      "length": 7
                     }
                   ]
                 }
@@ -1271,18 +1466,478 @@
               "spans": [
                 {
                   "offset": 0,
-                  "length": 233
+                  "length": 254
                 }
-              ]
+              ],
+              "kind": "document"
             }
           ],
-          "documents": [
+          "paragraphs": [
             {
-              "docType": "prebuilt:receipt",
+              "spans": [
+                {
+                  "offset": 0,
+                  "length": 7
+                }
+              ],
               "boundingRegions": [
                 {
                   "pageNumber": 1,
-                  "boundingBox": [
+                  "polygon": [
+                    616,
+                    281,
+                    1040,
+                    266,
+                    1044,
+                    385,
+                    620,
+                    400
+                  ]
+                }
+              ],
+              "content": "Contoso"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 8,
+                  "length": 41
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    312,
+                    592,
+                    751,
+                    592,
+                    751,
+                    856,
+                    312,
+                    856
+                  ]
+                }
+              ],
+              "content": "Contoso 123 Main Street Redmond, WA 98052"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 50,
+                  "length": 12
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    309,
+                    1004,
+                    617,
+                    1010,
+                    616,
+                    1070,
+                    308,
+                    1064
+                  ]
+                }
+              ],
+              "content": "123-456-7890"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 63,
+                  "length": 15
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    299,
+                    1219,
+                    629,
+                    1222,
+                    628,
+                    1294,
+                    298,
+                    1291
+                  ]
+                }
+              ],
+              "content": "6/10/2019 13:59"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 79,
+                  "length": 21
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    297,
+                    1334,
+                    770,
+                    1337,
+                    770,
+                    1398,
+                    297,
+                    1395
+                  ]
+                }
+              ],
+              "content": "Sales Associate: Paul"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 101,
+                  "length": 15
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    334,
+                    1559,
+                    673,
+                    1559,
+                    673,
+                    1622,
+                    334,
+                    1622
+                  ]
+                }
+              ],
+              "content": "1 Surface Pro 6"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 117,
+                  "length": 22
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    370,
+                    1668,
+                    845,
+                    1670,
+                    845,
+                    1742,
+                    370,
+                    1740
+                  ]
+                }
+              ],
+              "content": "256GB /Intel Core i5 /"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 140,
+                  "length": 15
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    366,
+                    1781,
+                    728,
+                    1784,
+                    727,
+                    1855,
+                    365,
+                    1852
+                  ]
+                }
+              ],
+              "content": "8GB RAM (Black)"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 156,
+                  "length": 20
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    322,
+                    2006,
+                    1130,
+                    2022,
+                    1129,
+                    2098,
+                    321,
+                    2083
+                  ]
+                }
+              ],
+              "content": "1 SurfacePen $ 99.99"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 177,
+                  "length": 8
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    275,
+                    2168,
+                    452,
+                    2161,
+                    452,
+                    2174,
+                    276,
+                    2181
+                  ]
+                }
+              ],
+              "content": "------ -"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 186,
+                  "length": 9
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    474,
+                    2244,
+                    698,
+                    2246,
+                    697,
+                    2306,
+                    473,
+                    2304
+                  ]
+                }
+              ],
+              "content": "Sub-Total"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 196,
+                  "length": 3
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    568,
+                    2356,
+                    654,
+                    2359,
+                    652,
+                    2418,
+                    566,
+                    2415
+                  ]
+                }
+              ],
+              "content": "Tax"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 200,
+                  "length": 5
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    545,
+                    2595,
+                    666,
+                    2590,
+                    668,
+                    2647,
+                    547,
+                    2652
+                  ]
+                }
+              ],
+              "content": "Total"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 206,
+                  "length": 11
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    872,
+                    1478,
+                    1112,
+                    1476,
+                    1112,
+                    1487,
+                    872,
+                    1489
+                  ]
+                }
+              ],
+              "content": "-- - --- --"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 218,
+                  "length": 6
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    980,
+                    1794,
+                    1127,
+                    1798,
+                    1125,
+                    1856,
+                    978,
+                    1852
+                  ]
+                }
+              ],
+              "content": "999.00"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 225,
+                  "length": 6
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    968,
+                    2176,
+                    1113,
+                    2174,
+                    1113,
+                    2186,
+                    968,
+                    2188
+                  ]
+                }
+              ],
+              "content": "------"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 232,
+                  "length": 7
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    964,
+                    2262,
+                    1129,
+                    2256,
+                    1131,
+                    2315,
+                    966,
+                    2321
+                  ]
+                }
+              ],
+              "content": "1098.99"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 240,
+                  "length": 6
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    982,
+                    2370,
+                    1128,
+                    2370,
+                    1128,
+                    2431,
+                    982,
+                    2431
+                  ]
+                }
+              ],
+              "content": "104.40"
+            },
+            {
+              "spans": [
+                {
+                  "offset": 247,
+                  "length": 7
+                }
+              ],
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
+                    958,
+                    2595,
+                    1123,
+                    2614,
+                    1116,
+                    2675,
+                    951,
+                    2656
+                  ]
+                }
+              ],
+              "content": "1203.39"
+            }
+          ],
+          "styles": [],
+          "documents": [
+            {
+              "docType": "receipt.retailMeal",
+              "boundingRegions": [
+                {
+                  "pageNumber": 1,
+                  "polygon": [
                     0,
                     0,
                     1688,
@@ -1301,30 +1956,30 @@
                     {
                       "type": "object",
                       "valueObject": {
-                        "Name": {
+                        "Description": {
                           "type": "string",
-                          "valueString": "Surface Pro 6",
-                          "content": "Surface Pro 6",
+                          "valueString": "Surface Pro 6\n256GB /Intel Core i5 /\n8GB RAM (Black)",
+                          "content": "Surface Pro 6\n256GB /Intel Core i5 /\n8GB RAM (Black)",
                           "boundingRegions": [
                             {
                               "pageNumber": 1,
-                              "boundingBox": [
-                                360,
-                                1561,
-                                671,
-                                1563,
-                                671,
-                                1621,
-                                360,
-                                1620
+                              "polygon": [
+                                362,
+                                1559,
+                                844,
+                                1562,
+                                842,
+                                1857,
+                                361,
+                                1854
                               ]
                             }
                           ],
-                          "confidence": 0.974,
+                          "confidence": 0.995,
                           "spans": [
                             {
                               "offset": 103,
-                              "length": 13
+                              "length": 52
                             }
                           ]
                         },
@@ -1335,19 +1990,19 @@
                           "boundingRegions": [
                             {
                               "pageNumber": 1,
-                              "boundingBox": [
+                              "polygon": [
+                                336,
+                                1559,
+                                351,
+                                1559,
+                                350,
+                                1623,
                                 334,
-                                1560,
-                                349,
-                                1561,
-                                348,
-                                1619,
-                                333,
-                                1619
+                                1623
                               ]
                             }
                           ],
-                          "confidence": 0.976,
+                          "confidence": 0.995,
                           "spans": [
                             {
                               "offset": 101,
@@ -1362,54 +2017,81 @@
                           "boundingRegions": [
                             {
                               "pageNumber": 1,
-                              "boundingBox": [
-                                977,
-                                1796,
-                                1128,
-                                1800,
-                                1127,
-                                1854,
-                                977,
-                                1849
+                              "polygon": [
+                                979,
+                                1794,
+                                1126,
+                                1798,
+                                1124,
+                                1856,
+                                978,
+                                1852
                               ]
                             }
                           ],
-                          "confidence": 0.987,
+                          "confidence": 0.995,
                           "spans": [
                             {
-                              "offset": 157,
+                              "offset": 218,
                               "length": 6
                             }
                           ]
                         }
-                      }
+                      },
+                      "content": "1 Surface Pro 6\n256GB /Intel Core i5 /\n8GB RAM (Black)\n999.00",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            334,
+                            1559,
+                            1127,
+                            1563,
+                            1126,
+                            1858,
+                            333,
+                            1854
+                          ]
+                        }
+                      ],
+                      "confidence": 0.995,
+                      "spans": [
+                        {
+                          "offset": 101,
+                          "length": 54
+                        },
+                        {
+                          "offset": 218,
+                          "length": 6
+                        }
+                      ]
                     },
                     {
                       "type": "object",
                       "valueObject": {
-                        "Name": {
+                        "Description": {
                           "type": "string",
                           "valueString": "SurfacePen",
                           "content": "SurfacePen",
                           "boundingRegions": [
                             {
                               "pageNumber": 1,
-                              "boundingBox": [
-                                345,
-                                2020,
+                              "polygon": [
+                                351,
+                                2017,
                                 625,
-                                2014,
+                                2012,
                                 626,
-                                2075,
-                                348,
-                                2080
+                                2076,
+                                351,
+                                2083
                               ]
                             }
                           ],
-                          "confidence": 0.974,
+                          "confidence": 0.995,
                           "spans": [
                             {
-                              "offset": 166,
+                              "offset": 158,
                               "length": 10
                             }
                           ]
@@ -1421,22 +2103,22 @@
                           "boundingRegions": [
                             {
                               "pageNumber": 1,
-                              "boundingBox": [
-                                317,
-                                2021,
-                                333,
-                                2020,
-                                336,
-                                2080,
-                                320,
-                                2080
+                              "polygon": [
+                                322,
+                                2018,
+                                338,
+                                2017,
+                                339,
+                                2084,
+                                323,
+                                2084
                               ]
                             }
                           ],
-                          "confidence": 0.978,
+                          "confidence": 0.995,
                           "spans": [
                             {
-                              "offset": 164,
+                              "offset": 156,
                               "length": 1
                             }
                           ]
@@ -1444,59 +2126,77 @@
                         "TotalPrice": {
                           "type": "number",
                           "valueNumber": 99.99,
-                          "content": "99.99",
+                          "content": "$ 99.99",
                           "boundingRegions": [
                             {
                               "pageNumber": 1,
-                              "boundingBox": [
-                                1004,
-                                2031,
-                                1128,
-                                2031,
-                                1128,
-                                2091,
-                                1004,
-                                2090
+                              "polygon": [
+                                960,
+                                2029,
+                                1129,
+                                2027,
+                                1130,
+                                2093,
+                                961,
+                                2095
                               ]
                             }
                           ],
-                          "confidence": 0.986,
+                          "confidence": 0.995,
                           "spans": [
                             {
-                              "offset": 177,
-                              "length": 5
+                              "offset": 169,
+                              "length": 7
                             }
                           ]
                         }
-                      }
+                      },
+                      "content": "1 SurfacePen $ 99.99",
+                      "boundingRegions": [
+                        {
+                          "pageNumber": 1,
+                          "polygon": [
+                            322,
+                            2017,
+                            1128,
+                            2002,
+                            1130,
+                            2092,
+                            323,
+                            2107
+                          ]
+                        }
+                      ],
+                      "confidence": 0.995,
+                      "spans": [
+                        {
+                          "offset": 156,
+                          "length": 20
+                        }
+                      ]
                     }
                   ]
                 },
-                "Locale": {
-                  "type": "string",
-                  "valueString": "en-US",
-                  "confidence": 0.99
-                },
                 "MerchantAddress": {
                   "type": "string",
-                  "valueString": "123 Main Street Redmond, WA 98052",
+                  "valueString": "123 Main Street\nRedmond, WA 98052",
                   "content": "123 Main Street Redmond, WA 98052",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        314,
-                        690,
-                        753,
+                      "polygon": [
+                        315,
+                        692,
+                        754,
                         698,
-                        750,
+                        752,
                         860,
-                        311,
-                        852
+                        313,
+                        854
                       ]
                     }
                   ],
-                  "confidence": 0.976,
+                  "confidence": 0.995,
                   "spans": [
                     {
                       "offset": 16,
@@ -1511,19 +2211,19 @@
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        328,
-                        590,
-                        497,
-                        601,
-                        494,
-                        651,
-                        324,
+                      "polygon": [
+                        325,
+                        592,
+                        499,
+                        600,
+                        496,
+                        652,
+                        322,
                         640
                       ]
                     }
                   ],
-                  "confidence": 0.976,
+                  "confidence": 0.995,
                   "spans": [
                     {
                       "offset": 8,
@@ -1533,23 +2233,24 @@
                 },
                 "MerchantPhoneNumber": {
                   "type": "phoneNumber",
+                  "valuePhoneNumber": "\u002B11234567890",
                   "content": "123-456-7890",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        308,
+                      "polygon": [
+                        309,
                         1005,
-                        620,
+                        615,
                         1012,
-                        616,
-                        1068,
-                        306,
-                        1063
+                        615,
+                        1070,
+                        308,
+                        1066
                       ]
                     }
                   ],
-                  "confidence": 0.989,
+                  "confidence": 0.995,
                   "spans": [
                     {
                       "offset": 50,
@@ -1557,89 +2258,84 @@
                     }
                   ]
                 },
-                "ReceiptType": {
-                  "type": "string",
-                  "valueString": "Itemized",
-                  "confidence": 0.981
-                },
                 "Subtotal": {
                   "type": "number",
                   "valueNumber": 1098.99,
-                  "content": "$ 1098.99",
+                  "content": "1098.99",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        926,
+                      "polygon": [
+                        964,
                         2262,
-                        1134,
+                        1125,
                         2256,
-                        1136,
-                        2316,
-                        927,
-                        2322
+                        1127,
+                        2315,
+                        966,
+                        2321
                       ]
                     }
                   ],
-                  "confidence": 0.976,
+                  "confidence": 0.995,
                   "spans": [
                     {
-                      "offset": 207,
-                      "length": 9
-                    }
-                  ]
-                },
-                "Tax": {
-                  "type": "number",
-                  "valueNumber": 104.4,
-                  "content": "104.40",
-                  "boundingRegions": [
-                    {
-                      "pageNumber": 1,
-                      "boundingBox": [
-                        980,
-                        2372,
-                        1128,
-                        2370,
-                        1129,
-                        2427,
-                        981,
-                        2429
-                      ]
-                    }
-                  ],
-                  "confidence": 0.986,
-                  "spans": [
-                    {
-                      "offset": 217,
-                      "length": 6
+                      "offset": 232,
+                      "length": 7
                     }
                   ]
                 },
                 "Total": {
                   "type": "number",
                   "valueNumber": 1203.39,
-                  "content": "$ 1203.39",
+                  "content": "1203.39",
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
-                        909,
-                        2590,
-                        1126,
-                        2613,
+                      "polygon": [
+                        958,
+                        2595,
                         1120,
+                        2614,
+                        1112,
                         2674,
-                        903,
-                        2651
+                        951,
+                        2654
                       ]
                     }
                   ],
-                  "confidence": 0.982,
+                  "confidence": 0.995,
                   "spans": [
                     {
-                      "offset": 224,
-                      "length": 9
+                      "offset": 247,
+                      "length": 7
+                    }
+                  ]
+                },
+                "TotalTax": {
+                  "type": "number",
+                  "valueNumber": 104.4,
+                  "content": "104.40",
+                  "boundingRegions": [
+                    {
+                      "pageNumber": 1,
+                      "polygon": [
+                        984,
+                        2372,
+                        1123,
+                        2370,
+                        1124,
+                        2431,
+                        985,
+                        2432
+                      ]
+                    }
+                  ],
+                  "confidence": 0.995,
+                  "spans": [
+                    {
+                      "offset": 240,
+                      "length": 6
                     }
                   ]
                 },
@@ -1650,19 +2346,19 @@
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
+                      "polygon": [
                         302,
-                        1223,
+                        1220,
                         495,
-                        1224,
-                        494,
-                        1290,
-                        302,
-                        1289
+                        1221,
+                        493,
+                        1293,
+                        299,
+                        1291
                       ]
                     }
                   ],
-                  "confidence": 0.989,
+                  "confidence": 0.995,
                   "spans": [
                     {
                       "offset": 63,
@@ -1677,19 +2373,19 @@
                   "boundingRegions": [
                     {
                       "pageNumber": 1,
-                      "boundingBox": [
+                      "polygon": [
+                        509,
+                        1221,
+                        628,
+                        1223,
+                        627,
+                        1295,
                         507,
-                        1224,
-                        632,
-                        1228,
-                        631,
-                        1290,
-                        507,
-                        1290
+                        1293
                       ]
                     }
                   ],
-                  "confidence": 0.988,
+                  "confidence": 0.995,
                   "spans": [
                     {
                       "offset": 73,
@@ -1698,11 +2394,11 @@
                   ]
                 }
               },
-              "confidence": 1,
+              "confidence": 0.995,
               "spans": [
                 {
                   "offset": 0,
-                  "length": 233
+                  "length": 254
                 }
               ]
             }
@@ -1713,7 +2409,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-canary.cognitiveservices.azure.com/",
-    "RandomSeed": "333033669"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-canadacentral.cognitiveservices.azure.com/",
+    "RandomSeed": "1449921958"
   }
 }

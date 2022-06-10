@@ -34,10 +34,11 @@ pr:
     - sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SDKType: client
     ServiceDirectory: eventhub
+    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.EventHubs

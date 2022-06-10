@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of VnetValidationFailureDetails. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="message"> Text describing the validation outcome. </param>
         /// <param name="failed"> A flag describing whether or not validation failed. </param>
         /// <param name="failedTests"> A list of tests that failed in the validation. </param>
         /// <param name="warnings"> A list of warnings generated during validation. </param>
-        internal VnetValidationFailureDetails(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string message, bool? failed, IList<VnetValidationTestFailure> failedTests, IList<VnetValidationTestFailure> warnings) : base(id, name, type, systemData, kind)
+        internal VnetValidationFailureDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string message, bool? failed, IList<VnetValidationTestFailure> failedTests, IList<VnetValidationTestFailure> warnings) : base(id, name, resourceType, systemData, kind)
         {
             Message = message;
             Failed = failed;
