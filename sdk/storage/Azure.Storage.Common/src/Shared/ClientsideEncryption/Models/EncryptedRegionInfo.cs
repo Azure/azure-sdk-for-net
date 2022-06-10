@@ -19,10 +19,5 @@ namespace Azure.Storage.Cryptography.Models
         /// Length of the nonce found in the content stream.
         /// </summary>
         public int NonceLength { get; set; }
-
-        /// <summary>
-        /// Length of the tag found in the content stream.
-        /// </summary>
-        public int TagLength { get; set; }
     }
 }

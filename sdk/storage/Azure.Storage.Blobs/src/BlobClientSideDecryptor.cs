@@ -60,7 +60,7 @@ namespace Azure.Storage.Blobs
                 ClientSideEncryptionVersion.V1_0 => ivInStream ? Constants.ClientSideEncryption.EncryptionBlockSize : 0,
                 // first block is special case where we don't want to communicate a trim. Otherwise communicate nonce length * 1-indexed start region + tag length * 0-indexed region
                 ClientSideEncryptionVersion.V2_0 => contentRange?.Start > 0
-                    ? (-encryptionData.EncryptedRegionInfo.NonceLength * (v2StartRegion0Indexed)) - (encryptionData.EncryptedRegionInfo.TagLength * v2StartRegion0Indexed)
+                    ? (-encryptionData.EncryptedRegionInfo.NonceLength * (v2StartRegion0Indexed)) - (Constants.ClientSideEncryption.V2.TagSize * v2StartRegion0Indexed)
                     : 0,
                 _ => throw Errors.InvalidArgument(nameof(encryptionData.EncryptionAgent.EncryptionVersion))
             };
@@ -217,7 +217,7 @@ namespace Azure.Storage.Blobs
             int encryptedRegionDataSize = encryptionData.EncryptedRegionInfo.DataLength;
             int totalEncryptedRegionSize = encryptionData.EncryptedRegionInfo.NonceLength
                 + encryptionData.EncryptedRegionInfo.DataLength
-                + encryptionData.EncryptedRegionInfo.TagLength;
+                + Constants.ClientSideEncryption.V2.TagSize;
 
             long newOffset = 0;
             long? newCount = null;
@@ -288,7 +288,7 @@ namespace Azure.Storage.Blobs
     {
         public static int GetTotalRegionLength(this EncryptedRegionInfo info)
         {
-            return info.NonceLength + info.DataLength + info.TagLength;
+            return info.NonceLength + info.DataLength + Constants.ClientSideEncryption.V2.TagSize;
         }
     }
 }

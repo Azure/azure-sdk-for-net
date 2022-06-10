@@ -80,7 +80,6 @@ namespace Azure.Storage.Cryptography.Models
         {
             json.WriteNumber(nameof(encryptedRegionInfo.DataLength), encryptedRegionInfo.DataLength);
             json.WriteNumber(nameof(encryptedRegionInfo.NonceLength), encryptedRegionInfo.NonceLength);
-            json.WriteNumber(nameof(encryptedRegionInfo.TagLength), encryptedRegionInfo.TagLength);
         }
 
         private static void WriteWrappedKey(Utf8JsonWriter json, KeyEnvelope key)
@@ -225,10 +224,6 @@ namespace Azure.Storage.Cryptography.Models
             if (property.NameEquals(nameof(info.NonceLength)))
             {
                 info.NonceLength = property.Value.GetInt32();
-            }
-            else if (property.NameEquals(nameof(info.TagLength)))
-            {
-                info.TagLength = property.Value.GetInt32();
             }
             else if (property.NameEquals(nameof(info.DataLength)))
             {
