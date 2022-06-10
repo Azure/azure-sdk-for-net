@@ -4,25 +4,13 @@
 
 ### Features Added
 
+* Added `ConversationAnalysisProjectsClient` to manage projects.
 * Added conversation issue summarization as a long-running operation.
 * Added conversation personally identifiable information (PII) extraction as a long-running operation.
 
 ### Breaking Changes
 
-- Removed `StringIndexType` and hardcoded it to `Utf16CodeUnit`.
-- Renamed `Conversation` to `ConversationInput`.
-- Renamed "CustomConversation" to just "Conversation", including `AnalyzeConversationTaskKind.Conversation`, `ConversationResult`, `ConversationTaskParameters`, etc.
-- Renamed `Entity` to `TextEntity`.
-- Renamed `Error` to `AnalyzeError`.
-- Renamed `KnowledgeBaseAnswers` to `AnswersResult`.
-- Renamed "Orchestrator" to "Orchestration" including `OrchestrationPrediction`, etc.
-- Renamed `Role` to `ParticipantRole`.
-- Renamed `TargetKind` to `TargetProjectKind`.
-- Renamed "Workflow" to "Orchestration" including `ProjectKind.Workflow`, etc.
-
-### Bugs Fixed
-
-### Other Changes
+- Removed all models. See README.md for samples to use this client library.
 
 ## 1.0.0-beta.3 (2022-04-20)
 

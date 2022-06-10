@@ -5,18 +5,18 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "268",
+        "Content-Length": "263",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-745dca979732206a772e2e6f47ee20e5-4de26b2dfc5a6f05-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220606.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "6f7786fbe68797733e167b4640db271d",
+        "traceparent": "00-e5055ee12a8c8419de76f27be8aca65f-255cb5474dd7d8e1-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220610.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "38ec25f853bb9a61308fad7e296e08c1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
-            "text": "Send an email to Carol about the tomorrow\u0027s demo.",
+            "text": "Send an email to Carol about tomorrow\u0027s demo",
             "id": "1",
             "participantId": "1"
           }
@@ -30,61 +30,61 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "6ee285a3-3130-4c53-abb6-8804b35f0ce4",
+        "apim-request-id": "29578025-38b5-4d90-b005-9a9a593a5ed6",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.ConversationalLanguageUnderstanding.Prediction=1",
-        "Date": "Mon, 06 Jun 2022 21:02:12 GMT",
+        "Date": "Fri, 10 Jun 2022 22:53:53 GMT",
         "Pragma": "no-cache",
-        "request-id": "6ee285a3-3130-4c53-abb6-8804b35f0ce4",
+        "request-id": "29578025-38b5-4d90-b005-9a9a593a5ed6",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "139"
+        "x-envoy-upstream-service-time": "101"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
         "result": {
-          "query": "Send an email to Carol about the tomorrow\u0027s demo.",
+          "query": "Send an email to Carol about tomorrow\u0027s demo",
           "prediction": {
             "topIntent": "Send",
             "projectKind": "Conversation",
             "intents": [
               {
                 "category": "Send",
-                "confidenceScore": 0.88839144
+                "confidenceScore": 0.93409747
               },
               {
                 "category": "Read",
-                "confidenceScore": 0.42096567
+                "confidenceScore": 0.5374636
               },
               {
                 "category": "Setup",
-                "confidenceScore": 0.40674323
-              },
-              {
-                "category": "None",
-                "confidenceScore": 0.23741776
+                "confidenceScore": 0.48374596
               },
               {
                 "category": "Set",
-                "confidenceScore": 0.21623757
+                "confidenceScore": 0.2737239
               },
               {
                 "category": "Find",
-                "confidenceScore": 0.21160963
+                "confidenceScore": 0.2394025
+              },
+              {
+                "category": "None",
+                "confidenceScore": 0.2147143
               },
               {
                 "category": "Call",
-                "confidenceScore": 0.17545219
+                "confidenceScore": 0.18309219
               },
               {
                 "category": "Play",
-                "confidenceScore": 0.15643774
+                "confidenceScore": 0.14325047
               },
               {
                 "category": "Open",
-                "confidenceScore": 0.14740488
+                "confidenceScore": 0.13483635
               }
             ],
             "entities": [
@@ -104,15 +104,15 @@
               {
                 "category": "MeetingDate",
                 "text": "tomorrow",
-                "offset": 33,
+                "offset": 29,
                 "length": 8,
                 "confidenceScore": 1,
                 "resolutions": [
                   {
                     "resolutionKind": "DateTimeResolution",
                     "dateTimeSubKind": "Date",
-                    "timex": "2022-06-07",
-                    "value": "2022-06-07"
+                    "timex": "2022-06-11",
+                    "value": "2022-06-11"
                   }
                 ],
                 "extraInformation": [
@@ -133,6 +133,6 @@
     "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_PROJECT_NAME": "CLUScriptDeployed",
-    "RandomSeed": "658054115"
+    "RandomSeed": "840428822"
   }
 }

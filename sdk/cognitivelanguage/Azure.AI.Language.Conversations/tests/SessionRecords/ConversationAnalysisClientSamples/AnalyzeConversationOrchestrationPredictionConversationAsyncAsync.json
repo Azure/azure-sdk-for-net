@@ -5,18 +5,18 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "277",
+        "Content-Length": "273",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-39d7bedc8dfba1a1ffc3bc91ae424f17-11618d9850da5e4a-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220606.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "e2ca7e917c65fb1b4910adfb9ff6ae31",
+        "traceparent": "00-52e0c97538c0e3514bc76985f7714002-0ead33469d6b897c-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220610.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "52bf40d46608c78b2042810f43f6a934",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
-            "text": "Send an email to Carol about the tomorrow\u0027s demo",
+            "text": "Send an email to Carol about tomorrow\u0027s demo",
             "id": "1",
             "participantId": "1"
           }
@@ -30,70 +30,70 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4bc8b351-5f61-4492-bce4-af92422263ac",
+        "apim-request-id": "97067e7f-bae6-4826-af60-6fd4765d369b",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Mon, 06 Jun 2022 21:02:12 GMT",
+        "Date": "Fri, 10 Jun 2022 22:53:53 GMT",
         "Pragma": "no-cache",
-        "request-id": "4bc8b351-5f61-4492-bce4-af92422263ac",
+        "request-id": "97067e7f-bae6-4826-af60-6fd4765d369b",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "139"
+        "x-envoy-upstream-service-time": "150"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
         "result": {
-          "query": "Send an email to Carol about the tomorrow\u0027s demo",
+          "query": "Send an email to Carol about tomorrow\u0027s demo",
           "prediction": {
             "topIntent": "EmailIntent",
             "projectKind": "Orchestration",
             "intents": {
               "EmailIntent": {
-                "confidenceScore": 0.7871725,
+                "confidenceScore": 0.76472354,
                 "targetProjectKind": "Conversation",
                 "result": {
-                  "query": "Send an email to Carol about the tomorrow\u0027s demo",
+                  "query": "Send an email to Carol about tomorrow\u0027s demo",
                   "prediction": {
                     "topIntent": "Send",
                     "projectKind": "Conversation",
                     "intents": [
                       {
                         "category": "Send",
-                        "confidenceScore": 0.9053172
+                        "confidenceScore": 0.93409747
                       },
                       {
                         "category": "Read",
-                        "confidenceScore": 0.44011447
+                        "confidenceScore": 0.5374636
                       },
                       {
                         "category": "Setup",
-                        "confidenceScore": 0.41303915
+                        "confidenceScore": 0.48374596
                       },
                       {
                         "category": "Set",
-                        "confidenceScore": 0.21186642
-                      },
-                      {
-                        "category": "None",
-                        "confidenceScore": 0.20198277
+                        "confidenceScore": 0.2737239
                       },
                       {
                         "category": "Find",
-                        "confidenceScore": 0.19216746
+                        "confidenceScore": 0.2394025
+                      },
+                      {
+                        "category": "None",
+                        "confidenceScore": 0.2147143
                       },
                       {
                         "category": "Call",
-                        "confidenceScore": 0.16446844
+                        "confidenceScore": 0.18309219
                       },
                       {
                         "category": "Play",
-                        "confidenceScore": 0.15655291
+                        "confidenceScore": 0.14325047
                       },
                       {
                         "category": "Open",
-                        "confidenceScore": 0.08699014
+                        "confidenceScore": 0.13483635
                       }
                     ],
                     "entities": [
@@ -113,15 +113,15 @@
                       {
                         "category": "MeetingDate",
                         "text": "tomorrow",
-                        "offset": 33,
+                        "offset": 29,
                         "length": 8,
                         "confidenceScore": 1,
                         "resolutions": [
                           {
                             "resolutionKind": "DateTimeResolution",
                             "dateTimeSubKind": "Date",
-                            "timex": "2022-06-07",
-                            "value": "2022-06-07"
+                            "timex": "2022-06-11",
+                            "value": "2022-06-11"
                           }
                         ],
                         "extraInformation": [
@@ -136,11 +136,11 @@
                 }
               },
               "ChitChat-QnA": {
-                "confidenceScore": 0.65083516,
+                "confidenceScore": 0.6278386,
                 "targetProjectKind": "QuestionAnswering"
               },
               "None": {
-                "confidenceScore": 0.15003009,
+                "confidenceScore": 0.16380304,
                 "targetProjectKind": "NonLinked"
               }
             }
@@ -154,6 +154,6 @@
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
     "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
-    "RandomSeed": "1937494211"
+    "RandomSeed": "2105049769"
   }
 }

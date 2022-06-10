@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -18,13 +21,18 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation()
         {
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Send an email to Carol about the tomorrow's demo", TestEnvironment.Project);
+            ConversationalTask conversationalTask = new(
+                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo")),
+                new ConversationTaskParameters(TestEnvironment.ProjectName, TestEnvironment.DeploymentName));
+
+            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
 
             // assert - main object
             Assert.IsNotNull(response);
 
-            // cast
-            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            // deserialize
+            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
+            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -45,13 +53,18 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation_Orchestration_Conversation()
         {
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Send an email to Carol about the tomorrow's demo", TestEnvironment.OrchestrationProject);
+            ConversationalTask conversationalTask = new(
+                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Send an email to Carol about the tomorrow's demo")),
+                new ConversationTaskParameters(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName));
+
+            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
 
             // assert - main object
             Assert.IsNotNull(response);
 
-            // cast
-            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            // deserialize
+            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
+            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -83,13 +96,18 @@ namespace Azure.AI.Language.Conversations.Tests
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29136")]
         public async Task AnalyzeConversation_Orchestration_Luis()
         {
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("Reserve a table for 2 at the Italian restaurant", TestEnvironment.OrchestrationProject);
+            ConversationalTask conversationalTask = new(
+                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "Reserve a table for 2 at the Italian restaurant")),
+                new ConversationTaskParameters(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName));
+
+            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
 
             // assert - main object
             Assert.IsNotNull(response);
 
-            // cast
-            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            // deserialize
+            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
+            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -116,13 +134,18 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task AnalyzeConversation_Orchestration_QuestionAnswering()
         {
-            Response<AnalyzeConversationTaskResult> response = await Client.AnalyzeConversationAsync("How are you?", TestEnvironment.OrchestrationProject);
+            ConversationalTask conversationalTask = new(
+                new ConversationAnalysisOptions(new TextConversationItem("1", "1", "How are you?")),
+                new ConversationTaskParameters(TestEnvironment.OrchestrationProjectName, TestEnvironment.OrchestrationDeploymentName));
+
+            Response response = await Client.AnalyzeConversationAsync(conversationalTask.AsRequestContent());
 
             // assert - main object
             Assert.IsNotNull(response);
 
-            // cast
-            ConversationalTaskResult conversationalTaskResult = response.Value as ConversationalTaskResult;
+            // deserialize
+            using JsonDocument json = await JsonDocument.ParseAsync(response.ContentStream);
+            ConversationalTaskResult conversationalTaskResult = ConversationalTaskResult.DeserializeConversationalTaskResult(json.RootElement);
             Assert.IsNotNull(conversationalTaskResult);
 
             // assert - prediction type
@@ -149,8 +172,6 @@ namespace Azure.AI.Language.Conversations.Tests
         [RecordedTest]
         public async Task StartAnalyzeConversationAsync_ConversationSummarization()
         {
-            ConversationAnalysisClient client = Client;
-
             var textConversationItems = new List<TextConversationItem>()
             {
                 new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
@@ -171,10 +192,14 @@ namespace Azure.AI.Language.Conversations.Tests
                 conversationSummarizationTask
             };
 
-            Operation<AnalyzeConversationJobState> analyzeConversationOperation = await client.StartAnalyzeConversationAsync(input, tasks);
+            var multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
+            var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
+
+            Operation<BinaryData> analyzeConversationOperation = await Client.SubmitJobAsync(WaitUntil.Started, analyzeConversationJobsInput.AsRequestContent());
             await analyzeConversationOperation.WaitForCompletionAsync();
 
-            AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
+            using JsonDocument json = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
+            AnalyzeConversationJobState jobResults = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(json.RootElement);
             Assert.NotNull(jobResults);
 
             foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
@@ -221,10 +246,14 @@ namespace Azure.AI.Language.Conversations.Tests
                 piiTask
             };
 
-            Operation<AnalyzeConversationJobState> analyzeConversationOperation = await Client.StartAnalyzeConversationAsync(input, tasks);
+            var multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
+            var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
+
+            Operation<BinaryData> analyzeConversationOperation = await Client.SubmitJobAsync(WaitUntil.Started, analyzeConversationJobsInput.AsRequestContent());
             await analyzeConversationOperation.WaitForCompletionAsync();
 
-            AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
+            using JsonDocument json = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
+            AnalyzeConversationJobState jobResults = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(json.RootElement);
             Assert.NotNull(jobResults);
 
             foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
@@ -242,11 +271,11 @@ namespace Azure.AI.Language.Conversations.Tests
                     foreach (ConversationPIIItemResult conversationItem in conversation.ConversationItems)
                     {
                         Assert.NotNull(conversationItem.Entities);
-                        foreach (TextEntity entity in conversationItem.Entities)
+                        foreach (Entity entity in conversationItem.Entities)
                         {
                             Assert.NotNull(entity.Text);
                             Assert.NotNull(entity.Length);
-                            Assert.NotNull(entity.Confidence);
+                            Assert.NotNull(entity.ConfidenceScore);
                             Assert.NotNull(entity.Category);
                             Assert.NotNull(entity.Offset);
                         }
@@ -311,11 +340,14 @@ namespace Azure.AI.Language.Conversations.Tests
                 piiTask
             };
 
-            Operation<AnalyzeConversationJobState> analyzeConversationOperation = await Client.StartAnalyzeConversationAsync(input, tasks);
+            var multiLanguageConversationAnalysisInput = new MultiLanguageConversationAnalysisInput(input);
+            var analyzeConversationJobsInput = new AnalyzeConversationJobsInput(multiLanguageConversationAnalysisInput, tasks);
 
+            Operation<BinaryData> analyzeConversationOperation = await Client.SubmitJobAsync(WaitUntil.Started, analyzeConversationJobsInput.AsRequestContent());
             await analyzeConversationOperation.WaitForCompletionAsync();
 
-            AnalyzeConversationJobState jobResults = analyzeConversationOperation.Value;
+            using JsonDocument json = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
+            AnalyzeConversationJobState jobResults = AnalyzeConversationJobState.DeserializeAnalyzeConversationJobState(json.RootElement);
             Assert.NotNull(jobResults);
 
             foreach (AnalyzeConversationJobResult result in jobResults.Tasks.Items)
@@ -333,11 +365,11 @@ namespace Azure.AI.Language.Conversations.Tests
                     foreach (ConversationPIIItemResult conversationItem in conversation.ConversationItems)
                     {
                         Assert.NotNull(conversationItem.Entities);
-                        foreach (TextEntity entity in conversationItem.Entities)
+                        foreach (Entity entity in conversationItem.Entities)
                         {
                             Assert.NotNull(entity.Text);
                             Assert.NotNull(entity.Length);
-                            Assert.NotNull(entity.Confidence);
+                            Assert.NotNull(entity.ConfidenceScore);
                             Assert.NotNull(entity.Category);
                             Assert.NotNull(entity.Offset);
                         }

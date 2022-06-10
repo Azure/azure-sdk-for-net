@@ -28,6 +28,37 @@ namespace Azure.AI.Language.Conversations
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
+        /// <summary> Initializes a new instance of ConversationAnalysisClient for mocking. </summary>
+        protected ConversationAnalysisClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ConversationAnalysisClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential, ConversationAnalysisClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new ConversationAnalysisClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary> Analyzes the input conversation utterance. </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
@@ -171,7 +202,7 @@ namespace Azure.AI.Language.Conversations
         ///         lastUpdateDateTime: string (ISO 8601 Format),
         ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;,
         ///         taskName: string,
-        ///         kind: &quot;conversationalPIIResults&quot; | &quot;conversationalSummarizationResults&quot;
+        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;
         ///       }
         ///     ]
         ///   },
@@ -257,7 +288,7 @@ namespace Azure.AI.Language.Conversations
         ///         lastUpdateDateTime: string (ISO 8601 Format),
         ///         status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot;,
         ///         taskName: string,
-        ///         kind: &quot;conversationalPIIResults&quot; | &quot;conversationalSummarizationResults&quot;
+        ///         kind: &quot;ConversationalPIIResults&quot; | &quot;ConversationalSummarizationResults&quot;
         ///       }
         ///     ]
         ///   },

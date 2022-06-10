@@ -10,13 +10,11 @@ license-header: MICROSOFT_MIT_NO_VERSION
 batch:
 - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations.json
   clear-output-folder: true
-  model-namespace: false
-  data-plane: true
 
-# TODO: Uncomment when we ship authoring support and remove ./ConversationsClientOptions.cs.
-# - input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations-authoring.json
-#   add-credentials: true
-#   data-plane: true
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e7f37e4e43b1d12fd1988fda3ed39624c4b23303/specification/cognitiveservices/data-plane/Language/preview/2022-05-15-preview/analyzeconversations-authoring.json
+
+data-plane: true
+model-namespace: false
 
 modelerfour:
   lenient-model-deduplication: true
@@ -73,23 +71,4 @@ directive:
   where: $["info"]
   transform: >
     $["version"] = "2022_05_15_Preview";
-
-# Work around https://github.com/Azure/azure-sdk-for-net/issues/29141
-- from: swagger-document
-  where: $.definitions.AnalyzeConversationResultsKind
-  transform: >
-    $["enum"] = [
-      "conversationalPIIResults",
-      "conversationalSummarizationResults"
-    ];
-
-- from: swagger-document
-  where: $.definitions.AnalyzeConversationConversationPIIResult
-  transform: >
-    $["x-ms-discriminator-value"] = "conversationalPIIResults";
-
-- from: swagger-document
-  where: $.definitions.AnalyzeConversationSummarizationResult
-  transform: >
-    $["x-ms-discriminator-value"] = "conversationalSummarizationResults";
 ```

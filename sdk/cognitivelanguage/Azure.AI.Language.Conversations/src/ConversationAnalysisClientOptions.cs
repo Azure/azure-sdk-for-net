@@ -9,6 +9,7 @@ namespace Azure.AI.Language.Conversations
     /// <summary>
     /// Client options for <see cref="ConversationAnalysisClient"/>.
     /// </summary>
+    [CodeGenModel("ConversationAnalysisProjectsClientOptions")]
     public partial class ConversationAnalysisClientOptions : ClientOptions
     {
         internal string Version { get; }
@@ -26,10 +27,5 @@ namespace Azure.AI.Language.Conversations
 
             this.ConfigureLogging();
         }
-
-        /// <summary>
-        /// Gets the method used to interpret string offsets, which is always <see cref="StringIndexType.Utf16CodeUnit"/> for .NET.
-        /// </summary>
-        internal static StringIndexType DefaultStringIndexType { get; } = StringIndexType.Utf16CodeUnit;
     }
 }
