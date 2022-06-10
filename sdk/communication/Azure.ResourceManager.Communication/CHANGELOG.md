@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Rename plenty of classes and property names.
+
 ### Bugs Fixed
 
 ### Other Changes
