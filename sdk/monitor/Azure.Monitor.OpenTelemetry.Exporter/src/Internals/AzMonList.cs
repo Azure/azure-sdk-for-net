@@ -17,14 +17,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private AzMonList(KeyValuePair<string, object>[] data, int length)
         {
             this.data = data;
-            Length = length;
+            this.Length = length;
         }
 
         public int Length { get; }
 
         public ref KeyValuePair<string, object> this[int index]
         {
-            get => ref data[index];
+            get => ref this.data[index];
         }
 
         public static AzMonList Initialize()
@@ -124,31 +124,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             public Enumerator(in AzMonList list)
             {
-                data = list.data;
-                length = list.Length;
-                index = 0;
-                current = default;
+                this.data = list.data;
+                this.length = list.Length;
+                this.index = 0;
+                this.current = default;
             }
 
-            public object Current { get => current; }
+            public object Current { get => this.current; }
 
             public bool MoveNext()
             {
-                if (index < length)
+                if (this.index < this.length)
                 {
-                    current = data[index++];
+                    this.current = this.data[this.index++];
                     return true;
                 }
 
-                index = length + 1;
-                current = default;
+                this.index = this.length + 1;
+                this.current = default;
                 return false;
             }
 
             void IEnumerator.Reset()
             {
-                index = 0;
-                current = default;
+                this.index = 0;
+                this.current = default;
             }
         }
     }

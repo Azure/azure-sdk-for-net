@@ -19,31 +19,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
 
         [Event(1, Message = "{0} - {1}", Level = EventLevel.Critical)]
-        public void WriteCritical(string name, string message) => Write(EventLevel.Critical, 1, name, message);
+        public void WriteCritical(string name, string message) => this.Write(EventLevel.Critical, 1, name, message);
 
         [Event(2, Message = "{0} - {1}", Level = EventLevel.Error)]
-        public void WriteError(string name, string message) => Write(EventLevel.Error, 2, name, message);
+        public void WriteError(string name, string message) => this.Write(EventLevel.Error, 2, name, message);
 
         [NonEvent]
-        public void WriteError(string name, Exception exception) => WriteException(EventLevel.Error, 2, name, exception);
+        public void WriteError(string name, Exception exception) => this.WriteException(EventLevel.Error, 2, name, exception);
 
         [Event(3, Message = "{0} - {1}", Level = EventLevel.Warning)]
-        public void WriteWarning(string name, string message) => Write(EventLevel.Warning, 3, name, message);
+        public void WriteWarning(string name, string message) => this.Write(EventLevel.Warning, 3, name, message);
 
         [NonEvent]
-        public void WriteWarning(string name, Exception exception) => WriteException(EventLevel.Warning, 3, name, exception);
+        public void WriteWarning(string name, Exception exception) => this.WriteException(EventLevel.Warning, 3, name, exception);
 
         [Event(4, Message = "{0} - {1}", Level = EventLevel.Informational)]
-        public void WriteInformational(string name, string message) => Write(EventLevel.Informational, 4, name, message);
+        public void WriteInformational(string name, string message) => this.Write(EventLevel.Informational, 4, name, message);
 
         [Event(5, Message = "{0} - {1}", Level = EventLevel.Verbose)]
-        public void WriteVerbose(string name, string message) => Write(EventLevel.Verbose, 5, name, message);
+        public void WriteVerbose(string name, string message) => this.Write(EventLevel.Verbose, 5, name, message);
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Write(EventLevel eventLevel, int eventId, string name, string message)
         {
-            if (IsEnabled(eventLevel, EventKeywords.All))
+            if (this.IsEnabled(eventLevel, EventKeywords.All))
             {
                 WriteEvent(eventId, name, message);
             }
@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void WriteException(EventLevel eventLevel, int eventId, string name, Exception exception)
         {
-            if (IsEnabled(eventLevel, EventKeywords.All))
+            if (this.IsEnabled(eventLevel, EventKeywords.All))
             {
                 WriteEvent(eventId, name, exception.LogAsyncException().ToInvariantString());
             }
@@ -65,9 +65,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             public override void Dispose()
             {
-                foreach (EventSource eventSource in eventSources)
+                foreach (EventSource eventSource in this.eventSources)
                 {
-                    DisableEvents(eventSource);
+                    this.DisableEvents(eventSource);
                 }
 
                 base.Dispose();
@@ -78,8 +78,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (eventSource?.Name == EventSourceName)
                 {
-                    eventSources.Add(eventSource);
-                    EnableEvents(eventSource, EventLevel.Verbose, (EventKeywords)(-1));
+                    this.eventSources.Add(eventSource);
+                    this.EnableEvents(eventSource, EventLevel.Verbose, (EventKeywords)(-1));
                 }
 
                 base.OnEventSourceCreated(eventSource);
