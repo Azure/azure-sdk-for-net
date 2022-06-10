@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (this.IsEnabled(eventLevel, EventKeywords.All))
             {
-                WriteEvent(eventId, name, message);
+                this.WriteEvent(eventId, name, message);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (this.IsEnabled(eventLevel, EventKeywords.All))
             {
-                WriteEvent(eventId, name, exception.LogAsyncException().ToInvariantString());
+                this.WriteEvent(eventId, name, exception.LogAsyncException().ToInvariantString());
             }
         }
 
