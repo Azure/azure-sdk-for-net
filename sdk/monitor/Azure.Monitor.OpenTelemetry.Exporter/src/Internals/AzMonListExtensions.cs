@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class AzMonListExtensions
     {

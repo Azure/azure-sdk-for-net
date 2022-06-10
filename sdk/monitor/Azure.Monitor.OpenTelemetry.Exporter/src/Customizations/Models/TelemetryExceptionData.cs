@@ -4,7 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models

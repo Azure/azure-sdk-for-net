@@ -8,10 +8,16 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using Microsoft.Extensions.Logging;
+
 using Moq;
+
 using OpenTelemetry.Logs;
+
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
