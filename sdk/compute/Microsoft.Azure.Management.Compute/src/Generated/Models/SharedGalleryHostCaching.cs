@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SharingProfileGroupTypes.
+    /// Defines values for SharedGalleryHostCaching.
     /// </summary>
-    public static class SharingProfileGroupTypes
+    public static class SharedGalleryHostCaching
     {
-        public const string Subscriptions = "Subscriptions";
-        public const string AADTenants = "AADTenants";
+        public const string None = "None";
+        public const string ReadOnly = "ReadOnly";
+        public const string ReadWrite = "ReadWrite";
     }
 }

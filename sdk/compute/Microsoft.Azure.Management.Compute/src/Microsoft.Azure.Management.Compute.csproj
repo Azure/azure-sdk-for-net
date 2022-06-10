@@ -9,19 +9,15 @@
       Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.
       Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Compute" (https://www.nuget.org/packages/Azure.ResourceManager.Compute/). Please see the package changelog for more information.
     </Description>
-    <Version>55.0.0</Version>
+    <Version>56.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         This is a public release of the Azure Compute SDK. Included with this release is:
-        1. ComputeRP API calls updated with 2022-03-01 version. 
-        2. UltraSSDcapability properties added in dedicated host resource.
-        3. Identity property added to virtual machine scale set.
-        4. ConsistencyMode and InstanceView added to restore point.
-        5. Guest patching feature added to VM and VMSS.
-        6. treatFailureAsDeploymentFailure and enableAutomaticUpgrade added to VMGalleryApplication resource.
-        7. intent property added for VM.
+        1. GalleryRP API calls updated to version 2022-01-03.
+        2. Added Settings and AdvancedSettings to the gallery application version.
+        3. Added PrivacyStatement and Uri to the community gallery image.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

@@ -12,11 +12,15 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for SharingProfileGroupTypes.
+    /// Defines values for GalleryProvisioningState.
     /// </summary>
-    public static class SharingProfileGroupTypes
+    public static class GalleryProvisioningState
     {
-        public const string Subscriptions = "Subscriptions";
-        public const string AADTenants = "AADTenants";
+        public const string Creating = "Creating";
+        public const string Updating = "Updating";
+        public const string Failed = "Failed";
+        public const string Succeeded = "Succeeded";
+        public const string Deleting = "Deleting";
+        public const string Migrating = "Migrating";
     }
 }
