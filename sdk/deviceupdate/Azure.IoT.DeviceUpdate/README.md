@@ -27,7 +27,7 @@ dotnet add package Azure.IoT.DeviceUpdate --prerelease
 
 ### Authenticate the Client
 
-In order to interact with the Device Update for IoT Hub service, you will need to create an instance of a [TokenCredential class](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) and pass it to the constructor of your UpdateClient, DeviceClient and DeploymentClient class.
+In order to interact with the Device Update for IoT Hub service, you will need to create an instance of a [TokenCredential class](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) and pass it to the constructor of your DeviceUpdateClient and DeviceManagementClient class.
 
 ## Key concepts
 

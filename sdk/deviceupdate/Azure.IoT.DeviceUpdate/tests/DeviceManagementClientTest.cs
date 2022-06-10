@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using System.Net.Http;
 using Azure.Core.Pipeline;
-using System.IO;
 using System.Net;
 using NUnit.Framework;
 
@@ -47,7 +46,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
         }
 
-        // [RecordedTest]
+        [RecordedTest]
         public async Task GetGroups()
         {
             DeviceManagementClient client = CreateClient();
@@ -55,6 +54,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             int counter = 0;
             await foreach (var item in response)
             {
+                System.Diagnostics.Debug.WriteLine(item);
                 Assert.IsNotNull(item);
                 counter++;
             }
@@ -62,7 +62,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             Assert.IsTrue(counter > 0);
         }
 
-        // [RecordedTest]
+        [RecordedTest]
         public async Task GetGroup()
         {
             DeviceManagementClient client = CreateClient();
@@ -85,6 +85,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
         }
 
+        //  Temporary disabled because the service doesn't properly handle this method yet
         // [RecordedTest]
         public async Task GetDeviceClasses()
         {
@@ -115,6 +116,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
         }
 
+        //  Temporary disabled because the service doesn't properly handle this method yet
         // [RecordedTest]
         public async Task GetBestUpdatesForGroups()
         {
@@ -148,6 +150,7 @@ namespace Azure.IoT.DeviceUpdate.Tests
             }
         }
 
+        //  Temporary disabled because the service doesn't properly handle this method yet
         // [RecordedTest]
         public async Task GetDeploymentsForGroups()
         {

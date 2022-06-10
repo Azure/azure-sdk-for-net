@@ -1,0 +1,45 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://adu-sdk-testing.api.adu.microsoft.com/deviceUpdate/sdkinstance/management/groups?api-version=2022-07-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-05f8d7f50b5d794796a7b729fd470668-f33473353276474a-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220609.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "e7b9c2d3b56bff8cf2b17afb20eb0616",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "384",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 10 Jun 2022 01:31:04 GMT",
+        "mise-correlation-id": "50a3eb5b-bacb-428b-9469-841bd178f58f",
+        "traceparent": "00-05f8d7f50b5d794796a7b729fd470668-f33473353276474a-00"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "groupId": "$default",
+            "groupType": "DefaultNoTag",
+            "createdDateTime": "2022-06-08T23:58:17.7255595\u002B00:00",
+            "deployments": []
+          },
+          {
+            "groupId": "dpokluda-test",
+            "groupType": "IoTHubTag",
+            "createdDateTime": "2022-06-09T00:08:48.4487\u002B00:00",
+            "deviceCount": 1,
+            "deployments": []
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "775456042"
+  }
+}

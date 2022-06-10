@@ -6,18 +6,19 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e67ae9ae0010a7428a5481f97c4c1de3-1359e1bb8df27148-00",
-        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220607.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
-        "x-ms-client-request-id": "a3ff2359e39916112105f7ed90de36ee",
+        "traceparent": "00-1ad3930b27e5b54c8ffba32ab4eb9b9f-da2b7bd1e6f06647-00",
+        "User-Agent": "azsdk-net-IoT.DeviceUpdate/1.0.0-alpha.20220609.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "01fcfa839cce0e2a52795fca2ddf5c8c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1271",
+        "Content-Length": "1161",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Jun 2022 17:13:06 GMT",
-        "traceparent": "00-e67ae9ae0010a7428a5481f97c4c1de3-1359e1bb8df27148-00"
+        "Date": "Fri, 10 Jun 2022 01:31:06 GMT",
+        "mise-correlation-id": "52356fac-dead-46f8-a1e0-832d60bbcbce",
+        "traceparent": "00-1ad3930b27e5b54c8ffba32ab4eb9b9f-da2b7bd1e6f06647-00"
       },
       "ResponseBody": {
         "value": [
@@ -64,27 +65,20 @@
             "deviceId": "dpokluda-test",
             "deviceClassId": "0919e3ae422a2bfa8c84ff905813e60351e456d1",
             "groupId": "dpokluda-test",
-            "installedUpdate": {
-              "updateId": {
-                "provider": "fabrikam",
-                "name": "vacuum",
-                "version": "2022.131.655.39"
-              }
-            },
             "onLatestUpdate": false,
             "lastAttemptedUpdate": {
               "updateId": {
                 "provider": "fabrikam",
                 "name": "vacuum",
-                "version": "2022.131.655.39"
+                "version": "2022.608.554.1"
               }
             },
-            "deploymentStatus": "Succeeded",
-            "lastDeploymentId": "test0201031705",
+            "deploymentStatus": "Failed",
+            "lastDeploymentId": "test0609070108",
             "lastInstallResult": {
-              "resultCode": 700,
-              "extendedResultCode": 0,
-              "resultDetails": "apply success"
+              "resultCode": 0,
+              "extendedResultCode": 805306371,
+              "resultDetails": ""
             }
           }
         ]
@@ -92,6 +86,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "690268616"
+    "RandomSeed": "417161331"
   }
 }
