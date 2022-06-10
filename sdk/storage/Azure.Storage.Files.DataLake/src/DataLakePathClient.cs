@@ -182,11 +182,6 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         internal virtual PathRestClient BlobPathRestClient => _blobPathRestClient;
 
-        /// <summary>
-        /// The <see cref="TimeSpan"/> representing an infinite lease duration.
-        /// </summary>
-        public static readonly TimeSpan InfiniteLeaseDuration = TimeSpan.FromSeconds(Constants.Blob.Lease.InfiniteLeaseDuration);
-
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
@@ -766,15 +761,15 @@ namespace Azure.Storage.Files.DataLake
                 resourceType: resourceType,
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
-                permissions: options?.Permissions,
-                umask: options?.Umask,
-                owner: options?.Owner,
-                group: options?.Group,
-                accessControlList: options?.AccessControlList,
+                permissions: options?.AccessOptions?.Permissions,
+                umask: options?.AccessOptions?.Umask,
+                owner: options?.AccessOptions?.Owner,
+                group: options?.AccessOptions?.Group,
+                accessControlList: options?.AccessOptions?.AccessControlList,
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
-                timeToExpire: options?.TimeToExpire,
-                expiresOn: options?.ExpiresOn,
+                timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 conditions: options?.Conditions,
                 async: false,
                 cancellationToken)
@@ -815,15 +810,15 @@ namespace Azure.Storage.Files.DataLake
                 resourceType: resourceType,
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
-                permissions: options?.Permissions,
-                umask: options?.Umask,
-                owner: options?.Owner,
-                group: options?.Group,
-                accessControlList: options?.AccessControlList,
+                permissions: options?.AccessOptions?.Permissions,
+                umask: options?.AccessOptions?.Umask,
+                owner: options?.AccessOptions?.Owner,
+                group: options?.AccessOptions?.Group,
+                accessControlList: options?.AccessOptions?.AccessControlList,
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
-                timeToExpire: options?.TimeToExpire,
-                expiresOn: options?.ExpiresOn,
+                timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 conditions: options?.Conditions,
                 async: true,
                 cancellationToken)
@@ -1107,18 +1102,18 @@ namespace Azure.Storage.Files.DataLake
 
                     if (timeToExpire.HasValue)
                     {
-                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.TimeToExpire)} does not apply to directories.");
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.TimeToExpire)} does not apply to directories.");
                     }
 
                     if (expiresOn.HasValue)
                     {
-                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ExpiresOn)} does not apply to directories.");
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.ExpiresOn)} does not apply to directories.");
                     }
                 }
 
                 if (expiresOn.HasValue && timeToExpire.HasValue)
                 {
-                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ExpiresOn)} and {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.TimeToExpire)} cannot both be set.");
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.ExpiresOn)} and {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ScheduleDeletionOptions.TimeToExpire)} cannot both be set.");
                 }
 
                 try
@@ -1260,15 +1255,15 @@ namespace Azure.Storage.Files.DataLake
                     resourceType: resourceType,
                     httpHeaders: options?.HttpHeaders,
                     metadata: options?.Metadata,
-                    permissions: options?.Permissions,
-                    umask: options?.Umask,
-                    owner: options?.Owner,
-                    group: options?.Group,
-                    accessControlList: options?.AccessControlList,
+                    permissions: options?.AccessOptions?.Permissions,
+                    umask: options?.AccessOptions?.Umask,
+                    owner: options?.AccessOptions?.Owner,
+                    group: options?.AccessOptions?.Group,
+                    accessControlList: options?.AccessOptions?.AccessControlList,
                     leaseId: options?.LeaseId,
                     leaseDuration: options?.LeaseDuration,
-                    timeToExpire: options?.TimeToExpire,
-                    expiresOn: options?.ExpiresOn,
+                    timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                    expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -1305,15 +1300,15 @@ namespace Azure.Storage.Files.DataLake
                 resourceType: resourceType,
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
-                permissions: options?.Permissions,
-                umask: options?.Umask,
-                owner: options?.Owner,
-                group: options?.Group,
-                accessControlList: options?.AccessControlList,
+                permissions: options?.AccessOptions?.Permissions,
+                umask: options?.AccessOptions?.Umask,
+                owner: options?.AccessOptions?.Owner,
+                group: options?.AccessOptions?.Group,
+                accessControlList: options?.AccessOptions?.AccessControlList,
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
-                timeToExpire: options?.TimeToExpire,
-                expiresOn: options?.ExpiresOn,
+                timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
+                expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);

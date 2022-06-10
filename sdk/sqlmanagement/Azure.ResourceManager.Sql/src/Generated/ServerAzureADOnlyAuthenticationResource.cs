@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ServerAzureADOnlyAuthenticationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerAzureADOnlyAuthenticationResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string authenticationName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, AuthenticationName authenticationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}";
             return new ResourceIdentifier(resourceId);

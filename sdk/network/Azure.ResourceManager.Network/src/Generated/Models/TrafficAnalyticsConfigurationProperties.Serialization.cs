@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<bool> enabled = default;
             Optional<string> workspaceId = default;
             Optional<string> workspaceRegion = default;
-            Optional<string> workspaceResourceId = default;
+            Optional<ResourceIdentifier> workspaceResourceId = default;
             Optional<int> trafficAnalyticsInterval = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,7 +74,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("workspaceResourceId"))
                 {
-                    workspaceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    workspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("trafficAnalyticsInterval"))

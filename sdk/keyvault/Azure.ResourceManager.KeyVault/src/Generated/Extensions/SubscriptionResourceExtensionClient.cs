@@ -247,9 +247,9 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="content"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(VaultCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultNameAvailabilityResult>> CheckVaultNameAvailabilityAsync(VaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKeyVaultNameAvailability");
+            using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckVaultNameAvailability");
             scope.Start();
             try
             {
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.KeyVault
         /// </summary>
         /// <param name="content"> The name of the vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckKeyVaultNameAvailability(VaultCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<VaultNameAvailabilityResult> CheckVaultNameAvailability(VaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKeyVaultNameAvailability");
+            using var scope = VaultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckVaultNameAvailability");
             scope.Start();
             try
             {

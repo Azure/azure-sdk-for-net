@@ -85,6 +85,11 @@ namespace Azure.Messaging.ServiceBus
         private volatile bool _closed;
 
         /// <summary>
+        /// Indicates whether or not the user has called CloseAsync or DisposeAsync on the receiver.
+        /// </summary>
+        internal bool IsDisposed => _closed;
+
+        /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
@@ -221,7 +226,7 @@ namespace Azure.Messaging.ServiceBus
         /// request to cancel the operation.</param>
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
-            IsClosed = true;
+            _closed = true;
             Type clientType = GetType();
 
             Logger.ClientCloseStart(clientType, Identifier);
@@ -264,7 +269,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             _connection.ThrowIfClosed();
 
             if (maxWaitTime.HasValue)
@@ -446,7 +451,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -538,7 +543,7 @@ namespace Azure.Messaging.ServiceBus
             Guid lockToken,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             _connection.ThrowIfClosed();
             ThrowIfNotPeekLockMode();
             ThrowIfLockTokenIsEmpty(lockToken);
@@ -632,7 +637,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             _connection.ThrowIfClosed();
             ThrowIfNotPeekLockMode();
             ThrowIfLockTokenIsEmpty(lockToken);
@@ -830,7 +835,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             _connection.ThrowIfClosed();
             ThrowIfNotPeekLockMode();
             ThrowIfLockTokenIsEmpty(lockToken);
@@ -928,7 +933,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             _connection.ThrowIfClosed();
             ThrowIfNotPeekLockMode();
             ThrowIfLockTokenIsEmpty(lockToken);
@@ -1021,7 +1026,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -1109,7 +1114,7 @@ namespace Azure.Messaging.ServiceBus
             Guid lockToken,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusReceiver));
+            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusReceiver));
             _connection.ThrowIfClosed();
             ThrowIfNotPeekLockMode();
             ThrowIfSessionReceiver();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations
     public partial class QuotaRequestDetailsResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="QuotaRequestDetailsResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, string location, string id)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, AzureLocation location, string id)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}";
             return new ResourceIdentifier(resourceId);

@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.Write($"ErrorInitializingRoleInstanceToHostName{EventLevelSuffix.Error}", $"{ex.ToInvariantString()}");
+                    AzureMonitorExporterEventSource.Log.WriteError("ErrorInitializingRoleInstanceToHostName", ex);
                 }
             }
         }
