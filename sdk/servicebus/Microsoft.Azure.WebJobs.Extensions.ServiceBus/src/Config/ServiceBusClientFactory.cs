@@ -14,7 +14,7 @@ using Constants = Microsoft.Azure.WebJobs.ServiceBus.Constants;
 
 namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
 {
-    internal class ServiceBusClientFactory
+    public class ServiceBusClientFactory
     {
         private readonly IConfiguration _configuration;
         private readonly AzureComponentFactory _componentFactory;

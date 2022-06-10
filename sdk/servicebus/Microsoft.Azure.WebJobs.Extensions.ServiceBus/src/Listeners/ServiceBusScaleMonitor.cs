@@ -14,7 +14,7 @@ using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
-    internal class ServiceBusScaleMonitor : IScaleMonitor<ServiceBusTriggerMetrics>
+    public class ServiceBusScaleMonitor : IScaleMonitor<ServiceBusTriggerMetrics>
     {
         private const string DeadLetterQueuePath = @"/$DeadLetterQueue";
 
