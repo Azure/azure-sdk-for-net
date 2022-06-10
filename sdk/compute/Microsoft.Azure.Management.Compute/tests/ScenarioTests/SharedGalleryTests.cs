@@ -41,9 +41,8 @@ namespace Compute.Tests
                 Trace.TraceInformation("Got the shared galleries which are shared to tenant of current subscription.");
 
                 int count = sharedGalleriesList.Count();
-                Assert.Equal(1, count);
-
-                foreach(SharedGallery gallery in sharedGalleriesList)
+                Assert.True(count > 0);
+                foreach (SharedGallery gallery in sharedGalleriesList)
                 {
                     if(gallery.Name == GalleryUniqueName)
                     {
@@ -55,18 +54,16 @@ namespace Compute.Tests
                 sharedGalleriesList = m_CrpClient.SharedGalleries.List(galleryAccessLocation);
 
                 count = sharedGalleriesList.Count();
-                Assert.Equal(1, count);
+                Assert.True(count > 0);
                 Trace.TraceInformation("Got the shared gallery {0} which is shared to current subscription.", GalleryUniqueName);
-
-                ValidateSharedGallery(sharedGalleriesList.First());
-
-                sharedGalleriesList = m_CrpClient.SharedGalleries.List(galleryAccessLocation, sharedTo: SharedToValues.Tenant);
-
-                count = sharedGalleriesList.Count();
-                Assert.Equal(1, count);
-                Trace.TraceInformation("Got the shared gallery {0} which is shared to current tenant.", GalleryUniqueName);
-
-                ValidateSharedGallery(sharedGalleriesList.First());
+                foreach (SharedGallery gallery in sharedGalleriesList)
+                {
+                    if (gallery.Name == GalleryUniqueName)
+                    {
+                        ValidateSharedGallery(gallery);
+                        break;
+                    }
+                }
 
             }
         }
@@ -180,6 +177,9 @@ namespace Compute.Tests
         {
             string expectedId = "/SharedGalleries/" + GalleryUniqueName + "/Images/" + GalleryImageName + "/Versions/" + GalleryImageVersionName;
             Assert.Equal(expectedId, sharedGalleryImageVersion.UniqueId);
+            Assert.NotNull(sharedGalleryImageVersion.StorageProfile);
+            Assert.NotNull(sharedGalleryImageVersion.ExcludeFromLatest);
+            Assert.NotNull(sharedGalleryImageVersion.StorageProfile.OsDiskImage);
         }
     }
 }
