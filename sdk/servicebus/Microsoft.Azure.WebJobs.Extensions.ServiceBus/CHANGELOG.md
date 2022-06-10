@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 5.5.1 (2022-06-07)
+
+### Bugs Fixed
+
+- Fixed race condition when starting up function app.
+
 ## 5.5.0 (2022-05-16)
 
 ### Bugs Fixed

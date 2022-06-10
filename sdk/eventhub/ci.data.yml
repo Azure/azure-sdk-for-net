@@ -30,7 +30,7 @@ pr:
     - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SdkType: data
     ServiceDirectory: eventhub

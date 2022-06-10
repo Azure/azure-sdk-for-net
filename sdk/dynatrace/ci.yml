@@ -22,10 +22,10 @@ pr:
     - sdk/dynatrace/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: dynatrace
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager.DynaTrace
-      safeName: AzureResourceManagerDynaTrace
+    - name: Azure.ResourceManager.Dynatrace
+      safeName: AzureResourceManagerDynatrace

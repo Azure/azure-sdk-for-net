@@ -15,17 +15,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentPage DeserializeDocumentPage(JsonElement element)
         {
+            DocumentPageKind kind = default;
             int pageNumber = default;
-            float angle = default;
-            float width = default;
-            float height = default;
-            V3LengthUnit unit = default;
+            Optional<float> angle = default;
+            Optional<float> width = default;
+            Optional<float> height = default;
+            Optional<V3LengthUnit> unit = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            IReadOnlyList<DocumentWord> words = default;
+            Optional<IReadOnlyList<DocumentWord>> words = default;
             Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
-            IReadOnlyList<DocumentLine> lines = default;
+            Optional<IReadOnlyList<DocumentImage>> images = default;
+            Optional<IReadOnlyList<DocumentLine>> lines = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"))
+                {
+                    kind = new DocumentPageKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("pageNumber"))
                 {
                     pageNumber = property.Value.GetInt32();
@@ -33,21 +40,41 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("angle"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     angle = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("width"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     width = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("height"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     height = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("unit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     unit = new V3LengthUnit(property.Value.GetString());
                     continue;
                 }
@@ -63,6 +90,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("words"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DocumentWord> array = new List<DocumentWord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -86,8 +118,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     selectionMarks = array;
                     continue;
                 }
+                if (property.NameEquals("images"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DocumentImage> array = new List<DocumentImage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentImage.DeserializeDocumentImage(item));
+                    }
+                    images = array;
+                    continue;
+                }
                 if (property.NameEquals("lines"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DocumentLine> array = new List<DocumentLine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -97,7 +149,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentPage(pageNumber, angle, width, height, unit, spans, words, Optional.ToList(selectionMarks), lines);
+            return new DocumentPage(kind, pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(images), Optional.ToList(lines));
         }
     }
 }

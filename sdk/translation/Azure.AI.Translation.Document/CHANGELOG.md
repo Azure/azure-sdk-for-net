@@ -1,6 +1,16 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2022-06-07)
 
 ### Features Added
 - Added optional parameter `categoryId` to the `DocumentTranslationInput.AddTarget`.
@@ -11,10 +21,19 @@
 - Renamed type `StorageInputType` to `StorageInputUriKind`.
 - Renamed property `StorageType` to `StorageUriKind` in `DocumentTranslationInput`.
 - Renamed parameter `asc` to `ascending` in `TranslationFilterOrder` constructor.
+- The following properties inside of the `DocumentTranslationOperation` class will throw an `InvalidOperationException` if they are accessed and the LRO hasn't made a request to the service:
+  - `CreatedOn`
+  - `DocumentsCanceled`
+  - `DocumentsFailed`
+  - `DocumentsInProgress`
+  - `DocumentsNotStarted`
+  - `DocumentsSucceeded`
+  - `DocumentsTotal`
+  - `LastModified`
+  - `Status`
 
 ### Bugs Fixed
-
-### Other Changes
+- In `DocumentTranslationOperation`, `Cancel` calls won't overwrite the response from `GetRawResponse` anymore.
 
 ## 1.0.0-beta.6 (2021-11-09)
 
