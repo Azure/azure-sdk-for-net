@@ -49,8 +49,14 @@ parameters:
   default:
     Public:
       SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      # TODO: Migrate location override into azure-sdk-tools eng/common
+      # See https://github.com/Azure/azure-sdk-tools/issues/3398
+      Location: 'westus'
     Preview:
       SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+      # TODO: Migrate location override into azure-sdk-tools eng/common
+      # See https://github.com/Azure/azure-sdk-tools/issues/3398
+      Location: 'westus'
     Canary:
       SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
       Location: 'eastus2euap'
