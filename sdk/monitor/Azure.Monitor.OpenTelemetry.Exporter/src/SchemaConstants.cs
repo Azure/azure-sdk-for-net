@@ -16,14 +16,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     /// </remarks>
     internal static class SchemaConstants
     {
+        /// <remarks>
+        /// If a Key exceeds maximum allowable length limit, then that particular Key-Value pair should be dropped.
+        /// </remarks>
+        public const int KVP_MaxKeyLength = 150;
+        public const int KVP_MaxValueLength = 8192;
+
         // TODO: Apply these rules
         public const int AvailabilityData_Id_MaxLength = 512;
         public const int AvailabilityData_Name_MaxLength = 1024;
         public const int AvailabilityData_RunLocation_MaxLength = 1024;
         public const int AvailabilityData_Message_MaxLength = 8192;
-        public const int AvailabilityData_Properties_MaxKeyLength = 150;
-        public const int AvailabilityData_Properties_MaxValueLength = 8192;
-        public const int AvailabilityData_Measurements_MaxKeyLength = 150;
+        public const int AvailabilityData_Properties_MaxKeyLength = KVP_MaxKeyLength;
+        public const int AvailabilityData_Properties_MaxValueLength = KVP_MaxValueLength;
+        public const int AvailabilityData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
         public const int AvailabilityData_Duration_LessThanDays = 1000;
 
         // TODO: Apply these rules
@@ -32,15 +38,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         // TODO: Apply these rules
         public const int EventData_Name_MaxLength = 512;
-        public const int EventData_Properties_MaxKeyLength = 150;
+        public const int EventData_Properties_MaxKeyLength = KVP_MaxKeyLength;
         public const int EventData_Properties_MaxValueLength = 8192;
-        public const int EventData_Measurements_MaxKeyLength = 150;
+        public const int EventData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
 
-        // TODO: Apply these rules
         public const int ExceptionData_ProblemId_MaxLength = 1024;
-        public const int ExceptionData_Properties_MaxKeyLength = 150;
-        public const int ExceptionData_Properties_MaxValueLength = 8192;
-        public const int ExceptionData_Measurements_MaxKeyLength = 150;
+        public const int ExceptionData_Properties_MaxKeyLength = KVP_MaxKeyLength;
+        public const int ExceptionData_Properties_MaxValueLength = KVP_MaxValueLength;
+        public const int ExceptionData_Measurements_MaxKeyLength = KVP_MaxKeyLength; // TODO: ExceptionData.Measurements is currently not in use (2022-06-07).
 
         public const int ExceptionDetails_TypeName_MaxLength = 1024;
         public const int ExceptionDetails_Message_MaxLength = 32768;
@@ -49,31 +54,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
         // TODO: Apply these rules
         public const int MessageData_Message_MaxLength = 32768;
-        public const int MessageData_Properties_MaxKeyLength = 150;
-        public const int MessageData_Properties_MaxValueLength = 8192;
-        public const int MessageData_Measurements_MaxKeyLength = 150;
+        public const int MessageData_Properties_MaxKeyLength = KVP_MaxKeyLength;
+        public const int MessageData_Properties_MaxValueLength = KVP_MaxValueLength;
+        public const int MessageData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
 
         // TODO: Apply these rules
-        public const int MetricsData_Properties_MaxKeyLength = 150;
-        public const int MetricsData_Properties_MaxValueLength = 8192;
+        public const int MetricsData_Properties_MaxKeyLength = KVP_MaxKeyLength;
+        public const int MetricsData_Properties_MaxValueLength = KVP_MaxValueLength;
 
         // TODO: Apply these rules
         public const int PageViewData_Id_MaxLength = 512;
         public const int PageViewData_Name_MaxLength = 1024;
         public const int PageViewData_Url_MaxLength = 2048;
         public const int PageViewData_ReferredUri_MaxLength = 2048;
-        public const int PageViewData_Properties_MaxKeyLength = 150;
-        public const int PageViewData_Properties_MaxValueLength = 8192;
-        public const int PageViewData_Measurements_MaxKeyLength = 150;
+        public const int PageViewData_Properties_MaxKeyLength = KVP_MaxKeyLength;
+        public const int PageViewData_Properties_MaxValueLength = KVP_MaxValueLength;
+        public const int PageViewData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
         public const int PageViewData_Duration_LessThanDays = 1000;
 
         // TODO: Apply these rules
         public const int PageViewPerfData_Id_MaxLength = 512;
         public const int PageViewPerfData_Name_MaxLength = 1024;
         public const int PageViewPerfData_Url_MaxLength = 2048;
-        public const int PageViewPerfData_Properties_MaxKeyLength = 150;
-        public const int PageViewPerfData_Properties_MaxValueLength = 8192;
-        public const int PageViewPerfData_Measurements_MaxKeyLength = 150;
+        public const int PageViewPerfData_Properties_MaxKeyLength = KVP_MaxKeyLength;
+        public const int PageViewPerfData_Properties_MaxValueLength = KVP_MaxValueLength;
+        public const int PageViewPerfData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
         public const int PageViewPerfData_Duration_LessThanDays = 1000;
 
         // TODO: Apply these rules
@@ -83,9 +88,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int RemoteDependencyData_Data_MaxLength = 8192;
         public const int RemoteDependencyData_Type_MaxLength = 1024;
         public const int RemoteDependencyData_Target_MaxLength = 1024;
-        public const int RemoteDependencyData_Properties_MaxKeyLength = 150;
-        public const int RemoteDependencyData_Properties_MaxValueLength = 8192;
-        public const int RemoteDependencyData_Measurements_MaxKeyLength = 150;
+        public const int RemoteDependencyData_Properties_MaxKeyLength = KVP_MaxKeyLength;
+        public const int RemoteDependencyData_Properties_MaxValueLength = KVP_MaxValueLength;
+        public const int RemoteDependencyData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
         public const int RemoteDependencyData_Duration_LessThanDays = 1000;
 
         // TODO: Apply these rules
@@ -94,9 +99,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int RequestData_ResponseCode_MaxLength = 1024;
         public const int RequestData_Source_MaxLength = 1024;
         public const int RequestData_Url_MaxLength = 2048;
-        public const int RequestData_Properties_MaxKeyLength = 150;
-        public const int RequestData_Properties_MaxValueLength = 8192;
-        public const int RequestData_Measurements_MaxKeyLength = 150;
+        public const int RequestData_Properties_MaxKeyLength = KVP_MaxKeyLength;
+        public const int RequestData_Properties_MaxValueLength = KVP_MaxValueLength;
+        public const int RequestData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
         public const int RequestData_Duration_LessThanDays = 1000;
 
         public const int StackFrame_Method_MaxLength = 1024;
