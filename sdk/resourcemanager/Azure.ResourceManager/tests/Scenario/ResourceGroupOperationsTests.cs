@@ -12,10 +12,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2019-10-01")]
     public class ResourceGroupOperationsTests : ResourceManagerTestBase
     {
-        public ResourceGroupOperationsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+        public ResourceGroupOperationsTests(bool isAsync, string apiVersion)
+            : base(isAsync, ResourceGroupResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
         }
 
@@ -28,7 +29,6 @@ namespace Azure.ResourceManager.Tests
             Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task DeleteRg()
         {
@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.Tests
             await rg.DeleteAsync(WaitUntil.Completed);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task StartDeleteRg()
         {
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.Tests
             await deleteOp.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(2));
         }
 
-        [TestCase]
         [RecordedTest]
         public void StartDeleteNonExistantRg()
         {
@@ -63,7 +61,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task Get()
         {
@@ -84,7 +81,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(404, ex.Status);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task Update()
         {
@@ -108,7 +104,6 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.UpdateAsync(null));
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task StartExportTemplate()
         {
@@ -127,7 +122,6 @@ namespace Azure.ResourceManager.Tests
             });
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task AddTag()
         {
@@ -150,7 +144,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(400, ex.Status);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task SetTags()
         {
@@ -174,7 +167,6 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.SetTagsAsync(null));
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task RemoveTag()
         {
@@ -206,7 +198,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(tags2, rg2.Data.Tags);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task ListAvailableLocations()
         {
@@ -222,7 +213,6 @@ namespace Azure.ResourceManager.Tests
             Assert.GreaterOrEqual(count, 1);
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task MoveResources()
         {
@@ -252,7 +242,6 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.MoveResourcesAsync(WaitUntil.Completed, null));
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task StartMoveResources()
         {
@@ -288,7 +277,6 @@ namespace Azure.ResourceManager.Tests
             });
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task ValidateMoveResources()
         {
@@ -310,7 +298,6 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg1.ValidateMoveResourcesAsync(WaitUntil.Completed, null));
         }
 
-        [TestCase]
         [RecordedTest]
         public async Task StartValidateMoveResources()
         {

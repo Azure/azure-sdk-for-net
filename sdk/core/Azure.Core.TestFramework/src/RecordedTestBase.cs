@@ -38,6 +38,8 @@ namespace Azure.Core.TestFramework
 
         private DateTime _testStartTime;
 
+        protected  string SessionFileQualifier { get; set; } = string.Empty;
+
         protected bool ValidateClientInstrumentation { get; set; }
 
         protected override DateTime TestStartTime => _testStartTime;
@@ -207,7 +209,9 @@ namespace Azure.Core.TestFramework
 
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
 
-            string fileName = name + (IsAsync ? "Async" : string.Empty) + ".json";
+            string async = IsAsync ? "Async" : string.Empty;
+
+            string fileName = $"{name}{SessionFileQualifier}{async}.json";
 
             return Path.Combine(
                 GetSessionFileDirectory(),
