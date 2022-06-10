@@ -7,10 +7,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using OpenTelemetry;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class TraceHelper
     {

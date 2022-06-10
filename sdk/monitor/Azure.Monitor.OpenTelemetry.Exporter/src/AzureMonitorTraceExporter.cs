@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 
 using Azure.Core.Pipeline;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 using OpenTelemetry;
 

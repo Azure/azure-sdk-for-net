@@ -3,7 +3,10 @@
 
 using System.Diagnostics;
 using System.Globalization;
+
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models

@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 using Azure.Core.Shared;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     [EventSource(Name = EventSourceName)]
     internal sealed class AzureMonitorExporterEventSource : EventSource
@@ -19,33 +19,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
 
         [Event(1, Message = "{0} - {1}", Level = EventLevel.Critical)]
-        public void WriteCritical(string name, string message) => this.Write(EventLevel.Critical, 1, name, message);
+        public void WriteCritical(string name, string message) => Write(EventLevel.Critical, 1, name, message);
 
         [Event(2, Message = "{0} - {1}", Level = EventLevel.Error)]
-        public void WriteError(string name, string message) => this.Write(EventLevel.Error, 2, name, message);
+        public void WriteError(string name, string message) => Write(EventLevel.Error, 2, name, message);
 
         [NonEvent]
-        public void WriteError(string name, Exception exception) => this.WriteException(EventLevel.Error, 2, name, exception);
+        public void WriteError(string name, Exception exception) => WriteException(EventLevel.Error, 2, name, exception);
 
         [Event(3, Message = "{0} - {1}", Level = EventLevel.Warning)]
-        public void WriteWarning(string name, string message) => this.Write(EventLevel.Warning, 3, name, message);
+        public void WriteWarning(string name, string message) => Write(EventLevel.Warning, 3, name, message);
 
         [NonEvent]
-        public void WriteWarning(string name, Exception exception) => this.WriteException(EventLevel.Warning, 3, name, exception);
+        public void WriteWarning(string name, Exception exception) => WriteException(EventLevel.Warning, 3, name, exception);
 
         [Event(4, Message = "{0} - {1}", Level = EventLevel.Informational)]
-        public void WriteInformational(string name, string message) => this.Write(EventLevel.Informational, 4, name, message);
+        public void WriteInformational(string name, string message) => Write(EventLevel.Informational, 4, name, message);
 
         [Event(5, Message = "{0} - {1}", Level = EventLevel.Verbose)]
-        public void WriteVerbose(string name, string message) => this.Write(EventLevel.Verbose, 5, name, message);
+        public void WriteVerbose(string name, string message) => Write(EventLevel.Verbose, 5, name, message);
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Write(EventLevel eventLevel, int eventId, string name, string message)
         {
-            if (this.IsEnabled(eventLevel, EventKeywords.All))
+            if (IsEnabled(eventLevel, EventKeywords.All))
             {
-                this.WriteEvent(eventId, name, message);
+                WriteEvent(eventId, name, message);
             }
         }
 
@@ -53,9 +53,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void WriteException(EventLevel eventLevel, int eventId, string name, Exception exception)
         {
-            if (this.IsEnabled(eventLevel, EventKeywords.All))
+            if (IsEnabled(eventLevel, EventKeywords.All))
             {
-                this.WriteEvent(eventId, name, exception.LogAsyncException().ToInvariantString());
+                WriteEvent(eventId, name, exception.LogAsyncException().ToInvariantString());
             }
         }
 
@@ -65,9 +65,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             public override void Dispose()
             {
-                foreach (EventSource eventSource in this.eventSources)
+                foreach (EventSource eventSource in eventSources)
                 {
-                    this.DisableEvents(eventSource);
+                    DisableEvents(eventSource);
                 }
 
                 base.Dispose();
@@ -78,8 +78,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (eventSource?.Name == EventSourceName)
                 {
-                    this.eventSources.Add(eventSource);
-                    this.EnableEvents(eventSource, EventLevel.Verbose, (EventKeywords)(-1));
+                    eventSources.Add(eventSource);
+                    EnableEvents(eventSource, EventLevel.Verbose, (EventKeywords)(-1));
                 }
 
                 base.OnEventSourceCreated(eventSource);

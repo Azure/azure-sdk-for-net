@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using OpenTelemetry;
 using OpenTelemetry.Contrib.Extensions.PersistentStorage;
 
@@ -31,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             options.Retry.MaxRetries = 0;
-            ConnectionString.ConnectionStringParser.GetValues(options.ConnectionString, out _instrumentationKey, out string ingestionEndpoint);
+            ConnectionStringParser.GetValues(options.ConnectionString, out _instrumentationKey, out string ingestionEndpoint);
             _applicationInsightsRestClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), host: ingestionEndpoint);
 
             if (!options.DisableOfflineStorage)

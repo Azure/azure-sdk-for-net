@@ -6,7 +6,7 @@ using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal readonly struct AzMonList : IEnumerable
     {
@@ -17,14 +17,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private AzMonList(KeyValuePair<string, object>[] data, int length)
         {
             this.data = data;
-            this.Length = length;
+            Length = length;
         }
 
         public int Length { get; }
 
         public ref KeyValuePair<string, object> this[int index]
         {
-            get => ref this.data[index];
+            get => ref data[index];
         }
 
         public static AzMonList Initialize()
@@ -81,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             int lengthTagNames = tagNames.Length;
             int lengthList = list.Length;
-            object[] values = new object[(int)lengthTagNames];
+            object[] values = new object[lengthTagNames];
 
             for (int i = 0; i < lengthList; i++)
             {
@@ -124,31 +124,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             public Enumerator(in AzMonList list)
             {
-                this.data = list.data;
-                this.length = list.Length;
-                this.index = 0;
-                this.current = default;
+                data = list.data;
+                length = list.Length;
+                index = 0;
+                current = default;
             }
 
-            public object Current { get => this.current; }
+            public object Current { get => current; }
 
             public bool MoveNext()
             {
-                if (this.index < this.length)
+                if (index < length)
                 {
-                    this.current = this.data[this.index++];
+                    current = data[index++];
                     return true;
                 }
 
-                this.index = this.length + 1;
-                this.current = default;
+                index = length + 1;
+                current = default;
                 return false;
             }
 
             void IEnumerator.Reset()
             {
-                this.index = 0;
-                this.current = default;
+                index = 0;
+                current = default;
             }
         }
     }
