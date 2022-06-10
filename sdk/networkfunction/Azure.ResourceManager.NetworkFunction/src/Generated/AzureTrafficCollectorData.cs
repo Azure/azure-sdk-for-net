@@ -6,33 +6,36 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary> A class representing the AzureTrafficCollector data model. </summary>
-    public partial class AzureTrafficCollectorData : TrackedResource
+    public partial class AzureTrafficCollectorData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AzureTrafficCollectorData. </summary>
-        public AzureTrafficCollectorData()
+        /// <param name="location"> The location. </param>
+        public AzureTrafficCollectorData(AzureLocation location) : base(location)
         {
             CollectorPolicies = new ChangeTrackingList<CollectorPolicyData>();
         }
 
         /// <summary> Initializes a new instance of AzureTrafficCollectorData. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="collectorPolicies"> Collector Policies for Azure Traffic Collector. </param>
         /// <param name="virtualHub"> The virtualHub to which the Azure Traffic Collector belongs. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
-        internal AzureTrafficCollectorData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, TrackedResourceSystemData systemData, string etag, IList<CollectorPolicyData> collectorPolicies, SubResource virtualHub, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, systemData)
+        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<CollectorPolicyData> collectorPolicies, SubResource virtualHub, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Etag = etag;
             CollectorPolicies = collectorPolicies;
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Collector Policies for Azure Traffic Collector. </summary>
         public IList<CollectorPolicyData> CollectorPolicies { get; }
         /// <summary> The virtualHub to which the Azure Traffic Collector belongs. </summary>

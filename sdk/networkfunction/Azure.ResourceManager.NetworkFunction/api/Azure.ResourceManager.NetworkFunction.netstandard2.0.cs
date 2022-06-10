@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.NetworkFunction
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AzureTrafficCollectorData : Azure.ResourceManager.NetworkFunction.Models.TrackedResource
+    public partial class AzureTrafficCollectorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AzureTrafficCollectorData() { }
+        public AzureTrafficCollectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkFunction.CollectorPolicyData> CollectorPolicies { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } }
     }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkFunction
     {
         public CollectorPolicyData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat> EmissionPolicies { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat IngestionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkFunction.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -102,26 +102,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     {
         public AzureTrafficCollectorPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkFunction.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.NetworkFunction.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.NetworkFunction.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.NetworkFunction.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetworkFunction.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.CreatedByType left, Azure.ResourceManager.NetworkFunction.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetworkFunction.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetworkFunction.Models.CreatedByType left, Azure.ResourceManager.NetworkFunction.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DestinationType : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.DestinationType>
@@ -249,28 +229,5 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public static implicit operator Azure.ResourceManager.NetworkFunction.Models.SourceType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkFunction.Models.SourceType left, Azure.ResourceManager.NetworkFunction.Models.SourceType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SystemData
-    {
-        internal SystemData() { }
-        public string CreatedBy { get { throw null; } }
-        public Azure.ResourceManager.NetworkFunction.Models.CreatedByType? CreatedByType { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string LastModifiedBy { get { throw null; } }
-        public Azure.ResourceManager.NetworkFunction.Models.CreatedByType? LastModifiedByType { get { throw null; } }
-    }
-    public partial class TrackedResource
-    {
-        public TrackedResource() { }
-        public string Id { get { throw null; } }
-        public string Location { get { throw null; } set { } }
-        public string Name { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public Azure.ResourceManager.NetworkFunction.Models.TrackedResourceSystemData SystemData { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class TrackedResourceSystemData : Azure.ResourceManager.NetworkFunction.Models.SystemData
-    {
-        internal TrackedResourceSystemData() { }
     }
 }

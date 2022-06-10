@@ -7,7 +7,9 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -18,22 +20,16 @@ namespace Azure.ResourceManager.NetworkFunction
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            writer.WritePropertyName("tags");
+            writer.WriteStartObject();
+            foreach (var item in Tags)
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags");
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CollectorPolicies))
@@ -57,13 +53,13 @@ namespace Azure.ResourceManager.NetworkFunction
 
         internal static AzureTrafficCollectorData DeserializeAzureTrafficCollectorData(JsonElement element)
         {
-            Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<TrackedResourceSystemData> systemData = default;
+            Optional<ETag> etag = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             Optional<IList<CollectorPolicyData>> collectorPolicies = default;
             Optional<SubResource> virtualHub = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -71,12 +67,32 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"))
+                {
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -86,37 +102,12 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = TrackedResourceSystemData.DeserializeTrackedResourceSystemData(property.Value);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -167,7 +158,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     continue;
                 }
             }
-            return new AzureTrafficCollectorData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), systemData.Value, etag.Value, Optional.ToList(collectorPolicies), virtualHub, Optional.ToNullable(provisioningState));
+            return new AzureTrafficCollectorData(id, name, type, systemData, tags, location, Optional.ToNullable(etag), Optional.ToList(collectorPolicies), virtualHub, Optional.ToNullable(provisioningState));
         }
     }
 }

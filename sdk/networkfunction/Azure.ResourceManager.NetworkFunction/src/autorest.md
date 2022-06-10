@@ -35,5 +35,17 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-
+directive:
+  - from: swagger-document
+    where: '$.definitions..etag'
+    transform: >
+      $['x-ms-format'] = 'etag';
+  - from: swagger-document
+    where: '$.definitions'
+    transform: >
+      $.SystemData.properties.lastModifiedAt = {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of resource last modification (UTC)"
+        }
 ```

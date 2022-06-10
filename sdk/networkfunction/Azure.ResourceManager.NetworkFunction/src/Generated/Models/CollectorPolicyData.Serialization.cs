@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
@@ -41,11 +42,11 @@ namespace Azure.ResourceManager.NetworkFunction
 
         internal static CollectorPolicyData DeserializeCollectorPolicyData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            ResourceManager.Models.SystemData systemData = default;
+            SystemData systemData = default;
             Optional<IngestionPolicyPropertiesFormat> ingestionPolicy = default;
             Optional<IList<EmissionPoliciesPropertiesFormat>> emissionPolicies = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -53,7 +54,12 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -73,7 +79,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
                 if (property.NameEquals("systemData"))
                 {
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -124,7 +130,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     continue;
                 }
             }
-            return new CollectorPolicyData(id, name, type, systemData, etag.Value, ingestionPolicy.Value, Optional.ToList(emissionPolicies), Optional.ToNullable(provisioningState));
+            return new CollectorPolicyData(id, name, type, systemData, Optional.ToNullable(etag), ingestionPolicy.Value, Optional.ToList(emissionPolicies), Optional.ToNullable(provisioningState));
         }
     }
 }

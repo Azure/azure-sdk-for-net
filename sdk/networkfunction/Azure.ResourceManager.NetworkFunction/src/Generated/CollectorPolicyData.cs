@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="ingestionPolicy"> Ingestion policies. </param>
         /// <param name="emissionPolicies"> Emission policies. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             IngestionPolicy = ingestionPolicy;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? Etag { get; }
         /// <summary> Ingestion policies. </summary>
         public IngestionPolicyPropertiesFormat IngestionPolicy { get; set; }
         /// <summary> Emission policies. </summary>
