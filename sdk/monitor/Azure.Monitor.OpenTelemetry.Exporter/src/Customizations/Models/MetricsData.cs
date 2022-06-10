@@ -69,7 +69,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Properties = new ChangeTrackingDictionary<string, string>();
             foreach (var tag in metricPoint.Tags)
             {
-                Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value?.ToString()));
+                if (tag.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && tag.Value != null)
+                {
+                    // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
+
+                    Properties.Add(new KeyValuePair<string, string>(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.MetricsData_Properties_MaxValueLength)));
+                }
             }
             Properties.Add(AggregationIntervalMsKey, DefaultExportIntervalMilliseconds);
         }
