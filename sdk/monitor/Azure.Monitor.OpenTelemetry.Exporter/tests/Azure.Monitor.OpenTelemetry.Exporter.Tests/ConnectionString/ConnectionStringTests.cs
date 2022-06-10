@@ -8,7 +8,7 @@ using Xunit;
 // This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Core" which doesn't exist.
 using AzureCoreConnectionString = Azure.Core.ConnectionString;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     /// <summary>
     /// Because we don't own the code for <see cref="Azure.Core.ConnectionString"/>, these tests are to verify expected behavior.

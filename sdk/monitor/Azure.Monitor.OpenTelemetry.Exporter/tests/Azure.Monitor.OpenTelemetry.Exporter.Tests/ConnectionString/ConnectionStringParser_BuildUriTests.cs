@@ -7,7 +7,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     /// <summary>
     /// The <see cref="ConnectionStringParser.TryBuildUri(string, string, out Uri, string)"/> method takes user input to construct an endpoint.
