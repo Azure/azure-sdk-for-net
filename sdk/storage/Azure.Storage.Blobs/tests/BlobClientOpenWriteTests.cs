@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Tests
     public class BlobClientOpenWriteTests : BlobBaseClientOpenWriteTests<BlobClient>
     {
         public BlobClientOpenWriteTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             // Validate every test didn't accidentally use client-side encryption when writing a blob.
             AdditionalAssertions += async (client) =>

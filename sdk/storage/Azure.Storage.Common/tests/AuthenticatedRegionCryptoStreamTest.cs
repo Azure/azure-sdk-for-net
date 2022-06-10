@@ -349,7 +349,6 @@ namespace Azure.Storage.Test
             }
         }
 
-#if NETCOREAPP3_1
         [Test]
         [Combinatorial]
         public void RoundTrip_Read(
@@ -385,7 +384,6 @@ namespace Azure.Storage.Test
             // Assert
             CollectionAssert.AreEqual(plaintext.ToArray(), roundtrippedPlaintext);
         }
-#endif
 
         /// <summary>
         /// A buffer can end up partially filled. Ensure when capping read lengths we cap
