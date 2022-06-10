@@ -231,7 +231,8 @@ namespace Azure.Core.Tests
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
                 : operationInternal.WaitForCompletionResponse(CancellationToken.None);
 
-            testListener.AssertScope($"{expectedTypeName}.WaitForCompletionResponse", expectedAttributes);
+            testListener.AssertAndRemoveScope($"{expectedTypeName}.WaitForCompletionResponse", expectedAttributes);
+            CollectionAssert.IsEmpty(testListener.Scopes);
         }
 
         [Test]
@@ -247,7 +248,8 @@ namespace Azure.Core.Tests
                 ? await operationInternal.WaitForCompletionAsync(CancellationToken.None)
                 : operationInternal.WaitForCompletion(CancellationToken.None);
 
-            testListener.AssertScope($"{expectedTypeName}.WaitForCompletion", expectedAttributes);
+            testListener.AssertAndRemoveScope($"{expectedTypeName}.WaitForCompletion", expectedAttributes);
+            CollectionAssert.IsEmpty(testListener.Scopes);
         }
 
         [Test]
