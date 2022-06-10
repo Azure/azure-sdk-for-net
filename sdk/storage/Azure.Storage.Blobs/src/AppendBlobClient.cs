@@ -1386,7 +1386,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             AppendBlockFromUriInternal(
                 sourceUri,
-                options != default ? options.SourceRange : default,
+                options?.SourceRange ?? default,
                 options?.SourceContentHash,
                 options?.DestinationConditions,
                 options?.SourceConditions,
@@ -1434,7 +1434,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default) =>
             await AppendBlockFromUriInternal(
                 sourceUri,
-                options != default ? options.SourceRange : default,
+                options?.SourceRange ?? default,
                 options?.SourceContentHash,
                 options?.DestinationConditions,
                 options?.SourceConditions,
