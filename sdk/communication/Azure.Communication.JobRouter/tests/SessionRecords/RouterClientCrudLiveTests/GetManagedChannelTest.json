@@ -1,0 +1,185 @@
+{
+  "Entries": [
+    {
+<<<<<<< HEAD
+      "RequestUri": "https://prod-test.communication.azure.com/routing/channels/ACS_Chat_Channel?api-version=2021-04-07-preview1",
+=======
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/channels/ACS_Chat_Channel?api-version=2021-04-07-preview1",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+<<<<<<< HEAD
+        "traceparent": "00-81a4a49df8e9d44c84634d8dad0e2ab2-6c4c863d55a0c346-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220216.1",
+          "(.NET 5.0.14; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "a63e94a2d072406210a24347597e21b5",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 16 Feb 2022 17:10:51 GMT",
+=======
+        "traceparent": "00-e055169e5cc2264f9392ae092fef62dc-127bd4d5f54e174a-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "a63e94a2d072406210a24347597e21b5",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:52:46 GMT",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+<<<<<<< HEAD
+        "Date": "Wed, 16 Feb 2022 17:10:51 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "81a4a49df8e9d44c84634d8dad0e2ab2",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0GzANYgAAAADnH\u002BoYTtkzTZzbtC0SrccTWVZSMzExMDAwMTE2MDUxADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+=======
+        "Date": "Tue, 12 Oct 2021 23:52:46 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "e055169e5cc2264f9392ae092fef62dc",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0zh9mYQAAAAD5AIPX07b3S7E\u002ByHVWOSXaWVZSMzBFREdFMDQxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "ACS_Chat_Channel",
+        "name": "ACS Chat Channel",
+        "acsManaged": true
+      }
+    },
+    {
+<<<<<<< HEAD
+      "RequestUri": "https://prod-test.communication.azure.com/routing/channels/ACS_SMS_Channel?api-version=2021-04-07-preview1",
+=======
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/channels/ACS_SMS_Channel?api-version=2021-04-07-preview1",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+<<<<<<< HEAD
+        "traceparent": "00-8c92c43f7b6361469e252e52c11392fc-c9a9bd2cabb6c14f-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220216.1",
+          "(.NET 5.0.14; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "f39e5a290cc458e0e0a1a5344c27ad7a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 16 Feb 2022 17:10:51 GMT",
+=======
+        "traceparent": "00-8c876471d74e8546963ad9f1c2f85b7f-6bd1f1d9341fc343-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "f39e5a290cc458e0e0a1a5344c27ad7a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:52:46 GMT",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+<<<<<<< HEAD
+        "Date": "Wed, 16 Feb 2022 17:10:51 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "8c92c43f7b6361469e252e52c11392fc",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0GzANYgAAAABYNagaTJmdSqCtHRX2VB6aWVZSMzExMDAwMTE2MDUxADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+=======
+        "Date": "Tue, 12 Oct 2021 23:52:46 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "8c876471d74e8546963ad9f1c2f85b7f",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0zh9mYQAAAADjPR6uWBe/Soa1Hcvw64X2WVZSMzBFREdFMDQxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "ACS_SMS_Channel",
+        "name": "ACS SMS Channel",
+        "acsManaged": true
+      }
+    },
+    {
+<<<<<<< HEAD
+      "RequestUri": "https://prod-test.communication.azure.com/routing/channels/ACS_Voice_Channel?api-version=2021-04-07-preview1",
+=======
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/channels/ACS_Voice_Channel?api-version=2021-04-07-preview1",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+<<<<<<< HEAD
+        "traceparent": "00-4462422af6682043903ab78763b805f9-db952ba89ad3f94d-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220216.1",
+          "(.NET 5.0.14; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "2544d9f0e71d65f7245c92bb9897589a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 16 Feb 2022 17:10:52 GMT",
+=======
+        "traceparent": "00-2941fab65cdc794a9eacce03996ba1c0-0a5862a8cbac1647-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "2544d9f0e71d65f7245c92bb9897589a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:52:46 GMT",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+<<<<<<< HEAD
+        "Date": "Wed, 16 Feb 2022 17:10:51 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "4462422af6682043903ab78763b805f9",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0GzANYgAAAAA2EGqSqMFeR68eQ3kHDyjdWVZSMzExMDAwMTE2MDUxADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+=======
+        "Date": "Tue, 12 Oct 2021 23:52:46 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "2941fab65cdc794a9eacce03996ba1c0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0zh9mYQAAAADxEg\u002B8/mS4RYjQ8ujbdmhCWVZSMzBFREdFMDQxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "ACS_Voice_Channel",
+        "name": "ACS Voice Channel",
+        "acsManaged": true
+      }
+    }
+  ],
+  "Variables": {
+<<<<<<< HEAD
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://prod-test.communication.azure.com/;accesskey=Kg==",
+    "id-prefix": "sdk-MQdd6u0McUmcrFxXqt-czw-",
+=======
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-XMHtg_fbUU6wc711mHl8Gg-",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+    "RandomSeed": "596789186"
+  }
+}

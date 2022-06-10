@@ -1,0 +1,260 @@
+{
+  "Entries": [
+    {
+<<<<<<< HEAD
+      "RequestUri": "https://prod-test.communication.azure.com/routing/channels?api-version=2021-04-07-preview1",
+=======
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/channels?api-version=2021-04-07-preview1",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "88",
+        "Content-Type": "application/json",
+<<<<<<< HEAD
+        "traceparent": "00-7b6560ef18bb3e4889522ed5c8a3b168-8cceaea36b67d448-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220216.1",
+          "(.NET 5.0.14; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "32959106f973029121743f054f36c984",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 16 Feb 2022 17:09:59 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-1v4HbmgkG0es-dNZiehpWg-DeleteChannelTest",
+=======
+        "traceparent": "00-dc0d712b34b71148957f17470209bd27-7caa52446a162546-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "32959106f973029121743f054f36c984",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:52:22 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-rwKi75Ang0-kqL-5Ji3Xhg-DeleteChannelTest",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "name": "TestChannelName-ChannelId"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+<<<<<<< HEAD
+        "Date": "Wed, 16 Feb 2022 17:09:59 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "7b6560ef18bb3e4889522ed5c8a3b168",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "05y8NYgAAAABdFi9/TXLFToNcQwZojxMbWVZSMzExMDAwMTE2MDUxADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-1v4HbmgkG0es-dNZiehpWg-DeleteChannelTest",
+=======
+        "Date": "Tue, 12 Oct 2021 23:52:22 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "dc0d712b34b71148957f17470209bd27",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0th9mYQAAAAAw7i6Va880RadwWUTgTne7WVZSMzBFREdFMDQxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-rwKi75Ang0-kqL-5Ji3Xhg-DeleteChannelTest",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "name": "TestChannelName-ChannelId",
+        "acsManaged": false
+      }
+    },
+    {
+<<<<<<< HEAD
+      "RequestUri": "https://prod-test.communication.azure.com/routing/channels/sdk-1v4HbmgkG0es-dNZiehpWg-DeleteChannelTest?api-version=2021-04-07-preview1",
+=======
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/channels/sdk-rwKi75Ang0-kqL-5Ji3Xhg-DeleteChannelTest?api-version=2021-04-07-preview1",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+<<<<<<< HEAD
+        "traceparent": "00-596fa7baf3cefe4d9c503d808e9b0bc0-8ebc3839cd032e41-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220216.1",
+          "(.NET 5.0.14; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "74bb793dcc8672460b87cc672c20282d",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 16 Feb 2022 17:09:59 GMT",
+=======
+        "traceparent": "00-4c64a7d729b9f544886be4ed47690da7-ba6700cebfb41941-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "74bb793dcc8672460b87cc672c20282d",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:52:22 GMT",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+<<<<<<< HEAD
+        "Date": "Wed, 16 Feb 2022 17:09:59 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "596fa7baf3cefe4d9c503d808e9b0bc0",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "05y8NYgAAAABkYep3L0OQSpu8S48E4sdMWVZSMzExMDAwMTE2MDUxADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-1v4HbmgkG0es-dNZiehpWg-DeleteChannelTest",
+=======
+        "Date": "Tue, 12 Oct 2021 23:52:22 GMT",
+        "ETag": "\u002200000509-0000-0700-0000-61661fb60000\u0022",
+        "Request-Context": "appId=",
+        "trace-id": "4c64a7d729b9f544886be4ed47690da7",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0th9mYQAAAADP/gDe78epTLNmXwwzk3pLWVZSMzBFREdFMDQxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-rwKi75Ang0-kqL-5Ji3Xhg-DeleteChannelTest",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "name": "TestChannelName-ChannelId",
+        "acsManaged": false
+      }
+    },
+    {
+<<<<<<< HEAD
+      "RequestUri": "https://prod-test.communication.azure.com/routing/channels/sdk-1v4HbmgkG0es-dNZiehpWg-DeleteChannelTest?api-version=2021-04-07-preview1",
+=======
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/channels/sdk-rwKi75Ang0-kqL-5Ji3Xhg-DeleteChannelTest?api-version=2021-04-07-preview1",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+<<<<<<< HEAD
+        "traceparent": "00-b9f990cb4204af48bafbfe8a922d4c8c-7abef7d42e865649-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220216.1",
+          "(.NET 5.0.14; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "94443592765125a1e02283ec9113dd05",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 16 Feb 2022 17:09:59 GMT",
+=======
+        "traceparent": "00-58a2187682fe524ca13aef52c0fad451-de9013707c7ed148-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "94443592765125a1e02283ec9113dd05",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:52:22 GMT",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+<<<<<<< HEAD
+        "Date": "Wed, 16 Feb 2022 17:09:59 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "b9f990cb4204af48bafbfe8a922d4c8c",
+        "X-Azure-Ref": "05y8NYgAAAABCisNNE0HPRaJsB586Yn0tWVZSMzExMDAwMTE2MDUxADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+=======
+        "Date": "Tue, 12 Oct 2021 23:52:22 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "58a2187682fe524ca13aef52c0fad451",
+        "X-Azure-Ref": "0th9mYQAAAABrl5y\u002Bg676RILG5jJAvc3RWVZSMzBFREdFMDQxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": []
+    },
+    {
+<<<<<<< HEAD
+      "RequestUri": "https://prod-test.communication.azure.com/routing/channels/sdk-1v4HbmgkG0es-dNZiehpWg-DeleteChannelTest?api-version=2021-04-07-preview1",
+=======
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/channels/sdk-rwKi75Ang0-kqL-5Ji3Xhg-DeleteChannelTest?api-version=2021-04-07-preview1",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+<<<<<<< HEAD
+        "traceparent": "00-6d42b428b90e8a4089ec2faaa32dd510-694d8aed55285e4e-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220216.1",
+          "(.NET 5.0.14; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "d7473751e4c03ad44a2226ec2d2ad501",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 16 Feb 2022 17:10:00 GMT",
+=======
+        "traceparent": "00-01bbfee0b4acf647818f9ceb9147c5d8-2557896e1a5e4949-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "d7473751e4c03ad44a2226ec2d2ad501",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:52:22 GMT",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+<<<<<<< HEAD
+        "Date": "Wed, 16 Feb 2022 17:10:00 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "6d42b428b90e8a4089ec2faaa32dd510",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "05y8NYgAAAADZxPxuNHYaRJ4vhAQWhaFDWVZSMzExMDAwMTE2MDUxADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+=======
+        "Date": "Tue, 12 Oct 2021 23:52:22 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "01bbfee0b4acf647818f9ceb9147c5d8",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0th9mYQAAAADh7hxhFExHT4uTg5pROlNyWVZSMzBFREdFMDQxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "communicationError": {
+          "code": "NotFound",
+<<<<<<< HEAD
+          "message": "The item was previously deleted.",
+          "target": "/routing/channels/sdk-1v4HbmgkG0es-dNZiehpWg-DeleteChannelTest"
+=======
+          "message": "The item was not found.",
+          "target": "/routing/channels/sdk-rwKi75Ang0-kqL-5Ji3Xhg-DeleteChannelTest"
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        }
+      }
+    }
+  ],
+  "Variables": {
+<<<<<<< HEAD
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://prod-test.communication.azure.com/;accesskey=Kg==",
+    "id-prefix": "sdk-1v4HbmgkG0es-dNZiehpWg-",
+=======
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-rwKi75Ang0-kqL-5Ji3Xhg-",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+    "RandomSeed": "1947520302"
+  }
+}

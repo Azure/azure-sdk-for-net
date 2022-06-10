@@ -1,0 +1,146 @@
+{
+  "Entries": [
+    {
+<<<<<<< HEAD
+      "RequestUri": "https://prod-test.communication.azure.com/routing/channels?api-version=2021-04-07-preview1",
+=======
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/channels?api-version=2021-04-07-preview1",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "85",
+        "Content-Type": "application/json",
+<<<<<<< HEAD
+        "traceparent": "00-a2c4b2d9b4a6cd4ba5e0b480a1bbed72-1ea819ee10b6f449-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220216.1",
+          "(.NET 5.0.14; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "031ce27d2f6b65caf55b700f090dd50e",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 16 Feb 2022 17:10:47 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-Moz2BOEPxkySTvJNNvSs4A-GetChannelTest",
+=======
+        "traceparent": "00-de9915e0004cd84188b2ab559f005d8f-ec92d71d42315a42-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "031ce27d2f6b65caf55b700f090dd50e",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:52:44 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-bAZ4rFP6aUSSEvxmlu0eKA-GetChannelTest",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "name": "TestChannelName-ChannelId"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+<<<<<<< HEAD
+        "Date": "Wed, 16 Feb 2022 17:10:47 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "a2c4b2d9b4a6cd4ba5e0b480a1bbed72",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0FzANYgAAAACdnRcp08OdQbxKx2/tGqITWVZSMzExMDAwMTE2MDUxADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-Moz2BOEPxkySTvJNNvSs4A-GetChannelTest",
+=======
+        "Date": "Tue, 12 Oct 2021 23:52:43 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "de9915e0004cd84188b2ab559f005d8f",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0yx9mYQAAAADmXaOC7Ab4Sozj\u002Bs7OV71xWVZSMzBFREdFMDQxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-bAZ4rFP6aUSSEvxmlu0eKA-GetChannelTest",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "name": "TestChannelName-ChannelId",
+        "acsManaged": false
+      }
+    },
+    {
+<<<<<<< HEAD
+      "RequestUri": "https://prod-test.communication.azure.com/routing/channels/sdk-Moz2BOEPxkySTvJNNvSs4A-GetChannelTest?api-version=2021-04-07-preview1",
+=======
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/channels/sdk-bAZ4rFP6aUSSEvxmlu0eKA-GetChannelTest?api-version=2021-04-07-preview1",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+<<<<<<< HEAD
+        "traceparent": "00-c70f2443fe8d694ba8316744691e41e9-48ccd3675ba9274a-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220216.1",
+          "(.NET 5.0.14; Microsoft Windows 10.0.22000)"
+        ],
+        "x-ms-client-request-id": "eb8306fc8cab6d474d5ec95df243b96a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 16 Feb 2022 17:10:48 GMT",
+=======
+        "traceparent": "00-8425ba7744cc9f4693ef539b070d0b62-2e1008df7593c54a-00",
+        "User-Agent": [
+          "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1",
+          "(.NET 5.0.11; Microsoft Windows 10.0.19043)"
+        ],
+        "x-ms-client-request-id": "eb8306fc8cab6d474d5ec95df243b96a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:52:44 GMT",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+<<<<<<< HEAD
+        "Date": "Wed, 16 Feb 2022 17:10:47 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "c70f2443fe8d694ba8316744691e41e9",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0GDANYgAAAABkzDRVKTv0QLbypyJwC4aGWVZSMzExMDAwMTE2MDUxADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-Moz2BOEPxkySTvJNNvSs4A-GetChannelTest",
+=======
+        "Date": "Tue, 12 Oct 2021 23:52:43 GMT",
+        "ETag": "\u002200000909-0000-0700-0000-61661fcc0000\u0022",
+        "Request-Context": "appId=",
+        "trace-id": "8425ba7744cc9f4693ef539b070d0b62",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0zB9mYQAAAADB/8d7VGkMRZT6dLtGyZprWVZSMzBFREdFMDQxMABjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-bAZ4rFP6aUSSEvxmlu0eKA-GetChannelTest",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "name": "TestChannelName-ChannelId",
+        "acsManaged": false
+      }
+    }
+  ],
+  "Variables": {
+<<<<<<< HEAD
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://prod-test.communication.azure.com/;accesskey=Kg==",
+    "id-prefix": "sdk-Moz2BOEPxkySTvJNNvSs4A-",
+=======
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-bAZ4rFP6aUSSEvxmlu0eKA-",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+    "RandomSeed": "910354887"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "Entries": [
+    {
+<<<<<<< HEAD
+      "RequestUri": "https://prod-test.communication.azure.com/routing/workers?api-version=2021-04-07-preview1",
+=======
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/workers?api-version=2021-04-07-preview1",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "146",
+        "Content-Type": "application/json",
+<<<<<<< HEAD
+        "traceparent": "00-35d7f40c9d1a3e4996b078e9f7a9654d-c85fa4dd741e8343-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220216.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "7274fa58e32d9da63bd5c15b77c8cfd9",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 16 Feb 2022 17:07:52 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-wr65Iisgo0yiSE53RiIMMg--WorkerIDRegisterWorker",
+=======
+        "traceparent": "00-e353ecb0fbe2c746bf2f7a745794f1ad-987134f81ac47e4a-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "7274fa58e32d9da63bd5c15b77c8cfd9",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:52:01 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-mmhoNGUhTEGUqEn20Gei6g--WorkerIDRegisterWorker",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "queueAssignments": null,
+        "totalCapacity": 100,
+        "labels": null,
+        "channelConfigurations": null
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+<<<<<<< HEAD
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 16 Feb 2022 17:07:52 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "35d7f40c9d1a3e4996b078e9f7a9654d",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0aC8NYgAAAACbeU0EYBgXRKHiQ4K3B09VWVZSMzExMDAwMTE1MDUzADlmYzdiNTE5LWE4Y2MtNGY4OS05MzVlLWM5MTQ4YWUwOWU4MQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-wr65Iisgo0yiSE53RiIMMg--WorkerIDRegisterWorker",
+        "state": "active",
+        "queueAssignments": [],
+        "totalCapacity": 100,
+        "labels": {
+          "Id": "sdk-wr65Iisgo0yiSE53RiIMMg--WorkerIDRegisterWorker"
+        },
+=======
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 23:52:01 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "e353ecb0fbe2c746bf2f7a745794f1ad",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0oR9mYQAAAACnKHnCNiLdQbKmyFrJ928\u002BWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-mmhoNGUhTEGUqEn20Gei6g--WorkerIDRegisterWorker",
+        "state": "Active",
+        "queueAssignments": [],
+        "totalCapacity": 100,
+        "labels": {},
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+        "channelConfigurations": [],
+        "offers": [],
+        "assignedJobs": [],
+        "loadRatio": 0
+      }
+    }
+  ],
+  "Variables": {
+<<<<<<< HEAD
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://prod-test.communication.azure.com/;accesskey=Kg==",
+    "id-prefix": "sdk-wr65Iisgo0yiSE53RiIMMg-",
+=======
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-mmhoNGUhTEGUqEn20Gei6g-",
+>>>>>>> 6c7c35af66 (JobRouter - initial commit)
+    "RandomSeed": "485091562"
+  }
+}

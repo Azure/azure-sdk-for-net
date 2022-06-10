@@ -1,0 +1,352 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/channels?api-version=2021-04-07-preview1",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "87",
+        "Content-Type": "application/json",
+        "traceparent": "00-7e5c76bf4e04e74292a94ebeac902426-4ceb22ff9b34c445-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "23645552c9c161d960a9eb85cd08db94",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:23 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-dyGMPCvepU-N750COvsgkQ-CP_FallbackQueue",
+        "name": "TestChannelName-ChannelId"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 23:51:22 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "7e5c76bf4e04e74292a94ebeac902426",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0eh9mYQAAAABqqXski\u002BwrTJzMSaSETKJYWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-dyGMPCvepU-N750COvsgkQ-CP_FallbackQueue",
+        "name": "TestChannelName-ChannelId",
+        "acsManaged": false
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionpolicies?api-version=2021-04-07-preview1",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "265",
+        "Content-Type": "application/json",
+        "traceparent": "00-cd1020d1cab19c40b34666671fe0e2dd-92a7926eb1dec34c-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "73eaea652a53e743c9382f240be66458",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:23 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "name": "LongestIdleDistributionPolicysdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "offerTTL": "00:00:30",
+        "mode": {
+          "kind": "longest-idle",
+          "minConcurrentOffers": 1,
+          "maxConcurrentOffers": 1,
+          "bypassSelectors": false
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 23:51:22 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "cd1020d1cab19c40b34666671fe0e2dd",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0eh9mYQAAAAASlf7kV3KHSpu\u002Bzc9eFSkTWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "name": "LongestIdleDistributionPolicysdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "offerTTL": "00:00:30",
+        "mode": {
+          "kind": "longest-idle",
+          "minConcurrentOffers": 1,
+          "maxConcurrentOffers": 1,
+          "bypassSelectors": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/queues?api-version=2021-04-07-preview1",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "235",
+        "Content-Type": "application/json",
+        "traceparent": "00-54fb3d25abaf0343956055e355c6079f-64ee1044046b7e46-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "d8a20d1d3775ef2d9ff1066047250fa9",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:23 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "name": "DefaultQueue-Sdk-Testsdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "distributionPolicyId": "sdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "labels": {
+          "Label_1": "Value_1"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 23:51:22 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "54fb3d25abaf0343956055e355c6079f",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0ex9mYQAAAAAlOpFHgq4FR4qOKasrY2u6WVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "name": "DefaultQueue-Sdk-Testsdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "distributionPolicyId": "sdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "labels": {
+          "Label_1": "Value_1"
+        },
+        "exceptionPolicyId": null
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/classificationpolicies?api-version=2021-04-07-preview1",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "187",
+        "Content-Type": "application/json",
+        "traceparent": "00-63c34681204baa47a9f2e3e4dbfa9ea6-949d1e1390a41e4e-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "de1d350cbbf428fc117d59899ab45579",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:23 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "sdk-dyGMPCvepU-N750COvsgkQ--CP_FallbackQueue",
+        "name": "FallbackQueue-ClassificationPolicy",
+        "fallbackQueueId": "sdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "workerSelectors": null
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 23:51:23 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "63c34681204baa47a9f2e3e4dbfa9ea6",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0ex9mYQAAAAD/OcdCYdSBRJ56Ab6g45WRWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "sdk-dyGMPCvepU-N750COvsgkQ--CP_FallbackQueue",
+        "name": "FallbackQueue-ClassificationPolicy",
+        "fallbackQueueId": "sdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "queueSelector": null,
+        "prioritizationRule": null,
+        "workerSelectors": []
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/jobs?api-version=2021-04-07-preview1",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "193",
+        "Content-Type": "application/json",
+        "traceparent": "00-2cf50f5eb1a08e4e818063cc9b5c7b80-c046bcd0a6a2ed4e-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "c068934402652d1fbdfad36223e29fa3",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:23 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "channelReference": "123",
+        "channelId": "sdk-dyGMPCvepU-N750COvsgkQ-CP_FallbackQueue",
+        "classificationPolicyId": "sdk-dyGMPCvepU-N750COvsgkQ--CP_FallbackQueue",
+        "workerSelectors": null,
+        "labels": null
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 23:51:23 GMT",
+        "Location": "7448ca22-cd4d-4e5b-bc40-7a4f8139301c",
+        "Request-Context": "appId=",
+        "trace-id": "2cf50f5eb1a08e4e818063cc9b5c7b80",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0ex9mYQAAAAAWL2qRbY1aQ7mf9sNsOQ7ZWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "7448ca22-cd4d-4e5b-bc40-7a4f8139301c"
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/jobs/7448ca22-cd4d-4e5b-bc40-7a4f8139301c?api-version=2021-04-07-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a2cc5970db03c84e97e8170b7c0cd590-c641afa384d77e49-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "d618852886c96164107ac7f8dda454ea",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:23 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 23:51:23 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "a2cc5970db03c84e97e8170b7c0cd590",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0ex9mYQAAAACKZEvVg0vQRpkKvFwukSB\u002BWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "7448ca22-cd4d-4e5b-bc40-7a4f8139301c",
+        "channelReference": "123",
+        "jobStatus": "PendingClassification",
+        "enqueueTimeUtc": null,
+        "channelId": "sdk-dyGMPCvepU-N750COvsgkQ-CP_FallbackQueue",
+        "classificationPolicyId": "sdk-dyGMPCvepU-N750COvsgkQ--CP_FallbackQueue",
+        "queueId": null,
+        "priority": 1,
+        "dispositionCode": null,
+        "workerSelectors": [],
+        "labels": {},
+        "assignments": {},
+        "notes": {}
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/jobs/7448ca22-cd4d-4e5b-bc40-7a4f8139301c?api-version=2021-04-07-preview1",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a545912c1083c748914f8797a62f6414-f7d6ed56e0d79749-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "b41c8d9b4fbd094416ef21f9e799042e",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:24 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 Oct 2021 23:51:24 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "a545912c1083c748914f8797a62f6414",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0fB9mYQAAAAC9gfcy/NyBSoC5OeDd45DVWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "7448ca22-cd4d-4e5b-bc40-7a4f8139301c",
+        "channelReference": "123",
+        "jobStatus": "Queued",
+        "enqueueTimeUtc": "2021-10-12T23:51:23.4701155\u002B00:00",
+        "channelId": "sdk-dyGMPCvepU-N750COvsgkQ-CP_FallbackQueue",
+        "classificationPolicyId": "sdk-dyGMPCvepU-N750COvsgkQ--CP_FallbackQueue",
+        "queueId": "sdk-dyGMPCvepU-N750COvsgkQ-Q2_CP_FallbackQueue",
+        "priority": 1,
+        "dispositionCode": null,
+        "workerSelectors": [],
+        "labels": {},
+        "assignments": {},
+        "notes": {}
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/jobs/7448ca22-cd4d-4e5b-bc40-7a4f8139301c/cancel?api-version=2021-04-07-preview1",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "traceparent": "00-c66cf65d6377554382d50fc42c84b44f-bffbacfe46004842-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "1560b6dd7f9bbeaf2e06afea3b265018",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:24 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {},
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Content-Length": "0",
+        "Date": "Tue, 12 Oct 2021 23:51:24 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "c66cf65d6377554382d50fc42c84b44f",
+        "X-Azure-Ref": "0fB9mYQAAAAAtyLnhcqkZS7tFreNcJFTEWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/classificationpolicies/sdk-dyGMPCvepU-N750COvsgkQ--CP_FallbackQueue?api-version=2021-04-07-preview1",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-b3781e5d5ced384e9bca916456ca8ca9-eb8146c736366f4f-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20211012.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "x-ms-client-request-id": "96c6e9a6eac6d9e6400fbfda656a7a76",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 12 Oct 2021 23:51:24 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1",
+        "Date": "Tue, 12 Oct 2021 23:51:24 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "b3781e5d5ced384e9bca916456ca8ca9",
+        "X-Azure-Ref": "0fB9mYQAAAADunFjYGPaFQZVSel9X4qkNWVZSMzBFREdFMDQxMQBjYzkyNzU4ZC0wNWY3LTRhZDYtYWE1ZS0wZmE5NzE4ZDg5ODU=",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-dyGMPCvepU-N750COvsgkQ-",
+    "RandomSeed": "1122336749"
+  }
+}
