@@ -80,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             if (!string.IsNullOrEmpty(logRecord.EventId.Name))
             {
-                properties.Add("EventName", logRecord.EventId.Name);
+                properties.Add("EventName", logRecord.EventId.Name.Truncate(SchemaConstants.KVP_MaxValueLength));
             }
 
             return message;
@@ -123,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             if (builder?.Length > 0)
             {
-                properties.Add("Scope", builder.ToString());
+                properties.Add("Scope", builder.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
             }
         }
 
@@ -194,12 +194,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     }
                     else
                     {
-                        properties.Add("OriginalFormat", item.Value.ToString());
+                        properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
                     }
                 }
-                else
+                else if (item.Key.Length <= SchemaConstants.KVP_MaxKeyLength)
                 {
-                    properties.Add(item.Key, item.Value.ToString());
+                    // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
+
+                    properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
                 }
             }
         }
