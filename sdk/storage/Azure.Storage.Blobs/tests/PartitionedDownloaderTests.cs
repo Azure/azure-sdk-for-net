@@ -228,33 +228,6 @@ namespace Azure.Storage.Blobs.Test
                             progress: progress,
                             cancellation));
                 });
-
-            //if (_async)
-            //{
-            //    blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-            //        .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>((range, conditions, rangeGetHash, cancellation) =>
-            //            dataSource.GetStreamAsync(
-            //                range,
-            //                conditions,
-            //                rangeGetHash,
-            //                progress: default,
-            //                cancellation));
-            //    blockClient.Setup(c => c.DownloadStreamingAsync(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, It.IsAny<IProgress<long>>(), s_cancellationToken))
-            //        .Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, CancellationToken>(dataSource.GetStreamAsync);
-            //}
-            //else
-            //{
-            //    blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, s_cancellationToken))
-            //        .Returns<HttpRange, BlobRequestConditions, bool, CancellationToken>((range, conditions, rangeGetHash, cancellation) =>
-            //            dataSource.GetStream(
-            //                range,
-            //                conditions,
-            //                rangeGetHash,
-            //                progress: default,
-            //                cancellation));
-            //    blockClient.Setup(c => c.DownloadStreaming(It.IsAny<HttpRange>(), It.IsAny<BlobRequestConditions>(), false, It.IsAny<IProgress<long>>(), s_cancellationToken))
-            //        .Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, CancellationToken>(dataSource.GetStream);
-            //}
         }
 
         private async Task<Response> InvokeDownloadToAsync(PartitionedDownloader downloader, Stream stream)
