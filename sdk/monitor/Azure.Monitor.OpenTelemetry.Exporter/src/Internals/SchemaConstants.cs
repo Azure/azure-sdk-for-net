@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int KVP_MaxKeyLength = 150;
         public const int KVP_MaxValueLength = 8192;
 
-        // TODO: Apply these rules
+        // TODO: AvailabilityData is currently not in use (2022-06-10).
         public const int AvailabilityData_Id_MaxLength = 512;
         public const int AvailabilityData_Name_MaxLength = 1024;
         public const int AvailabilityData_RunLocation_MaxLength = 1024;
@@ -32,11 +32,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int AvailabilityData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
         public const int AvailabilityData_Duration_LessThanDays = 1000;
 
-        // TODO: Apply these rules
+        // TODO: DataPoint is currently not in use (2022-06-10).
         public const int DataPoint_Ns_MaxLength = 256;
         public const int DataPoint_Name_MaxLength = 1024;
 
-        // TODO: Apply these rules
+        // TODO: EventData is currently not in use (2022-06-10).
         public const int EventData_Name_MaxLength = 512;
         public const int EventData_Properties_MaxKeyLength = KVP_MaxKeyLength;
         public const int EventData_Properties_MaxValueLength = 8192;
@@ -52,17 +52,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int ExceptionDetails_Stack_MaxLength = 32768;
         public const int ExceptionDetails_Stack_MaxFrames = 100;
 
-        // TODO: Apply these rules
         public const int MessageData_Message_MaxLength = 32768;
         public const int MessageData_Properties_MaxKeyLength = KVP_MaxKeyLength;
         public const int MessageData_Properties_MaxValueLength = KVP_MaxValueLength;
-        public const int MessageData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
+        public const int MessageData_Measurements_MaxKeyLength = KVP_MaxKeyLength; // TODO: MessageData.Measurements is currently not in use (2022-06-10).
 
-        // TODO: Apply these rules
         public const int MetricsData_Properties_MaxKeyLength = KVP_MaxKeyLength;
         public const int MetricsData_Properties_MaxValueLength = KVP_MaxValueLength;
 
-        // TODO: Apply these rules
+        // TODO: PageViewData is currently not in use (2022-06-10).
         public const int PageViewData_Id_MaxLength = 512;
         public const int PageViewData_Name_MaxLength = 1024;
         public const int PageViewData_Url_MaxLength = 2048;
@@ -72,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int PageViewData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
         public const int PageViewData_Duration_LessThanDays = 1000;
 
-        // TODO: Apply these rules
+        // TODO: PageViewPerfData is currently not in use (2022-06-10).
         public const int PageViewPerfData_Id_MaxLength = 512;
         public const int PageViewPerfData_Name_MaxLength = 1024;
         public const int PageViewPerfData_Url_MaxLength = 2048;
