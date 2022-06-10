@@ -304,7 +304,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             JsonElement conversationalTaskResult = result.RootElement;
             JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
 
-            #region Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
             string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
             JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
 
@@ -349,7 +348,6 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            #endregion
 
             Assert.That(targetIntentResult.GetProperty("targetProjectKind").GetString(), Is.EqualTo("Conversation"));
             Assert.That(orchestrationPrediction.GetProperty("topIntent").GetString(), Is.EqualTo("EmailIntent"));
