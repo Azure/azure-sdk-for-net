@@ -352,7 +352,6 @@ namespace Azure.Storage.Test
         [Test]
         [Combinatorial]
         public void RoundTrip_Read(
-            [Values(true, false)] bool useRealEncryption,
             [Values(true, false)] bool alligned,
             [Values(1, 3)] int numAuthBlocks)
         {
@@ -363,17 +362,13 @@ namespace Azure.Storage.Test
 
             var encryptingReadStream = new AuthenticatedRegionCryptoStream(
                 new MemoryStream(plaintext.ToArray()),
-                useRealEncryption
-                    ? new GcmAuthenticatedCryptographicTransform(key, TransformMode.Encrypt)
-                    : new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte),
+                new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte),
                 _authRegionDataLength,
                 CryptoStreamMode.Read);
 
             var decryptingReadStream = new AuthenticatedRegionCryptoStream(
                 encryptingReadStream,
-                useRealEncryption
-                    ? new GcmAuthenticatedCryptographicTransform(key, TransformMode.Decrypt)
-                    : new MockDecryptTransform(_nonceLength, _tagLength),
+                new MockDecryptTransform(_nonceLength, _tagLength),
                 _authRegionDataLength,
                 CryptoStreamMode.Read);
 

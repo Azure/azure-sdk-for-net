@@ -14,6 +14,7 @@ using Azure.Security.KeyVault.Keys.Cryptography;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
@@ -1506,6 +1507,46 @@ namespace Azure.Storage.Blobs.Test
                 downloadData = stream.ToArray();
             }
             Assert.AreEqual(data, downloadData);
+        }
+
+        [Test]
+        [Combinatorial]
+        public void AesGcmStreaming(
+            [Values(true, false)] bool alligned,
+            [Values(1, 3)] int numAuthBlocks)
+        {
+            // test doesn't need recording
+            static byte[] GetRandomBytes(int length)
+            {
+                byte[] bytes = new byte[length];
+                new Random().NextBytes(bytes);
+                return bytes;
+            }
+
+            // Arrange
+            const int authRegionDataLength = Constants.KB;
+            int plaintextLength = (alligned ? authRegionDataLength : 500) + ((numAuthBlocks - 1) * authRegionDataLength);
+            ReadOnlySpan<byte> plaintext = new ReadOnlySpan<byte>(GetRandomBytes(plaintextLength));
+            byte[] key = GetRandomBytes(Constants.ClientSideEncryption.EncryptionKeySizeBits / 8);
+
+            var encryptingReadStream = new AuthenticatedRegionCryptoStream(
+                new MemoryStream(plaintext.ToArray()),
+                new GcmAuthenticatedCryptographicTransform(key, TransformMode.Encrypt),
+                authRegionDataLength,
+                CryptoStreamMode.Read);
+
+            var decryptingReadStream = new AuthenticatedRegionCryptoStream(
+                encryptingReadStream,
+                new GcmAuthenticatedCryptographicTransform(key, TransformMode.Decrypt),
+                authRegionDataLength,
+                CryptoStreamMode.Read);
+
+            // Act
+            var roundtrippedPlaintext = new byte[plaintext.Length];
+            decryptingReadStream.CopyTo(new MemoryStream(roundtrippedPlaintext));
+
+            // Assert
+            CollectionAssert.AreEqual(plaintext.ToArray(), roundtrippedPlaintext);
         }
 
         /// <summary>
