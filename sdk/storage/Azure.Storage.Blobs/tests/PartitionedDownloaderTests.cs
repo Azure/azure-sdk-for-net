@@ -209,8 +209,8 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 _async,
                 s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, string, bool, bool, CancellationToken>(
-                (range, conditions, rangeGetHash, progress, operationName, bypassEncryption, async, cancellation) =>
+            ).Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, string, bool, CancellationToken>(
+                (range, conditions, rangeGetHash, progress, operationName, async, cancellation) =>
                 {
                     return async
                         ? dataSource.GetStreamAsync(
