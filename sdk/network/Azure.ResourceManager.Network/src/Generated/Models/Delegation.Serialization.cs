@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<ResourceType?> type = default;
+            Optional<ResourceType> type = default;
             Optional<SystemData> systemData = default;
             Optional<string> serviceName = default;
             Optional<IReadOnlyList<string>> actions = default;

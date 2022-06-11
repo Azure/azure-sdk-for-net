@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<ResourceType?> type = default;
+            Optional<ResourceType> type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> allowVirtualNetworkAccess = default;
             Optional<bool> allowForwardedTraffic = default;

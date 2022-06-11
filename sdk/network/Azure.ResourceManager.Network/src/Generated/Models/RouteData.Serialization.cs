@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Network
             Optional<ETag> etag = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<ResourceType?> type = default;
+            Optional<ResourceType> type = default;
             Optional<SystemData> systemData = default;
             Optional<string> addressPrefix = default;
             Optional<RouteNextHopType> nextHopType = default;
