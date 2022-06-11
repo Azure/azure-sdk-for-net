@@ -13,29 +13,46 @@ namespace Azure.Storage.Files.DataLake
 
         public virtual DataLakeCustomerProvidedKey? CustomerProvidedKey { get; internal set; }
 
-        public AzureSasCredential SasCredential { get; internal set; }
-
         public DataLakeClientConfiguration(
             HttpPipeline pipeline,
             StorageSharedKeyCredential sharedKeyCredential,
             ClientDiagnostics clientDiagnostics,
             DataLakeClientOptions.ServiceVersion version,
-            DataLakeCustomerProvidedKey? customerProvidedKey,
-            AzureSasCredential sasCredential = default)
-            : base(pipeline, sharedKeyCredential, clientDiagnostics)
+            DataLakeCustomerProvidedKey? customerProvidedKey)
+            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, version, customerProvidedKey)
+        {
+        }
+
+        public DataLakeClientConfiguration(
+            HttpPipeline pipeline,
+            AzureSasCredential sasCredential,
+            ClientDiagnostics clientDiagnostics,
+            DataLakeClientOptions.ServiceVersion version,
+            DataLakeCustomerProvidedKey? customerProvidedKey)
+            : this(pipeline, default, sasCredential, clientDiagnostics, version, customerProvidedKey)
+        {
+        }
+
+        internal DataLakeClientConfiguration(
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential sharedKeyCredential,
+            AzureSasCredential sasCredential,
+            ClientDiagnostics clientDiagnostics,
+            DataLakeClientOptions.ServiceVersion version,
+            DataLakeCustomerProvidedKey? customerProvidedKey)
+            : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
         {
             Version = version;
             CustomerProvidedKey = customerProvidedKey;
-            SasCredential = sasCredential;
         }
 
         internal static DataLakeClientConfiguration DeepCopy(DataLakeClientConfiguration originalClientConfiguration)
             => new DataLakeClientConfiguration(
                 pipeline: originalClientConfiguration.Pipeline,
                 sharedKeyCredential: originalClientConfiguration.SharedKeyCredential,
+                sasCredential: originalClientConfiguration.SasCredential,
                 clientDiagnostics: originalClientConfiguration.ClientDiagnostics,
                 version: originalClientConfiguration.Version,
-                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey,
-                sasCredential: originalClientConfiguration.SasCredential);
+                customerProvidedKey: originalClientConfiguration.CustomerProvidedKey);
     }
 }
