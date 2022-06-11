@@ -132,7 +132,6 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        ignoreClientSideEncryption: true,
                         async: true,
                         cancellationToken);
 
@@ -149,7 +148,6 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        ignoreClientSideEncryption: true,
                         async: true,
                         cancellationToken)
                         .ConfigureAwait(false);
@@ -223,7 +221,6 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        ignoreClientSideEncryption: true,
                         async: true,
                         cancellationToken));
 
@@ -307,7 +304,6 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        ignoreClientSideEncryption: true,
                         async: false,
                         cancellationToken).EnsureCompleted();
                 }
@@ -319,7 +315,6 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        ignoreClientSideEncryption: true,
                         async: false,
                         cancellationToken).EnsureCompleted();
                 }
@@ -376,7 +371,6 @@ namespace Azure.Storage.Blobs
                         rangeGetContentHash: default,
                         _progress,
                         _innerOperationName,
-                        ignoreClientSideEncryption: true,
                         async: false,
                         cancellationToken).EnsureCompleted();
                     CopyTo(result.Value, destination, cancellationToken);

@@ -177,7 +177,6 @@ namespace Azure.Storage.Blobs.Test
                 false,
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                true, // downloader should always be bypassing decryption at the individual range level
                 _async,
                 s_cancellationToken)).ThrowsAsync(e);
 
@@ -208,7 +207,6 @@ namespace Azure.Storage.Blobs.Test
                 false,
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                true, // downloader should always be bypassing decryption at the individual range level
                 _async,
                 s_cancellationToken)
             ).Returns<HttpRange, BlobRequestConditions, bool, IProgress<long>, string, bool, bool, CancellationToken>(

@@ -23,7 +23,6 @@
   <ItemGroup>
     <!-- To test shared resources that aren't included in Azure.Storage.Common itself. -->
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\AuthenticatedRegionCryptoStream.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\GcmAuthenticatedCryptographicTransform.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\IAuthenticatedCryptographicTransform.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\TransformMode.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)AggregatingProgressIncrementer.cs" LinkBase="Shared" />
