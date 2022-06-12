@@ -1,6 +1,16 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2022-06-07)
 
 ### Features Added
 - Added optional parameter `categoryId` to the `DocumentTranslationInput.AddTarget`.
@@ -24,8 +34,6 @@
 
 ### Bugs Fixed
 - In `DocumentTranslationOperation`, `Cancel` calls won't overwrite the response from `GetRawResponse` anymore.
-
-### Other Changes
 
 ## 1.0.0-beta.6 (2021-11-09)
 
