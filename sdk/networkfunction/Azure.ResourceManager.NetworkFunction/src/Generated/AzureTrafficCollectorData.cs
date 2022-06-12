@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="collectorPolicies"> Collector Policies for Azure Traffic Collector. </param>
         /// <param name="virtualHub"> The virtualHub to which the Azure Traffic Collector belongs. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
-        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<CollectorPolicyData> collectorPolicies, SubResource virtualHub, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<CollectorPolicyData> collectorPolicies, SubResource virtualHub, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Etag = etag;
             CollectorPolicies = collectorPolicies;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <summary> The provisioning state of the application rule collection resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public CollectorProvisioningState? ProvisioningState { get; }
     }
 }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetworkFunction
             SystemData systemData = default;
             Optional<IngestionPolicyPropertiesFormat> ingestionPolicy = default;
             Optional<IList<EmissionPoliciesPropertiesFormat>> emissionPolicies = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<CollectorProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetworkFunction
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new CollectorProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

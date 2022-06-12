@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
-    public partial class Operation
+    public partial class CollectorOperation
     {
-        internal static Operation DeserializeOperation(JsonElement element)
+        internal static CollectorOperation DeserializeCollectorOperation(JsonElement element)
         {
             Optional<string> name = default;
             Optional<bool> isDataAction = default;
-            Optional<OperationDisplay> display = default;
+            Optional<CollectorOperationDisplay> display = default;
             Optional<string> origin = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    display = OperationDisplay.DeserializeOperationDisplay(property.Value);
+                    display = CollectorOperationDisplay.DeserializeCollectorOperationDisplay(property.Value);
                     continue;
                 }
                 if (property.NameEquals("origin"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     continue;
                 }
             }
-            return new Operation(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value);
+            return new CollectorOperation(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value);
         }
     }
 }

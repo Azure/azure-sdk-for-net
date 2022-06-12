@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
-    public partial class OperationDisplay
+    public partial class CollectorOperationDisplay
     {
-        internal static OperationDisplay DeserializeOperationDisplay(JsonElement element)
+        internal static CollectorOperationDisplay DeserializeCollectorOperationDisplay(JsonElement element)
         {
             Optional<string> provider = default;
             Optional<string> resource = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     continue;
                 }
             }
-            return new OperationDisplay(provider.Value, resource.Value, operation.Value, description.Value);
+            return new CollectorOperationDisplay(provider.Value, resource.Value, operation.Value, description.Value);
         }
     }
 }

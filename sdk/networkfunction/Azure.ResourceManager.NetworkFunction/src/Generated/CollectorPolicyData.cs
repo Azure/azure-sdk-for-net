@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="ingestionPolicy"> Ingestion policies. </param>
         /// <param name="emissionPolicies"> Emission policies. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             IngestionPolicy = ingestionPolicy;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <summary> Emission policies. </summary>
         public IList<EmissionPoliciesPropertiesFormat> EmissionPolicies { get; }
         /// <summary> The provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public CollectorProvisioningState? ProvisioningState { get; }
     }
 }

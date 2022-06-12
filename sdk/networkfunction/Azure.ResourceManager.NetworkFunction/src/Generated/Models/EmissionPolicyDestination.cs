@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         /// <summary> Initializes a new instance of EmissionPolicyDestination. </summary>
         /// <param name="destinationType"> Emission destination type. </param>
-        internal EmissionPolicyDestination(DestinationType? destinationType)
+        internal EmissionPolicyDestination(EmissionDestinationType? destinationType)
         {
             DestinationType = destinationType;
         }
 
         /// <summary> Emission destination type. </summary>
-        public DestinationType? DestinationType { get; set; }
+        public EmissionDestinationType? DestinationType { get; set; }
     }
 }

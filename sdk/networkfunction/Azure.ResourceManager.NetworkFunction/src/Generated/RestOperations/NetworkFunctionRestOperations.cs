@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary> Lists all of the available NetworkFunction Rest API operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<OperationListResult>> ListOperationsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<CollectorOperationListResult>> ListOperationsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListOperationsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 case 200:
                     {
-                        OperationListResult value = default;
+                        CollectorOperationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationListResult.DeserializeOperationListResult(document.RootElement);
+                        value = CollectorOperationListResult.DeserializeCollectorOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkFunction
 
         /// <summary> Lists all of the available NetworkFunction Rest API operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<OperationListResult> ListOperations(CancellationToken cancellationToken = default)
+        public Response<CollectorOperationListResult> ListOperations(CancellationToken cancellationToken = default)
         {
             using var message = CreateListOperationsRequest();
             _pipeline.Send(message, cancellationToken);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 case 200:
                     {
-                        OperationListResult value = default;
+                        CollectorOperationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationListResult.DeserializeOperationListResult(document.RootElement);
+                        value = CollectorOperationListResult.DeserializeCollectorOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

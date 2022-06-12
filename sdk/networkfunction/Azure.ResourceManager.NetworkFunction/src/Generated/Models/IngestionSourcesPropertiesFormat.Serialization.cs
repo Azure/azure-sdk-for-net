@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         internal static IngestionSourcesPropertiesFormat DeserializeIngestionSourcesPropertiesFormat(JsonElement element)
         {
-            Optional<SourceType> sourceType = default;
+            Optional<IngestionSourceType> sourceType = default;
             Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceType = new SourceType(property.Value.GetString());
+                    sourceType = new IngestionSourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"))

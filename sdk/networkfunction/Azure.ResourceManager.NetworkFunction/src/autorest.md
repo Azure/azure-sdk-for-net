@@ -44,8 +44,17 @@ directive:
     where: '$.definitions'
     transform: >
       $.SystemData.properties.lastModifiedAt = {
-          "type": "string",
-          "format": "date-time",
-          "description": "The timestamp of resource last modification (UTC)"
-        }
+          'type': 'string',
+          'format': 'date-time',
+          'description': 'The timestamp of resource last modification (UTC)'
+        };
+      $.ProvisioningState['x-ms-enum']['name'] = 'CollectorProvisioningState';
+      $.IngestionSourcesPropertiesFormat.properties.sourceType['x-ms-enum']['name'] = 'IngestionSourceType';
+      $.EmissionPolicyDestination.properties.destinationType['x-ms-enum']['name'] = 'EmissionDestinationType';
+      $.OperationListResult['x-ms-client-name'] = 'CollectorOperationListResult';
+
+  - rename-model:
+     from: Operation
+     to: CollectorOperation
+
 ```

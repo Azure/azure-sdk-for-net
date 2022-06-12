@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
-    internal partial class OperationListResult
+    internal partial class CollectorOperationListResult
     {
-        internal static OperationListResult DeserializeOperationListResult(JsonElement element)
+        internal static CollectorOperationListResult DeserializeCollectorOperationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Operation>> value = default;
+            Optional<IReadOnlyList<CollectorOperation>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Operation> array = new List<Operation>();
+                    List<CollectorOperation> array = new List<CollectorOperation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Operation.DeserializeOperation(item));
+                        array.Add(CollectorOperation.DeserializeCollectorOperation(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     continue;
                 }
             }
-            return new OperationListResult(Optional.ToList(value), nextLink.Value);
+            return new CollectorOperationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

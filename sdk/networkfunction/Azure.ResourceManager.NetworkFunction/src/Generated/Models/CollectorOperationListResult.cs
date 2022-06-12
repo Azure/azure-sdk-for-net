@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
     /// <summary> Result of the request to list Azure Traffic Collector operations. It contains a list of operations and a URL link to get the next set of results. </summary>
-    internal partial class OperationListResult
+    internal partial class CollectorOperationListResult
     {
-        /// <summary> Initializes a new instance of OperationListResult. </summary>
-        internal OperationListResult()
+        /// <summary> Initializes a new instance of CollectorOperationListResult. </summary>
+        internal CollectorOperationListResult()
         {
-            Value = new ChangeTrackingList<Operation>();
+            Value = new ChangeTrackingList<CollectorOperation>();
         }
 
-        /// <summary> Initializes a new instance of OperationListResult. </summary>
+        /// <summary> Initializes a new instance of CollectorOperationListResult. </summary>
         /// <param name="value"> List of operations supported by the Azure Traffic Collector resource provider. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal OperationListResult(IReadOnlyList<Operation> value, string nextLink)
+        internal CollectorOperationListResult(IReadOnlyList<CollectorOperation> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of operations supported by the Azure Traffic Collector resource provider. </summary>
-        public IReadOnlyList<Operation> Value { get; }
+        public IReadOnlyList<CollectorOperation> Value { get; }
         /// <summary> URL to get the next set of operation list results if there are any. </summary>
         public string NextLink { get; }
     }

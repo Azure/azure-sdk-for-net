@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkFunction
         public AzureTrafficCollectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkFunction.CollectorPolicyData> CollectorPolicies { get { throw null; } }
         public Azure.ETag? Etag { get { throw null; } }
-        public Azure.ResourceManager.NetworkFunction.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualHubId { get { throw null; } }
     }
     public partial class AzureTrafficCollectorResource : Azure.ResourceManager.ArmResource
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkFunction
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat> EmissionPolicies { get { throw null; } }
         public Azure.ETag? Etag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat IngestionPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.NetworkFunction.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class CollectorPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.NetworkFunction
         public static Azure.Pageable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> GetAzureTrafficCollectors(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.NetworkFunction.CollectorPolicyResource GetCollectorPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.NetworkFunction.Models.Operation> GetOperationsNetworkFunctions(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.NetworkFunction.Models.Operation> GetOperationsNetworkFunctionsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.NetworkFunction.Models.CollectorOperation> GetOperationsNetworkFunctions(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.NetworkFunction.Models.CollectorOperation> GetOperationsNetworkFunctionsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.NetworkFunction.Models
@@ -103,21 +103,57 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public AzureTrafficCollectorPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class CollectorOperation
+    {
+        internal CollectorOperation() { }
+        public Azure.ResourceManager.NetworkFunction.Models.CollectorOperationDisplay Display { get { throw null; } }
+        public bool? IsDataAction { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Origin { get { throw null; } }
+    }
+    public partial class CollectorOperationDisplay
+    {
+        internal CollectorOperationDisplay() { }
+        public string Description { get { throw null; } }
+        public string Operation { get { throw null; } }
+        public string Provider { get { throw null; } }
+        public string Resource { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DestinationType : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.DestinationType>
+    public readonly partial struct CollectorProvisioningState : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DestinationType(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkFunction.Models.DestinationType AzureMonitor { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetworkFunction.Models.DestinationType other) { throw null; }
+        public CollectorProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.DestinationType left, Azure.ResourceManager.NetworkFunction.Models.DestinationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetworkFunction.Models.DestinationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetworkFunction.Models.DestinationType left, Azure.ResourceManager.NetworkFunction.Models.DestinationType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState left, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState left, Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EmissionDestinationType : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EmissionDestinationType(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType AzureMonitor { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType left, Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType left, Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class EmissionPoliciesPropertiesFormat
@@ -129,7 +165,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     public partial class EmissionPolicyDestination
     {
         public EmissionPolicyDestination() { }
-        public Azure.ResourceManager.NetworkFunction.Models.DestinationType? DestinationType { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkFunction.Models.EmissionDestinationType? DestinationType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EmissionType : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.EmissionType>
@@ -158,7 +194,24 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     {
         public IngestionSourcesPropertiesFormat() { }
         public string ResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.NetworkFunction.Models.SourceType? SourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType? SourceType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IngestionSourceType : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IngestionSourceType(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType Resource { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType left, Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType left, Azure.ResourceManager.NetworkFunction.Models.IngestionSourceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IngestionType : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.IngestionType>
@@ -175,59 +228,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.IngestionType left, Azure.ResourceManager.NetworkFunction.Models.IngestionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkFunction.Models.IngestionType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkFunction.Models.IngestionType left, Azure.ResourceManager.NetworkFunction.Models.IngestionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Operation
-    {
-        internal Operation() { }
-        public Azure.ResourceManager.NetworkFunction.Models.OperationDisplay Display { get { throw null; } }
-        public bool? IsDataAction { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Origin { get { throw null; } }
-    }
-    public partial class OperationDisplay
-    {
-        internal OperationDisplay() { }
-        public string Description { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string Provider { get { throw null; } }
-        public string Resource { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkFunction.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.NetworkFunction.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.NetworkFunction.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.NetworkFunction.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetworkFunction.Models.ProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.ProvisioningState left, Azure.ResourceManager.NetworkFunction.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetworkFunction.Models.ProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetworkFunction.Models.ProvisioningState left, Azure.ResourceManager.NetworkFunction.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SourceType : System.IEquatable<Azure.ResourceManager.NetworkFunction.Models.SourceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SourceType(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkFunction.Models.SourceType Resource { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetworkFunction.Models.SourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetworkFunction.Models.SourceType left, Azure.ResourceManager.NetworkFunction.Models.SourceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetworkFunction.Models.SourceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetworkFunction.Models.SourceType left, Azure.ResourceManager.NetworkFunction.Models.SourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

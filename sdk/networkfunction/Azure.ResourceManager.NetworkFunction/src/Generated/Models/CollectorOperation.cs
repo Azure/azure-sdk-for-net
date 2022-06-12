@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
     /// <summary> Azure Traffic Collector REST API operation definition. </summary>
-    public partial class Operation
+    public partial class CollectorOperation
     {
-        /// <summary> Initializes a new instance of Operation. </summary>
-        internal Operation()
+        /// <summary> Initializes a new instance of CollectorOperation. </summary>
+        internal CollectorOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of Operation. </summary>
+        /// <summary> Initializes a new instance of CollectorOperation. </summary>
         /// <param name="name"> Operation name: {provider}/{resource}/{operation}. </param>
         /// <param name="isDataAction"> Indicates whether the operation is a data action. </param>
         /// <param name="display"> Display metadata associated with the operation. </param>
         /// <param name="origin"> Origin of the operation. </param>
-        internal Operation(string name, bool? isDataAction, OperationDisplay display, string origin)
+        internal CollectorOperation(string name, bool? isDataAction, CollectorOperationDisplay display, string origin)
         {
             Name = name;
             IsDataAction = isDataAction;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <summary> Indicates whether the operation is a data action. </summary>
         public bool? IsDataAction { get; }
         /// <summary> Display metadata associated with the operation. </summary>
-        public OperationDisplay Display { get; }
+        public CollectorOperationDisplay Display { get; }
         /// <summary> Origin of the operation. </summary>
         public string Origin { get; }
     }

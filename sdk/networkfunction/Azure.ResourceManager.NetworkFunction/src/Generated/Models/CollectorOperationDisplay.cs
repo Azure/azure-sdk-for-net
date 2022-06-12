@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
     /// <summary> Display metadata associated with the operation. </summary>
-    public partial class OperationDisplay
+    public partial class CollectorOperationDisplay
     {
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
-        internal OperationDisplay()
+        /// <summary> Initializes a new instance of CollectorOperationDisplay. </summary>
+        internal CollectorOperationDisplay()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationDisplay. </summary>
+        /// <summary> Initializes a new instance of CollectorOperationDisplay. </summary>
         /// <param name="provider"> Service provider: Microsoft NetworkFunction. </param>
         /// <param name="resource"> Resource on which the operation is performed etc. </param>
         /// <param name="operation"> Type of operation: get, read, delete, etc. </param>
         /// <param name="description"> Description of the operation. </param>
-        internal OperationDisplay(string provider, string resource, string operation, string description)
+        internal CollectorOperationDisplay(string provider, string resource, string operation, string description)
         {
             Provider = provider;
             Resource = resource;

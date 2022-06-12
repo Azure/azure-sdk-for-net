@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.NetworkFunction
         /// Operation Id: NetworkFunction_ListOperations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Models.Operation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.Operation> GetOperationsNetworkFunctionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CollectorOperation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CollectorOperation> GetOperationsNetworkFunctionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Models.Operation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CollectorOperation>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = NetworkFunctionClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperationsNetworkFunctions");
                 scope.Start();
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.NetworkFunction
         /// Operation Id: NetworkFunction_ListOperations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.Operation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.Operation> GetOperationsNetworkFunctions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CollectorOperation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CollectorOperation> GetOperationsNetworkFunctions(CancellationToken cancellationToken = default)
         {
-            Page<Models.Operation> FirstPageFunc(int? pageSizeHint)
+            Page<CollectorOperation> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = NetworkFunctionClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOperationsNetworkFunctions");
                 scope.Start();

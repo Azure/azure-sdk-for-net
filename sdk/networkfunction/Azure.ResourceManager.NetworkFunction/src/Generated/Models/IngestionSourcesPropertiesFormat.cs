@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <summary> Initializes a new instance of IngestionSourcesPropertiesFormat. </summary>
         /// <param name="sourceType"> Ingestion source type. </param>
         /// <param name="resourceId"> Resource ID. </param>
-        internal IngestionSourcesPropertiesFormat(SourceType? sourceType, string resourceId)
+        internal IngestionSourcesPropertiesFormat(IngestionSourceType? sourceType, string resourceId)
         {
             SourceType = sourceType;
             ResourceId = resourceId;
         }
 
         /// <summary> Ingestion source type. </summary>
-        public SourceType? SourceType { get; set; }
+        public IngestionSourceType? SourceType { get; set; }
         /// <summary> Resource ID. </summary>
         public string ResourceId { get; set; }
     }

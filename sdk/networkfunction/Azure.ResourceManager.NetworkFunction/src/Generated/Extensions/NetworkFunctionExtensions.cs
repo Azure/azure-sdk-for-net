@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Models.Operation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.Operation> GetOperationsNetworkFunctionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CollectorOperation" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CollectorOperation> GetOperationsNetworkFunctionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetOperationsNetworkFunctionsAsync(cancellationToken);
         }
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.Operation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.Operation> GetOperationsNetworkFunctions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CollectorOperation" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CollectorOperation> GetOperationsNetworkFunctions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetOperationsNetworkFunctions(cancellationToken);
         }
