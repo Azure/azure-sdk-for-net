@@ -15,6 +15,8 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+override-operation-name:
+  CheckNameAvailability: CheckLedgerNameAvailability
 
 rename-rules:
   CPU: Cpu
@@ -36,5 +38,12 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+
+directive:
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.ResourceLocation.properties.location['x-ms-format'] = 'azure-location';
+      $.ProvisioningState['x-ms-enum']['name'] = 'LedgerProvisioningState';
 
 ```

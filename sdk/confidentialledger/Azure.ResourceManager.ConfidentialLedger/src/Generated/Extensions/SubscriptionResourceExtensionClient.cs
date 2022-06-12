@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </summary>
         /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckLedgerNameAvailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailability");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckLedgerNameAvailability");
             scope.Start();
             try
             {
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// </summary>
         /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResponse> CheckLedgerNameAvailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailability");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckLedgerNameAvailability");
             scope.Start();
             try
             {

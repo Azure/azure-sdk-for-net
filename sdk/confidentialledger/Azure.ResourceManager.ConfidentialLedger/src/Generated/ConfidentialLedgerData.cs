@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="properties"> Properties of Confidential Ledger Resource. </param>
         /// <param name="location"> The Azure location where the Confidential Ledger is running. </param>
         /// <param name="tags"> Additional tags for Confidential Ledger. </param>
-        internal ConfidentialLedgerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LedgerProperties properties, string location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ConfidentialLedgerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LedgerProperties properties, AzureLocation? location, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <summary> Properties of Confidential Ledger Resource. </summary>
         public LedgerProperties Properties { get; set; }
         /// <summary> The Azure location where the Confidential Ledger is running. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> Additional tags for Confidential Ledger. </summary>
         public IDictionary<string, string> Tags { get; }
     }

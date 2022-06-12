@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         internal static ConfidentialLedgerData DeserializeConfidentialLedgerData(JsonElement element)
         {
             Optional<LedgerProperties> properties = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -65,7 +65,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -104,7 +109,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
                     continue;
                 }
             }
-            return new ConfidentialLedgerData(id, name, type, systemData, properties.Value, location.Value, Optional.ToDictionary(tags));
+            return new ConfidentialLedgerData(id, name, type, systemData, properties.Value, Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

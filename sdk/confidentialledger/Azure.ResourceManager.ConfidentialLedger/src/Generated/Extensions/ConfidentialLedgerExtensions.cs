@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResponse>> CheckLedgerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckLedgerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResponse> CheckLedgerNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailability(content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckLedgerNameAvailability(content, cancellationToken);
         }
 
         /// <summary>

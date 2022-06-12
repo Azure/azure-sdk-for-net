@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="provisioningState"> Provisioning state of Ledger Resource. </param>
         /// <param name="aadBasedSecurityPrincipals"> Array of all AAD based Security Principals. </param>
         /// <param name="certBasedSecurityPrincipals"> Array of all cert based Security Principals. </param>
-        internal LedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, LedgerType? ledgerType, ProvisioningState? provisioningState, IList<AADBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals)
+        internal LedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, LedgerType? ledgerType, LedgerProvisioningState? provisioningState, IList<AADBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals)
         {
             LedgerName = ledgerName;
             LedgerUri = ledgerUri;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Type of Confidential Ledger. </summary>
         public LedgerType? LedgerType { get; set; }
         /// <summary> Provisioning state of Ledger Resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public LedgerProvisioningState? ProvisioningState { get; }
         /// <summary> Array of all AAD based Security Principals. </summary>
         public IList<AADBasedSecurityPrincipal> AadBasedSecurityPrincipals { get; }
         /// <summary> Array of all cert based Security Principals. </summary>

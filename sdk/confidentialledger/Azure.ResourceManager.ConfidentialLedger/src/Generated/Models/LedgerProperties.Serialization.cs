@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<Uri> identityServiceUri = default;
             Optional<string> ledgerInternalNamespace = default;
             Optional<LedgerType> ledgerType = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<LedgerProvisioningState> provisioningState = default;
             Optional<IList<AADBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
             Optional<IList<CertBasedSecurityPrincipal>> certBasedSecurityPrincipals = default;
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new LedgerProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("aadBasedSecurityPrincipals"))
