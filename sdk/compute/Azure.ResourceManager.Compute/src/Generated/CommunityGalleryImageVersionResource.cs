@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
     public partial class CommunityGalleryImageVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunityGalleryImageVersionResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string publicGalleryName, string galleryImageName, string galleryImageVersionName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}";
             return new ResourceIdentifier(resourceId);

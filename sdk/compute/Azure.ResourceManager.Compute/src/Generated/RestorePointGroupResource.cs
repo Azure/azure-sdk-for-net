@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RestorePointResource>> GetRestorePointAsync(string restorePointName, RestorePointExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointResource>> GetRestorePointAsync(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return await GetRestorePoints().GetAsync(restorePointName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RestorePointResource> GetRestorePoint(string restorePointName, RestorePointExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePointResource> GetRestorePoint(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return GetRestorePoints().Get(restorePointName, expand, cancellationToken);
         }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RestorePointGroupResource>> GetAsync(RestorePointGroupExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointGroupResource>> GetAsync(RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupResource.Get");
             scope.Start();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RestorePointGroupResource> Get(RestorePointGroupExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePointGroupResource> Get(RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupResource.Get");
             scope.Start();

@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string restorePointGroupName, string subscriptionId, string resourceGroupName, RestorePointGroupExpandOptions? expand)
+        internal HttpMessage CreateGetRequest(string restorePointGroupName, string subscriptionId, string resourceGroupName, RestorePointGroupExpand? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestorePointGroupData>> GetAsync(string restorePointGroupName, string subscriptionId, string resourceGroupName, RestorePointGroupExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RestorePointGroupData>> GetAsync(string restorePointGroupName, string subscriptionId, string resourceGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestorePointGroupData> Get(string restorePointGroupName, string subscriptionId, string resourceGroupName, RestorePointGroupExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public Response<RestorePointGroupData> Get(string restorePointGroupName, string subscriptionId, string resourceGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

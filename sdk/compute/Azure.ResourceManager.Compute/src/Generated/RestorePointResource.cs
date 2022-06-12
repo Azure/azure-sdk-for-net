@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RestorePointResource>> GetAsync(RestorePointExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointResource>> GetAsync(RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointResource.Get");
             scope.Start();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RestorePointResource> Get(RestorePointExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePointResource> Get(RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointResource.Get");
             scope.Start();

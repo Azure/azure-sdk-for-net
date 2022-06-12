@@ -141,6 +141,14 @@ directive:
       $.RestorePointCollectionSourceProperties.properties.id["x-ms-format"] = "arm-id";
       $.RestorePointCollectionSourceProperties.properties.location["x-ms-format"] = "azure-location";
       $.RestorePointSourceMetadata.properties.location["x-ms-format"] = "azure-location";
+  - from: restorePoint.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}"].get.parameters
+    transform: >
+      $[4]["x-ms-enum"].name = "RestorePointExpand";
+  - from: restorePoint.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}"].get.parameters
+    transform: >
+      $[3]["x-ms-enum"].name = "RestorePointCollectionExpand";
   - from: computeRPCommon.json
     where: $.definitions
     transform: >

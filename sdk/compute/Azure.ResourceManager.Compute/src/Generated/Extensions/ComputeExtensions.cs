@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroupResource resourceGroupResource, string restorePointGroupName, RestorePointGroupExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroupResource resourceGroupResource, string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetRestorePointGroups().GetAsync(restorePointGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -1743,7 +1743,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroupResource resourceGroupResource, string restorePointGroupName, RestorePointGroupExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroupResource resourceGroupResource, string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetRestorePointGroups().Get(restorePointGroupName, expand, cancellationToken);
         }
