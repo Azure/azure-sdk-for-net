@@ -37,11 +37,11 @@ rename-rules:
   URI: Uri
 directive:
   - from: swagger-document
-    where: '$.definitions..etag'
+    where: $.definitions..etag
     transform: >
       $['x-ms-format'] = 'etag';
   - from: swagger-document
-    where: '$.definitions'
+    where: $.definitions
     transform: >
       $.SystemData.properties.lastModifiedAt = {
           'type': 'string',
