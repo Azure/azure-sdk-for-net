@@ -91,9 +91,6 @@ public class Program
 
                 switch (t)
                 {
-                    case TestScenario.BufferedProducerHashingTest:
-                        break;
-
                     case TestScenario.BufferedProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
                         testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
@@ -110,18 +107,12 @@ public class Program
                         testScenarioTasks.Add(burstBufferedProducerTest.RunTestAsync(cancellationSource.Token));
                         break;
 
-                    case TestScenario.DistributedTracingTest:
-                        break;
-
                     case TestScenario.EventProducerTest:
                         environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
                         testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
 
                         var eventProducerTest = new EventProducerTest(testConfiguration, metrics, opts.Role);
                         testScenarioTasks.Add(eventProducerTest.RunTestAsync(cancellationSource.Token));
-                        break;
-
-                    case TestScenario.ProcessorLoadBalancesTest:
                         break;
 
                     case TestScenario.ProcessorTest:
@@ -141,7 +132,14 @@ public class Program
                         testScenarioTasks.Add(processorTest.RunTestAsync(cancellationSource.Token));
                         break;
 
-                    case TestScenario.ProcessorPartitionOwnershipTest:
+                    case TestScenario.BufferedCPU:
+                        environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
+                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+                        break;
+
+                    case TestScenario.ProducerCPU:
+                        environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
+                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
                         break;
                 }
             }
@@ -199,6 +197,8 @@ public class Program
         "ProcessorLoadBalancesTest" => TestScenario.ProcessorLoadBalancesTest,
         "ProcessorTest" or "Processor"=> TestScenario.ProcessorTest,
         "ProcessorPartitionOwnershipTest" => TestScenario.ProcessorPartitionOwnershipTest,
+        "ProducerCPU" => TestScenario.ProducerCPU,
+        "BufferedCPU" => TestScenario.BufferedCPU,
         _ => throw new ArgumentNullException(),
     };
 
