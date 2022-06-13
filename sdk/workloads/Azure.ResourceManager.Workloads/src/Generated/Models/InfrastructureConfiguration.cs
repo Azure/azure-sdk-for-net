@@ -9,7 +9,11 @@ using System;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Deploy SAP Infrastructure Details. </summary>
+    /// <summary>
+    /// Deploy SAP Infrastructure Details.
+    /// Please note <see cref="InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
+    /// </summary>
     public partial class InfrastructureConfiguration
     {
         /// <summary> Initializes a new instance of InfrastructureConfiguration. </summary>

@@ -24,7 +24,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scopes"> the list of resource id&apos;s that this metric alert is scoped to. </param>
         /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
-        /// <param name="criteria"> defines the specific alert criteria information. </param>
+        /// <param name="criteria">
+        /// defines the specific alert criteria information.
+        /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
         public MetricAlertData(AzureLocation location, int severity, bool enabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, MetricAlertCriteria criteria) : base(location)
         {
@@ -57,7 +61,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
         /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
         /// <param name="targetResourceRegion"> the region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
-        /// <param name="criteria"> defines the specific alert criteria information. </param>
+        /// <param name="criteria">
+        /// defines the specific alert criteria information.
+        /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// </param>
         /// <param name="autoMitigate"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
         /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
@@ -95,7 +103,11 @@ namespace Azure.ResourceManager.Monitor
         public string TargetResourceType { get; set; }
         /// <summary> the region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>
         public string TargetResourceRegion { get; set; }
-        /// <summary> defines the specific alert criteria information. </summary>
+        /// <summary>
+        /// defines the specific alert criteria information.
+        /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// </summary>
         public MetricAlertCriteria Criteria { get; set; }
         /// <summary> the flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
         public bool? AutoMitigate { get; set; }
