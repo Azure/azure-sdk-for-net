@@ -6,13 +6,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-tag: package-2021-08
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/409af02e5ca217c7e7ec2acf50f4976c053496f8/specification/storage/resource-manager/readme.md
+tag: package-2021-09
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4124b7c2773a714303299f0cfd742b0d26d3bb5d//specification/storage/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
-modelerfour: # we need to remove these two configurations
-  lenient-model-deduplication: true
-  seal-single-value-enum-by-default: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
@@ -71,4 +68,12 @@ directive:
   - from: swagger-document
     where: $.definitions.Multichannel.properties.enabled
     transform: $['x-ms-client-name'] = 'IsMultiChannelEnabled'
+  - from: swagger-document
+    where: $.definitions.BlobRestoreParameters
+    transform: >
+      $.required = ["timetoRestore", "blobRanges"];
+      var old = $.properties["timeToRestore"];
+      old["x-ms-client-name"] = "timeToRestore";
+      $.properties["timetoRestore"] = old;
+      delete $.properties["timeToRestore"];
 ```

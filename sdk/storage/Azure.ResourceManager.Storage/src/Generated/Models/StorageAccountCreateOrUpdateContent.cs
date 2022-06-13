@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Storage.Models
         public Encryption Encryption { get; set; }
         /// <summary> Network rule set. </summary>
         public NetworkRuleSet NetworkRuleSet { get; set; }
-        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier used for billing. </summary>
+        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The &apos;Premium&apos; access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
         public AccessTier? AccessTier { get; set; }
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
@@ -103,5 +103,7 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? DefaultToOAuthAuthentication { get; set; }
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the new containers in the account by default. </summary>
         public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
+        /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
+        public DnsEndpointType? DnsEndpointType { get; set; }
     }
 }

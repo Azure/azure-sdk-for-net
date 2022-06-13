@@ -1287,16 +1287,16 @@ namespace Azure.ResourceManager.Storage.Tests
             // prepare policy objects,the type of policy rule should always be Inventory
             List<BlobInventoryPolicyRule> ruleList = new List<BlobInventoryPolicyRule>();
             BlobInventoryPolicyRule rule1 = new BlobInventoryPolicyRule(true, "rule1", containerName,
-                new BlobInventoryPolicyDefinition(
-                    filters: new BlobInventoryPolicyFilter(
-                        blobTypes: new List<string>(new string[] { "blockBlob" }),
-                        prefixMatch: new List<string>(new string[] { "prefix1", "prefix2" }),
-                        includeBlobVersions: true,
-                        includeSnapshots: true),
-                    format: Format.Csv,
-                    schedule: Schedule.Weekly,
-                    objectType: ObjectType.Blob,
-                    schemaFields: blobSchemaFields1));
+                new BlobInventoryPolicyDefinition(Format.Csv, Schedule.Weekly, ObjectType.Blob, blobSchemaFields1)
+                {
+                    Filters = new BlobInventoryPolicyFilter()
+                    {
+                        BlobTypes = { "blockBlob" },
+                        PrefixMatch = { "prefix1", "prefix2" },
+                        IncludeBlobVersions = true,
+                        IncludeSnapshots = true,
+                    }
+                });
 
             BlobInventoryPolicyRule rule2 = new BlobInventoryPolicyRule(true, "rule2", containerName,
                 new BlobInventoryPolicyDefinition(
@@ -1360,7 +1360,10 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 BaseBlob = new ManagementPolicyBaseBlob()
                 {
-                    Delete = new DateAfterModification(1000, null)
+                    Delete = new DateAfterModification()
+                    {
+                        DaysAfterModificationGreaterThan = 1000,
+                    }
                 }
             };
             ManagementPolicyDefinition definition1 = new ManagementPolicyDefinition(action)

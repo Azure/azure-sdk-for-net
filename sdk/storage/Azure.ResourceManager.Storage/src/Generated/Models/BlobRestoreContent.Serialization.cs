@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("timeToRestore");
-            writer.WriteStringValue(TimeToRestore, "O");
             writer.WritePropertyName("blobRanges");
             writer.WriteStartArray();
             foreach (var item in BlobRanges)
@@ -26,20 +24,17 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("timetoRestore");
+            writer.WriteStringValue(TimeToRestore, "O");
             writer.WriteEndObject();
         }
 
         internal static BlobRestoreContent DeserializeBlobRestoreContent(JsonElement element)
         {
-            DateTimeOffset timeToRestore = default;
             IList<BlobRestoreRange> blobRanges = default;
+            DateTimeOffset timetoRestore = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timeToRestore"))
-                {
-                    timeToRestore = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
                 if (property.NameEquals("blobRanges"))
                 {
                     List<BlobRestoreRange> array = new List<BlobRestoreRange>();
@@ -50,8 +45,13 @@ namespace Azure.ResourceManager.Storage.Models
                     blobRanges = array;
                     continue;
                 }
+                if (property.NameEquals("timetoRestore"))
+                {
+                    timetoRestore = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new BlobRestoreContent(timeToRestore, blobRanges);
+            return new BlobRestoreContent(blobRanges, timetoRestore);
         }
     }
 }
