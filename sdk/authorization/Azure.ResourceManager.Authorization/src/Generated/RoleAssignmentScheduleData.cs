@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="updatedOn"> DateTime when role assignment schedule was modified. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleAssignmentScheduleData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, string roleAssignmentScheduleRequestId, string linkedRoleEligibilityScheduleId, AssignmentType? assignmentType, MemberType? memberType, RoleAssignmentScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, string roleAssignmentScheduleRequestId, string linkedRoleEligibilityScheduleId, AssignmentType? assignmentType, MemberType? memberType, RoleAssignmentScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;

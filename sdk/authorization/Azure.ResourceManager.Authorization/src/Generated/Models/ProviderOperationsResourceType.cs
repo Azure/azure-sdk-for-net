@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Resource Type. </summary>
-    public partial class ResourceType
+    public partial class ProviderOperationsResourceType
     {
-        /// <summary> Initializes a new instance of ResourceType. </summary>
-        internal ResourceType()
+        /// <summary> Initializes a new instance of ProviderOperationsResourceType. </summary>
+        internal ProviderOperationsResourceType()
         {
             Operations = new ChangeTrackingList<ProviderOperation>();
         }
 
-        /// <summary> Initializes a new instance of ResourceType. </summary>
+        /// <summary> Initializes a new instance of ProviderOperationsResourceType. </summary>
         /// <param name="name"> The resource type name. </param>
         /// <param name="displayName"> The resource type display name. </param>
         /// <param name="operations"> The resource type operations. </param>
-        internal ResourceType(string name, string displayName, IReadOnlyList<ProviderOperation> operations)
+        internal ProviderOperationsResourceType(string name, string displayName, IReadOnlyList<ProviderOperation> operations)
         {
             Name = name;
             DisplayName = displayName;

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Authorization
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </param>
         /// <param name="policyAssignmentProperties"> Additional properties of scope, role definition and policy. </param>
-        internal RoleManagementPolicyAssignmentData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string policyId, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyAssignmentProperties policyAssignmentProperties) : base(id, name, resourceType, systemData)
+        internal RoleManagementPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string policyId, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyAssignmentProperties policyAssignmentProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;

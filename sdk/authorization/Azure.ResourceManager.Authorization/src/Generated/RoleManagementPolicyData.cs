@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Authorization
         /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
         /// </param>
         /// <param name="policyProperties"> Additional properties of scope. </param>
-        internal RoleManagementPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string scope, string displayName, string description, bool? isOrganizationDefault, AzurePrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyProperties policyProperties) : base(id, name, resourceType, systemData)
+        internal RoleManagementPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string displayName, string description, bool? isOrganizationDefault, AzurePrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyProperties policyProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             DisplayName = displayName;

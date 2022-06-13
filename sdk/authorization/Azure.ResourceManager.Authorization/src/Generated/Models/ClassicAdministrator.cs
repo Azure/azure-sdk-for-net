@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="emailAddress"> The email address of the administrator. </param>
         /// <param name="role"> The role of the administrator. </param>
-        internal ClassicAdministrator(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string emailAddress, string role) : base(id, name, resourceType, systemData)
+        internal ClassicAdministrator(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emailAddress, string role) : base(id, name, resourceType, systemData)
         {
             EmailAddress = emailAddress;
             Role = role;

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization
         private ClientDiagnostics ClassicAdministratorsClientDiagnostics => _classicAdministratorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ClassicAdministratorsRestOperations ClassicAdministratorsRestClient => _classicAdministratorsRestClient ??= new ClassicAdministratorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Authorization
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<string> roleName = default;
             Optional<string> description = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             Optional<string> emailAddress = default;
             Optional<string> role = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

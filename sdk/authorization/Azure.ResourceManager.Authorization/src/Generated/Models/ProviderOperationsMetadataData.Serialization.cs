@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Authorization
         internal static ProviderOperationsMetadataData DeserializeProviderOperationsMetadataData(JsonElement element)
         {
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<Models.ResourceType>> resourceTypes = default;
+            Optional<IReadOnlyList<ProviderOperationsResourceType>> resourceTypes = default;
             Optional<IReadOnlyList<ProviderOperation>> operations = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Authorization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Models.ResourceType> array = new List<Models.ResourceType>();
+                    List<ProviderOperationsResourceType> array = new List<ProviderOperationsResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceType.DeserializeResourceType(item));
+                        array.Add(ProviderOperationsResourceType.DeserializeProviderOperationsResourceType(item));
                     }
                     resourceTypes = array;
                     continue;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

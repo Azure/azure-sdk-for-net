@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Authorization
         private ClientDiagnostics PermissionsClientDiagnostics => _permissionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PermissionsRestOperations PermissionsRestClient => _permissionsRestClient ??= new PermissionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;

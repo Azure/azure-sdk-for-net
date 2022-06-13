@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
-        internal RoleDefinitionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string roleName, string description, string roleType, IList<AzurePermission> permissions, IList<string> assignableScopes) : base(id, name, resourceType, systemData)
+        internal RoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, string roleType, IList<AzurePermission> permissions, IList<string> assignableScopes) : base(id, name, resourceType, systemData)
         {
             RoleName = roleName;
             Description = description;

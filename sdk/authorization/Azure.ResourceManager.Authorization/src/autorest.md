@@ -61,7 +61,7 @@ directive:
   - rename-model:
       from: RoleAssignmentScheduleRequestProperties
       to: RoleAssignmentSchedule
-      
+
   # change single class name
   - from: authorization-RoleDefinitionsCalls.json
     where: $.definitions.Permission
@@ -85,6 +85,15 @@ directive:
   # - from: RoleAssignmentScheduleRequest.json
   #   where: $.definitions.RoleAssignmentScheduleRequestFilter.properties.principalId.description
   #   transform: $ = "foo"
+  # - from: RoleAssignmentScheduleRequest.json
+  #   where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.type
+  #   transform: $['x-ms-enum'].name = "RoleAssignmentScheduleRequestType"
+
+  # Rename the name of the common class
+  - from: authorization-ProviderOperationsCalls.json
+    where: $.definitions.ResourceType
+    transform:  $['x-ms-client-name'] = "ProviderOperationsResourceType"
+
 
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json
@@ -104,6 +113,5 @@ directive:
   # - from: RoleAssignmentScheduleRequest.json
   #   where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.linkedRoleEligibilityScheduleId
   #   transform: $['x-ms-format'] = 'azure-location'
-
 
 ```

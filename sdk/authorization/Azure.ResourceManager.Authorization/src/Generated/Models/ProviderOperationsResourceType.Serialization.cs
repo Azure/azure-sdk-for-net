@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class ResourceType
+    public partial class ProviderOperationsResourceType
     {
-        internal static ResourceType DeserializeResourceType(JsonElement element)
+        internal static ProviderOperationsResourceType DeserializeProviderOperationsResourceType(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> displayName = default;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new ResourceType(name.Value, displayName.Value, Optional.ToList(operations));
+            return new ProviderOperationsResourceType(name.Value, displayName.Value, Optional.ToList(operations));
         }
     }
 }
