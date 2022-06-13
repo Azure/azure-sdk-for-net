@@ -1,4 +1,3 @@
-    $["x-ms-client-default"] = "Utf16CodeUnit";
 # Generated code configuration
 
 Run `dotnet build /t:GenerateCode` to generate code.
@@ -77,16 +76,19 @@ directive:
 - from: swagger-document
   where: $.definitions.StringIndexType
   transform: >
+    $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
     $["x-ms-client-default"] = "Utf16CodeUnit";
 
 - from: swagger-document
   where: $.definitions.ConversationalAnalysisAuthoringStringIndexType
   transform: >
+    $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
     $["x-ms-client-default"] = "Utf16CodeUnit";
 
 - from: swagger-document
   where: $.parameters.ConversationalAnalysisAuthoringStringIndexTypeQueryParameter
   transform: >
+    $["description"] = "Specifies the method used to interpret string offsets. Set this to \"Utf16CodeUnit\" for .NET strings, which are encoded as UTF-16.";
     $["x-ms-client-default"] = "Utf16CodeUnit";
 
 # Correct Endpoint parameter description to reference right domain suffix.
