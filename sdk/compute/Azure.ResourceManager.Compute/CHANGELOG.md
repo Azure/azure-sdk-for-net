@@ -12,6 +12,10 @@
 
 ### Other Changes
 
+- Updated API version of compute RP to `2022-03-01`.
+- Updated API version of disk RP to `2022-03-02`.
+- Updated API version of gallery RP to `2022-01-03`.
+
 ## 1.0.0-beta.8 (2022-04-08)
 
 ### Breaking Changes
