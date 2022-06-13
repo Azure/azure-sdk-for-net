@@ -59,7 +59,7 @@ namespace Azure.Communication.Identity.Tests
             return InstrumentClientOptions(communicationIdentityClientOptions);
         }
 
-        protected async Task<GetTokenForTeamsUserOptions> createTeamsUserParams()
+        protected async Task<GetTokenForTeamsUserOptions> CreateTeamsUserParams()
         {
             GetTokenForTeamsUserOptions options = new GetTokenForTeamsUserOptions("Sanitized", "Sanitized", "Sanitized");
             if (!TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest && Mode != RecordedTestMode.Playback)

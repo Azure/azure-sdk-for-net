@@ -24,14 +24,19 @@ namespace Azure.Communication.Identity.Tests
         /// <summary>
         /// Options used to exchange an AAD access token of a Teams user for a new Communication Identity access token.
         /// </summary>
-        internal GetTokenForTeamsUserOptions CTEOptions;
+        private GetTokenForTeamsUserOptions CTEOptions = new GetTokenForTeamsUserOptions("Sanitized", "Sanitized", "Sanitized");
         /// <summary>
         /// Initializes a new instance of the <see cref="CommunicationIdentityClient"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public CommunicationIdentityClientLiveTests(bool isAsync) : base(isAsync)
         {
-            CTEOptions = createTeamsUserParams().Result;
+        }
+
+        [OneTimeSetUp]
+        public async Task InitVariables()
+        {
+            CTEOptions = await CreateTeamsUserParams();
         }
 
         [Test]

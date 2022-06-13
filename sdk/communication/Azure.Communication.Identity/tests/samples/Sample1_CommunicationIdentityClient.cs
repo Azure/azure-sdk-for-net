@@ -159,7 +159,7 @@ namespace Azure.Communication.Identity.Samples
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            var options = createTeamsUserParams().Result;
+            var options = CreateTeamsUserParams().Result;
             var teamsUserAadToken = options.TeamsUserAadToken;
             var clientId = options.ClientId;
             var userObjectId = options.UserObjectId;
@@ -181,7 +181,7 @@ namespace Azure.Communication.Identity.Samples
                 Assert.Ignore("Ignore exchange teams token test if flag is enabled.");
             }
 
-            var options = await createTeamsUserParams();
+            var options = await CreateTeamsUserParams();
             var teamsUserAadToken = options.TeamsUserAadToken;
             var clientId = options.ClientId;
             var userObjectId = options.UserObjectId;
