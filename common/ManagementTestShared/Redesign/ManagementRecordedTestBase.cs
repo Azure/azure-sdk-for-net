@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.TestFramework
         private ResourceType _resourceType;
         private string _apiVersion;
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default)
-            : base(isAsync, mode)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default, string apiVersion = null)
+            : base(isAsync, mode, apiVersion)
         {
             AdditionalInterceptors = new[] { new ManagementInterceptor(this) };
 
@@ -46,11 +46,10 @@ namespace Azure.ResourceManager.TestFramework
         }
 
         protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default)
-            : this(isAsync, mode)
+            : this(isAsync, mode, apiVersion)
         {
             _resourceType = resourceType;
             _apiVersion = apiVersion;
-            SessionFileQualifier = apiVersion;
         }
 
         private void Initialize()

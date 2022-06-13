@@ -38,7 +38,7 @@ namespace Azure.Core.TestFramework
 
         private DateTime _testStartTime;
 
-        protected  string SessionFileQualifier { get; set; } = string.Empty;
+        private string VersionQualifier { get; }
 
         protected bool ValidateClientInstrumentation { get; set; }
 
@@ -179,9 +179,10 @@ namespace Azure.Core.TestFramework
         {
         };
 
-        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync)
+        protected RecordedTestBase(bool isAsync, RecordedTestMode? mode = null, string apiVersion = null) : base(isAsync)
         {
             Mode = mode ?? TestEnvironment.GlobalTestMode;
+            VersionQualifier = apiVersion;
         }
 
         protected async Task<TestRecording> CreateTestRecordingAsync(RecordedTestMode mode, string sessionFile) =>
@@ -210,8 +211,9 @@ namespace Azure.Core.TestFramework
             string name = new string(testAdapter.Name.Select(c => s_invalidChars.Contains(c) ? '%' : c).ToArray());
 
             string async = IsAsync ? "Async" : string.Empty;
+            string version = VersionQualifier is null ? string.Empty : $"[{VersionQualifier}]";
 
-            string fileName = $"{name}{SessionFileQualifier}{async}.json";
+            string fileName = $"{name}{version}{async}.json";
 
             return Path.Combine(
                 GetSessionFileDirectory(),
