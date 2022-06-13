@@ -28,7 +28,7 @@ extends:
         AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
     PreSteps:
       - bash: brew install openssl@1.1
-        displayName: (MacOS) Grant access to ~/.Azure
+        displayName: (MacOS) Install OpenSSL
         condition: contains(variables['OSVmImage'], 'mac')
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
