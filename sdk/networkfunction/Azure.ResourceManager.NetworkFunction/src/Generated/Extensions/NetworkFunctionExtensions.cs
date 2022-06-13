@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.NetworkFunction.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkFunction
@@ -19,41 +18,6 @@ namespace Azure.ResourceManager.NetworkFunction
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetworkFunction. </summary>
     public static partial class NetworkFunctionExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient((client) =>
-            {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// Lists all of the available NetworkFunction Rest API operations.
-        /// Request Path: /providers/Microsoft.NetworkFunction/operations
-        /// Operation Id: NetworkFunction_ListOperations
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CollectorOperation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CollectorOperation> GetOperationsNetworkFunctionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetOperationsNetworkFunctionsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the available NetworkFunction Rest API operations.
-        /// Request Path: /providers/Microsoft.NetworkFunction/operations
-        /// Operation Id: NetworkFunction_ListOperations
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CollectorOperation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CollectorOperation> GetOperationsNetworkFunctions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetOperationsNetworkFunctions(cancellationToken);
-        }
-
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient((client) =>

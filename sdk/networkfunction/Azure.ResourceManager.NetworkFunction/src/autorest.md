@@ -36,6 +36,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
 directive:
+  - remove-operation: NetworkFunction_ListOperations
   - from: swagger-document
     where: $.definitions..etag
     transform: >
@@ -51,10 +52,5 @@ directive:
       $.ProvisioningState['x-ms-enum']['name'] = 'CollectorProvisioningState';
       $.IngestionSourcesPropertiesFormat.properties.sourceType['x-ms-enum']['name'] = 'IngestionSourceType';
       $.EmissionPolicyDestination.properties.destinationType['x-ms-enum']['name'] = 'EmissionDestinationType';
-      $.OperationListResult['x-ms-client-name'] = 'CollectorOperationListResult';
-
-  - rename-model:
-     from: Operation
-     to: CollectorOperation
 
 ```
