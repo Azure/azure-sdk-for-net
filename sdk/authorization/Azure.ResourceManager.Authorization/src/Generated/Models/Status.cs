@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> The status of the role assignment schedule. </summary>
+    /// <summary> The status of the role assignment schedule request. </summary>
     public readonly partial struct Status : IEquatable<Status>
     {
         private readonly string _value;

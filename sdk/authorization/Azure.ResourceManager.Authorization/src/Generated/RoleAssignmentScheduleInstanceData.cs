@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, string roleAssignmentScheduleId, string originRoleAssignmentId, Status? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string linkedRoleEligibilityScheduleId, string linkedRoleEligibilityScheduleInstanceId, AssignmentType? assignmentType, MemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, string roleAssignmentScheduleId, string originRoleAssignmentId, RoleAssignmentScheduleInstanceStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string linkedRoleEligibilityScheduleId, string linkedRoleEligibilityScheduleInstanceId, AssignmentType? assignmentType, MemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Role Assignment Id in external system. </summary>
         public string OriginRoleAssignmentId { get; }
         /// <summary> The status of the role assignment schedule instance. </summary>
-        public Status? Status { get; }
+        public RoleAssignmentScheduleInstanceStatus? Status { get; }
         /// <summary> The startDateTime of the role assignment schedule instance. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The endDateTime of the role assignment schedule instance. </summary>

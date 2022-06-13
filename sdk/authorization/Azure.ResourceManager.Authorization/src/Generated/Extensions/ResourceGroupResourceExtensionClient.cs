@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Authorization
         /// Operation Id: Permissions_ListForResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Permission" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Permission> GetForResourceGroupPermissionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AzurePermission> GetForResourceGroupPermissionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Permission>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AzurePermission>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = PermissionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetForResourceGroupPermissions");
                 scope.Start();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization
                     throw;
                 }
             }
-            async Task<Page<Permission>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AzurePermission>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = PermissionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetForResourceGroupPermissions");
                 scope.Start();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Authorization
         /// Operation Id: Permissions_ListForResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Permission" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Permission> GetForResourceGroupPermissions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AzurePermission> GetForResourceGroupPermissions(CancellationToken cancellationToken = default)
         {
-            Page<Permission> FirstPageFunc(int? pageSizeHint)
+            Page<AzurePermission> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = PermissionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetForResourceGroupPermissions");
                 scope.Start();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Authorization
                     throw;
                 }
             }
-            Page<Permission> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AzurePermission> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = PermissionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetForResourceGroupPermissions");
                 scope.Start();
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Permission" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Permission> GetForResourcePermissionsAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AzurePermission> GetForResourcePermissionsAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Permission>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AzurePermission>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = PermissionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetForResourcePermissions");
                 scope.Start();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Authorization
                     throw;
                 }
             }
-            async Task<Page<Permission>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AzurePermission>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = PermissionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetForResourcePermissions");
                 scope.Start();
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Permission" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Permission> GetForResourcePermissions(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AzurePermission" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AzurePermission> GetForResourcePermissions(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<Permission> FirstPageFunc(int? pageSizeHint)
+            Page<AzurePermission> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = PermissionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetForResourcePermissions");
                 scope.Start();
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Authorization
                     throw;
                 }
             }
-            Page<Permission> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AzurePermission> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = PermissionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetForResourcePermissions");
                 scope.Start();

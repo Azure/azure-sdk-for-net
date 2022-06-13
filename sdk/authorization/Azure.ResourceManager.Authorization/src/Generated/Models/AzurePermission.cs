@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Role definition permissions. </summary>
-    public partial class Permission
+    public partial class AzurePermission
     {
-        /// <summary> Initializes a new instance of Permission. </summary>
-        public Permission()
+        /// <summary> Initializes a new instance of AzurePermission. </summary>
+        public AzurePermission()
         {
             Actions = new ChangeTrackingList<string>();
             NotActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Permission. </summary>
+        /// <summary> Initializes a new instance of AzurePermission. </summary>
         /// <param name="actions"> Allowed actions. </param>
         /// <param name="notActions"> Denied actions. </param>
-        internal Permission(IList<string> actions, IList<string> notActions)
+        internal AzurePermission(IList<string> actions, IList<string> notActions)
         {
             Actions = actions;
             NotActions = notActions;

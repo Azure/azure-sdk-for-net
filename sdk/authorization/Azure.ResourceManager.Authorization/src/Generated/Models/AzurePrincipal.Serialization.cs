@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class Principal
+    public partial class AzurePrincipal
     {
-        internal static Principal DeserializePrincipal(JsonElement element)
+        internal static AzurePrincipal DeserializeAzurePrincipal(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> displayName = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new Principal(id.Value, displayName.Value, type.Value, email.Value);
+            return new AzurePrincipal(id.Value, displayName.Value, type.Value, email.Value);
         }
     }
 }

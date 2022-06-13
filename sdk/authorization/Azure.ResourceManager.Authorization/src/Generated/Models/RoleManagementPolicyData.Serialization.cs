@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<bool> isOrganizationDefault = default;
-            Optional<Principal> lastModifiedBy = default;
+            Optional<AzurePrincipal> lastModifiedBy = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
             Optional<IList<RoleManagementPolicyRule>> rules = default;
             Optional<IReadOnlyList<RoleManagementPolicyRule>> effectiveRules = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastModifiedBy = Principal.DeserializePrincipal(property0.Value);
+                            lastModifiedBy = AzurePrincipal.DeserializeAzurePrincipal(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedDateTime"))

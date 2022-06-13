@@ -8,19 +8,19 @@
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The name of the entity last modified it. </summary>
-    public partial class Principal
+    public partial class AzurePrincipal
     {
-        /// <summary> Initializes a new instance of Principal. </summary>
-        internal Principal()
+        /// <summary> Initializes a new instance of AzurePrincipal. </summary>
+        internal AzurePrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of Principal. </summary>
+        /// <summary> Initializes a new instance of AzurePrincipal. </summary>
         /// <param name="id"> The id of the principal made changes. </param>
         /// <param name="displayName"> The name of the principal made changes. </param>
         /// <param name="principalType"> Type of principal such as user , group etc. </param>
         /// <param name="email"> Email of principal. </param>
-        internal Principal(string id, string displayName, string principalType, string email)
+        internal AzurePrincipal(string id, string displayName, string principalType, string email)
         {
             Id = id;
             DisplayName = displayName;

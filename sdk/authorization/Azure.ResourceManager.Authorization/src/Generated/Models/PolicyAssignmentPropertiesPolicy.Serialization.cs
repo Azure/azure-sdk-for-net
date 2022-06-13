@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
         internal static PolicyAssignmentPropertiesPolicy DeserializePolicyAssignmentPropertiesPolicy(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<Principal> lastModifiedBy = default;
+            Optional<AzurePrincipal> lastModifiedBy = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastModifiedBy = Principal.DeserializePrincipal(property.Value);
+                    lastModifiedBy = AzurePrincipal.DeserializeAzurePrincipal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastModifiedDateTime"))

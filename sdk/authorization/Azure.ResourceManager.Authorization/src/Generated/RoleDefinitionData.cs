@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Initializes a new instance of RoleDefinitionData. </summary>
         public RoleDefinitionData()
         {
-            Permissions = new ChangeTrackingList<Permission>();
+            Permissions = new ChangeTrackingList<AzurePermission>();
             AssignableScopes = new ChangeTrackingList<string>();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
-        internal RoleDefinitionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string roleName, string description, string roleType, IList<Permission> permissions, IList<string> assignableScopes) : base(id, name, resourceType, systemData)
+        internal RoleDefinitionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string roleName, string description, string roleType, IList<AzurePermission> permissions, IList<string> assignableScopes) : base(id, name, resourceType, systemData)
         {
             RoleName = roleName;
             Description = description;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The role type. </summary>
         public string RoleType { get; set; }
         /// <summary> Role definition permissions. </summary>
-        public IList<Permission> Permissions { get; }
+        public IList<AzurePermission> Permissions { get; }
         /// <summary> Role definition assignable scopes. </summary>
         public IList<string> AssignableScopes { get; }
     }

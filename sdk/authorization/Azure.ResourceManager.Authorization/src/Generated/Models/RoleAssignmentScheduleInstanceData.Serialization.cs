@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<PrincipalType> principalType = default;
             Optional<string> roleAssignmentScheduleId = default;
             Optional<string> originRoleAssignmentId = default;
-            Optional<Status> status = default;
+            Optional<RoleAssignmentScheduleInstanceStatus> status = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
             Optional<string> linkedRoleEligibilityScheduleId = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new Status(property0.Value.GetString());
+                            status = new RoleAssignmentScheduleInstanceStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startDateTime"))

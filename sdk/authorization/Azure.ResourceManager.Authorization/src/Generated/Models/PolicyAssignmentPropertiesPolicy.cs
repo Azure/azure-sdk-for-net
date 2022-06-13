@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> Id of the policy. </param>
         /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
         /// <param name="lastModifiedOn"> The last modified date time. </param>
-        internal PolicyAssignmentPropertiesPolicy(string id, Principal lastModifiedBy, DateTimeOffset? lastModifiedOn)
+        internal PolicyAssignmentPropertiesPolicy(string id, AzurePrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn)
         {
             Id = id;
             LastModifiedBy = lastModifiedBy;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Id of the policy. </summary>
         public string Id { get; }
         /// <summary> The name of the entity last modified it. </summary>
-        public Principal LastModifiedBy { get; }
+        public AzurePrincipal LastModifiedBy { get; }
         /// <summary> The last modified date time. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
     }

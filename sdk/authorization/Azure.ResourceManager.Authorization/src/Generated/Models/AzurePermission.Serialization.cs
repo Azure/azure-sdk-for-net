@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class Permission : IUtf8JsonSerializable
+    public partial class AzurePermission : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization.Models
             writer.WriteEndObject();
         }
 
-        internal static Permission DeserializePermission(JsonElement element)
+        internal static AzurePermission DeserializeAzurePermission(JsonElement element)
         {
             Optional<IList<string>> actions = default;
             Optional<IList<string>> notActions = default;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new Permission(Optional.ToList(actions), Optional.ToList(notActions));
+            return new AzurePermission(Optional.ToList(actions), Optional.ToList(notActions));
         }
     }
 }

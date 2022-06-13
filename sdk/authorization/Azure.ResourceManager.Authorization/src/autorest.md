@@ -61,23 +61,30 @@ directive:
   - rename-model:
       from: RoleAssignmentScheduleRequestProperties
       to: RoleAssignmentSchedule
+      
   # change single class name
-  # # - from: common-types.json
-  # #   where: $.definitions.Permission
-  # #   transform: $['x-ms-client-name'] = "AzurePermission"
-  # - from: common-types.json
-  #   where: $.definitions.Principal
-  #   transform: $['x-ms-client-name'] = "AzurePrincipal"
-  # # - from: RoleAssignmentScheduleRequest.json
-  # #   where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
-  # #   transform: $['x-ms-client-name'] = "ExpirationType"
-  # - from: RoleAssignmentSchedule.json
-  #   where: $.definitions.RoleAssignmentScheduleProperties.properties.status
-  #   transform: $['x-ms-enum'].name = "RoleAssignmentScheduleStatus"
+  - from: authorization-RoleDefinitionsCalls.json
+    where: $.definitions.Permission
+    transform: $['x-ms-client-name'] = "AzurePermission"
+  - from: common-types.json
+    where: $.definitions.Permission
+    transform: $['x-ms-client-name'] = "AzurePermission"
+  - from: common-types.json
+    where: $.definitions.Principal
+    transform: $['x-ms-client-name'] = "AzurePrincipal"
 
-  # - from: authorization-RoleAssignmentsCalls.json
-  #   where: $.definitions.RoleAssignmentCreateParameters
-  #   transform: $['x-ms-client-name'] = "RoleAssignmentCreateOrUpdateContent"
+  - from: RoleAssignmentSchedule.json
+    where: $.definitions.RoleAssignmentScheduleProperties.properties.status
+    transform: $['x-ms-enum'].name = "RoleAssignmentScheduleStatus"
+  - from: RoleAssignmentScheduleInstance.json
+    where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.status
+    transform: $['x-ms-enum'].name = "RoleAssignmentScheduleInstanceStatus"
+  # - from: RoleAssignmentScheduleRequest.json
+  #   where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.status
+  #   transform: $['x-ms-enum'].name = "RoleAssignmentScheduleRequestStatus"
+  # - from: RoleAssignmentScheduleRequest.json
+  #   where: $.definitions.RoleAssignmentScheduleRequestFilter.properties.principalId.description
+  #   transform: $ = "foo"
 
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json
@@ -87,7 +94,16 @@ directive:
     where: $.paths['/{roleDefinitionId}']
     transform: $ = {}
 
-
+  # Assign the specified type
+  # - from: RoleAssignmentSchedule.json
+  #   where: $.definitions.RoleAssignmentScheduleProperties.properties.linkedRoleEligibilityScheduleId
+  #   transform: $['x-ms-format'] = 'resource-type'
+  # - from: RoleAssignmentScheduleInstance.json
+  #   where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.linkedRoleEligibilityScheduleId
+  #   transform: $['x-ms-format'] = 'duration-constant' 
+  # - from: RoleAssignmentScheduleRequest.json
+  #   where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.linkedRoleEligibilityScheduleId
+  #   transform: $['x-ms-format'] = 'azure-location'
 
 
 ```

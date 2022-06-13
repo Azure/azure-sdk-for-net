@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of PermissionGetResult. </summary>
         internal PermissionGetResult()
         {
-            Value = new ChangeTrackingList<Permission>();
+            Value = new ChangeTrackingList<AzurePermission>();
         }
 
         /// <summary> Initializes a new instance of PermissionGetResult. </summary>
         /// <param name="value"> An array of permissions. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal PermissionGetResult(IReadOnlyList<Permission> value, string nextLink)
+        internal PermissionGetResult(IReadOnlyList<AzurePermission> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of permissions. </summary>
-        public IReadOnlyList<Permission> Value { get; }
+        public IReadOnlyList<AzurePermission> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

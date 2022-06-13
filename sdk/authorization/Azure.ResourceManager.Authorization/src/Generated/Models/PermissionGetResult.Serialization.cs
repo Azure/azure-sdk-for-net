@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static PermissionGetResult DeserializePermissionGetResult(JsonElement element)
         {
-            Optional<IReadOnlyList<Permission>> value = default;
+            Optional<IReadOnlyList<AzurePermission>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Permission> array = new List<Permission>();
+                    List<AzurePermission> array = new List<AzurePermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Permission.DeserializePermission(item));
+                        array.Add(AzurePermission.DeserializeAzurePermission(item));
                     }
                     value = array;
                     continue;
