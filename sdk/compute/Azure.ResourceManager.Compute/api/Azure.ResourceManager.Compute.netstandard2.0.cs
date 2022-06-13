@@ -2578,7 +2578,7 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ComputePrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
     {
         internal ComputePrivateLinkResourceData() { }
-        public string GroupId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }

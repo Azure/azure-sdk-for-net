@@ -180,6 +180,7 @@ directive:
     where: $.definitions
     transform: >
       $.PrivateLinkResource["x-ms-client-name"] = "ComputePrivateLinkResourceData";
+      $.PrivateLinkResourceProperties.properties.groupId["x-ms-format"] = "arm-id";
   - from: diskRestorePoint.json
     where: $.definitions
     transform: >
