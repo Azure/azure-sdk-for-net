@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -19,4 +18,6 @@ internal class ProcessorConfiguration
     /// </summary>
     ///
     public TimeSpan ReadTimeout = TimeSpan.FromMinutes(1);
+
+    public bool ValidateEventsSent = true;
 }

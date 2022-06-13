@@ -1,0 +1,22 @@
+command: ['if', '[$JOB_COMPLETION_INDEX -eq "1"];', 'then', 'sleep', '30m', 'fi']
+
+try overriding location?
+testing on different runtimes?
+outline of the processor test - what NEEDS to be tested and why
+	- events are received in order
+	- properties and event data are not corrupted
+	- gets sent to the correct partition
+	- event is expected (i.e. sent to this partition)
+	- duplicate events
+	- missing events
+
+fix docker init container - cant use docker hub
+composite - key/value 
+hash idea - good
+storage blobs key/value
+
+app insights
+
+shared volume mount
+
+logs

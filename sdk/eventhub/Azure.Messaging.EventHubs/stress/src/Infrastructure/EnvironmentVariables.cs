@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 namespace Azure.Messaging.EventHubs.Stress;
 
 /// <summary>
@@ -80,4 +78,27 @@ public static class EnvironmentVariables
     /// </summary>
     ///
     public const string JobCompletionIndex = "JOB_COMPLETION_INDEX";
+
+    // Azure Redis Cache Information
+
+    /// <summary>
+    ///   The name of the environment variable that holds the name of the Azure Redis Cache access key for the processor test
+    ///   scenario.
+    /// </summary>
+    ///
+    public const string RedisCacheAccesKey = "REDIS_CACHE_ACCESS_KEY";
+
+    /// <summary>
+    ///   The name of the environment variable that holds the name of the Azure Redis Cache host name for the processor test
+    ///   scenario.
+    /// </summary>
+    ///
+    public const string RedisCacheHostname = "REDIS_CACHE_HOSTNAME";
+
+    /// <summary>
+    ///   The name of the environment variable that holds the name of the Azure Redis Cache port for the processor test
+    ///   scenario.
+    /// </summary>
+    ///
+    public const string RedisCachePort = "REDIS_CACHE_PORT";
 }

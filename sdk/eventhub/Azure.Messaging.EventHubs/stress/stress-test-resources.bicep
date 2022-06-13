@@ -11,7 +11,7 @@ param testApplicationOid string
 param location string = resourceGroup().location
 
 var namespaceName = resourceGroup().name
-var shortNamespaceName = substring(replace(namespaceName, '-',''), 0, 15)
+var storageAccountName = 'storage${uniqueString(namespaceName)}'
 var defaultSASKeyName = 'RootManageSharedAccessKey'
 var eventHubsAuthRuleResourceId = resourceId('Microsoft.EventHub/namespaces/authorizationRules', namespaceName, defaultSASKeyName)
 
@@ -32,7 +32,7 @@ var processorTestEventHubPartitions = 10
 
 // Storage Account Creation
 resource sa 'Microsoft.Storage/storageAccounts@2021-06-01' = {
-  name: shortNamespaceName
+  name: storageAccountName
   location: location
   sku: {
     name: 'Standard_LRS'

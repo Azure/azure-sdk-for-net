@@ -48,17 +48,14 @@ public class Program
     {
         // See if there are environment variables available to use in the .env file
         var environment = new Dictionary<string, string>();
-        var appInsightsKey = String.Empty;
-        var eventHubsConnectionString = String.Empty;
-
         var environmentFile = Environment.GetEnvironmentVariable("ENV_FILE");
         if (!(string.IsNullOrEmpty(environmentFile)))
         {
             environment = EnvironmentReader.LoadFromFile(environmentFile);
         }
 
-        environment.TryGetValue(EnvironmentVariables.ApplicationInsightsKey, out appInsightsKey);
-        environment.TryGetValue(EnvironmentVariables.EventHubsConnectionString, out eventHubsConnectionString);
+        environment.TryGetValue(EnvironmentVariables.ApplicationInsightsKey, out var appInsightsKey);
+        environment.TryGetValue(EnvironmentVariables.EventHubsConnectionString, out var eventHubsConnectionString);
 
         // If not, and this is an interactive run, try and get them from the user.
 
@@ -68,9 +65,8 @@ public class Program
         // If a job index is provided, a single role is started, otherwise, all specified roles within the
         // test scenario runs are run in parallel.
 
-        var roleConfiguration = new RoleConfiguration();
         var testScenarioTasks = new List<Task>();
-        var metrics = new Metrics(appInsightsKey);
+        var testsToRun = opts.All ? Enum.GetValues(typeof(TestScenario)) : new TestScenario[]{StringToTestScenario(opts.Test)};
 
         var testConfiguration = new TestConfiguration();
         testConfiguration.EventHubsConnectionString = eventHubsConnectionString;
@@ -79,118 +75,85 @@ public class Program
         var runDuration = TimeSpan.FromHours(testConfiguration.DurationInHours);
         cancellationSource.CancelAfter(runDuration);
 
+        var metrics = new Metrics(appInsightsKey);
+
         using var azureEventListener = new AzureEventSourceListener((args, level) => metrics.Client.TrackTrace($"EventWritten: {args.ToString()} Level: {level}."), EventLevel.Warning);
 
-        // If running the Event Producer Test scenario, gather resources and add a scenario run to the task list.
-        if (opts.Test == RoleConfiguration.EventProducerTest || opts.Test == RoleConfiguration.EventProducerTestShort || opts.All)
-        {
-            // Get the needed resources for the event producer test: an event hub
-            var eventHubName = String.Empty;
-            environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
-            eventHubName = PromptForResources("Event Hub", RoleConfiguration.EventProducerTest, eventHubName, opts.Interactive);
-            testConfiguration.EventHub = eventHubName;
-
-            roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.EventProducerTest, out var roleList);
-            testScenarioTasks.Add(RunScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, RoleConfiguration.EventProducerTest, cancellationSource.Token));
-        }
-
-        // If running the Buffered Producer Test scenario, gather resources and add a scenario run to the task list.
-        if (opts.Test == RoleConfiguration.BufferedProducerTest || opts.Test == RoleConfiguration.BufferedProducerTestShort || opts.All)
-        {
-            // Get the needed resources for the buffered producer test: an event hub
-            var eventHubName = String.Empty;
-            environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
-            eventHubName = PromptForResources("Event Hub", RoleConfiguration.BufferedProducerTest, eventHubName, opts.Interactive);
-            testConfiguration.EventHub = eventHubName;
-
-            roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.BufferedProducerTest, out var roleList);
-            testScenarioTasks.Add(RunScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, RoleConfiguration.BufferedProducerTest, cancellationSource.Token));
-        }
-
-        // If running the Burst Buffered Producer Test scenario, gather resources and add a scenario run to the task list.
-        if (opts.Test == RoleConfiguration.BurstBufferedProducerTest || opts.Test == RoleConfiguration.BurstBufferedProducerTestShort || opts.All)
-        {
-            // Get the needed resources for the buffered producer test: an event hub
-            var eventHubName = String.Empty;
-            environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
-            eventHubName = PromptForResources("Event Hub", "Burst Buffered Producer Test", eventHubName, opts.Interactive);
-            testConfiguration.EventHub = eventHubName;
-
-            roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.BurstBufferedProducerTest, out var roleList);
-            testScenarioTasks.Add(RunScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, RoleConfiguration.BurstBufferedProducerTest, cancellationSource.Token));
-        }
-
-        // If running the Processor Test scenario, gather resources and add a scenario run to the task list.
-        if (opts.Test == RoleConfiguration.EventProcessorTest || opts.Test == RoleConfiguration.EventProcessorTestShort || opts.All)
-        {
-            // Get the needed resources for the processor test: an event hub, storage account, and blob container name
-            var eventHubName = String.Empty;
-            var storageBlob = String.Empty;
-            var storageConnectionString = String.Empty;
-            environment.TryGetValue(EnvironmentVariables.EventHubProcessorTest, out eventHubName);
-            eventHubName = PromptForResources("Event Hub", RoleConfiguration.EventProcessorTest, eventHubName, opts.Interactive);
-            testConfiguration.EventHub = eventHubName;
-
-            environment.TryGetValue(EnvironmentVariables.StorageBlobProcessorTest, out storageBlob);
-            storageBlob = PromptForResources("Storage Blob Name", RoleConfiguration.EventProcessorTest, storageBlob, opts.Interactive);
-            testConfiguration.BlobContainer = storageBlob;
-
-            environment.TryGetValue(EnvironmentVariables.StorageAccountProcessorTest, out storageConnectionString);
-            storageConnectionString = PromptForResources("Storage Account Connection String", RoleConfiguration.EventProcessorTest, storageConnectionString, opts.Interactive);
-            testConfiguration.StorageConnectionString = storageConnectionString;
-
-            roleConfiguration.TestScenarioRoles.TryGetValue(RoleConfiguration.EventProcessorTest, out var roleList);
-            testScenarioTasks.Add(RunScenario(roleList, testConfiguration, roleConfiguration, metrics, opts.Role, RoleConfiguration.BurstBufferedProducerTest, cancellationSource.Token));
-        }
-
-        // Wait for all scenario runs to finish before returning.
-        await Task.WhenAll(testScenarioTasks).ConfigureAwait(false);
-    }
-
-    /// <summary>
-    ///   Runs all of the roles designated for this scenario. If this is a single-role instance, only one role is run, otherwise all roles
-    ///   are run in parallel.
-    /// </summary>
-    ///
-    /// <param name="roleList">The list of roles needed for the scenario being run.</param>
-    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> instance used to configure this test scenario run.</param>
-    /// <param name="roleConfiguration">The <see cref="RoleConfiguration" /> instance used to configure the role being run.</param>
-    /// <param name="metrics">The <see cref="Metrics" /> instance used by this role to send metrics to application insights.</param>
-    /// <param name="testName">The name of the test scenario that is being run, for metrics purposes.</param>
-    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-    ///
-    private static async Task RunScenario(List<string> roleList,
-                                           TestConfiguration testConfiguration,
-                                           RoleConfiguration roleConfiguration,
-                                           Metrics metrics,
-                                           string roleString,
-                                           string testName,
-                                           CancellationToken cancellationToken)
-    {
-        var scenarioTasks = new List<Task>();
         try
         {
-            // This means the job index environment variable was not set, so run all roles for this scenario in parallel.
-            if (string.IsNullOrEmpty(roleString))
+            foreach (TestScenario t in testsToRun)
             {
-                foreach (var role in roleList)
+                var testName = TestScenarioToString(t);
+                metrics.Client.Context.GlobalProperties["TestName"] = testName;
+                var eventHubName = string.Empty;
+                var storageBlob = string.Empty;
+                var storageConnectionString = string.Empty;
+
+                switch (t)
                 {
-                    scenarioTasks.Add(RunRole(role, testConfiguration, roleConfiguration, metrics, testName, cancellationToken));
+                    case TestScenario.BufferedProducerHashingTest:
+                        break;
+
+                    case TestScenario.BufferedProducerTest:
+                        environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
+                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+
+                        var bufferedProducerTest = new BufferedProducerTest(testConfiguration, metrics, opts.Role);
+                        testScenarioTasks.Add(bufferedProducerTest.RunTestAsync(cancellationSource.Token));
+                        break;
+
+                    case TestScenario.BurstBufferedProducerTest:
+                        environment.TryGetValue(EnvironmentVariables.EventHubBurstBufferedProducerTest, out eventHubName);
+                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+
+                        var burstBufferedProducerTest = new BurstBufferedProducerTest(testConfiguration, metrics, opts.Role);
+                        testScenarioTasks.Add(burstBufferedProducerTest.RunTestAsync(cancellationSource.Token));
+                        break;
+
+                    case TestScenario.DistributedTracingTest:
+                        break;
+
+                    case TestScenario.EventProducerTest:
+                        environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
+                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+
+                        var eventProducerTest = new EventProducerTest(testConfiguration, metrics, opts.Role);
+                        testScenarioTasks.Add(eventProducerTest.RunTestAsync(cancellationSource.Token));
+                        break;
+
+                    case TestScenario.ProcessorLoadBalancesTest:
+                        break;
+
+                    case TestScenario.ProcessorTest:
+                        // Get the Event Hub name for this test
+                        environment.TryGetValue(EnvironmentVariables.EventHubProcessorTest, out eventHubName);
+                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
+
+                        // Get the storage blob name for this test
+                        environment.TryGetValue(EnvironmentVariables.StorageBlobProcessorTest, out storageBlob);
+                        testConfiguration.BlobContainer = PromptForResources("Storage Blob Name", testName, storageBlob, opts.Interactive);
+
+                        // Get the storage account connection string for this test
+                        environment.TryGetValue(EnvironmentVariables.StorageAccountProcessorTest, out storageConnectionString);
+                        testConfiguration.StorageConnectionString = PromptForResources("Storage Account Connection String", testName, storageConnectionString, opts.Interactive);
+
+                        var processorTest = new ProcessorTest(testConfiguration, metrics, opts.Role);
+                        testScenarioTasks.Add(processorTest.RunTestAsync(cancellationSource.Token));
+                        break;
+
+                    case TestScenario.ProcessorPartitionOwnershipTest:
+                        break;
                 }
             }
-            else
+
+            while (!cancellationSource.Token.IsCancellationRequested)
             {
-                scenarioTasks.Add(RunRole(roleList[int.Parse(roleString)], testConfiguration, roleConfiguration, metrics, testName, cancellationToken));
+                metrics.UpdateEnvironmentStatistics();
+
+                await Task.Delay(TimeSpan.FromMinutes(5), cancellationSource.Token).ConfigureAwait(false);
             }
-
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                UpdateEnvironmentStatistics(metrics);
-
-                await Task.Delay(TimeSpan.FromMinutes(5), cancellationToken).ConfigureAwait(false);
-            }
-
-            await Task.WhenAll(scenarioTasks).ConfigureAwait(false);
+            // Wait for all tests scenarios to finish before returning.
+            await Task.WhenAll(testScenarioTasks).ConfigureAwait(false);
         }
         catch (TaskCanceledException)
         {
@@ -214,72 +177,30 @@ public class Program
         }
     }
 
-    /// <summary>
-    ///   Starts a background task for each test that needs to be run, and waits for all
-    ///   test runs to completed before returning.
-    /// </summary>
-    ///
-    /// <param name="roleList">The list of roles needed for the scenario being run.</param>
-    /// <param name="testConfiguration">The <see cref="TestConfiguration" /> instance used to configure this test scenario run.</param>
-    /// <param name="roleConfiguration">The <see cref="RoleConfiguration" /> instance used to configure the role being run.</param>
-    /// <param name="metrics">The <see cref="Metrics" /> instance used by this role to send metrics to application insights.</param>
-    /// <param name="testName">The name of the test scenario that is being run, for metrics purposes.</param>
-    /// <param name="cancellationToken">The <see cref="CancellationToke"/> instance to signal the request to cancel the operation.</param>
-    ///
-    private static async Task RunRole(string role,
-                                      TestConfiguration testConfiguration,
-                                      RoleConfiguration roleConfiguration,
-                                      Metrics metrics,
-                                      string testName,
-                                      CancellationToken cancellationToken)
+    public static string TestScenarioToString(TestScenario testScenario) => testScenario switch
     {
-        if (role == RoleConfiguration.Publisher)
-        {
-            var publisherConfiguration = new PublisherConfiguration();
-            var publisher = new Publisher(publisherConfiguration, testConfiguration, metrics, testName);
-            await publisher.Start(cancellationToken);
-        }
+        TestScenario.BufferedProducerHashingTest => "BufferedProducerHashingTest",
+        TestScenario.BufferedProducerTest => "BufferedProducerTest",
+        TestScenario.BurstBufferedProducerTest => "BurstBufferedProducerTest",
+        TestScenario.DistributedTracingTest => "DistributedTracingTest",
+        TestScenario.EventProducerTest => "EventProducerTest",
+        TestScenario.ProcessorLoadBalancesTest => "ProcessorLoadBalancesTest",
+        TestScenario.ProcessorTest => "ProcessorTest",
+        TestScenario.ProcessorPartitionOwnershipTest => "ProcessorPartitionOwnershipTest",
+        _ => string.Empty,
+    };
 
-        if (role == RoleConfiguration.BufferedPublisher)
-        {
-            var publisherConfiguration = new BufferedPublisherConfiguration();
-            var publisher = new BufferedPublisher(testConfiguration, publisherConfiguration, metrics, testName);
-            await publisher.Start(cancellationToken);
-        }
-
-        if (role == RoleConfiguration.Processor)
-        {
-            var partitionCount = _getPartitionCount(testConfiguration.EventHubsConnectionString, testConfiguration.EventHub);
-            await partitionCount.ConfigureAwait(false);
-            var processConfiguration = new ProcessorConfiguration();
-            var processor = new Processor(testConfiguration, processConfiguration, metrics, partitionCount.Result, testName);
-            await processor.Start(cancellationToken);
-        }
-
-        if (role == RoleConfiguration.BurstBufferedPublisher)
-        {
-            var publisherConfiguration = new BufferedPublisherConfiguration();
-            publisherConfiguration.ProducerPublishingDelay = TimeSpan.FromMinutes(25);
-            var publisher = new BufferedPublisher(testConfiguration, publisherConfiguration, metrics, testName);
-            await publisher.Start(cancellationToken);
-        }
-
-        //return Task.CompletedTask;
-        await Task.Delay(TimeSpan.FromSeconds(1));
-    }
-
-    /// <summary>
-    ///   Collects garbage collection environment metrics and sends them to Application Insights.
-    /// </summary>
-    ///
-    /// <param name="metrics">The <see cref="Metrics" /> instance to use to send metrics to Application Insights.</param>
-    ///
-    private static void UpdateEnvironmentStatistics(Metrics metrics)
+    public static TestScenario StringToTestScenario(string testScenario) => testScenario switch
     {
-        metrics.Client.GetMetric(Metrics.GenerationZeroCollections).TrackValue(GC.CollectionCount(0));
-        metrics.Client.GetMetric(Metrics.GenerationOneCollections).TrackValue(GC.CollectionCount(1));
-        metrics.Client.GetMetric(Metrics.GenerationTwoCollections).TrackValue(GC.CollectionCount(2));
-    }
+        "BufferedProducerHashingTest" => TestScenario.BufferedProducerHashingTest,
+        "BufferedProducerTest" or "BuffProd"=> TestScenario.BufferedProducerTest,
+        "BurstBufferedProducerTest" => TestScenario.BurstBufferedProducerTest,
+        "EventProducerTest" or "EventProd"=> TestScenario.EventProducerTest,
+        "ProcessorLoadBalancesTest" => TestScenario.ProcessorLoadBalancesTest,
+        "ProcessorTest" or "Processor"=> TestScenario.ProcessorTest,
+        "ProcessorPartitionOwnershipTest" => TestScenario.ProcessorPartitionOwnershipTest,
+        _ => throw new ArgumentNullException(),
+    };
 
     /// <summary>
     ///   Prompts the user using the command line for resources if they have not been provided yet.
@@ -307,26 +228,6 @@ public class Program
         }
 
         return currentValue;
-    }
-
-    /// <summary>
-    ///   Starts a background task for each test that needs to be run, and waits for all
-    ///   test runs to completed before returning.
-    /// </summary>
-    ///
-    /// <param name="eventHubsConnectionString">The connection string to connect to the Event Hubs namespace for this test.</param>
-    /// <param name="eventHubName">The name of the Event Hub to send events to for this test.</param>
-    ///
-    private static async Task<int> _getPartitionCount(string eventHubsConnectionString, string eventHubName)
-    {
-        int partitionCount;
-
-        await using (var producerClient = new EventHubProducerClient(eventHubsConnectionString, eventHubName))
-        {
-            partitionCount = (await producerClient.GetEventHubPropertiesAsync()).PartitionIds.Length;
-        }
-
-        return partitionCount;
     }
 
     /// <summary>
