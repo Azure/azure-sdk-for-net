@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations
         public bool? Verbose { get; set; }
         /// <summary> If true, the service will keep the query for further review. </summary>
         public bool? IsLoggingEnabled { get; set; }
-        /// <summary> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </summary>
+        /// <summary> Specifies the method used to interpret string offsets. Set this to &quot;Utf16CodeUnit&quot; for .NET strings, which are encoded as UTF-16. </summary>
         public StringIndexType? StringIndexType { get; set; }
         /// <summary> The name of a target project to forward the request to. </summary>
         public string DirectTarget { get; set; }
