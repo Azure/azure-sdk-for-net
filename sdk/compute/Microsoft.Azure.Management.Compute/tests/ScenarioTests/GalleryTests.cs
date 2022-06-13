@@ -119,7 +119,8 @@ namespace Compute.Tests
 
                 IPage<GalleryImage> listGalleryImagesResult = m_CrpClient.GalleryImages.ListByGallery(rgName, galleryName);
                 Assert.Single(listGalleryImagesResult);
-                Assert.Null(listGalleryImagesResult.NextPageLink);
+                Assert.Equal(1, listGalleryImagesResult.Count());
+                //Assert.Null(listGalleryImagesResult.NextPageLink);
 
                 m_CrpClient.GalleryImages.Delete(rgName, galleryName, galleryImageName);
                 listGalleryImagesResult = m_CrpClient.GalleryImages.ListByGallery(rgName, galleryName);
@@ -194,13 +195,13 @@ namespace Compute.Tests
                     IPage<GalleryImageVersion> listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
                         ListByGalleryImage(rgName, galleryName, galleryImageName);
                     Assert.Single(listGalleryImageVersionsResult);
-                    Assert.Null(listGalleryImageVersionsResult.NextPageLink);
+                    Assert.Equal(1, listGalleryImageVersionsResult.Count());
+                    //Assert.Null(listGalleryImageVersionsResult.NextPageLink);
 
                     m_CrpClient.GalleryImageVersions.Delete(rgName, galleryName, galleryImageName, galleryImageVersionName);
                     listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
                         ListByGalleryImage(rgName, galleryName, galleryImageName);
                     Assert.Empty(listGalleryImageVersionsResult);
-                    Assert.Null(listGalleryImageVersionsResult.NextPageLink);
                     Trace.TraceInformation(string.Format("Deleted the gallery image version: {0} in gallery image: {1}",
                         galleryImageVersionName, galleryImageName));
 
@@ -231,7 +232,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string location = ComputeManagementTestUtilities.DefaultLocation;
+                string location = galleryHomeLocation;
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
 
@@ -276,7 +277,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string location = ComputeManagementTestUtilities.DefaultLocation;
+                string location = galleryHomeLocation;
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
@@ -759,7 +760,7 @@ namespace Compute.Tests
             return new GalleryApplication
             {
                 Eula = "This is the gallery application EULA.",
-                Location = ComputeManagementTestUtilities.DefaultLocation,
+                Location = galleryHomeLocation,
                 SupportedOSType = OperatingSystemTypes.Windows,
                 PrivacyStatementUri = "www.privacystatement.com",
                 ReleaseNoteUri = "www.releasenote.com",
@@ -771,7 +772,7 @@ namespace Compute.Tests
         {
             return new GalleryApplicationVersion
             {
-                Location = ComputeManagementTestUtilities.DefaultLocation,
+                Location = galleryHomeLocation,
                 PublishingProfile = new GalleryApplicationVersionPublishingProfile
                 {
                     Source = new UserArtifactSource
@@ -783,10 +784,20 @@ namespace Compute.Tests
                         Install = "powershell -command \"Expand-Archive -Path test.zip -DestinationPath C:\\package\"",
                         Remove = "del C:\\package "
                     },
+                    Settings = new UserArtifactSettings
+                    {
+                        PackageFileName = "test.zip",
+                        ConfigFileName = "config.cfg"
+                    },
+                    AdvancedSettings = new Dictionary<string, string>()
+                    {
+                        { "cacheLimit", "500" },
+                        { "user", "root"}
+                    },
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
                     TargetRegions = new List<TargetRegion> {
-                        new TargetRegion { Name = ComputeManagementTestUtilities.DefaultLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
+                        new TargetRegion { Name = galleryHomeLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
                     },
                     EndOfLifeDate = DateTime.Today.AddDays(10).Date
                 }
@@ -831,6 +842,16 @@ namespace Compute.Tests
             Assert.NotNull(applicationVersionOut.PublishingProfile.EndOfLifeDate);
             Assert.NotNull(applicationVersionOut.PublishingProfile.PublishedDate);
             Assert.NotNull(applicationVersionOut.Id);
+            Assert.Equal(applicationVersionIn.PublishingProfile.Settings.PackageFileName, applicationVersionOut.PublishingProfile.Settings.PackageFileName);
+            Assert.Equal(applicationVersionIn.PublishingProfile.Settings.ConfigFileName, applicationVersionOut.PublishingProfile.Settings.ConfigFileName);
+            IDictionary<string, string> advancedSettingsIn = applicationVersionIn.PublishingProfile.AdvancedSettings;
+            IDictionary<string, string> advancedSettingsOut = applicationVersionOut.PublishingProfile.AdvancedSettings;
+            Assert.Equal(advancedSettingsIn.Count, advancedSettingsOut.Count);
+            foreach (KeyValuePair<string, string> kvp in advancedSettingsIn)
+            {
+                Assert.True(advancedSettingsOut.ContainsKey(kvp.Key));
+                Assert.Equal(kvp.Value, advancedSettingsOut[kvp.Key]);
+            }
         }
     }
 }

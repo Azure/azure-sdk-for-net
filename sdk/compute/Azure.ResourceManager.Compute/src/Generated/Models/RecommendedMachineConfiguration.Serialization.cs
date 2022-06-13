@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VCPUs))
+            if (Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs");
-                writer.WriteObjectValue(VCPUs);
+                writer.WriteObjectValue(VCpus);
             }
             if (Optional.IsDefined(Memory))
             {

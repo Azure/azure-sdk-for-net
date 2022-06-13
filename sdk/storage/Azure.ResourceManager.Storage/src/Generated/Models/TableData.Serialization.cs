@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -18,6 +20,16 @@ namespace Azure.ResourceManager.Storage
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(SignedIdentifiers))
+            {
+                writer.WritePropertyName("signedIdentifiers");
+                writer.WriteStartArray();
+                foreach (var item in SignedIdentifiers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -29,6 +41,7 @@ namespace Azure.ResourceManager.Storage
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> tableName = default;
+            Optional<IList<TableSignedIdentifier>> signedIdentifiers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -65,11 +78,26 @@ namespace Azure.ResourceManager.Storage
                             tableName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("signedIdentifiers"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<TableSignedIdentifier> array = new List<TableSignedIdentifier>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(TableSignedIdentifier.DeserializeTableSignedIdentifier(item));
+                            }
+                            signedIdentifiers = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new TableData(id, name, type, systemData, tableName.Value);
+            return new TableData(id, name, type, systemData, tableName.Value, Optional.ToList(signedIdentifiers));
         }
     }
 }

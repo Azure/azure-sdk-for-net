@@ -223,7 +223,7 @@ namespace Azure.Core.Extensions.Tests
         public void CreatesManagedServiceIdentityCredentialsWithResourceId()
         {
             IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("UserAssignedManagedIdentityResourceId", "ConfigurationResourceId"),
+                new KeyValuePair<string, string>("managedIdentityResourceId", "ConfigurationResourceId"),
                 new KeyValuePair<string, string>("credential", "managedidentity")
             );
 
@@ -241,7 +241,7 @@ namespace Azure.Core.Extensions.Tests
         public void CreatesManagedServiceIdentityCredentialsThrowsWhenResourceIdAndClientIdSpecified()
         {
             IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("UserAssignedManagedIdentityResourceId", "ConfigurationResourceId"),
+                new KeyValuePair<string, string>("managedIdentityResourceId", "ConfigurationResourceId"),
                 new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
                 new KeyValuePair<string, string>("credential", "managedidentity")
             );
