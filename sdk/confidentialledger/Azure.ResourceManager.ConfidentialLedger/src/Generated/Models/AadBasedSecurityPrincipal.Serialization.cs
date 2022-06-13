@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class AADBasedSecurityPrincipal : IUtf8JsonSerializable
+    public partial class AadBasedSecurityPrincipal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(LedgerRoleName))
             {
@@ -33,10 +34,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             writer.WriteEndObject();
         }
 
-        internal static AADBasedSecurityPrincipal DeserializeAADBasedSecurityPrincipal(JsonElement element)
+        internal static AadBasedSecurityPrincipal DeserializeAadBasedSecurityPrincipal(JsonElement element)
         {
             Optional<string> principalId = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<LedgerRoleName> ledgerRoleName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +48,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("ledgerRoleName"))
@@ -61,7 +67,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new AADBasedSecurityPrincipal(principalId.Value, tenantId.Value, Optional.ToNullable(ledgerRoleName));
+            return new AadBasedSecurityPrincipal(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(ledgerRoleName));
         }
     }
 }

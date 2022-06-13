@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.ConfidentialLedger
 }
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class AADBasedSecurityPrincipal
+    public partial class AadBasedSecurityPrincipal
     {
-        public AADBasedSecurityPrincipal() { }
+        public AadBasedSecurityPrincipal() { }
         public Azure.ResourceManager.ConfidentialLedger.Models.LedgerRoleName? LedgerRoleName { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
+        public System.Guid? TenantId { get { throw null; } set { } }
     }
     public partial class CertBasedSecurityPrincipal
     {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     public partial class LedgerProperties
     {
         public LedgerProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ConfidentialLedger.Models.AADBasedSecurityPrincipal> AadBasedSecurityPrincipals { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ConfidentialLedger.Models.AadBasedSecurityPrincipal> AadBasedSecurityPrincipals { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ConfidentialLedger.Models.CertBasedSecurityPrincipal> CertBasedSecurityPrincipals { get { throw null; } }
         public System.Uri IdentityServiceUri { get { throw null; } }
         public string LedgerInternalNamespace { get { throw null; } }

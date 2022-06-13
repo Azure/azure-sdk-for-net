@@ -38,6 +38,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  AAD: Aad
 
 directive:
   - from: confidentialledger.json
@@ -45,6 +46,7 @@ directive:
     transform: >
       $.ResourceLocation.properties.location['x-ms-format'] = 'azure-location';
       $.ProvisioningState['x-ms-enum']['name'] = 'LedgerProvisioningState';
+      $.AADBasedSecurityPrincipal.properties.tenantId['format'] = 'uuid';
   - from: types.json
     where: $.definitions
     transform: >

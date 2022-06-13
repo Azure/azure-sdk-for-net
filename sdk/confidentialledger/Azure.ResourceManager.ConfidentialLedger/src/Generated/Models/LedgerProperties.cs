@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of LedgerProperties. </summary>
         public LedgerProperties()
         {
-            AadBasedSecurityPrincipals = new ChangeTrackingList<AADBasedSecurityPrincipal>();
+            AadBasedSecurityPrincipals = new ChangeTrackingList<AadBasedSecurityPrincipal>();
             CertBasedSecurityPrincipals = new ChangeTrackingList<CertBasedSecurityPrincipal>();
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="provisioningState"> Provisioning state of Ledger Resource. </param>
         /// <param name="aadBasedSecurityPrincipals"> Array of all AAD based Security Principals. </param>
         /// <param name="certBasedSecurityPrincipals"> Array of all cert based Security Principals. </param>
-        internal LedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, LedgerType? ledgerType, LedgerProvisioningState? provisioningState, IList<AADBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals)
+        internal LedgerProperties(string ledgerName, Uri ledgerUri, Uri identityServiceUri, string ledgerInternalNamespace, LedgerType? ledgerType, LedgerProvisioningState? provisioningState, IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals, IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals)
         {
             LedgerName = ledgerName;
             LedgerUri = ledgerUri;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Provisioning state of Ledger Resource. </summary>
         public LedgerProvisioningState? ProvisioningState { get; }
         /// <summary> Array of all AAD based Security Principals. </summary>
-        public IList<AADBasedSecurityPrincipal> AadBasedSecurityPrincipals { get; }
+        public IList<AadBasedSecurityPrincipal> AadBasedSecurityPrincipals { get; }
         /// <summary> Array of all cert based Security Principals. </summary>
         public IList<CertBasedSecurityPrincipal> CertBasedSecurityPrincipals { get; }
     }

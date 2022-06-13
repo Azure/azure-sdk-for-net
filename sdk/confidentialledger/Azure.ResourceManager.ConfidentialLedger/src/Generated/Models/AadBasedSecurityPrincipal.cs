@@ -5,21 +5,23 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> AAD based security principal with associated Ledger RoleName. </summary>
-    public partial class AADBasedSecurityPrincipal
+    public partial class AadBasedSecurityPrincipal
     {
-        /// <summary> Initializes a new instance of AADBasedSecurityPrincipal. </summary>
-        public AADBasedSecurityPrincipal()
+        /// <summary> Initializes a new instance of AadBasedSecurityPrincipal. </summary>
+        public AadBasedSecurityPrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of AADBasedSecurityPrincipal. </summary>
+        /// <summary> Initializes a new instance of AadBasedSecurityPrincipal. </summary>
         /// <param name="principalId"> UUID/GUID based Principal Id of the Security Principal. </param>
         /// <param name="tenantId"> UUID/GUID based Tenant Id of the Security Principal. </param>
         /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
-        internal AADBasedSecurityPrincipal(string principalId, string tenantId, LedgerRoleName? ledgerRoleName)
+        internal AadBasedSecurityPrincipal(string principalId, Guid? tenantId, LedgerRoleName? ledgerRoleName)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> UUID/GUID based Principal Id of the Security Principal. </summary>
         public string PrincipalId { get; set; }
         /// <summary> UUID/GUID based Tenant Id of the Security Principal. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
         /// <summary> LedgerRole associated with the Security Principal of Ledger. </summary>
         public LedgerRoleName? LedgerRoleName { get; set; }
     }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<string> ledgerInternalNamespace = default;
             Optional<LedgerType> ledgerType = default;
             Optional<LedgerProvisioningState> provisioningState = default;
-            Optional<IList<AADBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
+            Optional<IList<AadBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
             Optional<IList<CertBasedSecurityPrincipal>> certBasedSecurityPrincipals = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AADBasedSecurityPrincipal> array = new List<AADBasedSecurityPrincipal>();
+                    List<AadBasedSecurityPrincipal> array = new List<AadBasedSecurityPrincipal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AADBasedSecurityPrincipal.DeserializeAADBasedSecurityPrincipal(item));
+                        array.Add(AadBasedSecurityPrincipal.DeserializeAadBasedSecurityPrincipal(item));
                     }
                     aadBasedSecurityPrincipals = array;
                     continue;
