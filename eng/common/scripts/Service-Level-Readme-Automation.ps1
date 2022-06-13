@@ -189,10 +189,12 @@ foreach($moniker in $monikers) {
       $pkgKey = GetPackageKey $metadataEntry
       if($onboardedPackages.ContainsKey($pkgKey)) {
         if ($onboardedPackages[$pkgKey] -and $onboardedPackages[$pkgKey].DirectoryPath) {
-          Add-Member -InputObject $metadataEntry `
-          -MemberType NoteProperty `
-          -Name DirectoryPath `
-          -Value $onboardedPackages[$pkgKey].DirectoryPath
+          if (!($metadataEntry.PSObject.Members.Name -contains "DirectoryPath")) {
+            Add-Member -InputObject $metadataEntry `
+              -MemberType NoteProperty `
+              -Name DirectoryPath `
+              -Value $onboardedPackages[$pkgKey].DirectoryPath
+          }
         }
         $csvMetadata += $metadataEntry
       }
