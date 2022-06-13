@@ -359,15 +359,19 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             try
             {
                 var currentConfig = _restClient.GetSipConfiguration(cancellationToken);
+                var newTrunks = trunks.ToDictionary(x => x.Fqdn, x => x);
 
                 if (currentConfig.Value.Trunks.Count > 0)
                 {
-                    var configToRemove = new SipConfiguration(currentConfig.Value.Trunks.Keys.ToDictionary(x => x, x => (SipTrunk)null));
-                    _restClient.PatchSipConfiguration(configToRemove, cancellationToken);
+                    var trunkFqdnsToRemove = currentConfig.Value.Trunks.Keys.Where(x => !newTrunks.ContainsKey(x));
+
+                    foreach (var fqdn in trunkFqdnsToRemove)
+                    {
+                        newTrunks.Add(fqdn, null);
+                    }
                 }
 
-                var newConfig = new SipConfiguration(trunks.ToDictionary(x => x.Fqdn, x => x));
-                var response = _restClient.PatchSipConfiguration(newConfig, cancellationToken);
+                var response = _restClient.PatchSipConfiguration(new SipConfiguration(newTrunks), cancellationToken);
                 return response.GetRawResponse();
             }
             catch (Exception ex)
@@ -391,15 +395,19 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             try
             {
                 var currentConfig = await _restClient.GetSipConfigurationAsync(cancellationToken).ConfigureAwait(false);
+                var newTrunks = trunks.ToDictionary(x => x.Fqdn, x => x);
 
                 if (currentConfig.Value.Trunks.Count > 0)
                 {
-                    var configToRemove = new SipConfiguration(currentConfig.Value.Trunks.Keys.ToDictionary(x => x, x => (SipTrunk)null));
-                    await _restClient.PatchSipConfigurationAsync(configToRemove, cancellationToken).ConfigureAwait(false);
+                    var trunkFqdnsToRemove = currentConfig.Value.Trunks.Keys.Where(x => !newTrunks.ContainsKey(x));
+
+                    foreach (var fqdn in trunkFqdnsToRemove)
+                    {
+                        newTrunks.Add(fqdn, null);
+                    }
                 }
 
-                var newConfig = new SipConfiguration(trunks.ToDictionary(x => x.Fqdn, x => x));
-                var response = await _restClient.PatchSipConfigurationAsync(newConfig, cancellationToken).ConfigureAwait(false);
+                var response = await _restClient.PatchSipConfigurationAsync(new SipConfiguration(newTrunks), cancellationToken).ConfigureAwait(false);
                 return response.GetRawResponse();
             }
             catch (Exception ex) {
