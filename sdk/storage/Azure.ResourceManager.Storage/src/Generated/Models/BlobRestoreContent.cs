@@ -15,32 +15,32 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class BlobRestoreContent
     {
         /// <summary> Initializes a new instance of BlobRestoreContent. </summary>
-        /// <param name="timeToRestore"> Restore blob to the specified time. </param>
         /// <param name="blobRanges"> Blob ranges to restore. </param>
+        /// <param name="timeToRestore"> Restore blob to the specified time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobRanges"/> is null. </exception>
-        public BlobRestoreContent(DateTimeOffset timeToRestore, IEnumerable<BlobRestoreRange> blobRanges)
+        public BlobRestoreContent(IEnumerable<BlobRestoreRange> blobRanges, DateTimeOffset timeToRestore)
         {
             if (blobRanges == null)
             {
                 throw new ArgumentNullException(nameof(blobRanges));
             }
 
-            TimeToRestore = timeToRestore;
             BlobRanges = blobRanges.ToList();
+            TimeToRestore = timeToRestore;
         }
 
         /// <summary> Initializes a new instance of BlobRestoreContent. </summary>
-        /// <param name="timeToRestore"> Restore blob to the specified time. </param>
         /// <param name="blobRanges"> Blob ranges to restore. </param>
-        internal BlobRestoreContent(DateTimeOffset timeToRestore, IList<BlobRestoreRange> blobRanges)
+        /// <param name="timeToRestore"> Restore blob to the specified time. </param>
+        internal BlobRestoreContent(IList<BlobRestoreRange> blobRanges, DateTimeOffset timeToRestore)
         {
-            TimeToRestore = timeToRestore;
             BlobRanges = blobRanges;
+            TimeToRestore = timeToRestore;
         }
 
-        /// <summary> Restore blob to the specified time. </summary>
-        public DateTimeOffset TimeToRestore { get; set; }
         /// <summary> Blob ranges to restore. </summary>
         public IList<BlobRestoreRange> BlobRanges { get; }
+        /// <summary> Restore blob to the specified time. </summary>
+        public DateTimeOffset TimeToRestore { get; set; }
     }
 }

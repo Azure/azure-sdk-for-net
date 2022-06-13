@@ -20,7 +20,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="location"> The location. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
-        /// <param name="configuration"> Defines if an existing SAP system is being registered or a new SAP system is being created. </param>
+        /// <param name="configuration">
+        /// Defines if an existing SAP system is being registered or a new SAP system is being created
+        /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
         public SapVirtualInstanceData(AzureLocation location, SapEnvironmentType environment, SapProductType sapProduct, SapConfiguration configuration) : base(location)
         {
@@ -44,7 +48,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="identity"> Managed service identity (user assigned identities). </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>
-        /// <param name="configuration"> Defines if an existing SAP system is being registered or a new SAP system is being created. </param>
+        /// <param name="configuration">
+        /// Defines if an existing SAP system is being registered or a new SAP system is being created
+        /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
+        /// </param>
         /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>
         /// <param name="health"> Defines the SAP Instance health. </param>
@@ -71,7 +79,11 @@ namespace Azure.ResourceManager.Workloads
         public SapEnvironmentType Environment { get; set; }
         /// <summary> Defines the SAP Product type. </summary>
         public SapProductType SapProduct { get; set; }
-        /// <summary> Defines if an existing SAP system is being registered or a new SAP system is being created. </summary>
+        /// <summary>
+        /// Defines if an existing SAP system is being registered or a new SAP system is being created
+        /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
+        /// </summary>
         public SapConfiguration Configuration { get; set; }
         /// <summary> Managed resource group configuration. </summary>
         internal ManagedRGConfiguration ManagedResourceGroupConfiguration { get; set; }

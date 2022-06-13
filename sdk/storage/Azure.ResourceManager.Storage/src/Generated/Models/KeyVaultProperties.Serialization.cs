@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<Uri> keyvaulturi = default;
             Optional<string> currentVersionedKeyIdentifier = default;
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
+            Optional<DateTimeOffset> currentVersionedKeyExpirationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyname"))
@@ -78,8 +79,18 @@ namespace Azure.ResourceManager.Storage.Models
                     lastKeyRotationTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("currentVersionedKeyExpirationTimestamp"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    currentVersionedKeyExpirationTimestamp = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new KeyVaultProperties(keyname.Value, keyversion.Value, keyvaulturi.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp));
+            return new KeyVaultProperties(keyname.Value, keyversion.Value, keyvaulturi.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp), Optional.ToNullable(currentVersionedKeyExpirationTimestamp));
         }
     }
 }

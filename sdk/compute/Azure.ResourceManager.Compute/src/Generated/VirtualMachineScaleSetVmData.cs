@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
         /// <param name="resources"> The virtual machine child extension resources. </param>
         /// <param name="zones"> The virtual machine zones. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
         /// <param name="latestModelApplied"> Specifies whether the latest model has been applied to the virtual machine. </param>
         /// <param name="vmId"> Azure VM unique ID. </param>
         /// <param name="instanceView"> The virtual machine instance view. </param>
@@ -53,13 +54,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="modelDefinitionApplied"> Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine. </param>
         /// <param name="protectionPolicy"> Specifies the protection policy of the virtual machine. </param>
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
-        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, SecurityProfile securityProfile, NetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData) : base(id, name, resourceType, systemData, tags, location)
+        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, ManagedServiceIdentity identity, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, HardwareProfile hardwareProfile, StorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, OSProfile osProfile, SecurityProfile securityProfile, NetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, WritableSubResource availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData) : base(id, name, resourceType, systemData, tags, location)
         {
             InstanceId = instanceId;
             Sku = sku;
             Plan = plan;
             Resources = resources;
             Zones = zones;
+            Identity = identity;
             LatestModelApplied = latestModelApplied;
             VmId = vmId;
             InstanceView = instanceView;
@@ -89,6 +91,8 @@ namespace Azure.ResourceManager.Compute
         public IReadOnlyList<VirtualMachineExtensionData> Resources { get; }
         /// <summary> The virtual machine zones. </summary>
         public IReadOnlyList<string> Zones { get; }
+        /// <summary> The identity of the virtual machine, if configured. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Specifies whether the latest model has been applied to the virtual machine. </summary>
         public bool? LatestModelApplied { get; }
         /// <summary> Azure VM unique ID. </summary>

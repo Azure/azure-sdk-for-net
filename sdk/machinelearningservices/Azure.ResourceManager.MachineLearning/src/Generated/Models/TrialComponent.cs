@@ -37,7 +37,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of TrialComponent. </summary>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
-        /// <param name="distribution"> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </param>
+        /// <param name="distribution">
+        /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
+        /// Please note <see cref="DistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Mpi"/>, <see cref="PyTorch"/> and <see cref="TensorFlow"/>.
+        /// </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
@@ -55,7 +59,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string CodeId { get; set; }
         /// <summary> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
         public string Command { get; set; }
-        /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>
+        /// <summary>
+        /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
+        /// Please note <see cref="DistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Mpi"/>, <see cref="PyTorch"/> and <see cref="TensorFlow"/>.
+        /// </summary>
         public DistributionConfiguration Distribution { get; set; }
         /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
         public string EnvironmentId { get; set; }
