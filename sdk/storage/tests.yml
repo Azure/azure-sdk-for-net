@@ -26,5 +26,9 @@ extends:
     ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
       EnvVars:
         AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
+    PreSteps:
+      - bash: brew install openssl@1.1
+        displayName: (MacOS) Grant access to ~/.Azure
+        condition: contains(variables['OSVmImage'], 'mac')
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
