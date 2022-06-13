@@ -24,4 +24,11 @@ steps:
         pwsh: true
         workingDirectory: $(Pipeline.Workspace)
       displayName: Create API Review for ${{ artifact.name}}
-      condition: and(succeededOrFailed(), ne(variables['Skip.CreateApiReview'], 'true') , ne(variables['Build.Reason'],'PullRequest'), eq(variables['System.TeamProject'], 'internal'), not(endsWith(variables['Build.Repository.Name'], '-pr')))
+      condition: >-
+        and(
+          succeededOrFailed(),
+          ne(variables['Skip.CreateApiReview'], 'true'),
+          ne(variables['Build.Reason'],'PullRequest'),
+          eq(variables['System.TeamProject'], 'internal'),
+          not(endsWith(variables['Build.Repository.Name'], '-pr'))
+        )
