@@ -12,7 +12,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Workloads.Tests.Tests
 {
-    [TestFixture]
     public class MonitorCRUDTests : WorkloadsManagementTestBase
     {
         public MonitorCRUDTests(bool isAsync) : base(isAsync)
