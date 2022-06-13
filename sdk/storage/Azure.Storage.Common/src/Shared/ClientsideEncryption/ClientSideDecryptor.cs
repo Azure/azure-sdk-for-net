@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
@@ -380,7 +381,7 @@ namespace Azure.Storage.Cryptography
                 throw Errors.ClientSideEncryption.KeyNotFound(encryptionData.WrappedContentKey.KeyId);
             }
 
-            var contentEncryptionKey = async
+            byte[] unwrappedContent = async
                 ? await key.UnwrapKeyAsync(
                     encryptionData.WrappedContentKey.Algorithm,
                     encryptionData.WrappedContentKey.EncryptedKey,
@@ -390,12 +391,34 @@ namespace Azure.Storage.Cryptography
                     encryptionData.WrappedContentKey.EncryptedKey,
                     cancellationToken);
 
-            if (s_contentEncryptionKeyCache.Value != default)
+            Memory<byte> unwrappedKey;
+            switch (encryptionData.EncryptionAgent.EncryptionVersion)
             {
-                s_contentEncryptionKeyCache.Value.Key = contentEncryptionKey;
+                case ClientSideEncryptionVersion.V1_0:
+                    unwrappedKey = unwrappedContent;
+                    break;
+                // v2.0 binds content encryption key with content encryption algorithm under a single keywrap.
+                // Separate key from algorithm ID and validate ID match
+                case ClientSideEncryptionVersion.V2_0:
+                    string unwrappedAlgorithmString = Encoding.UTF8.GetString(new ReadOnlySpan<byte>(unwrappedContent)
+                        .Slice(Constants.ClientSideEncryption.EncryptionKeySizeBits / 8).ToArray());
+                    if (new ClientSideEncryptionAlgorithm(unwrappedAlgorithmString) != encryptionData.EncryptionAgent.EncryptionAlgorithm)
+                    {
+                        throw new CryptographicException("Unexpected unwrapped content encryption algorithm.");
+                    }
+                    unwrappedKey = new Memory<byte>(unwrappedContent)
+                        .Slice(0, Constants.ClientSideEncryption.EncryptionKeySizeBits / 8).ToArray();
+                    break;
+                default:
+                    throw Errors.InvalidArgument(nameof(encryptionData));
             }
 
-            return contentEncryptionKey;
+            if (s_contentEncryptionKeyCache.Value != default)
+            {
+                s_contentEncryptionKeyCache.Value.Key = unwrappedKey;
+            }
+
+            return unwrappedKey;
         }
 
         internal static void BeginContentEncryptionKeyCaching(ContentEncryptionKeyCache cache = default)

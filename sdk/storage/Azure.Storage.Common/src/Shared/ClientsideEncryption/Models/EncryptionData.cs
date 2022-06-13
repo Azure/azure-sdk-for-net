@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
@@ -85,7 +86,13 @@ namespace Azure.Storage.Cryptography.Models
             IKeyEncryptionKey keyEncryptionKey,
             bool async,
             CancellationToken cancellationToken)
-            => new EncryptionData()
+        {
+            // v2.0 binds content encryption key with content encryption algorithm under a single keywrap
+            var dataToWrap = new byte[contentEncryptionKey.Length + ClientSideEncryptionAlgorithm.AesGcm256.ToString().Length];
+            contentEncryptionKey.CopyTo(dataToWrap, 0);
+            Encoding.UTF8.GetBytes(ClientSideEncryptionAlgorithm.AesGcm256.ToString()).CopyTo(dataToWrap, contentEncryptionKey.Length);
+
+            return new EncryptionData()
             {
                 EncryptionMode = Constants.ClientSideEncryption.EncryptionMode,
                 EncryptionAgent = new EncryptionAgent()
@@ -106,11 +113,12 @@ namespace Azure.Storage.Cryptography.Models
                 {
                     Algorithm = keyWrapAlgorithm,
                     EncryptedKey = async
-                        ? await keyEncryptionKey.WrapKeyAsync(keyWrapAlgorithm, contentEncryptionKey, cancellationToken).ConfigureAwait(false)
-                        : keyEncryptionKey.WrapKey(keyWrapAlgorithm, contentEncryptionKey, cancellationToken),
+                        ? await keyEncryptionKey.WrapKeyAsync(keyWrapAlgorithm, dataToWrap, cancellationToken).ConfigureAwait(false)
+                        : keyEncryptionKey.WrapKey(keyWrapAlgorithm, dataToWrap, cancellationToken),
                     KeyId = keyEncryptionKey.KeyId
                 }
             };
+        }
 
         /// <summary>
         /// Singleton string identifying this encryption library.
