@@ -77,10 +77,10 @@ function CompareAndMergeMetadata ($original, $updated) {
   foreach ($key in $originalTable.Keys) {
     if (!($updatedTable.ContainsKey($key))) {
       Write-Warning "New metadata missed the entry: $key. Adding back."
-      $updatedTable[$key] = $originalTable[$key]
+      $updated += "$key`: $($originalTable[$key])`r`n"
     }
   }
-  return $($updatedTable.GetEnumerator() | % { "$($_.Key): $($_.Value)" })
+  return $updated
 }
 
 # Update the metadata table.
@@ -231,4 +231,3 @@ foreach($moniker in $monikers) {
       -packageInfos $servicePackages -serviceName $service -moniker $moniker
   }
 }
-
