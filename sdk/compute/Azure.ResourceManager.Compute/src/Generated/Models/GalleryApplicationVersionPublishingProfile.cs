@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Source = source;
+            AdvancedSettings = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionPublishingProfile. </summary>
@@ -34,13 +36,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="replicationMode"> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </param>
+        /// <param name="targetExtendedLocations"> The target extended locations where the Image Version is going to be replicated to. This property is updatable. </param>
         /// <param name="source"> The source image from which the Image Version is going to be created. </param>
         /// <param name="manageActions"></param>
+        /// <param name="settings"> Additional settings for the VM app that contains the target package and config file name when it is deployed to target VM or VM scale set. </param>
+        /// <param name="advancedSettings"> Optional. Additional settings to pass to the vm-application-manager extension. For advanced use only. </param>
         /// <param name="enableHealthCheck"> Optional. Whether or not this application reports health. </param>
-        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, StorageAccountType? storageAccountType, ReplicationMode? replicationMode, UserArtifactSource source, UserArtifactManage manageActions, bool? enableHealthCheck) : base(targetRegions, replicaCount, excludeFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode)
+        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, StorageAccountType? storageAccountType, ReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, UserArtifactSource source, UserArtifactManage manageActions, UserArtifactSettings settings, IDictionary<string, string> advancedSettings, bool? enableHealthCheck) : base(targetRegions, replicaCount, excludeFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations)
         {
             Source = source;
             ManageActions = manageActions;
+            Settings = settings;
+            AdvancedSettings = advancedSettings;
             EnableHealthCheck = enableHealthCheck;
         }
 
@@ -48,6 +55,10 @@ namespace Azure.ResourceManager.Compute.Models
         public UserArtifactSource Source { get; set; }
         /// <summary> Gets or sets the manage actions. </summary>
         public UserArtifactManage ManageActions { get; set; }
+        /// <summary> Additional settings for the VM app that contains the target package and config file name when it is deployed to target VM or VM scale set. </summary>
+        public UserArtifactSettings Settings { get; set; }
+        /// <summary> Optional. Additional settings to pass to the vm-application-manager extension. For advanced use only. </summary>
+        public IDictionary<string, string> AdvancedSettings { get; }
         /// <summary> Optional. Whether or not this application reports health. </summary>
         public bool? EnableHealthCheck { get; set; }
     }

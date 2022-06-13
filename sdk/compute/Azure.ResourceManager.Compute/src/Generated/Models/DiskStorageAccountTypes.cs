@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         private const string UltraSsdLRSValue = "UltraSSD_LRS";
         private const string PremiumZRSValue = "Premium_ZRS";
         private const string StandardSsdZRSValue = "StandardSSD_ZRS";
+        private const string PremiumV2LRSValue = "PremiumV2_LRS";
 
         /// <summary> Standard HDD locally redundant storage. Best for backup, non-critical, and infrequent access. </summary>
         public static DiskStorageAccountTypes StandardLRS { get; } = new DiskStorageAccountTypes(StandardLRSValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskStorageAccountTypes PremiumZRS { get; } = new DiskStorageAccountTypes(PremiumZRSValue);
         /// <summary> Standard SSD zone redundant storage. Best for web servers, lightly used enterprise applications and dev/test that need storage resiliency against zone failures. </summary>
         public static DiskStorageAccountTypes StandardSsdZRS { get; } = new DiskStorageAccountTypes(StandardSsdZRSValue);
+        /// <summary> Premium SSD v2 locally redundant storage. Best for production and performance-sensitive workloads that consistently require low latency and high IOPS and throughput. </summary>
+        public static DiskStorageAccountTypes PremiumV2LRS { get; } = new DiskStorageAccountTypes(PremiumV2LRSValue);
         /// <summary> Determines if two <see cref="DiskStorageAccountTypes"/> values are the same. </summary>
         public static bool operator ==(DiskStorageAccountTypes left, DiskStorageAccountTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskStorageAccountTypes"/> values are not the same. </summary>

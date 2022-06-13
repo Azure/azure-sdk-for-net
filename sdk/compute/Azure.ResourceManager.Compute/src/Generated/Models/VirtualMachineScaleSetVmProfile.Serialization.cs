@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("applicationProfile");
                 writer.WriteObjectValue(ApplicationProfile);
             }
+            if (Optional.IsDefined(HardwareProfile))
+            {
+                writer.WritePropertyName("hardwareProfile");
+                writer.WriteObjectValue(HardwareProfile);
+            }
             writer.WriteEndObject();
         }
 
@@ -104,6 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> userData = default;
             Optional<CapacityReservationProfile> capacityReservation = default;
             Optional<ApplicationProfile> applicationProfile = default;
+            Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osProfile"))
@@ -236,8 +242,18 @@ namespace Azure.ResourceManager.Compute.Models
                     applicationProfile = ApplicationProfile.DeserializeApplicationProfile(property.Value);
                     continue;
                 }
+                if (property.NameEquals("hardwareProfile"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    hardwareProfile = VirtualMachineScaleSetHardwareProfile.DeserializeVirtualMachineScaleSetHardwareProfile(property.Value);
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value);
+            return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, hardwareProfile.Value);
         }
     }
 }

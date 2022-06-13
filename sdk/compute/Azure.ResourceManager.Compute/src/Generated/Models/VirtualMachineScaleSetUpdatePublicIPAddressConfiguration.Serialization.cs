@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -32,6 +33,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("dnsSettings");
                 writer.WriteObjectValue(DnsSettings);
             }
+            if (Optional.IsDefined(PublicIPPrefix))
+            {
+                writer.WritePropertyName("publicIPPrefix");
+                JsonSerializer.Serialize(writer, PublicIPPrefix);
+            }
             if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption");
@@ -46,6 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> name = default;
             Optional<int> idleTimeoutInMinutes = default;
             Optional<VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings> dnsSettings = default;
+            Optional<WritableSubResource> publicIPPrefix = default;
             Optional<DeleteOptions> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -83,6 +90,16 @@ namespace Azure.ResourceManager.Compute.Models
                             dnsSettings = VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings.DeserializeVirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("publicIPPrefix"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publicIPPrefix = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            continue;
+                        }
                         if (property0.NameEquals("deleteOption"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -97,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(name.Value, Optional.ToNullable(idleTimeoutInMinutes), dnsSettings.Value, Optional.ToNullable(deleteOption));
+            return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(name.Value, Optional.ToNullable(idleTimeoutInMinutes), dnsSettings.Value, publicIPPrefix, Optional.ToNullable(deleteOption));
         }
     }
 }

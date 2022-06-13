@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of VirtualMachinePublicIPAddressConfiguration. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
-        /// <param name="sku"> Describes the public IP Sku. </param>
+        /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP address when the VM is deleted. </param>
         /// <param name="dnsSettings"> The dns settings to be applied on the publicIP addresses . </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The publicIP address configuration name. </summary>
         public string Name { get; set; }
-        /// <summary> Describes the public IP Sku. </summary>
+        /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
         public PublicIPAddressSku Sku { get; set; }
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }

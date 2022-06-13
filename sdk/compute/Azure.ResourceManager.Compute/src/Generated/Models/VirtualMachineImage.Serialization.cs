@@ -88,6 +88,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture");
+                writer.WriteStringValue(Architecture.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -106,6 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<HyperVGenerationTypes> hyperVGeneration = default;
             Optional<DisallowedConfiguration> disallowed = default;
             Optional<IList<VirtualMachineImageFeature>> features = default;
+            Optional<ArchitectureTypes> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -242,11 +248,21 @@ namespace Azure.ResourceManager.Compute.Models
                             features = array;
                             continue;
                         }
+                        if (property0.NameEquals("architecture"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            architecture = new ArchitectureTypes(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineImage(id.Value, name, location, Optional.ToDictionary(tags), extendedLocation.Value, plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, Optional.ToList(features));
+            return new VirtualMachineImage(id.Value, name, location, Optional.ToDictionary(tags), extendedLocation.Value, plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, Optional.ToList(features), Optional.ToNullable(architecture));
         }
     }
 }

@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, ResourceType? resourceType, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures) : base(id)
+        /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, ResourceType? resourceType, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures, BinaryData protectedSettingsFromKeyVault) : base(id)
         {
             Name = name;
             ResourceType = resourceType;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
             Settings = settings;
             ProtectedSettings = protectedSettings;
             SuppressFailures = suppressFailures;
+            ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
         }
 
         /// <summary> The name of the extension. </summary>
@@ -68,5 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
         public BinaryData ProtectedSettings { get; set; }
         /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
         public bool? SuppressFailures { get; set; }
+        /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
+        public BinaryData ProtectedSettingsFromKeyVault { get; set; }
     }
 }

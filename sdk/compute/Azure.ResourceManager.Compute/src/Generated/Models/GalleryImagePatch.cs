@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image definition that you want to update. </summary>
-    public partial class GalleryImagePatch : GalleryUpdateResourceDefinition
+    public partial class GalleryImagePatch : GalleryUpdateResourceData
     {
         /// <summary> Initializes a new instance of GalleryImagePatch. </summary>
         public GalleryImagePatch()
@@ -56,8 +56,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
         public ImagePurchasePlan PurchasePlan { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public GalleryImagePropertiesProvisioningState? ProvisioningState { get; }
+        public GalleryProvisioningState? ProvisioningState { get; }
         /// <summary> A list of gallery image features. </summary>
         public IList<GalleryImageFeature> Features { get; }
+        /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
+        public ArchitectureTypes? Architecture { get; set; }
     }
 }

@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Compute
             Optional<float> completionPercent = default;
             Optional<string> replicationState = default;
             Optional<AzureLocation> sourceResourceLocation = default;
+            Optional<DiskSecurityProfile> securityProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -213,11 +214,21 @@ namespace Azure.ResourceManager.Compute
                             sourceResourceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("securityProfile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DiskRestorePointData(id, name, type, systemData, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, Optional.ToNullable(sourceResourceLocation));
+            return new DiskRestorePointData(id, name, type, systemData, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, Optional.ToNullable(sourceResourceLocation), securityProfile.Value);
         }
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image version that you want to update. </summary>
-    public partial class GalleryImageVersionPatch : GalleryUpdateResourceDefinition
+    public partial class GalleryImageVersionPatch : GalleryUpdateResourceData
     {
         /// <summary> Initializes a new instance of GalleryImageVersionPatch. </summary>
         public GalleryImageVersionPatch()
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The publishing profile of a gallery image Version. </summary>
         public GalleryImageVersionPublishingProfile PublishingProfile { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public GalleryImageVersionPropertiesProvisioningState? ProvisioningState { get; }
+        public GalleryProvisioningState? ProvisioningState { get; }
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>
         public GalleryImageVersionStorageProfile StorageProfile { get; set; }
         /// <summary> This is the replication status of the gallery image version. </summary>

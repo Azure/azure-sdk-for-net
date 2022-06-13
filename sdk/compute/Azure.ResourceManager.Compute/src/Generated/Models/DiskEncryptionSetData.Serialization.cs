@@ -51,13 +51,18 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled");
                 writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
             }
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                writer.WritePropertyName("federatedClientId");
+                writer.WriteStringValue(FederatedClientId);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static DiskEncryptionSetData DeserializeDiskEncryptionSetData(JsonElement element)
         {
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -71,6 +76,7 @@ namespace Azure.ResourceManager.Compute
             Optional<bool> rotationToLatestKeyVersionEnabled = default;
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             Optional<ApiError> autoKeyRotationError = default;
+            Optional<string> federatedClientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -80,7 +86,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -197,11 +203,16 @@ namespace Azure.ResourceManager.Compute
                             autoKeyRotationError = ApiError.DeserializeApiError(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("federatedClientId"))
+                        {
+                            federatedClientId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DiskEncryptionSetData(id, name, type, systemData, tags, location, identity, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp), autoKeyRotationError.Value);
+            return new DiskEncryptionSetData(id, name, type, systemData, tags, location, identity, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp), autoKeyRotationError.Value, federatedClientId.Value);
         }
     }
 }

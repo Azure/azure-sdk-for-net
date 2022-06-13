@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class SupportedCapabilities : IUtf8JsonSerializable
+    public partial class SupportedCapabilities : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,12 +20,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("acceleratedNetwork");
                 writer.WriteBooleanValue(AcceleratedNetwork.Value);
             }
+            if (Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture");
+                writer.WriteStringValue(Architecture.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
         internal static SupportedCapabilities DeserializeSupportedCapabilities(JsonElement element)
         {
             Optional<bool> acceleratedNetwork = default;
+            Optional<ArchitectureTypes> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("acceleratedNetwork"))
@@ -38,8 +44,18 @@ namespace Azure.ResourceManager.Compute.Models
                     acceleratedNetwork = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("architecture"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    architecture = new ArchitectureTypes(property.Value.GetString());
+                    continue;
+                }
             }
-            return new SupportedCapabilities(Optional.ToNullable(acceleratedNetwork));
+            return new SupportedCapabilities(Optional.ToNullable(acceleratedNetwork), Optional.ToNullable(architecture));
         }
     }
 }

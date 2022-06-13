@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="hyperVGeneration"> Specifies the HyperVGeneration Type. </param>
         /// <param name="disallowed"> Specifies disallowed configuration for the VirtualMachine created from the image. </param>
         /// <param name="features"></param>
-        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features) : base(id, name, location, tags, extendedLocation)
+        /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
+        internal VirtualMachineImage(ResourceIdentifier id, string name, AzureLocation location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, PurchasePlan plan, OSDiskImage osDiskImage, IList<DataDiskImage> dataDiskImages, AutomaticOSUpgradeProperties automaticOSUpgradeProperties, HyperVGenerationTypes? hyperVGeneration, DisallowedConfiguration disallowed, IList<VirtualMachineImageFeature> features, ArchitectureTypes? architecture) : base(id, name, location, tags, extendedLocation)
         {
             Plan = plan;
             OSDiskImage = osDiskImage;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
             HyperVGeneration = hyperVGeneration;
             Disallowed = disallowed;
             Features = features;
+            Architecture = architecture;
         }
 
         /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
@@ -99,5 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Gets the features. </summary>
         public IList<VirtualMachineImageFeature> Features { get; }
+        /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
+        public ArchitectureTypes? Architecture { get; set; }
     }
 }
