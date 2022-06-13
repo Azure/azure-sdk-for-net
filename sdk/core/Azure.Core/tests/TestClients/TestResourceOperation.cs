@@ -8,18 +8,18 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Core.Tests
 {
-    internal class TestResourceOperationOrResponseOfT : Operation<TestResource>, IOperationSource<TestResource>
+    internal class TestResourceOperation : Operation<TestResource>, IOperationSource<TestResource>
     {
         private TestResource _value;
         private bool _exceptionOnWait;
         private OperationInternal<TestResource> _operationHelper;
         private int _delaySteps = 0;
 
-        protected TestResourceOperationOrResponseOfT()
+        protected TestResourceOperation()
         {
         }
 
-        public TestResourceOperationOrResponseOfT(TestResource value, bool exceptionOnWait = false, int delaySteps = 0)
+        public TestResourceOperation(TestResource value, bool exceptionOnWait = false, int delaySteps = 0)
         {
             _value = value;
             _exceptionOnWait = exceptionOnWait;
@@ -47,12 +47,12 @@ namespace Azure.Core.Tests
             return _operationHelper.WaitForCompletion(pollingInterval, cancellationToken);
         }
 
-        public async override ValueTask<Response<TestResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        public override async ValueTask<Response<TestResource>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
             return await _operationHelper.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        public async override ValueTask<Response<TestResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public override async ValueTask<Response<TestResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
             return await _operationHelper.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
         }
