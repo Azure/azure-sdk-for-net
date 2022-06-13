@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.9 (2022-06-13)
 
 ### Breaking Changes
 
 - Rename plenty of classes and property names according to the architecture board's review.
-
-### Bugs Fixed
 
 ### Other Changes
 
