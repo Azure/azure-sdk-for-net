@@ -7,10 +7,10 @@ namespace Azure.ResourceManager.Authorization
         public static Azure.ResourceManager.Authorization.ProviderOperationsMetadataCollection GetAllProviderOperationsMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Authorization.Models.ClassicAdministrator> GetClassicAdministrators(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.ClassicAdministrator> GetClassicAdministratorsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Authorization.Models.Permission> GetForResourceGroupPermissions(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.Permission> GetForResourceGroupPermissionsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Authorization.Models.Permission> GetForResourcePermissions(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.Permission> GetForResourcePermissionsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Authorization.Models.AzurePermission> GetForResourceGroupPermissions(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.AzurePermission> GetForResourceGroupPermissionsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Authorization.Models.AzurePermission> GetForResourcePermissions(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.AzurePermission> GetForResourcePermissionsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Authorization.ProviderOperationsMetadataResource> GetProviderOperationsMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.ProviderOperationsMetadataResource>> GetProviderOperationsMetadataAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Authorization.ProviderOperationsMetadataResource GetProviderOperationsMetadataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Authorization
         internal ProviderOperationsMetadataData() { }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.Models.ProviderOperation> Operations { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.Models.ResourceType> ResourceTypes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.Models.ProviderOperationsResourceType> ResourceTypes { get { throw null; } }
     }
     public partial class ProviderOperationsMetadataResource : Azure.ResourceManager.ArmResource
     {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Authorization
         public string RoleDefinitionId { get { throw null; } }
         public string Scope { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.Status? Status { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus? Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class RoleAssignmentScheduleInstanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleAssignmentScheduleInstanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleAssignmentScheduleInstanceResource>, System.Collections.IEnumerable
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Authorization
         public string RoleDefinitionId { get { throw null; } }
         public string Scope { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.Status? Status { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus? Status { get { throw null; } }
     }
     public partial class RoleAssignmentScheduleInstanceResource : Azure.ResourceManager.ArmResource
     {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Authorization
         public RoleDefinitionData() { }
         public System.Collections.Generic.IList<string> AssignableScopes { get { throw null; } }
         public string Description { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.Permission> Permissions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.AzurePermission> Permissions { get { throw null; } }
         public string RoleName { get { throw null; } set { } }
         public string RoleType { get { throw null; } set { } }
     }
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Authorization
         public string DisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule> EffectiveRules { get { throw null; } }
         public bool? IsOrganizationDefault { get { throw null; } set { } }
-        public Azure.ResourceManager.Authorization.Models.Principal LastModifiedBy { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.AzurePrincipal LastModifiedBy { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.Authorization.Models.PolicyPropertiesScope PolicyScope { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule> Rules { get { throw null; } }
@@ -567,6 +567,20 @@ namespace Azure.ResourceManager.Authorization.Models
         public static implicit operator Azure.ResourceManager.Authorization.Models.AssignmentType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.AssignmentType left, Azure.ResourceManager.Authorization.Models.AssignmentType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class AzurePermission
+    {
+        public AzurePermission() { }
+        public System.Collections.Generic.IList<string> Actions { get { throw null; } }
+        public System.Collections.Generic.IList<string> NotActions { get { throw null; } }
+    }
+    public partial class AzurePrincipal
+    {
+        internal AzurePrincipal() { }
+        public string DisplayName { get { throw null; } }
+        public string Email { get { throw null; } }
+        public string Id { get { throw null; } }
+        public string PrincipalType { get { throw null; } }
     }
     public partial class ClassicAdministrator : Azure.ResourceManager.Models.ResourceData
     {
@@ -677,12 +691,6 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.NotificationLevel left, Azure.ResourceManager.Authorization.Models.NotificationLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Permission
-    {
-        public Permission() { }
-        public System.Collections.Generic.IList<string> Actions { get { throw null; } }
-        public System.Collections.Generic.IList<string> NotActions { get { throw null; } }
-    }
     public partial class PolicyAssignmentProperties
     {
         internal PolicyAssignmentProperties() { }
@@ -694,7 +702,7 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal PolicyAssignmentPropertiesPolicy() { }
         public string Id { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.Principal LastModifiedBy { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.AzurePrincipal LastModifiedBy { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
     }
     public partial class PolicyAssignmentPropertiesRoleDefinition
@@ -717,14 +725,6 @@ namespace Azure.ResourceManager.Authorization.Models
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public string PolicyPropertiesScopeType { get { throw null; } }
-    }
-    public partial class Principal
-    {
-        internal Principal() { }
-        public string DisplayName { get { throw null; } }
-        public string Email { get { throw null; } }
-        public string Id { get { throw null; } }
-        public string PrincipalType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrincipalType : System.IEquatable<Azure.ResourceManager.Authorization.Models.PrincipalType>
@@ -755,6 +755,13 @@ namespace Azure.ResourceManager.Authorization.Models
         public string Name { get { throw null; } }
         public string Origin { get { throw null; } }
         public System.BinaryData Properties { get { throw null; } }
+    }
+    public partial class ProviderOperationsResourceType
+    {
+        internal ProviderOperationsResourceType() { }
+        public string DisplayName { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.Models.ProviderOperation> Operations { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecipientType : System.IEquatable<Azure.ResourceManager.Authorization.Models.RecipientType>
@@ -800,13 +807,6 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.RequestType left, Azure.ResourceManager.Authorization.Models.RequestType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceType
-    {
-        internal ResourceType() { }
-        public string DisplayName { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.Models.ProviderOperation> Operations { get { throw null; } }
-    }
     public partial class RoleAssignmentCreateOrUpdateContent
     {
         public RoleAssignmentCreateOrUpdateContent(Azure.ResourceManager.Authorization.Models.RoleAssignmentProperties properties) { }
@@ -837,6 +837,82 @@ namespace Azure.ResourceManager.Authorization.Models
         public System.TimeSpan? Duration { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.Type? RoleAssignmentExpirationType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoleAssignmentScheduleInstanceStatus : System.IEquatable<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoleAssignmentScheduleInstanceStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus AdminApproved { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus AdminDenied { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus Denied { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus FailedAsResourceIsLocked { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus Granted { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus Invalid { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus PendingAdminDecision { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus PendingApproval { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus PendingApprovalProvisioning { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus PendingEvaluation { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus PendingExternalProvisioning { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus PendingProvisioning { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus PendingRevocation { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus PendingScheduleCreation { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus Provisioned { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus ProvisioningStarted { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus Revoked { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus ScheduleCreated { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus TimedOut { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus left, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus left, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleInstanceStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoleAssignmentScheduleStatus : System.IEquatable<Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoleAssignmentScheduleStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus AdminApproved { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus AdminDenied { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus Denied { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus FailedAsResourceIsLocked { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus Granted { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus Invalid { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus PendingAdminDecision { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus PendingApproval { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus PendingApprovalProvisioning { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus PendingEvaluation { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus PendingExternalProvisioning { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus PendingProvisioning { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus PendingRevocation { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus PendingScheduleCreation { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus Provisioned { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus ProvisioningStarted { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus Revoked { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus ScheduleCreated { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus TimedOut { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus left, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus left, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class RoleAssignmentScheduleTicketInfo
     {
