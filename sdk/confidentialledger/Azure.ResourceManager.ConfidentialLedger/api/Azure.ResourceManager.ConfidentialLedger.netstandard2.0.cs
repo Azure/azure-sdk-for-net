@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
     }
     public static partial class ConfidentialLedgerExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityResponse> CheckLedgerNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityResponse>> CheckLedgerNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ConfidentialLedger.Models.LedgerNameAvailabilityResult> CheckLedgerNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.ConfidentialLedger.Models.LedgerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.Models.LedgerNameAvailabilityResult>> CheckLedgerNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.ConfidentialLedger.Models.LedgerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource> GetConfidentialLedger(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string ledgerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource>> GetConfidentialLedgerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string ledgerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ConfidentialLedger.ConfidentialLedgerResource GetConfidentialLedgerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -69,12 +69,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public string Cert { get { throw null; } set { } }
         public Azure.ResourceManager.ConfidentialLedger.Models.LedgerRoleName? LedgerRoleName { get { throw null; } set { } }
     }
-    public partial class CheckNameAvailabilityContent
-    {
-        public CheckNameAvailabilityContent() { }
-        public string Name { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CheckNameAvailabilityReason : System.IEquatable<Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason>
     {
@@ -93,9 +87,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static bool operator !=(Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason left, Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CheckNameAvailabilityResponse
+    public partial class LedgerNameAvailabilityContent
     {
-        internal CheckNameAvailabilityResponse() { }
+        public LedgerNameAvailabilityContent() { }
+        public string Name { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } set { } }
+    }
+    public partial class LedgerNameAvailabilityResult
+    {
+        internal LedgerNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.ConfidentialLedger.Models.CheckNameAvailabilityReason? Reason { get { throw null; } }

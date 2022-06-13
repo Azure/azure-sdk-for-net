@@ -40,10 +40,15 @@ rename-rules:
   URI: Uri
 
 directive:
-  - from: swagger-document
+  - from: confidentialledger.json
     where: $.definitions
     transform: >
       $.ResourceLocation.properties.location['x-ms-format'] = 'azure-location';
       $.ProvisioningState['x-ms-enum']['name'] = 'LedgerProvisioningState';
+  - from: types.json
+    where: $.definitions
+    transform: >
+      $.CheckNameAvailabilityRequest['x-ms-client-name'] = 'LedgerNameAvailabilityRequest';
+      $.CheckNameAvailabilityResponse['x-ms-client-name'] = 'LedgerNameAvailabilityResult';
 
 ```

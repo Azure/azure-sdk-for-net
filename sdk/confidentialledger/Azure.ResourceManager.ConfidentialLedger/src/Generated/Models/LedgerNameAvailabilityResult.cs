@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> The check availability result. </summary>
-    public partial class CheckNameAvailabilityResponse
+    public partial class LedgerNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
-        internal CheckNameAvailabilityResponse()
+        /// <summary> Initializes a new instance of LedgerNameAvailabilityResult. </summary>
+        internal LedgerNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of LedgerNameAvailabilityResult. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        internal CheckNameAvailabilityResponse(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message)
+        internal LedgerNameAvailabilityResult(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
