@@ -35,5 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         public BinaryData ProtectedSettings { get; set; }
         /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
         public bool? SuppressFailures { get; set; }
+        /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
+        public BinaryData ProtectedSettingsFromKeyVault { get; set; }
     }
 }
