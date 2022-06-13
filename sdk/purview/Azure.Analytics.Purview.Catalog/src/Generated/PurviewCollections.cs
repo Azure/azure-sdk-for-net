@@ -68,6 +68,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     attributes: Dictionary&lt;string, AnyObject&gt;,
         ///     typeName: string,
         ///     lastModifiedTS: string,
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///     classifications: [
         ///       {
         ///         attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -89,8 +90,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ],
         ///     createTime: number,
         ///     createdBy: string,
+        ///     customAttributes: Dictionary&lt;string, string&gt;,
         ///     guid: string,
         ///     homeId: string,
+        ///     isIncomplete: boolean,
+        ///     labels: [string],
         ///     meanings: [
         ///       {
         ///         confidence: number,
@@ -149,6 +153,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -217,6 +223,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     attributes: Dictionary&lt;string, AnyObject&gt;,
         ///     typeName: string,
         ///     lastModifiedTS: string,
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///     classifications: [
         ///       {
         ///         attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -238,8 +245,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ],
         ///     createTime: number,
         ///     createdBy: string,
+        ///     customAttributes: Dictionary&lt;string, string&gt;,
         ///     guid: string,
         ///     homeId: string,
+        ///     isIncomplete: boolean,
+        ///     labels: [string],
         ///     meanings: [
         ///       {
         ///         confidence: number,
@@ -298,6 +308,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -367,6 +379,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///       attributes: Dictionary&lt;string, AnyObject&gt;,
         ///       typeName: string,
         ///       lastModifiedTS: string,
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///       classifications: [
         ///         {
         ///           attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -388,8 +401,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       createTime: number,
         ///       createdBy: string,
+        ///       customAttributes: Dictionary&lt;string, string&gt;,
         ///       guid: string,
         ///       homeId: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meanings: [
         ///         {
         ///           confidence: number,
@@ -449,6 +465,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -518,6 +536,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///       attributes: Dictionary&lt;string, AnyObject&gt;,
         ///       typeName: string,
         ///       lastModifiedTS: string,
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///       classifications: [
         ///         {
         ///           attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -539,8 +558,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       createTime: number,
         ///       createdBy: string,
+        ///       customAttributes: Dictionary&lt;string, string&gt;,
         ///       guid: string,
         ///       homeId: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meanings: [
         ///         {
         ///           confidence: number,
@@ -600,6 +622,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -693,6 +717,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -786,6 +812,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {

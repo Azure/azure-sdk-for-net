@@ -43,11 +43,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="endOfLifeDate">The end of life date of the gallery
         /// image version Definition. This property can be used for
         /// decommissioning purposes. This property is updatable.</param>
-        public SharedGalleryImageVersion(string name = default(string), string location = default(string), string uniqueId = default(string), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?))
+        /// <param name="excludeFromLatest">If set to true, Virtual Machines
+        /// deployed from the latest version of the Image Definition won't use
+        /// this Image Version.</param>
+        /// <param name="storageProfile">Describes the storage profile of the
+        /// image version.</param>
+        public SharedGalleryImageVersion(string name = default(string), string location = default(string), string uniqueId = default(string), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), bool? excludeFromLatest = default(bool?), SharedGalleryImageVersionStorageProfile storageProfile = default(SharedGalleryImageVersionStorageProfile))
             : base(name, location, uniqueId)
         {
             PublishedDate = publishedDate;
             EndOfLifeDate = endOfLifeDate;
+            ExcludeFromLatest = excludeFromLatest;
+            StorageProfile = storageProfile;
             CustomInit();
         }
 
@@ -71,6 +78,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.endOfLifeDate")]
         public System.DateTime? EndOfLifeDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets if set to true, Virtual Machines deployed from the
+        /// latest version of the Image Definition won't use this Image
+        /// Version.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.excludeFromLatest")]
+        public bool? ExcludeFromLatest { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes the storage profile of the image version.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.storageProfile")]
+        public SharedGalleryImageVersionStorageProfile StorageProfile { get; set; }
 
     }
 }

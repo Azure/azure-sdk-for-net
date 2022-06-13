@@ -64,6 +64,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     attributes: Dictionary&lt;string, AnyObject&gt;,
         ///     typeName: string,
         ///     lastModifiedTS: string,
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///     classifications: [
         ///       {
         ///         attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -85,8 +86,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ],
         ///     createTime: number,
         ///     createdBy: string,
+        ///     customAttributes: Dictionary&lt;string, string&gt;,
         ///     guid: string,
         ///     homeId: string,
+        ///     isIncomplete: boolean,
+        ///     labels: [string],
         ///     meanings: [
         ///       {
         ///         confidence: number,
@@ -145,6 +149,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -210,6 +216,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     attributes: Dictionary&lt;string, AnyObject&gt;,
         ///     typeName: string,
         ///     lastModifiedTS: string,
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///     classifications: [
         ///       {
         ///         attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -231,8 +238,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ],
         ///     createTime: number,
         ///     createdBy: string,
+        ///     customAttributes: Dictionary&lt;string, string&gt;,
         ///     guid: string,
         ///     homeId: string,
+        ///     isIncomplete: boolean,
+        ///     labels: [string],
         ///     meanings: [
         ///       {
         ///         confidence: number,
@@ -291,6 +301,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -356,6 +368,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///       attributes: Dictionary&lt;string, AnyObject&gt;,
         ///       typeName: string,
         ///       lastModifiedTS: string,
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///       classifications: [
         ///         {
         ///           attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -377,8 +390,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       createTime: number,
         ///       createdBy: string,
+        ///       customAttributes: Dictionary&lt;string, string&gt;,
         ///       guid: string,
         ///       homeId: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meanings: [
         ///         {
         ///           confidence: number,
@@ -452,6 +468,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///       attributes: Dictionary&lt;string, AnyObject&gt;,
         ///       typeName: string,
         ///       lastModifiedTS: string,
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///       classifications: [
         ///         {
         ///           attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -473,8 +490,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       createTime: number,
         ///       createdBy: string,
+        ///       customAttributes: Dictionary&lt;string, string&gt;,
         ///       guid: string,
         ///       homeId: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meanings: [
         ///         {
         ///           confidence: number,
@@ -549,6 +569,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///       attributes: Dictionary&lt;string, AnyObject&gt;,
         ///       typeName: string,
         ///       lastModifiedTS: string,
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///       classifications: [
         ///         {
         ///           attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -570,8 +591,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       createTime: number,
         ///       createdBy: string,
+        ///       customAttributes: Dictionary&lt;string, string&gt;,
         ///       guid: string,
         ///       homeId: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meanings: [
         ///         {
         ///           confidence: number,
@@ -631,6 +655,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -697,6 +723,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///       attributes: Dictionary&lt;string, AnyObject&gt;,
         ///       typeName: string,
         ///       lastModifiedTS: string,
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///       classifications: [
         ///         {
         ///           attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -718,8 +745,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       createTime: number,
         ///       createdBy: string,
+        ///       customAttributes: Dictionary&lt;string, string&gt;,
         ///       guid: string,
         ///       homeId: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meanings: [
         ///         {
         ///           confidence: number,
@@ -779,6 +809,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -864,6 +896,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -949,6 +983,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -1125,6 +1161,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     attributes: Dictionary&lt;string, AnyObject&gt;,
         ///     typeName: string,
         ///     lastModifiedTS: string,
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///     classifications: [
         ///       {
         ///         attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -1146,8 +1183,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ],
         ///     createTime: number,
         ///     createdBy: string,
+        ///     customAttributes: Dictionary&lt;string, string&gt;,
         ///     guid: string,
         ///     homeId: string,
+        ///     isIncomplete: boolean,
+        ///     labels: [string],
         ///     meanings: [
         ///       {
         ///         confidence: number,
@@ -1219,6 +1259,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     attributes: Dictionary&lt;string, AnyObject&gt;,
         ///     typeName: string,
         ///     lastModifiedTS: string,
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///     classifications: [
         ///       {
         ///         attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -1240,8 +1281,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ],
         ///     createTime: number,
         ///     createdBy: string,
+        ///     customAttributes: Dictionary&lt;string, string&gt;,
         ///     guid: string,
         ///     homeId: string,
+        ///     isIncomplete: boolean,
+        ///     labels: [string],
         ///     meanings: [
         ///       {
         ///         confidence: number,
@@ -1342,6 +1386,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -1437,6 +1483,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -1525,6 +1573,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -1611,6 +1661,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -2183,6 +2235,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     attributes: Dictionary&lt;string, AnyObject&gt;,
         ///     typeName: string,
         ///     lastModifiedTS: string,
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///     classifications: [
         ///       {
         ///         attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -2204,8 +2257,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ],
         ///     createTime: number,
         ///     createdBy: string,
+        ///     customAttributes: Dictionary&lt;string, string&gt;,
         ///     guid: string,
         ///     homeId: string,
+        ///     isIncomplete: boolean,
+        ///     labels: [string],
         ///     meanings: [
         ///       {
         ///         confidence: number,
@@ -2285,6 +2341,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     attributes: Dictionary&lt;string, AnyObject&gt;,
         ///     typeName: string,
         ///     lastModifiedTS: string,
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///     classifications: [
         ///       {
         ///         attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -2306,8 +2363,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ],
         ///     createTime: number,
         ///     createdBy: string,
+        ///     customAttributes: Dictionary&lt;string, string&gt;,
         ///     guid: string,
         ///     homeId: string,
+        ///     isIncomplete: boolean,
+        ///     labels: [string],
         ///     meanings: [
         ///       {
         ///         confidence: number,
@@ -2388,6 +2448,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     attributes: Dictionary&lt;string, AnyObject&gt;,
         ///     typeName: string,
         ///     lastModifiedTS: string,
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///     classifications: [
         ///       {
         ///         attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -2409,8 +2470,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ],
         ///     createTime: number,
         ///     createdBy: string,
+        ///     customAttributes: Dictionary&lt;string, string&gt;,
         ///     guid: string,
         ///     homeId: string,
+        ///     isIncomplete: boolean,
+        ///     labels: [string],
         ///     meanings: [
         ///       {
         ///         confidence: number,
@@ -2469,6 +2533,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -2543,6 +2609,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///     attributes: Dictionary&lt;string, AnyObject&gt;,
         ///     typeName: string,
         ///     lastModifiedTS: string,
+        ///     businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///     classifications: [
         ///       {
         ///         attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -2564,8 +2631,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///     ],
         ///     createTime: number,
         ///     createdBy: string,
+        ///     customAttributes: Dictionary&lt;string, string&gt;,
         ///     guid: string,
         ///     homeId: string,
+        ///     isIncomplete: boolean,
+        ///     labels: [string],
         ///     meanings: [
         ///       {
         ///         confidence: number,
@@ -2624,6 +2694,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -2719,6 +2791,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -2813,6 +2887,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       displayText: string,
         ///       guid: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meaningNames: [string],
         ///       meanings: [
         ///         {
@@ -3273,6 +3349,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///       attributes: Dictionary&lt;string, AnyObject&gt;,
         ///       typeName: string,
         ///       lastModifiedTS: string,
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///       classifications: [
         ///         {
         ///           attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -3294,8 +3371,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       createTime: number,
         ///       createdBy: string,
+        ///       customAttributes: Dictionary&lt;string, string&gt;,
         ///       guid: string,
         ///       homeId: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meanings: [
         ///         {
         ///           confidence: number,
@@ -3382,6 +3462,7 @@ namespace Azure.Analytics.Purview.Catalog
         ///       attributes: Dictionary&lt;string, AnyObject&gt;,
         ///       typeName: string,
         ///       lastModifiedTS: string,
+        ///       businessAttributes: Dictionary&lt;string, AnyObject&gt;,
         ///       classifications: [
         ///         {
         ///           attributes: Dictionary&lt;string, AnyObject&gt;,
@@ -3403,8 +3484,11 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ],
         ///       createTime: number,
         ///       createdBy: string,
+        ///       customAttributes: Dictionary&lt;string, string&gt;,
         ///       guid: string,
         ///       homeId: string,
+        ///       isIncomplete: boolean,
+        ///       labels: [string],
         ///       meanings: [
         ///         {
         ///           confidence: number,
@@ -3495,6 +3579,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   displayText: string,
         ///   guid: string,
+        ///   isIncomplete: boolean,
+        ///   labels: [string],
         ///   meaningNames: [string],
         ///   meanings: [
         ///     {
@@ -3575,6 +3661,8 @@ namespace Azure.Analytics.Purview.Catalog
         ///   ],
         ///   displayText: string,
         ///   guid: string,
+        ///   isIncomplete: boolean,
+        ///   labels: [string],
         ///   meaningNames: [string],
         ///   meanings: [
         ///     {
@@ -3611,6 +3699,608 @@ namespace Azure.Analytics.Purview.Catalog
             try
             {
                 using HttpMessage message = CreateGetHeaderRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove business metadata from an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteBusinessMetadataAsync(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteBusinessMetadataRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Remove business metadata from an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteBusinessMetadata(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteBusinessMetadataRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add business metadata to an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="isOverwrite"> Whether to overwrite the existing business metadata on the entity or not, default is false. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, RequestContent content, bool? isOverwrite = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddOrUpdateBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataRequest(guid, content, isOverwrite, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add business metadata to an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="isOverwrite"> Whether to overwrite the existing business metadata on the entity or not, default is false. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddOrUpdateBusinessMetadata(string guid, RequestContent content, bool? isOverwrite = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddOrUpdateBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataRequest(guid, content, isOverwrite, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete business metadata attributes from an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="bmName"> BusinessMetadata name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteBusinessMetadataAttributesAsync(string guid, string bmName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteBusinessMetadataAttributes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteBusinessMetadataAttributesRequest(guid, bmName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete business metadata attributes from an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="bmName"> BusinessMetadata name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteBusinessMetadataAttributes(string guid, string bmName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteBusinessMetadataAttributes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteBusinessMetadataAttributesRequest(guid, bmName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add or update business metadata attributes. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="bmName"> BusinessMetadata name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string bmName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddOrUpdateBusinessMetadataAttributes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataAttributesRequest(guid, bmName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add or update business metadata attributes. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="bmName"> BusinessMetadata name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddOrUpdateBusinessMetadataAttributes(string guid, string bmName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(bmName, nameof(bmName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddOrUpdateBusinessMetadataAttributes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataAttributesRequest(guid, bmName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        public virtual async Task<Response> GetSampleBusinessMetadataTemplateAsync(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetSampleBusinessMetadataTemplate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSampleBusinessMetadataTemplateRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        public virtual Response GetSampleBusinessMetadataTemplate(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetSampleBusinessMetadataTemplate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSampleBusinessMetadataTemplateRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   failedImportInfoList: [
+        ///     {
+        ///       childObjectName: string,
+        ///       importStatus: &quot;SUCCESS&quot; | &quot;FAILED&quot;,
+        ///       parentObjectName: string,
+        ///       remarks: string
+        ///     }
+        ///   ],
+        ///   successImportInfoList: [ImportInfo]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.ImportBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   failedImportInfoList: [
+        ///     {
+        ///       childObjectName: string,
+        ///       importStatus: &quot;SUCCESS&quot; | &quot;FAILED&quot;,
+        ///       parentObjectName: string,
+        ///       remarks: string
+        ///     }
+        ///   ],
+        ///   successImportInfoList: [ImportInfo]
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response ImportBusinessMetadata(RequestContent content, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.ImportBusinessMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> delete given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteLabelsAsync(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteLabelsRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> delete given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteLabels(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteLabelsRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Set labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> SetLabelsAsync(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetLabelsRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Set labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response SetLabels(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetLabels");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetLabelsRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> add given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddLabelAsync(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddLabel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddLabelRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> add given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddLabel(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddLabel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddLabelRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> DeleteLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response DeleteLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.DeleteLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Set labels to a given entity identified by its type and unique attributes, if labels is null/empty, existing labels will all be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: POST /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Set labels to a given entity identified by its type and unique attributes, if labels is null/empty, existing labels will all be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: POST /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response SetLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.SetLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be added. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be added. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response AddLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("PurviewEntities.AddLabelsByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddLabelsByUniqueAttributeRequest(typeName, content, attrQualifiedName, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4049,6 +4739,224 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/header", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteBusinessMetadataRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddOrUpdateBusinessMetadataRequest(string guid, RequestContent content, bool? isOverwrite, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata", false);
+            if (isOverwrite != null)
+            {
+                uri.AppendQuery("isOverwrite", isOverwrite.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteBusinessMetadataAttributesRequest(string guid, string bmName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata/", false);
+            uri.AppendPath(bmName, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddOrUpdateBusinessMetadataAttributesRequest(string guid, string bmName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata/", false);
+            uri.AppendPath(bmName, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetSampleBusinessMetadataTemplateRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/businessmetadata/import/template", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
+            return message;
+        }
+
+        internal HttpMessage CreateImportBusinessMetadataRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/businessmetadata/import", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "multipart/form-data");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteLabelsRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateSetLabelsRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddLabelRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateSetLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
             return message;
         }
 

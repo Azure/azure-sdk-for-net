@@ -7,7 +7,11 @@
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The target service properties. </summary>
+    /// <summary>
+    /// The target service properties
+    /// Please note <see cref="TargetServiceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureResource"/>, <see cref="ConfluentBootstrapServer"/> and <see cref="ConfluentSchemaRegistry"/>.
+    /// </summary>
     public partial class TargetServiceBase
     {
         /// <summary> Initializes a new instance of TargetServiceBase. </summary>
