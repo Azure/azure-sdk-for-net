@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             Name = dependencyName.Truncate(SchemaConstants.RemoteDependencyData_Name_MaxLength);
-            Id = activity.Context.SpanId.ToHexString().Truncate(SchemaConstants.RemoteDependencyData_Id_MaxLength);
+            Id = activity.Context.SpanId.ToHexString();
             Duration = activity.Duration < SchemaConstants.RemoteDependencyData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                 : SchemaConstants.Duration_MaxValue;

@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
             }
 
-            Id = activity.Context.SpanId.ToHexString().Truncate(SchemaConstants.RequestData_Id_MaxLength);
+            Id = activity.Context.SpanId.ToHexString();
             Name = TraceHelper.GetOperationName(activity, ref monitorTags.MappedTags).Truncate(SchemaConstants.RequestData_Name_MaxLength);
             Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
