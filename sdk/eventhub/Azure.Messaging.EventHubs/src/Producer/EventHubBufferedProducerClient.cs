@@ -2409,26 +2409,6 @@ namespace Azure.Messaging.EventHubs.Producer
                                                        TimeSpan delayInterval) => ((remainingTime != Timeout.InfiniteTimeSpan) && (remainingTime < delayInterval)) ? remainingTime : delayInterval;
 
         /// <summary>
-        ///   Calculates the amount of delay to apply between checks when no events are available
-        ///   in the buffers for any partition, gradually increasing for each empty check until it
-        ///   reaches the maximum limit.
-        /// </summary>
-        ///
-        /// <param name="consecutiveEmptyBufferCount">The consecutive number of times that the buffers have been empty when checked.</param>
-        /// <param name="startingEmptyBufferDelaySeconds">The number of seconds to use as the starting point for the delay.</param>
-        /// <param name="maximumBufferDelaySeconds">The maximum number of seconds to allow as a delay.</param>
-        ///
-        /// <returns>The amount of delay to apply before checking the buffers for available events.</returns>
-        ///
-        private static TimeSpan CalculateEmptyBufferDelay(int consecutiveEmptyBufferCount,
-                                                          double startingEmptyBufferDelaySeconds,
-                                                          double maximumBufferDelaySeconds)
-        {
-            var delay = (Math.Pow(1.4, consecutiveEmptyBufferCount) * startingEmptyBufferDelaySeconds);
-            return TimeSpan.FromSeconds(delay > maximumBufferDelaySeconds ? maximumBufferDelaySeconds : delay);
-        }
-
-        /// <summary>
         ///   The set of information needed to track and manage the active publishing
         ///   activities for a partition.
         /// </summary>
