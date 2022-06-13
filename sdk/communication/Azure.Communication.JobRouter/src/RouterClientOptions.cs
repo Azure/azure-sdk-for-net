@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// The latest version of the Router service.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_04_07_preview1;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2021_10_20_preview2;
 
         internal string ApiVersion { get; }
 
@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2021_04_07_preview1 => "2021-04-07-preview1",
+                ServiceVersion.V2021_10_20_preview2 => "2021-10-20-preview2",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -40,7 +40,7 @@ namespace Azure.Communication.JobRouter
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
 #pragma warning disable AZC0016 // All parts of ServiceVersion members' names must begin with a number or uppercase letter and cannot have consecutive underscores
-            V2021_04_07_preview1 = 1
+            V2021_10_20_preview2 = 1
 #pragma warning restore AZC0016 // All parts of ServiceVersion members' names must begin with a number or uppercase letter and cannot have consecutive underscores
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }

@@ -122,8 +122,8 @@ using Azure.Core.Pipeline;
                 {
                     Name = options.Name,
                     FallbackQueueId = options.FallbackQueueId,
-                    QueueSelectors = options.QueueSelectors.ToList(),
-                    WorkerSelectors = options.WorkerSelectors.ToList(),
+                    QueueSelectors = (options.QueueSelectors ?? new List<QueueSelectorAttachment>()).ToList(),
+                    WorkerSelectors = (options.WorkerSelectors ?? new List<WorkerSelectorAttachment>()).ToList(),
                     PrioritizationRule = options.PrioritizationRule
                 };
 
@@ -160,8 +160,8 @@ using Azure.Core.Pipeline;
                 {
                     Name = options.Name,
                     FallbackQueueId = options.FallbackQueueId,
-                    QueueSelectors = options.QueueSelectors.ToList(),
-                    WorkerSelectors = options.WorkerSelectors.ToList(),
+                    QueueSelectors = (options.QueueSelectors ?? new List<QueueSelectorAttachment>()).ToList(),
+                    WorkerSelectors = (options.WorkerSelectors ?? new List<WorkerSelectorAttachment>()).ToList(),
                     PrioritizationRule = options.PrioritizationRule
                 };
 
@@ -197,8 +197,8 @@ using Azure.Core.Pipeline;
                 {
                     Name = options.Name,
                     FallbackQueueId = options.FallbackQueueId,
-                    QueueSelectors = options.QueueSelectors.ToList(),
-                    WorkerSelectors = options.WorkerSelectors.ToList(),
+                    QueueSelectors = (options.QueueSelectors ?? new List<QueueSelectorAttachment>() ).ToList(),
+                    WorkerSelectors = (options.WorkerSelectors ?? new List<WorkerSelectorAttachment>()).ToList(),
                     PrioritizationRule = options.PrioritizationRule
                 };
 

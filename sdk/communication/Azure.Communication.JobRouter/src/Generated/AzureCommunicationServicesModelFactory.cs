@@ -37,6 +37,20 @@ namespace Azure.Communication.JobRouter
             return new ClassificationPolicy(id, name, fallbackQueueId, queueSelectors?.ToList(), prioritizationRule, workerSelectors?.ToList());
         }
 
+        /// <summary> Initializes a new instance of JobRouterError. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> Further details about specific errors that led to this error. </param>
+        /// <param name="innerError"> The inner error if any. </param>
+        /// <returns> A new <see cref="JobRouter.JobRouterError"/> instance for mocking. </returns>
+        public static JobRouterError JobRouterError(string code = null, string message = null, string target = null, IEnumerable<JobRouterError> details = null, JobRouterError innerError = null)
+        {
+            details ??= new List<JobRouterError>();
+
+            return new JobRouterError(code, message, target, details?.ToList(), innerError);
+        }
+
         /// <summary> Initializes a new instance of ClassificationPolicyCollection. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>

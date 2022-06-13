@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class JobRouterError
+    public partial class JobRouterError
     {
         internal static JobRouterError DeserializeJobRouterError(JsonElement element)
         {

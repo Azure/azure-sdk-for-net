@@ -135,9 +135,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             Assert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
             Assert.Null(getClassificationPolicyResponse.Value.Name);
-            Assert.Null(getClassificationPolicyResponse.Value.QueueSelectors);
+            Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectors);
             Assert.Null(getClassificationPolicyResponse.Value.PrioritizationRule);
-            Assert.AreEqual(0, getClassificationPolicyResponse.Value.WorkerSelectors.Count);
+            Assert.IsEmpty(getClassificationPolicyResponse.Value.WorkerSelectors);
 
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
         }
@@ -160,9 +160,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             Assert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
             Assert.AreEqual(classificationPolicyName, getClassificationPolicyResponse.Value.Name);
-            Assert.Null(getClassificationPolicyResponse.Value.QueueSelectors);
+            Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectors);
             Assert.IsTrue(getClassificationPolicyResponse.Value.PrioritizationRule.GetType() == typeof(StaticRule));
-            Assert.AreEqual(0, getClassificationPolicyResponse.Value.WorkerSelectors.Count);
+            Assert.IsEmpty(getClassificationPolicyResponse.Value.WorkerSelectors);
 
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
         }
@@ -224,7 +224,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.Null(getClassificationPolicyResponse.Value.FallbackQueueId);
             Assert.AreEqual(classificationPolicyName, getClassificationPolicyResponse.Value.Name);
             Assert.Null(getClassificationPolicyResponse.Value.PrioritizationRule);
-            Assert.Null(getClassificationPolicyResponse.Value.QueueSelectors);
+            Assert.IsEmpty(getClassificationPolicyResponse.Value.QueueSelectors);
             Assert.AreEqual(1, getClassificationPolicyResponse.Value.WorkerSelectors.Count);
 
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
