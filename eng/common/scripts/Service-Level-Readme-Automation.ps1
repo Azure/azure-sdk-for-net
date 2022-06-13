@@ -2,7 +2,7 @@
 .SYNOPSIS
 The script is to generate service level readme if it is missing. 
 For exist ones, we do 2 things here:
-1. Generate the client and mgmt table but not import to the existing service level readme.
+1. Generate the client but not import to the existing service level readme.
 2. Update the metadata of service level readme
 
 .DESCRIPTION
@@ -80,7 +80,7 @@ function CompareAndMergeMetadata ($original, $updated) {
       $updatedTable[$key] = $originalTable[$key]
     }
   }
-  return $updated
+  return $($updatedTable.GetEnumerator() | % { "$($_.Key): $($_.Value)" })
 }
 
 # Update the metadata table.
@@ -162,6 +162,24 @@ function generate-service-level-readme($readmeBaseName, $pathPrefix, $packageInf
 $fullMetadata = Get-CSVMetadata
 $monikers = @("latest", "preview")
 foreach($moniker in $monikers) {
+  # The onboarded packages return is key-value pair, which key is the package index, and value is the package info from {metadata}.json
+  # E.g. 
+  # Key as: @azure/storage-blob
+  # Value as: 
+  # {
+  #   "Name": "@azure/storage-blob",
+  #   "Version": "12.10.0-beta.1",
+  #   "DevVersion": null,
+  #   "DirectoryPath": "sdk/storage/storage-blob",
+  #   "ServiceDirectory": "storage",
+  #   "ReadMePath": "sdk/storage/storage-blob/README.md",
+  #   "ChangeLogPath": "sdk/storage/storage-blob/CHANGELOG.md",
+  #   "Group": null,
+  #   "SdkType": "client",
+  #   "IsNewSdk": true,
+  #   "ArtifactName": "azure-storage-blob",
+  #   "ReleaseStatus": "2022-04-19"
+  # }
   $onboardedPackages = &$GetOnboardedDocsMsPackagesForMonikerFn `
     -DocRepoLocation $DocRepoLocation -moniker $moniker
   $csvMetadata = @()
@@ -169,18 +187,11 @@ foreach($moniker in $monikers) {
     if ($metadataEntry.Package -and $metadataEntry.Hide -ne 'true') {
       $pkgKey = GetPackageKey $metadataEntry
       if($onboardedPackages.ContainsKey($pkgKey)) {
-        $jsonFileName = $pkgKey.Replace('@azure/', 'azure-')
-        $jsonFilePath = "$DocRepoLocation/metadata/$moniker/$jsonFileName.json"
-        if(!(Test-Path $jsonFilePath)){
-          $csvMetadata += $metadataEntry
-          continue
-        }
-        if (!($metadataEntry.PSObject.Members.Name -contains "DirectoryPath")) {
-          $metadataJsonFile = Get-Content $jsonFilePath -Raw | ConvertFrom-Json
+        if ($onboardedPackages[$pkgKey] -and $onboardedPackages[$pkgKey].DirectoryPath) {
           Add-Member -InputObject $metadataEntry `
           -MemberType NoteProperty `
           -Name DirectoryPath `
-          -Value $metadataJsonFile.DirectoryPath
+          -Value $onboardedPackages[$pkgKey].DirectoryPath
         }
         $csvMetadata += $metadataEntry
       }
