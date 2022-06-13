@@ -11,6 +11,7 @@ namespace EventHub.Tests.TestHelper
     using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.Azure.Management.KeyVault;
     using Microsoft.Azure.Management.Network;
+    using Azure.Security.KeyVault.Secrets;
     using Microsoft.Azure.Management.ManagedServiceIdentity;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json;

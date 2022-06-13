@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9b39ed2a-41e7-488d-9f1e-7cf2fba2cf5c"
+          "90b5c69c-836a-43f0-91d8-12af067c9631"
         ],
         "Accept-Language": [
           "en-US"
@@ -30,13 +30,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "0c796958-4ddd-4d4a-b31e-2073d1e1db63"
+          "994226ba-76a6-433d-8da4-a47d6c0b8ab0"
         ],
         "x-ms-correlation-request-id": [
-          "0c796958-4ddd-4d4a-b31e-2073d1e1db63"
+          "994226ba-76a6-433d-8da4-a47d6c0b8ab0"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20220607T132528Z:0c796958-4ddd-4d4a-b31e-2073d1e1db63"
+          "JIOINDIAWEST:20220609T113200Z:994226ba-76a6-433d-8da4-a47d6c0b8ab0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,7 +45,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:25:28 GMT"
+          "Thu, 09 Jun 2022 11:32:00 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -61,13 +61,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourcegroups/Default-ResourceGroup-6427?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlZ3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourcegroups/Default-ResourceGroup-6431?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlZ3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"Australia East\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d759752a-aa6d-4fae-a5e5-bfabc1830d19"
+          "8e2ab2f2-b6af-4a5b-8fa2-9788a92d4b67"
         ],
         "Accept-Language": [
           "en-US"
@@ -96,13 +96,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "4620ae7d-ad8b-4bb6-8097-72e61c552592"
+          "90a6e1f4-bd3e-4292-9b44-8b0bc86d5671"
         ],
         "x-ms-correlation-request-id": [
-          "4620ae7d-ad8b-4bb6-8097-72e61c552592"
+          "90a6e1f4-bd3e-4292-9b44-8b0bc86d5671"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20220607T132532Z:4620ae7d-ad8b-4bb6-8097-72e61c552592"
+          "JIOINDIAWEST:20220609T113204Z:90a6e1f4-bd3e-4292-9b44-8b0bc86d5671"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,7 +111,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:25:32 GMT"
+          "Thu, 09 Jun 2022 11:32:04 GMT"
         ],
         "Content-Length": [
           "212"
@@ -123,7 +123,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427\",\r\n  \"name\": \"Default-ResourceGroup-6427\",\r\n  \"location\": \"australiaeast\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431\",\r\n  \"name\": \"Default-ResourceGroup-6431\",\r\n  \"location\": \"australiaeast\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -133,7 +133,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ef436632-cdb0-451f-845f-cc1be117395e"
+          "273fddaa-b058-49b8-8bce-ee95331910a5"
         ],
         "Accept-Language": [
           "en-US"
@@ -153,7 +153,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ed31003f-4ae5-4d5b-b66d-d6b3f9d86195_M3CH3_M3CH3"
+          "aaa3d063-1c47-4678-9330-f0a7a383619a_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -166,10 +166,10 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "bf5460d0-d1fa-4110-b874-7c9631a022fb"
+          "18d4943b-6ff3-4d9b-9590-e291bfe45023"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132533Z:bf5460d0-d1fa-4110-b874-7c9631a022fb"
+          "JIOINDIAWEST:20220609T113205Z:18d4943b-6ff3-4d9b-9590-e291bfe45023"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -178,7 +178,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:25:33 GMT"
+          "Thu, 09 Jun 2022 11:32:05 GMT"
         ],
         "Content-Length": [
           "51222"
@@ -197,10 +197,10 @@
       "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/providers/Microsoft.EventHub/checkNameAvailability?api-version=2022-01-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvY2hlY2tOYW1lQXZhaWxhYmlsaXR5P2FwaS12ZXJzaW9uPTIwMjItMDEtMDEtcHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"sdk-NS1-1558\"\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"sdk-NS1-8279\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0e744bf9-a01d-4e5a-b31f-29615e0c8d7f"
+          "3565fa10-a0dc-42aa-a805-8890f4df73a5"
         ],
         "Accept-Language": [
           "en-US"
@@ -226,7 +226,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "80827aee-b3e4-4b5d-a6c0-dd2297a7fe4e_M3CH3_M3CH3"
+          "08a39f82-380a-43fe-b218-75ba6df0bad7_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -239,10 +239,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "0d832452-6269-440a-ac99-ba9b57c982f7"
+          "70fcf50f-1214-4294-9432-4ab96589b5c2"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132533Z:0d832452-6269-440a-ac99-ba9b57c982f7"
+          "JIOINDIAWEST:20220609T113206Z:70fcf50f-1214-4294-9432-4ab96589b5c2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -251,7 +251,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:25:33 GMT"
+          "Thu, 09 Jun 2022 11:32:06 GMT"
         ],
         "Content-Length": [
           "53"
@@ -267,13 +267,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558?api-version=2022-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTE1NTg/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10\r\n  },\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b9946c8a-0b1f-4108-beb1-bab5829eab43"
+          "5a0328fe-5ac1-4007-aa1b-0d2db0ad321c"
         ],
         "Accept-Language": [
           "en-US"
@@ -299,7 +299,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "37859072-923b-4594-b7d7-35e96a733555_M3CH3_M3CH3"
+          "775627a0-8f99-425d-b2c6-b8553175c7d4_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -312,10 +312,10 @@
           "49"
         ],
         "x-ms-correlation-request-id": [
-          "743e4968-9b33-451e-9b5c-cf09fdf96bb9"
+          "ab501998-fbfb-479e-96a1-380b39621260"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132541Z:743e4968-9b33-451e-9b5c-cf09fdf96bb9"
+          "JIOINDIAWEST:20220609T113216Z:ab501998-fbfb-479e-96a1-380b39621260"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -324,7 +324,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:25:41 GMT"
+          "Thu, 09 Jun 2022 11:32:15 GMT"
         ],
         "Content-Length": [
           "803"
@@ -336,17 +336,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558\",\r\n  \"name\": \"sdk-NS1-1558\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Created\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-1558\",\r\n    \"createdAt\": \"2022-06-07T13:25:39.853Z\",\r\n    \"updatedAt\": \"2022-06-07T13:25:39.853Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-1558.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Created\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558?api-version=2022-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTE1NTg/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"isAutoInflateEnabled\": true,\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"zoneRedundant\": false,\r\n    \"disableLocalAuth\": true\r\n  },\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"isAutoInflateEnabled\": true,\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"zoneRedundant\": false,\r\n    \"disableLocalAuth\": false\r\n  },\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cbaacaf0-23c7-4323-881a-d40815dd4ecd"
+          "4ef8c6e0-c2c2-4f29-b74d-b2c1ef4d3e8d"
         ],
         "Accept-Language": [
           "en-US"
@@ -361,7 +361,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "440"
+          "442"
         ]
       },
       "ResponseHeaders": {
@@ -372,7 +372,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a8d5ea6f-7dcd-4b25-bd3f-14e173829652_M3CH3_M3CH3"
+          "60874071-3f2e-4f7f-835a-f9b7a8624b62_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -382,13 +382,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "47"
+          "48"
         ],
         "x-ms-correlation-request-id": [
-          "9be050f2-f1b5-4519-98b2-2f08bfc716cc"
+          "e061ff36-708c-45db-8d13-c659dd09621d"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132706Z:9be050f2-f1b5-4519-98b2-2f08bfc716cc"
+          "JIOINDIAWEST:20220609T113326Z:e061ff36-708c-45db-8d13-c659dd09621d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -397,10 +397,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:27:05 GMT"
+          "Thu, 09 Jun 2022 11:33:25 GMT"
         ],
         "Content-Length": [
-          "802"
+          "804"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -409,12 +409,158 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558\",\r\n  \"name\": \"sdk-NS1-1558\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": true,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Updating\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-1558\",\r\n    \"createdAt\": \"2022-06-07T13:25:39.853Z\",\r\n    \"updatedAt\": \"2022-06-07T13:27:05.95Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-1558.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Updating\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:33:26.54Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558?api-version=2022-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTE1NTg/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"isAutoInflateEnabled\": true,\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"zoneRedundant\": false,\r\n    \"disableLocalAuth\": true\r\n  },\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2721ba71-4007-408b-8fea-b843445b4d68"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "441"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c97f9f96-065e-4cc8-a33c-b8782e8db162_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "46"
+        ],
+        "x-ms-correlation-request-id": [
+          "9a5f39a8-e2d2-4ae4-8fb1-4d0b8159f335"
+        ],
+        "x-ms-routing-request-id": [
+          "JIOINDIAWEST:20220609T113420Z:9a5f39a8-e2d2-4ae4-8fb1-4d0b8159f335"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 09 Jun 2022 11:34:19 GMT"
+        ],
+        "Content-Length": [
+          "803"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"disableLocalAuth\": true,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Updating\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:34:19.87Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"isAutoInflateEnabled\": true,\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"zoneRedundant\": false,\r\n    \"disableLocalAuth\": false\r\n  },\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1cd432a7-e16f-4968-b779-7bfc1b6cef9a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "442"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "eba0f363-8f8f-4cb3-bf1d-44599e63322e_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "45"
+        ],
+        "x-ms-correlation-request-id": [
+          "ec7c3d37-980c-429e-aabe-2c054a1c3fd9"
+        ],
+        "x-ms-routing-request-id": [
+          "JIOINDIAWEST:20220609T113457Z:ec7c3d37-980c-429e-aabe-2c054a1c3fd9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 09 Jun 2022 11:34:57 GMT"
+        ],
+        "Content-Length": [
+          "805"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Updating\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:34:57.443Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -433,7 +579,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a352f59a-5c5e-4203-bb2f-0d6e26b79e4a_M3CH3_M3CH3"
+          "98c273c4-3fe5-4395-ae36-1c72f5c51f32_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -446,10 +592,10 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "64c64159-630a-417d-890b-90f979b91011"
+          "9b32a0a2-758a-4740-821e-c226d3d04d28"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132612Z:64c64159-630a-417d-890b-90f979b91011"
+          "JIOINDIAWEST:20220609T113246Z:9b32a0a2-758a-4740-821e-c226d3d04d28"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -458,7 +604,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:26:11 GMT"
+          "Thu, 09 Jun 2022 11:32:46 GMT"
         ],
         "Content-Length": [
           "803"
@@ -470,12 +616,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558\",\r\n  \"name\": \"sdk-NS1-1558\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Created\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-1558\",\r\n    \"createdAt\": \"2022-06-07T13:25:39.853Z\",\r\n    \"updatedAt\": \"2022-06-07T13:25:39.853Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-1558.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Created\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558?api-version=2022-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTE1NTg/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -494,23 +640,23 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d3cf026c-e8ac-4e51-a1ee-ad1d8dfbde08_M3CH3_M3CH3"
+          "266c8a27-239e-47af-a196-0f3770419965_M8SN1_M8SN1"
         ],
         "Server-SB": [
-          "Service-Bus-Resource-Provider/CH3"
+          "Service-Bus-Resource-Provider/SN1"
         ],
         "Server": [
-          "Service-Bus-Resource-Provider/CH3",
+          "Service-Bus-Resource-Provider/SN1",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "6fdd85c0-df3d-456c-9780-044c282ccd5d"
+          "74ae4e91-4169-43ec-8584-7bdb8e29256d"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132643Z:6fdd85c0-df3d-456c-9780-044c282ccd5d"
+          "JIOINDIAWEST:20220609T113318Z:74ae4e91-4169-43ec-8584-7bdb8e29256d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -519,10 +665,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:26:42 GMT"
+          "Thu, 09 Jun 2022 11:33:17 GMT"
         ],
         "Content-Length": [
-          "800"
+          "801"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -531,21 +677,15 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558\",\r\n  \"name\": \"sdk-NS1-1558\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-1558\",\r\n    \"createdAt\": \"2022-06-07T13:25:39.853Z\",\r\n    \"updatedAt\": \"2022-06-07T13:26:29.33Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-1558.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:33:03.833Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558?api-version=2022-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTE1NTg/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "7d441efc-f5a1-4f1d-8c34-56f823eb84db"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
         "User-Agent": [
           "FxVersion/4.700.22.21202",
           "OSName/Windows",
@@ -561,7 +701,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "2937d87c-1700-4a45-afb5-0d9064439294_M3CH3_M3CH3"
+          "a5dbb4ab-a6d3-404c-8daf-bb8b163a638c_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -574,10 +714,10 @@
           "11997"
         ],
         "x-ms-correlation-request-id": [
-          "dd760a89-e39d-4484-ab70-88685de2c2bb"
+          "ccf2c39d-f2cd-4759-933d-2afa8ca9ef48"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132643Z:dd760a89-e39d-4484-ab70-88685de2c2bb"
+          "JIOINDIAWEST:20220609T113357Z:ccf2c39d-f2cd-4759-933d-2afa8ca9ef48"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -586,10 +726,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:26:43 GMT"
+          "Thu, 09 Jun 2022 11:33:57 GMT"
         ],
         "Content-Length": [
-          "800"
+          "801"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -598,78 +738,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558\",\r\n  \"name\": \"sdk-NS1-1558\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-1558\",\r\n    \"createdAt\": \"2022-06-07T13:25:39.853Z\",\r\n    \"updatedAt\": \"2022-06-07T13:26:29.33Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-1558.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:33:29.54Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558?api-version=2022-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTE1NTg/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "FxVersion/4.700.22.21202",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "d8329d9c-b7c3-4b81-8a24-961f5d31286c_M3CH3_M3CH3"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/CH3"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/CH3",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
-        ],
-        "x-ms-correlation-request-id": [
-          "ef27b809-6985-483e-97ad-2723cbd79de6"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132736Z:ef27b809-6985-483e-97ad-2723cbd79de6"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 07 Jun 2022 13:27:35 GMT"
-        ],
-        "Content-Length": [
-          "800"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558\",\r\n  \"name\": \"sdk-NS1-1558\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": true,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-1558\",\r\n    \"createdAt\": \"2022-06-07T13:25:39.853Z\",\r\n    \"updatedAt\": \"2022-06-07T13:27:10.877Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-1558.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558?api-version=2022-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTE1NTg/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e27b31f0-9b75-4efb-a99e-7193b335701a"
+          "d777fc84-85a7-486f-8e11-ff4d1e88b0eb"
         ],
         "Accept-Language": [
           "en-US"
@@ -689,74 +768,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e90c9c4f-1b5a-47bf-968f-1b3cae6888a0_M3CH3_M3CH3"
-        ],
-        "Server-SB": [
-          "Service-Bus-Resource-Provider/CH3"
-        ],
-        "Server": [
-          "Service-Bus-Resource-Provider/CH3",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11993"
-        ],
-        "x-ms-correlation-request-id": [
-          "983b6b6b-37e7-4eeb-8581-3cdd6d3c6491"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132747Z:983b6b6b-37e7-4eeb-8581-3cdd6d3c6491"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 07 Jun 2022 13:27:46 GMT"
-        ],
-        "Content-Length": [
-          "800"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558\",\r\n  \"name\": \"sdk-NS1-1558\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": true,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-1558\",\r\n    \"createdAt\": \"2022-06-07T13:25:39.853Z\",\r\n    \"updatedAt\": \"2022-06-07T13:27:10.877Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-1558.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces?api-version=2022-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcz9hcGktdmVyc2lvbj0yMDIyLTAxLTAxLXByZXZpZXc=",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "44355a24-f5c3-4306-bc63-86d417193c64"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.700.22.21202",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "5a2aa563-9148-46b7-9138-952fdb05bd1c_M3CH3_M3CH3"
+          "ab4b59bb-2088-4ae6-bb2d-431e7aa350fa_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -769,10 +781,10 @@
           "11996"
         ],
         "x-ms-correlation-request-id": [
-          "aefed1e8-02fa-41da-addb-03c0ffaf3d7d"
+          "370d2636-882c-449b-94a5-6787c6b60d3c"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132644Z:aefed1e8-02fa-41da-addb-03c0ffaf3d7d"
+          "JIOINDIAWEST:20220609T113358Z:370d2636-882c-449b-94a5-6787c6b60d3c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -781,10 +793,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:26:43 GMT"
+          "Thu, 09 Jun 2022 11:33:57 GMT"
         ],
         "Content-Length": [
-          "812"
+          "801"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -793,7 +805,263 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"Standard\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 1\r\n      },\r\n      \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558\",\r\n      \"name\": \"sdk-NS1-1558\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces\",\r\n      \"location\": \"Australia East\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\"\r\n      },\r\n      \"properties\": {\r\n        \"minimumTlsVersion\": \"1.2\",\r\n        \"publicNetworkAccess\": \"Enabled\",\r\n        \"disableLocalAuth\": false,\r\n        \"zoneRedundant\": false,\r\n        \"isAutoInflateEnabled\": true,\r\n        \"maximumThroughputUnits\": 10,\r\n        \"kafkaEnabled\": true,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-1558\",\r\n        \"createdAt\": \"2022-06-07T13:25:39.853Z\",\r\n        \"updatedAt\": \"2022-06-07T13:26:29.33Z\",\r\n        \"serviceBusEndpoint\": \"https://sdk-NS1-1558.servicebus.windows.net:443/\",\r\n        \"status\": \"Active\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:33:29.54Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "59253f7c-7e18-46df-9375-b1824cd27bf6_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-correlation-request-id": [
+          "2a7a7183-ceda-4bf2-8a5b-ad7c0e9836da"
+        ],
+        "x-ms-routing-request-id": [
+          "JIOINDIAWEST:20220609T113450Z:2a7a7183-ceda-4bf2-8a5b-ad7c0e9836da"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 09 Jun 2022 11:34:50 GMT"
+        ],
+        "Content-Length": [
+          "799"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"disableLocalAuth\": true,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:34:24.8Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d8ddfbe2-6c65-42fb-aa22-821e797d0573_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "x-ms-correlation-request-id": [
+          "9727339e-50d4-43cf-92f3-40534aa2910d"
+        ],
+        "x-ms-routing-request-id": [
+          "JIOINDIAWEST:20220609T113528Z:9727339e-50d4-43cf-92f3-40534aa2910d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 09 Jun 2022 11:35:27 GMT"
+        ],
+        "Content-Length": [
+          "801"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:35:01.97Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cc1b9b38-7b71-412f-84f5-4c239e044863"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "6f608dc3-1ee1-434d-974b-d95e2d5a41f6_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-correlation-request-id": [
+          "aeca752c-ef31-4d56-893b-65b3f809c51c"
+        ],
+        "x-ms-routing-request-id": [
+          "JIOINDIAWEST:20220609T113538Z:aeca752c-ef31-4d56-893b-65b3f809c51c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 09 Jun 2022 11:35:38 GMT"
+        ],
+        "Content-Length": [
+          "801"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:35:01.97Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Active\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcz9hcGktdmVyc2lvbj0yMDIyLTAxLTAxLXByZXZpZXc=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e990074a-3277-4a24-96d1-e32b61ed2c4a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.21202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.EventHub.EventHubManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "d546bca7-6f38-46c8-9081-5f5d141d52f6_M5CH3_M5CH3"
+        ],
+        "Server-SB": [
+          "Service-Bus-Resource-Provider/CH3"
+        ],
+        "Server": [
+          "Service-Bus-Resource-Provider/CH3",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-correlation-request-id": [
+          "012103e3-50dd-438c-a164-deb71eb86977"
+        ],
+        "x-ms-routing-request-id": [
+          "JIOINDIAWEST:20220609T113358Z:012103e3-50dd-438c-a164-deb71eb86977"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 09 Jun 2022 11:33:58 GMT"
+        ],
+        "Content-Length": [
+          "813"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"Standard\",\r\n        \"tier\": \"Standard\",\r\n        \"capacity\": 1\r\n      },\r\n      \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n      \"name\": \"sdk-NS1-8279\",\r\n      \"type\": \"Microsoft.EventHub/Namespaces\",\r\n      \"location\": \"Australia East\",\r\n      \"tags\": {\r\n        \"tag1\": \"value1\",\r\n        \"tag2\": \"value2\"\r\n      },\r\n      \"properties\": {\r\n        \"minimumTlsVersion\": \"1.2\",\r\n        \"publicNetworkAccess\": \"Disabled\",\r\n        \"disableLocalAuth\": false,\r\n        \"zoneRedundant\": false,\r\n        \"isAutoInflateEnabled\": true,\r\n        \"maximumThroughputUnits\": 10,\r\n        \"kafkaEnabled\": true,\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n        \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n        \"updatedAt\": \"2022-06-09T11:33:29.54Z\",\r\n        \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n        \"status\": \"Active\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -803,7 +1071,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0edc93a2-89e4-4b47-b66b-6f73fe46fa67"
+          "ee720771-9946-4a9e-ab32-72367c16a3c4"
         ],
         "Accept-Language": [
           "en-US"
@@ -826,23 +1094,23 @@
           ""
         ],
         "x-ms-request-id": [
-          "23fb1c76-cb43-4116-a3bb-5920d9833c33_M3CH3_M3CH3"
+          "c1c88948-4a66-4855-b83b-b9cc6953c580_M1SN1_M1SN1"
         ],
         "Server-SB": [
-          "Service-Bus-Resource-Provider/CH3"
+          "Service-Bus-Resource-Provider/SN1"
         ],
         "Server": [
-          "Service-Bus-Resource-Provider/CH3",
+          "Service-Bus-Resource-Provider/SN1",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
+          "11994"
         ],
         "x-ms-correlation-request-id": [
-          "16755b30-9196-457e-ad2a-a0b1f724f49c"
+          "fe43157f-eab3-44fe-beec-c6a69e9bbafb"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132644Z:16755b30-9196-457e-ad2a-a0b1f724f49c"
+          "JIOINDIAWEST:20220609T113359Z:fe43157f-eab3-44fe-beec-c6a69e9bbafb"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -851,7 +1119,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:26:44 GMT"
+          "Thu, 09 Jun 2022 11:33:59 GMT"
         ],
         "Content-Length": [
           "80897"
@@ -867,13 +1135,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558?api-version=2022-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTE1NTg/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ec2d051e-6469-4462-a1a4-a935e6fcf937"
+          "bf9b47d8-5c42-41ab-8ce4-58130beaaeb8"
         ],
         "Accept-Language": [
           "en-US"
@@ -899,7 +1167,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "9fb90b68-0c30-4c14-a1ca-948be1f42e03_M3CH3_M3CH3"
+          "5e2f2ce6-b08d-40b9-8023-ce8538423fbc_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -909,13 +1177,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
-          "48"
+          "47"
         ],
         "x-ms-correlation-request-id": [
-          "49f4e047-5cd1-4184-a0f9-b491ef29a0cd"
+          "fa19a1ae-ed91-4daa-b84d-e769e118f667"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132647Z:49f4e047-5cd1-4184-a0f9-b491ef29a0cd"
+          "JIOINDIAWEST:20220609T113403Z:fa19a1ae-ed91-4daa-b84d-e769e118f667"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -924,10 +1192,10 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:26:47 GMT"
+          "Thu, 09 Jun 2022 11:34:02 GMT"
         ],
         "Content-Length": [
-          "803"
+          "804"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -936,17 +1204,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558\",\r\n  \"name\": \"sdk-NS1-1558\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Updating\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-1558\",\r\n    \"createdAt\": \"2022-06-07T13:25:39.853Z\",\r\n    \"updatedAt\": \"2022-06-07T13:26:45.94Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-1558.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  },\r\n  \"id\": \"/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279\",\r\n  \"name\": \"sdk-NS1-8279\",\r\n  \"type\": \"Microsoft.EventHub/Namespaces\",\r\n  \"location\": \"Australia East\",\r\n  \"tags\": {\r\n    \"tag3\": \"value3\",\r\n    \"tag4\": \"value4\"\r\n  },\r\n  \"properties\": {\r\n    \"minimumTlsVersion\": \"1.2\",\r\n    \"publicNetworkAccess\": \"Disabled\",\r\n    \"disableLocalAuth\": false,\r\n    \"zoneRedundant\": false,\r\n    \"isAutoInflateEnabled\": true,\r\n    \"maximumThroughputUnits\": 10,\r\n    \"kafkaEnabled\": true,\r\n    \"provisioningState\": \"Updating\",\r\n    \"metricId\": \"a70b8550-49b1-4c60-b9f9-86b7edbf31e4:sdk-ns1-8279\",\r\n    \"createdAt\": \"2022-06-09T11:32:13.803Z\",\r\n    \"updatedAt\": \"2022-06-09T11:34:00.79Z\",\r\n    \"serviceBusEndpoint\": \"https://sdk-NS1-8279.servicebus.windows.net:443/\",\r\n    \"status\": \"Activating\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/namespaces/sdk-NS1-1558?api-version=2022-01-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTE1NTg/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourceGroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/namespaces/sdk-NS1-8279?api-version=2022-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlR3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbmFtZXNwYWNlcy9zZGstTlMxLTgyNzk/YXBpLXZlcnNpb249MjAyMi0wMS0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0a39ffad-e026-4f6e-b775-d352b2334874"
+          "ca40adf9-532d-463a-a417-49d8db61094e"
         ],
         "Accept-Language": [
           "en-US"
@@ -966,10 +1234,10 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourcegroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/locations/australiaeast/operationStatus/sdk-NS1-1558?api-version=2022-01-01-preview&resourceType=Namespace"
+          "https://management.azure.com/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourcegroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/locations/australiaeast/operationStatus/sdk-NS1-8279?api-version=2022-01-01-preview&resourceType=Namespace"
         ],
         "x-ms-request-id": [
-          "1300e7c7-010c-4cae-adea-12cf4e8d2fa8_M3CH3_M3CH3"
+          "9fe87903-5b09-4c7f-9558-7925cda2b3ea_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -982,10 +1250,10 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "16003c6c-a425-4122-8d14-443e5b0d265f"
+          "753d7e29-d0ce-4786-9849-0fd663f2cc78"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132748Z:16003c6c-a425-4122-8d14-443e5b0d265f"
+          "JIOINDIAWEST:20220609T113541Z:753d7e29-d0ce-4786-9849-0fd663f2cc78"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -994,7 +1262,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:27:48 GMT"
+          "Thu, 09 Jun 2022 11:35:40 GMT"
         ],
         "Expires": [
           "-1"
@@ -1007,8 +1275,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourcegroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/locations/australiaeast/operationStatus/sdk-NS1-1558?api-version=2022-01-01-preview&resourceType=Namespace",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlZ3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbG9jYXRpb25zL2F1c3RyYWxpYWVhc3Qvb3BlcmF0aW9uU3RhdHVzL3Nkay1OUzEtMTU1OD9hcGktdmVyc2lvbj0yMDIyLTAxLTAxLXByZXZpZXcmcmVzb3VyY2VUeXBlPU5hbWVzcGFjZQ==",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourcegroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/locations/australiaeast/operationStatus/sdk-NS1-8279?api-version=2022-01-01-preview&resourceType=Namespace",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlZ3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbG9jYXRpb25zL2F1c3RyYWxpYWVhc3Qvb3BlcmF0aW9uU3RhdHVzL3Nkay1OUzEtODI3OT9hcGktdmVyc2lvbj0yMDIyLTAxLTAxLXByZXZpZXcmcmVzb3VyY2VUeXBlPU5hbWVzcGFjZQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1027,7 +1295,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "10752e8b-317f-41c8-971e-120d7e7b48e6_M3CH3_M3CH3"
+          "003872a5-8cf0-4aca-a806-551af75c69b3_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -1037,13 +1305,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
+          "11990"
         ],
         "x-ms-correlation-request-id": [
-          "b98c519a-804c-4c6d-9149-0b1513a1d457"
+          "b6674864-cc75-4e84-852d-ec0e85a57503"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132819Z:b98c519a-804c-4c6d-9149-0b1513a1d457"
+          "JIOINDIAWEST:20220609T113611Z:b6674864-cc75-4e84-852d-ec0e85a57503"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1052,7 +1320,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:28:19 GMT"
+          "Thu, 09 Jun 2022 11:36:11 GMT"
         ],
         "Expires": [
           "-1"
@@ -1062,8 +1330,8 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourcegroups/Default-ResourceGroup-6427/providers/Microsoft.EventHub/locations/australiaeast/operationStatus/sdk-NS1-1558?api-version=2022-01-01-preview&resourceType=Namespace",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlZ3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3L3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbG9jYXRpb25zL2F1c3RyYWxpYWVhc3Qvb3BlcmF0aW9uU3RhdHVzL3Nkay1OUzEtMTU1OD9hcGktdmVyc2lvbj0yMDIyLTAxLTAxLXByZXZpZXcmcmVzb3VyY2VUeXBlPU5hbWVzcGFjZQ==",
+      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourcegroups/Default-ResourceGroup-6431/providers/Microsoft.EventHub/locations/australiaeast/operationStatus/sdk-NS1-8279?api-version=2022-01-01-preview&resourceType=Namespace",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlZ3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDMxL3Byb3ZpZGVycy9NaWNyb3NvZnQuRXZlbnRIdWIvbG9jYXRpb25zL2F1c3RyYWxpYWVhc3Qvb3BlcmF0aW9uU3RhdHVzL3Nkay1OUzEtODI3OT9hcGktdmVyc2lvbj0yMDIyLTAxLTAxLXByZXZpZXcmcmVzb3VyY2VUeXBlPU5hbWVzcGFjZQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1082,7 +1350,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7bc89fd6-7372-4615-933c-dcb48a4a94da_M3CH3_M3CH3"
+          "2cedc8bd-6814-46e1-a4e6-a90a84a642b5_M5CH3_M5CH3"
         ],
         "Server-SB": [
           "Service-Bus-Resource-Provider/CH3"
@@ -1092,13 +1360,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
+          "11989"
         ],
         "x-ms-correlation-request-id": [
-          "631d39f7-e592-409d-85e5-7d84cc233fea"
+          "09f3062b-2f47-494d-b55f-8a723511f32c"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132820Z:631d39f7-e592-409d-85e5-7d84cc233fea"
+          "JIOINDIAWEST:20220609T113611Z:09f3062b-2f47-494d-b55f-8a723511f32c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1107,7 +1375,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 07 Jun 2022 13:28:20 GMT"
+          "Thu, 09 Jun 2022 11:36:11 GMT"
         ],
         "Expires": [
           "-1"
@@ -1115,75 +1383,12 @@
       },
       "ResponseBody": "",
       "StatusCode": 204
-    },
-    {
-      "RequestUri": "/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/resourcegroups/Default-ResourceGroup-6427?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTcwYjg1NTAtNDliMS00YzYwLWI5ZjktODZiN2VkYmYzMWU0L3Jlc291cmNlZ3JvdXBzL0RlZmF1bHQtUmVzb3VyY2VHcm91cC02NDI3P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "d17faf01-46a8-424b-ab39-8437851a2eb8"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.700.22.21202",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Location": [
-          "https://management.azure.com/subscriptions/a70b8550-49b1-4c60-b9f9-86b7edbf31e4/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1ERUZBVUxUOjJEUkVTT1VSQ0VHUk9VUDoyRDY0MjctQVVTVFJBTElBRUFTVCIsImpvYkxvY2F0aW9uIjoiYXVzdHJhbGlhZWFzdCJ9?api-version=2015-11-01"
-        ],
-        "Retry-After": [
-          "15"
-        ],
-        "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
-        ],
-        "x-ms-request-id": [
-          "2fc66efb-c83f-4ef7-9e89-bd88863a952a"
-        ],
-        "x-ms-correlation-request-id": [
-          "2fc66efb-c83f-4ef7-9e89-bd88863a952a"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20220607T132824Z:2fc66efb-c83f-4ef7-9e89-bd88863a952a"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Tue, 07 Jun 2022 13:28:24 GMT"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 202
     }
   ],
   "Names": {
     "NamespaceCreateGetUpdateDelete": [
-      "Default-ResourceGroup-6427",
-      "sdk-NS1-1558"
+      "Default-ResourceGroup-6431",
+      "sdk-NS1-8279"
     ]
   },
   "Variables": {

@@ -122,7 +122,7 @@ namespace EventHub.Tests.ScenarioTests
                 finally
                 {
                     //Delete Resource Group
-                    //this.ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupCluster, null, default(CancellationToken)).ConfigureAwait(false);
+                    this.ResourceManagementClient.ResourceGroups.DeleteWithHttpMessagesAsync(resourceGroupCluster, null, default(CancellationToken)).ConfigureAwait(false);
                 }
 
             }

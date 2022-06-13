@@ -66,12 +66,29 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.NotNull(createNamespaceResponse);
                     Assert.Equal(createNamespaceResponse.Name, namespaceName);
                     Assert.Equal(SkuName.Standard, createNamespaceResponse.Sku.Name);
+                    Assert.Equal(SkuName.Standard, createNamespaceResponse.Sku.Tier);
+                    Assert.Equal(1, createNamespaceResponse.Sku.Capacity);
                     Assert.Equal(new Dictionary<string, string>() { { "tag1", "value1" }, { "tag2", "value2" } },
                                     createNamespaceResponse.Tags);
                     Assert.True(createNamespaceResponse.IsAutoInflateEnabled);
                     Assert.Equal(10, createNamespaceResponse.MaximumThroughputUnits);
+                    Assert.Equal("Enabled", createNamespaceResponse.PublicNetworkAccess);
 
-                    
+                    createNamespaceResponse.PublicNetworkAccess = "Disabled";
+
+                    createNamespaceResponse = EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, createNamespaceResponse);
+
+                    Assert.NotNull(createNamespaceResponse);
+                    Assert.Equal(createNamespaceResponse.Name, namespaceName);
+                    Assert.Equal(SkuName.Standard, createNamespaceResponse.Sku.Name);
+                    Assert.Equal(SkuName.Standard, createNamespaceResponse.Sku.Tier);
+                    Assert.Equal(1, createNamespaceResponse.Sku.Capacity);
+                    Assert.Equal(new Dictionary<string, string>() { { "tag1", "value1" }, { "tag2", "value2" } },
+                                    createNamespaceResponse.Tags);
+                    Assert.True(createNamespaceResponse.IsAutoInflateEnabled);
+                    Assert.Equal(10, createNamespaceResponse.MaximumThroughputUnits);
+                    Assert.Equal("Disabled", createNamespaceResponse.PublicNetworkAccess);
+
                     var getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                     Assert.NotNull(getNamespaceResponse);
                     Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
@@ -111,7 +128,6 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.True(updateNamespaceResponse.IsAutoInflateEnabled);
                     Assert.Equal(10, updateNamespaceResponse.MaximumThroughputUnits);
 
-
                     // Will uncomment the assertions once the service is deployed
                     TestUtilities.Wait(10000);
 
@@ -127,6 +143,19 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.True(updateNamespaceResponse.IsAutoInflateEnabled);
                     Assert.Equal(10, updateNamespaceResponse.MaximumThroughputUnits);
                     Assert.True(updateNamespaceResponse.DisableLocalAuth);
+
+                    updateNamespaceResponse.DisableLocalAuth = false;
+
+                    updateNamespaceResponse = EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, updateNamespaceResponse);
+
+                    Assert.NotNull(updateNamespaceResponse);
+                    Assert.Equal(updateNamespaceResponse.Name, namespaceName);
+                    Assert.Equal(SkuName.Standard, updateNamespaceResponse.Sku.Name);
+                    Assert.Equal(new Dictionary<string, string>() { { "tag3", "value3" }, { "tag4", "value4" } },
+                                    updateNamespaceResponse.Tags);
+                    Assert.True(updateNamespaceResponse.IsAutoInflateEnabled);
+                    Assert.Equal(10, updateNamespaceResponse.MaximumThroughputUnits);
+                    Assert.False(updateNamespaceResponse.DisableLocalAuth);
 
                     // Will uncomment the assertions once the service is deployed
                     TestUtilities.Wait(10000);
