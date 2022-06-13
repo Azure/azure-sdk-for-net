@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
             SapMonitorData sapMonitorData = new SapMonitorData(AzureLocation.EastUS2);
             sapMonitorData.AppLocation = AzureLocation.EastUS;
             sapMonitorData.MonitorSubnetId = new ResourceIdentifier(
-                "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/nitin-agarwal-scale-test/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/snet-1306-1");
+                "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/nitin-agarwal-scale-test/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/snet-0906-2");
             sapMonitorData.RoutingPreference = RoutingPreference.RouteAll;
             sapMonitorData.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
             {

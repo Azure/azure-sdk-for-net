@@ -114,7 +114,7 @@
           "managedResourceGroupConfiguration": {
             "name": "sapmonrg-9905"
           },
-          "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/nitin-agarwal-scale-test/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/snet-1006-1"
+          "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/nitin-agarwal-scale-test/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/snet-1306-5"
         }
       },
       "StatusCode": 201,

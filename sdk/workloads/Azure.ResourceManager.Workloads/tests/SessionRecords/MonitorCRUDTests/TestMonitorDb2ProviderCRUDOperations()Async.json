@@ -110,7 +110,7 @@
           "managedResourceGroupConfiguration": {
             "name": "sapmonrg-9608"
           },
-          "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/Basant-db2/providers/Microsoft.Network/virtualNetworks/db2-vnet/subnets/snet-db2-2"
+          "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/Basant-db2/providers/Microsoft.Network/virtualNetworks/db2-vnet/subnets/snet-db2-3"
         }
       },
       "StatusCode": 201,
