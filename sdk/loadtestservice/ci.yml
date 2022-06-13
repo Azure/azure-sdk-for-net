@@ -29,5 +29,3 @@ extends:
     Artifacts:
     - name: Azure.Analytics.LoadTestService
       safeName: AzureAnalyticsLoadTestService
-    - name: Azure.Analytics.LoadTesting
-      safeName: AzureAnalyticsLoadTesting

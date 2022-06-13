@@ -6,10 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-require:
-- D:\Project\azure-rest-api-specs\specification\loadtestservice\data-plane\readme.md
-- D:\Project\azure-rest-api-specs\specification\loadtestservice\data-plane\readme.csharp.md
-csharp: true 
+input-file: 
+- D:\Project\azure-rest-api-specs\specification\loadtestservice\data-plane\Microsoft.LoadTestService\preview\2022-06-01-preview\loadtestservice.json
 namespace: Azure.Analytics.LoadTestService
 
  
