@@ -1971,7 +1971,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<GalleryResource>> GetGalleryAsync(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermissions? select = null, GalleryExpandParams? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<GalleryResource>> GetGalleryAsync(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermissions? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroupResource.GetGalleries().GetAsync(galleryName, select, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -1989,7 +1989,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<GalleryResource> GetGallery(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermissions? select = null, GalleryExpandParams? expand = null, CancellationToken cancellationToken = default)
+        public static Response<GalleryResource> GetGallery(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermissions? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetGalleries().Get(galleryName, select, expand, cancellationToken);
         }

@@ -6,7 +6,7 @@
 
 ### Breaking Changes
 
-- Rename plenty of classes and property names.
+- Rename plenty of classes and property names according to the architecture board's review.
 
 ### Bugs Fixed
 

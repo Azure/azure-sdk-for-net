@@ -236,6 +236,10 @@ directive:
       $.DiskImageEncryption.properties.diskEncryptionSetId["x-ms-format"] = "arm-id";
       $.GalleryArtifactVersionSource.properties.id["x-ms-format"] = "arm-id";
       $.UpdateResourceDefinition["x-ms-client-name"] = "GalleryUpdateResourceData";
+  - from: gallery.json
+    where: $.parameters
+    transform: >
+      $.GalleryODataExpandQueryParameter["x-ms-enum"].name = "GalleryExpand";
   - from: sharedGallery.json
     where: $.definitions
     transform: >
