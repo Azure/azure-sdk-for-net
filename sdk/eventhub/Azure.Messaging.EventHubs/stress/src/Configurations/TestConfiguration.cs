@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs.Stress;
 
@@ -10,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Stress;
 ///   The set of configurations to use for a test scenario run.
 /// </summary>
 ///
-internal class TestConfiguration
+public class TestConfiguration
 {
     // Resource Configurations
 
@@ -44,5 +46,26 @@ internal class TestConfiguration
     ///   The number of hours to run a test scenario for.
     /// </summary>
     ///
-    public int DurationInHours = 150;
+    public int DurationInHours = 1;
+
+    /// <summary>
+    ///   Gets the partition count of the Event Hub being used for this test run.
+    /// </summary>
+    ///
+    public async Task<int> GetEventHubPartitionCount()
+    {
+        int partitionCount;
+
+        if (string.IsNullOrEmpty(EventHubsConnectionString) || string.IsNullOrEmpty(EventHub))
+        {
+            return 0;
+        }
+
+        await using (var producerClient = new EventHubProducerClient(EventHubsConnectionString, EventHub))
+        {
+            partitionCount = (await producerClient.GetEventHubPropertiesAsync()).PartitionIds.Length;
+        }
+
+        return partitionCount;
+    }
 }
