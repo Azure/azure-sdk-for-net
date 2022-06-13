@@ -224,7 +224,7 @@ foreach($moniker in $monikers) {
     $servicePackages = $packagesForService.Values.Where({ $_.ServiceName -eq $service })
   
   
-    $serviceReadmeBaseName = $service.ToLower().Replace(' ', '-').Replace('/', '-')
+    $serviceReadmeBaseName = ServiceLevelReadmeNameStyle -serviceName $service
     $hrefPrefix = "docs-ref-services"
   
     generate-service-level-readme -readmeBaseName $serviceReadmeBaseName -pathPrefix $hrefPrefix `

@@ -129,3 +129,7 @@ ms.service: $msService
 "@
   return $header
 }
+
+function ServiceLevelReadmeNameStyle($serviceName) {
+  return $serviceName.ToLower().Replace(' ', '-').Replace('/', '-')
+}
