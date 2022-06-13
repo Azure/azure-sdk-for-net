@@ -170,7 +170,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeConversationAsync_ConversationSummarization()
+        public async Task SubmitJobAsync_ConversationSummarization()
         {
             var textConversationItems = new List<TextConversationItem>()
             {
@@ -224,7 +224,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeConversationAsync_ConversationPII_TextInput()
+        public async Task SubmitJobAsync_ConversationPII_TextInput()
         {
             var textConversationItems = new List<TextConversationItem>()
             {
@@ -285,7 +285,7 @@ namespace Azure.AI.Language.Conversations.Tests
         }
 
         [RecordedTest]
-        public async Task StartAnalyzeConversationAsync_ConversationPII_TranscriptInput()
+        public async Task SubmitJobAsync_ConversationPII_TranscriptInput()
         {
             var transciprtConversationItemOne = new TranscriptConversationItem(id: "1", participantId: "speaker")
             {

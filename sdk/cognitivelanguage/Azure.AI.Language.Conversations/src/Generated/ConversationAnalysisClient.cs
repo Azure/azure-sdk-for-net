@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ConversationAnalysisClientOptions())
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
-        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>

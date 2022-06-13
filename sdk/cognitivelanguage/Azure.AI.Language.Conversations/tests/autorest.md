@@ -65,4 +65,16 @@ directive:
   where: $.definitions.AnalyzeConversationSummarizationResult
   transform: >
     $["x-ms-discriminator-value"] = "conversationalSummarizationResults";
+
+# Always default to UTF16 string indices.
+- from: swagger-document
+  where: $.definitions.StringIndexType
+  transform: >
+    $["x-ms-client-default"] = "Utf16CodeUnit";
+
+# Correct Endpoint parameter description to reference right domain suffix.
+- from: swagger-document
+  where: $.parameters.Endpoint
+  transform: >
+    $["description"] = "Supported Cognitive Services endpoint (e.g., https://<resource-name>.cognitiveservices.azure.com)."
 ```

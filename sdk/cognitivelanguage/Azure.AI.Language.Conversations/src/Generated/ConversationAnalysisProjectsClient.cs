@@ -2145,7 +2145,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -2226,7 +2226,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -2913,8 +2913,8 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Triggers a job to export a project&apos;s data. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
@@ -2939,7 +2939,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string projectName, string stringIndexType, string exportedProjectFormat = null, string assetKind = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ExportAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string stringIndexType = "Utf16CodeUnit", string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
@@ -2948,7 +2948,7 @@ namespace Azure.AI.Language.Conversations
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportRequest(projectName, stringIndexType, exportedProjectFormat, assetKind, context);
+                using HttpMessage message = CreateExportRequest(projectName, exportedProjectFormat, stringIndexType, assetKind, context);
                 return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2961,8 +2961,8 @@ namespace Azure.AI.Language.Conversations
         /// <summary> Triggers a job to export a project&apos;s data. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: &quot;Conversation&quot; | &quot;Luis&quot;. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: &quot;Utf16CodeUnit&quot;. </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
@@ -2987,7 +2987,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string projectName, string stringIndexType, string exportedProjectFormat = null, string assetKind = null, RequestContext context = null)
+        public virtual Operation<BinaryData> Export(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string stringIndexType = "Utf16CodeUnit", string assetKind = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
@@ -2996,7 +2996,7 @@ namespace Azure.AI.Language.Conversations
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportRequest(projectName, stringIndexType, exportedProjectFormat, assetKind, context);
+                using HttpMessage message = CreateExportRequest(projectName, exportedProjectFormat, stringIndexType, assetKind, context);
                 return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -3725,7 +3725,7 @@ namespace Azure.AI.Language.Conversations
             return message;
         }
 
-        internal HttpMessage CreateExportRequest(string projectName, string stringIndexType, string exportedProjectFormat, string assetKind, RequestContext context)
+        internal HttpMessage CreateExportRequest(string projectName, string exportedProjectFormat, string stringIndexType, string assetKind, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -3736,11 +3736,11 @@ namespace Azure.AI.Language.Conversations
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:export", false);
-            uri.AppendQuery("stringIndexType", stringIndexType, true);
             if (exportedProjectFormat != null)
             {
                 uri.AppendQuery("format", exportedProjectFormat, true);
             }
+            uri.AppendQuery("stringIndexType", stringIndexType, true);
             if (assetKind != null)
             {
                 uri.AppendQuery("assetKind", assetKind, true);

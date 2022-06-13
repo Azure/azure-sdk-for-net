@@ -13,7 +13,7 @@ ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, cre
 
 Once you have created a client, you can prepare the input:
 
-```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Input
+```C# Snippet:SubmitJob_ConversationPII_Text_Input
 var data = new
 {
     analysisInput = new
@@ -70,25 +70,25 @@ var data = new
 };
 ```
 
-then you can start analyzing by calling the `AnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+Then you can start analyzing by calling the `SubmitJob`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
 
 ## Synchronous
 
-```C# Snippet:StartAnalyzeConversation_StartAnalayzing
+```C# Snippet:SubmitJob_StartAnalayzing
 Operation<BinaryData> analyzeConversationOperation = client.SubmitJob(WaitUntil.Started, RequestContent.Create(data));
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
-```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
+```C# Snippet:SubmitJobAsync_StartAnalayzing
 Operation<BinaryData> analyzeConversationOperation = await client.SubmitJobAsync(WaitUntil.Started, RequestContent.Create(data));
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
 You can finally print the results:
 
-```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Results
+```C# Snippet:SubmitJob_ConversationPII_Text_Results
 using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
 JsonElement jobResults = result.RootElement;
 foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())

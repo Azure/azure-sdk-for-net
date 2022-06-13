@@ -21,8 +21,8 @@ dotnet add package Azure.AI.Language.Conversations --prerelease
 
 ### Prerequisites
 
-* An [Azure subscription][azure_subscription]
-* An existing Azure Language Service Resource
+- An [Azure subscription][azure_subscription]
+- An existing Azure Language Service Resource
 
 ### Authenticate the client
 
@@ -79,7 +79,7 @@ The following examples show common scenarios using the `client` [created above](
 
 ### Analyze a conversation
 
-To analyze a conversation, you can call the `client.AnalyzeConversation()` method which takes a `TextConversationItem` and `ConversationsProject` as parameters.
+To analyze a conversation, you can call the `client.AnalyzeConversation()` method:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversation
 string projectName = "Menu";
@@ -151,9 +151,7 @@ foreach (JsonElement entity in conversationPrediction.GetProperty("entities").En
 }
 ```
 
-The specified parameters can also be used to initialize a `AnalyzeConversationOptions` instance. You can then call `AnalyzeConversation()` using the options object as a parameter as shown below.
-
-You can also set the verbose parameter in the `AnalyzeConversation()` method.
+Additional options can be passed to `AnalyzeConversation` like enabling more verbose output:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithOptions
 string projectName = "Menu";
@@ -229,7 +227,7 @@ foreach (JsonElement entity in conversationPrediction.GetProperty("entities").En
 
 ### Analyze a conversation in a different language
 
-The language property in the `TextConversationItem` can be used to specify the language of the conversation.
+The `language` property can be set to specify the language of the conversation:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
 string projectName = "Menu";
@@ -307,9 +305,11 @@ foreach (JsonElement entity in conversationPrediction.GetProperty("entities").En
 Other optional properties can be set such as verbosity and whether service logging is enabled.
 
 ### Analyze a conversation - Orchestration Project
-To analyze a conversation using an orchestration project, you can then call the `client.AnalyzeConversation()` just like the conversation project. But you have to cast the prediction to `OrchestratorPrediction`. Also, you have to cast the intent type into the one you need.
+
+To analyze a conversation using an orchestration project, you can call the `client.AnalyzeConversation()` method just like the conversation project.
 
 ### Orchestration Project - Conversation Prediction
+
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
 string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
 JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
@@ -358,6 +358,7 @@ if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Conversa
 ```
 
 ### Orchestration Project - QuestionAnswering Prediction
+
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
 string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
 JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
@@ -376,6 +377,7 @@ if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Question
 ```
 
 ### Orchestration Project - Luis Prediction
+
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionLuis
 string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
 JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
@@ -391,7 +393,7 @@ if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "Luis")
 
 First, you should prepare the input:
 
-```C# Snippet:StartAnalyzeConversation_ConversationSummarization_Input
+```C# Snippet:SubmitJob_ConversationSummarization_Input
 var data = new
 {
     analysisInput = new
@@ -446,25 +448,25 @@ var data = new
 };
 ```
 
-Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+Then you can start analyzing by calling the `SubmitJob`, and because this is a long running operation you'll have to wait until it's finished by calling `WaitForCompletion` function.
 
 ## Synchronous
 
-```C# Snippet:StartAnalyzeConversation_StartAnalayzing
+```C# Snippet:SubmitJob_StartAnalayzing
 Operation<BinaryData> analyzeConversationOperation = client.SubmitJob(WaitUntil.Started, RequestContent.Create(data));
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
-```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
+```C# Snippet:SubmitJobAsync_StartAnalayzing
 Operation<BinaryData> analyzeConversationOperation = await client.SubmitJobAsync(WaitUntil.Started, RequestContent.Create(data));
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
 You can finally print the results:
 
-```C# Snippet:StartAnalyzeConversation_ConversationSummarization_Results
+```C# Snippet:SubmitJob_ConversationSummarization_Results
 using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
 JsonElement jobResults = result.RootElement;
 foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
@@ -490,7 +492,7 @@ foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items"
 
 First, you should prepare the input:
 
-```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Input
+```C# Snippet:SubmitJob_ConversationPII_Text_Input
 var data = new
 {
     analysisInput = new
@@ -547,25 +549,25 @@ var data = new
 };
 ```
 
-Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+Then you can start analyzing by calling the `SubmitJob`, and because this is a long running operation you'll have to wait until it's finished by calling `WaitForCompletion` function.
 
 ## Synchronous
 
-```C# Snippet:StartAnalyzeConversation_StartAnalayzing
+```C# Snippet:SubmitJob_StartAnalayzing
 Operation<BinaryData> analyzeConversationOperation = client.SubmitJob(WaitUntil.Started, RequestContent.Create(data));
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
-```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
+```C# Snippet:SubmitJobAsync_StartAnalayzing
 Operation<BinaryData> analyzeConversationOperation = await client.SubmitJobAsync(WaitUntil.Started, RequestContent.Create(data));
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
 You can finally print the results:
 
-```C# Snippet:StartAnalyzeConversation_ConversationPII_Text_Results
+```C# Snippet:SubmitJob_ConversationPII_Text_Results
 using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
 JsonElement jobResults = result.RootElement;
 foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
@@ -603,7 +605,7 @@ foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items"
 
 First, you should prepare the input:
 
-```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Input
+```C# Snippet:SubmitJob_ConversationPII_Transcript_Input
 var data = new
 {
     analysisInput = new
@@ -733,25 +735,25 @@ var data = new
 };
 ```
 
-Then you can start analyzing by calling the `StartAnalyzeConversation`, and because this is a long running operation, you have to wait until it's finished by calling `WaitForCompletion` function.
+Then you can start analyzing by calling the `SubmitJob`, and because this is a long running operation you'll have to wait until it's finished by calling `WaitForCompletion` function.
 
 ## Synchronous
 
-```C# Snippet:StartAnalyzeConversation_StartAnalayzing
+```C# Snippet:SubmitJob_StartAnalayzing
 Operation<BinaryData> analyzeConversationOperation = client.SubmitJob(WaitUntil.Started, RequestContent.Create(data));
 analyzeConversationOperation.WaitForCompletion();
 ```
 
 ## Asynchronous
 
-```C# Snippet:StartAnalyzeConversationAsync_StartAnalayzing
+```C# Snippet:SubmitJobAsync_StartAnalayzing
 Operation<BinaryData> analyzeConversationOperation = await client.SubmitJobAsync(WaitUntil.Started, RequestContent.Create(data));
 await analyzeConversationOperation.WaitForCompletionAsync();
 ```
 
 You can finally print the results:
 
-```C# Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Results
+```C# Snippet:SubmitJob_ConversationPII_Transcript_Results
 using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
 JsonElement jobResults = result.RootElement;
 foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
@@ -873,9 +875,9 @@ To learn more about other logging mechanisms see [here][core_logging].
 
 ## Next steps
 
-* View our [samples][conversationanalysis_samples].
-* Read about the different [features][conversationanalysis_docs_features] of the Conversations service.
-* Try our service [demos][conversationanalysis_docs_demos].
+- View our [samples][conversationanalysis_samples].
+- Read about the different [features][conversationanalysis_docs_features] of the Conversations service.
+- Try our service [demos][conversationanalysis_docs_demos].
 
 ## Contributing
 

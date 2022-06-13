@@ -16,11 +16,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        public void StartAnalyzeConversation_ConversationPII_Text()
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29140")]
+        public void SubmitJob_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:StartAnalyzeConversation_ConversationPII_Text_Input
+            #region Snippet:SubmitJob_ConversationSummarization_Input
             var data = new
             {
                 analysisInput = new
@@ -33,21 +34,21 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                             {
                                 new
                                 {
-                                    text = "Hi, I am John Doe.",
+                                    text = "Hello, how can I help you?",
                                     id = "1",
-                                    participantId = "0",
+                                    participantId = "Agent",
                                 },
                                 new
                                 {
-                                    text = "Hi John, how are you doing today?",
+                                    text = "How to upgrade Office? I am getting error messages the whole day.",
                                     id = "2",
-                                    participantId = "1",
+                                    participantId = "Customer",
                                 },
                                 new
                                 {
-                                    text = "Pretty good.",
+                                    text = "Press the upgrade button please. Then sign in and follow the instructions.",
                                     id = "3",
-                                    participantId = "0",
+                                    participantId = "Agent",
                                 },
                             },
                             id = "1",
@@ -62,25 +63,25 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     {
                         parameters = new
                         {
-                            piiCategories = new[]
+                            summaryAspects = new[]
                             {
-                                "All",
-                            },
-                            includeAudioRedaction = false,
-                            modelVersion = "2022-05-15-preview",
-                            loggingOptOut = false,
+                                "issue",
+                                "resolution",
+                            }
                         },
-                        kind = "ConversationalPIITask",
-                        taskName = "analyze",
+                        kind = "ConversationalSummarizationTask",
+                        taskName = "1",
                     },
                 },
             };
             #endregion
 
+            #region Snippet:SubmitJob_StartAnalayzing
             Operation<BinaryData> analyzeConversationOperation = client.SubmitJob(WaitUntil.Started, RequestContent.Create(data));
             analyzeConversationOperation.WaitForCompletion();
+            #endregion
 
-            #region Snippet:StartAnalyzeConversation_ConversationPII_Text_Results
+            #region Snippet:SubmitJob_ConversationSummarization_Results
             using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
             JsonElement jobResults = result.RootElement;
             foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
@@ -91,23 +92,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
                 {
                     Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
-                    Console.WriteLine("Conversation Items:");
-                    foreach (JsonElement conversationItem in conversation.GetProperty("conversationItems").EnumerateArray())
+                    Console.WriteLine("Summaries:");
+                    foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
                     {
-                        Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
-
-                        Console.WriteLine($"Redacted Text: {conversationItem.GetProperty("redactedContent").GetProperty("text").GetString()}");
-
-                        Console.WriteLine("Entities:");
-                        foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
-                        {
-                            Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-                            Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-                            Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-                            Console.WriteLine($"Confidence Score: {entity.GetProperty("confidenceScore").GetSingle()}");
-                            Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
-                            Console.WriteLine();
-                        }
+                        Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
+                        Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
                     }
                     Console.WriteLine();
                 }
@@ -120,7 +109,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        public async Task StartAnalyzeConversationAsync_ConversationPII_Text()
+        public async Task SubmitJobAsync_ConversationSummarization()
         {
             ConversationAnalysisClient client = Client;
 
@@ -136,21 +125,21 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                             {
                                 new
                                 {
-                                    text = "Hi, I am John Doe.",
+                                    text = "Hello, how can I help you?",
                                     id = "1",
-                                    participantId = "0",
+                                    participantId = "Agent",
                                 },
                                 new
                                 {
-                                    text = "Hi John, how are you doing today?",
+                                    text = "How to upgrade Office? I am getting error messages the whole day.",
                                     id = "2",
-                                    participantId = "1",
+                                    participantId = "Customer",
                                 },
                                 new
                                 {
-                                    text = "Pretty good.",
+                                    text = "Press the upgrade button please. Then sign in and follow the instructions.",
                                     id = "3",
-                                    participantId = "0",
+                                    participantId = "Agent",
                                 },
                             },
                             id = "1",
@@ -165,24 +154,24 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     {
                         parameters = new
                         {
-                            piiCategories = new[]
+                            summaryAspects = new[]
                             {
-                                "All",
-                            },
-                            includeAudioRedaction = false,
-                            modelVersion = "2022-05-15-preview",
-                            loggingOptOut = false,
+                                "issue",
+                                "resolution",
+                            }
                         },
-                        kind = "ConversationalPIITask",
-                        taskName = "analyze",
+                        kind = "ConversationalSummarizationTask",
+                        taskName = "1",
                     },
                 },
             };
 
+            #region Snippet:SubmitJobAsync_StartAnalayzing
             Operation<BinaryData> analyzeConversationOperation = await client.SubmitJobAsync(WaitUntil.Started, RequestContent.Create(data));
             await analyzeConversationOperation.WaitForCompletionAsync();
+            #endregion
 
-            using JsonDocument result = await JsonDocument.ParseAsync(analyzeConversationOperation.Value.ToStream());
+            using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
             JsonElement jobResults = result.RootElement;
             foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
             {
@@ -192,23 +181,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
                 {
                     Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
-                    Console.WriteLine("Conversation Items:");
-                    foreach (JsonElement conversationItem in conversation.GetProperty("conversationItems").EnumerateArray())
+                    Console.WriteLine("Summaries:");
+                    foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
                     {
-                        Console.WriteLine($"Conversation Item: #{conversationItem.GetProperty("id").GetString()}");
-
-                        Console.WriteLine($"Redacted Text: {conversationItem.GetProperty("redactedContent").GetProperty("text").GetString()}");
-
-                        Console.WriteLine("Entities:");
-                        foreach (JsonElement entity in conversationItem.GetProperty("entities").EnumerateArray())
-                        {
-                            Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-                            Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-                            Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-                            Console.WriteLine($"Confidence Score: {entity.GetProperty("confidenceScore").GetSingle()}");
-                            Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
-                            Console.WriteLine();
-                        }
+                        Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
+                        Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
                     }
                     Console.WriteLine();
                 }

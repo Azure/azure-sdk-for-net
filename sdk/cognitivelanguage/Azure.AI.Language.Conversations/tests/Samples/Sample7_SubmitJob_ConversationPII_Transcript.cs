@@ -17,11 +17,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        public void StartAnalyzeConversation_ConversationPII_Transcript()
+        public void SubmitJob_ConversationPII_Transcript()
         {
             ConversationAnalysisClient client = Client;
 
-            #region Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Input
+            #region Snippet:SubmitJob_ConversationPII_Transcript_Input
             var data = new
             {
                 analysisInput = new
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             Operation<BinaryData> analyzeConversationOperation = client.SubmitJob(WaitUntil.Started, RequestContent.Create(data));
             analyzeConversationOperation.WaitForCompletion();
 
-            #region Snippet:StartAnalyzeConversation_ConversationPII_Transcript_Results
+            #region Snippet:SubmitJob_ConversationPII_Transcript_Results
             using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
             JsonElement jobResults = result.RootElement;
             foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
@@ -197,7 +197,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
         [AsyncOnly]
         [RecordedTest]
-        public async Task StartAnalyzeConversationAsync_ConversationPII_Transcript()
+        public async Task SubmitJobAsync_ConversationPII_Transcript()
         {
             ConversationAnalysisClient client = Client;
 
