@@ -54,41 +54,27 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Get a collection. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAdministration/Collections/GetCollection
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   name: string,
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
+        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
+        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
+        ///   name: string, # Optional. <Description>Gets the name.</Description>
         ///   parentCollection: {
-        ///     referenceName: string,
-        ///     type: string
-        ///   },
+        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
+        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
+        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
         /// }
         /// </code>
         /// 
@@ -112,41 +98,27 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Get a collection. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAdministration/Collections/GetCollection
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   name: string,
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
+        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
+        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
+        ///   name: string, # Optional. <Description>Gets the name.</Description>
         ///   parentCollection: {
-        ///     referenceName: string,
-        ///     type: string
-        ///   },
+        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
+        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
+        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
         /// }
         /// </code>
         /// 
@@ -172,61 +144,47 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAdministration/Collections/CreateOrUpdateCollection
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   name: string,
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
+        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
+        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
+        ///   name: string, # Optional. <Description>Gets the name.</Description>
         ///   parentCollection: {
-        ///     referenceName: string,
-        ///     type: string
-        ///   },
+        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
+        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
+        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   name: string,
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
+        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
+        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
+        ///   name: string, # Optional. <Description>Gets the name.</Description>
         ///   parentCollection: {
-        ///     referenceName: string,
-        ///     type: string
-        ///   },
+        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
+        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
+        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
         /// }
         /// </code>
         /// 
@@ -254,61 +212,47 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAdministration/Collections/CreateOrUpdateCollection
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   name: string,
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
+        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
+        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
+        ///   name: string, # Optional. <Description>Gets the name.</Description>
         ///   parentCollection: {
-        ///     referenceName: string,
-        ///     type: string
-        ///   },
+        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
+        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
+        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///   description: string,
-        ///   friendlyName: string,
-        ///   name: string,
+        ///   collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
+        ///   description: string, # Optional. <Description>Gets or sets the description.</Description>
+        ///   friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
+        ///   name: string, # Optional. <Description>Gets the name.</Description>
         ///   parentCollection: {
-        ///     referenceName: string,
-        ///     type: string
-        ///   },
+        ///     referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
+        ///     type: string, # Optional. <Description>Gets the reference type property.</Description>
+        ///   }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///   }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
         /// }
         /// </code>
         /// 
@@ -333,26 +277,6 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Deletes a Collection entity. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteCollectionAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
@@ -371,26 +295,6 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Deletes a Collection entity. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteCollection(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewCollection.DeleteCollection");
@@ -410,27 +314,13 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAdministration/Collections/GetCollectionPath
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   parentFriendlyNameChain: [string],
-        ///   parentNameChain: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   parentFriendlyNameChain: [string], # Optional. <Description>The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.</Description>
+        ///   parentNameChain: [string], # Optional. <Description>The names of ancestors starting from the default (root) collection and ending with the immediate parent.</Description>
         /// }
         /// </code>
         /// 
@@ -454,27 +344,13 @@ namespace Azure.Analytics.Purview.Administration
         /// <summary> Gets the parent name and parent friendly name chains that represent the collection path. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAdministration/Collections/GetCollectionPath
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   parentFriendlyNameChain: [string],
-        ///   parentNameChain: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   parentFriendlyNameChain: [string], # Optional. <Description>The friendly names of ancestors starting from the default (root) collection and ending with the immediate parent.</Description>
+        ///   parentNameChain: [string], # Optional. <Description>The names of ancestors starting from the default (root) collection and ending with the immediate parent.</Description>
         /// }
         /// </code>
         /// 
@@ -499,33 +375,19 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAdministration/Collections/ListChildCollectionNames
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
+        ///   count: number, # Optional. <Description>Total item count.</Description>
+        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
         ///   value: [
         ///     {
-        ///       friendlyName: string,
-        ///       name: string
+        ///       friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
+        ///       name: string, # Optional. <Description>Gets the name.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   ], # Required. <Description>Collection of items of type results.</Description>
         /// }
         /// </code>
         /// 
@@ -556,33 +418,19 @@ namespace Azure.Analytics.Purview.Administration
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAdministration/Collections/ListChildCollectionNames
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
+        ///   count: number, # Optional. <Description>Total item count.</Description>
+        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
         ///   value: [
         ///     {
-        ///       friendlyName: string,
-        ///       name: string
+        ///       friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
+        ///       name: string, # Optional. <Description>Gets the name.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   ], # Required. <Description>Collection of items of type results.</Description>
         /// }
         /// </code>
         /// 

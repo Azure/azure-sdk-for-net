@@ -56,63 +56,59 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaries
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
         /// }
         /// </code>
         /// 
@@ -140,63 +136,59 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaries
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
         /// }
         /// </code>
         /// 
@@ -222,115 +214,115 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/CreateGlossary
+        /// Schema for <c>AtlasGlossaryExtInfo Request Body</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
-        ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   categories: [
-        ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
-        ///     }
-        ///   ],
-        ///   language: string,
-        ///   terms: [
-        ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
-        ///     }
-        ///   ],
-        ///   usage: string
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
         /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
+        ///   terms: [
+        ///     {
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
         /// 
@@ -358,115 +350,115 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/CreateGlossary
+        /// Schema for <c>AtlasGlossaryExtInfo Request Body</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
-        ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   categories: [
-        ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
-        ///     }
-        ///   ],
-        ///   language: string,
-        ///   terms: [
-        ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
-        ///     }
-        ///   ],
-        ///   usage: string
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
         /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
+        ///   terms: [
+        ///     {
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
         /// 
@@ -494,123 +486,119 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/CreateGlossaryCategories
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -638,123 +626,119 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/CreateGlossaryCategories
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -782,123 +766,119 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/CreateGlossaryCategory
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -926,123 +906,119 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/CreateGlossaryCategory
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -1071,67 +1047,63 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryCategory
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -1160,67 +1132,63 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryCategory
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -1250,123 +1218,119 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/UpdateGlossaryCategory
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -1397,123 +1361,119 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/UpdateGlossaryCategory
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -1542,16 +1502,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -1575,16 +1525,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteGlossaryCategory(string categoryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -1610,67 +1550,63 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/PartialUpdateGlossaryCategory
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -1701,67 +1637,63 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/PartialUpdateGlossaryCategory
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -1794,20 +1726,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetRelatedCategories
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   categoryGuid: string,
-        ///   description: string,
-        ///   displayText: string,
-        ///   parentCategoryGuid: string,
-        ///   relationGuid: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///   description: string, # Optional. <Description>The description of the category header.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///   relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         /// }
         /// </code>
         /// 
@@ -1839,20 +1767,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetRelatedCategories
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   categoryGuid: string,
-        ///   description: string,
-        ///   displayText: string,
-        ///   parentCategoryGuid: string,
-        ///   relationGuid: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///   description: string, # Optional. <Description>The description of the category header.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///   relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         /// }
         /// </code>
         /// 
@@ -1884,23 +1808,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetCategoryTerms
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   description: string,
-        ///   displayText: string,
-        ///   expression: string,
-        ///   relationGuid: string,
-        ///   source: string,
-        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///   steward: string,
-        ///   termGuid: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   description: string, # Optional. <Description>The description of the related term.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///   relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   source: string, # Optional. <Description>The source of the term.</Description>
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///   steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///   termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         /// }
         /// </code>
         /// 
@@ -1932,23 +1852,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="categoryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetCategoryTerms
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   description: string,
-        ///   displayText: string,
-        ///   expression: string,
-        ///   relationGuid: string,
-        ///   source: string,
-        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///   steward: string,
-        ///   termGuid: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   description: string, # Optional. <Description>The description of the related term.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///   relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   source: string, # Optional. <Description>The source of the term.</Description>
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///   steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///   termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         /// }
         /// </code>
         /// 
@@ -1977,213 +1893,211 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/CreateGlossaryTerm
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -2212,213 +2126,211 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/CreateGlossaryTerm
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -2449,112 +2361,109 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryTerm
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -2585,112 +2494,109 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryTerm
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -2721,213 +2627,211 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/UpdateGlossaryTerm
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -2959,213 +2863,211 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/UpdateGlossaryTerm
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -3194,16 +3096,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteGlossaryTermAsync(string termGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -3227,16 +3119,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteGlossaryTerm(string termGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -3263,112 +3145,109 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/PartialUpdateGlossaryTerm
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -3400,112 +3279,109 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/PartialUpdateGlossaryTerm
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -3535,213 +3411,211 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/CreateGlossaryTerms
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -3770,213 +3644,211 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/CreateGlossaryTerms
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -4008,28 +3880,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetEntitiesAssignedWithTerm
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   guid: string,
-        ///   typeName: string,
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   displayText: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   relationshipType: string,
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///   relationshipType: string, # Optional.
         ///   relationshipAttributes: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string
-        ///   },
-        ///   relationshipGuid: string,
-        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///     typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///     lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///   relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         /// }
         /// </code>
         /// 
@@ -4061,28 +3929,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetEntitiesAssignedWithTerm
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   guid: string,
-        ///   typeName: string,
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   displayText: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   relationshipType: string,
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///   relationshipType: string, # Optional.
         ///   relationshipAttributes: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string
-        ///   },
-        ///   relationshipGuid: string,
-        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///     typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///     lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///   relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         /// }
         /// </code>
         /// 
@@ -4112,28 +3976,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/AssignTermToEntities
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   guid: string,
-        ///   typeName: string,
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   displayText: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   relationshipType: string,
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///   relationshipType: string, # Optional.
         ///   relationshipAttributes: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string
-        ///   },
-        ///   relationshipGuid: string,
-        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///     typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///     lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///   relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         /// }
         /// </code>
         /// 
@@ -4164,28 +4024,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/AssignTermToEntities
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   guid: string,
-        ///   typeName: string,
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   displayText: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   relationshipType: string,
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///   relationshipType: string, # Optional.
         ///   relationshipAttributes: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string
-        ///   },
-        ///   relationshipGuid: string,
-        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///     typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///     lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///   relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         /// }
         /// </code>
         /// 
@@ -4216,28 +4072,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/RemoveTermAssignmentFromEntities
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   guid: string,
-        ///   typeName: string,
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   displayText: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   relationshipType: string,
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///   relationshipType: string, # Optional.
         ///   relationshipAttributes: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string
-        ///   },
-        ///   relationshipGuid: string,
-        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///     typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///     lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///   relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         /// }
         /// </code>
         /// 
@@ -4268,28 +4120,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/RemoveTermAssignmentFromEntities
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   guid: string,
-        ///   typeName: string,
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   displayText: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   relationshipType: string,
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///   relationshipType: string, # Optional.
         ///   relationshipAttributes: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string
-        ///   },
-        ///   relationshipGuid: string,
-        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///     typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///     lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///   relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         /// }
         /// </code>
         /// 
@@ -4320,28 +4168,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/DeleteTermAssignmentFromEntities
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   guid: string,
-        ///   typeName: string,
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   displayText: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   relationshipType: string,
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///   relationshipType: string, # Optional.
         ///   relationshipAttributes: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string
-        ///   },
-        ///   relationshipGuid: string,
-        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///     typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///     lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///   relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         /// }
         /// </code>
         /// 
@@ -4372,28 +4216,24 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/DeleteTermAssignmentFromEntities
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   guid: string,
-        ///   typeName: string,
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   displayText: string,
-        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   relationshipType: string,
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///   relationshipType: string, # Optional.
         ///   relationshipAttributes: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string
-        ///   },
-        ///   relationshipGuid: string,
-        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///     typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///     lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///   relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         /// }
         /// </code>
         /// 
@@ -4426,23 +4266,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetRelatedTerms
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   description: string,
-        ///   displayText: string,
-        ///   expression: string,
-        ///   relationGuid: string,
-        ///   source: string,
-        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///   steward: string,
-        ///   termGuid: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   description: string, # Optional. <Description>The description of the related term.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///   relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   source: string, # Optional. <Description>The source of the term.</Description>
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///   steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///   termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         /// }
         /// </code>
         /// 
@@ -4474,23 +4310,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="termGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetRelatedTerms
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   description: string,
-        ///   displayText: string,
-        ///   expression: string,
-        ///   relationGuid: string,
-        ///   source: string,
-        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///   steward: string,
-        ///   termGuid: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   description: string, # Optional. <Description>The description of the related term.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///   relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   source: string, # Optional. <Description>The source of the term.</Description>
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///   steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///   termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         /// }
         /// </code>
         /// 
@@ -4519,63 +4351,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossary
+        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
-        ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
         /// 
@@ -4604,63 +4434,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossary
+        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
-        ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
         /// 
@@ -4690,115 +4518,115 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/UpdateGlossary
+        /// Schema for <c>AtlasGlossaryExtInfo Request Body</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
-        ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   categories: [
-        ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
-        ///     }
-        ///   ],
-        ///   language: string,
-        ///   terms: [
-        ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
-        ///     }
-        ///   ],
-        ///   usage: string
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
         /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
+        ///   terms: [
+        ///     {
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
         /// 
@@ -4829,115 +4657,115 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/UpdateGlossary
+        /// Schema for <c>AtlasGlossaryExtInfo Request Body</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
-        ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   categories: [
-        ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
-        ///     }
-        ///   ],
-        ///   language: string,
-        ///   terms: [
-        ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
-        ///     }
-        ///   ],
-        ///   usage: string
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
         /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   categories: [
+        ///     {
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
+        ///   terms: [
+        ///     {
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
         /// 
@@ -4966,16 +4794,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteGlossaryAsync(string glossaryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -4999,16 +4817,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteGlossary(string glossaryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -5036,67 +4844,63 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryCategories
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -5128,67 +4932,63 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryCategories
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   childrenCategories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   parentCategory: AtlasRelatedCategoryHeader,
+        ///   ], # Optional. <Description>An array of children categories.</Description>
+        ///   parentCategory: AtlasRelatedCategoryHeader, # Optional. <Description>The header of the related category.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
         /// }
         /// </code>
         /// 
@@ -5220,20 +5020,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryCategoriesHeaders
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   categoryGuid: string,
-        ///   description: string,
-        ///   displayText: string,
-        ///   parentCategoryGuid: string,
-        ///   relationGuid: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///   description: string, # Optional. <Description>The description of the category header.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///   relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         /// }
         /// </code>
         /// 
@@ -5265,20 +5061,16 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryCategoriesHeaders
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   categoryGuid: string,
-        ///   description: string,
-        ///   displayText: string,
-        ///   parentCategoryGuid: string,
-        ///   relationGuid: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///   description: string, # Optional. <Description>The description of the category header.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///   relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         /// }
         /// </code>
         /// 
@@ -5308,65 +5100,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetDetailedGlossary
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string,
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;,
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
         /// 
@@ -5396,65 +5184,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetDetailedGlossary
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string,
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;,
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
         /// 
@@ -5485,63 +5269,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/PartialUpdateGlossary
+        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
-        ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
         /// 
@@ -5573,63 +5355,61 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/PartialUpdateGlossary
+        /// Schema for <c>AtlasGlossaryExtInfo Response Body</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
-        ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       parentCategoryGuid: string,
-        ///       relationGuid: string
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the category header.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       parentCategoryGuid: string, # Optional. <Description>The GUID of the parent category.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
         ///     }
-        ///   ],
-        ///   language: string,
+        ///   ], # Optional. <Description>An array of categories.</Description>
+        ///   language: string, # Optional. <Description>The language of the glossary.</Description>
         ///   terms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   usage: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of related term headers.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the glossary.</Description>
+        ///   classifications: [
+        ///     {
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. <Description>The glossary category information.</Description>
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. <Description>The glossary term information.</Description>
         /// }
         /// </code>
         /// 
@@ -5663,112 +5443,109 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryTerms
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -5801,112 +5578,109 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryTerms
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -5938,23 +5712,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryTermHeaders
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   description: string,
-        ///   displayText: string,
-        ///   expression: string,
-        ///   relationGuid: string,
-        ///   source: string,
-        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///   steward: string,
-        ///   termGuid: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   description: string, # Optional. <Description>The description of the related term.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///   relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   source: string, # Optional. <Description>The source of the term.</Description>
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///   steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///   termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         /// }
         /// </code>
         /// 
@@ -5986,23 +5756,19 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetGlossaryTermHeaders
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   description: string,
-        ///   displayText: string,
-        ///   expression: string,
-        ///   relationGuid: string,
-        ///   source: string,
-        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///   steward: string,
-        ///   termGuid: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   description: string, # Optional. <Description>The description of the related term.</Description>
+        ///   displayText: string, # Optional. <Description>The display text.</Description>
+        ///   expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///   relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   source: string, # Optional. <Description>The source of the term.</Description>
+        ///   status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///   steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///   termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         /// }
         /// </code>
         /// 
@@ -6031,27 +5797,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetImportCsvOperationStatus
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
-        ///   createTime: string,
-        ///   lastUpdateTime: string,
+        ///   id: string, # Optional. <Description>guid string</Description>
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. <Description>Enum of the status of import csv operation.</Description>
+        ///   createTime: string, # Optional. <Description>The created time of the record.</Description>
+        ///   lastUpdateTime: string, # Optional. <Description>The last updated time of the record.</Description>
         ///   properties: {
-        ///     importedTerms: string,
-        ///     totalTermsDetected: string
-        ///   },
+        ///     importedTerms: string, # Optional. <Description>Term numbers that already imported successfully</Description>
+        ///     totalTermsDetected: string, # Optional. <Description>Total term numbers that detected in csv</Description>
+        ///   }, # Optional.
         ///   error: {
-        ///     errorCode: number,
-        ///     errorMessage: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     errorCode: number, # Optional. <Description>Error code from async import job if fail</Description>
+        ///     errorMessage: string, # Optional. <Description>Error message from async import job if fail</Description>
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -6080,27 +5842,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="operationGuid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetImportCsvOperationStatus
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
-        ///   createTime: string,
-        ///   lastUpdateTime: string,
+        ///   id: string, # Optional. <Description>guid string</Description>
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. <Description>Enum of the status of import csv operation.</Description>
+        ///   createTime: string, # Optional. <Description>The created time of the record.</Description>
+        ///   lastUpdateTime: string, # Optional. <Description>The last updated time of the record.</Description>
         ///   properties: {
-        ///     importedTerms: string,
-        ///     totalTermsDetected: string
-        ///   },
+        ///     importedTerms: string, # Optional. <Description>Term numbers that already imported successfully</Description>
+        ///     totalTermsDetected: string, # Optional. <Description>Total term numbers that detected in csv</Description>
+        ///   }, # Optional.
         ///   error: {
-        ///     errorCode: number,
-        ///     errorMessage: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     errorCode: number, # Optional. <Description>Error code from async import job if fail</Description>
+        ///     errorMessage: string, # Optional. <Description>Error message from async import job if fail</Description>
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -6184,112 +5942,109 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetTermsByGlossaryName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -6321,112 +6076,109 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/GetTermsByGlossaryName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       entityGuid: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       removePropagationsOnEntityDelete: boolean,
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityGuid: string, # Optional. <Description>The GUID of the entity.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. <Description>Determines if propagations will be removed on entity deletion.</Description>
         ///       validityPeriods: [
         ///         {
-        ///           endTime: string,
-        ///           startTime: string,
-        ///           timeZone: string
+        ///           endTime: string, # Optional. <Description>The end of the time boundary.</Description>
+        ///           startTime: string, # Optional. <Description>The start of the time boundary.</Description>
+        ///           timeZone: string, # Optional. <Description>The timezone of the time boundary.</Description>
         ///         }
-        ///       ],
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;
+        ///       ], # Optional. <Description>An array of time boundaries indicating validity periods.</Description>
+        ///       source: string, # Optional. <Description>indicate the source who create the classification detail</Description>
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>more detail on source information</Description>
         ///     }
-        ///   ],
-        ///   longDescription: string,
-        ///   name: string,
-        ///   qualifiedName: string,
-        ///   shortDescription: string,
-        ///   lastModifiedTS: string,
-        ///   guid: string,
-        ///   abbreviation: string,
-        ///   templateName: [AnyObject],
+        ///   ], # Optional. <Description>An array of classifications.</Description>
+        ///   longDescription: string, # Optional. <Description>The long version description.</Description>
+        ///   name: string, # Optional. <Description>The name of the glossary object.</Description>
+        ///   qualifiedName: string, # Optional. <Description>The qualified name of the glossary object.</Description>
+        ///   shortDescription: string, # Optional. <Description>The short version of description.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///   abbreviation: string, # Optional. <Description>The abbreviation of the term.</Description>
+        ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
-        ///     displayText: string,
-        ///     glossaryGuid: string,
-        ///     relationGuid: string
-        ///   },
+        ///     displayText: string, # Optional. <Description>The display text.</Description>
+        ///     glossaryGuid: string, # Optional. <Description>The GUID of the glossary.</Description>
+        ///     relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///   }, # Optional. <Description>The glossary header with basic information.</Description>
         ///   antonyms: [
         ///     {
-        ///       description: string,
-        ///       displayText: string,
-        ///       expression: string,
-        ///       relationGuid: string,
-        ///       source: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///       steward: string,
-        ///       termGuid: string
+        ///       description: string, # Optional. <Description>The description of the related term.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       expression: string, # Optional. <Description>The expression of the term.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       source: string, # Optional. <Description>The source of the term.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
+        ///       steward: string, # Optional. <Description>The steward of the term.</Description>
+        ///       termGuid: string, # Optional. <Description>The GUID of the term.</Description>
         ///     }
-        ///   ],
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;,
+        ///   ], # Optional. <Description>An array of related term headers as antonyms.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   status: &quot;Draft&quot; | &quot;Approved&quot; | &quot;Alert&quot; | &quot;Expired&quot;, # Optional. <Description>Status of the AtlasGlossaryTerm</Description>
         ///   resources: [
         ///     {
-        ///       displayName: string,
-        ///       url: string
+        ///       displayName: string, # Optional. <Description>Display name for url.</Description>
+        ///       url: string, # Optional. <Description>web url. http or https</Description>
         ///     }
-        ///   ],
-        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;,
-        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;,
+        ///   ], # Optional. <Description>An array of resource link for term</Description>
+        ///   contacts: Dictionary&lt;string, ContactBasic[]&gt;, # Optional. <Description>The dictionary of contacts for terms. Key could be Expert or Steward.</Description>
+        ///   attributes: Dictionary&lt;string, Dictionary&lt;string, AnyObject&gt;&gt;, # Optional. <Description>The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The key of the first layer map is term template name.</Description>
         ///   assignedEntities: [
         ///     {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       displayText: string,
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       relationshipType: string,
+        ///       guid: string, # Optional. <Description>The GUID of the object.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The unique attributes of the object.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.</Description>
+        ///       relationshipType: string, # Optional.
         ///       relationshipAttributes: {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string
-        ///       },
-        ///       relationshipGuid: string,
-        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;
+        ///         attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The attributes of the struct.</Description>
+        ///         typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///         lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       }, # Optional. <Description>Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.</Description>
+        ///       relationshipGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. <Description>The enum of relationship status.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of related object IDs.</Description>
         ///   categories: [
         ///     {
-        ///       categoryGuid: string,
-        ///       description: string,
-        ///       displayText: string,
-        ///       relationGuid: string,
-        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;
+        ///       categoryGuid: string, # Optional. <Description>The GUID of the category.</Description>
+        ///       description: string, # Optional. <Description>The description of the record.</Description>
+        ///       displayText: string, # Optional. <Description>The display text.</Description>
+        ///       relationGuid: string, # Optional. <Description>The GUID of the relationship.</Description>
+        ///       status: &quot;DRAFT&quot; | &quot;ACTIVE&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;, # Optional. <Description>The status of term relationship.</Description>
         ///     }
-        ///   ],
-        ///   classifies: [AtlasRelatedTermHeader],
-        ///   examples: [string],
-        ///   isA: [AtlasRelatedTermHeader],
-        ///   preferredTerms: [AtlasRelatedTermHeader],
-        ///   preferredToTerms: [AtlasRelatedTermHeader],
-        ///   replacedBy: [AtlasRelatedTermHeader],
-        ///   replacementTerms: [AtlasRelatedTermHeader],
-        ///   seeAlso: [AtlasRelatedTermHeader],
-        ///   synonyms: [AtlasRelatedTermHeader],
-        ///   translatedTerms: [AtlasRelatedTermHeader],
-        ///   translationTerms: [AtlasRelatedTermHeader],
-        ///   usage: string,
-        ///   validValues: [AtlasRelatedTermHeader],
-        ///   validValuesFor: [AtlasRelatedTermHeader]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term categorization headers.</Description>
+        ///   classifies: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers.</Description>
+        ///   examples: [string], # Optional. <Description>An array of examples.</Description>
+        ///   isA: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers indicating the is-a relationship.</Description>
+        ///   preferredTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of preferred related term headers.</Description>
+        ///   preferredToTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are preferred to.</Description>
+        ///   replacedBy: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers that are replaced by.</Description>
+        ///   replacementTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for replacement.</Description>
+        ///   seeAlso: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for see also.</Description>
+        ///   synonyms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as synonyms.</Description>
+        ///   translatedTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of translated related term headers.</Description>
+        ///   translationTerms: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers for translation.</Description>
+        ///   usage: string, # Optional. <Description>The usage of the term.</Description>
+        ///   validValues: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values.</Description>
+        ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. <Description>An array of related term headers as valid values for other records.</Description>
         /// }
         /// </code>
         /// 
@@ -6458,27 +6210,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/ImportGlossaryTermsViaCsv
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
-        ///   createTime: string,
-        ///   lastUpdateTime: string,
+        ///   id: string, # Optional. <Description>guid string</Description>
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. <Description>Enum of the status of import csv operation.</Description>
+        ///   createTime: string, # Optional. <Description>The created time of the record.</Description>
+        ///   lastUpdateTime: string, # Optional. <Description>The last updated time of the record.</Description>
         ///   properties: {
-        ///     importedTerms: string,
-        ///     totalTermsDetected: string
-        ///   },
+        ///     importedTerms: string, # Optional. <Description>Term numbers that already imported successfully</Description>
+        ///     totalTermsDetected: string, # Optional. <Description>Total term numbers that detected in csv</Description>
+        ///   }, # Optional.
         ///   error: {
-        ///     errorCode: number,
-        ///     errorMessage: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     errorCode: number, # Optional. <Description>Error code from async import job if fail</Description>
+        ///     errorMessage: string, # Optional. <Description>Error message from async import job if fail</Description>
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -6511,27 +6259,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/ImportGlossaryTermsViaCsv
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
-        ///   createTime: string,
-        ///   lastUpdateTime: string,
+        ///   id: string, # Optional. <Description>guid string</Description>
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. <Description>Enum of the status of import csv operation.</Description>
+        ///   createTime: string, # Optional. <Description>The created time of the record.</Description>
+        ///   lastUpdateTime: string, # Optional. <Description>The last updated time of the record.</Description>
         ///   properties: {
-        ///     importedTerms: string,
-        ///     totalTermsDetected: string
-        ///   },
+        ///     importedTerms: string, # Optional. <Description>Term numbers that already imported successfully</Description>
+        ///     totalTermsDetected: string, # Optional. <Description>Total term numbers that detected in csv</Description>
+        ///   }, # Optional.
         ///   error: {
-        ///     errorCode: number,
-        ///     errorMessage: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     errorCode: number, # Optional. <Description>Error code from async import job if fail</Description>
+        ///     errorMessage: string, # Optional. <Description>Error message from async import job if fail</Description>
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -6564,27 +6308,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/ImportGlossaryTermsViaCsvByGlossaryName
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
-        ///   createTime: string,
-        ///   lastUpdateTime: string,
+        ///   id: string, # Optional. <Description>guid string</Description>
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. <Description>Enum of the status of import csv operation.</Description>
+        ///   createTime: string, # Optional. <Description>The created time of the record.</Description>
+        ///   lastUpdateTime: string, # Optional. <Description>The last updated time of the record.</Description>
         ///   properties: {
-        ///     importedTerms: string,
-        ///     totalTermsDetected: string
-        ///   },
+        ///     importedTerms: string, # Optional. <Description>Term numbers that already imported successfully</Description>
+        ///     totalTermsDetected: string, # Optional. <Description>Total term numbers that detected in csv</Description>
+        ///   }, # Optional.
         ///   error: {
-        ///     errorCode: number,
-        ///     errorMessage: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     errorCode: number, # Optional. <Description>Error code from async import job if fail</Description>
+        ///     errorMessage: string, # Optional. <Description>Error message from async import job if fail</Description>
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -6617,27 +6357,23 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewGlossary/ImportGlossaryTermsViaCsvByGlossaryName
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;,
-        ///   createTime: string,
-        ///   lastUpdateTime: string,
+        ///   id: string, # Optional. <Description>guid string</Description>
+        ///   status: &quot;NotStarted&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Running&quot;, # Optional. <Description>Enum of the status of import csv operation.</Description>
+        ///   createTime: string, # Optional. <Description>The created time of the record.</Description>
+        ///   lastUpdateTime: string, # Optional. <Description>The last updated time of the record.</Description>
         ///   properties: {
-        ///     importedTerms: string,
-        ///     totalTermsDetected: string
-        ///   },
+        ///     importedTerms: string, # Optional. <Description>Term numbers that already imported successfully</Description>
+        ///     totalTermsDetected: string, # Optional. <Description>Total term numbers that detected in csv</Description>
+        ///   }, # Optional.
         ///   error: {
-        ///     errorCode: number,
-        ///     errorMessage: string
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     errorCode: number, # Optional. <Description>Error code from async import job if fail</Description>
+        ///     errorMessage: string, # Optional. <Description>Error message from async import job if fail</Description>
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 

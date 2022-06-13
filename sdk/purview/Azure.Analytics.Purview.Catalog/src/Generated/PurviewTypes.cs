@@ -54,76 +54,79 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetBusinessMetadataDefByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -152,76 +155,79 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetBusinessMetadataDefByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -250,76 +256,79 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetBusinessMetadataDefByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -348,76 +357,79 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetBusinessMetadataDefByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -446,86 +458,91 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetClassificationDefByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         /// }
         /// </code>
         /// 
@@ -554,86 +571,91 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetClassificationDefByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         /// }
         /// </code>
         /// 
@@ -662,86 +684,91 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetClassificationDefByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         /// }
         /// </code>
         /// 
@@ -770,86 +797,91 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetClassificationDefByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         /// }
         /// </code>
         /// 
@@ -878,104 +910,100 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetEntityDefinitionByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   subTypes: [string],
-        ///   superTypes: [string],
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///   relationshipAttributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
         /// }
         /// </code>
         /// 
@@ -1004,104 +1032,100 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetEntityDefinitionByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   subTypes: [string],
-        ///   superTypes: [string],
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///   relationshipAttributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
         /// }
         /// </code>
         /// 
@@ -1130,104 +1154,100 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetEntityDefinitionByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   subTypes: [string],
-        ///   superTypes: [string],
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///   relationshipAttributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
         /// }
         /// </code>
         /// 
@@ -1256,104 +1276,100 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetEntityDefinitionByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   subTypes: [string],
-        ///   superTypes: [string],
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///   relationshipAttributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
         /// }
         /// </code>
         /// 
@@ -1382,69 +1398,65 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetEnumDefByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   defaultValue: string,
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   defaultValue: string, # Optional. <Description>The default value.</Description>
         ///   elementDefs: [
         ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
+        ///       description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///       ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///       value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of enum element definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -1473,69 +1485,65 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetEnumDefByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   defaultValue: string,
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   defaultValue: string, # Optional. <Description>The default value.</Description>
         ///   elementDefs: [
         ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
+        ///       description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///       ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///       value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of enum element definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -1564,69 +1572,65 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetEnumDefByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   defaultValue: string,
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   defaultValue: string, # Optional. <Description>The default value.</Description>
         ///   elementDefs: [
         ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
+        ///       description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///       ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///       value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of enum element definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -1655,69 +1659,65 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetEnumDefByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   defaultValue: string,
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   defaultValue: string, # Optional. <Description>The default value.</Description>
         ///   elementDefs: [
         ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
+        ///       description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///       ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///       value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of enum element definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -1746,94 +1746,100 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetRelationshipDefByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         /// }
         /// </code>
         /// 
@@ -1862,94 +1868,100 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetRelationshipDefByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         /// }
         /// </code>
         /// 
@@ -1978,94 +1990,100 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetRelationshipDefByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         /// }
         /// </code>
         /// 
@@ -2094,94 +2112,100 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetRelationshipDefByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         /// }
         /// </code>
         /// 
@@ -2210,83 +2234,421 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetStructDefByGuid
+        /// Schema for <c>AtlasBusinessMetadataDef Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>AtlasClassificationDef Response Body</c>:
         /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>AtlasEntityDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>AtlasRelationshipDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>TermTemplateDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -2315,83 +2677,421 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetStructDefByGuid
+        /// Schema for <c>AtlasBusinessMetadataDef Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>AtlasClassificationDef Response Body</c>:
         /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>AtlasEntityDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>AtlasRelationshipDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>TermTemplateDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -2420,83 +3120,421 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetStructDefByName
+        /// Schema for <c>AtlasBusinessMetadataDef Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>AtlasClassificationDef Response Body</c>:
         /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>AtlasEntityDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>AtlasRelationshipDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>TermTemplateDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -2525,83 +3563,421 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetStructDefByName
+        /// Schema for <c>AtlasBusinessMetadataDef Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
-        ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
-        ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>AtlasClassificationDef Response Body</c>:
         /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>AtlasEntityDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
+        ///   relationshipAttributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>AtlasRelationshipDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   endDef1: {
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
+        /// }
+        /// </code>
+        /// Schema for <c>TermTemplateDef Response Body</c>:
+        /// <code>{
+        ///   attributeDefs: [
+        ///     {
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [
+        ///         {
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
+        ///         }
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///     }
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///   dateFormatter: {
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
+        ///     numberFormat: {
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     timeZone: {
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -2630,124 +4006,139 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetTypeDefinitionByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string],
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///   relationshipAttributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///     }
-        ///   ],
-        ///   defaultValue: string,
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
+        ///   defaultValue: string, # Optional. <Description>The default value.</Description>
         ///   elementDefs: [
         ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
+        ///       description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///       ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///       value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum element definitions.</Description>
         ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string,
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -2776,124 +4167,139 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetTypeDefinitionByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string],
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///   relationshipAttributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///     }
-        ///   ],
-        ///   defaultValue: string,
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
+        ///   defaultValue: string, # Optional. <Description>The default value.</Description>
         ///   elementDefs: [
         ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
+        ///       description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///       ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///       value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum element definitions.</Description>
         ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string,
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -2922,124 +4328,139 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetTypeDefinitionByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string],
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///   relationshipAttributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///     }
-        ///   ],
-        ///   defaultValue: string,
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
+        ///   defaultValue: string, # Optional. <Description>The default value.</Description>
         ///   elementDefs: [
         ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
+        ///       description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///       ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///       value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum element definitions.</Description>
         ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string,
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -3068,124 +4489,139 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetTypeDefinitionByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string,
-        ///   entityTypes: [string],
-        ///   subTypes: [string],
-        ///   superTypes: [string],
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///   entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///   subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///   superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///   relationshipAttributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number,
-        ///       isLegacyAttribute: boolean,
-        ///       relationshipTypeName: string
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///       isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///       relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///     }
-        ///   ],
-        ///   defaultValue: string,
+        ///   ], # Optional. <Description>An array of relationship attributes.</Description>
+        ///   defaultValue: string, # Optional. <Description>The default value.</Description>
         ///   elementDefs: [
         ///     {
-        ///       description: string,
-        ///       ordinal: number,
-        ///       value: string
+        ///       description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///       ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///       value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum element definitions.</Description>
         ///   endDef1: {
-        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///     description: string,
-        ///     isContainer: boolean,
-        ///     isLegacyAttribute: boolean,
-        ///     name: string,
-        ///     type: string
-        ///   },
-        ///   endDef2: AtlasRelationshipEndDef,
-        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///   relationshipLabel: string,
+        ///     cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///     description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///     isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///     isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///     name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///     type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///   }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///   relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///   relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///       constraints: [AtlasConstraintDef],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///       constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -3213,16 +4649,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteTypeByNameAsync(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -3246,16 +4672,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteTypeByName(string name, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -3282,243 +4698,258 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetAllTypeDefinitions
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -3547,243 +4978,258 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetAllTypeDefinitions
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -3812,236 +5258,258 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/CreateTypeDefinitions
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
@@ -4050,237 +5518,249 @@ namespace Azure.Analytics.Purview.Catalog
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -4311,236 +5791,258 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/CreateTypeDefinitions
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
@@ -4549,237 +6051,249 @@ namespace Azure.Analytics.Purview.Catalog
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -4807,236 +6321,258 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/UpdateAtlasTypeDefinitions
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
@@ -5045,237 +6581,249 @@ namespace Azure.Analytics.Purview.Catalog
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -5303,236 +6851,258 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/UpdateAtlasTypeDefinitions
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
@@ -5541,237 +7111,249 @@ namespace Azure.Analytics.Purview.Catalog
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -5799,243 +7381,258 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/DeleteTypeDefinitions
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -6063,243 +7660,258 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/DeleteTypeDefinitions
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   businessMetadataDefs: [
         ///     {
         ///       attributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///           constraints: [
         ///             {
-        ///               params: Dictionary&lt;string, AnyObject&gt;,
-        ///               type: string
+        ///               params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///               type: string, # Optional. <Description>The type of the constraint.</Description>
         ///             }
-        ///           ],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number
+        ///           ], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///         }
-        ///       ],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
+        ///       ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///       dateFormatter: {
-        ///         availableLocales: [string],
-        ///         calendar: number,
-        ///         dateInstance: DateFormat,
-        ///         dateTimeInstance: DateFormat,
-        ///         instance: DateFormat,
-        ///         lenient: boolean,
+        ///         availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///         calendar: number, # Optional.
+        ///         dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///         lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///         numberFormat: {
-        ///           availableLocales: [string],
-        ///           currency: string,
-        ///           currencyInstance: NumberFormat,
-        ///           groupingUsed: boolean,
-        ///           instance: NumberFormat,
-        ///           integerInstance: NumberFormat,
-        ///           maximumFractionDigits: number,
-        ///           maximumIntegerDigits: number,
-        ///           minimumFractionDigits: number,
-        ///           minimumIntegerDigits: number,
-        ///           numberInstance: NumberFormat,
-        ///           parseIntegerOnly: boolean,
-        ///           percentInstance: NumberFormat,
-        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///         },
-        ///         timeInstance: DateFormat,
+        ///           availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///           currency: string, # Optional. <Description>The currency.</Description>
+        ///           currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///           instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///           maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///           minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///           minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///           numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///           percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///           roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///         }, # Optional. <Description>The number format.</Description>
+        ///         timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///         timeZone: {
-        ///           dstSavings: number,
-        ///           id: string,
-        ///           availableIds: [string],
-        ///           default: TimeZone,
-        ///           displayName: string,
-        ///           rawOffset: number
-        ///         }
-        ///       },
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///           dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///           id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///           availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///           default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///           displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///           rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///         }, # Optional. <Description>The timezone information.</Description>
+        ///       }, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>businessMetadataDefs</Description>
         ///   classificationDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       entityTypes: [string],
-        ///       subTypes: [string],
-        ///       superTypes: [string]
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       entityTypes: [string], # Optional. <Description>Specifying a list of entityType names in the classificationDef, ensures that classifications can
+        /// only be applied to those entityTypes.
+        /// &lt;ul&gt;
+        /// &lt;li&gt;Any subtypes of the entity types inherit the restriction&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes inherit the parents entityTypes restrictions&lt;/li&gt;
+        /// &lt;li&gt;Any classificationDef subtypes can further restrict the parents entityTypes restrictions by specifying a subset of the entityTypes&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are no parent restrictions means there are no restrictions&lt;/li&gt;
+        /// &lt;li&gt;An empty entityTypes list when there are parent restrictions means that the subtype picks up the parents restrictions&lt;/li&gt;
+        /// &lt;li&gt;If a list of entityTypes are supplied, where one inherits from another, this will be rejected. This should encourage cleaner classificationsDefs&lt;/li&gt;
+        /// &lt;/ul&gt;</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of classification definitions.</Description>
         ///   entityDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       subTypes: [string],
-        ///       superTypes: [string],
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       subTypes: [string], # Optional. <Description>An array of sub types.</Description>
+        ///       superTypes: [string], # Optional. <Description>An array of super types.</Description>
         ///       relationshipAttributeDefs: [
         ///         {
-        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///           constraints: [AtlasConstraintDef],
-        ///           defaultValue: string,
-        ///           description: string,
-        ///           includeInNotification: boolean,
-        ///           isIndexable: boolean,
-        ///           isOptional: boolean,
-        ///           isUnique: boolean,
-        ///           name: string,
-        ///           options: Dictionary&lt;string, string&gt;,
-        ///           typeName: string,
-        ///           valuesMaxCount: number,
-        ///           valuesMinCount: number,
-        ///           isLegacyAttribute: boolean,
-        ///           relationshipTypeName: string
+        ///           cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///           constraints: [AtlasConstraintDef], # Optional. <Description>An array of constraints.</Description>
+        ///           defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///           description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///           includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///           isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///           isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///           isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///           name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///           options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///           typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///           valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///           valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
+        ///           isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///           relationshipTypeName: string, # Optional. <Description>The name of the relationship type.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of relationship attributes.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of entity definitions.</Description>
         ///   enumDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       defaultValue: string,
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value.</Description>
         ///       elementDefs: [
         ///         {
-        ///           description: string,
-        ///           ordinal: number,
-        ///           value: string
+        ///           description: string, # Optional. <Description>The description of the enum element definition.</Description>
+        ///           ordinal: number, # Optional. <Description>The ordinal of the enum element definition.</Description>
+        ///           value: string, # Optional. <Description>The value of the enum element definition.</Description>
         ///         }
-        ///       ]
+        ///       ], # Optional. <Description>An array of enum element definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of enum definitions.</Description>
         ///   relationshipDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///       endDef1: {
-        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
-        ///         description: string,
-        ///         isContainer: boolean,
-        ///         isLegacyAttribute: boolean,
-        ///         name: string,
-        ///         type: string
-        ///       },
-        ///       endDef2: AtlasRelationshipEndDef,
-        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;,
-        ///       relationshipLabel: string
+        ///         cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
+        ///         description: string, # Optional. <Description>The description of the relationship end definition.</Description>
+        ///         isContainer: boolean, # Optional. <Description>Determines if it is container.</Description>
+        ///         isLegacyAttribute: boolean, # Optional. <Description>Determines if it is a legacy attribute.</Description>
+        ///         name: string, # Optional. <Description>The name of the relationship end definition.</Description>
+        ///         type: string, # Optional. <Description>The type of the relationship end.</Description>
+        ///       }, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       endDef2: AtlasRelationshipEndDef, # Optional. <Description>The relationshipEndDef represents an end of the relationship. The end of the relationship is defined by a type, an
+        /// attribute name, cardinality and whether it  is the container end of the relationship.</Description>
+        ///       relationshipCategory: &quot;ASSOCIATION&quot; | &quot;AGGREGATION&quot; | &quot;COMPOSITION&quot;, # Optional. <Description>The Relationship category determines the style of relationship around containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// &lt;p&gt;
+        /// ASSOCIATION is a relationship with no containment. &lt;br&gt;
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// &lt;p&gt;
+        /// The difference being in the lifecycles of the container and its children. In the COMPOSITION case,
+        /// the children cannot exist without the container. For AGGREGATION, the life cycles
+        /// of the container and children are totally independent.</Description>
+        ///       relationshipLabel: string, # Optional. <Description>The label of the relationship.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of relationship definitions.</Description>
         ///   structDefs: [
         ///     {
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string,
-        ///       attributeDefs: [AtlasAttributeDef]
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
         ///     }
-        ///   ],
+        ///   ], # Optional. <Description>An array of struct definitions.</Description>
         ///   termTemplateDefs: [
         ///     {
-        ///       attributeDefs: [AtlasAttributeDef],
-        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       dateFormatter: DateFormat,
-        ///       description: string,
-        ///       guid: string,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       serviceType: string,
-        ///       typeVersion: string,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       lastModifiedTS: string
+        ///       attributeDefs: [AtlasAttributeDef], # Optional. <Description>An array of attribute definitions.</Description>
+        ///       category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///       createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///       createdBy: string, # Optional. <Description>The user who created the record.</Description>
+        ///       dateFormatter: DateFormat, # Optional. <Description>The date format.</Description>
+        ///       description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///       guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///       name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///       serviceType: string, # Optional. <Description>The service type.</Description>
+        ///       typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///       updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///       updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///       version: number, # Optional. <Description>The version of the record.</Description>
+        ///       lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   ], # Optional. <Description>An array of term template definitions.</Description>
         /// }
         /// </code>
         /// 
@@ -6330,18 +7942,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetTypeDefinitionHeaders
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   guid: string,
-        ///   name: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
         /// }
         /// </code>
         /// 
@@ -6370,18 +7978,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: &quot;enum&quot; | &quot;entity&quot; | &quot;classification&quot; | &quot;relationship&quot; | &quot;struct&quot; | &quot;term_template&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetTypeDefinitionHeaders
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   guid: string,
-        ///   name: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
         /// }
         /// </code>
         /// 
@@ -6408,83 +8012,79 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetTermTemplateDefByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -6513,83 +8113,79 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetTermTemplateDefByGuid
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -6618,83 +8214,79 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetTermTemplateDefByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 
@@ -6723,83 +8315,79 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewCatalog/PurviewTypes/GetTermTemplateDefByName
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   attributeDefs: [
         ///     {
-        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;,
+        ///       cardinality: &quot;SINGLE&quot; | &quot;LIST&quot; | &quot;SET&quot;, # Optional. <Description>single-valued attribute or multi-valued attribute.</Description>
         ///       constraints: [
         ///         {
-        ///           params: Dictionary&lt;string, AnyObject&gt;,
-        ///           type: string
+        ///           params: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>The parameters of the constraint definition.</Description>
+        ///           type: string, # Optional. <Description>The type of the constraint.</Description>
         ///         }
-        ///       ],
-        ///       defaultValue: string,
-        ///       description: string,
-        ///       includeInNotification: boolean,
-        ///       isIndexable: boolean,
-        ///       isOptional: boolean,
-        ///       isUnique: boolean,
-        ///       name: string,
-        ///       options: Dictionary&lt;string, string&gt;,
-        ///       typeName: string,
-        ///       valuesMaxCount: number,
-        ///       valuesMinCount: number
+        ///       ], # Optional. <Description>An array of constraints.</Description>
+        ///       defaultValue: string, # Optional. <Description>The default value of the attribute.</Description>
+        ///       description: string, # Optional. <Description>The description of the attribute.</Description>
+        ///       includeInNotification: boolean, # Optional. <Description>Determines if it is included in notification.</Description>
+        ///       isIndexable: boolean, # Optional. <Description>Determines if it is indexable.</Description>
+        ///       isOptional: boolean, # Optional. <Description>Determines if it is optional.</Description>
+        ///       isUnique: boolean, # Optional. <Description>Determines if it unique.</Description>
+        ///       name: string, # Optional. <Description>The name of the attribute.</Description>
+        ///       options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the attribute.</Description>
+        ///       typeName: string, # Optional. <Description>The name of the type.</Description>
+        ///       valuesMaxCount: number, # Optional. <Description>The maximum count of the values.</Description>
+        ///       valuesMinCount: number, # Optional. <Description>The minimum count of the values.</Description>
         ///     }
-        ///   ],
-        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;,
-        ///   createTime: number,
-        ///   createdBy: string,
+        ///   ], # Optional. <Description>An array of attribute definitions.</Description>
+        ///   category: &quot;PRIMITIVE&quot; | &quot;OBJECT_ID_TYPE&quot; | &quot;ENUM&quot; | &quot;STRUCT&quot; | &quot;CLASSIFICATION&quot; | &quot;ENTITY&quot; | &quot;ARRAY&quot; | &quot;MAP&quot; | &quot;RELATIONSHIP&quot; | &quot;TERM_TEMPLATE&quot;, # Optional. <Description>The enum of type category.</Description>
+        ///   createTime: number, # Optional. <Description>The created time of the record.</Description>
+        ///   createdBy: string, # Optional. <Description>The user who created the record.</Description>
         ///   dateFormatter: {
-        ///     availableLocales: [string],
-        ///     calendar: number,
-        ///     dateInstance: DateFormat,
-        ///     dateTimeInstance: DateFormat,
-        ///     instance: DateFormat,
-        ///     lenient: boolean,
+        ///     availableLocales: [string], # Optional. <Description>An array of available locales.</Description>
+        ///     calendar: number, # Optional.
+        ///     dateInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     dateTimeInstance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     instance: DateFormat, # Optional. <Description>The date format.</Description>
+        ///     lenient: boolean, # Optional. <Description>Determines the leniency of the date format.</Description>
         ///     numberFormat: {
-        ///       availableLocales: [string],
-        ///       currency: string,
-        ///       currencyInstance: NumberFormat,
-        ///       groupingUsed: boolean,
-        ///       instance: NumberFormat,
-        ///       integerInstance: NumberFormat,
-        ///       maximumFractionDigits: number,
-        ///       maximumIntegerDigits: number,
-        ///       minimumFractionDigits: number,
-        ///       minimumIntegerDigits: number,
-        ///       numberInstance: NumberFormat,
-        ///       parseIntegerOnly: boolean,
-        ///       percentInstance: NumberFormat,
-        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;
-        ///     },
-        ///     timeInstance: DateFormat,
+        ///       availableLocales: [string], # Optional. <Description>The number format.</Description>
+        ///       currency: string, # Optional. <Description>The currency.</Description>
+        ///       currencyInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       groupingUsed: boolean, # Optional. <Description>Determines if grouping is used.</Description>
+        ///       instance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       integerInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       maximumFractionDigits: number, # Optional. <Description>The maximum of fraction digits.</Description>
+        ///       maximumIntegerDigits: number, # Optional. <Description>The maximum of integer digits.</Description>
+        ///       minimumFractionDigits: number, # Optional. <Description>The minimum of fraction digits.</Description>
+        ///       minimumIntegerDigits: number, # Optional. <Description>The minimum of integer digits.</Description>
+        ///       numberInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       parseIntegerOnly: boolean, # Optional. <Description>Determines if only integer is parsed.</Description>
+        ///       percentInstance: NumberFormat, # Optional. <Description>The number format.</Description>
+        ///       roundingMode: &quot;UP&quot; | &quot;DOWN&quot; | &quot;CEILING&quot; | &quot;FLOOR&quot; | &quot;HALF_UP&quot; | &quot;HALF_DOWN&quot; | &quot;HALF_EVEN&quot; | &quot;UNNECESSARY&quot;, # Optional. <Description>The enum of rounding mode.</Description>
+        ///     }, # Optional. <Description>The number format.</Description>
+        ///     timeInstance: DateFormat, # Optional. <Description>The date format.</Description>
         ///     timeZone: {
-        ///       dstSavings: number,
-        ///       id: string,
-        ///       availableIds: [string],
-        ///       default: TimeZone,
-        ///       displayName: string,
-        ///       rawOffset: number
-        ///     }
-        ///   },
-        ///   description: string,
-        ///   guid: string,
-        ///   name: string,
-        ///   options: Dictionary&lt;string, string&gt;,
-        ///   serviceType: string,
-        ///   typeVersion: string,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number,
-        ///   lastModifiedTS: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
+        ///       dstSavings: number, # Optional. <Description>The value of the daylight saving time.</Description>
+        ///       id: string, # Optional. <Description>The ID of the timezone.</Description>
+        ///       availableIds: [string], # Optional. <Description>An array of available IDs.</Description>
+        ///       default: TimeZone, # Optional. <Description>The timezone information.</Description>
+        ///       displayName: string, # Optional. <Description>The display name of the timezone.</Description>
+        ///       rawOffset: number, # Optional. <Description>The raw offset of the timezone.</Description>
+        ///     }, # Optional. <Description>The timezone information.</Description>
+        ///   }, # Optional. <Description>The date format.</Description>
+        ///   description: string, # Optional. <Description>The description of the type definition.</Description>
+        ///   guid: string, # Optional. <Description>The GUID of the type definition.</Description>
+        ///   name: string, # Optional. <Description>The name of the type definition.</Description>
+        ///   options: Dictionary&lt;string, string&gt;, # Optional. <Description>The options for the type definition.</Description>
+        ///   serviceType: string, # Optional. <Description>The service type.</Description>
+        ///   typeVersion: string, # Optional. <Description>The version of the type.</Description>
+        ///   updateTime: number, # Optional. <Description>The update time of the record.</Description>
+        ///   updatedBy: string, # Optional. <Description>The user who updated the record.</Description>
+        ///   version: number, # Optional. <Description>The version of the record.</Description>
+        ///   lastModifiedTS: string, # Optional. <Description>ETag for concurrency control.</Description>
         /// }
         /// </code>
         /// 

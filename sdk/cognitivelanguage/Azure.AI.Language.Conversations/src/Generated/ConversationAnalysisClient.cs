@@ -64,31 +64,43 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/Conversations/ConversationAnalysis/AnalyzeConversation
+        /// Schema for <c>CustomConversationalTask Request Body</c>:
         /// <code>{
-        ///   kind: &quot;Conversation&quot; (required)
+        ///   kind: Conversation, # Required. <Description>Enumeration of supported Conversation tasks.</Description>
+        ///   analysisInput: {
+        ///     conversationItem: {
+        ///       id: string, # Required. <Description>The ID of a conversation item.</Description>
+        ///       participantId: string, # Required. <Description>The participant ID of a conversation item.</Description>
+        ///       language: string, # Optional. <Description>The override language of a conversation item in BCP 47 language representation.</Description>
+        ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. <Description>Enumeration of supported conversational modalities.</Description>
+        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. <Description>The role of the participant.</Description>
+        ///     }, # Required. <Description>The abstract base for a user input formatted conversation (e.g., Text, Transcript).</Description>
+        ///   }, # Required. <Description>The input ConversationItem and its optional parameters</Description>
+        ///   parameters: {
+        ///     projectName: string, # Required. <Description>The name of the project to use.</Description>
+        ///     deploymentName: string, # Required. <Description>The name of the deployment to use.</Description>
+        ///     verbose: boolean, # Optional. <Description>If true, the service will return more detailed information in the response.</Description>
+        ///     isLoggingEnabled: boolean, # Optional. <Description>If true, the service will keep the query for further review.</Description>
+        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. <Description>Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets.</Description>
+        ///     directTarget: string, # Optional. <Description>The name of a target project to forward the request to.</Description>
+        ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. <Description>A dictionary representing the parameters for each target project.</Description>
+        ///   }, # Required. <Description>Input parameters necessary for a CustomConversation task.</Description>
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// Schema for <c>CustomConversationalTaskResult Response Body</c>:
         /// <code>{
-        ///   kind: &quot;ConversationResult&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   kind: ConversationResult, # Required. <Description>Enumeration of supported conversational task results</Description>
+        ///   result: {
+        ///     query: string, # Required. <Description>The conversation utterance given by the caller.</Description>
+        ///     detectedLanguage: string, # Optional. <Description>The system detected language for the query in BCP 47 language representation..</Description>
+        ///     prediction: {
+        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. <Description>The type of the project.</Description>
+        ///       topIntent: string, # Optional. <Description>The intent with the highest score.</Description>
+        ///     }, # Required. <Description>The prediction result of a conversation project.</Description>
+        ///   }, # Required. <Description>Represents a conversation analysis response.</Description>
         /// }
         /// </code>
         /// 
@@ -116,31 +128,43 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/Conversations/ConversationAnalysis/AnalyzeConversation
+        /// Schema for <c>CustomConversationalTask Request Body</c>:
         /// <code>{
-        ///   kind: &quot;Conversation&quot; (required)
+        ///   kind: Conversation, # Required. <Description>Enumeration of supported Conversation tasks.</Description>
+        ///   analysisInput: {
+        ///     conversationItem: {
+        ///       id: string, # Required. <Description>The ID of a conversation item.</Description>
+        ///       participantId: string, # Required. <Description>The participant ID of a conversation item.</Description>
+        ///       language: string, # Optional. <Description>The override language of a conversation item in BCP 47 language representation.</Description>
+        ///       modality: &quot;transcript&quot; | &quot;text&quot;, # Optional. <Description>Enumeration of supported conversational modalities.</Description>
+        ///       role: &quot;agent&quot; | &quot;customer&quot; | &quot;generic&quot;, # Optional. <Description>The role of the participant.</Description>
+        ///     }, # Required. <Description>The abstract base for a user input formatted conversation (e.g., Text, Transcript).</Description>
+        ///   }, # Required. <Description>The input ConversationItem and its optional parameters</Description>
+        ///   parameters: {
+        ///     projectName: string, # Required. <Description>The name of the project to use.</Description>
+        ///     deploymentName: string, # Required. <Description>The name of the deployment to use.</Description>
+        ///     verbose: boolean, # Optional. <Description>If true, the service will return more detailed information in the response.</Description>
+        ///     isLoggingEnabled: boolean, # Optional. <Description>If true, the service will keep the query for further review.</Description>
+        ///     stringIndexType: &quot;TextElements_v8&quot; | &quot;UnicodeCodePoint&quot; | &quot;Utf16CodeUnit&quot;, # Optional. <Description>Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets.</Description>
+        ///     directTarget: string, # Optional. <Description>The name of a target project to forward the request to.</Description>
+        ///     targetProjectParameters: Dictionary&lt;string, AnalysisParameters&gt;, # Optional. <Description>A dictionary representing the parameters for each target project.</Description>
+        ///   }, # Required. <Description>Input parameters necessary for a CustomConversation task.</Description>
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// Schema for <c>CustomConversationalTaskResult Response Body</c>:
         /// <code>{
-        ///   kind: &quot;ConversationResult&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot; | &quot;Timeout&quot; | &quot;QuotaExceeded&quot; | &quot;Conflict&quot; | &quot;Warning&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot; | &quot;InvalidRequestBodyFormat&quot; | &quot;EmptyRequest&quot; | &quot;MissingInputDocuments&quot; | &quot;InvalidDocument&quot; | &quot;ModelVersionIncorrect&quot; | &quot;InvalidDocumentBatch&quot; | &quot;UnsupportedLanguageCode&quot; | &quot;InvalidCountryHint&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   kind: ConversationResult, # Required. <Description>Enumeration of supported conversational task results</Description>
+        ///   result: {
+        ///     query: string, # Required. <Description>The conversation utterance given by the caller.</Description>
+        ///     detectedLanguage: string, # Optional. <Description>The system detected language for the query in BCP 47 language representation..</Description>
+        ///     prediction: {
+        ///       projectKind: &quot;Conversation&quot; | &quot;Orchestration&quot;, # Required. <Description>The type of the project.</Description>
+        ///       topIntent: string, # Optional. <Description>The intent with the highest score.</Description>
+        ///     }, # Required. <Description>The prediction result of a conversation project.</Description>
+        ///   }, # Required. <Description>Represents a conversation analysis response.</Description>
         /// }
         /// </code>
         /// 

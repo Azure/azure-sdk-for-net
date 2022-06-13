@@ -72,28 +72,45 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/GetProperties
+        /// Schema for <c>SystemClassificationRule Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>CustomClassificationRule Response Body</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -117,28 +134,45 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Get a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/GetProperties
+        /// Schema for <c>SystemClassificationRule Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>CustomClassificationRule Response Body</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -163,35 +197,83 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/CreateOrUpdate
+        /// Schema for <c>SystemClassificationRule Request Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot; (required)
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// Schema for <c>CustomClassificationRule Request Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// Schema for <c>SystemClassificationRule Response Body</c>:
+        /// <code>{
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// Schema for <c>CustomClassificationRule Response Body</c>:
+        /// <code>{
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
+        ///       {
+        ///         kind: &quot;Regex&quot;, # Required.
+        ///       }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -216,35 +298,83 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Request Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/CreateOrUpdate
+        /// Schema for <c>SystemClassificationRule Request Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot; (required)
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Body</c>:
+        /// Schema for <c>CustomClassificationRule Request Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// Schema for <c>SystemClassificationRule Response Body</c>:
+        /// <code>{
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
+        /// }
+        /// </code>
+        /// Schema for <c>CustomClassificationRule Response Body</c>:
+        /// <code>{
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
+        ///       {
+        ///         kind: &quot;Regex&quot;, # Required.
+        ///       }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -268,28 +398,45 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/Delete
+        /// Schema for <c>SystemClassificationRule Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>CustomClassificationRule Response Body</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -313,28 +460,45 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Deletes a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/Delete
+        /// Schema for <c>SystemClassificationRule Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   name: string,
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;
+        ///   kind: System, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
-        /// Schema for <c>Response Error</c>:
+        /// Schema for <c>CustomClassificationRule Response Body</c>:
         /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
+        ///   kind: Custom, # Required.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
+        ///   properties: {
+        ///     minimumPercentageMatch: number, # Optional.
+        ///     classificationAction: &quot;Keep&quot; | &quot;Delete&quot;, # Optional.
+        ///     dataPatterns: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
+        ///         kind: &quot;Regex&quot;, # Required.
         ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///     columnPatterns: [ClassificationRulePattern], # Optional.
+        ///     description: string, # Optional.
+        ///     version: number, # Optional.
+        ///     classificationName: string, # Optional.
+        ///     ruleStatus: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -361,42 +525,28 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/TagVersion
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   scanResultId: OperationResponseScanResultId,
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;,
+        ///   scanResultId: OperationResponseScanResultId, # Optional.
+        ///   startTime: string (ISO 8601 Format), # Optional.
+        ///   endTime: string (ISO 8601 Format), # Optional.
+        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
+        ///     code: string, # Optional.
+        ///     message: string, # Optional.
+        ///     target: string, # Optional.
         ///     details: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorInfo]
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [ErrorInfo], # Optional.
         ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
-        ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -425,42 +575,28 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/TagVersion
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   scanResultId: OperationResponseScanResultId,
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;,
+        ///   scanResultId: OperationResponseScanResultId, # Optional.
+        ///   startTime: string (ISO 8601 Format), # Optional.
+        ///   endTime: string (ISO 8601 Format), # Optional.
+        ///   status: &quot;Accepted&quot; | &quot;InProgress&quot; | &quot;TransientFailure&quot; | &quot;Succeeded&quot; | &quot;Failed&quot; | &quot;Canceled&quot;, # Optional.
         ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
+        ///     code: string, # Optional.
+        ///     message: string, # Optional.
+        ///     target: string, # Optional.
         ///     details: [
         ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorInfo]
+        ///         code: string, # Optional.
+        ///         message: string, # Optional.
+        ///         target: string, # Optional.
+        ///         details: [ErrorInfo], # Optional.
         ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
-        ///       }
-        ///     ]
-        ///   }
+        ///     ], # Optional.
+        ///   }, # Optional.
         /// }
         /// </code>
         /// 
@@ -486,34 +622,20 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Lists the rule versions of a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/GetVersions
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       id: string,
-        ///       name: string,
-        ///       kind: &quot;System&quot; | &quot;Custom&quot;
+        ///       id: string, # Optional.
+        ///       name: string, # Optional.
+        ///       kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         ///     }
-        ///   ],
-        ///   nextLink: string,
-        ///   count: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional.
+        ///   nextLink: string, # Optional.
+        ///   count: number, # Optional.
         /// }
         /// </code>
         /// 
@@ -543,34 +665,20 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> Lists the rule versions of a classification rule. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewScanningService/PurviewClassificationRule/GetVersions
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       id: string,
-        ///       name: string,
-        ///       kind: &quot;System&quot; | &quot;Custom&quot;
+        ///       id: string, # Optional.
+        ///       name: string, # Optional.
+        ///       kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         ///     }
-        ///   ],
-        ///   nextLink: string,
-        ///   count: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         message: string,
-        ///         target: string,
-        ///         details: [ErrorModel]
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional.
+        ///   nextLink: string, # Optional.
+        ///   count: number, # Optional.
         /// }
         /// </code>
         /// 

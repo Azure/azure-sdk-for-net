@@ -65,87 +65,75 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Get an account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetAccountProperties
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
+        ///   id: string, # Optional. <Description>Gets or sets the identifier.</Description>
         ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
+        ///     principalId: string, # Optional. <Description>Service principal object Id</Description>
+        ///     tenantId: string, # Optional. <Description>Tenant Id</Description>
+        ///     type: &quot;SystemAssigned&quot;, # Optional. <Description>Identity Type</Description>
+        ///   }, # Optional. <Description>Identity Info on the tracked resource</Description>
+        ///   location: string, # Optional. <Description>Gets or sets the location.</Description>
+        ///   name: string, # Optional. <Description>Gets or sets the name.</Description>
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
+        ///       awsExternalId: string, # Optional. <Description>AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning</Description>
+        ///     }, # Optional. <Description>Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>Gets the time at which the entity was created.</Description>
+        ///     createdBy: string, # Optional. <Description>Gets the creator of the entity.</Description>
+        ///     createdByObjectId: string, # Optional. <Description>Gets the creators of the entity&apos;s object id.</Description>
         ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
+        ///       catalog: string, # Optional. <Description>Gets the catalog endpoint.</Description>
+        ///       guardian: string, # Optional. <Description>Gets the guardian endpoint.</Description>
+        ///       scan: string, # Optional. <Description>Gets the scan endpoint.</Description>
+        ///     }, # Optional. <Description>The URIs that are the public endpoints of the account.</Description>
+        ///     friendlyName: string, # Optional. <Description>Gets or sets the friendly name.</Description>
+        ///     managedResourceGroupName: string, # Optional. <Description>Gets or sets the managed resource group name</Description>
         ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
+        ///       eventHubNamespace: string, # Optional. <Description>Gets the managed event hub namespace resource identifier.</Description>
+        ///       resourceGroup: string, # Optional. <Description>Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.</Description>
+        ///       storageAccount: string, # Optional. <Description>Gets the managed storage account resource identifier.</Description>
+        ///     }, # Optional. <Description>Gets the resource identifiers of the managed resources.</Description>
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string,
-        ///         name: string,
+        ///         id: string, # Optional. <Description>Gets or sets the identifier.</Description>
+        ///         name: string, # Optional. <Description>Gets or sets the name.</Description>
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string
-        ///           },
+        ///             id: string, # Optional. <Description>The private endpoint identifier.</Description>
+        ///           }, # Optional. <Description>The private endpoint information.</Description>
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
+        ///             actionsRequired: string, # Optional. <Description>The required actions.</Description>
+        ///             description: string, # Optional. <Description>The description.</Description>
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. <Description>The status.</Description>
+        ///           }, # Optional. <Description>The private link service connection state.</Description>
+        ///           provisioningState: string, # Optional. <Description>The provisioning state.</Description>
+        ///         }, # Optional. <Description>The connection identifier.</Description>
+        ///         type: string, # Optional. <Description>Gets or sets the type.</Description>
         ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
+        ///     ], # Optional. <Description>Gets the private endpoint connections information.</Description>
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. <Description>Gets or sets the state of the provisioning.</Description>
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. <Description>Gets or sets the public network access.</Description>
+        ///   }, # Optional. <Description>Gets or sets the properties.</Description>
         ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
+        ///     capacity: number, # Optional. <Description>Gets or sets the sku capacity. Possible values include: 4, 16</Description>
+        ///     name: &quot;Standard&quot;, # Optional. <Description>Gets or sets the sku name.</Description>
+        ///   }, # Optional. <Description>Gets or sets the Sku.</Description>
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///   }, # Optional. <Description>Metadata pertaining to creation and last modification of the resource.</Description>
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. <Description>Tags on the azure resource.</Description>
+        ///   type: string, # Optional. <Description>Gets or sets the type.</Description>
         /// }
         /// </code>
         /// 
@@ -169,87 +157,75 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> Get an account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetAccountProperties
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
+        ///   id: string, # Optional. <Description>Gets or sets the identifier.</Description>
         ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
+        ///     principalId: string, # Optional. <Description>Service principal object Id</Description>
+        ///     tenantId: string, # Optional. <Description>Tenant Id</Description>
+        ///     type: &quot;SystemAssigned&quot;, # Optional. <Description>Identity Type</Description>
+        ///   }, # Optional. <Description>Identity Info on the tracked resource</Description>
+        ///   location: string, # Optional. <Description>Gets or sets the location.</Description>
+        ///   name: string, # Optional. <Description>Gets or sets the name.</Description>
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
+        ///       awsExternalId: string, # Optional. <Description>AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning</Description>
+        ///     }, # Optional. <Description>Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>Gets the time at which the entity was created.</Description>
+        ///     createdBy: string, # Optional. <Description>Gets the creator of the entity.</Description>
+        ///     createdByObjectId: string, # Optional. <Description>Gets the creators of the entity&apos;s object id.</Description>
         ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
+        ///       catalog: string, # Optional. <Description>Gets the catalog endpoint.</Description>
+        ///       guardian: string, # Optional. <Description>Gets the guardian endpoint.</Description>
+        ///       scan: string, # Optional. <Description>Gets the scan endpoint.</Description>
+        ///     }, # Optional. <Description>The URIs that are the public endpoints of the account.</Description>
+        ///     friendlyName: string, # Optional. <Description>Gets or sets the friendly name.</Description>
+        ///     managedResourceGroupName: string, # Optional. <Description>Gets or sets the managed resource group name</Description>
         ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
+        ///       eventHubNamespace: string, # Optional. <Description>Gets the managed event hub namespace resource identifier.</Description>
+        ///       resourceGroup: string, # Optional. <Description>Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.</Description>
+        ///       storageAccount: string, # Optional. <Description>Gets the managed storage account resource identifier.</Description>
+        ///     }, # Optional. <Description>Gets the resource identifiers of the managed resources.</Description>
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string,
-        ///         name: string,
+        ///         id: string, # Optional. <Description>Gets or sets the identifier.</Description>
+        ///         name: string, # Optional. <Description>Gets or sets the name.</Description>
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string
-        ///           },
+        ///             id: string, # Optional. <Description>The private endpoint identifier.</Description>
+        ///           }, # Optional. <Description>The private endpoint information.</Description>
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
+        ///             actionsRequired: string, # Optional. <Description>The required actions.</Description>
+        ///             description: string, # Optional. <Description>The description.</Description>
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. <Description>The status.</Description>
+        ///           }, # Optional. <Description>The private link service connection state.</Description>
+        ///           provisioningState: string, # Optional. <Description>The provisioning state.</Description>
+        ///         }, # Optional. <Description>The connection identifier.</Description>
+        ///         type: string, # Optional. <Description>Gets or sets the type.</Description>
         ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
+        ///     ], # Optional. <Description>Gets the private endpoint connections information.</Description>
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. <Description>Gets or sets the state of the provisioning.</Description>
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. <Description>Gets or sets the public network access.</Description>
+        ///   }, # Optional. <Description>Gets or sets the properties.</Description>
         ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
+        ///     capacity: number, # Optional. <Description>Gets or sets the sku capacity. Possible values include: 4, 16</Description>
+        ///     name: &quot;Standard&quot;, # Optional. <Description>Gets or sets the sku name.</Description>
+        ///   }, # Optional. <Description>Gets or sets the Sku.</Description>
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///   }, # Optional. <Description>Metadata pertaining to creation and last modification of the resource.</Description>
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. <Description>Tags on the azure resource.</Description>
+        ///   type: string, # Optional. <Description>Gets or sets the type.</Description>
         /// }
         /// </code>
         /// 
@@ -275,92 +251,80 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/UpdateAccountProperties
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   friendlyName: string
+        ///   friendlyName: string, # Optional. <Description>The friendly name for the azure resource.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
+        ///   id: string, # Optional. <Description>Gets or sets the identifier.</Description>
         ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
+        ///     principalId: string, # Optional. <Description>Service principal object Id</Description>
+        ///     tenantId: string, # Optional. <Description>Tenant Id</Description>
+        ///     type: &quot;SystemAssigned&quot;, # Optional. <Description>Identity Type</Description>
+        ///   }, # Optional. <Description>Identity Info on the tracked resource</Description>
+        ///   location: string, # Optional. <Description>Gets or sets the location.</Description>
+        ///   name: string, # Optional. <Description>Gets or sets the name.</Description>
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
+        ///       awsExternalId: string, # Optional. <Description>AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning</Description>
+        ///     }, # Optional. <Description>Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>Gets the time at which the entity was created.</Description>
+        ///     createdBy: string, # Optional. <Description>Gets the creator of the entity.</Description>
+        ///     createdByObjectId: string, # Optional. <Description>Gets the creators of the entity&apos;s object id.</Description>
         ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
+        ///       catalog: string, # Optional. <Description>Gets the catalog endpoint.</Description>
+        ///       guardian: string, # Optional. <Description>Gets the guardian endpoint.</Description>
+        ///       scan: string, # Optional. <Description>Gets the scan endpoint.</Description>
+        ///     }, # Optional. <Description>The URIs that are the public endpoints of the account.</Description>
+        ///     friendlyName: string, # Optional. <Description>Gets or sets the friendly name.</Description>
+        ///     managedResourceGroupName: string, # Optional. <Description>Gets or sets the managed resource group name</Description>
         ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
+        ///       eventHubNamespace: string, # Optional. <Description>Gets the managed event hub namespace resource identifier.</Description>
+        ///       resourceGroup: string, # Optional. <Description>Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.</Description>
+        ///       storageAccount: string, # Optional. <Description>Gets the managed storage account resource identifier.</Description>
+        ///     }, # Optional. <Description>Gets the resource identifiers of the managed resources.</Description>
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string,
-        ///         name: string,
+        ///         id: string, # Optional. <Description>Gets or sets the identifier.</Description>
+        ///         name: string, # Optional. <Description>Gets or sets the name.</Description>
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string
-        ///           },
+        ///             id: string, # Optional. <Description>The private endpoint identifier.</Description>
+        ///           }, # Optional. <Description>The private endpoint information.</Description>
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
+        ///             actionsRequired: string, # Optional. <Description>The required actions.</Description>
+        ///             description: string, # Optional. <Description>The description.</Description>
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. <Description>The status.</Description>
+        ///           }, # Optional. <Description>The private link service connection state.</Description>
+        ///           provisioningState: string, # Optional. <Description>The provisioning state.</Description>
+        ///         }, # Optional. <Description>The connection identifier.</Description>
+        ///         type: string, # Optional. <Description>Gets or sets the type.</Description>
         ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
+        ///     ], # Optional. <Description>Gets the private endpoint connections information.</Description>
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. <Description>Gets or sets the state of the provisioning.</Description>
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. <Description>Gets or sets the public network access.</Description>
+        ///   }, # Optional. <Description>Gets or sets the properties.</Description>
         ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
+        ///     capacity: number, # Optional. <Description>Gets or sets the sku capacity. Possible values include: 4, 16</Description>
+        ///     name: &quot;Standard&quot;, # Optional. <Description>Gets or sets the sku name.</Description>
+        ///   }, # Optional. <Description>Gets or sets the Sku.</Description>
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///   }, # Optional. <Description>Metadata pertaining to creation and last modification of the resource.</Description>
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. <Description>Tags on the azure resource.</Description>
+        ///   type: string, # Optional. <Description>Gets or sets the type.</Description>
         /// }
         /// </code>
         /// 
@@ -388,92 +352,80 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/UpdateAccountProperties
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   friendlyName: string
+        ///   friendlyName: string, # Optional. <Description>The friendly name for the azure resource.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
+        ///   id: string, # Optional. <Description>Gets or sets the identifier.</Description>
         ///   identity: {
-        ///     principalId: string,
-        ///     tenantId: string,
-        ///     type: &quot;SystemAssigned&quot;
-        ///   },
-        ///   location: string,
-        ///   name: string,
+        ///     principalId: string, # Optional. <Description>Service principal object Id</Description>
+        ///     tenantId: string, # Optional. <Description>Tenant Id</Description>
+        ///     type: &quot;SystemAssigned&quot;, # Optional. <Description>Identity Type</Description>
+        ///   }, # Optional. <Description>Identity Info on the tracked resource</Description>
+        ///   location: string, # Optional. <Description>Gets or sets the location.</Description>
+        ///   name: string, # Optional. <Description>Gets or sets the name.</Description>
         ///   properties: {
         ///     cloudConnectors: {
-        ///       awsExternalId: string
-        ///     },
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByObjectId: string,
+        ///       awsExternalId: string, # Optional. <Description>AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning</Description>
+        ///     }, # Optional. <Description>Cloud connectors.
+        /// External cloud identifier used as part of scanning configuration.</Description>
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>Gets the time at which the entity was created.</Description>
+        ///     createdBy: string, # Optional. <Description>Gets the creator of the entity.</Description>
+        ///     createdByObjectId: string, # Optional. <Description>Gets the creators of the entity&apos;s object id.</Description>
         ///     endpoints: {
-        ///       catalog: string,
-        ///       guardian: string,
-        ///       scan: string
-        ///     },
-        ///     friendlyName: string,
-        ///     managedResourceGroupName: string,
+        ///       catalog: string, # Optional. <Description>Gets the catalog endpoint.</Description>
+        ///       guardian: string, # Optional. <Description>Gets the guardian endpoint.</Description>
+        ///       scan: string, # Optional. <Description>Gets the scan endpoint.</Description>
+        ///     }, # Optional. <Description>The URIs that are the public endpoints of the account.</Description>
+        ///     friendlyName: string, # Optional. <Description>Gets or sets the friendly name.</Description>
+        ///     managedResourceGroupName: string, # Optional. <Description>Gets or sets the managed resource group name</Description>
         ///     managedResources: {
-        ///       eventHubNamespace: string,
-        ///       resourceGroup: string,
-        ///       storageAccount: string
-        ///     },
+        ///       eventHubNamespace: string, # Optional. <Description>Gets the managed event hub namespace resource identifier.</Description>
+        ///       resourceGroup: string, # Optional. <Description>Gets the managed resource group resource identifier. This resource group will host resource dependencies for the account.</Description>
+        ///       storageAccount: string, # Optional. <Description>Gets the managed storage account resource identifier.</Description>
+        ///     }, # Optional. <Description>Gets the resource identifiers of the managed resources.</Description>
         ///     privateEndpointConnections: [
         ///       {
-        ///         id: string,
-        ///         name: string,
+        ///         id: string, # Optional. <Description>Gets or sets the identifier.</Description>
+        ///         name: string, # Optional. <Description>Gets or sets the name.</Description>
         ///         properties: {
         ///           privateEndpoint: {
-        ///             id: string
-        ///           },
+        ///             id: string, # Optional. <Description>The private endpoint identifier.</Description>
+        ///           }, # Optional. <Description>The private endpoint information.</Description>
         ///           privateLinkServiceConnectionState: {
-        ///             actionsRequired: string,
-        ///             description: string,
-        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;
-        ///           },
-        ///           provisioningState: string
-        ///         },
-        ///         type: string
+        ///             actionsRequired: string, # Optional. <Description>The required actions.</Description>
+        ///             description: string, # Optional. <Description>The description.</Description>
+        ///             status: &quot;Unknown&quot; | &quot;Pending&quot; | &quot;Approved&quot; | &quot;Rejected&quot; | &quot;Disconnected&quot;, # Optional. <Description>The status.</Description>
+        ///           }, # Optional. <Description>The private link service connection state.</Description>
+        ///           provisioningState: string, # Optional. <Description>The provisioning state.</Description>
+        ///         }, # Optional. <Description>The connection identifier.</Description>
+        ///         type: string, # Optional. <Description>Gets or sets the type.</Description>
         ///       }
-        ///     ],
-        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;,
-        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;
-        ///   },
+        ///     ], # Optional. <Description>Gets the private endpoint connections information.</Description>
+        ///     provisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;SoftDeleting&quot; | &quot;SoftDeleted&quot; | &quot;Failed&quot; | &quot;Succeeded&quot; | &quot;Canceled&quot;, # Optional. <Description>Gets or sets the state of the provisioning.</Description>
+        ///     publicNetworkAccess: &quot;NotSpecified&quot; | &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional. <Description>Gets or sets the public network access.</Description>
+        ///   }, # Optional. <Description>Gets or sets the properties.</Description>
         ///   sku: {
-        ///     capacity: number,
-        ///     name: &quot;Standard&quot;
-        ///   },
+        ///     capacity: number, # Optional. <Description>Gets or sets the sku capacity. Possible values include: 4, 16</Description>
+        ///     name: &quot;Standard&quot;, # Optional. <Description>Gets or sets the sku name.</Description>
+        ///   }, # Optional. <Description>Gets or sets the Sku.</Description>
         ///   systemData: {
-        ///     createdAt: string (ISO 8601 Format),
-        ///     createdBy: string,
-        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///     lastModifiedAt: string (ISO 8601 Format),
-        ///     lastModifiedBy: string,
-        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///   },
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   type: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///     createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///     createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///     createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///     lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///     lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///   }, # Optional. <Description>Metadata pertaining to creation and last modification of the resource.</Description>
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. <Description>Tags on the azure resource.</Description>
+        ///   type: string, # Optional. <Description>Gets or sets the type.</Description>
         /// }
         /// </code>
         /// 
@@ -499,27 +451,13 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> List the authorization keys associated with this account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetAccessKeys
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. <Description>Gets or sets the primary connection string.</Description>
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. <Description>Gets or sets the secondary connection string.</Description>
         /// }
         /// </code>
         /// 
@@ -543,27 +481,13 @@ namespace Azure.Analytics.Purview.Account
         /// <summary> List the authorization keys associated with this account. </summary>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetAccessKeys
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. <Description>Gets or sets the primary connection string.</Description>
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. <Description>Gets or sets the secondary connection string.</Description>
         /// }
         /// </code>
         /// 
@@ -589,32 +513,18 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/RegenerateAccessKey
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;
+        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. <Description>The access key type.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. <Description>Gets or sets the primary connection string.</Description>
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. <Description>Gets or sets the secondary connection string.</Description>
         /// }
         /// </code>
         /// 
@@ -642,32 +552,18 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/RegenerateAccessKey
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;
+        ///   keyType: &quot;PrimaryAtlasKafkaKey&quot; | &quot;SecondaryAtlasKafkaKey&quot;, # Optional. <Description>The access key type.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   atlasKafkaPrimaryEndpoint: string,
-        ///   atlasKafkaSecondaryEndpoint: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   atlasKafkaPrimaryEndpoint: string, # Optional. <Description>Gets or sets the primary connection string.</Description>
+        ///   atlasKafkaSecondaryEndpoint: string, # Optional. <Description>Gets or sets the secondary connection string.</Description>
         /// }
         /// </code>
         /// 
@@ -694,47 +590,33 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetCollections
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
+        ///   count: number, # Optional. <Description>Total item count.</Description>
+        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
         ///   value: [
         ///     {
-        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///       description: string,
-        ///       friendlyName: string,
-        ///       name: string,
+        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
+        ///       description: string, # Optional. <Description>Gets or sets the description.</Description>
+        ///       friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
+        ///       name: string, # Optional. <Description>Gets the name.</Description>
         ///       parentCollection: {
-        ///         referenceName: string,
-        ///         type: string
-        ///       },
+        ///         referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
+        ///         type: string, # Optional. <Description>Gets the reference type property.</Description>
+        ///       }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
         ///       systemData: {
-        ///         createdAt: string (ISO 8601 Format),
-        ///         createdBy: string,
-        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///         lastModifiedAt: string (ISO 8601 Format),
-        ///         lastModifiedBy: string,
-        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///       }
+        ///         createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///         createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///         lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///         lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///       }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   ], # Required. <Description>Collection of items of type results.</Description>
         /// }
         /// </code>
         /// 
@@ -765,47 +647,33 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetCollections
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
+        ///   count: number, # Optional. <Description>Total item count.</Description>
+        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
         ///   value: [
         ///     {
-        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;,
-        ///       description: string,
-        ///       friendlyName: string,
-        ///       name: string,
+        ///       collectionProvisioningState: &quot;Unknown&quot; | &quot;Creating&quot; | &quot;Moving&quot; | &quot;Deleting&quot; | &quot;Failed&quot; | &quot;Succeeded&quot;, # Optional. <Description>Gets the state of the provisioning.</Description>
+        ///       description: string, # Optional. <Description>Gets or sets the description.</Description>
+        ///       friendlyName: string, # Optional. <Description>Gets or sets the friendly name of the collection.</Description>
+        ///       name: string, # Optional. <Description>Gets the name.</Description>
         ///       parentCollection: {
-        ///         referenceName: string,
-        ///         type: string
-        ///       },
+        ///         referenceName: string, # Optional. <Description>Gets or sets the reference name.</Description>
+        ///         type: string, # Optional. <Description>Gets the reference type property.</Description>
+        ///       }, # Optional. <Description>Gets or sets the parent collection reference.</Description>
         ///       systemData: {
-        ///         createdAt: string (ISO 8601 Format),
-        ///         createdBy: string,
-        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;,
-        ///         lastModifiedAt: string (ISO 8601 Format),
-        ///         lastModifiedBy: string,
-        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;
-        ///       }
+        ///         createdAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of resource creation (UTC).</Description>
+        ///         createdBy: string, # Optional. <Description>The identity that created the resource.</Description>
+        ///         createdByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that created the resource.</Description>
+        ///         lastModifiedAt: string (ISO 8601 Format), # Optional. <Description>The timestamp of the last modification the resource (UTC).</Description>
+        ///         lastModifiedBy: string, # Optional. <Description>The identity that last modified the resource.</Description>
+        ///         lastModifiedByType: &quot;User&quot; | &quot;Application&quot; | &quot;ManagedIdentity&quot; | &quot;Key&quot;, # Optional. <Description>The type of identity that last modified the resource.</Description>
+        ///       }, # Optional. <Description>Gets the system data that contains information about who and when created and updated the resource.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   ], # Required. <Description>Collection of items of type results.</Description>
         /// }
         /// </code>
         /// 
@@ -836,121 +704,107 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetResourceSetRules
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
+        ///   count: number, # Optional. <Description>Total item count.</Description>
+        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
         ///   value: [
         ///     {
         ///       advancedResourceSet: {
-        ///         modifiedAt: string (ISO 8601 Format),
-        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///       },
-        ///       name: string,
+        ///         modifiedAt: string (ISO 8601 Format), # Optional. <Description>Date at which ResourceSetProcessing property of the account is updated.</Description>
+        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. <Description>The advanced resource property of the account.</Description>
+        ///       }, # Optional. <Description>Gets or sets the advanced resource set property of the account.</Description>
+        ///       name: string, # Optional. <Description>The name of the rule</Description>
         ///       pathPatternConfig: {
         ///         acceptedPatterns: [
         ///           {
-        ///             createdBy: string,
-        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             path: string
+        ///             createdBy: string, # Optional.
+        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             modifiedBy: string, # Optional.
+        ///             name: string, # Required.
+        ///             path: string, # Required.
         ///           }
-        ///         ],
+        ///         ], # Optional.
         ///         complexReplacers: [
         ///           {
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             typeName: string
+        ///             createdBy: string, # Optional.
+        ///             description: string, # Optional.
+        ///             disabled: boolean, # Optional.
+        ///             disableRecursiveReplacerApplication: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             modifiedBy: string, # Optional.
+        ///             name: string, # Optional.
+        ///             typeName: string, # Optional.
         ///           }
-        ///         ],
-        ///         createdBy: string,
-        ///         enableDefaultPatterns: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
+        ///         ], # Optional.
+        ///         createdBy: string, # Required.
+        ///         enableDefaultPatterns: boolean, # Required.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
         ///         normalizationRules: [
         ///           {
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             dynamicReplacement: boolean,
-        ///             entityTypes: [string],
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
+        ///             description: string, # Optional.
+        ///             disabled: boolean, # Optional.
+        ///             dynamicReplacement: boolean, # Optional.
+        ///             entityTypes: [string], # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
         ///             regex: {
-        ///               maxDigits: number,
-        ///               maxLetters: number,
-        ///               minDashes: number,
-        ///               minDigits: number,
-        ///               minDigitsOrLetters: number,
-        ///               minDots: number,
-        ///               minHex: number,
-        ///               minLetters: number,
-        ///               minUnderscores: number,
-        ///               options: number,
-        ///               regexStr: string
-        ///             },
-        ///             replaceWith: string,
-        ///             version: number
+        ///               maxDigits: number, # Optional.
+        ///               maxLetters: number, # Optional.
+        ///               minDashes: number, # Optional.
+        ///               minDigits: number, # Optional.
+        ///               minDigitsOrLetters: number, # Optional.
+        ///               minDots: number, # Optional.
+        ///               minHex: number, # Optional.
+        ///               minLetters: number, # Optional.
+        ///               minUnderscores: number, # Optional.
+        ///               options: number, # Optional.
+        ///               regexStr: string, # Optional.
+        ///             }, # Optional.
+        ///             replaceWith: string, # Optional.
+        ///             version: number, # Optional.
         ///           }
-        ///         ],
+        ///         ], # Optional.
         ///         regexReplacers: [
         ///           {
-        ///             condition: string,
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             doNotReplaceRegex: FastRegex,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             regex: FastRegex,
-        ///             replaceWith: string
+        ///             condition: string, # Optional.
+        ///             createdBy: string, # Optional.
+        ///             description: string, # Optional.
+        ///             disabled: boolean, # Required.
+        ///             disableRecursiveReplacerApplication: boolean, # Optional.
+        ///             doNotReplaceRegex: FastRegex, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             modifiedBy: string, # Optional.
+        ///             name: string, # Required.
+        ///             regex: FastRegex, # Optional.
+        ///             replaceWith: string, # Optional.
         ///           }
-        ///         ],
-        ///         rejectedPatterns: [Filter],
+        ///         ], # Optional.
+        ///         rejectedPatterns: [Filter], # Optional.
         ///         scopedRules: [
         ///           {
-        ///             bindingUrl: string,
+        ///             bindingUrl: string, # Required.
         ///             rules: [
         ///               {
-        ///                 displayName: string,
-        ///                 isResourceSet: boolean,
-        ///                 lastUpdatedTimestamp: number,
-        ///                 name: string,
-        ///                 qualifiedName: string
+        ///                 displayName: string, # Optional.
+        ///                 isResourceSet: boolean, # Optional.
+        ///                 lastUpdatedTimestamp: number, # Optional.
+        ///                 name: string, # Optional.
+        ///                 qualifiedName: string, # Required.
         ///               }
-        ///             ],
-        ///             storeType: string
+        ///             ], # Optional.
+        ///             storeType: string, # Required.
         ///           }
-        ///         ],
-        ///         version: number
-        ///       }
+        ///         ], # Optional.
+        ///         version: number, # Optional.
+        ///       }, # Optional. <Description>The configuration rules for path pattern extraction.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   ], # Required. <Description>Collection of items of type results.</Description>
         /// }
         /// </code>
         /// 
@@ -981,121 +835,107 @@ namespace Azure.Analytics.Purview.Account
         /// <param name="skipToken"> The String to use. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/PurviewAccount/Accounts/GetResourceSetRules
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number,
-        ///   nextLink: string,
+        ///   count: number, # Optional. <Description>Total item count.</Description>
+        ///   nextLink: string, # Optional. <Description>The Url of next result page.</Description>
         ///   value: [
         ///     {
         ///       advancedResourceSet: {
-        ///         modifiedAt: string (ISO 8601 Format),
-        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;
-        ///       },
-        ///       name: string,
+        ///         modifiedAt: string (ISO 8601 Format), # Optional. <Description>Date at which ResourceSetProcessing property of the account is updated.</Description>
+        ///         resourceSetProcessing: &quot;Default&quot; | &quot;Advanced&quot;, # Optional. <Description>The advanced resource property of the account.</Description>
+        ///       }, # Optional. <Description>Gets or sets the advanced resource set property of the account.</Description>
+        ///       name: string, # Optional. <Description>The name of the rule</Description>
         ///       pathPatternConfig: {
         ///         acceptedPatterns: [
         ///           {
-        ///             createdBy: string,
-        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             path: string
+        ///             createdBy: string, # Optional.
+        ///             filterType: &quot;Pattern&quot; | &quot;Regex&quot;, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             modifiedBy: string, # Optional.
+        ///             name: string, # Required.
+        ///             path: string, # Required.
         ///           }
-        ///         ],
+        ///         ], # Optional.
         ///         complexReplacers: [
         ///           {
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             typeName: string
+        ///             createdBy: string, # Optional.
+        ///             description: string, # Optional.
+        ///             disabled: boolean, # Optional.
+        ///             disableRecursiveReplacerApplication: boolean, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             modifiedBy: string, # Optional.
+        ///             name: string, # Optional.
+        ///             typeName: string, # Optional.
         ///           }
-        ///         ],
-        ///         createdBy: string,
-        ///         enableDefaultPatterns: boolean,
-        ///         lastUpdatedTimestamp: number,
-        ///         modifiedBy: string,
+        ///         ], # Optional.
+        ///         createdBy: string, # Required.
+        ///         enableDefaultPatterns: boolean, # Required.
+        ///         lastUpdatedTimestamp: number, # Optional.
+        ///         modifiedBy: string, # Optional.
         ///         normalizationRules: [
         ///           {
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             dynamicReplacement: boolean,
-        ///             entityTypes: [string],
-        ///             lastUpdatedTimestamp: number,
-        ///             name: string,
+        ///             description: string, # Optional.
+        ///             disabled: boolean, # Optional.
+        ///             dynamicReplacement: boolean, # Optional.
+        ///             entityTypes: [string], # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             name: string, # Optional.
         ///             regex: {
-        ///               maxDigits: number,
-        ///               maxLetters: number,
-        ///               minDashes: number,
-        ///               minDigits: number,
-        ///               minDigitsOrLetters: number,
-        ///               minDots: number,
-        ///               minHex: number,
-        ///               minLetters: number,
-        ///               minUnderscores: number,
-        ///               options: number,
-        ///               regexStr: string
-        ///             },
-        ///             replaceWith: string,
-        ///             version: number
+        ///               maxDigits: number, # Optional.
+        ///               maxLetters: number, # Optional.
+        ///               minDashes: number, # Optional.
+        ///               minDigits: number, # Optional.
+        ///               minDigitsOrLetters: number, # Optional.
+        ///               minDots: number, # Optional.
+        ///               minHex: number, # Optional.
+        ///               minLetters: number, # Optional.
+        ///               minUnderscores: number, # Optional.
+        ///               options: number, # Optional.
+        ///               regexStr: string, # Optional.
+        ///             }, # Optional.
+        ///             replaceWith: string, # Optional.
+        ///             version: number, # Optional.
         ///           }
-        ///         ],
+        ///         ], # Optional.
         ///         regexReplacers: [
         ///           {
-        ///             condition: string,
-        ///             createdBy: string,
-        ///             description: string,
-        ///             disabled: boolean,
-        ///             disableRecursiveReplacerApplication: boolean,
-        ///             doNotReplaceRegex: FastRegex,
-        ///             lastUpdatedTimestamp: number,
-        ///             modifiedBy: string,
-        ///             name: string,
-        ///             regex: FastRegex,
-        ///             replaceWith: string
+        ///             condition: string, # Optional.
+        ///             createdBy: string, # Optional.
+        ///             description: string, # Optional.
+        ///             disabled: boolean, # Required.
+        ///             disableRecursiveReplacerApplication: boolean, # Optional.
+        ///             doNotReplaceRegex: FastRegex, # Optional.
+        ///             lastUpdatedTimestamp: number, # Optional.
+        ///             modifiedBy: string, # Optional.
+        ///             name: string, # Required.
+        ///             regex: FastRegex, # Optional.
+        ///             replaceWith: string, # Optional.
         ///           }
-        ///         ],
-        ///         rejectedPatterns: [Filter],
+        ///         ], # Optional.
+        ///         rejectedPatterns: [Filter], # Optional.
         ///         scopedRules: [
         ///           {
-        ///             bindingUrl: string,
+        ///             bindingUrl: string, # Required.
         ///             rules: [
         ///               {
-        ///                 displayName: string,
-        ///                 isResourceSet: boolean,
-        ///                 lastUpdatedTimestamp: number,
-        ///                 name: string,
-        ///                 qualifiedName: string
+        ///                 displayName: string, # Optional.
+        ///                 isResourceSet: boolean, # Optional.
+        ///                 lastUpdatedTimestamp: number, # Optional.
+        ///                 name: string, # Optional.
+        ///                 qualifiedName: string, # Required.
         ///               }
-        ///             ],
-        ///             storeType: string
+        ///             ], # Optional.
+        ///             storeType: string, # Required.
         ///           }
-        ///         ],
-        ///         version: number
-        ///       }
+        ///         ], # Optional.
+        ///         version: number, # Optional.
+        ///       }, # Optional. <Description>The configuration rules for path pattern extraction.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     details: [
-        ///       {
-        ///         code: string,
-        ///         details: [ErrorModel],
-        ///         message: string,
-        ///         target: string
-        ///       }
-        ///     ],
-        ///     message: string,
-        ///     target: string
-        ///   }
+        ///   ], # Required. <Description>Collection of items of type results.</Description>
         /// }
         /// </code>
         /// 

@@ -69,35 +69,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/Get
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmId: string,
-        ///   farmerId: string,
-        ///   primaryBoundaryId: string,
-        ///   boundaryIds: [string],
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmId: string, # Optional. <Description>ID of the associated Farm.</Description>
+        ///   farmerId: string, # Optional. <Description>Farmer ID.</Description>
+        ///   primaryBoundaryId: string, # Optional. <Description>Primary boundary id.</Description>
+        ///   boundaryIds: [string], # Optional. <Description>Boundary Ids.</Description>
+        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
+        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
+        ///   status: string, # Optional. <Description>Status of the resource.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 
@@ -128,35 +119,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/Get
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmId: string,
-        ///   farmerId: string,
-        ///   primaryBoundaryId: string,
-        ///   boundaryIds: [string],
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmId: string, # Optional. <Description>ID of the associated Farm.</Description>
+        ///   farmerId: string, # Optional. <Description>Farmer ID.</Description>
+        ///   primaryBoundaryId: string, # Optional. <Description>Primary boundary id.</Description>
+        ///   boundaryIds: [string], # Optional. <Description>Boundary Ids.</Description>
+        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
+        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
+        ///   status: string, # Optional. <Description>Status of the resource.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 
@@ -188,51 +170,45 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/CreateOrUpdate
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   farmId: string,
-        ///   farmerId: string,
-        ///   primaryBoundaryId: string,
-        ///   boundaryIds: [string],
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///   farmId: string, # Optional. <Description>ID of the associated Farm.</Description>
+        ///   farmerId: string, # Optional. <Description>Farmer ID.</Description>
+        ///   primaryBoundaryId: string, # Optional. <Description>Primary boundary id.</Description>
+        ///   boundaryIds: [string], # Optional. <Description>Boundary Ids.</Description>
+        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
+        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
+        ///   status: string, # Optional. <Description>Status of the resource.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmId: string,
-        ///   farmerId: string,
-        ///   primaryBoundaryId: string,
-        ///   boundaryIds: [string],
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmId: string, # Optional. <Description>ID of the associated Farm.</Description>
+        ///   farmerId: string, # Optional. <Description>Farmer ID.</Description>
+        ///   primaryBoundaryId: string, # Optional. <Description>Primary boundary id.</Description>
+        ///   boundaryIds: [string], # Optional. <Description>Boundary Ids.</Description>
+        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
+        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
+        ///   status: string, # Optional. <Description>Status of the resource.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 
@@ -264,51 +240,45 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/CreateOrUpdate
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   farmId: string,
-        ///   farmerId: string,
-        ///   primaryBoundaryId: string,
-        ///   boundaryIds: [string],
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///   farmId: string, # Optional. <Description>ID of the associated Farm.</Description>
+        ///   farmerId: string, # Optional. <Description>Farmer ID.</Description>
+        ///   primaryBoundaryId: string, # Optional. <Description>Primary boundary id.</Description>
+        ///   boundaryIds: [string], # Optional. <Description>Boundary Ids.</Description>
+        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
+        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
+        ///   status: string, # Optional. <Description>Status of the resource.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmId: string,
-        ///   farmerId: string,
-        ///   primaryBoundaryId: string,
-        ///   boundaryIds: [string],
-        ///   id: string,
-        ///   eTag: string,
-        ///   status: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   modifiedDateTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmId: string, # Optional. <Description>ID of the associated Farm.</Description>
+        ///   farmerId: string, # Optional. <Description>Farmer ID.</Description>
+        ///   primaryBoundaryId: string, # Optional. <Description>Primary boundary id.</Description>
+        ///   boundaryIds: [string], # Optional. <Description>Boundary Ids.</Description>
+        ///   id: string, # Optional. <Description>Unique resource ID.</Description>
+        ///   eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
+        ///   status: string, # Optional. <Description>Status of the resource.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 
@@ -338,24 +308,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteAsync(string farmerId, string fieldId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -381,24 +333,6 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> or <paramref name="fieldId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response Delete(string farmerId, string fieldId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(farmerId, nameof(farmerId));
@@ -424,37 +358,29 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/GetCascadeDeleteJobDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
+        ///   resourceId: string, # Required. <Description>The id of the resource.</Description>
+        ///   resourceType: string, # Required. <Description>The type of the resource.</Description>
+        ///   id: string, # Optional. <Description>Unique job id.</Description>
+        ///   status: string, # Optional. <Description>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
+        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
+        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 
@@ -483,37 +409,29 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/GetCascadeDeleteJobDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
+        ///   resourceId: string, # Required. <Description>The id of the resource.</Description>
+        ///   resourceType: string, # Required. <Description>The type of the resource.</Description>
+        ///   id: string, # Optional. <Description>Unique job id.</Description>
+        ///   status: string, # Optional. <Description>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
+        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
+        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 
@@ -559,41 +477,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/ListByFarmerId
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       farmId: string,
-        ///       farmerId: string,
-        ///       primaryBoundaryId: string,
-        ///       boundaryIds: [string],
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///       farmId: string, # Optional. <Description>ID of the associated Farm.</Description>
+        ///       farmerId: string, # Optional. <Description>Farmer ID.</Description>
+        ///       primaryBoundaryId: string, # Optional. <Description>Primary boundary id.</Description>
+        ///       boundaryIds: [string], # Optional. <Description>Boundary Ids.</Description>
+        ///       id: string, # Optional. <Description>Unique resource ID.</Description>
+        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
+        ///       status: string, # Optional. <Description>Status of the resource.</Description>
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///       name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///       description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. <Description>List of requested objects.</Description>
+        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
+        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
         /// }
         /// </code>
         /// 
@@ -645,41 +554,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="farmerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="farmerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/ListByFarmerId
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       farmId: string,
-        ///       farmerId: string,
-        ///       primaryBoundaryId: string,
-        ///       boundaryIds: [string],
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///       farmId: string, # Optional. <Description>ID of the associated Farm.</Description>
+        ///       farmerId: string, # Optional. <Description>Farmer ID.</Description>
+        ///       primaryBoundaryId: string, # Optional. <Description>Primary boundary id.</Description>
+        ///       boundaryIds: [string], # Optional. <Description>Boundary Ids.</Description>
+        ///       id: string, # Optional. <Description>Unique resource ID.</Description>
+        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
+        ///       status: string, # Optional. <Description>Status of the resource.</Description>
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///       name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///       description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. <Description>List of requested objects.</Description>
+        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
+        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
         /// }
         /// </code>
         /// 
@@ -728,41 +628,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/List
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       farmId: string,
-        ///       farmerId: string,
-        ///       primaryBoundaryId: string,
-        ///       boundaryIds: [string],
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///       farmId: string, # Optional. <Description>ID of the associated Farm.</Description>
+        ///       farmerId: string, # Optional. <Description>Farmer ID.</Description>
+        ///       primaryBoundaryId: string, # Optional. <Description>Primary boundary id.</Description>
+        ///       boundaryIds: [string], # Optional. <Description>Boundary Ids.</Description>
+        ///       id: string, # Optional. <Description>Unique resource ID.</Description>
+        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
+        ///       status: string, # Optional. <Description>Status of the resource.</Description>
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///       name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///       description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. <Description>List of requested objects.</Description>
+        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
+        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
         /// }
         /// </code>
         /// 
@@ -809,41 +700,32 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="skipToken"> Skip token for getting next set of results. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/List
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       farmId: string,
-        ///       farmerId: string,
-        ///       primaryBoundaryId: string,
-        ///       boundaryIds: [string],
-        ///       id: string,
-        ///       eTag: string,
-        ///       status: string,
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       modifiedDateTime: string (ISO 8601 Format),
-        ///       name: string,
-        ///       description: string,
-        ///       properties: Dictionary&lt;string, AnyObject&gt;
+        ///       farmId: string, # Optional. <Description>ID of the associated Farm.</Description>
+        ///       farmerId: string, # Optional. <Description>Farmer ID.</Description>
+        ///       primaryBoundaryId: string, # Optional. <Description>Primary boundary id.</Description>
+        ///       boundaryIds: [string], # Optional. <Description>Boundary Ids.</Description>
+        ///       id: string, # Optional. <Description>Unique resource ID.</Description>
+        ///       eTag: string, # Optional. <Description>The ETag value to implement optimistic concurrency.</Description>
+        ///       status: string, # Optional. <Description>Status of the resource.</Description>
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was created, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///       modifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when resource was last modified, sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///       name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///       description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///       properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         ///     }
-        ///   ],
-        ///   $skipToken: string,
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   ], # Optional. <Description>List of requested objects.</Description>
+        ///   $skipToken: string, # Optional. <Description>Token used in retrieving the next page. If null, there are no additional pages.</Description>
+        ///   nextLink: string, # Optional. <Description>Continuation link (absolute URI) to the next page of results in the list.</Description>
         /// }
         /// </code>
         /// 
@@ -879,37 +761,29 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/CreateCascadeDeleteJob
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
+        ///   resourceId: string, # Required. <Description>The id of the resource.</Description>
+        ///   resourceType: string, # Required. <Description>The type of the resource.</Description>
+        ///   id: string, # Optional. <Description>Unique job id.</Description>
+        ///   status: string, # Optional. <Description>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
+        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
+        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 
@@ -943,37 +817,29 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="farmerId"/> or <paramref name="fieldId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/Fields/CreateCascadeDeleteJob
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   resourceId: string,
-        ///   resourceType: string,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
+        ///   resourceId: string, # Required. <Description>The id of the resource.</Description>
+        ///   resourceType: string, # Required. <Description>The type of the resource.</Description>
+        ///   id: string, # Optional. <Description>Unique job id.</Description>
+        ///   status: string, # Optional. <Description>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
+        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
+        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 

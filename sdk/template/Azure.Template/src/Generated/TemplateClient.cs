@@ -65,14 +65,17 @@ namespace Azure.Template
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/TemplateClient/GetSecret
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   value: string,
-        ///   id: string,
-        ///   contentType: string,
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   kid: string,
-        ///   managed: boolean
+        ///   value: string, # Optional. <Description>The secret value.</Description>
+        ///   id: string, # Optional. <Description>The secret id.</Description>
+        ///   contentType: string, # Optional. <Description>The content type of the secret.</Description>
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. <Description>Application specific metadata in the form of key-value pairs.</Description>
+        ///   kid: string, # Optional. <Description>If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.</Description>
+        ///   managed: boolean, # Optional. <Description>True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.</Description>
         /// }
         /// </code>
         /// 
@@ -101,14 +104,17 @@ namespace Azure.Template
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/TemplateClient/GetSecret
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   value: string,
-        ///   id: string,
-        ///   contentType: string,
-        ///   tags: Dictionary&lt;string, string&gt;,
-        ///   kid: string,
-        ///   managed: boolean
+        ///   value: string, # Optional. <Description>The secret value.</Description>
+        ///   id: string, # Optional. <Description>The secret id.</Description>
+        ///   contentType: string, # Optional. <Description>The content type of the secret.</Description>
+        ///   tags: Dictionary&lt;string, string&gt;, # Optional. <Description>Application specific metadata in the form of key-value pairs.</Description>
+        ///   kid: string, # Optional. <Description>If this is a secret backing a KV certificate, then this field specifies the corresponding key backing the KV certificate.</Description>
+        ///   managed: boolean, # Optional. <Description>True if the secret&apos;s lifetime is managed by key vault. If this is a secret backing a certificate, then managed will be true.</Description>
         /// }
         /// </code>
         /// 

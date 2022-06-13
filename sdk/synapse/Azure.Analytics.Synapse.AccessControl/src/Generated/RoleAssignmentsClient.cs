@@ -65,52 +65,39 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleAssignments/CheckPrincipalAccess
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   subject: {
-        ///     principalId: SubjectInfoPrincipalId (required),
-        ///     groupIds: [SubjectInfoGroupIdsItem]
-        ///   } (required),
+        ///     principalId: SubjectInfoPrincipalId, # Required. <Description>Principal Id</Description>
+        ///     groupIds: [SubjectInfoGroupIdsItem], # Optional. <Description>List of group Ids that the principalId is part of.</Description>
+        ///   }, # Required. <Description>Subject details</Description>
         ///   actions: [
         ///     {
-        ///       id: string (required),
-        ///       isDataAction: boolean (required)
+        ///       id: string, # Required. <Description>Action Id.</Description>
+        ///       isDataAction: boolean, # Required. <Description>Is a data action or not.</Description>
         ///     }
-        ///   ] (required),
-        ///   scope: string (required)
+        ///   ], # Required. <Description>List of actions.</Description>
+        ///   scope: string, # Required. <Description>Scope at which the check access is done.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   accessDecisions: [
         ///     {
-        ///       accessDecision: string,
-        ///       actionId: string,
+        ///       accessDecision: string, # Optional. <Description>Access Decision.</Description>
+        ///       actionId: string, # Optional. <Description>Action Id.</Description>
         ///       roleAssignment: {
-        ///         id: string,
-        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///         principalId: RoleAssignmentDetailsPrincipalId,
-        ///         scope: string,
-        ///         principalType: string
-        ///       }
+        ///         id: string, # Optional. <Description>Role Assignment ID</Description>
+        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. <Description>Role ID of the Synapse Built-In Role</Description>
+        ///         principalId: RoleAssignmentDetailsPrincipalId, # Optional. <Description>Object ID of the AAD principal or security-group</Description>
+        ///         scope: string, # Optional. <Description>Scope at the role assignment is created</Description>
+        ///         principalType: string, # Optional. <Description>Type of the principal Id: User, Group or ServicePrincipal</Description>
+        ///       }, # Optional. <Description>Role Assignment response details</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. <Description>To check if the current user, group, or service principal has permission to read artifacts in the specified workspace.</Description>
         /// }
         /// </code>
         /// 
@@ -139,52 +126,39 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleAssignments/CheckPrincipalAccess
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   subject: {
-        ///     principalId: SubjectInfoPrincipalId (required),
-        ///     groupIds: [SubjectInfoGroupIdsItem]
-        ///   } (required),
+        ///     principalId: SubjectInfoPrincipalId, # Required. <Description>Principal Id</Description>
+        ///     groupIds: [SubjectInfoGroupIdsItem], # Optional. <Description>List of group Ids that the principalId is part of.</Description>
+        ///   }, # Required. <Description>Subject details</Description>
         ///   actions: [
         ///     {
-        ///       id: string (required),
-        ///       isDataAction: boolean (required)
+        ///       id: string, # Required. <Description>Action Id.</Description>
+        ///       isDataAction: boolean, # Required. <Description>Is a data action or not.</Description>
         ///     }
-        ///   ] (required),
-        ///   scope: string (required)
+        ///   ], # Required. <Description>List of actions.</Description>
+        ///   scope: string, # Required. <Description>Scope at which the check access is done.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   accessDecisions: [
         ///     {
-        ///       accessDecision: string,
-        ///       actionId: string,
+        ///       accessDecision: string, # Optional. <Description>Access Decision.</Description>
+        ///       actionId: string, # Optional. <Description>Action Id.</Description>
         ///       roleAssignment: {
-        ///         id: string,
-        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///         principalId: RoleAssignmentDetailsPrincipalId,
-        ///         scope: string,
-        ///         principalType: string
-        ///       }
+        ///         id: string, # Optional. <Description>Role Assignment ID</Description>
+        ///         roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. <Description>Role ID of the Synapse Built-In Role</Description>
+        ///         principalId: RoleAssignmentDetailsPrincipalId, # Optional. <Description>Object ID of the AAD principal or security-group</Description>
+        ///         scope: string, # Optional. <Description>Scope at the role assignment is created</Description>
+        ///         principalType: string, # Optional. <Description>Type of the principal Id: User, Group or ServicePrincipal</Description>
+        ///       }, # Optional. <Description>Role Assignment response details</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. <Description>To check if the current user, group, or service principal has permission to read artifacts in the specified workspace.</Description>
         /// }
         /// </code>
         /// 
@@ -214,34 +188,21 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleAssignments/ListRoleAssignments
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number,
+        ///   count: number, # Optional. <Description>Number of role assignments</Description>
         ///   value: [
         ///     {
-        ///       id: string,
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///       principalId: RoleAssignmentDetailsPrincipalId,
-        ///       scope: string,
-        ///       principalType: string
+        ///       id: string, # Optional. <Description>Role Assignment ID</Description>
+        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. <Description>Role ID of the Synapse Built-In Role</Description>
+        ///       principalId: RoleAssignmentDetailsPrincipalId, # Optional. <Description>Object ID of the AAD principal or security-group</Description>
+        ///       scope: string, # Optional. <Description>Scope at the role assignment is created</Description>
+        ///       principalType: string, # Optional. <Description>Type of the principal Id: User, Group or ServicePrincipal</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. <Description>A list of role assignments</Description>
         /// }
         /// </code>
         /// 
@@ -269,34 +230,21 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleAssignments/ListRoleAssignments
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   count: number,
+        ///   count: number, # Optional. <Description>Number of role assignments</Description>
         ///   value: [
         ///     {
-        ///       id: string,
-        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///       principalId: RoleAssignmentDetailsPrincipalId,
-        ///       scope: string,
-        ///       principalType: string
+        ///       id: string, # Optional. <Description>Role Assignment ID</Description>
+        ///       roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. <Description>Role ID of the Synapse Built-In Role</Description>
+        ///       principalId: RoleAssignmentDetailsPrincipalId, # Optional. <Description>Object ID of the AAD principal or security-group</Description>
+        ///       scope: string, # Optional. <Description>Scope at the role assignment is created</Description>
+        ///       principalType: string, # Optional. <Description>Type of the principal Id: User, Group or ServicePrincipal</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   ], # Optional. <Description>A list of role assignments</Description>
         /// }
         /// </code>
         /// 
@@ -325,37 +273,24 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleAssignments/CreateRoleAssignment
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   roleId: RoleAssignmentRequestRoleId (required),
-        ///   principalId: RoleAssignmentRequestPrincipalId (required),
-        ///   scope: string (required),
-        ///   principalType: string
+        ///   roleId: RoleAssignmentRequestRoleId, # Required. <Description>Role ID of the Synapse Built-In Role</Description>
+        ///   principalId: RoleAssignmentRequestPrincipalId, # Required. <Description>Object ID of the AAD principal or security-group</Description>
+        ///   scope: string, # Required. <Description>Scope at which the role assignment is created</Description>
+        ///   principalType: string, # Optional. <Description>Type of the principal Id: User, Group or ServicePrincipal</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   id: string, # Optional. <Description>Role Assignment ID</Description>
+        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. <Description>Role ID of the Synapse Built-In Role</Description>
+        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. <Description>Object ID of the AAD principal or security-group</Description>
+        ///   scope: string, # Optional. <Description>Scope at the role assignment is created</Description>
+        ///   principalType: string, # Optional. <Description>Type of the principal Id: User, Group or ServicePrincipal</Description>
         /// }
         /// </code>
         /// 
@@ -387,37 +322,24 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleAssignments/CreateRoleAssignment
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   roleId: RoleAssignmentRequestRoleId (required),
-        ///   principalId: RoleAssignmentRequestPrincipalId (required),
-        ///   scope: string (required),
-        ///   principalType: string
+        ///   roleId: RoleAssignmentRequestRoleId, # Required. <Description>Role ID of the Synapse Built-In Role</Description>
+        ///   principalId: RoleAssignmentRequestPrincipalId, # Required. <Description>Object ID of the AAD principal or security-group</Description>
+        ///   scope: string, # Required. <Description>Scope at which the role assignment is created</Description>
+        ///   principalType: string, # Optional. <Description>Type of the principal Id: User, Group or ServicePrincipal</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   id: string, # Optional. <Description>Role Assignment ID</Description>
+        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. <Description>Role ID of the Synapse Built-In Role</Description>
+        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. <Description>Object ID of the AAD principal or security-group</Description>
+        ///   scope: string, # Optional. <Description>Scope at the role assignment is created</Description>
+        ///   principalType: string, # Optional. <Description>Type of the principal Id: User, Group or ServicePrincipal</Description>
         /// }
         /// </code>
         /// 
@@ -447,29 +369,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleAssignments/GetRoleAssignmentById
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   id: string, # Optional. <Description>Role Assignment ID</Description>
+        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. <Description>Role ID of the Synapse Built-In Role</Description>
+        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. <Description>Object ID of the AAD principal or security-group</Description>
+        ///   scope: string, # Optional. <Description>Scope at the role assignment is created</Description>
+        ///   principalType: string, # Optional. <Description>Type of the principal Id: User, Group or ServicePrincipal</Description>
         /// }
         /// </code>
         /// 
@@ -498,29 +407,16 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/AccessControlClient/RoleAssignments/GetRoleAssignmentById
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   id: string,
-        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId,
-        ///   principalId: RoleAssignmentDetailsPrincipalId,
-        ///   scope: string,
-        ///   principalType: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
+        ///   id: string, # Optional. <Description>Role Assignment ID</Description>
+        ///   roleDefinitionId: RoleAssignmentDetailsRoleDefinitionId, # Optional. <Description>Role ID of the Synapse Built-In Role</Description>
+        ///   principalId: RoleAssignmentDetailsPrincipalId, # Optional. <Description>Object ID of the AAD principal or security-group</Description>
+        ///   scope: string, # Optional. <Description>Scope at the role assignment is created</Description>
+        ///   principalType: string, # Optional. <Description>Type of the principal Id: User, Group or ServicePrincipal</Description>
         /// }
         /// </code>
         /// 
@@ -549,25 +445,6 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
@@ -592,25 +469,6 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));

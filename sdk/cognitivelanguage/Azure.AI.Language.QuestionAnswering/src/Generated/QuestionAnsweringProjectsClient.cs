@@ -69,35 +69,21 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetProjectDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   projectName: string,
-        ///   description: string,
-        ///   language: string,
-        ///   multilingualResource: boolean,
+        ///   projectName: string, # Optional. <Description>Name of the project.</Description>
+        ///   description: string, # Optional. <Description>Description of the project.</Description>
+        ///   language: string, # Optional. <Description>Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.</Description>
+        ///   multilingualResource: boolean, # Optional. <Description>Resource enabled for multiple languages across projects or not.</Description>
         ///   settings: {
-        ///     defaultAnswer: string
-        ///   },
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastModifiedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     defaultAnswer: string, # Optional. <Description>Default Answer response when no good match is found in the knowledge base.</Description>
+        ///   }, # Optional. <Description>Configurable settings of the Project.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Project creation date-time.</Description>
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last modified date-time.</Description>
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last deployment date-time.</Description>
         /// }
         /// </code>
         /// 
@@ -126,35 +112,21 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetProjectDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   projectName: string,
-        ///   description: string,
-        ///   language: string,
-        ///   multilingualResource: boolean,
+        ///   projectName: string, # Optional. <Description>Name of the project.</Description>
+        ///   description: string, # Optional. <Description>Description of the project.</Description>
+        ///   language: string, # Optional. <Description>Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.</Description>
+        ///   multilingualResource: boolean, # Optional. <Description>Resource enabled for multiple languages across projects or not.</Description>
         ///   settings: {
-        ///     defaultAnswer: string
-        ///   },
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastModifiedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     defaultAnswer: string, # Optional. <Description>Default Answer response when no good match is found in the knowledge base.</Description>
+        ///   }, # Optional. <Description>Configurable settings of the Project.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Project creation date-time.</Description>
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last modified date-time.</Description>
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last deployment date-time.</Description>
         /// }
         /// </code>
         /// 
@@ -184,45 +156,31 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/CreateProject
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   description: string,
-        ///   language: string (required),
-        ///   multilingualResource: boolean,
+        ///   description: string, # Optional. <Description>Description of the project.</Description>
+        ///   language: string, # Required. <Description>Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.</Description>
+        ///   multilingualResource: boolean, # Optional. <Description>Set to true to enable creating knowledgebases in different languages for the same resource.</Description>
         ///   settings: {
-        ///     defaultAnswer: string
-        ///   }
+        ///     defaultAnswer: string, # Optional. <Description>Default Answer response when no good match is found in the knowledge base.</Description>
+        ///   }, # Optional. <Description>Configurable settings of the Project.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   projectName: string,
-        ///   description: string,
-        ///   language: string,
-        ///   multilingualResource: boolean,
+        ///   projectName: string, # Optional. <Description>Name of the project.</Description>
+        ///   description: string, # Optional. <Description>Description of the project.</Description>
+        ///   language: string, # Optional. <Description>Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.</Description>
+        ///   multilingualResource: boolean, # Optional. <Description>Resource enabled for multiple languages across projects or not.</Description>
         ///   settings: {
-        ///     defaultAnswer: string
-        ///   },
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastModifiedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     defaultAnswer: string, # Optional. <Description>Default Answer response when no good match is found in the knowledge base.</Description>
+        ///   }, # Optional. <Description>Configurable settings of the Project.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Project creation date-time.</Description>
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last modified date-time.</Description>
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last deployment date-time.</Description>
         /// }
         /// </code>
         /// 
@@ -253,45 +211,31 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/CreateProject
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   description: string,
-        ///   language: string (required),
-        ///   multilingualResource: boolean,
+        ///   description: string, # Optional. <Description>Description of the project.</Description>
+        ///   language: string, # Required. <Description>Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.</Description>
+        ///   multilingualResource: boolean, # Optional. <Description>Set to true to enable creating knowledgebases in different languages for the same resource.</Description>
         ///   settings: {
-        ///     defaultAnswer: string
-        ///   }
+        ///     defaultAnswer: string, # Optional. <Description>Default Answer response when no good match is found in the knowledge base.</Description>
+        ///   }, # Optional. <Description>Configurable settings of the Project.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   projectName: string,
-        ///   description: string,
-        ///   language: string,
-        ///   multilingualResource: boolean,
+        ///   projectName: string, # Optional. <Description>Name of the project.</Description>
+        ///   description: string, # Optional. <Description>Description of the project.</Description>
+        ///   language: string, # Optional. <Description>Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.</Description>
+        ///   multilingualResource: boolean, # Optional. <Description>Resource enabled for multiple languages across projects or not.</Description>
         ///   settings: {
-        ///     defaultAnswer: string
-        ///   },
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastModifiedDateTime: string (ISO 8601 Format),
-        ///   lastDeployedDateTime: string (ISO 8601 Format)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     defaultAnswer: string, # Optional. <Description>Default Answer response when no good match is found in the knowledge base.</Description>
+        ///   }, # Optional. <Description>Configurable settings of the Project.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Project creation date-time.</Description>
+        ///   lastModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last modified date-time.</Description>
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last deployment date-time.</Description>
         /// }
         /// </code>
         /// 
@@ -321,45 +265,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetDeleteStatus
+        /// Schema for <c>ExportJobState Response Body</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -388,45 +319,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetDeleteStatus
+        /// Schema for <c>ExportJobState Response Body</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -456,46 +374,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetExportStatus
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   resultUrl: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -526,46 +430,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetExportStatus
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   resultUrl: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -596,45 +486,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetImportStatus
+        /// Schema for <c>ExportJobState Response Body</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -665,45 +542,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetImportStatus
+        /// Schema for <c>ExportJobState Response Body</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -735,45 +599,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetDeployStatus
+        /// Schema for <c>ExportJobState Response Body</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -806,45 +657,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetDeployStatus
+        /// Schema for <c>ExportJobState Response Body</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -876,31 +714,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/UpdateSynonyms
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       alterations: [string] (required)
+        ///       alterations: [string], # Required. <Description>Collection of word alterations.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>Collection of synonyms.</Description>
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -931,31 +755,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/UpdateSynonyms
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       alterations: [string] (required)
+        ///       alterations: [string], # Required. <Description>Collection of word alterations.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>Collection of synonyms.</Description>
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -986,45 +796,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetUpdateSourcesStatus
+        /// Schema for <c>ExportJobState Response Body</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -1055,45 +852,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetUpdateSourcesStatus
+        /// Schema for <c>ExportJobState Response Body</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -1124,45 +908,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetUpdateQnasStatus
+        /// Schema for <c>ExportJobState Response Body</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -1193,45 +964,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
-        /// Schema for <c>Response Body</c>:
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetUpdateQnasStatus
+        /// Schema for <c>ExportJobState Response Body</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -1262,32 +1020,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/AddFeedback
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   records: [
         ///     {
-        ///       userId: string,
-        ///       userQuestion: string,
-        ///       qnaId: number
+        ///       userId: string, # Optional. <Description>Unique identifier of the user.</Description>
+        ///       userQuestion: string, # Optional. <Description>User suggested question for the QnA.</Description>
+        ///       qnaId: number, # Optional. <Description>Unique ID of the QnA.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>A list of Feedback Records for Active Learning.</Description>
         /// }
         /// </code>
         /// 
@@ -1318,32 +1062,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/AddFeedback
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   records: [
         ///     {
-        ///       userId: string,
-        ///       userQuestion: string,
-        ///       qnaId: number
+        ///       userId: string, # Optional. <Description>Unique identifier of the user.</Description>
+        ///       userQuestion: string, # Optional. <Description>User suggested question for the QnA.</Description>
+        ///       qnaId: number, # Optional. <Description>Unique ID of the QnA.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>A list of Feedback Records for Active Learning.</Description>
         /// }
         /// </code>
         /// 
@@ -1373,40 +1103,26 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/ListProjects
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       projectName: string,
-        ///       description: string,
-        ///       language: string,
-        ///       multilingualResource: boolean,
+        ///       projectName: string, # Optional. <Description>Name of the project.</Description>
+        ///       description: string, # Optional. <Description>Description of the project.</Description>
+        ///       language: string, # Optional. <Description>Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.</Description>
+        ///       multilingualResource: boolean, # Optional. <Description>Resource enabled for multiple languages across projects or not.</Description>
         ///       settings: {
-        ///         defaultAnswer: string
-        ///       },
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       lastModifiedDateTime: string (ISO 8601 Format),
-        ///       lastDeployedDateTime: string (ISO 8601 Format)
+        ///         defaultAnswer: string, # Optional. <Description>Default Answer response when no good match is found in the knowledge base.</Description>
+        ///       }, # Optional. <Description>Configurable settings of the Project.</Description>
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Project creation date-time.</Description>
+        ///       lastModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last modified date-time.</Description>
+        ///       lastDeployedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last deployment date-time.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -1439,40 +1155,26 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/ListProjects
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       projectName: string,
-        ///       description: string,
-        ///       language: string,
-        ///       multilingualResource: boolean,
+        ///       projectName: string, # Optional. <Description>Name of the project.</Description>
+        ///       description: string, # Optional. <Description>Description of the project.</Description>
+        ///       language: string, # Optional. <Description>Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.</Description>
+        ///       multilingualResource: boolean, # Optional. <Description>Resource enabled for multiple languages across projects or not.</Description>
         ///       settings: {
-        ///         defaultAnswer: string
-        ///       },
-        ///       createdDateTime: string (ISO 8601 Format),
-        ///       lastModifiedDateTime: string (ISO 8601 Format),
-        ///       lastDeployedDateTime: string (ISO 8601 Format)
+        ///         defaultAnswer: string, # Optional. <Description>Default Answer response when no good match is found in the knowledge base.</Description>
+        ///       }, # Optional. <Description>Configurable settings of the Project.</Description>
+        ///       createdDateTime: string (ISO 8601 Format), # Optional. <Description>Project creation date-time.</Description>
+        ///       lastModifiedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last modified date-time.</Description>
+        ///       lastDeployedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last deployment date-time.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -1508,32 +1210,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/ListDeployments
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       deploymentName: string,
-        ///       lastDeployedDateTime: string (ISO 8601 Format)
+        ///       deploymentName: string, # Optional. <Description>Name of the deployment.</Description>
+        ///       lastDeployedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last deployment date-time.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>List of deployments of a project.</Description>
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -1571,32 +1259,18 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/ListDeployments
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       deploymentName: string,
-        ///       lastDeployedDateTime: string (ISO 8601 Format)
+        ///       deploymentName: string, # Optional. <Description>Name of the deployment.</Description>
+        ///       lastDeployedDateTime: string (ISO 8601 Format), # Optional. <Description>Represents the project last deployment date-time.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>List of deployments of a project.</Description>
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -1634,31 +1308,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetSynonyms
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       alterations: [string]
+        ///       alterations: [string], # Required. <Description>Collection of word alterations.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>Collection of synonyms.</Description>
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -1696,31 +1356,17 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetSynonyms
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       alterations: [string]
+        ///       alterations: [string], # Required. <Description>Collection of word alterations.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>Collection of synonyms.</Description>
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -1758,36 +1404,22 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetSources
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       displayName: string,
-        ///       source: string,
-        ///       sourceUri: string,
-        ///       sourceKind: &quot;file&quot; | &quot;url&quot;,
-        ///       contentStructureKind: &quot;unstructured&quot;,
-        ///       lastUpdatedDateTime: string (ISO 8601 Format)
+        ///       displayName: string, # Optional. <Description>Friendly name of the Source.</Description>
+        ///       source: string, # Optional. <Description>Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.</Description>
+        ///       sourceUri: string, # Required. <Description>URI location for the file or url.</Description>
+        ///       sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. <Description>Supported source types.</Description>
+        ///       contentStructureKind: &quot;unstructured&quot;, # Optional. <Description>Content structure type for sources.</Description>
+        ///       lastUpdatedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when the QnA was last updated.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>Custom sources from which QnAs were extracted or explicitly added to the project.</Description>
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -1825,36 +1457,22 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetSources
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       displayName: string,
-        ///       source: string,
-        ///       sourceUri: string,
-        ///       sourceKind: &quot;file&quot; | &quot;url&quot;,
-        ///       contentStructureKind: &quot;unstructured&quot;,
-        ///       lastUpdatedDateTime: string (ISO 8601 Format)
+        ///       displayName: string, # Optional. <Description>Friendly name of the Source.</Description>
+        ///       source: string, # Optional. <Description>Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.</Description>
+        ///       sourceUri: string, # Required. <Description>URI location for the file or url.</Description>
+        ///       sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. <Description>Supported source types.</Description>
+        ///       contentStructureKind: &quot;unstructured&quot;, # Optional. <Description>Content structure type for sources.</Description>
+        ///       lastUpdatedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when the QnA was last updated.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>Custom sources from which QnAs were extracted or explicitly added to the project.</Description>
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -1893,67 +1511,53 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetQnas
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       id: number,
-        ///       answer: string,
-        ///       source: string,
-        ///       questions: [string],
-        ///       metadata: Dictionary&lt;string, string&gt;,
+        ///       id: number, # Optional. <Description>Unique ID for the QnA.</Description>
+        ///       answer: string, # Optional. <Description>Answer text.</Description>
+        ///       source: string, # Optional. <Description>Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .</Description>
+        ///       questions: [string], # Optional. <Description>List of questions associated with the answer.</Description>
+        ///       metadata: Dictionary&lt;string, string&gt;, # Optional. <Description>Metadata associated with the answer, useful to categorize or filter question answers.</Description>
         ///       dialog: {
-        ///         isContextOnly: boolean,
+        ///         isContextOnly: boolean, # Optional. <Description>To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.</Description>
         ///         prompts: [
         ///           {
-        ///             displayOrder: number,
-        ///             qnaId: number,
+        ///             displayOrder: number, # Optional. <Description>Index of the prompt. It is used for ordering of the prompts.</Description>
+        ///             qnaId: number, # Optional. <Description>ID of the QnA corresponding to the prompt.</Description>
         ///             qna: {
-        ///               id: number,
-        ///               answer: string,
-        ///               source: string,
-        ///               questions: [string],
-        ///               metadata: Dictionary&lt;string, string&gt;,
-        ///               dialog: QnaDialog,
+        ///               id: number, # Optional. <Description>Unique ID for the QnA.</Description>
+        ///               answer: string, # Optional. <Description>Answer text.</Description>
+        ///               source: string, # Optional. <Description>Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .</Description>
+        ///               questions: [string], # Optional. <Description>List of questions associated with the answer.</Description>
+        ///               metadata: Dictionary&lt;string, string&gt;, # Optional. <Description>Metadata associated with the answer, useful to categorize or filter question answers.</Description>
+        ///               dialog: QnaDialog, # Optional. <Description>Context of a QnA.</Description>
         ///               activeLearningSuggestions: [
         ///                 {
-        ///                   clusterHead: string,
+        ///                   clusterHead: string, # Optional. <Description>Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.</Description>
         ///                   suggestedQuestions: [
         ///                     {
-        ///                       question: string,
-        ///                       userSuggestedCount: number,
-        ///                       autoSuggestedCount: number
+        ///                       question: string, # Optional. <Description>Question suggested by the Active Learning feature.</Description>
+        ///                       userSuggestedCount: number, # Optional. <Description>The number of times the question was suggested explicitly by the user.</Description>
+        ///                       autoSuggestedCount: number, # Optional. <Description>The number of times the question was suggested automatically by the Active Learning algorithm.</Description>
         ///                     }
-        ///                   ]
+        ///                   ], # Optional. <Description>List of all suggested questions for the QnA.</Description>
         ///                 }
-        ///               ]
-        ///             },
-        ///             displayText: string
+        ///               ], # Optional. <Description>List of Active Learning suggestions for the QnA.</Description>
+        ///             }, # Optional. <Description>QnA record. Either QnAId or QnA record needs to be present in a Prompt.</Description>
+        ///             displayText: string, # Optional. <Description>Text displayed to represent a follow up question prompt.</Description>
         ///           }
-        ///         ]
-        ///       },
-        ///       activeLearningSuggestions: [SuggestedQuestionsCluster],
-        ///       lastUpdatedDateTime: string (ISO 8601 Format)
+        ///         ], # Optional. <Description>List of prompts associated with the answer.</Description>
+        ///       }, # Optional. <Description>Context of a QnA.</Description>
+        ///       activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. <Description>List of Active Learning suggestions for the QnA.</Description>
+        ///       lastUpdatedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when the QnA was last updated.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>List of QnA records.</Description>
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -1992,67 +1596,53 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/GetQnas
         /// Schema for <c>Response Body</c>:
         /// <code>{
         ///   value: [
         ///     {
-        ///       id: number,
-        ///       answer: string,
-        ///       source: string,
-        ///       questions: [string],
-        ///       metadata: Dictionary&lt;string, string&gt;,
+        ///       id: number, # Optional. <Description>Unique ID for the QnA.</Description>
+        ///       answer: string, # Optional. <Description>Answer text.</Description>
+        ///       source: string, # Optional. <Description>Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .</Description>
+        ///       questions: [string], # Optional. <Description>List of questions associated with the answer.</Description>
+        ///       metadata: Dictionary&lt;string, string&gt;, # Optional. <Description>Metadata associated with the answer, useful to categorize or filter question answers.</Description>
         ///       dialog: {
-        ///         isContextOnly: boolean,
+        ///         isContextOnly: boolean, # Optional. <Description>To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.</Description>
         ///         prompts: [
         ///           {
-        ///             displayOrder: number,
-        ///             qnaId: number,
+        ///             displayOrder: number, # Optional. <Description>Index of the prompt. It is used for ordering of the prompts.</Description>
+        ///             qnaId: number, # Optional. <Description>ID of the QnA corresponding to the prompt.</Description>
         ///             qna: {
-        ///               id: number,
-        ///               answer: string,
-        ///               source: string,
-        ///               questions: [string],
-        ///               metadata: Dictionary&lt;string, string&gt;,
-        ///               dialog: QnaDialog,
+        ///               id: number, # Optional. <Description>Unique ID for the QnA.</Description>
+        ///               answer: string, # Optional. <Description>Answer text.</Description>
+        ///               source: string, # Optional. <Description>Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .</Description>
+        ///               questions: [string], # Optional. <Description>List of questions associated with the answer.</Description>
+        ///               metadata: Dictionary&lt;string, string&gt;, # Optional. <Description>Metadata associated with the answer, useful to categorize or filter question answers.</Description>
+        ///               dialog: QnaDialog, # Optional. <Description>Context of a QnA.</Description>
         ///               activeLearningSuggestions: [
         ///                 {
-        ///                   clusterHead: string,
+        ///                   clusterHead: string, # Optional. <Description>Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.</Description>
         ///                   suggestedQuestions: [
         ///                     {
-        ///                       question: string,
-        ///                       userSuggestedCount: number,
-        ///                       autoSuggestedCount: number
+        ///                       question: string, # Optional. <Description>Question suggested by the Active Learning feature.</Description>
+        ///                       userSuggestedCount: number, # Optional. <Description>The number of times the question was suggested explicitly by the user.</Description>
+        ///                       autoSuggestedCount: number, # Optional. <Description>The number of times the question was suggested automatically by the Active Learning algorithm.</Description>
         ///                     }
-        ///                   ]
+        ///                   ], # Optional. <Description>List of all suggested questions for the QnA.</Description>
         ///                 }
-        ///               ]
-        ///             },
-        ///             displayText: string
+        ///               ], # Optional. <Description>List of Active Learning suggestions for the QnA.</Description>
+        ///             }, # Optional. <Description>QnA record. Either QnAId or QnA record needs to be present in a Prompt.</Description>
+        ///             displayText: string, # Optional. <Description>Text displayed to represent a follow up question prompt.</Description>
         ///           }
-        ///         ]
-        ///       },
-        ///       activeLearningSuggestions: [SuggestedQuestionsCluster],
-        ///       lastUpdatedDateTime: string (ISO 8601 Format)
+        ///         ], # Optional. <Description>List of prompts associated with the answer.</Description>
+        ///       }, # Optional. <Description>Context of a QnA.</Description>
+        ///       activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. <Description>List of Active Learning suggestions for the QnA.</Description>
+        ///       lastUpdatedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when the QnA was last updated.</Description>
         ///     }
-        ///   ],
-        ///   nextLink: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional. <Description>List of QnA records.</Description>
+        ///   nextLink: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -2087,26 +1677,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -2131,26 +1701,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -2178,46 +1728,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/Export
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   resultUrl: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -2249,46 +1785,32 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/Export
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   resultUrl: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   expirationDateTime: string (ISO 8601 Format),
-        ///   jobId: string,
-        ///   lastUpdatedDateTime: string (ISO 8601 Format),
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;,
+        ///   resultUrl: string, # Required. <Description>URL to download the result of the Export Job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Required.
+        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
+        ///   jobId: string, # Required.
+        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
+        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. <Description>Job Status.</Description>
         ///   errors: [
         ///     {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///       message: string,
-        ///       target: string,
-        ///       details: [Error],
+        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///       message: string, # Required. <Description>A human-readable representation of the error.</Description>
+        ///       target: string, # Optional. <Description>The target of the error.</Description>
+        ///       details: [Error], # Optional. <Description>An array of details about specific errors that led to this reported error.</Description>
         ///       innererror: {
-        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///         message: string,
-        ///         details: Dictionary&lt;string, string&gt;,
-        ///         target: string,
-        ///         innererror: InnerErrorModel
-        ///       }
+        ///         code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;, # Required. <Description>One of a server-defined set of error codes.</Description>
+        ///         message: string, # Required. <Description>Error message.</Description>
+        ///         details: Dictionary&lt;string, string&gt;, # Optional. <Description>Error details.</Description>
+        ///         target: string, # Optional. <Description>Error target.</Description>
+        ///         innererror: InnerErrorModel, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
+        ///       }, # Optional. <Description>An object containing more specific information than the current object about the error.</Description>
         ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///   ], # Optional.
         /// }
         /// </code>
         /// 
@@ -2321,83 +1843,69 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/Import
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   metadata: {
-        ///     description: string,
-        ///     language: string (required),
-        ///     multilingualResource: boolean,
+        ///     description: string, # Optional. <Description>Description of the project.</Description>
+        ///     language: string, # Required. <Description>Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.</Description>
+        ///     multilingualResource: boolean, # Optional. <Description>Set to true to enable creating knowledgebases in different languages for the same resource.</Description>
         ///     settings: {
-        ///       defaultAnswer: string
-        ///     }
-        ///   },
+        ///       defaultAnswer: string, # Optional. <Description>Default Answer response when no good match is found in the knowledge base.</Description>
+        ///     }, # Optional. <Description>Configurable settings of the Project.</Description>
+        ///   }, # Optional. <Description>Parameters needed to create the project.</Description>
         ///   assets: {
         ///     synonyms: [
         ///       {
-        ///         alterations: [string] (required)
+        ///         alterations: [string], # Required. <Description>Collection of word alterations.</Description>
         ///       }
-        ///     ],
+        ///     ], # Optional. <Description>Collection of synonyms.</Description>
         ///     qnas: [
         ///       {
-        ///         sourceDisplayName: string,
-        ///         id: number,
-        ///         answer: string,
-        ///         source: string,
-        ///         questions: [string],
-        ///         metadata: Dictionary&lt;string, string&gt;,
+        ///         sourceDisplayName: string, # Optional. <Description>Friendly name of the Source.</Description>
+        ///         id: number, # Optional. <Description>Unique ID for the QnA.</Description>
+        ///         answer: string, # Optional. <Description>Answer text.</Description>
+        ///         source: string, # Optional. <Description>Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .</Description>
+        ///         questions: [string], # Optional. <Description>List of questions associated with the answer.</Description>
+        ///         metadata: Dictionary&lt;string, string&gt;, # Optional. <Description>Metadata associated with the answer, useful to categorize or filter question answers.</Description>
         ///         dialog: {
-        ///           isContextOnly: boolean,
+        ///           isContextOnly: boolean, # Optional. <Description>To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.</Description>
         ///           prompts: [
         ///             {
-        ///               displayOrder: number,
-        ///               qnaId: number,
+        ///               displayOrder: number, # Optional. <Description>Index of the prompt. It is used for ordering of the prompts.</Description>
+        ///               qnaId: number, # Optional. <Description>ID of the QnA corresponding to the prompt.</Description>
         ///               qna: {
-        ///                 id: number,
-        ///                 answer: string,
-        ///                 source: string,
-        ///                 questions: [string],
-        ///                 metadata: Dictionary&lt;string, string&gt;,
-        ///                 dialog: QnaDialog,
+        ///                 id: number, # Optional. <Description>Unique ID for the QnA.</Description>
+        ///                 answer: string, # Optional. <Description>Answer text.</Description>
+        ///                 source: string, # Optional. <Description>Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .</Description>
+        ///                 questions: [string], # Optional. <Description>List of questions associated with the answer.</Description>
+        ///                 metadata: Dictionary&lt;string, string&gt;, # Optional. <Description>Metadata associated with the answer, useful to categorize or filter question answers.</Description>
+        ///                 dialog: QnaDialog, # Optional. <Description>Context of a QnA.</Description>
         ///                 activeLearningSuggestions: [
         ///                   {
-        ///                     clusterHead: string,
+        ///                     clusterHead: string, # Optional. <Description>Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.</Description>
         ///                     suggestedQuestions: [
         ///                       {
-        ///                         question: string,
-        ///                         userSuggestedCount: number,
-        ///                         autoSuggestedCount: number
+        ///                         question: string, # Optional. <Description>Question suggested by the Active Learning feature.</Description>
+        ///                         userSuggestedCount: number, # Optional. <Description>The number of times the question was suggested explicitly by the user.</Description>
+        ///                         autoSuggestedCount: number, # Optional. <Description>The number of times the question was suggested automatically by the Active Learning algorithm.</Description>
         ///                       }
-        ///                     ]
+        ///                     ], # Optional. <Description>List of all suggested questions for the QnA.</Description>
         ///                   }
-        ///                 ]
-        ///               },
-        ///               displayText: string
+        ///                 ], # Optional. <Description>List of Active Learning suggestions for the QnA.</Description>
+        ///               }, # Optional. <Description>QnA record. Either QnAId or QnA record needs to be present in a Prompt.</Description>
+        ///               displayText: string, # Optional. <Description>Text displayed to represent a follow up question prompt.</Description>
         ///             }
-        ///           ]
-        ///         },
-        ///         activeLearningSuggestions: [SuggestedQuestionsCluster],
-        ///         lastUpdatedDateTime: string (ISO 8601 Format)
+        ///           ], # Optional. <Description>List of prompts associated with the answer.</Description>
+        ///         }, # Optional. <Description>Context of a QnA.</Description>
+        ///         activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. <Description>List of Active Learning suggestions for the QnA.</Description>
+        ///         lastUpdatedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when the QnA was last updated.</Description>
         ///       }
-        ///     ]
-        ///   },
-        ///   fileUri: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     ], # Optional. <Description>List of QnA records to import.</Description>
+        ///   }, # Optional. <Description>All assets for this project.</Description>
+        ///   fileUri: string, # Optional. <Description>Import data File URI.</Description>
         /// }
         /// </code>
         /// 
@@ -2430,83 +1938,69 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/Import
         /// Schema for <c>Request Body</c>:
         /// <code>{
         ///   metadata: {
-        ///     description: string,
-        ///     language: string (required),
-        ///     multilingualResource: boolean,
+        ///     description: string, # Optional. <Description>Description of the project.</Description>
+        ///     language: string, # Required. <Description>Language of the text records. This is BCP-47 representation of a language. For example, use &quot;en&quot; for English; &quot;es&quot; for Spanish etc. If not set, use &quot;en&quot; for English as default.</Description>
+        ///     multilingualResource: boolean, # Optional. <Description>Set to true to enable creating knowledgebases in different languages for the same resource.</Description>
         ///     settings: {
-        ///       defaultAnswer: string
-        ///     }
-        ///   },
+        ///       defaultAnswer: string, # Optional. <Description>Default Answer response when no good match is found in the knowledge base.</Description>
+        ///     }, # Optional. <Description>Configurable settings of the Project.</Description>
+        ///   }, # Optional. <Description>Parameters needed to create the project.</Description>
         ///   assets: {
         ///     synonyms: [
         ///       {
-        ///         alterations: [string] (required)
+        ///         alterations: [string], # Required. <Description>Collection of word alterations.</Description>
         ///       }
-        ///     ],
+        ///     ], # Optional. <Description>Collection of synonyms.</Description>
         ///     qnas: [
         ///       {
-        ///         sourceDisplayName: string,
-        ///         id: number,
-        ///         answer: string,
-        ///         source: string,
-        ///         questions: [string],
-        ///         metadata: Dictionary&lt;string, string&gt;,
+        ///         sourceDisplayName: string, # Optional. <Description>Friendly name of the Source.</Description>
+        ///         id: number, # Optional. <Description>Unique ID for the QnA.</Description>
+        ///         answer: string, # Optional. <Description>Answer text.</Description>
+        ///         source: string, # Optional. <Description>Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .</Description>
+        ///         questions: [string], # Optional. <Description>List of questions associated with the answer.</Description>
+        ///         metadata: Dictionary&lt;string, string&gt;, # Optional. <Description>Metadata associated with the answer, useful to categorize or filter question answers.</Description>
         ///         dialog: {
-        ///           isContextOnly: boolean,
+        ///           isContextOnly: boolean, # Optional. <Description>To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.</Description>
         ///           prompts: [
         ///             {
-        ///               displayOrder: number,
-        ///               qnaId: number,
+        ///               displayOrder: number, # Optional. <Description>Index of the prompt. It is used for ordering of the prompts.</Description>
+        ///               qnaId: number, # Optional. <Description>ID of the QnA corresponding to the prompt.</Description>
         ///               qna: {
-        ///                 id: number,
-        ///                 answer: string,
-        ///                 source: string,
-        ///                 questions: [string],
-        ///                 metadata: Dictionary&lt;string, string&gt;,
-        ///                 dialog: QnaDialog,
+        ///                 id: number, # Optional. <Description>Unique ID for the QnA.</Description>
+        ///                 answer: string, # Optional. <Description>Answer text.</Description>
+        ///                 source: string, # Optional. <Description>Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .</Description>
+        ///                 questions: [string], # Optional. <Description>List of questions associated with the answer.</Description>
+        ///                 metadata: Dictionary&lt;string, string&gt;, # Optional. <Description>Metadata associated with the answer, useful to categorize or filter question answers.</Description>
+        ///                 dialog: QnaDialog, # Optional. <Description>Context of a QnA.</Description>
         ///                 activeLearningSuggestions: [
         ///                   {
-        ///                     clusterHead: string,
+        ///                     clusterHead: string, # Optional. <Description>Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.</Description>
         ///                     suggestedQuestions: [
         ///                       {
-        ///                         question: string,
-        ///                         userSuggestedCount: number,
-        ///                         autoSuggestedCount: number
+        ///                         question: string, # Optional. <Description>Question suggested by the Active Learning feature.</Description>
+        ///                         userSuggestedCount: number, # Optional. <Description>The number of times the question was suggested explicitly by the user.</Description>
+        ///                         autoSuggestedCount: number, # Optional. <Description>The number of times the question was suggested automatically by the Active Learning algorithm.</Description>
         ///                       }
-        ///                     ]
+        ///                     ], # Optional. <Description>List of all suggested questions for the QnA.</Description>
         ///                   }
-        ///                 ]
-        ///               },
-        ///               displayText: string
+        ///                 ], # Optional. <Description>List of Active Learning suggestions for the QnA.</Description>
+        ///               }, # Optional. <Description>QnA record. Either QnAId or QnA record needs to be present in a Prompt.</Description>
+        ///               displayText: string, # Optional. <Description>Text displayed to represent a follow up question prompt.</Description>
         ///             }
-        ///           ]
-        ///         },
-        ///         activeLearningSuggestions: [SuggestedQuestionsCluster],
-        ///         lastUpdatedDateTime: string (ISO 8601 Format)
+        ///           ], # Optional. <Description>List of prompts associated with the answer.</Description>
+        ///         }, # Optional. <Description>Context of a QnA.</Description>
+        ///         activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. <Description>List of Active Learning suggestions for the QnA.</Description>
+        ///         lastUpdatedDateTime: string (ISO 8601 Format), # Optional. <Description>Date-time when the QnA was last updated.</Description>
         ///       }
-        ///     ]
-        ///   },
-        ///   fileUri: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     ], # Optional. <Description>List of QnA records to import.</Description>
+        ///   }, # Optional. <Description>All assets for this project.</Description>
+        ///   fileUri: string, # Optional. <Description>Import data File URI.</Description>
         /// }
         /// </code>
         /// 
@@ -2536,26 +2030,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -2582,26 +2056,6 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
         public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -2629,34 +2083,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/UpdateSources
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot; (required),
+        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. <Description>Update operation type for assets.</Description>
         ///   value: {
-        ///     displayName: string,
-        ///     source: string,
-        ///     sourceUri: string (required),
-        ///     sourceKind: &quot;file&quot; | &quot;url&quot; (required),
-        ///     contentStructureKind: &quot;unstructured&quot;,
-        ///     refresh: boolean
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     displayName: string, # Optional. <Description>Friendly name of the Source.</Description>
+        ///     source: string, # Optional. <Description>Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.</Description>
+        ///     sourceUri: string, # Required. <Description>URI location for the file or url.</Description>
+        ///     sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. <Description>Supported source types.</Description>
+        ///     contentStructureKind: &quot;unstructured&quot;, # Optional. <Description>Content structure type for sources.</Description>
+        ///     refresh: boolean, # Optional. <Description>Boolean flag used to refresh data from the Source.</Description>
+        ///   }, # Required. <Description>Update source record.</Description>
         /// }
         /// </code>
         /// 
@@ -2688,34 +2128,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/UpdateSources
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot; (required),
+        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. <Description>Update operation type for assets.</Description>
         ///   value: {
-        ///     displayName: string,
-        ///     source: string,
-        ///     sourceUri: string (required),
-        ///     sourceKind: &quot;file&quot; | &quot;url&quot; (required),
-        ///     contentStructureKind: &quot;unstructured&quot;,
-        ///     refresh: boolean
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     displayName: string, # Optional. <Description>Friendly name of the Source.</Description>
+        ///     source: string, # Optional. <Description>Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.</Description>
+        ///     sourceUri: string, # Required. <Description>URI location for the file or url.</Description>
+        ///     sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. <Description>Supported source types.</Description>
+        ///     contentStructureKind: &quot;unstructured&quot;, # Optional. <Description>Content structure type for sources.</Description>
+        ///     refresh: boolean, # Optional. <Description>Boolean flag used to refresh data from the Source.</Description>
+        ///   }, # Required. <Description>Update source record.</Description>
         /// }
         /// </code>
         /// 
@@ -2747,56 +2173,42 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/UpdateQnas
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot; (required),
+        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. <Description>Update operation type for assets.</Description>
         ///   value: {
-        ///     id: number,
-        ///     answer: string,
-        ///     source: string,
-        ///     questions: [string],
-        ///     metadata: Dictionary&lt;string, string&gt;,
+        ///     id: number, # Optional. <Description>Unique ID for the QnA.</Description>
+        ///     answer: string, # Optional. <Description>Answer text.</Description>
+        ///     source: string, # Optional. <Description>Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .</Description>
+        ///     questions: [string], # Optional. <Description>List of questions associated with the answer.</Description>
+        ///     metadata: Dictionary&lt;string, string&gt;, # Optional. <Description>Metadata associated with the answer, useful to categorize or filter question answers.</Description>
         ///     dialog: {
-        ///       isContextOnly: boolean,
+        ///       isContextOnly: boolean, # Optional. <Description>To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.</Description>
         ///       prompts: [
         ///         {
-        ///           displayOrder: number,
-        ///           qnaId: number,
-        ///           qna: QnaRecord,
-        ///           displayText: string
+        ///           displayOrder: number, # Optional. <Description>Index of the prompt. It is used for ordering of the prompts.</Description>
+        ///           qnaId: number, # Optional. <Description>ID of the QnA corresponding to the prompt.</Description>
+        ///           qna: QnaRecord, # Optional. <Description>QnA record. Either QnAId or QnA record needs to be present in a Prompt.</Description>
+        ///           displayText: string, # Optional. <Description>Text displayed to represent a follow up question prompt.</Description>
         ///         }
-        ///       ]
-        ///     },
+        ///       ], # Optional. <Description>List of prompts associated with the answer.</Description>
+        ///     }, # Optional. <Description>Context of a QnA.</Description>
         ///     activeLearningSuggestions: [
         ///       {
-        ///         clusterHead: string,
+        ///         clusterHead: string, # Optional. <Description>Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.</Description>
         ///         suggestedQuestions: [
         ///           {
-        ///             question: string,
-        ///             userSuggestedCount: number,
-        ///             autoSuggestedCount: number
+        ///             question: string, # Optional. <Description>Question suggested by the Active Learning feature.</Description>
+        ///             userSuggestedCount: number, # Optional. <Description>The number of times the question was suggested explicitly by the user.</Description>
+        ///             autoSuggestedCount: number, # Optional. <Description>The number of times the question was suggested automatically by the Active Learning algorithm.</Description>
         ///           }
-        ///         ]
+        ///         ], # Optional. <Description>List of all suggested questions for the QnA.</Description>
         ///       }
-        ///     ]
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     ], # Optional. <Description>List of Active Learning suggestions for the QnA.</Description>
+        ///   }, # Required. <Description>QnA record.</Description>
         /// }
         /// </code>
         /// 
@@ -2828,56 +2240,42 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/QuestionAnswering/QuestionAnsweringProjects/UpdateQnas
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot; (required),
+        ///   op: &quot;add&quot; | &quot;delete&quot; | &quot;replace&quot;, # Required. <Description>Update operation type for assets.</Description>
         ///   value: {
-        ///     id: number,
-        ///     answer: string,
-        ///     source: string,
-        ///     questions: [string],
-        ///     metadata: Dictionary&lt;string, string&gt;,
+        ///     id: number, # Optional. <Description>Unique ID for the QnA.</Description>
+        ///     answer: string, # Optional. <Description>Answer text.</Description>
+        ///     source: string, # Optional. <Description>Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .</Description>
+        ///     questions: [string], # Optional. <Description>List of questions associated with the answer.</Description>
+        ///     metadata: Dictionary&lt;string, string&gt;, # Optional. <Description>Metadata associated with the answer, useful to categorize or filter question answers.</Description>
         ///     dialog: {
-        ///       isContextOnly: boolean,
+        ///       isContextOnly: boolean, # Optional. <Description>To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.</Description>
         ///       prompts: [
         ///         {
-        ///           displayOrder: number,
-        ///           qnaId: number,
-        ///           qna: QnaRecord,
-        ///           displayText: string
+        ///           displayOrder: number, # Optional. <Description>Index of the prompt. It is used for ordering of the prompts.</Description>
+        ///           qnaId: number, # Optional. <Description>ID of the QnA corresponding to the prompt.</Description>
+        ///           qna: QnaRecord, # Optional. <Description>QnA record. Either QnAId or QnA record needs to be present in a Prompt.</Description>
+        ///           displayText: string, # Optional. <Description>Text displayed to represent a follow up question prompt.</Description>
         ///         }
-        ///       ]
-        ///     },
+        ///       ], # Optional. <Description>List of prompts associated with the answer.</Description>
+        ///     }, # Optional. <Description>Context of a QnA.</Description>
         ///     activeLearningSuggestions: [
         ///       {
-        ///         clusterHead: string,
+        ///         clusterHead: string, # Optional. <Description>Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.</Description>
         ///         suggestedQuestions: [
         ///           {
-        ///             question: string,
-        ///             userSuggestedCount: number,
-        ///             autoSuggestedCount: number
+        ///             question: string, # Optional. <Description>Question suggested by the Active Learning feature.</Description>
+        ///             userSuggestedCount: number, # Optional. <Description>The number of times the question was suggested explicitly by the user.</Description>
+        ///             autoSuggestedCount: number, # Optional. <Description>The number of times the question was suggested automatically by the Active Learning algorithm.</Description>
         ///           }
-        ///         ]
+        ///         ], # Optional. <Description>List of all suggested questions for the QnA.</Description>
         ///       }
-        ///     ]
-        ///   } (required)
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: &quot;InvalidRequest&quot; | &quot;InvalidArgument&quot; | &quot;Unauthorized&quot; | &quot;Forbidden&quot; | &quot;NotFound&quot; | &quot;ProjectNotFound&quot; | &quot;OperationNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchIndexNotFound&quot; | &quot;TooManyRequests&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;AzureCognitiveSearchIndexLimitReached&quot; | &quot;InternalServerError&quot; | &quot;ServiceUnavailable&quot;,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: &quot;InvalidRequest&quot; | &quot;InvalidParameterValue&quot; | &quot;KnowledgeBaseNotFound&quot; | &quot;AzureCognitiveSearchNotFound&quot; | &quot;AzureCognitiveSearchThrottling&quot; | &quot;ExtractionFailure&quot;,
-        ///       message: string,
-        ///       details: Dictionary&lt;string, string&gt;,
-        ///       target: string,
-        ///       innererror: InnerErrorModel
-        ///     }
-        ///   }
+        ///     ], # Optional. <Description>List of Active Learning suggestions for the QnA.</Description>
+        ///   }, # Required. <Description>QnA record.</Description>
         /// }
         /// </code>
         /// 

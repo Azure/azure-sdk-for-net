@@ -65,38 +65,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/FarmOperations/GetDataIngestionJobDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   authProviderId: string,
-        ///   operations: [string],
-        ///   startYear: number,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
+        ///   authProviderId: string, # Required. <Description>Authentication provider ID.</Description>
+        ///   operations: [string], # Optional. <Description>List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.</Description>
+        ///   startYear: number, # Required. <Description>Start Year (Minimum = 2000, Maximum = CurrentYear).</Description>
+        ///   id: string, # Optional. <Description>Unique job id.</Description>
+        ///   status: string, # Optional. <Description>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
+        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
+        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 
@@ -125,38 +117,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/FarmOperations/GetDataIngestionJobDetails
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   authProviderId: string,
-        ///   operations: [string],
-        ///   startYear: number,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
+        ///   authProviderId: string, # Required. <Description>Authentication provider ID.</Description>
+        ///   operations: [string], # Optional. <Description>List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.</Description>
+        ///   startYear: number, # Required. <Description>Start Year (Minimum = 2000, Maximum = CurrentYear).</Description>
+        ///   id: string, # Optional. <Description>Unique job id.</Description>
+        ///   status: string, # Optional. <Description>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
+        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
+        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 
@@ -187,57 +171,53 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/FarmOperations/CreateDataIngestionJob
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   farmerId: string (required),
-        ///   authProviderId: string (required),
-        ///   operations: [string],
-        ///   startYear: number (required),
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
+        ///   authProviderId: string, # Required. <Description>Authentication provider ID.</Description>
+        ///   operations: [string], # Optional. <Description>List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.</Description>
+        ///   startYear: number, # Required. <Description>Start Year (Minimum = 2000, Maximum = CurrentYear).</Description>
+        ///   id: string, # Optional. <Description>Unique job id.</Description>
+        ///   status: string, # Optional. <Description>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
+        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
+        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   authProviderId: string,
-        ///   operations: [string],
-        ///   startYear: number,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
+        ///   authProviderId: string, # Required. <Description>Authentication provider ID.</Description>
+        ///   operations: [string], # Optional. <Description>List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.</Description>
+        ///   startYear: number, # Required. <Description>Start Year (Minimum = 2000, Maximum = CurrentYear).</Description>
+        ///   id: string, # Optional. <Description>Unique job id.</Description>
+        ///   status: string, # Optional. <Description>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
+        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
+        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 
@@ -268,57 +248,53 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/FarmBeats/FarmOperations/CreateDataIngestionJob
         /// Schema for <c>Request Body</c>:
         /// <code>{
-        ///   farmerId: string (required),
-        ///   authProviderId: string (required),
-        ///   operations: [string],
-        ///   startYear: number (required),
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
+        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
+        ///   authProviderId: string, # Required. <Description>Authentication provider ID.</Description>
+        ///   operations: [string], # Optional. <Description>List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.</Description>
+        ///   startYear: number, # Required. <Description>Start Year (Minimum = 2000, Maximum = CurrentYear).</Description>
+        ///   id: string, # Optional. <Description>Unique job id.</Description>
+        ///   status: string, # Optional. <Description>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
+        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
+        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   farmerId: string,
-        ///   authProviderId: string,
-        ///   operations: [string],
-        ///   startYear: number,
-        ///   id: string,
-        ///   status: string,
-        ///   durationInSeconds: number,
-        ///   message: string,
-        ///   createdDateTime: string (ISO 8601 Format),
-        ///   lastActionDateTime: string (ISO 8601 Format),
-        ///   startTime: string (ISO 8601 Format),
-        ///   endTime: string (ISO 8601 Format),
-        ///   name: string,
-        ///   description: string,
-        ///   properties: Dictionary&lt;string, AnyObject&gt;
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [Error],
-        ///     innererror: {
-        ///       code: string,
-        ///       innererror: InnerError
-        ///     }
-        ///   },
-        ///   traceId: string
+        ///   farmerId: string, # Required. <Description>Farmer ID.</Description>
+        ///   authProviderId: string, # Required. <Description>Authentication provider ID.</Description>
+        ///   operations: [string], # Optional. <Description>List of operation types for which data needs to be downloaded. Available values: AllOperations, Application, Planting, Harvest, Tillage.</Description>
+        ///   startYear: number, # Required. <Description>Start Year (Minimum = 2000, Maximum = CurrentYear).</Description>
+        ///   id: string, # Optional. <Description>Unique job id.</Description>
+        ///   status: string, # Optional. <Description>Status of the job.
+        /// Possible values: &apos;Waiting&apos;, &apos;Running&apos;, &apos;Succeeded&apos;, &apos;Failed&apos;, &apos;Cancelled&apos;.</Description>
+        ///   durationInSeconds: number, # Optional. <Description>Duration of the job in seconds.</Description>
+        ///   message: string, # Optional. <Description>Status message to capture more details of the job.</Description>
+        ///   createdDateTime: string (ISO 8601 Format), # Optional. <Description>Job created at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   lastActionDateTime: string (ISO 8601 Format), # Optional. <Description>Job was last acted upon at dateTime. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   startTime: string (ISO 8601 Format), # Optional. <Description>Job start time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   endTime: string (ISO 8601 Format), # Optional. <Description>Job end time when available. Sample format: yyyy-MM-ddTHH:mm:ssZ.</Description>
+        ///   name: string, # Optional. <Description>Name to identify resource.</Description>
+        ///   description: string, # Optional. <Description>Textual description of the resource.</Description>
+        ///   properties: Dictionary&lt;string, AnyObject&gt;, # Optional. <Description>A collection of key value pairs that belongs to the resource.
+        /// Each pair must not have a key greater than 50 characters
+        /// and must not have a value greater than 150 characters.
+        /// Note: A maximum of 25 key value pairs can be provided for a resource and only string and numeral values are supported.</Description>
         /// }
         /// </code>
         /// 

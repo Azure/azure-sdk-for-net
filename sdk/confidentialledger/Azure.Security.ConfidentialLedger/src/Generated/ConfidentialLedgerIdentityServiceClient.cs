@@ -39,19 +39,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedgerIdentityService/GetLedgerIdentity
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   ledgerId: string,
-        ///   ledgerTlsCertificate: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     innererror: ConfidentialLedgerErrorBody
-        ///   }
+        ///   ledgerId: string, # Optional. <Description>Id for the ledger.</Description>
+        ///   ledgerTlsCertificate: string, # Required. <Description>PEM-encoded certificate used for TLS by the Confidential Ledger.</Description>
         /// }
         /// </code>
         /// 
@@ -80,19 +74,13 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://docs.microsoft.com/rest/api/ConfidentialLedger/ConfidentialLedgerIdentityService/GetLedgerIdentity
         /// Schema for <c>Response Body</c>:
         /// <code>{
-        ///   ledgerId: string,
-        ///   ledgerTlsCertificate: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     innererror: ConfidentialLedgerErrorBody
-        ///   }
+        ///   ledgerId: string, # Optional. <Description>Id for the ledger.</Description>
+        ///   ledgerTlsCertificate: string, # Required. <Description>PEM-encoded certificate used for TLS by the Confidential Ledger.</Description>
         /// }
         /// </code>
         /// 
