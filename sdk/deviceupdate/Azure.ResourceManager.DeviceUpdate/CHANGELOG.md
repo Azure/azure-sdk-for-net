@@ -1,5 +1,17 @@
 # Release History
 
+## 1.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+- Switching to 2022-04-01-preview version.
+- Removal of IoTHubConnectionString and EventHubConnectionString from Instance model
+- Addition of SKU property to the account model
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
