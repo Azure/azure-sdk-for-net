@@ -14,5 +14,19 @@ namespace Azure.Maps.Search.Models
         internal BoundingBox()
         {
         }
+
+        /// <summary> Initializes a new instance of BoundingBox. </summary>
+        /// <param name="topLeft"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
+        /// <param name="bottomRight"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
+        internal BoundingBox(LatLon topLeft, LatLon bottomRight)
+        {
+            TopLeft = topLeft;
+            BottomRight = bottomRight;
+        }
+
+        /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
+        public LatLon TopLeft { get; }
+        /// <summary> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </summary>
+        public LatLon BottomRight { get; }
     }
 }

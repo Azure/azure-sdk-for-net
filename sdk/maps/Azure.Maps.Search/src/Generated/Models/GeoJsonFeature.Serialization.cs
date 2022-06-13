@@ -33,8 +33,51 @@ namespace Azure.Maps.Search.Models
                 writer.WriteStringValue(FeatureType);
             }
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
+        }
+
+        internal static GeoJsonFeature DeserializeGeoJsonFeature(JsonElement element)
+        {
+            GeoJsonGeometry geometry = default;
+            Optional<object> properties = default;
+            Optional<string> id = default;
+            Optional<string> featureType = default;
+            GeoJsonObjectType type = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("geometry"))
+                {
+                    geometry = GeoJsonGeometry.DeserializeGeoJsonGeometry(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("featureType"))
+                {
+                    featureType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString().ToGeoJsonObjectType();
+                    continue;
+                }
+            }
+            return new GeoJsonFeature(type, geometry, properties.Value, id.Value, featureType.Value);
         }
     }
 }

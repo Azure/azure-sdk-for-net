@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Linq;
 using Azure.Maps.Search.Models;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -38,13 +39,13 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions {
-                Coordinates = new LatLon(25.04, 121.56),
+                Coordinates = new GeoPosition(121.56, 25.04),
                 Language = "en"
             });
             Assert.AreEqual("Xinyi District", searchResult.Value.Results.First().Address.MunicipalitySubdivision);
 
             searchResult = await client.SearchAddressAsync("Road", new SearchAddressOptions {
-                Coordinates = new LatLon(47.6773, -122.0910)
+                Coordinates = new GeoPosition(-122.0910, 47.6773)
             });
             Assert.AreEqual("Redmond", searchResult.Value.Results.First().Address.Municipality);
         }
@@ -69,7 +70,7 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var searchResult = await client.SearchAddressAsync("Moke", new SearchAddressOptions {
-                BoundingBox = new BoundingBox(northWest: new LatLon(-44.9905, -191.4481), southEast: new LatLon(-45.0128, -191.4148))
+                BoundingBox = new GeoBoundingBox(-191.4481, -45.0128, -191.4148, -44.990)
             });
 
             Assert.AreEqual("Moke Lake Road", searchResult.Value.Results.First().Address.StreetName);

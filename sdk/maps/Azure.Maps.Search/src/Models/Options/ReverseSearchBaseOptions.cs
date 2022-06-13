@@ -3,11 +3,15 @@
 
 #nullable disable
 
+using Azure.Core.GeoJson;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Options. </summary>
     public class ReverseSearchBaseOptions
     {
+        /// <summary> Query is represented by coordinates which is a pair of coordinates to translate. Here it is represented by GeoPosition. </summary>
+        public GeoPosition? coordinates { get; set; }
         /// <summary> The radius in meters to for the results to be constrained to the defined area. </summary>
         public int? RadiusInMeters { get; set; }
 

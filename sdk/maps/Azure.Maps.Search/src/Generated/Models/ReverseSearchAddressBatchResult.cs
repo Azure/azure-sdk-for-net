@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> This object is returned from a successful Search Address Reverse Batch service call. </summary>
-    public partial class ReverseSearchAddressBatchProcessResult : BatchResult
+    public partial class ReverseSearchAddressBatchResult : BatchResult
     {
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchProcessResult. </summary>
-        internal ReverseSearchAddressBatchProcessResult()
+        /// <summary> Initializes a new instance of ReverseSearchAddressBatchResult. </summary>
+        internal ReverseSearchAddressBatchResult()
         {
             BatchItems = new ChangeTrackingList<ReverseSearchAddressBatchItem>();
         }
 
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchProcessResult. </summary>
+        /// <summary> Initializes a new instance of ReverseSearchAddressBatchResult. </summary>
         /// <param name="batchSummary"> Summary of the results for the batch request. </param>
         /// <param name="batchItems"> Array containing the batch results. </param>
-        internal ReverseSearchAddressBatchProcessResult(BatchResultSummary batchSummary, IReadOnlyList<ReverseSearchAddressBatchItem> batchItems) : base(batchSummary)
+        internal ReverseSearchAddressBatchResult(BatchResultSummary batchSummary, IReadOnlyList<ReverseSearchAddressBatchItem> batchItems) : base(batchSummary)
         {
             BatchItems = batchItems;
         }

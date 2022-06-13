@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
         }
 
@@ -26,7 +26,8 @@ namespace Azure.Maps.Search.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Feature": return GeoJsonCircleFeature.DeserializeGeoJsonCircleFeature(element);
+                    case "Feature": return GeoJsonFeature.DeserializeGeoJsonFeature(element);
+                    case "FeatureCollection": return GeoJsonFeatureCollection.DeserializeGeoJsonFeatureCollection(element);
                     case "GeoJsonGeometry": return GeoJsonGeometry.DeserializeGeoJsonGeometry(element);
                     case "GeometryCollection": return GeoJsonGeometryCollection.DeserializeGeoJsonGeometryCollection(element);
                     case "LineString": return GeoJsonLineString.DeserializeGeoJsonLineString(element);
@@ -35,15 +36,14 @@ namespace Azure.Maps.Search.Models
                     case "MultiPolygon": return GeoJsonMultiPolygon.DeserializeGeoJsonMultiPolygon(element);
                     case "Point": return GeoJsonPoint.DeserializeGeoJsonPoint(element);
                     case "Polygon": return GeoJsonPolygon.DeserializeGeoJsonPolygon(element);
-                    case "FeatureCollection": return GeoJsonFeatureCollection.DeserializeGeoJsonFeatureCollection(element);
                 }
             }
-            string type = default;
+            GeoJsonObjectType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = property.Value.GetString().ToGeoJsonObjectType();
                     continue;
                 }
             }

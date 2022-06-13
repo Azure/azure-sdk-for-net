@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class ReverseSearchAddressBatchProcessResult
+    public partial class ReverseSearchAddressBatchResult
     {
-        internal static ReverseSearchAddressBatchProcessResult DeserializeReverseSearchAddressBatchProcessResult(JsonElement element)
+        internal static ReverseSearchAddressBatchResult DeserializeReverseSearchAddressBatchResult(JsonElement element)
         {
             Optional<IReadOnlyList<ReverseSearchAddressBatchItem>> batchItems = default;
             Optional<BatchResultSummary> summary = default;
@@ -45,7 +45,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchAddressBatchProcessResult(summary.Value, Optional.ToList(batchItems));
+            return new ReverseSearchAddressBatchResult(summary.Value, Optional.ToList(batchItems));
         }
     }
 }

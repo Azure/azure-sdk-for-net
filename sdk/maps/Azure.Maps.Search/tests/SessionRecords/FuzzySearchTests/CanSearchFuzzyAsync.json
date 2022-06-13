@@ -6,42 +6,42 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-0e2d3bdf77f54b428020f61a8d42f626-621a98a64ca75443-00",
+        "traceparent": "00-1928dafe2dcd2c4281cda3654765a64f-621ebd3575558c46-00",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "27f27382405b836253b71a15ee8b094b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "8793",
+        "Content-Length": "8623",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Dec 2021 19:45:31 GMT",
+        "Date": "Mon, 13 Jun 2022 08:13:53 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 8E916F1E75754F50A4E6CFD43FDE24DD Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:32Z"
+        "X-MSEdge-Ref": "Ref A: FEE4ACB73E544BA292E2CD2E2F713B59 Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:13:53Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "milford",
           "queryType": "NON_NEAR",
-          "queryTime": 27,
+          "queryTime": 8,
           "numResults": 10,
           "offset": 0,
-          "totalResults": 126,
+          "totalResults": 125,
           "fuzzyLevel": 1
         },
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/1262",
+            "id": "NZ/GEO/p0/2891",
             "score": 2.3825688362,
             "entityType": "Municipality",
             "address": {
@@ -86,7 +86,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/731",
+            "id": "NZ/GEO/p0/540",
             "score": 2.358474493,
             "entityType": "Municipality",
             "address": {
@@ -131,7 +131,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3998",
+            "id": "NZ/GEO/p0/4196",
             "score": 2.1768069267,
             "entityType": "MunicipalitySubdivision",
             "address": {
@@ -177,7 +177,71 @@
           },
           {
             "type": "POI",
-            "id": "g6JpZK81NTQwMDgwMDAwMjM2MjKhY6NOWkyhdqdVbmlmaWVk",
+            "id": "554009000525688",
+            "score": 2.1244060993,
+            "info": "search:ta:554009000525688-NZ",
+            "poi": {
+              "name": "Milford Track",
+              "categorySet": [
+                {
+                  "id": 7376
+                }
+              ],
+              "categories": [
+                "important tourist attraction"
+              ],
+              "classifications": [
+                {
+                  "code": "IMPORTANT_TOURIST_ATTRACTION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "important tourist attraction"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Milford Track",
+              "municipality": "Fiordland National Park",
+              "countrySecondarySubdivision": "Southland",
+              "countryTertiarySubdivision": "Southland",
+              "countrySubdivision": "South Island",
+              "postalCode": "9679",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Milford Track, Fiordland National Park, Fiordland National Park 9679",
+              "localName": "Fiordland National Park"
+            },
+            "position": {
+              "lat": -44.8604,
+              "lon": 167.82471
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.8595,
+                "lon": 167.82344
+              },
+              "btmRightPoint": {
+                "lat": -44.8613,
+                "lon": 167.82598
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": -44.86049,
+                  "lon": 167.82468
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "554008000023622",
             "score": 2.1244060993,
             "info": "search:ta:554008000023622-NZ",
             "poi": {
@@ -241,71 +305,7 @@
           },
           {
             "type": "POI",
-            "id": "g6JpZK81NTQwMDkwMDA1MjU2ODihY6NOWkyhdqdVbmlmaWVk",
-            "score": 2.1244060993,
-            "info": "search:ta:554009000525688-NZ",
-            "poi": {
-              "name": "Milford Track",
-              "categorySet": [
-                {
-                  "id": 7376
-                }
-              ],
-              "categories": [
-                "important tourist attraction"
-              ],
-              "classifications": [
-                {
-                  "code": "IMPORTANT_TOURIST_ATTRACTION",
-                  "names": [
-                    {
-                      "nameLocale": "en-US",
-                      "name": "important tourist attraction"
-                    }
-                  ]
-                }
-              ]
-            },
-            "address": {
-              "streetName": "Milford Track",
-              "municipality": "Fiordland National Park",
-              "countrySecondarySubdivision": "Southland",
-              "countryTertiarySubdivision": "Southland",
-              "countrySubdivision": "South Island",
-              "postalCode": "9679",
-              "countryCode": "NZ",
-              "country": "New Zealand",
-              "countryCodeISO3": "NZL",
-              "freeformAddress": "Milford Track, Fiordland National Park, Fiordland National Park 9679",
-              "localName": "Fiordland National Park"
-            },
-            "position": {
-              "lat": -44.86049,
-              "lon": 167.82468
-            },
-            "viewport": {
-              "topLeftPoint": {
-                "lat": -44.85959,
-                "lon": 167.82341
-              },
-              "btmRightPoint": {
-                "lat": -44.86139,
-                "lon": 167.82595
-              }
-            },
-            "entryPoints": [
-              {
-                "type": "main",
-                "position": {
-                  "lat": -44.86049,
-                  "lon": 167.82468
-                }
-              }
-            ]
-          },
-          {
-            "type": "POI",
-            "id": "g6JpZK81NTQwMDkwMDA0NjYyNjehY6NOWkyhdqdVbmlmaWVk",
+            "id": "554009000466267",
             "score": 2.1244060993,
             "info": "search:ta:554009000466267-NZ",
             "poi": {
@@ -346,32 +346,32 @@
               "localName": "Te Anau"
             },
             "position": {
-              "lat": -45.42995,
-              "lon": 167.74397
+              "lat": -45.43027,
+              "lon": 167.74263
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -45.42899,
-                "lon": 167.74261
+                "lat": -45.42937,
+                "lon": 167.74135
               },
               "btmRightPoint": {
-                "lat": -45.43091,
-                "lon": 167.74533
+                "lat": -45.43117,
+                "lon": 167.74391
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": -45.4309,
-                  "lon": 167.74381
+                  "lat": -45.43111,
+                  "lon": 167.74332
                 }
               }
             ]
           },
           {
             "type": "POI",
-            "id": "g6JpZK81NTQwMDkwMDA0ODMyNDChY6NOWkyhdqdVbmlmaWVk",
+            "id": "554009000483240",
             "score": 2.1053037643,
             "info": "search:ta:554009000483240-NZ",
             "poi": {
@@ -447,7 +447,7 @@
           },
           {
             "type": "POI",
-            "id": "g6JpZK81NTQwMDkwMDEwMDU0MDehY6NOWkyhdqdVbmlmaWVk",
+            "id": "554009001005407",
             "score": 2.1037807465,
             "info": "search:ta:554009001005407-NZ",
             "poi": {
@@ -520,7 +520,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/87081",
+            "id": "NZ/STR/p0/83036",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -553,13 +553,13 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/87084",
+            "id": "NZ/STR/p0/83039",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
               "municipality": "Middlemarch",
               "countrySecondarySubdivision": "Otago",
-              "countryTertiarySubdivision": "Dan\u012Bdina",
+              "countryTertiarySubdivision": "Dunedin",
               "countrySubdivision": "South Island",
               "postalCode": "9596, 9597",
               "countryCode": "NZ",
@@ -588,8 +588,8 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
-    "ENDPOINT_URL": null,
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
     "RandomSeed": "502797388"
   }
 }

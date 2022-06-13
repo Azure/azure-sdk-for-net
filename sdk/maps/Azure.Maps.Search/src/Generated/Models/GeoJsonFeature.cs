@@ -23,7 +23,7 @@ namespace Azure.Maps.Search.Models
             }
 
             Geometry = geometry;
-            Type = "Feature";
+            Type = GeoJsonObjectType.GeoJsonFeature;
         }
 
         /// <summary> Initializes a new instance of GeoJsonFeature. </summary>
@@ -32,13 +32,13 @@ namespace Azure.Maps.Search.Models
         /// <param name="properties"> Properties can contain any additional metadata about the `Feature`. Value can be any JSON object or a JSON null value. </param>
         /// <param name="id"> Identifier for the feature. </param>
         /// <param name="featureType"> The type of the feature. The value depends on the data model the current feature is part of. Some data models may have an empty value. </param>
-        internal GeoJsonFeature(string type, GeoJsonGeometry geometry, object properties, string id, string featureType) : base(type)
+        internal GeoJsonFeature(GeoJsonObjectType type, GeoJsonGeometry geometry, object properties, string id, string featureType) : base(type)
         {
             Geometry = geometry;
             Properties = properties;
             Id = id;
             FeatureType = featureType;
-            Type = type ?? "Feature";
+            Type = type;
         }
 
         /// <summary> A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details. </summary>

@@ -133,17 +133,19 @@ namespace Azure.Maps.Search.Models
         /// <param name="phone"> Telephone number property. </param>
         /// <param name="url"> Website URL property. </param>
         /// <param name="categorySet"> The list of the most specific POI categories. </param>
+        /// <param name="categories"> Categories array. </param>
         /// <param name="classifications"> Classification array. </param>
         /// <param name="brands"> Brands array. The name of the brand for the POI being returned. </param>
         /// <param name="operatingHours"> Opening hours for a POI (Points of Interest). </param>
         /// <returns> A new <see cref="Models.PointOfInterest"/> instance for mocking. </returns>
-        public static PointOfInterest PointOfInterest(string name = null, string phone = null, string url = null, IEnumerable<PointOfInterestCategorySet> categorySet = null, IEnumerable<PointOfInterestClassification> classifications = null, IEnumerable<BrandName> brands = null, OperatingHours operatingHours = null)
+        public static PointOfInterest PointOfInterest(string name = null, string phone = null, string url = null, IEnumerable<PointOfInterestCategorySet> categorySet = null, IEnumerable<string> categories = null, IEnumerable<PointOfInterestClassification> classifications = null, IEnumerable<BrandName> brands = null, OperatingHours operatingHours = null)
         {
             categorySet ??= new List<PointOfInterestCategorySet>();
+            categories ??= new List<string>();
             classifications ??= new List<PointOfInterestClassification>();
             brands ??= new List<BrandName>();
 
-            return new PointOfInterest(name, phone, url, categorySet?.ToList(), classifications?.ToList(), brands?.ToList(), operatingHours);
+            return new PointOfInterest(name, phone, url, categorySet?.ToList(), categories?.ToList(), classifications?.ToList(), brands?.ToList(), operatingHours);
         }
 
         /// <summary> Initializes a new instance of PointOfInterestCategorySet. </summary>
@@ -214,13 +216,23 @@ namespace Azure.Maps.Search.Models
         /// <param name="freeformAddress"> An address line formatted according to the formatting rules of a Result&apos;s country of origin, or in the case of a country, its full country name. </param>
         /// <param name="countrySubdivisionName"> The full name of a first level of country administrative hierarchy. This field appears only in case countrySubdivision is presented in an abbreviated form. Only supported for USA, Canada, and Great Britain. </param>
         /// <param name="localName"> An address component which represents the name of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit. This field is used to build the `freeformAddress` property. </param>
-        /// <param name="boundingBox"> Bounding box coordinates. </param>
+        /// <param name="boundingBox"> The bounding box of the location. </param>
         /// <returns> A new <see cref="Models.Address"/> instance for mocking. </returns>
-        public static Address Address(string buildingNumber = null, string street = null, string crossStreet = null, string streetNumber = null, IEnumerable<int> routeNumbers = null, string streetName = null, string streetNameAndNumber = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, string extendedPostalCode = null, string countryCode = null, string country = null, string countryCodeISO3 = null, string freeformAddress = null, string countrySubdivisionName = null, string localName = null, object boundingBox = null)
+        public static Address Address(string buildingNumber = null, string street = null, string crossStreet = null, string streetNumber = null, IEnumerable<string> routeNumbers = null, string streetName = null, string streetNameAndNumber = null, string municipality = null, string municipalitySubdivision = null, string countryTertiarySubdivision = null, string countrySecondarySubdivision = null, string countrySubdivision = null, string postalCode = null, string extendedPostalCode = null, string countryCode = null, string country = null, string countryCodeISO3 = null, string freeformAddress = null, string countrySubdivisionName = null, string localName = null, BoundingBoxCompassNotation boundingBox = null)
         {
-            routeNumbers ??= new List<int>();
+            routeNumbers ??= new List<string>();
 
             return new Address(buildingNumber, street, crossStreet, streetNumber, routeNumbers?.ToList(), streetName, streetNameAndNumber, municipality, municipalitySubdivision, countryTertiarySubdivision, countrySecondarySubdivision, countrySubdivision, postalCode, extendedPostalCode, countryCode, country, countryCodeISO3, freeformAddress, countrySubdivisionName, localName, boundingBox);
+        }
+
+        /// <summary> Initializes a new instance of BoundingBoxCompassNotation. </summary>
+        /// <param name="northEast"> North-east latitude,longitude coordinate of the bounding box as comma-separated floats. </param>
+        /// <param name="southWest"> South-west latitude,longitude coordinate of the bounding box as comma-separated floats. </param>
+        /// <param name="entity"> Entity type source of the bounding box. For reverse-geocoding this is always equal to position. </param>
+        /// <returns> A new <see cref="Models.BoundingBoxCompassNotation"/> instance for mocking. </returns>
+        public static BoundingBoxCompassNotation BoundingBoxCompassNotation(string northEast = null, string southWest = null, Entity? entity = null)
+        {
+            return new BoundingBoxCompassNotation(northEast, southWest, entity);
         }
 
         /// <summary> Initializes a new instance of BoundingBox. </summary>
@@ -361,15 +373,15 @@ namespace Azure.Maps.Search.Models
             return new BatchResultSummary(successfulRequests, totalRequests);
         }
 
-        /// <summary> Initializes a new instance of ReverseSearchAddressBatchProcessResult. </summary>
+        /// <summary> Initializes a new instance of ReverseSearchAddressBatchResult. </summary>
         /// <param name="batchSummary"> Summary of the results for the batch request. </param>
         /// <param name="batchItems"> Array containing the batch results. </param>
-        /// <returns> A new <see cref="Models.ReverseSearchAddressBatchProcessResult"/> instance for mocking. </returns>
-        public static ReverseSearchAddressBatchProcessResult ReverseSearchAddressBatchProcessResult(BatchResultSummary batchSummary = null, IEnumerable<ReverseSearchAddressBatchItem> batchItems = null)
+        /// <returns> A new <see cref="Models.ReverseSearchAddressBatchResult"/> instance for mocking. </returns>
+        public static ReverseSearchAddressBatchResult ReverseSearchAddressBatchResult(BatchResultSummary batchSummary = null, IEnumerable<ReverseSearchAddressBatchItem> batchItems = null)
         {
             batchItems ??= new List<ReverseSearchAddressBatchItem>();
 
-            return new ReverseSearchAddressBatchProcessResult(batchSummary, batchItems?.ToList());
+            return new ReverseSearchAddressBatchResult(batchSummary, batchItems?.ToList());
         }
 
         /// <summary> Initializes a new instance of ReverseSearchAddressBatchItemResponse. </summary>

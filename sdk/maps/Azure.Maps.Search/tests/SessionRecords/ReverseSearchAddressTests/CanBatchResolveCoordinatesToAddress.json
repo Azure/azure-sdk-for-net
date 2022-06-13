@@ -8,12 +8,12 @@
         "Authorization": "Sanitized",
         "Content-Length": "258",
         "Content-Type": "application/json",
-        "traceparent": "00-9425d895ad304c44be46bb1f8d92d689-8ad0694ecaed1b49-00",
+        "traceparent": "00-ac6d6a67f009cd4baa9ec42ba3ea5203-e96ef5638b314e48-00",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "4a3dfd4d5e706754975a0b03ff14bad9",
         "x-ms-return-client-request-id": "true"
       },
@@ -30,13 +30,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 07 Dec 2021 19:45:32 GMT",
+        "Date": "Mon, 13 Jun 2022 08:13:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 77E812F03B2F46A3AFC76782CA8EBF0B Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:32Z"
+        "X-MSEdge-Ref": "Ref A: 7CAAEDBDE2514517A3B2D3F33AD335BC Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:13:58Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -44,7 +44,7 @@
             "statusCode": 200,
             "response": {
               "summary": {
-                "queryTime": 8,
+                "queryTime": 5,
                 "numResults": 1
               },
               "addresses": [
@@ -72,7 +72,7 @@
                     "extendedPostalCode": "54558",
                     "localName": "Puli Township"
                   },
-                  "position": "24.000271,120.988739"
+                  "position": "24.000296,120.988716"
                 }
               ]
             }
@@ -81,18 +81,18 @@
             "statusCode": 200,
             "response": {
               "summary": {
-                "queryTime": 7,
+                "queryTime": 3,
                 "numResults": 1
               },
               "addresses": [
                 {
                   "address": {
-                    "buildingNumber": "214",
-                    "streetNumber": "214",
+                    "buildingNumber": "1016",
+                    "streetNumber": "1016",
                     "routeNumbers": [],
-                    "street": "Madison Street",
-                    "streetName": "Madison Street",
-                    "streetNameAndNumber": "214 Madison Street",
+                    "street": "3rd Avenue",
+                    "streetName": "3rd Avenue",
+                    "streetNameAndNumber": "1016 3rd Avenue",
                     "countryCode": "US",
                     "countrySubdivision": "WA",
                     "countrySecondarySubdivision": "King",
@@ -101,17 +101,17 @@
                     "municipalitySubdivision": "Central Business District",
                     "country": "United States",
                     "countryCodeISO3": "USA",
-                    "freeformAddress": "214 Madison Street, Seattle, WA 98104",
+                    "freeformAddress": "1016 3rd Avenue, Seattle, WA 98104",
                     "boundingBox": {
-                      "northEast": "47.606097,-122.332937",
-                      "southWest": "47.605644,-122.334014",
+                      "northEast": "47.606332,-122.334075",
+                      "southWest": "47.605617,-122.334708",
                       "entity": "position"
                     },
-                    "extendedPostalCode": "98104-3638",
+                    "extendedPostalCode": "98104-1107",
                     "countrySubdivisionName": "Washington",
                     "localName": "Seattle"
                   },
-                  "position": "47.605488,-122.334358"
+                  "position": "47.605797,-122.334236"
                 }
               ]
             }
@@ -125,8 +125,8 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
-    "ENDPOINT_URL": null,
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
     "RandomSeed": "1493940145"
   }
 }

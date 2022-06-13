@@ -11,12 +11,6 @@ namespace Azure.Maps.Search.Models
     public class SearchPointOfInterestOptions: SearchAddressBaseOptions
     {
         /// <summary>
-        /// Hours of operation for a POI (Points of Interest). The availability of hours of operation will vary based on the data available. If not passed, then no opening hours information will be returned.
-        /// Supported value: nextSevenDays
-        /// </summary>
-        public OperatingHoursRange? OperatingHours { get; set; }
-
-        /// <summary>
         /// A comma-separated list of category set IDs which could be used to restrict the result to specific Points of Interest categories. ID order does not matter. When multiple category identifiers are provided, only POIs that belong to (at least) one of the categories from the provided list will be returned. The list of supported categories can be discovered using  [POI Categories API](https://aka.ms/AzureMapsPOICategoryTree). Usage examples:
         ///
         /// * **categorySet=7315** (Search Points of Interest from category Restaurant)

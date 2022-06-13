@@ -23,7 +23,5 @@ namespace Azure.Maps.Search.Models
             ProviderId = providerId;
             GeometryData = geometryData;
         }
-        /// <summary> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if &quot;error&quot; is not present. </summary>
-        public GeoJsonFeatureCollection GeometryData { get; }
     }
 }

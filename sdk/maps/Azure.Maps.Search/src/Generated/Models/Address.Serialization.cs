@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             Optional<string> street = default;
             Optional<string> crossStreet = default;
             Optional<string> streetNumber = default;
-            Optional<IReadOnlyList<int>> routeNumbers = default;
+            Optional<IReadOnlyList<string>> routeNumbers = default;
             Optional<string> streetName = default;
             Optional<string> streetNameAndNumber = default;
             Optional<string> municipality = default;
@@ -35,7 +35,7 @@ namespace Azure.Maps.Search.Models
             Optional<string> freeformAddress = default;
             Optional<string> countrySubdivisionName = default;
             Optional<string> localName = default;
-            Optional<object> boundingBox = default;
+            Optional<BoundingBoxCompassNotation> boundingBox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("buildingNumber"))
@@ -65,10 +65,10 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<int> array = new List<int>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetInt32());
+                        array.Add(item.GetString());
                     }
                     routeNumbers = array;
                     continue;
@@ -155,7 +155,7 @@ namespace Azure.Maps.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    boundingBox = property.Value.GetObject();
+                    boundingBox = BoundingBoxCompassNotation.DeserializeBoundingBoxCompassNotation(property.Value);
                     continue;
                 }
             }

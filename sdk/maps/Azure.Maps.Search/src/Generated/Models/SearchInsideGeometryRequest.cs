@@ -8,7 +8,7 @@
 namespace Azure.Maps.Search.Models
 {
     /// <summary> This type represents the request body for the Search Inside Geometry service. </summary>
-    public partial class SearchInsideGeometryRequest
+    internal partial class SearchInsideGeometryRequest
     {
         /// <summary> Initializes a new instance of SearchInsideGeometryRequest. </summary>
         public SearchInsideGeometryRequest()
@@ -16,6 +16,6 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> A valid `GeoJSON` object. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3) for details. </summary>
-        public PolygonOrGeometryCollectionOrFeatureCollection Geometry { get; set; }
+        public GeoJsonObject Geometry { get; set; }
     }
 }

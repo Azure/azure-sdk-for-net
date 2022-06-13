@@ -25,16 +25,16 @@ namespace Azure.Maps.Search.Models
             }
 
             Coordinates = coordinates.ToList();
-            Type = "MultiPolygon";
+            Type = GeoJsonObjectType.GeoJsonMultiPolygon;
         }
 
         /// <summary> Initializes a new instance of GeoJsonMultiPolygon. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
         /// <param name="coordinates"> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
-        internal GeoJsonMultiPolygon(string type, IList<IList<IList<IList<double>>>> coordinates) : base(type)
+        internal GeoJsonMultiPolygon(GeoJsonObjectType type, IList<IList<IList<IList<double>>>> coordinates) : base(type)
         {
             Coordinates = coordinates;
-            Type = type ?? "MultiPolygon";
+            Type = type;
         }
 
         /// <summary> Contains a list of valid `GeoJSON Polygon` objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </summary>

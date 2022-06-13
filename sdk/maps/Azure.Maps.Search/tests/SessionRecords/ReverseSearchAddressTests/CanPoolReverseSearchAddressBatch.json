@@ -8,12 +8,12 @@
         "Authorization": "Sanitized",
         "Content-Length": "258",
         "Content-Type": "application/json",
-        "traceparent": "00-96ee72cde472f840b35def17c3ec0f08-e0edbf39d02ce646-00",
+        "traceparent": "00-b90a69b3acd22542b5f17d4c944c3b73-d6a68d4ed7768043-00",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "c372029c77dffb99c8160f9a1577531d",
         "x-ms-return-client-request-id": "true"
       },
@@ -31,26 +31,26 @@
       "ResponseHeaders": {
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Dec 2021 19:45:33 GMT",
-        "Location": "https://atlas.microsoft.com/search/address/reverse/batch/7926b0f4-2308-426e-a921-92ee571e12e6?api-version=1.0",
+        "Date": "Mon, 13 Jun 2022 08:13:58 GMT",
+        "Location": "https://atlas.microsoft.com/search/address/reverse/batch/477c6c1a-ad62-4821-9fdb-e7f5791a1712?api-version=1.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: B47E10916C664539AD8E47649781F4C4 Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:33Z"
+        "X-MSEdge-Ref": "Ref A: A9C7EA97A32F46D3AF3437DADE44B3DC Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:13:58Z"
       },
       "ResponseBody": "\u0022\u0022"
     },
     {
-      "RequestUri": "https://atlas.microsoft.com/search/address/reverse/batch/7926b0f4-2308-426e-a921-92ee571e12e6?api-version=1.0",
+      "RequestUri": "https://atlas.microsoft.com/search/address/reverse/batch/477c6c1a-ad62-4821-9fdb-e7f5791a1712?api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "8ce413039cfa418a773793052a812c0c",
         "x-ms-return-client-request-id": "true"
       },
@@ -58,13 +58,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 07 Dec 2021 19:45:33 GMT",
+        "Date": "Mon, 13 Jun 2022 08:13:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 25E7484DFBEC46AE96CE70C40167ED25 Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:33Z"
+        "X-MSEdge-Ref": "Ref A: 193C14692C5B4ABC8248012352E47510 Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:13:58Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -72,7 +72,7 @@
             "statusCode": 200,
             "response": {
               "summary": {
-                "queryTime": 8,
+                "queryTime": 6,
                 "numResults": 1
               },
               "addresses": [
@@ -100,7 +100,7 @@
                     "extendedPostalCode": "54558",
                     "localName": "Puli Township"
                   },
-                  "position": "24.000271,120.988739"
+                  "position": "24.000296,120.988716"
                 }
               ]
             }
@@ -109,18 +109,18 @@
             "statusCode": 200,
             "response": {
               "summary": {
-                "queryTime": 7,
+                "queryTime": 3,
                 "numResults": 1
               },
               "addresses": [
                 {
                   "address": {
-                    "buildingNumber": "214",
-                    "streetNumber": "214",
+                    "buildingNumber": "1016",
+                    "streetNumber": "1016",
                     "routeNumbers": [],
-                    "street": "Madison Street",
-                    "streetName": "Madison Street",
-                    "streetNameAndNumber": "214 Madison Street",
+                    "street": "3rd Avenue",
+                    "streetName": "3rd Avenue",
+                    "streetNameAndNumber": "1016 3rd Avenue",
                     "countryCode": "US",
                     "countrySubdivision": "WA",
                     "countrySecondarySubdivision": "King",
@@ -129,17 +129,17 @@
                     "municipalitySubdivision": "Central Business District",
                     "country": "United States",
                     "countryCodeISO3": "USA",
-                    "freeformAddress": "214 Madison Street, Seattle, WA 98104",
+                    "freeformAddress": "1016 3rd Avenue, Seattle, WA 98104",
                     "boundingBox": {
-                      "northEast": "47.606097,-122.332937",
-                      "southWest": "47.605644,-122.334014",
+                      "northEast": "47.606332,-122.334075",
+                      "southWest": "47.605617,-122.334708",
                       "entity": "position"
                     },
-                    "extendedPostalCode": "98104-3638",
+                    "extendedPostalCode": "98104-1107",
                     "countrySubdivisionName": "Washington",
                     "localName": "Seattle"
                   },
-                  "position": "47.605488,-122.334358"
+                  "position": "47.605797,-122.334236"
                 }
               ]
             }
@@ -153,8 +153,8 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
-    "ENDPOINT_URL": null,
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
     "RandomSeed": "2008009567"
   }
 }

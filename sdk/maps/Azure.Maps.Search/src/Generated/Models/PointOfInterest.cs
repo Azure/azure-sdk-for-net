@@ -17,6 +17,7 @@ namespace Azure.Maps.Search.Models
         internal PointOfInterest()
         {
             CategorySet = new ChangeTrackingList<PointOfInterestCategorySet>();
+            Categories = new ChangeTrackingList<string>();
             Classifications = new ChangeTrackingList<PointOfInterestClassification>();
             Brands = new ChangeTrackingList<BrandName>();
         }
@@ -26,15 +27,17 @@ namespace Azure.Maps.Search.Models
         /// <param name="phone"> Telephone number property. </param>
         /// <param name="url"> Website URL property. </param>
         /// <param name="categorySet"> The list of the most specific POI categories. </param>
+        /// <param name="categories"> Categories array. </param>
         /// <param name="classifications"> Classification array. </param>
         /// <param name="brands"> Brands array. The name of the brand for the POI being returned. </param>
         /// <param name="operatingHours"> Opening hours for a POI (Points of Interest). </param>
-        internal PointOfInterest(string name, string phone, string url, IReadOnlyList<PointOfInterestCategorySet> categorySet, IReadOnlyList<PointOfInterestClassification> classifications, IReadOnlyList<BrandName> brands, OperatingHours operatingHours)
+        internal PointOfInterest(string name, string phone, string url, IReadOnlyList<PointOfInterestCategorySet> categorySet, IReadOnlyList<string> categories, IReadOnlyList<PointOfInterestClassification> classifications, IReadOnlyList<BrandName> brands, OperatingHours operatingHours)
         {
             Name = name;
             Phone = phone;
             Url = url;
             CategorySet = categorySet;
+            Categories = categories;
             Classifications = classifications;
             Brands = brands;
             OperatingHours = operatingHours;
@@ -48,6 +51,8 @@ namespace Azure.Maps.Search.Models
         public string Url { get; }
         /// <summary> The list of the most specific POI categories. </summary>
         public IReadOnlyList<PointOfInterestCategorySet> CategorySet { get; }
+        /// <summary> Categories array. </summary>
+        public IReadOnlyList<string> Categories { get; }
         /// <summary> Classification array. </summary>
         public IReadOnlyList<PointOfInterestClassification> Classifications { get; }
         /// <summary> Brands array. The name of the brand for the POI being returned. </summary>

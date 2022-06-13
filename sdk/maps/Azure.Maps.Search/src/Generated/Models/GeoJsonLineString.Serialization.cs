@@ -29,14 +29,14 @@ namespace Azure.Maps.Search.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
         }
 
         internal static GeoJsonLineString DeserializeGeoJsonLineString(JsonElement element)
         {
             IList<IList<double>> coordinates = default;
-            string type = default;
+            GeoJsonObjectType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coordinates"))
@@ -56,7 +56,7 @@ namespace Azure.Maps.Search.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = property.Value.GetString().ToGeoJsonObjectType();
                     continue;
                 }
             }

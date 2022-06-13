@@ -4,14 +4,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Options. </summary>
     public class SearchAddressOptions: SearchAddressBaseOptions
     {
-        /// <summary> A pair of coordinates where results should be biased. E.g. 37.337, -121.89. </summary>
-        public LatLon Coordinates { get; set; }
+        /// <summary> bounding box. </summary>
+        public GeoBoundingBox BoundingBox { get; set; }
+        /// <summary> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </summary>
+        public bool? IsTypeAhead { get; set; }
 
         /// <summary>
         /// Indexes for which extended postal codes should be included in the results.
@@ -57,8 +60,5 @@ namespace Azure.Maps.Search.Models
         /// * returnMatchType
         /// </summary>
         public GeographicEntityType? EntityType { get; set; }
-
-        /// <summary> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </summary>
-        public IEnumerable<string> CountryFilter { get; set; }
     }
 }

@@ -162,9 +162,9 @@ namespace Azure.Maps.Search
     /// }
     /// ```
     /// </summary>
-    public partial class SearchReverseSearchAddressBatchOperation : Operation<ReverseSearchAddressBatchProcessResult>, IOperationSource<ReverseSearchAddressBatchProcessResult>
+    public partial class SearchReverseSearchAddressBatchOperation : Operation<ReverseSearchAddressBatchResult>, IOperationSource<ReverseSearchAddressBatchResult>
     {
-        private readonly OperationInternals<ReverseSearchAddressBatchProcessResult> _operation;
+        private readonly OperationInternals<ReverseSearchAddressBatchResult> _operation;
 
         /// <summary> Initializes a new instance of SearchReverseSearchAddressBatchOperation for mocking. </summary>
         protected SearchReverseSearchAddressBatchOperation()
@@ -173,14 +173,14 @@ namespace Azure.Maps.Search
 
         internal SearchReverseSearchAddressBatchOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<ReverseSearchAddressBatchProcessResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SearchReverseSearchAddressBatchOperation");
+            _operation = new OperationInternals<ReverseSearchAddressBatchResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SearchReverseSearchAddressBatchOperation");
         }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
         /// <inheritdoc />
-        public override ReverseSearchAddressBatchProcessResult Value => _operation.Value;
+        public override ReverseSearchAddressBatchResult Value => _operation.Value;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
@@ -198,21 +198,21 @@ namespace Azure.Maps.Search
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ReverseSearchAddressBatchProcessResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
+        public override ValueTask<Response<ReverseSearchAddressBatchResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ReverseSearchAddressBatchProcessResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<ReverseSearchAddressBatchResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        ReverseSearchAddressBatchProcessResult IOperationSource<ReverseSearchAddressBatchProcessResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ReverseSearchAddressBatchResult IOperationSource<ReverseSearchAddressBatchResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return ReverseSearchAddressBatchProcessResult.DeserializeReverseSearchAddressBatchProcessResult(document.RootElement);
+            return ReverseSearchAddressBatchResult.DeserializeReverseSearchAddressBatchResult(document.RootElement);
         }
 
-        async ValueTask<ReverseSearchAddressBatchProcessResult> IOperationSource<ReverseSearchAddressBatchProcessResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ReverseSearchAddressBatchResult> IOperationSource<ReverseSearchAddressBatchResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ReverseSearchAddressBatchProcessResult.DeserializeReverseSearchAddressBatchProcessResult(document.RootElement);
+            return ReverseSearchAddressBatchResult.DeserializeReverseSearchAddressBatchResult(document.RootElement);
         }
     }
 }

@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a5e712f11158ec49ab76c273d6c882b7-7d6a5136863a2941-00",
+        "traceparent": "00-a5b7bbcce1452d4581f169bae2faff46-c20c6c2a1a902f49-00",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "31cd8ec0df6ff23e330484ccfd98ceb3",
         "x-ms-return-client-request-id": "true"
       },
@@ -20,19 +20,19 @@
       "ResponseHeaders": {
         "Content-Length": "834",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Dec 2021 19:45:39 GMT",
+        "Date": "Mon, 13 Jun 2022 08:14:04 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: D62E2BB0E7D54E498006D68F20A16D7F Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:39Z"
+        "X-MSEdge-Ref": "Ref A: 3278621285584C67AB4C530FF343B15E Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:14:05Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "closeburn",
           "queryType": "NON_NEAR",
-          "queryTime": 5,
+          "queryTime": 3,
           "numResults": 1,
           "offset": 0,
           "totalResults": 1,
@@ -41,7 +41,7 @@
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/2997",
+            "id": "NZ/GEO/p0/1744",
             "score": 2.382011652,
             "entityType": "Municipality",
             "address": {
@@ -89,8 +89,8 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
-    "ENDPOINT_URL": null,
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
     "RandomSeed": "311897381"
   }
 }

@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5302b6ceec9687418393ca46a2f0d1e4-81cd4cfc72bb2842-00",
+        "traceparent": "00-dc45b11b8026f1418fbb4f8c89d5bed4-c2bb2f50dfe4a54e-00",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "44efb1f0aa661606fe65a564e034b246",
         "x-ms-return-client-request-id": "true"
       },
@@ -20,13 +20,13 @@
       "ResponseHeaders": {
         "Content-Length": "681",
         "Content-Type": "application/json",
-        "Date": "Tue, 07 Dec 2021 19:45:35 GMT",
+        "Date": "Mon, 13 Jun 2022 08:14:00 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 9A74F457A0B54DE888A20E2691E52599 Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:35Z"
+        "X-MSEdge-Ref": "Ref A: 7B8A808118F44177A2B8CA72415D467E Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:14:01Z"
       },
       "ResponseBody": {
         "summary": {
@@ -58,15 +58,15 @@
               "extendedPostalCode": "54558",
               "localName": "Puli Township"
             },
-            "position": "24.000271,120.988739"
+            "position": "24.000296,120.988716"
           }
         ]
       }
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
-    "ENDPOINT_URL": null,
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
     "RandomSeed": "1864036501"
   }
 }

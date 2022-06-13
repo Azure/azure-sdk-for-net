@@ -4,26 +4,26 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System;
+using System.Globalization;
 
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Initializes a new instance of ReverseSearchAddressQuery. </summary>
     public class ReverseSearchAddressQuery: IQueryRepresentable
     {
-        private LatLon coordinates;
         private ReverseSearchOptions options;
 
         /// <summary> Initializes a new instance of ReverseSearchAddressQuery. </summary>
-        public ReverseSearchAddressQuery(LatLon coordinates, ReverseSearchOptions options = null)
+        public ReverseSearchAddressQuery(ReverseSearchOptions options = null)
         {
-            this.coordinates = coordinates;
             this.options = options;
         }
 
         /// <summary> The query string will be passed verbatim to the search API for processing. </summary>
         public string Query(SearchClient client)
         {
-            return "?" + client.RestClient.CreateReverseSearchAddressRequest((double[]) coordinates, ResponseFormat.Json, options?.Language, options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.Number, options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, options?.LocalizedMapView).Request.Uri;
+            return "?" + client.RestClient.CreateReverseSearchAddressRequest(new double[] {Convert.ToDouble(options?.coordinates?.Latitude, CultureInfo.InvariantCulture.NumberFormat), Convert.ToDouble(options?.coordinates?.Longitude, CultureInfo.GetCultureInfo("en-US").NumberFormat)}, ResponseFormat.Json, options?.Language, options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.Number, options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, options?.LocalizedMapView).Request.Uri;
         }
     }
 }

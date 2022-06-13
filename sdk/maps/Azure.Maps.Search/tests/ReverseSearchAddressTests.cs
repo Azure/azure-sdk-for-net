@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Linq;
 using Azure.Maps.Search.Models;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -19,7 +20,8 @@ namespace Azure.Maps.Search.Tests
         public async Task CanResolveCoordinatesToAddress()
         {
             var client = CreateClient();
-            var reverseResult = await client.ReverseSearchAddressAsync(new LatLon(24.0, 121.0), new ReverseSearchOptions {
+            var reverseResult = await client.ReverseSearchAddressAsync(new ReverseSearchOptions {
+                coordinates = new GeoPosition(121.0, 24.0),
                 Language = "en"
             });
             Assert.AreEqual("Nantou County", reverseResult.Value.Addresses.First().Address.Municipality);
@@ -29,7 +31,8 @@ namespace Azure.Maps.Search.Tests
         public async Task CanResolveCoordinatesToCrossStreetAddress()
         {
             var client = CreateClient();
-            var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new LatLon(24.0, 121.0), new ReverseSearchCrossStreetOptions {
+            var reverseResult = await client.ReverseSearchCrossStreetAddressAsync(new ReverseSearchCrossStreetOptions {
+                coordinates = new GeoPosition(121.0, 24.0),
                 Language = "en"
             });
             Assert.AreEqual("Niuwei Road Lane 1 \u0026 Niuwei Road", reverseResult.Value.Addresses.First().Address.StreetName);
@@ -40,8 +43,8 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var reverseResult = await client.ReverseSearchAddressBatchAsync(new[] {
-                new ReverseSearchAddressQuery(new LatLon(24.0, 121.0), new ReverseSearchOptions { Language = "en" }),
-                new ReverseSearchAddressQuery(new LatLon(47.606038, -122.333345)),
+                new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(121.0, 24.0), Language = "en" }),
+                new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(-122.333345, 47.606038) }),
             });
             Assert.AreEqual("Nantou County", reverseResult.Value.BatchItems.First().Addresses.First().Address.Municipality);
             Assert.AreEqual("Seattle", reverseResult.Value.BatchItems[1].Addresses.First().Address.Municipality);
@@ -52,8 +55,8 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var operation = await client.StartReverseSearchAddressBatchAsync(new[] {
-                new ReverseSearchAddressQuery(new LatLon(24.0, 121.0), new ReverseSearchOptions { Language = "en" }),
-                new ReverseSearchAddressQuery(new LatLon(47.606038, -122.333345)),
+                new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(121.0, 24.0), Language = "en" }),
+                new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(-122.333345, 47.606038) }),
             });
 
             var reverseResult = await operation.WaitForCompletionAsync();

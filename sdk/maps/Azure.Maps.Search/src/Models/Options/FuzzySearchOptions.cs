@@ -4,12 +4,22 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Options. </summary>
     public class FuzzySearchOptions: SearchPointOfInterestOptions
     {
+        /// <summary> bounding box. </summary>
+        public GeoBoundingBox BoundingBox { get; set; }
+        /// <summary> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </summary>
+        public bool? IsTypeAhead { get; set; }
+        /// <summary>
+        /// Hours of operation for a POI (Points of Interest). The availability of hours of operation will vary based on the data available. If not passed, then no opening hours information will be returned.
+        /// Supported value: nextSevenDays
+        /// </summary>
+        public OperatingHoursRange? OperatingHours { get; set; }
         /// <summary>
         /// Specifies the level of filtering performed on geographies. Narrows the search for specified geography entity types, e.g. return only municipality. The resulting response will contain the geography ID as well as the entity type matched. If you provide more than one entity as a comma separated list, endpoint will return the &apos;smallest entity available&apos;. Returned Geometry ID can be used to get the geometry of that geography via [Get Search Polygon](https://docs.microsoft.com/rest/api/maps/search/getsearchpolygon) API. The following parameters are ignored when entityType is set:
         ///

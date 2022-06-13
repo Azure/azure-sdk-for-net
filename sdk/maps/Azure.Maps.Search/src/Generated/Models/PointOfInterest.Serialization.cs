@@ -19,6 +19,7 @@ namespace Azure.Maps.Search.Models
             Optional<string> phone = default;
             Optional<string> url = default;
             Optional<IReadOnlyList<PointOfInterestCategorySet>> categorySet = default;
+            Optional<IReadOnlyList<string>> categories = default;
             Optional<IReadOnlyList<PointOfInterestClassification>> classifications = default;
             Optional<IReadOnlyList<BrandName>> brands = default;
             Optional<OperatingHours> openingHours = default;
@@ -52,6 +53,21 @@ namespace Azure.Maps.Search.Models
                         array.Add(PointOfInterestCategorySet.DeserializePointOfInterestCategorySet(item));
                     }
                     categorySet = array;
+                    continue;
+                }
+                if (property.NameEquals("categories"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    categories = array;
                     continue;
                 }
                 if (property.NameEquals("classifications"))
@@ -95,7 +111,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterest(name.Value, phone.Value, url.Value, Optional.ToList(categorySet), Optional.ToList(classifications), Optional.ToList(brands), openingHours.Value);
+            return new PointOfInterest(name.Value, phone.Value, url.Value, Optional.ToList(categorySet), Optional.ToList(categories), Optional.ToList(classifications), Optional.ToList(brands), openingHours.Value);
         }
     }
 }

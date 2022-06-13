@@ -8,12 +8,12 @@
         "Authorization": "Sanitized",
         "Content-Length": "240",
         "Content-Type": "application/json",
-        "traceparent": "00-ebc1fa8f8f96f248a758c326fb9b4304-93fd4f78ed903041-00",
+        "traceparent": "00-58a5267ced99974ba6d112b8d81a64d3-07547ae347ea4c4a-00",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211207.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "fd8482405bf47d502cc20daba338861a",
         "x-ms-return-client-request-id": "true"
       },
@@ -31,26 +31,26 @@
       "ResponseHeaders": {
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Dec 2021 14:21:34 GMT",
-        "Location": "https://atlas.microsoft.com/search/address/batch/d8ca08fc-7c51-49eb-8537-9f3bf7b208c4?api-version=1.0",
+        "Date": "Mon, 13 Jun 2022 08:14:01 GMT",
+        "Location": "https://atlas.microsoft.com/search/address/batch/d3c30a6f-c4a8-4837-895c-0e9630237f45?api-version=1.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 45D361A892B94F2BBE9A132EECE65EE0 Ref B: TYO01EDGE2113 Ref C: 2021-12-07T14:21:34Z"
+        "X-MSEdge-Ref": "Ref A: 63984F94E7194C0C8ACC2B96F701C911 Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:14:02Z"
       },
       "ResponseBody": "\u0022\u0022"
     },
     {
-      "RequestUri": "https://atlas.microsoft.com/search/address/batch/d8ca08fc-7c51-49eb-8537-9f3bf7b208c4?api-version=1.0",
+      "RequestUri": "https://atlas.microsoft.com/search/address/batch/d3c30a6f-c4a8-4837-895c-0e9630237f45?api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211207.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "6f0fd3f98aa1908dea4ad2e61260acd0",
         "x-ms-return-client-request-id": "true"
       },
@@ -58,13 +58,13 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Tue, 07 Dec 2021 14:21:35 GMT",
+        "Date": "Mon, 13 Jun 2022 08:14:01 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: E6785CDEC93D4AFC918B91610C6FEAAC Ref B: TYO01EDGE2113 Ref C: 2021-12-07T14:21:35Z"
+        "X-MSEdge-Ref": "Ref A: 4B1CC2910BA145679EB3286A1B2DBC54 Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:14:02Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -74,7 +74,7 @@
               "summary": {
                 "query": "microsoft campus",
                 "queryType": "NON_NEAR",
-                "queryTime": 15,
+                "queryTime": 3,
                 "numResults": 1,
                 "offset": 0,
                 "totalResults": 1,
@@ -83,8 +83,11 @@
               "results": [
                 {
                   "type": "Street",
-                  "id": "US/STR/p1/1849473",
+                  "id": "US/STR/p3/1290821",
                   "score": 4.1924114227,
+                  "matchConfidence": {
+                    "score": 1
+                  },
                   "address": {
                     "streetName": "Microsoft West Campus Road",
                     "municipality": "Redmond",
@@ -121,7 +124,7 @@
               "summary": {
                 "query": "millenium",
                 "queryType": "NON_NEAR",
-                "queryTime": 17,
+                "queryTime": 4,
                 "numResults": 2,
                 "offset": 0,
                 "totalResults": 2,
@@ -130,8 +133,11 @@
               "results": [
                 {
                   "type": "Street",
-                  "id": "US/STR/p2/1515019",
+                  "id": "US/STR/p2/1406369",
                   "score": 2.0959999561,
+                  "matchConfidence": {
+                    "score": 1
+                  },
                   "address": {
                     "streetName": "East Millenium Court",
                     "municipalitySubdivision": "Hedrick Acres",
@@ -140,6 +146,7 @@
                     "countrySubdivision": "AZ",
                     "countrySubdivisionName": "Arizona",
                     "postalCode": "85719",
+                    "extendedPostalCode": "85719-2548, 85719-2569",
                     "countryCode": "US",
                     "country": "United States",
                     "countryCodeISO3": "USA",
@@ -147,13 +154,13 @@
                     "localName": "Tucson"
                   },
                   "position": {
-                    "lat": 32.26197,
-                    "lon": -110.95794
+                    "lat": 32.26198,
+                    "lon": -110.9588
                   },
                   "viewport": {
                     "topLeftPoint": {
-                      "lat": 32.26197,
-                      "lon": -110.95794
+                      "lat": 32.26199,
+                      "lon": -110.95947
                     },
                     "btmRightPoint": {
                       "lat": 32.26195,
@@ -163,8 +170,11 @@
                 },
                 {
                   "type": "Street",
-                  "id": "US/STR/p0/585059",
+                  "id": "US/STR/p1/700825",
                   "score": 2.0754508972,
+                  "matchConfidence": {
+                    "score": 0.9358760277533196
+                  },
                   "address": {
                     "streetName": "Millenium Parkway",
                     "municipality": "Livonia",
@@ -205,8 +215,8 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
-    "ENDPOINT_URL": null,
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
     "RandomSeed": "1686524279"
   }
 }

@@ -25,16 +25,16 @@ namespace Azure.Maps.Search.Models
             }
 
             Geometries = geometries.ToList();
-            Type = "GeometryCollection";
+            Type = GeoJsonObjectType.GeoJsonGeometryCollection;
         }
 
         /// <summary> Initializes a new instance of GeoJsonGeometryCollection. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
         /// <param name="geometries"> Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </param>
-        internal GeoJsonGeometryCollection(string type, IList<GeoJsonGeometry> geometries) : base(type)
+        internal GeoJsonGeometryCollection(GeoJsonObjectType type, IList<GeoJsonGeometry> geometries) : base(type)
         {
             Geometries = geometries;
-            Type = type ?? "GeometryCollection";
+            Type = type;
         }
 
         /// <summary> Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude). </summary>

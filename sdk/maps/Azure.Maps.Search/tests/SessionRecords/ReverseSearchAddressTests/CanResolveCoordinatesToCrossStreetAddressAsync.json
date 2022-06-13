@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-00a83d2e0a33184d98ed8c6aa2df05a1-7d19341df888d64a-00",
+        "traceparent": "00-6de7ded7c674184f847564de65d428e8-a42b0d7c1bb95348-00",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211208.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "091e5a508b831fa43f283d3146d4e678",
         "x-ms-return-client-request-id": "true"
       },
@@ -20,18 +20,18 @@
       "ResponseHeaders": {
         "Content-Length": "452",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Dec 2021 19:45:35 GMT",
+        "Date": "Mon, 13 Jun 2022 08:14:01 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 97A3841BC30948AB924A4DEBF430AC00 Ref B: TPE30EDGE0621 Ref C: 2021-12-07T19:45:36Z"
+        "X-MSEdge-Ref": "Ref A: 65D3EA73444C4E43B097981EC8D77C02 Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:14:01Z"
       },
       "ResponseBody": {
         "summary": {
           "numResults": 1,
-          "queryTime": 26
+          "queryTime": 60
         },
         "addresses": [
           {
@@ -54,8 +54,8 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
-    "ENDPOINT_URL": null,
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
     "RandomSeed": "1168157666"
   }
 }

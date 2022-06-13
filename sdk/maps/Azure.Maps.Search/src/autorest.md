@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- https://raw.githubusercontent.com/ambientlight/azure-rest-api-specs/c3d63b309c40735f1be9fa2ef2e88ca9f7b6d9bf/specification/maps/data-plane/Search/preview/1.0/search.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c1260c7a90d503c18b0aeaf29968dfc0b4bf9e11/specification/maps/data-plane/Search/preview/1.0/search.json
 title: SearchClient
 openapi-type: data-plane
 tag: 1.0-preview

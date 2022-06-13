@@ -1,38 +1,38 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Moke\u0026topLeft=-44.9905%2C-191.4481\u0026btmRight=-45.0128%2C-191.4148",
+      "RequestUri": "https://atlas.microsoft.com/search/address/json?api-version=1.0\u0026query=Moke\u0026topLeft=-44.99%2C-191.4481\u0026btmRight=-45.0128%2C-191.4148",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-c8eb2af36d94d342bea5206748d89d32-0d7088b581728648-00",
+        "traceparent": "00-24f7f672c272b445b4d17532ac882536-3cc532038e7dd041-00",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211207.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "12fa093879a0d7da368ac4dded70a79e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "720",
+        "Content-Length": "767",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Dec 2021 14:21:36 GMT",
+        "Date": "Mon, 13 Jun 2022 08:14:03 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: B4E0A14D2B844051BE36479014CF5239 Ref B: TYO01EDGE2113 Ref C: 2021-12-07T14:21:37Z"
+        "X-MSEdge-Ref": "Ref A: D9022904959841E9A7CC8F614A76A29D Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:14:04Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "moke",
           "queryType": "NON_NEAR",
-          "queryTime": 22,
+          "queryTime": 29,
           "numResults": 1,
           "offset": 0,
           "totalResults": 1,
@@ -41,8 +41,11 @@
         "results": [
           {
             "type": "Street",
-            "id": "NZ/STR/p0/105086",
-            "score": 2.0554499626,
+            "id": "NZ/STR/p0/171282",
+            "score": 2.0553295612,
+            "matchConfidence": {
+              "score": 0.8924837714176492
+            },
             "address": {
               "streetName": "Moke Lake Road",
               "municipality": "Closeburn",
@@ -57,17 +60,17 @@
               "localName": "Closeburn"
             },
             "position": {
-              "lat": -44.99444,
-              "lon": 168.57535
+              "lat": -44.99791,
+              "lon": 168.57396
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -44.99355,
-                "lon": 168.57394
+                "lat": -44.99757,
+                "lon": 168.57261
               },
               "btmRightPoint": {
-                "lat": -44.99558,
-                "lon": 168.57587
+                "lat": -44.99862,
+                "lon": 168.57492
               }
             }
           }
@@ -76,8 +79,8 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
-    "ENDPOINT_URL": null,
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
     "RandomSeed": "235135591"
   }
 }

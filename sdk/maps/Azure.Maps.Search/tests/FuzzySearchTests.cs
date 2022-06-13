@@ -6,6 +6,8 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Linq;
 using Azure.Maps.Search.Models;
+using Azure.Core.GeoJson;
+using System;
 
 namespace Azure.Maps.Search.Tests
 {
@@ -19,7 +21,7 @@ namespace Azure.Maps.Search.Tests
         public async Task CanSearchFuzzy()
         {
             var client = CreateClient();
-            var fuzzySearchResponse = await client.FuzzySearchAsync("Milford", countryFilter: new[] { "NZ" });
+            var fuzzySearchResponse = await client.FuzzySearchAsync("Milford", new FuzzySearchOptions { CountryFilter = new[] { "NZ" } });
             Assert.AreEqual("Milford", fuzzySearchResponse.Value.Results.First().Address.Municipality);
             Assert.AreEqual("Milford Sound", fuzzySearchResponse.Value.Results[1].Address.Municipality);
         }
@@ -28,7 +30,8 @@ namespace Azure.Maps.Search.Tests
         public async Task CanSearchFuzzyBiasedAroundCoordinates()
         {
             var client = CreateClient();
-            var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new LatLon(25.04, 121.56), new FuzzySearchOptions {
+            var fuzzySearchResponse = await client.FuzzySearchAsync("coffee", new FuzzySearchOptions {
+                Coordinates = new GeoPosition(121.56, 25.04),
                 Language = "en"
             });
             Assert.AreEqual("CAFE_PUB", fuzzySearchResponse.Value.Results.First().PointOfInterest.Classifications.First().Code);
@@ -40,8 +43,8 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var fuzzySearchBatchResp = await client.FuzzySearchBatchAsync(new[] {
-                new FuzzySearchQuery("coffee", new LatLon(25.04, 121.56), new FuzzySearchOptions { Language = "en" }),
-                new FuzzySearchQuery("pizza", new LatLon(25.04, 121.56)),
+                new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = "en" }),
+                new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) })
             });
             Assert.AreEqual("CAFE_PUB", fuzzySearchBatchResp.Value.BatchItems.First().Results.First().PointOfInterest.Classifications.First().Code);
             Assert.AreEqual("Taipei City", fuzzySearchBatchResp.Value.BatchItems.First().Results.First().Address.Municipality);
@@ -54,8 +57,8 @@ namespace Azure.Maps.Search.Tests
         {
             var client = CreateClient();
             var operation = await client.StartFuzzySearchBatchAsync(new[] {
-                new FuzzySearchQuery("coffee", new LatLon(25.04, 121.56), new FuzzySearchOptions { Language = "en" }),
-                new FuzzySearchQuery("pizza", new LatLon(25.04, 121.56)),
+                new FuzzySearchQuery("coffee", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04), Language = "en" }),
+                new FuzzySearchQuery("pizza", new FuzzySearchOptions { Coordinates = new GeoPosition(121.56, 25.04) }),
             });
 
             var fuzzySearchBatchResp = await operation.WaitForCompletionAsync();

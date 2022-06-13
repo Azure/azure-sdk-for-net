@@ -14,6 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Maps.Search.Models;
 using System.Linq;
+using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search
 {
@@ -147,17 +148,16 @@ namespace Azure.Maps.Search
         /// 
         /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a a pair of coordinates and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
         /// </summary>
-        /// <param name="query"> The applicable query string (e.g., &quot;seattle&quot;, &quot;pizza&quot;). Can _also_ be specified as a comma separated string composed by latitude followed by longitude (e.g., &quot;47.641268, -122.125679&quot;). Must be properly URL encoded. </param>
-        /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, LatLon coordinates, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(String query, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
             scope.Start();
             try
             {
-                return await RestClient.FuzzySearchAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, null, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.FuzzySearchAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language, options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -174,127 +174,16 @@ namespace Azure.Maps.Search
         /// 
         /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a a pair of coordinates and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
         /// </summary>
-        /// <param name="query"> The applicable query string (e.g., &quot;seattle&quot;, &quot;pizza&quot;). Can _also_ be specified as a comma separated string composed by latitude followed by longitude (e.g., &quot;47.641268, -122.125679&quot;). Must be properly URL encoded. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, IEnumerable<string> countryFilter, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> FuzzySearch(String query, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
             scope.Start();
             try
             {
-                return await RestClient.FuzzySearchAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, null, null, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Free Form Search**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a a pair of coordinates and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
-        /// </summary>
-        /// <param name="query"> The applicable query string (e.g., &quot;seattle&quot;, &quot;pizza&quot;). Can _also_ be specified as a comma separated string composed by latitude followed by longitude (e.g., &quot;47.641268, -122.125679&quot;). Must be properly URL encoded. </param>
-        /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> FuzzySearchAsync(string query, LatLon coordinates, IEnumerable<string> countryFilter, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
-            scope.Start();
-            try
-            {
-                return await RestClient.FuzzySearchAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Free Form Search**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a a pair of coordinates and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
-        /// </summary>
-        /// <param name="query"> The applicable query string (e.g., &quot;seattle&quot;, &quot;pizza&quot;). Can _also_ be specified as a comma separated string composed by latitude followed by longitude (e.g., &quot;47.641268, -122.125679&quot;). Must be properly URL encoded. </param>
-        /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> FuzzySearch(string query, LatLon coordinates, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
-            scope.Start();
-            try
-            {
-                return RestClient.FuzzySearch(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, null, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Free Form Search**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a a pair of coordinates and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
-        /// </summary>
-        /// <param name="query"> The applicable query string (e.g., &quot;seattle&quot;, &quot;pizza&quot;). Can _also_ be specified as a comma separated string composed by latitude followed by longitude (e.g., &quot;47.641268, -122.125679&quot;). Must be properly URL encoded. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> FuzzySearch(string query, IEnumerable<string> countryFilter, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
-            scope.Start();
-            try
-            {
-                return RestClient.FuzzySearch(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, null, null, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Free Form Search**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// The basic default API is Free Form Search which handles the most fuzzy of inputs handling any combination of address or POI tokens. This search API is the canonical &apos;single line search&apos;. The Free Form Search API is a seamless combination of POI search and geocoding. The API can also be weighted with a contextual position (lat./lon. pair), or fully constrained by a a pair of coordinates and radius, or it can be executed more generally without any geo biasing anchor point.&lt;br&gt;&lt;br&gt;We strongly advise you to use the &apos;countrySet&apos; parameter to specify only the countries for which your application needs coverage, as the default behavior will be to search the entire world, potentially returning unnecessary results.&lt;br&gt;&lt;br&gt; E.g.: `countrySet`=US,FR &lt;br&gt;&lt;br&gt;Please see [Search Coverage](https://docs.microsoft.com/azure/location-based-services/geocoding-coverage) for a complete list of all the supported countries.&lt;br&gt;&lt;br&gt;Most Search queries default to `maxFuzzyLevel`=2 to gain performance and also reduce unusual results. This new default can be overridden as needed per request by passing in the query param `maxFuzzyLevel`=3 or 4.
-        /// </summary>
-        /// <param name="query"> The applicable query string (e.g., &quot;seattle&quot;, &quot;pizza&quot;). Can _also_ be specified as a comma separated string composed by latitude followed by longitude (e.g., &quot;47.641268, -122.125679&quot;). Must be properly URL encoded. </param>
-        /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> FuzzySearch(string query, LatLon coordinates, IEnumerable<string> countryFilter, FuzzySearchOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.FuzzySearch");
-            scope.Start();
-            try
-            {
-                return RestClient.FuzzySearch(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.FuzzySearch(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language, options?.ExtendedPostalCodesFor, options?.MinFuzzyLevel, options?.MaxFuzzyLevel, options?.IndexFilter, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.EntityType, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -312,16 +201,18 @@ namespace Azure.Maps.Search
         /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, a pair of coordinates location and category.
         /// </summary>
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
-        /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
+        /// <param name="IsTypeAhead"> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </param>
+        /// <param name="OperatingHours"> Hours of operation for a POI (Points of Interest). The availability of hours of operation will vary based on the data available. If not passed, then no opening hours information will be returned. </param>
+        /// <param name="BoundingBox"> Bounding Box </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, LatLon coordinates, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, bool IsTypeAhead, OperatingHoursRange OperatingHours, GeoBoundingBox BoundingBox, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
             scope.Start();
             try
             {
-                return await RestClient.SearchPointOfInterestAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, null, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchPointOfInterestAsync(query, ResponseFormat.Json, IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, BoundingBox != null ? BoundingBox.North + "," + BoundingBox.West : null, BoundingBox != null ? BoundingBox.South + "," + BoundingBox.East : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -339,126 +230,18 @@ namespace Azure.Maps.Search
         /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, a pair of coordinates location and category.
         /// </summary>
         /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
+        /// <param name="IsTypeAhead"> Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode. </param>
+        /// <param name="OperatingHours"> Hours of operation for a POI (Points of Interest). The availability of hours of operation will vary based on the data available. If not passed, then no opening hours information will be returned. </param>
+        /// <param name="BoundingBox"> Bounding Box </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, IEnumerable<string> countryFilter, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, bool IsTypeAhead, OperatingHoursRange OperatingHours, GeoBoundingBox BoundingBox, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
             scope.Start();
             try
             {
-                return await RestClient.SearchPointOfInterestAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, null, null, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Get POI by Name**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, a pair of coordinates location and category.
-        /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
-        /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAsync(string query, LatLon coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
-            scope.Start();
-            try
-            {
-                return await RestClient.SearchPointOfInterestAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Get POI by Name**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, a pair of coordinates location and category.
-        /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
-        /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, LatLon coordinates, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
-            scope.Start();
-            try
-            {
-                return RestClient.SearchPointOfInterest(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, null, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Get POI by Name**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, a pair of coordinates location and category.
-        /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, IEnumerable<string> countryFilter, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
-            scope.Start();
-            try
-            {
-                return RestClient.SearchPointOfInterest(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, null, null, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Get POI by Name**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// Points of Interest (POI) Search allows you to request POI results by name.  Search supports additional query parameters such as language and filtering results by area of interest driven by country or bounding box.  Endpoint will return only POI results matching the query string. Response includes POI details such as address, a pair of coordinates location and category.
-        /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
-        /// <param name="coordinates"> Coordinates where results should be biased. E.g. 37.337, -121.89. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterest(string query, LatLon coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterest");
-            scope.Start();
-            try
-            {
-                return RestClient.SearchPointOfInterest(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchPointOfInterest(query, ResponseFormat.Json, IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, BoundingBox != null ? BoundingBox.North + "," + BoundingBox.West : null, BoundingBox != null ? BoundingBox.South + "," + BoundingBox.East : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -475,16 +258,15 @@ namespace Azure.Maps.Search
         /// 
         /// If you have a use case for only retrieving POI results around a specific location, the nearby search method may be the right choice. This endpoint will only return POI results, and does not take in a search query parameter.
         /// </summary>
-        /// <param name="coordinates"> a pair of coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchNearbyPointOfInterestAsync(LatLon coordinates, SearchNearbyPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchNearbyPointOfInterestAsync(SearchNearbyPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchNearbyPointOfInterest");
             scope.Start();
             try
             {
-                return await RestClient.SearchNearbyPointOfInterestAsync(coordinates.Lat, coordinates.Lon, ResponseFormat.Json, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.RadiusInMeters, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchNearbyPointOfInterestAsync(Convert.ToDouble(options?.Coordinates?.Latitude), Convert.ToDouble(options?.Coordinates?.Longitude), ResponseFormat.Json, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.RadiusInMeters, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -501,16 +283,15 @@ namespace Azure.Maps.Search
         /// 
         /// If you have a use case for only retrieving POI results around a specific location, the nearby search method may be the right choice. This endpoint will only return POI results, and does not take in a search query parameter.
         /// </summary>
-        /// <param name="coordinates"> a pair of coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchNearbyPointOfInterest(LatLon coordinates, SearchNearbyPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchNearbyPointOfInterest(SearchNearbyPointOfInterestOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchNearbyPointOfInterest");
             scope.Start();
             try
             {
-                return RestClient.SearchNearbyPointOfInterest(coordinates.Lat, coordinates.Lon, ResponseFormat.Json, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.RadiusInMeters, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, cancellationToken);
+                return RestClient.SearchNearbyPointOfInterest(Convert.ToDouble(options?.Coordinates?.Latitude), Convert.ToDouble(options?.Coordinates?.Longitude), ResponseFormat.Json, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.RadiusInMeters, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -527,17 +308,15 @@ namespace Azure.Maps.Search
         /// 
         /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, a pair of coordinates location and classification.
         /// </summary>
-        /// <param name="query"> The POI category to search for (e.g., &quot;AIRPORT&quot;, &quot;RESTAURANT&quot;), must be properly URL encoded. Supported main categories can be requested by calling [Get Search POI Category Tree API](https://aka.ms/AzureMapsPOICategoryTree). List of available categories can also be found [here](https://docs.microsoft.com/azure/azure-maps/supported-search-categories). We recommend to use POI Search Category Tree API to request the supported categories. </param>
-        /// <param name="coordinates"> a pair of coordinates where results should be biased. E.g. 37.337, -121.89. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, LatLon coordinates, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
             scope.Start();
             try
             {
-                return await RestClient.SearchPointOfInterestCategoryAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, null, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchPointOfInterestCategoryAsync(options?.query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -554,129 +333,15 @@ namespace Azure.Maps.Search
         /// 
         /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, a pair of coordinates location and classification.
         /// </summary>
-        /// <param name="query"> The POI category to search for (e.g., &quot;AIRPORT&quot;, &quot;RESTAURANT&quot;), must be properly URL encoded. Supported main categories can be requested by calling [Get Search POI Category Tree API](https://aka.ms/AzureMapsPOICategoryTree). List of available categories can also be found [here](https://docs.microsoft.com/azure/azure-maps/supported-search-categories). We recommend to use POI Search Category Tree API to request the supported categories. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, IEnumerable<string> countryFilter, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
             scope.Start();
             try
             {
-
-                return await RestClient.SearchPointOfInterestCategoryAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, null, null, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Get POI by Category**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, a pair of coordinates location and classification.
-        /// </summary>
-        /// <param name="query"> The POI category to search for (e.g., &quot;AIRPORT&quot;, &quot;RESTAURANT&quot;), must be properly URL encoded. Supported main categories can be requested by calling [Get Search POI Category Tree API](https://aka.ms/AzureMapsPOICategoryTree). List of available categories can also be found [here](https://docs.microsoft.com/azure/azure-maps/supported-search-categories). We recommend to use POI Search Category Tree API to request the supported categories. </param>
-        /// <param name="coordinates"> a pair of coordinates where results should be biased. E.g. 37.337, -121.89. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestCategoryAsync(string query, LatLon coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
-            scope.Start();
-            try
-            {
-
-                return await RestClient.SearchPointOfInterestCategoryAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Get POI by Category**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, a pair of coordinates location and classification.
-        /// </summary>
-        /// <param name="query"> The POI category to search for (e.g., &quot;AIRPORT&quot;, &quot;RESTAURANT&quot;), must be properly URL encoded. Supported main categories can be requested by calling [Get Search POI Category Tree API](https://aka.ms/AzureMapsPOICategoryTree). List of available categories can also be found [here](https://docs.microsoft.com/azure/azure-maps/supported-search-categories). We recommend to use POI Search Category Tree API to request the supported categories. </param>
-        /// <param name="coordinates"> a pair of coordinates where results should be biased. E.g. 37.337, -121.89. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, LatLon coordinates, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
-            scope.Start();
-            try
-            {
-                return RestClient.SearchPointOfInterestCategory(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, null, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Get POI by Category**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, a pair of coordinates location and classification.
-        /// </summary>
-        /// <param name="query"> The POI category to search for (e.g., &quot;AIRPORT&quot;, &quot;RESTAURANT&quot;), must be properly URL encoded. Supported main categories can be requested by calling [Get Search POI Category Tree API](https://aka.ms/AzureMapsPOICategoryTree). List of available categories can also be found [here](https://docs.microsoft.com/azure/azure-maps/supported-search-categories). We recommend to use POI Search Category Tree API to request the supported categories. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, IEnumerable<string> countryFilter, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
-            scope.Start();
-            try
-            {
-                return RestClient.SearchPointOfInterestCategory(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, null, null, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Get POI by Category**
-        /// 
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// 
-        /// Points of Interest (POI) Category Search allows you to request POI results from given category. Search allows to query POIs from one category at a time.  Endpoint will only return POI results which are categorized as specified.  Response includes POI details such as address, a pair of coordinates location and classification.
-        /// </summary>
-        /// <param name="query"> The POI category to search for (e.g., &quot;AIRPORT&quot;, &quot;RESTAURANT&quot;), must be properly URL encoded. Supported main categories can be requested by calling [Get Search POI Category Tree API](https://aka.ms/AzureMapsPOICategoryTree). List of available categories can also be found [here](https://docs.microsoft.com/azure/azure-maps/supported-search-categories). We recommend to use POI Search Category Tree API to request the supported categories. </param>
-        /// <param name="coordinates"> a pair of coordinates where results should be biased. E.g. 37.337, -121.89. </param>
-        /// <param name="countryFilter"> Comma separated string of country codes, e.g. FR,ES. This will limit the search to the specified countries. </param>
-        /// <param name="options"> additional options  </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterestCategory(string query, LatLon coordinates, IEnumerable<string> countryFilter, SearchPointOfInterestCategoryOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestCategory");
-            scope.Start();
-            try
-            {
-                return RestClient.SearchPointOfInterestCategory(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, countryFilter, coordinates?.Lat, coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchPointOfInterestCategory(options?.query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CategoryFilter, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language, options?.ExtendedPostalCodesFor, options?.BrandFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -751,16 +416,16 @@ namespace Azure.Maps.Search
         /// 
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocode endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No POIs will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
         /// </summary>
-        /// <param name="query"> The address to search for (e.g., &quot;1 Microsoft way, Redmond, WA&quot;), must be properly URL encoded. </param>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchAddressAsync(string query, SearchAddressOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchAddressAsync(String query, SearchAddressOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddress");
             scope.Start();
             try
             {
-                return await RestClient.SearchAddressAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates?.Lat, options?.Coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.EntityType, options?.LocalizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAddressAsync(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language, options?.ExtendedPostalCodesFor, options?.EntityType, options?.LocalizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -777,16 +442,16 @@ namespace Azure.Maps.Search
         /// 
         /// In many cases, the complete search service might be too much, for instance if you are only interested in traditional geocoding. Search can also be accessed for address look up exclusively. The geocoding is performed by hitting the geocode endpoint with just the address or partial address in question. The geocoding search index will be queried for everything above the street level data. No POIs will be returned. Note that the geocoder is very tolerant of typos and incomplete addresses. It will also handle everything from exact street addresses or street or intersections as well as higher level geographies such as city centers, counties, states etc.
         /// </summary>
-        /// <param name="query"> The address to search for (e.g., &quot;1 Microsoft way, Redmond, WA&quot;), must be properly URL encoded. </param>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchAddress(string query, SearchAddressOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchAddress(String query, SearchAddressOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchAddress");
             scope.Start();
             try
             {
-                return RestClient.SearchAddress(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates?.Lat, options?.Coordinates?.Lon, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.TopLeft.ToString() : null, options?.BoundingBox != null ? options.BoundingBox.BottomRight.ToString() : null, options?.Language, options?.ExtendedPostalCodesFor, options?.EntityType, options?.LocalizedMapView, cancellationToken);
+                return RestClient.SearchAddress(query, ResponseFormat.Json, options?.IsTypeAhead, options?.Top, options?.Skip, options?.CountryFilter, options?.Coordinates?.Latitude, options?.Coordinates?.Longitude, options?.RadiusInMeters, options?.BoundingBox != null ? options.BoundingBox.North + "," + options.BoundingBox.West : null, options?.BoundingBox != null ? options.BoundingBox.South + "," + options.BoundingBox.East : null, options?.Language, options?.ExtendedPostalCodesFor, options?.EntityType, options?.LocalizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -803,16 +468,15 @@ namespace Azure.Maps.Search
         /// 
         /// There may be times when you need to translate a  a pair of coordinates (example: 37.786505, -122.3862) into a human understandable street address. Most often  this is needed in tracking applications where you  receive a GPS feed from the device or asset and  wish to know what address where the a pair of coordinates is  located. This endpoint will return address  information for a given coordinate.
         /// </summary>
-        /// <param name="coordinates"> A pair of coordinates to translate. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(LatLon coordinates, ReverseSearchOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReverseSearchAddressResult>> ReverseSearchAddressAsync(ReverseSearchOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddress");
             scope.Start();
             try
-            {
-                return await RestClient.ReverseSearchAddressAsync((double[]) coordinates, ResponseFormat.Json, options?.Language, options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.Number, options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, options?.LocalizedMapView, cancellationToken).ConfigureAwait(false);
+            { 
+                return await RestClient.ReverseSearchAddressAsync(new double[] {Convert.ToDouble(options?.coordinates?.Latitude), Convert.ToDouble(options?.coordinates?.Longitude)}, ResponseFormat.Json, options?.Language, options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.Number, options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, options?.LocalizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -829,16 +493,15 @@ namespace Azure.Maps.Search
         /// 
         /// There may be times when you need to translate a  a pair of coordinates (example: 37.786505, -122.3862) into a human understandable street address. Most often  this is needed in tracking applications where you  receive a GPS feed from the device or asset and  wish to know what address where the a pair of coordinates is  located. This endpoint will return address  information for a given coordinate.
         /// </summary>
-        /// <param name="coordinates"> A pair of coordinates to translate. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReverseSearchAddressResult> ReverseSearchAddress(LatLon coordinates, ReverseSearchOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReverseSearchAddressResult> ReverseSearchAddress(ReverseSearchOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddress");
             scope.Start();
             try
             {
-                return RestClient.ReverseSearchAddress((double[])coordinates, ResponseFormat.Json, options?.Language, options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.Number, options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, options?.LocalizedMapView, cancellationToken);
+                return RestClient.ReverseSearchAddress(new double[] {Convert.ToDouble(options?.coordinates?.Latitude), Convert.ToDouble(options?.coordinates?.Longitude)}, ResponseFormat.Json, options?.Language, options?.IncludeSpeedLimit, options?.Heading, options?.RadiusInMeters, options?.Number, options?.IncludeRoadUse, options?.RoadUse, options?.AllowFreeformNewline, options?.IncludeMatchType, options?.EntityType, options?.LocalizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -856,16 +519,15 @@ namespace Azure.Maps.Search
         /// There may be times when you need to translate a  a pair of coordinates (example: 37.786505, -122.3862) into a human understandable cross street. Most often this  is needed in tracking applications where you  receive a GPS feed from the device or asset and wish to know what address where the a pair of coordinates is  located.
         /// This endpoint will return cross street information  for a given coordinate.
         /// </summary>
-        /// <param name="coordinates"> A pair of coordinates to translate. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(LatLon coordinates, ReverseSearchCrossStreetOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReverseSearchCrossStreetAddressResult>> ReverseSearchCrossStreetAddressAsync(ReverseSearchCrossStreetOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchCrossStreetAddress");
             scope.Start();
             try
             {
-                return await RestClient.ReverseSearchCrossStreetAddressAsync((double[]) coordinates, ResponseFormat.Json, options?.Top, options?.Heading, options?.RadiusInMeters, options?.Language, options?.LocalizedMapView, cancellationToken).ConfigureAwait(false);
+                return await RestClient.ReverseSearchCrossStreetAddressAsync(new double[] {Convert.ToDouble(options?.coordinates?.Latitude), Convert.ToDouble(options?.coordinates?.Longitude)}, ResponseFormat.Json, options?.Top, options?.Heading, options?.RadiusInMeters, options?.Language, options?.LocalizedMapView, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -883,16 +545,15 @@ namespace Azure.Maps.Search
         /// There may be times when you need to translate a  a pair of coordinates (example: 37.786505, -122.3862) into a human understandable cross street. Most often this  is needed in tracking applications where you  receive a GPS feed from the device or asset and wish to know what address where the a pair of coordinates is  located.
         /// This endpoint will return cross street information  for a given coordinate.
         /// </summary>
-        /// <param name="coordinates"> A pair of a pair of coordinates to translate. </param>
         /// <param name="options"> additional options  </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(LatLon coordinates, ReverseSearchCrossStreetOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<ReverseSearchCrossStreetAddressResult> ReverseSearchCrossStreetAddress(ReverseSearchCrossStreetOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchCrossStreetAddress");
             scope.Start();
             try
             {
-                return RestClient.ReverseSearchCrossStreetAddress((double[]) coordinates, ResponseFormat.Json, options?.Top, options?.Heading, options?.RadiusInMeters, options?.Language, options?.LocalizedMapView, cancellationToken);
+                return RestClient.ReverseSearchCrossStreetAddress(new double[] {Convert.ToDouble(options?.coordinates?.Latitude), Convert.ToDouble(options?.coordinates?.Longitude)}, ResponseFormat.Json, options?.Top, options?.Heading, options?.RadiusInMeters, options?.Language, options?.LocalizedMapView, cancellationToken);
             }
             catch (Exception e)
             {
@@ -958,65 +619,41 @@ namespace Azure.Maps.Search
         /// 
         /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
         /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
-        /// <param name="polygon"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
+        /// <param name="geometry"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, GeoJsonPolygon polygon, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(String query, GeoObject geometry, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
-                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest { Geometry = new SearchInsidePolygon(polygon.Coordinates) }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest(geometry), ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
+        }   
 
         /// <summary>
         /// **Applies to**: S0 and S1 pricing tiers.
         /// 
         /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
         /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
-        /// <param name="featureCollection"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
-        /// <param name="options"> additional options </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, SearchInsideFeatureCollection featureCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
-            scope.Start();
-            try
-            {
-                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest { Geometry = featureCollection }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
-        /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
         /// <param name="geometryCollection"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(string query, SearchInsideGeometryCollection geometryCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchInsideGeometryAsync(String query, GeoCollection geometryCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
-                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest { Geometry = geometryCollection }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchInsideGeometryAsync(query, new SearchInsideGeometryRequest(geometryCollection), ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1030,17 +667,17 @@ namespace Azure.Maps.Search
         /// 
         /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
         /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
-        /// <param name="polygon"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
+        /// <param name="geometry"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, GeoJsonPolygon polygon, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchInsideGeometry(String query, GeoObject geometry, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
-                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest { Geometry = new SearchInsidePolygon(polygon.Coordinates) }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest(geometry), ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1054,41 +691,17 @@ namespace Azure.Maps.Search
         /// 
         /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
         /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
-        /// <param name="featureCollection"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
-        /// <param name="options"> additional options </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, SearchInsideFeatureCollection featureCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
-            scope.Start();
-            try
-            {
-                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest { Geometry = featureCollection }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// **Applies to**: S0 and S1 pricing tiers.
-        /// 
-        /// The Search Geometry endpoint allows you to perform a free form search inside a single geometry or many of them. The search results that fall inside the geometry/geometries will be returned.&lt;br&gt;&lt;br&gt;To send the geometry you will use a `POST` request where the request body will contain the `geometry` object represented as a `GeoJSON` type and the `Content-Type` header will be set to `application/json`. The geographical features to be searched can be modeled as Polygon and/or Circle geometries represented using any one of the following `GeoJSON` types:&lt;ul&gt;&lt;li&gt;**GeoJSON FeatureCollection** &lt;br&gt;The `geometry` can be represented as a `GeoJSON FeatureCollection` object. This is the recommended option if the geometry contains both Polygons and Circles. The `FeatureCollection` can contain a max of 50 `GeoJSON Feature` objects. Each `Feature` object should represent either a Polygon or a Circle with the following conditions:&lt;ul style=&quot;list-style-type:none&quot;&gt;&lt;li&gt;A `Feature` object for the Polygon geometry can have a max of 50 coordinates and it&apos;s properties must be empty.&lt;/li&gt;&lt;li&gt;A `Feature` object for the Circle geometry is composed of a _center_ represented using a `GeoJSON Point` type and a _radius_ value (in meters) which must be specified in the object&apos;s properties along with the _subType_ property whose value should be &apos;Circle&apos;.&lt;/li&gt;&lt;/ul&gt;&lt;br&gt; Please see the Examples section below for a sample `FeatureCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON GeometryCollection**&lt;br&gt;The `geometry` can be represented as a `GeoJSON GeometryCollection` object. This is the recommended option if the geometry contains a list of Polygons only. The `GeometryCollection` can contain a max of 50 `GeoJSON Polygon` objects. Each `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `GeometryCollection` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;li&gt;**GeoJSON Polygon**&lt;br&gt;The `geometry` can be represented as a `GeoJSON Polygon` object. This is the recommended option if the geometry contains a single Polygon. The `Polygon` object can have a max of 50 coordinates. Please see the Examples section below for a sample `Polygon` representation.&lt;br&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;.&lt;br&gt;&lt;br&gt;
-        /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
         /// <param name="geometryCollection"> This represents the geometry for one or more geographical features (parks, state boundary etc.) to search in and should be a GeoJSON compliant type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchInsideGeometry(string query, SearchInsideGeometryCollection geometryCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchInsideGeometry(String query, GeoCollection geometryCollection, SearchInsideGeometryOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchInsideGeometry");
             scope.Start();
             try
             {
-                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest { Geometry = geometryCollection }, ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchInsideGeometry(query, new SearchInsideGeometryRequest(geometryCollection), ResponseFormat.Json, options?.Top, options?.Language, options?.CategoryFilter, options?.ExtendedPostalCodesFor, options?.IndexFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1103,18 +716,18 @@ namespace Azure.Maps.Search
         /// 
         /// The Search Along Route endpoint allows you to perform a fuzzy search for POIs along a specified route. This search is constrained by specifying the `maxDetourTime` limiting measure.&lt;br&gt;&lt;br&gt;To send the route-points you will use a `POST` request where the request body will contain the `route` object represented as a `GeoJSON LineString` type and the `Content-Type` header will be set to `application/json`. Each route-point in `route` is represented as a `GeoJSON Position` type i.e. an array where the _longitude_ value is followed by the _latitude_ value and the _altitude_ value is ignored. The `route` should contain at least 2 route-points.&lt;br&gt;&lt;br&gt;It is possible that original route will be altered, some of it&apos;s points may be skipped. If the route that passes through the found point is faster than the original one, the `detourTime` value in the response is negative.
         /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
         /// <param name="maxDetourTime"> Maximum detour time of the point of interest in seconds. Max value is 3600 seconds. </param>
         /// <param name="route"> This represents the route to search along and should be a valid `GeoJSON LineString` type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAlongRouteAsync(string query, int maxDetourTime, GeoJsonLineString route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchAddressResult>> SearchPointOfInterestAlongRouteAsync(String query, int maxDetourTime, GeoLineString route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestAlongRoute");
             scope.Start();
             try
             {
-                return await RestClient.SearchAlongRouteAsync(query, maxDetourTime, new SearchAlongRouteRequest { Route = route }, ResponseFormat.Json, options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
+                return await RestClient.SearchAlongRouteAsync(query, maxDetourTime, new SearchAlongRouteRequest(route), ResponseFormat.Json, options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1129,18 +742,18 @@ namespace Azure.Maps.Search
         /// 
         /// The Search Along Route endpoint allows you to perform a fuzzy search for POIs along a specified route. This search is constrained by specifying the `maxDetourTime` limiting measure.&lt;br&gt;&lt;br&gt;To send the route-points you will use a `POST` request where the request body will contain the `route` object represented as a `GeoJSON LineString` type and the `Content-Type` header will be set to `application/json`. Each route-point in `route` is represented as a `GeoJSON Position` type i.e. an array where the _longitude_ value is followed by the _latitude_ value and the _altitude_ value is ignored. The `route` should contain at least 2 route-points.&lt;br&gt;&lt;br&gt;It is possible that original route will be altered, some of it&apos;s points may be skipped. If the route that passes through the found point is faster than the original one, the `detourTime` value in the response is negative.
         /// </summary>
-        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;, &quot;pizza&quot;). Must be properly URL encoded. </param>
+        /// <param name="query"> The POI name to search for (e.g., &quot;statue of liberty&quot;, &quot;starbucks&quot;), must be properly URL encoded. </param>
         /// <param name="maxDetourTime"> Maximum detour time of the point of interest in seconds. Max value is 3600 seconds. </param>
         /// <param name="route"> This represents the route to search along and should be a valid `GeoJSON LineString` type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </param>
         /// <param name="options"> additional options </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchAddressResult> SearchPointOfInterestAlongRoute(string query, int maxDetourTime, GeoJsonLineString route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchAddressResult> SearchPointOfInterestAlongRoute(string query, int maxDetourTime, GeoLineString route, SearchAlongRouteOptions options = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.SearchPointOfInterestAlongRoute");
             scope.Start();
             try
             {
-                return RestClient.SearchAlongRoute(query, maxDetourTime, new SearchAlongRouteRequest { Route = route }, ResponseFormat.Json, options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
+                return RestClient.SearchAlongRoute(query, maxDetourTime, new SearchAlongRouteRequest(route), ResponseFormat.Json, options?.Top, options?.BrandFilter, options?.CategoryFilter, options?.ElectricVehicleConnectorFilter, options?.LocalizedMapView, options?.OperatingHours, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1957,7 +1570,7 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReverseSearchAddressBatchProcessResult>> ReverseSearchAddressBatchAsync(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReverseSearchAddressBatchResult>> ReverseSearchAddressBatchAsync(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatch");
             scope.Start();
@@ -2120,7 +1733,7 @@ namespace Azure.Maps.Search
         /// </summary>
         /// <param name="queries"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReverseSearchAddressBatchProcessResult> ReverseSearchAddressBatch(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
+        public virtual Response<ReverseSearchAddressBatchResult> ReverseSearchAddressBatch(IEnumerable<ReverseSearchAddressQuery> queries, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SearchClient.ReverseSearchAddressBatch");
             scope.Start();
@@ -2986,7 +2599,6 @@ namespace Azure.Maps.Search
         /// ```
         /// </summary>
         /// <param name="queries"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
-
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queries"/> is null. </exception>
         public virtual async Task<SearchAddressBatchOperation> StartSearchAddressBatchAsync(IEnumerable<SearchAddressQuery> queries, CancellationToken cancellationToken = default)

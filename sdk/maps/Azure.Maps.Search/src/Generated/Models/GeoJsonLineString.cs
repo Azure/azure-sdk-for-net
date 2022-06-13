@@ -25,16 +25,16 @@ namespace Azure.Maps.Search.Models
             }
 
             Coordinates = coordinates.ToList();
-            Type = "LineString";
+            Type = GeoJsonObjectType.GeoJsonLineString;
         }
 
         /// <summary> Initializes a new instance of GeoJsonLineString. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
         /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>
-        internal GeoJsonLineString(string type, IList<IList<double>> coordinates) : base(type)
+        internal GeoJsonLineString(GeoJsonObjectType type, IList<IList<double>> coordinates) : base(type)
         {
             Coordinates = coordinates;
-            Type = type ?? "LineString";
+            Type = type;
         }
 
         /// <summary> Coordinates for the `GeoJson LineString` geometry. </summary>

@@ -17,12 +17,12 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of GeoJsonObject. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
-        internal GeoJsonObject(string type)
+        internal GeoJsonObject(GeoJsonObjectType type)
         {
             Type = type;
         }
 
         /// <summary> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </summary>
-        internal string Type { get; set; }
+        internal GeoJsonObjectType Type { get; set; }
     }
 }

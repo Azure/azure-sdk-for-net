@@ -25,16 +25,16 @@ namespace Azure.Maps.Search.Models
             }
 
             Features = features.ToList();
-            Type = "FeatureCollection";
+            Type = GeoJsonObjectType.GeoJsonFeatureCollection;
         }
 
         /// <summary> Initializes a new instance of GeoJsonFeatureCollection. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
-        internal GeoJsonFeatureCollection(string type, IList<GeoJsonFeature> features) : base(type)
+        internal GeoJsonFeatureCollection(GeoJsonObjectType type, IList<GeoJsonFeature> features) : base(type)
         {
             Features = features;
-            Type = type ?? "FeatureCollection";
+            Type = type;
         }
 
         /// <summary> Contains a list of valid `GeoJSON Feature` objects. </summary>

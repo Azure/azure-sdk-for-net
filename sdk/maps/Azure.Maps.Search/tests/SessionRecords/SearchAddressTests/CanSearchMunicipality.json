@@ -6,33 +6,33 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-801ef043c94df145ab5c4477ea437d8c-41f30dab684dd640-00",
+        "traceparent": "00-ac4f326f25583644b1b07bbbc1d88516-ac909e78542b5849-00",
         "User-Agent": [
-          "azsdk-net-Maps.Search/1.0.0-alpha.20211207.1",
-          "(.NET 5.0.10; Darwin 21.1.0 Darwin Kernel Version 21.1.0: Wed Oct 13 17:33:23 PDT 2021; root:xnu-8019.41.5~1/RELEASE_X86_64)"
+          "azsdk-net-Maps.Search/1.0.0-alpha.20220613.1",
+          "(.NET 5.0.17; Microsoft Windows 10.0.19044)"
         ],
-        "x-ms-client-id": "6a782b5b-631c-450d-9aa4-e561679d0d28",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
         "x-ms-client-request-id": "4b6166dc31ee5cd3f4e3ef6f81989a0b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "4222",
+        "Content-Length": "4418",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 07 Dec 2021 14:21:37 GMT",
+        "Date": "Mon, 13 Jun 2022 08:14:04 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 7F42E725369C4BA1B90287F07BB8D500 Ref B: TYO01EDGE2113 Ref C: 2021-12-07T14:21:37Z"
+        "X-MSEdge-Ref": "Ref A: 9081722D6B024B94889E2B7582B73766 Ref B: TPE30EDGE0911 Ref C: 2022-06-13T08:14:04Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "redmond",
           "queryType": "NON_NEAR",
-          "queryTime": 4,
+          "queryTime": 6,
           "numResults": 6,
           "offset": 0,
           "totalResults": 6,
@@ -41,9 +41,12 @@
         "results": [
           {
             "type": "Geography",
-            "id": "US/GEO/p0/15765",
-            "score": 2.4454529285,
+            "id": "US/GEO/p0/82634",
+            "score": 2.4457623959,
             "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
             "address": {
               "municipality": "Redmond",
               "countrySecondarySubdivision": "King",
@@ -86,9 +89,12 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/58509",
-            "score": 2.4159770012,
+            "id": "US/GEO/p0/42148",
+            "score": 2.4161009789,
             "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
             "address": {
               "municipality": "Redmond",
               "countrySecondarySubdivision": "Deschutes",
@@ -131,9 +137,12 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/41503",
+            "id": "US/GEO/p0/88196",
             "score": 2.3835597038,
             "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
             "address": {
               "municipality": "Redmond",
               "countrySecondarySubdivision": "Sevier",
@@ -176,9 +185,12 @@
           },
           {
             "type": "Geography",
-            "id": "US/GEO/p0/19208",
+            "id": "US/GEO/p0/18845",
             "score": 2.3822901249,
             "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
             "address": {
               "municipality": "Redmond",
               "countrySecondarySubdivision": "Mountrail",
@@ -221,9 +233,12 @@
           },
           {
             "type": "Geography",
-            "id": "AU/GEO/p0/10946",
+            "id": "AU/GEO/p0/6951",
             "score": 2.3822283745,
             "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 1
+            },
             "address": {
               "municipality": "Redmond",
               "countrySecondarySubdivision": "The Great Southern Wine Region",
@@ -265,9 +280,12 @@
           },
           {
             "type": "Geography",
-            "id": "AU/GEO/p0/6778",
+            "id": "AU/GEO/p0/1231",
             "score": 2.3586585522,
             "entityType": "Municipality",
+            "matchConfidence": {
+              "score": 0.9183351365829482
+            },
             "address": {
               "municipality": "Redmond West",
               "countrySecondarySubdivision": "The Great Southern Wine Region",
@@ -312,8 +330,8 @@
     }
   ],
   "Variables": {
-    "AZMAPS_CLIENT_ID": "6a782b5b-631c-450d-9aa4-e561679d0d28",
-    "ENDPOINT_URL": null,
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
     "RandomSeed": "299342546"
   }
 }
