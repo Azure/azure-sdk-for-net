@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Tests.Tests
     [TestFixture]
     public class MonitorCRUDTests : WorkloadsManagementTestBase
     {
-        public MonitorCRUDTests() : base(true, RecordedTestMode.Record)
+        public MonitorCRUDTests(bool isAsync) : base(isAsync)
         {}
 
         //[SetUp]
