@@ -7,9 +7,9 @@ namespace Azure.IoT.DeviceUpdate.Tests
 {
     public class DeviceUpdateClientTestEnvironment: TestEnvironment
     {
-        public string AccountEndPoint => GetVariable("DEVICEUPDATE_ACCOUNT_ENDPOINT");
+        public string AccountEndPoint => GetRecordedVariable("DEVICEUPDATE_ACCOUNT_ENDPOINT");
 
-        public string InstanceId => GetVariable("DEVICEUPDATE_INSTANCE_ID");
+        public string InstanceId => GetRecordedVariable("DEVICEUPDATE_INSTANCE_ID");
 
         public string UpdateProvider => "fabrikam";
 
