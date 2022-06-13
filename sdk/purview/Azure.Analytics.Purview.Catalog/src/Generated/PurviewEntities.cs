@@ -55,7 +55,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -358,7 +358,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -458,7 +458,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -559,7 +559,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -713,7 +713,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -863,7 +863,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -950,7 +950,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guids"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1037,7 +1037,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1093,7 +1092,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1152,7 +1150,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1250,7 +1248,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1353,7 +1351,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1450,7 +1448,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1540,7 +1538,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1628,7 +1626,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1717,7 +1715,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1773,7 +1771,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1829,7 +1827,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1866,7 +1863,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -1902,7 +1898,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1947,7 +1943,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1993,7 +1989,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2049,7 +2044,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2105,7 +2099,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2161,7 +2154,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2226,7 +2218,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2332,7 +2324,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2439,7 +2431,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2600,7 +2592,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -2758,7 +2750,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2854,7 +2846,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -2944,7 +2936,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -2982,7 +2973,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -3020,7 +3010,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3077,7 +3066,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3134,7 +3122,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3191,7 +3178,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3245,7 +3231,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3284,7 +3269,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -3339,7 +3323,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3452,7 +3436,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3550,7 +3534,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3632,7 +3616,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3710,10 +3694,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Remove business metadata from an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteBusinessMetadataAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -3734,10 +3719,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Remove business metadata from an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteBusinessMetadata(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -3758,11 +3744,12 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Add business metadata to an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="isOverwrite"> Whether to overwrite the existing business metadata on the entity or not, default is false. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, RequestContent content, bool? isOverwrite = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -3783,11 +3770,12 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Add business metadata to an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="isOverwrite"> Whether to overwrite the existing business metadata on the entity or not, default is false. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddOrUpdateBusinessMetadata(string guid, RequestContent content, bool? isOverwrite = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -3809,10 +3797,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete business metadata attributes from an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="bmName"> BusinessMetadata name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteBusinessMetadataAttributesAsync(string guid, string bmName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -3835,10 +3824,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Delete business metadata attributes from an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="bmName"> BusinessMetadata name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteBusinessMetadataAttributes(string guid, string bmName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -3861,10 +3851,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Add or update business metadata attributes. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="bmName"> BusinessMetadata name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string bmName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -3887,10 +3878,11 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Add or update business metadata attributes. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="bmName"> BusinessMetadata name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="bmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="bmName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddOrUpdateBusinessMetadataAttributes(string guid, string bmName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -3911,7 +3903,8 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> GetSampleBusinessMetadataTemplateAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetSampleBusinessMetadataTemplate");
@@ -3929,7 +3922,8 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response GetSampleBusinessMetadataTemplate(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewEntities.GetSampleBusinessMetadataTemplate");
@@ -3947,8 +3941,10 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -3982,8 +3978,10 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -4018,10 +4016,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> delete given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -4042,10 +4041,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> delete given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteLabels(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -4066,10 +4066,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Set labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> SetLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -4090,10 +4091,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Set labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response SetLabels(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -4114,10 +4116,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> add given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> AddLabelAsync(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -4138,10 +4141,11 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> add given labels to a given entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddLabel(string guid, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -4162,11 +4166,12 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
@@ -4187,11 +4192,12 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Delete given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be removed. If any labels in labels set are non-existing labels, they will be ignored, only existing labels will be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: DELETE /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
@@ -4212,11 +4218,12 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Set labels to a given entity identified by its type and unique attributes, if labels is null/empty, existing labels will all be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: POST /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
@@ -4237,11 +4244,12 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Set labels to a given entity identified by its type and unique attributes, if labels is null/empty, existing labels will all be removed. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: POST /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response SetLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
@@ -4262,11 +4270,12 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Add given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be added. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
@@ -4287,11 +4296,12 @@ namespace Azure.Analytics.Purview.Catalog
 
         /// <summary> Add given labels to a given entity identified by its type and unique attributes, if labels is null/empty, no labels will be added. In addition to the typeName path parameter, attribute key-value pair(s) can be provided in the following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique across entities, eg. qualifiedName. The REST request would look something like this: PUT /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue. </summary>
         /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
         /// <param name="attrQualifiedName"> The qualified name of the entity. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddLabelsByUniqueAttribute(string typeName, RequestContent content, string attrQualifiedName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));

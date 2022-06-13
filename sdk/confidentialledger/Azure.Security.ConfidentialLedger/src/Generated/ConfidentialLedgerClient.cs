@@ -47,7 +47,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -85,7 +85,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> The constitution is a script that assesses and applies proposals from consortium members. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -123,7 +123,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -165,7 +165,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> Consortium members can manage the Confidential Ledger. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -207,7 +207,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -245,7 +245,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <summary> A quote is an SGX enclave measurement that can be used to verify the validity of a node and its enclave. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -285,7 +285,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -331,7 +331,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -379,7 +379,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -427,7 +427,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -474,7 +474,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -529,7 +529,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -584,7 +584,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -627,7 +627,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="transactionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transactionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -668,7 +668,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -708,7 +708,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="subLedgerId"> The sub-ledger id. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -750,7 +750,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -787,7 +786,6 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Error</c>:
         /// <code>{
@@ -824,7 +822,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -867,7 +865,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -911,7 +909,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -962,7 +960,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -1012,7 +1010,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1066,7 +1064,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="toTransactionId"> Specify the last transaction ID in a range. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{

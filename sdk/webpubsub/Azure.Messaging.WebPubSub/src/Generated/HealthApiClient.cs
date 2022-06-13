@@ -56,7 +56,6 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Get service health status. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         public virtual async Task<Response> GetServiceStatusAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
@@ -76,7 +75,6 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Get service health status. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         public virtual Response GetServiceStatus(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");

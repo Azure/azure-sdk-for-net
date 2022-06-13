@@ -68,7 +68,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -123,7 +123,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -179,7 +179,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -246,7 +246,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -312,7 +312,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -367,7 +367,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -422,7 +422,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -477,7 +477,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -533,7 +533,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -599,7 +599,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -664,7 +664,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -719,7 +719,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="scanRulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -774,7 +774,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -829,7 +829,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -883,7 +883,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -935,7 +935,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -986,7 +986,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1037,7 +1037,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1087,7 +1087,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List key vault connections in account. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1149,7 +1149,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List key vault connections in account. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1211,7 +1211,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List classification rules in Account. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1270,7 +1270,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List classification rules in Account. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1329,7 +1329,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List data sources in Data catalog. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1437,7 +1437,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List data sources in Data catalog. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1545,7 +1545,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List scan rulesets in Data catalog. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1607,7 +1607,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List scan rulesets in Data catalog. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1669,7 +1669,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List all system scan rulesets for an account. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1731,7 +1731,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <summary> List all system scan rulesets for an account. </summary>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1794,7 +1794,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -1857,7 +1857,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{

@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -87,7 +87,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -141,7 +141,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -229,7 +229,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
+        /// <response> The response returned from the service. Details of the response body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Response Body</c>:
         /// <code>{
@@ -318,7 +318,6 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -360,7 +359,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> SubmitJobAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> SubmitJobAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -369,7 +368,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateSubmitJobRequest(content, context);
-                return await LowLevelOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -384,7 +383,6 @@ namespace Azure.AI.Language.Conversations
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <response> The response returned from the service. Details of the request body schema are in the Remarks section below. </response>
         /// <remarks>
         /// Schema for <c>Request Body</c>:
         /// <code>{
@@ -426,7 +424,7 @@ namespace Azure.AI.Language.Conversations
         /// </code>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> SubmitJob(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual Operation SubmitJob(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -435,7 +433,7 @@ namespace Azure.AI.Language.Conversations
             try
             {
                 using HttpMessage message = CreateSubmitJobRequest(content, context);
-                return LowLevelOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAnalysisClient.SubmitJob", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
