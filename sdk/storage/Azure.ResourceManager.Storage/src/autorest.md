@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
 tag: package-2021-09
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4124b7c2773a714303299f0cfd742b0d26d3bb5d/specification/storage/resource-manager/readme.md
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4124b7c2773a714303299f0cfd742b0d26d3bb5d//specification/storage/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
 
@@ -68,4 +68,12 @@ directive:
   - from: swagger-document
     where: $.definitions.Multichannel.properties.enabled
     transform: $['x-ms-client-name'] = 'IsMultiChannelEnabled'
+  - from: swagger-document
+    where: $.definitions.BlobRestoreParameters
+    transform: >
+      $.required = ["timetoRestore", "blobRanges"];
+      var old = $.properties["timeToRestore"];
+      old["x-ms-client-name"] = "timeToRestore";
+      $.properties["timetoRestore"] = old;
+      delete $.properties["timeToRestore"];
 ```
