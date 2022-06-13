@@ -68,6 +68,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("managedDisk");
                 writer.WriteObjectValue(ManagedDisk);
             }
+            if (Optional.IsDefined(DeleteOption))
+            {
+                writer.WritePropertyName("deleteOption");
+                writer.WriteStringValue(DeleteOption.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualHardDisk> image = default;
             Optional<IList<string>> vhdContainers = default;
             Optional<VirtualMachineScaleSetManagedDiskParameters> managedDisk = default;
+            Optional<DiskDeleteOptionTypes> deleteOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -180,8 +186,18 @@ namespace Azure.ResourceManager.Compute.Models
                     managedDisk = VirtualMachineScaleSetManagedDiskParameters.DeserializeVirtualMachineScaleSetManagedDiskParameters(property.Value);
                     continue;
                 }
+                if (property.NameEquals("deleteOption"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deleteOption = new DiskDeleteOptionTypes(property.Value.GetString());
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetOSDisk(name.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, diffDiskSettings.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(osType), image.Value, Optional.ToList(vhdContainers), managedDisk.Value);
+            return new VirtualMachineScaleSetOSDisk(name.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, diffDiskSettings.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(osType), image.Value, Optional.ToList(vhdContainers), managedDisk.Value, Optional.ToNullable(deleteOption));
         }
     }
 }

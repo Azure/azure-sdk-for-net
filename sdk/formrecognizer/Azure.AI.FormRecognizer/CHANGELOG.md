@@ -1,6 +1,16 @@
 # Release History
 
-## 4.0.0-beta.4 (2022-06-07)
+## 4.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.0.0-beta.4 (2022-06-08)
 
 ### Features Added
 - Added `Kind` property to the `DocumentPage` class.

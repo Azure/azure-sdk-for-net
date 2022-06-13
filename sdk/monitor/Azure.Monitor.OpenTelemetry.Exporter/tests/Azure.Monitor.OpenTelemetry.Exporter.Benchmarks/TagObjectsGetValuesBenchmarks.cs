@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using BenchmarkDotNet.Attributes;
+
 using System.Collections.Generic;
 using System.Diagnostics;
 

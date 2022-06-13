@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Gets the consistency mode for the restore point. Please refer to https://aka.ms/RestorePoints for more details. </summary>
+    /// <summary> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </summary>
     public readonly partial struct ConsistencyModeTypes : IEquatable<ConsistencyModeTypes>
     {
         private readonly string _value;

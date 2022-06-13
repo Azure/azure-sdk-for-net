@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of RuleListResult. </summary>
         internal RuleListResult()
         {
-            Value = new ChangeTrackingList<AfdRuleData>();
+            Value = new ChangeTrackingList<FrontDoorRuleData>();
         }
 
         /// <summary> Initializes a new instance of RuleListResult. </summary>
         /// <param name="value"> List of AzureFrontDoor rules within a rule set. </param>
         /// <param name="nextLink"> URL to get the next set of rule objects if there are any. </param>
-        internal RuleListResult(IReadOnlyList<AfdRuleData> value, string nextLink)
+        internal RuleListResult(IReadOnlyList<FrontDoorRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of AzureFrontDoor rules within a rule set. </summary>
-        public IReadOnlyList<AfdRuleData> Value { get; }
+        public IReadOnlyList<FrontDoorRuleData> Value { get; }
         /// <summary> URL to get the next set of rule objects if there are any. </summary>
         public string NextLink { get; }
     }
