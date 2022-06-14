@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -12,6 +13,8 @@ namespace Azure.Data.Batch
 {
     public partial class TaskClient : BaseClient
     {
+        public const int MaxAddTasks = 100;
+
         public virtual Response<Task> GetTask(string jobId, string taskId)
         {
             return HandleGet(jobId, taskId, GetTask, Task.DeserializeTask);
@@ -42,6 +45,17 @@ namespace Azure.Data.Batch
         public virtual async System.Threading.Tasks.Task<Response<TaskHeaders>> AddTaskAsync(string jobId, Task task)
         {
             return await HandleAddAsync<TaskHeaders>(jobId, task, AddAsync).ConfigureAwait(false);
+        }
+
+        public virtual Response<TaskHeaders> AddTasks(string jobId, IEnumerable<Task> tasks)
+        {
+            if (tasks.Count() > MaxAddTasks)
+            {
+                throw new ArgumentOutOfRangeException($"Cannot add {tasks.Count()}. Maximum is {MaxAddTasks}");
+            }
+
+            TaskAddCollectionParameter addParameter = new TaskAddCollectionParameter(tasks);
+            return HandleAdd<TaskHeaders>(jobId, addParameter, AddCollection);
         }
 
         public virtual Response<TaskHeaders> UpdateTask(string jobId, Task task)

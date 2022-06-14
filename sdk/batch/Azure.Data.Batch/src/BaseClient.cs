@@ -93,6 +93,13 @@ namespace Azure.Data.Batch
             return HandleResponse<T>(response);
         }
 
+        protected Response<T> HandleAddCollection<T>(string parentId, IEnumerable<object> contentList, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Response> add) where T : BaseHeaders, new()
+        {
+            RequestContent content = ModelHelpers.ToRequestContent(contentList);
+            Response response = add(parentId, content, null, null, null, null, null);
+            return HandleResponse<T>(response);
+        }
+
         protected Response<T> HandleUpdate<T>(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> update) where T : BaseHeaders, new()
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
