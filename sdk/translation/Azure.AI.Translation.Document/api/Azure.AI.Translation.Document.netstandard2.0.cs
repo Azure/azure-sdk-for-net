@@ -3,6 +3,7 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentFilterOrder
     {
         public DocumentFilterOrder(Azure.AI.Translation.Document.DocumentFilterProperty property, bool ascending = true) { }
+        public bool Ascending { get { throw null; } set { } }
         public Azure.AI.Translation.Document.DocumentFilterProperty Property { get { throw null; } set { } }
     }
     public enum DocumentFilterProperty
@@ -22,6 +23,25 @@ namespace Azure.AI.Translation.Document
         public System.Uri TranslatedDocumentUri { get { throw null; } }
         public string TranslatedToLanguageCode { get { throw null; } }
         public float TranslationProgressPercentage { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentTranslationAudience : System.IEquatable<Azure.AI.Translation.Document.DocumentTranslationAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DocumentTranslationAudience(string value) { throw null; }
+        public static Azure.AI.Translation.Document.DocumentTranslationAudience AzureChina { get { throw null; } }
+        public static Azure.AI.Translation.Document.DocumentTranslationAudience AzureGovernment { get { throw null; } }
+        public static Azure.AI.Translation.Document.DocumentTranslationAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.AI.Translation.Document.DocumentTranslationAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Translation.Document.DocumentTranslationAudience left, Azure.AI.Translation.Document.DocumentTranslationAudience right) { throw null; }
+        public static implicit operator Azure.AI.Translation.Document.DocumentTranslationAudience (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Translation.Document.DocumentTranslationAudience left, Azure.AI.Translation.Document.DocumentTranslationAudience right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DocumentTranslationClient
     {
@@ -50,6 +70,7 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentTranslationClientOptions : Azure.Core.ClientOptions
     {
         public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V1_0) { }
+        public Azure.AI.Translation.Document.DocumentTranslationAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 1,
@@ -69,9 +90,9 @@ namespace Azure.AI.Translation.Document
         public DocumentTranslationInput(Azure.AI.Translation.Document.TranslationSource source, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.TranslationTarget> targets) { }
         public DocumentTranslationInput(System.Uri sourceUri, System.Uri targetUri, string targetLanguageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null) { }
         public Azure.AI.Translation.Document.TranslationSource Source { get { throw null; } }
-        public Azure.AI.Translation.Document.StorageInputType? StorageType { get { throw null; } set { } }
+        public Azure.AI.Translation.Document.StorageInputUriKind? StorageUriKind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationTarget> Targets { get { throw null; } }
-        public void AddTarget(System.Uri targetUri, string languageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null) { }
+        public void AddTarget(System.Uri targetUri, string languageCode, Azure.AI.Translation.Document.TranslationGlossary glossary = null, string categoryId = null) { }
     }
     public static partial class DocumentTranslationModelFactory
     {
@@ -153,14 +174,15 @@ namespace Azure.AI.Translation.Document
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationFilterOrder> OrderBy { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.DocumentTranslationStatus> Statuses { get { throw null; } }
     }
-    public enum StorageInputType
+    public enum StorageInputUriKind
     {
         File = 0,
         Folder = 1,
     }
     public partial class TranslationFilterOrder
     {
-        public TranslationFilterOrder(Azure.AI.Translation.Document.TranslationFilterProperty property, bool asc = true) { }
+        public TranslationFilterOrder(Azure.AI.Translation.Document.TranslationFilterProperty property, bool ascending = true) { }
+        public bool Ascending { get { throw null; } set { } }
         public Azure.AI.Translation.Document.TranslationFilterProperty Property { get { throw null; } set { } }
     }
     public enum TranslationFilterProperty

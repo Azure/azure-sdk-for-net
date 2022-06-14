@@ -93,6 +93,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             new IdentifierTestData("https://test.vault.azure.net/secrets/test-name", "https://test.vault.azure.net", "test-name").Returns(true),
             new IdentifierTestData("https://test.vault.azure.net/secrets/test-name/test-version", "https://test.vault.azure.net", "test-name", "test-version").Returns(true),
             new IdentifierTestData("https://test.vault.azure.net/deletedsecrets/test-name/test-version", "https://test.vault.azure.net", "test-name", "test-version").Returns(true),
+            new IdentifierTestData("https://test.vault.azure.net:8443/secrets/test-name/test-version", "https://test.vault.azure.net:8443", "test-name", "test-version").Returns(true),
 
             // No client validation of other valid identifier paths.
             new IdentifierTestData("https://test.vault.azure.net/certificates/test-name/test-version", "https://test.vault.azure.net", "test-name", "test-version").Returns(true),

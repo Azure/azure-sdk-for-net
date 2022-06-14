@@ -59,10 +59,11 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             SystemData systemData = default;
             Optional<string> reservationId = default;
-            Optional<IReadOnlyList<Resources.Models.SubResource>> virtualMachinesAssociated = default;
+            Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
             Optional<DateTimeOffset> provisioningTime = default;
             Optional<string> provisioningState = default;
             Optional<CapacityReservationInstanceView> instanceView = default;
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -141,10 +142,10 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Resources.Models.SubResource> array = new List<Resources.Models.SubResource>();
+                            List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<Resources.Models.SubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
                             }
                             virtualMachinesAssociated = array;
                             continue;
@@ -174,11 +175,21 @@ namespace Azure.ResourceManager.Compute
                             instanceView = CapacityReservationInstanceView.DeserializeCapacityReservationInstanceView(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("timeCreated"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            timeCreated = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new CapacityReservationData(id, name, type, systemData, tags, location, sku, Optional.ToList(zones), reservationId.Value, Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value);
+            return new CapacityReservationData(id, name, type, systemData, tags, location, sku, Optional.ToList(zones), reservationId.Value, Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

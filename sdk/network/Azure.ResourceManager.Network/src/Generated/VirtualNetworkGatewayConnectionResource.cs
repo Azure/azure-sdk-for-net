@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "VirtualNetworkGatewayConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualNetworkGatewayConnectionResource(ArmClient client, VirtualNetworkGatewayConnectionData data) : this(client, new ResourceIdentifier(data.Id))
+        internal VirtualNetworkGatewayConnectionResource(ArmClient client, VirtualNetworkGatewayConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;

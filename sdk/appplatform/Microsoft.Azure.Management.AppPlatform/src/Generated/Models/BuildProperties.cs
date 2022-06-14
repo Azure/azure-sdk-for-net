@@ -41,7 +41,9 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// <param name="env">The environment variables for this build</param>
         /// <param name="triggeredBuildResult"> The build result triggered by
         /// this build</param>
-        public BuildProperties(string relativePath = default(string), string builder = default(string), string agentPool = default(string), string provisioningState = default(string), IDictionary<string, string> env = default(IDictionary<string, string>), TriggeredBuildResult triggeredBuildResult = default(TriggeredBuildResult))
+        /// <param name="resourceRequests">The customized build resource for
+        /// this build</param>
+        public BuildProperties(string relativePath = default(string), string builder = default(string), string agentPool = default(string), string provisioningState = default(string), IDictionary<string, string> env = default(IDictionary<string, string>), TriggeredBuildResult triggeredBuildResult = default(TriggeredBuildResult), BuildResourceRequests resourceRequests = default(BuildResourceRequests))
         {
             RelativePath = relativePath;
             Builder = builder;
@@ -49,6 +51,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
             ProvisioningState = provisioningState;
             Env = env;
             TriggeredBuildResult = triggeredBuildResult;
+            ResourceRequests = resourceRequests;
             CustomInit();
         }
 
@@ -93,6 +96,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "triggeredBuildResult")]
         public TriggeredBuildResult TriggeredBuildResult { get; set; }
+
+        /// <summary>
+        /// Gets or sets the customized build resource for this build
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceRequests")]
+        public BuildResourceRequests ResourceRequests { get; set; }
 
     }
 }

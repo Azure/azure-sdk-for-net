@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> type = default;
             Optional<string> id = default;
             Optional<string> address = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<IReadOnlyList<string>> nextHopIds = default;
             Optional<IReadOnlyList<string>> previousHopIds = default;
             Optional<IReadOnlyList<HopLink>> links = default;
@@ -43,7 +43,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("nextHopIds"))

@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     {
         public const string Private = "Private";
         public const string Groups = "Groups";
+        public const string Community = "Community";
     }
 }

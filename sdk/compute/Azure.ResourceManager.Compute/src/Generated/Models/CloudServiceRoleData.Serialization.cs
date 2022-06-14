@@ -16,18 +16,23 @@ namespace Azure.ResourceManager.Compute
     {
         internal static CloudServiceRoleData DeserializeCloudServiceRoleData(JsonElement element)
         {
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<CloudServiceRoleSku> sku = default;
-            Optional<CloudServiceRoleProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -38,16 +43,6 @@ namespace Azure.ResourceManager.Compute
                         continue;
                     }
                     sku = CloudServiceRoleSku.DeserializeCloudServiceRoleSku(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = CloudServiceRoleProperties.DeserializeCloudServiceRoleProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -62,7 +57,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -70,8 +65,25 @@ namespace Azure.ResourceManager.Compute
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("uniqueId"))
+                        {
+                            uniqueId = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
             }
-            return new CloudServiceRoleData(id, name, type, systemData, location.Value, sku.Value, properties.Value);
+            return new CloudServiceRoleData(id, name, type, systemData, Optional.ToNullable(location), sku.Value, uniqueId.Value);
         }
     }
 }

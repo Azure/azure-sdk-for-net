@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql
     public partial class ServerJobAgentJobExecutionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerJobAgentJobExecutionResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, string jobExecutionId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}";
             return new ResourceIdentifier(resourceId);

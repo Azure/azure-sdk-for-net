@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("publisher");
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(VirtualMachineExtensionType))
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(VirtualMachineExtensionType);
+                writer.WriteStringValue(ExtensionType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -71,6 +71,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("suppressFailures");
                 writer.WriteBooleanValue(SuppressFailures.Value);
             }
+            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            {
+                writer.WritePropertyName("protectedSettingsFromKeyVault");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ProtectedSettingsFromKeyVault);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettingsFromKeyVault.ToString()).RootElement);
+#endif
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -78,8 +87,8 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineScaleSetVmExtensionPatch DeserializeVirtualMachineScaleSetVmExtensionPatch(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceType> type = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
             Optional<string> type0 = default;
@@ -89,6 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<BinaryData> settings = default;
             Optional<BinaryData> protectedSettings = default;
             Optional<bool> suppressFailures = default;
+            Optional<BinaryData> protectedSettingsFromKeyVault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -98,12 +108,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -185,11 +205,21 @@ namespace Azure.ResourceManager.Compute.Models
                             suppressFailures = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("protectedSettingsFromKeyVault"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            protectedSettingsFromKeyVault = BinaryData.FromString(property0.Value.GetRawText());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVmExtensionPatch(id.Value, name.Value, type.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToNullable(suppressFailures));
+            return new VirtualMachineScaleSetVmExtensionPatch(id.Value, name.Value, Optional.ToNullable(type), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value);
         }
     }
 }

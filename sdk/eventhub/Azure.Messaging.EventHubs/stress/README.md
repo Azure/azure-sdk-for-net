@@ -3,9 +3,9 @@ The scenarios in this directory provide a suite of stress tests that test the Ev
 
 Test runs can call any of the following tests:
 - "EventProducerTest"
-- "EventBufferedProducerTest"
+- "BufferedProducerTest"
 - "BurstBufferedProducerTest"
-- "ConcurrentBufferedProducerTest"
+- "ProcessorTest"
 
 Or, you can run all tests with the "--all" flag.
 

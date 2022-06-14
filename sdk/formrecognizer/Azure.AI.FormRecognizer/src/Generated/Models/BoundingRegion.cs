@@ -11,31 +11,31 @@ using System.Linq;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> Bounding box on a specific page of the input. </summary>
+    /// <summary> Bounding polygon on a specific page of the input. </summary>
     public partial class BoundingRegion
     {
         /// <summary> Initializes a new instance of BoundingRegion. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
-        /// <param name="boundingBoxPrivate"> Bounding box on the page, or the entire page if not specified. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="boundingBoxPrivate"/> is null. </exception>
-        internal BoundingRegion(int pageNumber, IEnumerable<float> boundingBoxPrivate)
+        /// <param name="polygon"> Bounding polygon on the page, or the entire page if not specified. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="polygon"/> is null. </exception>
+        internal BoundingRegion(int pageNumber, IEnumerable<float> polygon)
         {
-            if (boundingBoxPrivate == null)
+            if (polygon == null)
             {
-                throw new ArgumentNullException(nameof(boundingBoxPrivate));
+                throw new ArgumentNullException(nameof(polygon));
             }
 
             PageNumber = pageNumber;
-            BoundingBoxPrivate = boundingBoxPrivate.ToList();
+            Polygon = polygon.ToList();
         }
 
         /// <summary> Initializes a new instance of BoundingRegion. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
-        /// <param name="boundingBoxPrivate"> Bounding box on the page, or the entire page if not specified. </param>
-        internal BoundingRegion(int pageNumber, IReadOnlyList<float> boundingBoxPrivate)
+        /// <param name="polygon"> Bounding polygon on the page, or the entire page if not specified. </param>
+        internal BoundingRegion(int pageNumber, IReadOnlyList<float> polygon)
         {
             PageNumber = pageNumber;
-            BoundingBoxPrivate = boundingBoxPrivate;
+            Polygon = polygon;
         }
 
         /// <summary> 1-based page number of page containing the bounding region. </summary>

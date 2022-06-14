@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Applications.Containers
     public partial class ManagedEnvironmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedEnvironmentResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -102,32 +102,32 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a dapr component.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}
         /// Operation Id: DaprComponents_Get
         /// </summary>
-        /// <param name="name"> Name of the Dapr Component. </param>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DaprComponentResource>> GetDaprComponentAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DaprComponentResource>> GetDaprComponentAsync(string componentName, CancellationToken cancellationToken = default)
         {
-            return await GetDaprComponents().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetDaprComponents().GetAsync(componentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a dapr component.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}
         /// Operation Id: DaprComponents_Get
         /// </summary>
-        /// <param name="name"> Name of the Dapr Component. </param>
+        /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DaprComponentResource> GetDaprComponent(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DaprComponentResource> GetDaprComponent(string componentName, CancellationToken cancellationToken = default)
         {
-            return GetDaprComponents().Get(name, cancellationToken);
+            return GetDaprComponents().Get(componentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppCertificateResources in the ManagedEnvironment. </summary>
@@ -139,32 +139,32 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get the specified Certificate.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/certificates/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
-        /// <param name="name"> Name of the Certificate. </param>
+        /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppCertificateResource>> GetContainerAppCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppCertificateResource>> GetContainerAppCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerAppCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the specified Certificate.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/certificates/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}
         /// Operation Id: Certificates_Get
         /// </summary>
-        /// <param name="name"> Name of the Certificate. </param>
+        /// <param name="certificateName"> Name of the Certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerAppCertificateResource> GetContainerAppCertificate(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppCertificateResource> GetContainerAppCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            return GetContainerAppCertificates().Get(name, cancellationToken);
+            return GetContainerAppCertificates().Get(certificateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedEnvironmentStorageResources in the ManagedEnvironment. </summary>
@@ -176,37 +176,37 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get storage for a managedEnvironment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{envName}/storages/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}
         /// Operation Id: ManagedEnvironmentsStorages_Get
         /// </summary>
-        /// <param name="name"> Name of the storage. </param>
+        /// <param name="storageName"> Name of the storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedEnvironmentStorageResource>> GetManagedEnvironmentStorageAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedEnvironmentStorageResource>> GetManagedEnvironmentStorageAsync(string storageName, CancellationToken cancellationToken = default)
         {
-            return await GetManagedEnvironmentStorages().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetManagedEnvironmentStorages().GetAsync(storageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get storage for a managedEnvironment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{envName}/storages/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/storages/{storageName}
         /// Operation Id: ManagedEnvironmentsStorages_Get
         /// </summary>
-        /// <param name="name"> Name of the storage. </param>
+        /// <param name="storageName"> Name of the storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagedEnvironmentStorageResource> GetManagedEnvironmentStorage(string name, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedEnvironmentStorageResource> GetManagedEnvironmentStorage(string storageName, CancellationToken cancellationToken = default)
         {
-            return GetManagedEnvironmentStorages().Get(name, cancellationToken);
+            return GetManagedEnvironmentStorages().Get(storageName, cancellationToken);
         }
 
         /// <summary>
         /// Get the properties of a Managed Environment used to host container apps.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get the properties of a Managed Environment used to host container apps.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Delete a Managed Environment if it does not have any container apps.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Delete a Managed Environment if it does not have any container apps.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Patches a Managed Environment using JSON Merge Patch
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Patches a Managed Environment using JSON Merge Patch
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Update
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Checks if resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/checkNameAvailability
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
         /// <param name="content"> The check name availability request. </param>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Checks if resource name is available.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}/checkNameAvailability
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/checkNameAvailability
         /// Operation Id: Namespaces_CheckNameAvailability
         /// </summary>
         /// <param name="content"> The check name availability request. </param>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Add a tag to the current resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Replace the tags on the resource with the given set.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Removes a tag by key from the resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}
         /// Operation Id: ManagedEnvironments_Get
         /// </summary>
         /// <param name="key"> The key for the tag. </param>

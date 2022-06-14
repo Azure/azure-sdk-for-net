@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             do
             {
-                message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+                message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
                 if (message != null)
                 {
                     count++;
@@ -339,6 +339,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     await TestReceiveFromFunction.ReceiveActions.ReceiveMessagesAsync(1));
                 Assert.ThrowsAsync<InvalidOperationException>(async () =>
                     await TestReceiveFromFunction.ReceiveActions.ReceiveDeferredMessagesAsync(Array.Empty<long>()));
+                await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_ReceiveFromDeadLetterQueue()
+        {
+            await WriteTopicMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestReceiveFromDeadLetterQueue>();
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
                 await host.StopAsync();
             }
         }
@@ -1472,6 +1485,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        public class TestReceiveFromDeadLetterQueue
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(TopicNameKey, FirstSubscriptionNameKey)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions)
+            {
+                await messageActions.DeadLetterMessageAsync(message, "DLQ");
+            }
+
+            public static async Task ReceiveFromDeadLetterAsync(
+                [ServiceBusTrigger(TopicNameKey,  FirstSubscriptionNameKey + "/$deadletterqueue")]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions)
+            {
+                Assert.AreEqual("DLQ", message.DeadLetterReason);
+                await messageActions.CompleteMessageAsync(message);
+                _waitHandle1.Set();
+            }
+        }
+
         public class TestReceiveFromFunction_Batch
         {
             public static ServiceBusReceiveActions ReceiveActions { get; private set; }
@@ -1612,21 +1646,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey)] string message)
             {
                 ServiceBusMultipleTestJobsBase.ProcessMessages(new string[] { message });
-            }
-        }
-
-        public class DrainModeHelper
-        {
-            public static async Task WaitForCancellationAsync(CancellationToken cancellationToken)
-            {
-                // Wait until the drain operation begins, signalled by the cancellation token
-                int elapsedTimeMills = 0;
-                while (elapsedTimeMills < DrainWaitTimeoutMills && !cancellationToken.IsCancellationRequested)
-                {
-                    await Task.Delay(elapsedTimeMills += 500);
-                }
-                // Allow some time for the Service Bus SDK to start draining before returning
-                await Task.Delay(DrainSleepMills);
             }
         }
 

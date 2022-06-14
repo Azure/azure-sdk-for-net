@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("days");
                 writer.WriteNumberValue(Days.Value);
             }
+            if (Optional.IsDefined(AllowPermanentDelete))
+            {
+                writer.WritePropertyName("allowPermanentDelete");
+                writer.WriteBooleanValue(AllowPermanentDelete.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<bool> enabled = default;
             Optional<int> days = default;
+            Optional<bool> allowPermanentDelete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -54,8 +60,18 @@ namespace Azure.ResourceManager.Storage.Models
                     days = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("allowPermanentDelete"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    allowPermanentDelete = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new DeleteRetentionPolicy(Optional.ToNullable(enabled), Optional.ToNullable(days));
+            return new DeleteRetentionPolicy(Optional.ToNullable(enabled), Optional.ToNullable(days), Optional.ToNullable(allowPermanentDelete));
         }
     }
 }

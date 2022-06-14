@@ -40,8 +40,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="provisioningState">The current state of the gallery
-        /// image version.</param>
+        /// <param name="provisioningState">Possible values include:
+        /// 'Creating', 'Updating', 'Failed', 'Succeeded', 'Deleting',
+        /// 'Migrating'</param>
         public GalleryImageVersion(string location, GalleryImageVersionStorageProfile storageProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
             : base(location, id, name, type, tags)
         {
@@ -63,13 +64,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public GalleryImageVersionPublishingProfile PublishingProfile { get; set; }
 
         /// <summary>
-        /// Gets the current state of the gallery image version.
-        /// </summary>
-        /// <remarks>
-        /// The provisioning state, which only appears in the response.
-        /// Possible values include: 'Creating', 'Updating', 'Failed',
+        /// Gets possible values include: 'Creating', 'Updating', 'Failed',
         /// 'Succeeded', 'Deleting', 'Migrating'
-        /// </remarks>
+        /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 

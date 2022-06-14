@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
             ResourceType type = default;
             SystemData systemData = default;
             Optional<GalleryImageVersionPublishingProfile> publishingProfile = default;
-            Optional<GalleryImageVersionPropertiesProvisioningState> provisioningState = default;
+            Optional<GalleryProvisioningState> provisioningState = default;
             Optional<GalleryImageVersionStorageProfile> storageProfile = default;
             Optional<ReplicationStatus> replicationStatus = default;
             foreach (var property in element.EnumerateObject())
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new GalleryImageVersionPropertiesProvisioningState(property0.Value.GetString());
+                            provisioningState = new GalleryProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"))

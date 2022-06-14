@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
         #endregion
 
         #region Disk
-        public static void AssertDisk(DiskData disk1, DiskData disk2)
+        public static void AssertDisk(ManagedDiskData disk1, ManagedDiskData disk2)
         {
             AssertTrackedResource(disk1, disk2);
             Assert.AreEqual(disk1.BurstingEnabled, disk2.BurstingEnabled);
@@ -127,15 +127,15 @@ namespace Azure.ResourceManager.Compute.Tests.Helpers
             Assert.AreEqual(disk1.CreationData?.UploadSizeBytes, disk2.CreationData?.UploadSizeBytes);
         }
 
-        public static DiskData GetEmptyDiskData(AzureLocation location, IDictionary<string, string> tags = null)
+        public static ManagedDiskData GetEmptyDiskData(AzureLocation location, IDictionary<string, string> tags = null)
         {
-            return new DiskData(location)
+            return new ManagedDiskData(location)
             {
                 Sku = new DiskSku()
                 {
                     Name = DiskStorageAccountTypes.StandardLRS
                 },
-                CreationData = new CreationData(DiskCreateOption.Empty),
+                CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
             };
         }
