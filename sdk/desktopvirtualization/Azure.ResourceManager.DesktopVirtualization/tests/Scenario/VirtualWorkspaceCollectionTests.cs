@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
         {
         }
 
-        [Test]
+        [TestCase]
         public async Task WorkspaceCrud()
         {
-            var workspaceName = "testWorkspaceCrudWS";
-            var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
+            string workspaceName = "testWorkspaceCrudWS";
+            string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
+            ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
-            var workspaceCollection = rg.GetVirtualWorkspaces();
-            var workspaceData = new VirtualWorkspaceData(
-                "brazilsouth");
+            VirtualWorkspaceCollection workspaceCollection = rg.GetVirtualWorkspaces();
+            VirtualWorkspaceData workspaceData = new VirtualWorkspaceData(
+                DefaultLocation);
 
-            var opWorkspaceCreate = await workspaceCollection.CreateOrUpdateAsync(
+            ArmOperation<VirtualWorkspaceResource> opWorkspaceCreate = await workspaceCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 workspaceName,
                 workspaceData);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             Assert.IsTrue(opWorkspaceCreate.HasCompleted);
             Assert.AreEqual(opWorkspaceCreate.Value.Data.Name, workspaceName);
 
-            var getOp = await workspaceCollection.GetAsync(
+            Response<VirtualWorkspaceResource> getOp = await workspaceCollection.GetAsync(
                 workspaceName);
 
             Assert.AreEqual(workspaceName, getOp.Value.Data.Name);
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             getOp = await workspaceCollection.GetAsync(
                 workspaceName);
 
-            var workspace = getOp.Value;
-            var deleteOp = await workspace.DeleteAsync(WaitUntil.Completed);
+            VirtualWorkspaceResource workspace = getOp.Value;
+            ArmOperation deleteOp = await workspace.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 

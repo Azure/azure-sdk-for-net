@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             LoadBalancerType expectedLoadBalancerType,
             PreferredAppGroupType preferredAppGroupType)
         {
-            var hostPoolName = $"testHostPoolCrud{caseNumber}";
+            string hostPoolName = $"testHostPoolCrud{caseNumber}";
 
-            var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
+            string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
+            ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
-            var hostPoolCollection = rg.GetHostPools();
-            var hostPoolData = new HostPoolData(
-                "brazilsouth",
+            HostPoolCollection hostPoolCollection = rg.GetHostPools();
+            HostPoolData hostPoolData = new HostPoolData(
+                DefaultLocation,
                 hostPoolType,
                 loadBalancerType,
                 preferredAppGroupType);
 
-            var op = await hostPoolCollection.CreateOrUpdateAsync(
+            ArmOperation<HostPoolResource> op = await hostPoolCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             Assert.IsTrue(op.HasCompleted);
             Assert.AreEqual(op.Value.Data.Name, hostPoolName);
 
-            var getOp = await hostPoolCollection.GetAsync(
+            Response<HostPoolResource> getOp = await hostPoolCollection.GetAsync(
                 hostPoolName);
 
             Assert.AreEqual(hostPoolName, getOp.Value.Data.Name);
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             getOp = await hostPoolCollection.GetAsync(
                 hostPoolName);
 
-            var hostPool = getOp.Value;
-            var deleteOp = await hostPool.DeleteAsync(WaitUntil.Completed);
+            HostPoolResource hostPool = getOp.Value;
+            ArmOperation deleteOp = await hostPool.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 

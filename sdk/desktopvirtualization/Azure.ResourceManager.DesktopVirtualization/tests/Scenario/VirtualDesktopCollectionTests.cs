@@ -25,31 +25,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
         {
         }
 
-        [Test]
+        [TestCase]
         public async Task DesktopApplicationCrud()
         {
-            var hostPoolName = "testDesktopApplicationCrudHP";
-            var applicationGroupName = "testDesktopApplicationCrudAG";
+            string hostPoolName = "testDesktopApplicationCrudHP";
+            string applicationGroupName = "testDesktopApplicationCrudAG";
 
-            var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
+            string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
+            ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
-            var hostPoolCollection = rg.GetHostPools();
-            var hostPoolData = new HostPoolData(
-                "brazilsouth",
+            HostPoolCollection hostPoolCollection = rg.GetHostPools();
+            HostPoolData hostPoolData = new HostPoolData(
+                DefaultLocation,
                 HostPoolType.Pooled,
                 LoadBalancerType.BreadthFirst,
                 PreferredAppGroupType.Desktop);
 
-            var opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
+            ArmOperation<HostPoolResource> opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
 
-            var agCollection = rg.GetVirtualApplicationGroups();
-            var agData = new VirtualApplicationGroupData("brazilsouth", opHostPoolCreate.Value.Data.Id, ApplicationGroupType.Desktop);
+            VirtualApplicationGroupCollection agCollection = rg.GetVirtualApplicationGroups();
+            VirtualApplicationGroupData agData = new VirtualApplicationGroupData(DefaultLocation, opHostPoolCreate.Value.Data.Id, ApplicationGroupType.Desktop);
 
-            var opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
+            ArmOperation<VirtualApplicationGroupResource> opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 applicationGroupName,
                 agData);
@@ -58,23 +58,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             Assert.IsTrue(opApplicationGroupCreate.HasCompleted);
             Assert.AreEqual(opApplicationGroupCreate.Value.Data.Name, applicationGroupName);
 
-            var desktopApplicationGroup = opApplicationGroupCreate.Value;
+            VirtualApplicationGroupResource desktopApplicationGroup = opApplicationGroupCreate.Value;
 
-            var desktopCollection = desktopApplicationGroup.GetVirtualDesktops();
+            VirtualDesktopCollection desktopCollection = desktopApplicationGroup.GetVirtualDesktops();
 
             AsyncPageable<VirtualDesktopResource> desktops = desktopCollection.GetAllAsync();
 
             Assert.IsNotNull(desktops);
 
-            var desktopList = await desktops.ToEnumerableAsync();
+            List<VirtualDesktopResource> desktopList = await desktops.ToEnumerableAsync();
 
             Assert.AreEqual(1, desktopList.Count);
 
-            var desktop = desktopList[0];
+            VirtualDesktopResource desktop = desktopList[0];
 
             await desktop.UpdateAsync(new VirtualDesktopPatch { Description = "Updated", FriendlyName = "UpdatedFriendlyName" });
 
-            var updatedDesktop = await desktopCollection.GetAsync(desktop.Id.Name);
+            Response<VirtualDesktopResource> updatedDesktop = await desktopCollection.GetAsync(desktop.Id.Name);
 
             Assert.IsNotNull(updatedDesktop);
 
@@ -82,13 +82,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             Assert.AreEqual("UpdatedFriendlyName", updatedDesktop.Value.Data.FriendlyName);
 
-            var getOp = await agCollection.GetAsync(
+            Response<VirtualApplicationGroupResource> getOp = await agCollection.GetAsync(
                 applicationGroupName);
 
             Assert.AreEqual(applicationGroupName, getOp.Value.Data.Name);
 
-            var applicationGroup = getOp.Value;
-            var deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
+            VirtualApplicationGroupResource applicationGroup = getOp.Value;
+            ArmOperation deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 

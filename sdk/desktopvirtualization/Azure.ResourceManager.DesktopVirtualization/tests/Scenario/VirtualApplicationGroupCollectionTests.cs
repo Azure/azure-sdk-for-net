@@ -25,31 +25,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
         {
         }
 
-        [Test]
+        [TestCase]
         public async Task DesktopApplicationGroupCrud()
         {
-            var hostPoolName = "testDesktopApplicationGroupCrudHP";
-            var applicationGroupName = "testDesktopApplicationGroupCrudAG";
+            string hostPoolName = "testDesktopApplicationGroupCrudHP";
+            string applicationGroupName = "testDesktopApplicationGroupCrudAG";
 
-            var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
+            string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
+            ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
-            var hostPoolCollection = rg.GetHostPools();
-            var hostPoolData = new HostPoolData(
-                "brazilsouth",
+            HostPoolCollection hostPoolCollection = rg.GetHostPools();
+            HostPoolData hostPoolData = new HostPoolData(
+                DefaultLocation,
                 HostPoolType.Pooled,
                 LoadBalancerType.BreadthFirst,
                 PreferredAppGroupType.Desktop);
 
-            var opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
+            ArmOperation<HostPoolResource> opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
 
-            var agCollection = rg.GetVirtualApplicationGroups();
-            var agData = new VirtualApplicationGroupData("brazilsouth", opHostPoolCreate.Value.Data.Id, ApplicationGroupType.Desktop);
+            VirtualApplicationGroupCollection agCollection = rg.GetVirtualApplicationGroups();
+            VirtualApplicationGroupData agData = new VirtualApplicationGroupData(DefaultLocation, opHostPoolCreate.Value.Data.Id, ApplicationGroupType.Desktop);
 
-            var opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
+            ArmOperation<VirtualApplicationGroupResource> opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 applicationGroupName,
                 agData);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             Assert.IsTrue(opApplicationGroupCreate.HasCompleted);
             Assert.AreEqual(opApplicationGroupCreate.Value.Data.Name, applicationGroupName);
 
-            var getOp = await agCollection.GetAsync(
+            Response<VirtualApplicationGroupResource> getOp = await agCollection.GetAsync(
                 applicationGroupName);
 
             Assert.AreEqual(applicationGroupName, getOp.Value.Data.Name);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             getOp = await agCollection.GetAsync(
                 applicationGroupName);
 
-            var applicationGroup = getOp.Value;
-            var deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
+            VirtualApplicationGroupResource applicationGroup = getOp.Value;
+            ArmOperation deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
@@ -103,31 +103,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             await opHostPoolCreate.Value.DeleteAsync(WaitUntil.Completed);
         }
 
-        [Test]
+        [TestCase]
         public async Task RemoteApplicationGroupCrud()
         {
-            var hostPoolName = "testRemoteApplicationGroupCrudHP";
-            var applicationGroupName = "testRemoteApplicationGroupCrudAG";
+            string hostPoolName = "testRemoteApplicationGroupCrudHP";
+            string applicationGroupName = "testRemoteApplicationGroupCrudAG";
 
-            var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
+            string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
+            ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
-            var hostPoolCollection = rg.GetHostPools();
-            var hostPoolData = new HostPoolData(
-                "brazilsouth",
+            HostPoolCollection hostPoolCollection = rg.GetHostPools();
+            HostPoolData hostPoolData = new HostPoolData(
+                DefaultLocation,
                 HostPoolType.Pooled,
                 LoadBalancerType.BreadthFirst,
                 PreferredAppGroupType.Desktop);
 
-            var opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
+            ArmOperation<HostPoolResource> opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
 
-            var agCollection = rg.GetVirtualApplicationGroups();
-            var agData = new VirtualApplicationGroupData("brazilsouth", opHostPoolCreate.Value.Data.Id, ApplicationGroupType.RemoteApp);
+            VirtualApplicationGroupCollection agCollection = rg.GetVirtualApplicationGroups();
+            VirtualApplicationGroupData agData = new VirtualApplicationGroupData(DefaultLocation, opHostPoolCreate.Value.Data.Id, ApplicationGroupType.RemoteApp);
 
-            var op = await agCollection.CreateOrUpdateAsync(
+            ArmOperation<VirtualApplicationGroupResource> op = await agCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 applicationGroupName,
                 agData);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             Assert.IsTrue(op.HasCompleted);
             Assert.AreEqual(op.Value.Data.Name, applicationGroupName);
 
-            var getOp = await agCollection.GetAsync(
+            Response<VirtualApplicationGroupResource> getOp = await agCollection.GetAsync(
                 applicationGroupName);
 
             Assert.AreEqual(applicationGroupName, getOp.Value.Data.Name);
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             getOp = await agCollection.GetAsync(
                 applicationGroupName);
 
-            var applicationGroup = getOp.Value;
-            var deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
+            VirtualApplicationGroupResource applicationGroup = getOp.Value;
+            ArmOperation deleteOp = await applicationGroup.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(deleteOp);
 
@@ -179,6 +179,150 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             }
 
             await opHostPoolCreate.Value.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [TestCase]
+        public async Task RemoteApplicationGroupList0AG()
+        {
+            string hostPoolName = "testRemoteApplicationGroupList0AGHP";
+
+            string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
+            ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
+            Assert.IsNotNull(rg);
+            HostPoolCollection hostPoolCollection = rg.GetHostPools();
+            HostPoolData hostPoolData = new HostPoolData(
+                DefaultLocation,
+                HostPoolType.Pooled,
+                LoadBalancerType.BreadthFirst,
+                PreferredAppGroupType.Desktop);
+
+            ArmOperation<HostPoolResource> opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                hostPoolName,
+                hostPoolData);
+
+            VirtualApplicationGroupCollection agCollection = rg.GetVirtualApplicationGroups();
+
+            AsyncPageable<VirtualApplicationGroupResource> agListPaged = agCollection.GetAllAsync();
+
+            List<VirtualApplicationGroupResource> agList = await agListPaged.ToEnumerableAsync<VirtualApplicationGroupResource>();
+
+            Assert.AreEqual(0, agList.Count);
+
+            await opHostPoolCreate.Value.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [TestCase]
+        public async Task RemoteApplicationGroupList1AG()
+        {
+            string hostPoolName = "testRemoteApplicationGroupList1AGHP";
+            string applicationGroupName = "testRemoteApplicationGroupList1AGAG";
+
+            string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
+            ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
+            Assert.IsNotNull(rg);
+            HostPoolCollection hostPoolCollection = rg.GetHostPools();
+            HostPoolData hostPoolData = new HostPoolData(
+                DefaultLocation,
+                HostPoolType.Pooled,
+                LoadBalancerType.BreadthFirst,
+                PreferredAppGroupType.Desktop);
+
+            ArmOperation<HostPoolResource> opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                hostPoolName,
+                hostPoolData);
+
+            VirtualApplicationGroupCollection agCollection = rg.GetVirtualApplicationGroups();
+            VirtualApplicationGroupData agData = new VirtualApplicationGroupData(DefaultLocation, opHostPoolCreate.Value.Data.Id, ApplicationGroupType.RemoteApp);
+
+            ArmOperation<VirtualApplicationGroupResource> op = await agCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                applicationGroupName,
+                agData);
+
+            AsyncPageable<VirtualApplicationGroupResource> agListPaged = agCollection.GetAllAsync();
+
+            IAsyncEnumerable<Page<VirtualApplicationGroupResource>> f = agListPaged.AsPages();
+
+            var pageEnumerator = f.GetAsyncEnumerator();
+
+            var b = await pageEnumerator.MoveNextAsync();
+
+            Assert.IsTrue(b);
+
+            Assert.AreEqual(1, pageEnumerator.Current.Values.Count);
+
+            Assert.AreEqual(null, pageEnumerator.Current.ContinuationToken);
+
+            await pageEnumerator.Current.Values[0].DeleteAsync(WaitUntil.Completed);
+
+            await opHostPoolCreate.Value.DeleteAsync(WaitUntil.Completed);
+        }
+
+        public static List<TestCaseData> applicationGroupListData = new List<TestCaseData>
+        {
+            new TestCaseData(0),
+            new TestCaseData(1),
+            new TestCaseData(10),
+        };
+
+        [TestCaseSource("applicationGroupListData")]
+        public async Task RemoteApplicationGroupList(
+            int numberOfApplicationGroups)
+        {
+            string hostPoolName = "RemoteApplicationGroupListHP";
+            string applicationGroupName = "RemoteApplicationGroupListAG";
+            List<string> applicationGroupNameList = new List<string>();
+
+            for (int i = 0; i < numberOfApplicationGroups; i++)
+            {
+                applicationGroupNameList.Add($"{applicationGroupName}{i}");
+            }
+
+            string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
+            ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
+            Assert.IsNotNull(rg);
+            HostPoolCollection hostPoolCollection = rg.GetHostPools();
+            HostPoolData hostPoolData = new HostPoolData(
+                DefaultLocation,
+                HostPoolType.Pooled,
+                LoadBalancerType.BreadthFirst,
+                PreferredAppGroupType.Desktop);
+
+            ArmOperation<HostPoolResource> opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                hostPoolName,
+                hostPoolData);
+
+            VirtualApplicationGroupCollection agCollection = rg.GetVirtualApplicationGroups();
+            VirtualApplicationGroupData agData = new VirtualApplicationGroupData(
+                DefaultLocation, opHostPoolCreate.Value.Data.Id, ApplicationGroupType.RemoteApp);
+
+            List<Task<ArmOperation<VirtualApplicationGroupResource>>> createTaskList = new List<Task<ArmOperation<VirtualApplicationGroupResource>>>();
+
+            for (int i=0; i<numberOfApplicationGroups; i++)
+            {
+                createTaskList.Add(agCollection.CreateOrUpdateAsync(
+                    WaitUntil.Started,
+                    applicationGroupNameList[i],
+                    agData));
+            }
+
+            if (createTaskList.Count > 0)
+            {
+                Task.WaitAll(createTaskList.ToArray());
+            }
+
+            AsyncPageable<VirtualApplicationGroupResource> agListPaged = agCollection.GetAllAsync();
+
+            IAsyncEnumerable<Page<VirtualApplicationGroupResource>> f = agListPaged.AsPages();
+
+            var pageEnumerator = f.GetAsyncEnumerator();
+
+            await pageEnumerator.MoveNextAsync();
+            Assert.IsNull(pageEnumerator.Current.ContinuationToken);
+            Assert.AreEqual(numberOfApplicationGroups, pageEnumerator.Current.Values.Count);
         }
     }
 }

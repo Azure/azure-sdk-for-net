@@ -25,31 +25,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
         {
         }
 
-        [Test]
+        [TestCase]
         public async Task RemoteApplicationCrud()
         {
-            var hostPoolName = "testRemoteApplicationCrudHP";
-            var applicationGroupName = "testRemoteApplicationCrudAG";
+            string hostPoolName = "testRemoteApplicationCrudHP";
+            string applicationGroupName = "testRemoteApplicationCrudAG";
 
-            var resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", "azsdkRG");
-            var rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
+            string resourceGroupName = Recording.GetVariable("DESKTOPVIRTUALIZATION_RESOURCE_GROUP", DefaultResourceGroupName);
+            ResourceGroupResource rg = (ResourceGroupResource)await ResourceGroups.GetAsync(resourceGroupName);
             Assert.IsNotNull(rg);
-            var hostPoolCollection = rg.GetHostPools();
-            var hostPoolData = new HostPoolData(
-                "brazilsouth",
+            HostPoolCollection hostPoolCollection = rg.GetHostPools();
+            HostPoolData hostPoolData = new HostPoolData(
+                DefaultLocation,
                 HostPoolType.Pooled,
                 LoadBalancerType.BreadthFirst,
                 PreferredAppGroupType.Desktop);
 
-            var opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
+            ArmOperation<HostPoolResource> opHostPoolCreate = await hostPoolCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 hostPoolName,
                 hostPoolData);
 
-            var agCollection = rg.GetVirtualApplicationGroups();
-            var agData = new VirtualApplicationGroupData("brazilsouth", opHostPoolCreate.Value.Data.Id, ApplicationGroupType.RemoteApp);
+            VirtualApplicationGroupCollection agCollection = rg.GetVirtualApplicationGroups();
+            VirtualApplicationGroupData agData = new VirtualApplicationGroupData(DefaultLocation, opHostPoolCreate.Value.Data.Id, ApplicationGroupType.RemoteApp);
 
-            var opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
+            ArmOperation<VirtualApplicationGroupResource> opApplicationGroupCreate = await agCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 applicationGroupName,
                 agData);
@@ -58,28 +58,28 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
             Assert.IsTrue(opApplicationGroupCreate.HasCompleted);
             Assert.AreEqual(opApplicationGroupCreate.Value.Data.Name, applicationGroupName);
 
-            var railApplicationGroup = opApplicationGroupCreate.Value;
+            VirtualApplicationGroupResource railApplicationGroup = opApplicationGroupCreate.Value;
 
-            var railApplications = railApplicationGroup.GetVirtualApplications();
+            VirtualApplicationCollection railApplications = railApplicationGroup.GetVirtualApplications();
 
             AsyncPageable<VirtualApplicationResource> applications = railApplications.GetAllAsync();
 
             Assert.IsNotNull(applications);
 
-            var applicationData = new VirtualApplicationData(CommandLineSetting.DoNotAllow);
+            VirtualApplicationData applicationData = new VirtualApplicationData(CommandLineSetting.DoNotAllow);
             applicationData.FilePath = "c:\\notepad.exe";
             applicationData.IconPath = "c:\\notepad.exe";
             applicationData.Description = "Note Pad";
             applicationData.ShowInPortal = true;
 
-            var opCreate = await railApplications.CreateOrUpdateAsync(WaitUntil.Completed, "notepad", applicationData);
+            ArmOperation<VirtualApplicationResource> opCreate = await railApplications.CreateOrUpdateAsync(WaitUntil.Completed, "notepad", applicationData);
 
             Assert.IsNotNull(opCreate);
 
             Assert.AreEqual("testRemoteApplicationCrudAG/notepad", opCreate.Value.Data.Name);
             Assert.AreEqual("Note Pad", opCreate.Value.Data.Description);
 
-            var opGet = await railApplications.GetAsync("notepad");
+            Response<VirtualApplicationResource> opGet = await railApplications.GetAsync("notepad");
 
             Assert.IsNotNull(opGet);
 
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Tests.Tests
 
             applicationData.Description = "NotePad";
 
-            var opUpdate = await railApplications.CreateOrUpdateAsync(WaitUntil.Completed, "notepad", applicationData);
+            ArmOperation<VirtualApplicationResource> opUpdate = await railApplications.CreateOrUpdateAsync(WaitUntil.Completed, "notepad", applicationData);
 
             Assert.IsNotNull(opUpdate);
 
             Assert.AreEqual("testRemoteApplicationCrudAG/notepad", opUpdate.Value.Data.Name);
             Assert.AreEqual("NotePad", opUpdate.Value.Data.Description);
 
-            var opDelete = await opUpdate.Value.DeleteAsync(WaitUntil.Completed);
+            ArmOperation opDelete = await opUpdate.Value.DeleteAsync(WaitUntil.Completed);
 
             Assert.IsNotNull(opDelete);
 
