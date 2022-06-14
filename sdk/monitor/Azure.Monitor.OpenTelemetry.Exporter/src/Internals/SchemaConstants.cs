@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
@@ -21,6 +23,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </remarks>
         public const int KVP_MaxKeyLength = 150;
         public const int KVP_MaxValueLength = 8192;
+
+        /// <remarks>
+        /// Represents 1 tick (1 ten-millionth of a second) less than 1000 days.
+        /// </remarks>
+        public const string Duration_MaxValue = "999.23:59:59.9999999";
 
         // TODO: AvailabilityData is currently not in use (2022-06-10).
         public const int AvailabilityData_Id_MaxLength = 512;
@@ -79,7 +86,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int PageViewPerfData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
         public const int PageViewPerfData_Duration_LessThanDays = 1000;
 
-        // TODO: Apply these rules
         public const int RemoteDependencyData_Id_MaxLength = 512;
         public const int RemoteDependencyData_Name_MaxLength = 1024;
         public const int RemoteDependencyData_ResultCode_MaxLength = 1024;
@@ -88,19 +94,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public const int RemoteDependencyData_Target_MaxLength = 1024;
         public const int RemoteDependencyData_Properties_MaxKeyLength = KVP_MaxKeyLength;
         public const int RemoteDependencyData_Properties_MaxValueLength = KVP_MaxValueLength;
-        public const int RemoteDependencyData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
-        public const int RemoteDependencyData_Duration_LessThanDays = 1000;
+        public const int RemoteDependencyData_Measurements_MaxKeyLength = KVP_MaxKeyLength; // TODO: RemoteDependencyData.Measurements is currently not in use (2022-06-10).
+        public static readonly TimeSpan RemoteDependencyData_Duration_LessThanDays = TimeSpan.FromDays(1000);
 
-        // TODO: Apply these rules
         public const int RequestData_Id_MaxLength = 512;
         public const int RequestData_Name_MaxLength = 1024;
         public const int RequestData_ResponseCode_MaxLength = 1024;
-        public const int RequestData_Source_MaxLength = 1024;
+        public const int RequestData_Source_MaxLength = 1024; // TODO: RequestData.Source is currently not in use (2022-06-10).
         public const int RequestData_Url_MaxLength = 2048;
         public const int RequestData_Properties_MaxKeyLength = KVP_MaxKeyLength;
         public const int RequestData_Properties_MaxValueLength = KVP_MaxValueLength;
-        public const int RequestData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
-        public const int RequestData_Duration_LessThanDays = 1000;
+        public const int RequestData_Measurements_MaxKeyLength = KVP_MaxKeyLength; // TODO: RequestData.Measurements is currently not in use (2022-06-10).
+        public static readonly TimeSpan RequestData_Duration_LessThanDays = TimeSpan.FromDays(1000);
 
         public const int StackFrame_Method_MaxLength = 1024;
         public const int StackFrame_Assembly_MaxLength = 1024;
