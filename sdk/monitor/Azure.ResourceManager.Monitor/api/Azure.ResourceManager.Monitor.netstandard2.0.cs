@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class AutoscaleNotification
     {
-        public AutoscaleNotification(Azure.ResourceManager.Monitor.Models.OperationType operation) { }
+        public AutoscaleNotification() { }
         public Azure.ResourceManager.Monitor.Models.EmailNotification Email { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.OperationType Operation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.WebhookNotification> Webhooks { get { throw null; } }

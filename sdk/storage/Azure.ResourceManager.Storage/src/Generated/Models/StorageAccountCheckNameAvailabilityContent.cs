@@ -14,9 +14,8 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of StorageAccountCheckNameAvailabilityContent. </summary>
         /// <param name="name"> The storage account name. </param>
-        /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public StorageAccountCheckNameAvailabilityContent(string name, Type resourceType)
+        public StorageAccountCheckNameAvailabilityContent(string name)
         {
             if (name == null)
             {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             Name = name;
-            ResourceType = resourceType;
+            ResourceType = Type.MicrosoftStorageStorageAccounts;
         }
 
         /// <summary> The storage account name. </summary>

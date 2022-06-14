@@ -749,23 +749,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.StoragePermission left, Azure.ResourceManager.KeyVault.Models.StoragePermission right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Type : System.IEquatable<Azure.ResourceManager.KeyVault.Models.Type>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Type(string value) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.Type MicrosoftKeyVaultVaults { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.KeyVault.Models.Type other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.Type left, Azure.ResourceManager.KeyVault.Models.Type right) { throw null; }
-        public static implicit operator Azure.ResourceManager.KeyVault.Models.Type (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.Type left, Azure.ResourceManager.KeyVault.Models.Type right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class VaultAccessPolicyParameters : Azure.ResourceManager.Models.ResourceData
     {
         public VaultAccessPolicyParameters(Azure.ResourceManager.KeyVault.Models.VaultAccessPolicyProperties properties) { }
@@ -791,9 +774,9 @@ namespace Azure.ResourceManager.KeyVault.Models
     }
     public partial class VaultNameAvailabilityContent
     {
-        public VaultNameAvailabilityContent(string name, Azure.ResourceManager.KeyVault.Models.Type resourceType) { }
+        public VaultNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.KeyVault.Models.Type ResourceType { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
     }
     public partial class VaultNameAvailabilityResult
     {

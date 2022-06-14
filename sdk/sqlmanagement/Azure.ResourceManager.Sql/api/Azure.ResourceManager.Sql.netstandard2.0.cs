@@ -4631,7 +4631,7 @@ namespace Azure.ResourceManager.Sql.Models
     }
     public partial class CheckNameAvailabilityContent
     {
-        public CheckNameAvailabilityContent(string name, Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType resourceType) { }
+        public CheckNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.CheckNameAvailabilityResourceType ResourceType { get { throw null; } }
     }

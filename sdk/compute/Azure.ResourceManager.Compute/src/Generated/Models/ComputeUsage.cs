@@ -13,18 +13,30 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ComputeUsage
     {
         /// <summary> Initializes a new instance of ComputeUsage. </summary>
-        /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal ComputeUsage(UsageUnit unit, int currentValue, long limit, UsageName name)
+        internal ComputeUsage(int currentValue, long limit, UsageName name)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Unit = UsageUnit.Count;
+            CurrentValue = currentValue;
+            Limit = limit;
+            Name = name;
+        }
+
+        /// <summary> Initializes a new instance of ComputeUsage. </summary>
+        /// <param name="unit"> An enum describing the unit of usage measurement. </param>
+        /// <param name="currentValue"> The current usage of the resource. </param>
+        /// <param name="limit"> The maximum permitted usage of the resource. </param>
+        /// <param name="name"> The name of the type of usage. </param>
+        internal ComputeUsage(UsageUnit unit, int currentValue, long limit, UsageName name)
+        {
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;

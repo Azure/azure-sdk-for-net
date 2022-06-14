@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of DatabaseAccountCreateOrUpdateContent. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
-        /// <param name="databaseAccountOfferType"> The offer type for the database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
-        public DatabaseAccountCreateOrUpdateContent(AzureLocation location, IEnumerable<DatabaseAccountLocation> locations, DatabaseAccountOfferType databaseAccountOfferType) : base(location)
+        public DatabaseAccountCreateOrUpdateContent(AzureLocation location, IEnumerable<DatabaseAccountLocation> locations) : base(location)
         {
             if (locations == null)
             {
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             Locations = locations.ToList();
-            DatabaseAccountOfferType = databaseAccountOfferType;
+            DatabaseAccountOfferType = DatabaseAccountOfferType.Standard;
             IPRules = new ChangeTrackingList<IPAddressOrRange>();
             Capabilities = new ChangeTrackingList<DatabaseAccountCapability>();
             VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();

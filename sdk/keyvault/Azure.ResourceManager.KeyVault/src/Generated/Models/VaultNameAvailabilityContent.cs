@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -14,9 +15,8 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         /// <summary> Initializes a new instance of VaultNameAvailabilityContent. </summary>
         /// <param name="name"> The vault name. </param>
-        /// <param name="resourceType"> The type of resource, Microsoft.KeyVault/vaults. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public VaultNameAvailabilityContent(string name, Type resourceType)
+        public VaultNameAvailabilityContent(string name)
         {
             if (name == null)
             {
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             Name = name;
-            ResourceType = resourceType;
+            ResourceType = "Microsoft.KeyVault/vaults";
         }
 
         /// <summary> The vault name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.KeyVault/vaults. </summary>
-        public Type ResourceType { get; }
+        public ResourceType ResourceType { get; }
     }
 }
