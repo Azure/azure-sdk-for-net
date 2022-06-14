@@ -131,27 +131,20 @@ public class Program
                         var processorTest = new ProcessorTest(testConfiguration, metrics, opts.Role);
                         testScenarioTasks.Add(processorTest.RunTestAsync(cancellationSource.Token));
                         break;
-
-                    case TestScenario.BufferedCPU:
-                        environment.TryGetValue(EnvironmentVariables.EventHubBufferedProducerTest, out eventHubName);
-                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
-                        break;
-
-                    case TestScenario.ProducerCPU:
-                        environment.TryGetValue(EnvironmentVariables.EventHubEventProducerTest, out eventHubName);
-                        testConfiguration.EventHub = PromptForResources("Event Hub", testName, eventHubName, opts.Interactive);
-                        break;
                 }
             }
 
-            while (!cancellationSource.Token.IsCancellationRequested)
+            var tasksWaiting = Task.WhenAll(testScenarioTasks);
+
+            while (tasksWaiting.Status == TaskStatus.Running)
             {
                 metrics.UpdateEnvironmentStatistics();
 
                 await Task.Delay(TimeSpan.FromMinutes(5), cancellationSource.Token).ConfigureAwait(false);
             }
+
+            await tasksWaiting.ConfigureAwait(false);
             // Wait for all tests scenarios to finish before returning.
-            await Task.WhenAll(testScenarioTasks).ConfigureAwait(false);
         }
         catch (TaskCanceledException)
         {
@@ -177,28 +170,19 @@ public class Program
 
     public static string TestScenarioToString(TestScenario testScenario) => testScenario switch
     {
-        TestScenario.BufferedProducerHashingTest => "BufferedProducerHashingTest",
         TestScenario.BufferedProducerTest => "BufferedProducerTest",
         TestScenario.BurstBufferedProducerTest => "BurstBufferedProducerTest",
-        TestScenario.DistributedTracingTest => "DistributedTracingTest",
         TestScenario.EventProducerTest => "EventProducerTest",
-        TestScenario.ProcessorLoadBalancesTest => "ProcessorLoadBalancesTest",
         TestScenario.ProcessorTest => "ProcessorTest",
-        TestScenario.ProcessorPartitionOwnershipTest => "ProcessorPartitionOwnershipTest",
         _ => string.Empty,
     };
 
     public static TestScenario StringToTestScenario(string testScenario) => testScenario switch
     {
-        "BufferedProducerHashingTest" => TestScenario.BufferedProducerHashingTest,
         "BufferedProducerTest" or "BuffProd"=> TestScenario.BufferedProducerTest,
         "BurstBufferedProducerTest" => TestScenario.BurstBufferedProducerTest,
         "EventProducerTest" or "EventProd"=> TestScenario.EventProducerTest,
-        "ProcessorLoadBalancesTest" => TestScenario.ProcessorLoadBalancesTest,
         "ProcessorTest" or "Processor"=> TestScenario.ProcessorTest,
-        "ProcessorPartitionOwnershipTest" => TestScenario.ProcessorPartitionOwnershipTest,
-        "ProducerCPU" => TestScenario.ProducerCPU,
-        "BufferedCPU" => TestScenario.BufferedCPU,
         _ => throw new ArgumentNullException(),
     };
 

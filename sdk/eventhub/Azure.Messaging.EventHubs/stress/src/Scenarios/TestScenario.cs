@@ -5,14 +5,9 @@ namespace Azure.Messaging.EventHubs.Stress;
 
 public enum TestScenario
 {
-    BufferedProducerHashingTest,
     BufferedProducerTest,
     BurstBufferedProducerTest,
-    DistributedTracingTest,
     EventProducerTest,
-    ProcessorLoadBalancesTest,
     ProcessorTest,
-    ProcessorPartitionOwnershipTest,
-    BufferedCPU,
-    ProducerCPU
+    PartitionOwnershipTest
 }
