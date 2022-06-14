@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework
 {
 #pragma warning disable SA1649 // File name should match first type name
     internal class MockOperationInternal<TResult> : OperationInternal<TResult>, IMockOperationInternal

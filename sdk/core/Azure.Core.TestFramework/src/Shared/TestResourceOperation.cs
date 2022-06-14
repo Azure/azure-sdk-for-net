@@ -4,10 +4,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Tests;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework
 {
     internal class TestResourceOperation : Operation<TestResource>, IOperationSource<TestResource>
     {

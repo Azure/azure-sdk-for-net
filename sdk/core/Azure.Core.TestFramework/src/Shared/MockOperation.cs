@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework
 {
     internal class MockOperation : Operation, IOperation
     {

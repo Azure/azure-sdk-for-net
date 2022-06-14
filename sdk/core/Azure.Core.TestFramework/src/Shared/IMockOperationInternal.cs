@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework
 {
     internal interface IMockOperationInternal
     {

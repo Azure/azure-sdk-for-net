@@ -4,7 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework
 {
     internal class TestClientOperations
     {

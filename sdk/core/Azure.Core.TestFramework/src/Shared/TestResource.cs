@@ -6,12 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using Azure.Core.TestFramework;
 using Azure.Core.Tests;
-using Azure.Core.Tests.TestFramework;
 using Azure.ResourceManager;
 
-namespace Azure.Core.TestFramework.Tests
+namespace Azure.Core.TestFramework
 {
     internal class TestResource : ArmResource
     {
