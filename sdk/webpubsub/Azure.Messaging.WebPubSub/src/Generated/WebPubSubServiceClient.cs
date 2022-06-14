@@ -39,7 +39,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call GenerateClientTokenImplAsync with all parameters.
+        /// This sample shows how to call GenerateClientTokenImplAsync with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -92,7 +92,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call GenerateClientTokenImpl with all parameters.
+        /// This sample shows how to call GenerateClientTokenImpl with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -238,7 +238,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call SendToAllAsync with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call SendToAllAsync with required parameters and request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -249,7 +249,7 @@ namespace Azure.Messaging.WebPubSub
         /// Response response = await client.SendToAllAsync(RequestContent.Create(data), null);
         /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call SendToAllAsync with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call SendToAllAsync with all parameters and request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -301,7 +301,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call SendToAll with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call SendToAll with required parameters and request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -312,7 +312,7 @@ namespace Azure.Messaging.WebPubSub
         /// Response response = client.SendToAll(RequestContent.Create(data), null);
         /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call SendToAll with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call SendToAll with all parameters and request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -908,7 +908,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call SendToGroupAsync with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call SendToGroupAsync with required parameters and request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -919,7 +919,7 @@ namespace Azure.Messaging.WebPubSub
         /// Response response = await client.SendToGroupAsync("group", RequestContent.Create(data), null);
         /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call SendToGroupAsync with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call SendToGroupAsync with all parameters and request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -974,7 +974,7 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call SendToGroup with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call SendToGroup with required parameters and request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -985,7 +985,7 @@ namespace Azure.Messaging.WebPubSub
         /// Response response = client.SendToGroup("group", RequestContent.Create(data), null);
         /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call SendToGroup with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call SendToGroup with all parameters and request content.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");

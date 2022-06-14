@@ -2212,7 +2212,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetOperationAsync with required parameters.
+        /// This sample shows how to call GetOperationAsync with required parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -2225,7 +2225,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// </code>
-        /// This sample shows how to call GetOperationAsync with all parameters.
+        /// This sample shows how to call GetOperationAsync with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -2316,7 +2316,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetOperation with required parameters.
+        /// This sample shows how to call GetOperation with required parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -2329,7 +2329,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
         /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
         /// </code>
-        /// This sample shows how to call GetOperation with all parameters.
+        /// This sample shows how to call GetOperation with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -3613,7 +3613,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of devices returned. You can filter on device GroupId or DeviceClassId. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call GetDevicesAsync with all parameters.
+        /// This sample shows how to call GetDevicesAsync with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -3733,7 +3733,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="filter"> Restricts the set of devices returned. You can filter on device GroupId or DeviceClassId. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call GetDevices with all parameters.
+        /// This sample shows how to call GetDevices with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4152,7 +4152,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetBestUpdatesForGroupsAsync with required parameters.
+        /// This sample shows how to call GetBestUpdatesForGroupsAsync with required parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4165,7 +4165,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
         /// </code>
-        /// This sample shows how to call GetBestUpdatesForGroupsAsync with all parameters.
+        /// This sample shows how to call GetBestUpdatesForGroupsAsync with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4246,7 +4246,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetBestUpdatesForGroups with required parameters.
+        /// This sample shows how to call GetBestUpdatesForGroups with required parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4259,7 +4259,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceCount").ToString());
         /// </code>
-        /// This sample shows how to call GetBestUpdatesForGroups with all parameters.
+        /// This sample shows how to call GetBestUpdatesForGroups with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4340,7 +4340,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetDeploymentsForGroupsAsync with required parameters.
+        /// This sample shows how to call GetDeploymentsForGroupsAsync with required parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4355,7 +4355,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
         /// </code>
-        /// This sample shows how to call GetDeploymentsForGroupsAsync with all parameters.
+        /// This sample shows how to call GetDeploymentsForGroupsAsync with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4444,7 +4444,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetDeploymentsForGroups with required parameters.
+        /// This sample shows how to call GetDeploymentsForGroups with required parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4459,7 +4459,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("updateId").GetProperty("version").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("groupId").ToString());
         /// </code>
-        /// This sample shows how to call GetDeploymentsForGroups with all parameters.
+        /// This sample shows how to call GetDeploymentsForGroups with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4549,7 +4549,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetDeploymentDevicesAsync with required parameters.
+        /// This sample shows how to call GetDeploymentDevicesAsync with required parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4562,7 +4562,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
         /// </code>
-        /// This sample shows how to call GetDeploymentDevicesAsync with all parameters.
+        /// This sample shows how to call GetDeploymentDevicesAsync with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4645,7 +4645,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetDeploymentDevices with required parameters.
+        /// This sample shows how to call GetDeploymentDevices with required parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4658,7 +4658,7 @@ namespace Azure.IoT.DeviceUpdate
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("movedOnToNewDeployment").ToString());
         /// Console.WriteLine(result.GetProperty("value").Item[0].GetProperty("deviceState").ToString());
         /// </code>
-        /// This sample shows how to call GetDeploymentDevices with all parameters.
+        /// This sample shows how to call GetDeploymentDevices with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4738,7 +4738,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call GetOperationsAsync with all parameters.
+        /// This sample shows how to call GetOperationsAsync with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
@@ -4837,7 +4837,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call GetOperations with all parameters.
+        /// This sample shows how to call GetOperations with all parameters, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
