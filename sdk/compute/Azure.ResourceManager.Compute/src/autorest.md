@@ -134,6 +134,7 @@ directive:
       $.UpgradeOperationHistoricalStatusInfo.properties.location["x-ms-format"] = "azure-location";
       $.RollingUpgradeStatusInfo["x-ms-client-name"] = "VirtualMachineScaleSetRollingUpgrade";
       $.VirtualMachineScaleSetSku.properties.resourceType["x-ms-format"] = "resource-type";
+      $.VirtualMachineScaleSetVMInstanceView.properties.assignedHost["x-ms-format"] = "arm-id";
   - from: restorePoint.json
     where: $.definitions
     transform: >
@@ -174,6 +175,8 @@ directive:
     where: $.definitions
     transform: >
       $.Disk["x-ms-client-name"] = "ManagedDisk";
+      $.Disk.properties.managedBy["x-ms-format"] = "arm-id";
+      $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
       $.DiskProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
       $.DiskUpdateProperties.properties.diskAccessId["x-ms-format"] = "arm-id";
   - from: diskAccess.json
