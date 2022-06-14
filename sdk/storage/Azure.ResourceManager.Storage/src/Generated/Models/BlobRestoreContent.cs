@@ -15,32 +15,32 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class BlobRestoreContent
     {
         /// <summary> Initializes a new instance of BlobRestoreContent. </summary>
-        /// <param name="blobRanges"> Blob ranges to restore. </param>
         /// <param name="timeToRestore"> Restore blob to the specified time. </param>
+        /// <param name="blobRanges"> Blob ranges to restore. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobRanges"/> is null. </exception>
-        public BlobRestoreContent(IEnumerable<BlobRestoreRange> blobRanges, DateTimeOffset timeToRestore)
+        public BlobRestoreContent(DateTimeOffset timeToRestore, IEnumerable<BlobRestoreRange> blobRanges)
         {
             if (blobRanges == null)
             {
                 throw new ArgumentNullException(nameof(blobRanges));
             }
 
-            BlobRanges = blobRanges.ToList();
             TimeToRestore = timeToRestore;
+            BlobRanges = blobRanges.ToList();
         }
 
         /// <summary> Initializes a new instance of BlobRestoreContent. </summary>
-        /// <param name="blobRanges"> Blob ranges to restore. </param>
         /// <param name="timeToRestore"> Restore blob to the specified time. </param>
-        internal BlobRestoreContent(IList<BlobRestoreRange> blobRanges, DateTimeOffset timeToRestore)
+        /// <param name="blobRanges"> Blob ranges to restore. </param>
+        internal BlobRestoreContent(DateTimeOffset timeToRestore, IList<BlobRestoreRange> blobRanges)
         {
-            BlobRanges = blobRanges;
             TimeToRestore = timeToRestore;
+            BlobRanges = blobRanges;
         }
 
-        /// <summary> Blob ranges to restore. </summary>
-        public IList<BlobRestoreRange> BlobRanges { get; }
         /// <summary> Restore blob to the specified time. </summary>
         public DateTimeOffset TimeToRestore { get; set; }
+        /// <summary> Blob ranges to restore. </summary>
+        public IList<BlobRestoreRange> BlobRanges { get; }
     }
 }

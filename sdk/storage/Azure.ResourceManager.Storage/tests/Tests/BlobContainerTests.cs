@@ -670,13 +670,14 @@ namespace Azure.ResourceManager.Storage.Tests
             //create restore ranges
             //start restore
             BlobRestoreContent restoreContent = new BlobRestoreContent(
+                Recording.Now.AddSeconds(-1).ToUniversalTime(),
                 new List<BlobRestoreRange>()
                 {
                     new BlobRestoreRange("", "container1/blob1"),
                     new BlobRestoreRange("container1/blob2", "container2/blob3"),
                     new BlobRestoreRange("container3/blob3", "")
-                }, Recording.Now.AddSeconds(-1).ToUniversalTime());
-            ArmOperation<BlobRestoreStatus> restoreOperation = _storageAccount.RestoreBlobRanges(WaitUntil.Started, restoreContent);
+                });
+            ArmOperation<BlobRestoreStatus> restoreOperation = await _storageAccount.RestoreBlobRangesAsync(WaitUntil.Started, restoreContent);
 
             //wait for restore completion
             BlobRestoreStatus restoreStatus = await restoreOperation.WaitForCompletionAsync();
