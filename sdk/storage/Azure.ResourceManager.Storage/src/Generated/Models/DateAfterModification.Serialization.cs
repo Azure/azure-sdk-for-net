@@ -25,6 +25,16 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("daysAfterLastAccessTimeGreaterThan");
                 writer.WriteNumberValue(DaysAfterLastAccessTimeGreaterThan.Value);
             }
+            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
+            {
+                writer.WritePropertyName("daysAfterLastTierChangeGreaterThan");
+                writer.WriteNumberValue(DaysAfterLastTierChangeGreaterThan.Value);
+            }
+            if (Optional.IsDefined(DaysAfterCreationGreaterThan))
+            {
+                writer.WritePropertyName("daysAfterCreationGreaterThan");
+                writer.WriteNumberValue(DaysAfterCreationGreaterThan.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -32,6 +42,8 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Optional<float> daysAfterModificationGreaterThan = default;
             Optional<float> daysAfterLastAccessTimeGreaterThan = default;
+            Optional<float> daysAfterLastTierChangeGreaterThan = default;
+            Optional<float> daysAfterCreationGreaterThan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysAfterModificationGreaterThan"))
@@ -54,8 +66,28 @@ namespace Azure.ResourceManager.Storage.Models
                     daysAfterLastAccessTimeGreaterThan = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("daysAfterLastTierChangeGreaterThan"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    daysAfterLastTierChangeGreaterThan = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("daysAfterCreationGreaterThan"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    daysAfterCreationGreaterThan = property.Value.GetSingle();
+                    continue;
+                }
             }
-            return new DateAfterModification(Optional.ToNullable(daysAfterModificationGreaterThan), Optional.ToNullable(daysAfterLastAccessTimeGreaterThan));
+            return new DateAfterModification(Optional.ToNullable(daysAfterModificationGreaterThan), Optional.ToNullable(daysAfterLastAccessTimeGreaterThan), Optional.ToNullable(daysAfterLastTierChangeGreaterThan), Optional.ToNullable(daysAfterCreationGreaterThan));
         }
     }
 }

@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a replica for a Container App Revision.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}
         /// Operation Id: ContainerAppsRevisionReplicas_GetReplica
         /// </summary>
-        /// <param name="name"> Name of the Container App Revision Replica. </param>
+        /// <param name="replicaName"> Name of the Container App Revision Replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<ContainerAppReplicaResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
+        public virtual async Task<Response<ContainerAppReplicaResource>> GetAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerAppReplicaContainerAppsRevisionReplicasRestClient.GetReplicaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppReplicaContainerAppsRevisionReplicasRestClient.GetReplicaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ContainerAppReplicaResource(Client, response.Value), response.GetRawResponse());
@@ -84,22 +84,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a replica for a Container App Revision.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}
         /// Operation Id: ContainerAppsRevisionReplicas_GetReplica
         /// </summary>
-        /// <param name="name"> Name of the Container App Revision Replica. </param>
+        /// <param name="replicaName"> Name of the Container App Revision Replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<ContainerAppReplicaResource> Get(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
+        public virtual Response<ContainerAppReplicaResource> Get(string replicaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerAppReplicaContainerAppsRevisionReplicasRestClient.GetReplica(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, cancellationToken);
+                var response = _containerAppReplicaContainerAppsRevisionReplicasRestClient.GetReplica(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ContainerAppReplicaResource(Client, response.Value), response.GetRawResponse());
@@ -167,22 +167,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}
         /// Operation Id: ContainerAppsRevisionReplicas_GetReplica
         /// </summary>
-        /// <param name="name"> Name of the Container App Revision Replica. </param>
+        /// <param name="replicaName"> Name of the Container App Revision Replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerAppReplicaContainerAppsRevisionReplicasRestClient.GetReplicaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _containerAppReplicaContainerAppsRevisionReplicasRestClient.GetReplicaAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,22 +194,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}
         /// Operation Id: ContainerAppsRevisionReplicas_GetReplica
         /// </summary>
-        /// <param name="name"> Name of the Container App Revision Replica. </param>
+        /// <param name="replicaName"> Name of the Container App Revision Replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
+        public virtual Response<bool> Exists(string replicaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _containerAppReplicaContainerAppsRevisionReplicasClientDiagnostics.CreateScope("ContainerAppReplicaCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerAppReplicaContainerAppsRevisionReplicasRestClient.GetReplica(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _containerAppReplicaContainerAppsRevisionReplicasRestClient.GetReplica(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, replicaName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

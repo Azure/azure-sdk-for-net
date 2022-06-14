@@ -100,5 +100,18 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         [JsonProperty(PropertyName = "instances")]
         public IList<DeploymentInstance> Instances { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DeploymentSettings != null)
+            {
+                DeploymentSettings.Validate();
+            }
+        }
     }
 }

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary>
         /// Gets the private link resources supported for the managed hsm pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateLinkResources
-        /// Operation Id: MHSMPrivateLinkResources_ListByManagedHsmResource
+        /// Operation Id: MHSMPrivateLinkResources_ListByMHSMResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedHsmPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary>
         /// Gets the private link resources supported for the managed hsm pool.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateLinkResources
-        /// Operation Id: MHSMPrivateLinkResources_ListByManagedHsmResource
+        /// Operation Id: MHSMPrivateLinkResources_ListByMHSMResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedHsmPrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>

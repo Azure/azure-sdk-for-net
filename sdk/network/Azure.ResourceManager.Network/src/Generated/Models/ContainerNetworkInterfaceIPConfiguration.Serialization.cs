@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Optional<string> name = default;
             Optional<string> type = default;
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +33,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -58,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ContainerNetworkInterfaceIPConfiguration(name.Value, type.Value, etag.Value, Optional.ToNullable(provisioningState));
+            return new ContainerNetworkInterfaceIPConfiguration(name.Value, type.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState));
         }
     }
 }

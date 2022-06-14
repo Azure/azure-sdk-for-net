@@ -76,6 +76,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Used for <see cref="CurrencyValue"/> type.
         /// </summary>
-        Currency
+        Currency,
+
+        /// <summary>
+        /// Used for <see cref="AddressValue"/> type.
+        /// </summary>
+        Address
     }
 }

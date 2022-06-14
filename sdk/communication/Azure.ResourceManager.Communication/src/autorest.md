@@ -7,12 +7,13 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 azure-arm: true
 title: communication
 namespace: Azure.ResourceManager.Communication
-input-file:  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/54a98083200e56d88fe1182f2741a61aea91c788/specification/communication/resource-manager/Microsoft.Communication/stable/2020-08-20/CommunicationService.json
+require: https://github.com/Azure/azure-rest-api-specs/blob/7168ecde052e9797d31d74c40ad00ac68c74ec6a/specification/communication/resource-manager/readme.md
+tag: package-2021-10-01-preview
+
 skip-csproj: true
-modelerfour:
-  flatten-payloads: false
+output-folder: Generated/
 override-operation-name:
-  CommunicationService_CheckNameAvailability: CheckCommunicationNameAvailability
+  CommunicationServices_CheckNameAvailability: CheckCommunicationNameAvailability
 
 rename-rules:
   CPU: Cpu
@@ -35,19 +36,23 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+  SPF: Spf
 
 directive:
   - rename-model:
-      from: CommunicationServiceResource
-      to: CommunicationService
+      from: DomainResource
+      to: CommunicationDomainResource
   - rename-model:
-      from: RegenerateKeyParameters
-      to: RegenerateKeyOptions
-  - rename-model:
-      from: NameAvailabilityParameters
-      to: NameAvailabilityOptions
-  - rename-model:
-      from: LinkNotificationHubParameters
-      to: LinkNotificationHubOptions
-
+      from: VerificationParameter
+      to: VerificationContent
+  - from: types.json
+    where: $.definitions
+    transform: >
+      $.CheckNameAvailabilityRequest["x-ms-client-name"] = "CheckNameAvailabilityRequestBody";
+      $.CheckNameAvailabilityResponse["x-ms-client-name"] = "CommunicationServiceNameAvailabilityResult";
+  - from: CommunicationServices.json
+    where: $.definitions
+    transform: >
+      $.NameAvailabilityParameters["x-ms-client-name"] = "CommunicationServiceNameAvailabilityContent"; 
+      $.TaggedResource["x-ms-client-name"] = "AcceptTags";          
 ```

@@ -54,26 +54,26 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Description for Create or update the AuthConfig for a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{name}
+        /// Create or update the AuthConfig for a Container App.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}
         /// Operation Id: ContainerAppsAuthConfigs_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="data"> Properties used to create a Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AuthConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AuthConfigData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<AuthConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authConfigName, AuthConfigData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _authConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("AuthConfigCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _authConfigContainerAppsAuthConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _authConfigContainerAppsAuthConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new ContainersArmOperation<AuthConfigResource>(Response.FromValue(new AuthConfigResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -87,26 +87,26 @@ namespace Azure.ResourceManager.Applications.Containers
         }
 
         /// <summary>
-        /// Description for Create or update the AuthConfig for a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{name}
+        /// Create or update the AuthConfig for a Container App.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}
         /// Operation Id: ContainerAppsAuthConfigs_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="data"> Properties used to create a Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AuthConfigResource> CreateOrUpdate(WaitUntil waitUntil, string name, AuthConfigData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AuthConfigResource> CreateOrUpdate(WaitUntil waitUntil, string authConfigName, AuthConfigData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _authConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("AuthConfigCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _authConfigContainerAppsAuthConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
+                var response = _authConfigContainerAppsAuthConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, data, cancellationToken);
                 var operation = new ContainersArmOperation<AuthConfigResource>(Response.FromValue(new AuthConfigResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -121,22 +121,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a AuthConfig of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}
         /// Operation Id: ContainerAppsAuthConfigs_Get
         /// </summary>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<AuthConfigResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
+        public virtual async Task<Response<AuthConfigResource>> GetAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
 
             using var scope = _authConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("AuthConfigCollection.Get");
             scope.Start();
             try
             {
-                var response = await _authConfigContainerAppsAuthConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _authConfigContainerAppsAuthConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AuthConfigResource(Client, response.Value), response.GetRawResponse());
@@ -150,22 +150,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Get a AuthConfig of a Container App.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}
         /// Operation Id: ContainerAppsAuthConfigs_Get
         /// </summary>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<AuthConfigResource> Get(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
+        public virtual Response<AuthConfigResource> Get(string authConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
 
             using var scope = _authConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("AuthConfigCollection.Get");
             scope.Start();
             try
             {
-                var response = _authConfigContainerAppsAuthConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                var response = _authConfigContainerAppsAuthConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AuthConfigResource(Client, response.Value), response.GetRawResponse());
@@ -263,22 +263,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}
         /// Operation Id: ContainerAppsAuthConfigs_Get
         /// </summary>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
 
             using var scope = _authConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("AuthConfigCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _authConfigContainerAppsAuthConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _authConfigContainerAppsAuthConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -290,22 +290,22 @@ namespace Azure.ResourceManager.Applications.Containers
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{name}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/authConfigs/{authConfigName}
         /// Operation Id: ContainerAppsAuthConfigs_Get
         /// </summary>
-        /// <param name="name"> Name of the Container App AuthConfig. </param>
+        /// <param name="authConfigName"> Name of the Container App AuthConfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
+        public virtual Response<bool> Exists(string authConfigName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNullOrEmpty(authConfigName, nameof(authConfigName));
 
             using var scope = _authConfigContainerAppsAuthConfigsClientDiagnostics.CreateScope("AuthConfigCollection.Exists");
             scope.Start();
             try
             {
-                var response = _authConfigContainerAppsAuthConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _authConfigContainerAppsAuthConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authConfigName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

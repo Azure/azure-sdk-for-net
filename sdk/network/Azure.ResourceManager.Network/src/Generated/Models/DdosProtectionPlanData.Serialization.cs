@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Network
 
         internal static DdosProtectionPlanData DeserializeDdosProtectionPlanData(JsonElement element)
         {
-            Optional<string> etag = default;
+            Optional<ETag> etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -52,7 +53,12 @@ namespace Azure.ResourceManager.Network
             {
                 if (property.NameEquals("etag"))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -67,7 +73,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("location"))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -82,7 +88,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -138,7 +144,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DdosProtectionPlanData(id, name, type, systemData, tags, location, etag.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
+            return new DdosProtectionPlanData(id, name, type, systemData, tags, location, Optional.ToNullable(etag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(virtualNetworks));
         }
     }
 }

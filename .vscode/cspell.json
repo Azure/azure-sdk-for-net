@@ -98,6 +98,13 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/appplatform/**/*.cs",
+      "words": [
+        "dynatrace",
+        "fqdns"
+      ]
+    },
+    {
       "filename": "**/sdk/azurestackhci/**/*.cs",
       "words": [
         "cref",
@@ -242,6 +249,12 @@
         "mhsmip"
       ]
     },
+	{
+      "filename": "**/sdk/networkfunction/**/*.cs",
+      "words": [
+        "ipfix"
+      ]
+    },
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
@@ -371,6 +384,15 @@
         "Guage",
         "Plex",
         "Vstsrm"
+      ]
+    },
+	{
+      "filename": "**/sdk/workloads/**/*.cs",
+      "words": [
+        "ascs",
+        "hana",
+        "ssdlrs",
+        "vmss"
       ]
     }
   ],

@@ -1,89 +1,72 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/390d1139-98fb-45af-b831-8d5ad61b150a/series/query",
+      "RequestUri": "https://ga-metrics-advisor.cognitiveservices.azure.com/metricsadvisor/v1.0/metrics/b6c0649c-0c51-4aa6-82b6-3c3b0aa55066/series/query",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "129",
+        "Content-Length": "116",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7c891ed43e21a94b8695e4f7261bce44-07f72fc073a61847-00",
-        "User-Agent": [
-          "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20211118.1",
-          "(.NET 5.0.12; Microsoft Windows 10.0.22000)"
-        ],
+        "traceparent": "00-3d21b4d815b30d9b5a74f731db502dcd-c3227c96c535ce13-00",
+        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.2.0-alpha.20220414.1 (.NET 6.0.4; Microsoft Windows 10.0.22000)",
         "x-api-key": "Sanitized",
-        "x-ms-client-request-id": "64bbec4967055f01b6865c8041edd7f3",
+        "x-ms-client-request-id": "f6020af6a3e29813645b3e29cb5d7cbe",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "activeSince": "2021-10-01T00:00:00.0000000Z",
+        "activeSince": "2022-01-01T00:00:00.0000000Z",
         "dimensionFilter": {
-          "region": [
-            "Cairo",
-            "Seoul",
-            "Beijing"
+          "Dim1": [
+            "JPN",
+            "USD",
+            "__SUM__"
           ],
-          "category": [
-            "__SUM__",
-            "Handmade"
+          "Dim2": [
+            "JP",
+            "US"
           ]
         }
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b5a79a6a-4d70-4b40-b7dd-abbd30752875",
-        "Content-Length": "642",
+        "apim-request-id": "1fdcbfae-27f6-4f1a-97f1-6bb67d7348ef",
+        "Content-Length": "383",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 18 Nov 2021 17:48:51 GMT",
+        "Date": "Tue, 19 Apr 2022 04:03:34 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "106",
-        "X-Request-ID": "b5a79a6a-4d70-4b40-b7dd-abbd30752875"
+        "x-envoy-upstream-service-time": "132",
+        "X-Request-ID": "1fdcbfae-27f6-4f1a-97f1-6bb67d7348ef"
       },
       "ResponseBody": {
         "value": [
           {
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
+            "metricId": "b6c0649c-0c51-4aa6-82b6-3c3b0aa55066",
             "dimension": {
-              "category": "Handmade",
-              "region": "Cairo"
+              "Dim1": "JPN",
+              "Dim2": "JP"
             }
           },
           {
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
+            "metricId": "b6c0649c-0c51-4aa6-82b6-3c3b0aa55066",
             "dimension": {
-              "category": "Handmade",
-              "region": "Seoul"
+              "Dim1": "__SUM__",
+              "Dim2": "JP"
             }
           },
           {
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
+            "metricId": "b6c0649c-0c51-4aa6-82b6-3c3b0aa55066",
             "dimension": {
-              "category": "__SUM__",
-              "region": "Cairo"
+              "Dim1": "USD",
+              "Dim2": "US"
             }
           },
           {
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
+            "metricId": "b6c0649c-0c51-4aa6-82b6-3c3b0aa55066",
             "dimension": {
-              "category": "__SUM__",
-              "region": "Seoul"
-            }
-          },
-          {
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
-            "dimension": {
-              "category": "__SUM__",
-              "region": "Beijing"
-            }
-          },
-          {
-            "metricId": "390d1139-98fb-45af-b831-8d5ad61b150a",
-            "dimension": {
-              "category": "Handmade",
-              "region": "Beijing"
+              "Dim1": "__SUM__",
+              "Dim2": "US"
             }
           }
         ]
@@ -95,6 +78,6 @@
     "METRICSADVISOR_ENDPOINT_SUFFIX": null,
     "METRICSADVISOR_PRIMARY_API_KEY": "Sanitized",
     "METRICSADVISOR_SUBSCRIPTION_KEY": "Sanitized",
-    "RandomSeed": "1041225969"
+    "RandomSeed": "650770062"
   }
 }
