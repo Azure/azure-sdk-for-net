@@ -13,23 +13,80 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.LoadTestService
 {
+    /// <summary> The AppComponent service client. </summary>
     public partial class AppComponentClient
     {
-        protected AppComponentClient();
+        /// <summary> </summary>
+        
+        public AppComponentClient(AzureLoadTestingClientOptions options) : this(new Uri("https://<dataPlaneURL>"), new AzureLoadTestingClientOptions())
+        {
+        }
+        /// <summary> </summary>
+        public AppComponentClient(Uri endpoint)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            AzureLoadTestingClientOptions new_options = new AzureLoadTestingClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(new_options, true);
+            _pipeline = HttpPipelineBuilder.Build(new_options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = new_options.Version;
+        }
     }
     public partial class ServerMetricsClient
     {
-        protected ServerMetricsClient();
+        /// <summary> </summary>
+        public ServerMetricsClient(AzureLoadTestingClientOptions options) : this(new Uri("https://<dataPlaneURL>"), new AzureLoadTestingClientOptions())
+        {
+        }
+        /// <summary> </summary>
+        public ServerMetricsClient(Uri endpoint)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            AzureLoadTestingClientOptions new_options = new AzureLoadTestingClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(new_options, true);
+            _pipeline = HttpPipelineBuilder.Build(new_options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = new_options.Version;
+        }
     }
     public partial class TestClient
     {
-        protected TestClient();
+        /// <summary> </summary>
+        public TestClient(AzureLoadTestingClientOptions options) : this(new Uri("https://<dataPlaneURL>"), new AzureLoadTestingClientOptions())
+        {
+        }
+        /// <summary> </summary>
+        public TestClient(Uri endpoint)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            AzureLoadTestingClientOptions new_options = new AzureLoadTestingClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(new_options, true);
+            _pipeline = HttpPipelineBuilder.Build(new_options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = new_options.Version;
+        }
     }
     public partial class TestRunClient
     {
-        protected TestRunClient();
+        /// <summary> </summary>
+        public TestRunClient(AzureLoadTestingClientOptions options) : this(new Uri("https://<dataPlaneURL>"), new AzureLoadTestingClientOptions())
+        {
+        }
+        /// <summary> </summary>
+        public TestRunClient(Uri endpoint)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            AzureLoadTestingClientOptions new_options = new AzureLoadTestingClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(new_options, true);
+            _pipeline = HttpPipelineBuilder.Build(new_options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = new_options.Version;
+        }
     }
+
 }
-
-
 
