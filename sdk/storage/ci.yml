@@ -55,5 +55,7 @@ extends:
       safeName: AzureResourceManagerStorage
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
-    - ${{ contains(variables['OSVmImage'], 'mac') }}:
-        bash: brew install openssl@3
+    - bash: brew install openssl@3
+      displayName: (MacOS) Install OpenSSL
+      condition: contains(variables['OSVmImage'], 'mac')
+    
