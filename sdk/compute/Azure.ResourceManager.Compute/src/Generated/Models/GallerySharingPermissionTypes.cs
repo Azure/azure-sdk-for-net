@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This property allows you to specify the permission of sharing gallery. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Private** &lt;br&gt;&lt;br&gt; **Groups**. </summary>
+    /// <summary> This property allows you to specify the permission of sharing gallery. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Private** &lt;br&gt;&lt;br&gt; **Groups** &lt;br&gt;&lt;br&gt; **Community**. </summary>
     public readonly partial struct GallerySharingPermissionTypes : IEquatable<GallerySharingPermissionTypes>
     {
         private readonly string _value;
@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         private const string PrivateValue = "Private";
         private const string GroupsValue = "Groups";
+        private const string CommunityValue = "Community";
 
         /// <summary> Private. </summary>
         public static GallerySharingPermissionTypes Private { get; } = new GallerySharingPermissionTypes(PrivateValue);
         /// <summary> Groups. </summary>
         public static GallerySharingPermissionTypes Groups { get; } = new GallerySharingPermissionTypes(GroupsValue);
+        /// <summary> Community. </summary>
+        public static GallerySharingPermissionTypes Community { get; } = new GallerySharingPermissionTypes(CommunityValue);
         /// <summary> Determines if two <see cref="GallerySharingPermissionTypes"/> values are the same. </summary>
         public static bool operator ==(GallerySharingPermissionTypes left, GallerySharingPermissionTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GallerySharingPermissionTypes"/> values are not the same. </summary>

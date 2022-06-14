@@ -1,6 +1,6 @@
 # Extract the layout of a document
 
-This sample demonstrates how to extract text, table structures, and selection marks, along with their bounding region coordinates from documents. If you want to analyze entities and key-value pairs in addition to this data, please see the [Analyze a general document][document_sample] sample. 
+This sample demonstrates how to extract text, paragraphs, styles, table structures, and selection marks, along with their bounding region coordinates from documents. If you want to analyze entities and key-value pairs in addition to this data, please see the [Analyze a general document][document_sample] sample.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -40,11 +40,12 @@ foreach (DocumentPage page in result.Pages)
         DocumentLine line = page.Lines[i];
         Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
 
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+        Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+        for (int j = 0; j < line.BoundingPolygon.Points.Length; j++)
+        {
+            Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
+        }
     }
 
     for (int i = 0; i < page.SelectionMarks.Count; i++)
@@ -52,11 +53,24 @@ foreach (DocumentPage page in result.Pages)
         DocumentSelectionMark selectionMark = page.SelectionMarks[i];
 
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+        Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+        for (int j = 0; j < selectionMark.BoundingPolygon.Points.Length; j++)
+        {
+            Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
+        }
+    }
+}
+
+Console.WriteLine("Paragraphs:");
+
+foreach (DocumentParagraph paragraph in result.Paragraphs)
+{
+    Console.WriteLine($"  Paragraph content: {paragraph.Content}");
+
+    if (paragraph.Role != null)
+    {
+        Console.WriteLine($"    Role: {paragraph.Role}");
     }
 }
 
@@ -116,11 +130,12 @@ foreach (DocumentPage page in result.Pages)
         DocumentLine line = page.Lines[i];
         Console.WriteLine($"  Line {i} has content: '{line.Content}'.");
 
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+        Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+        for (int j = 0; j < line.BoundingPolygon.Points.Length; j++)
+        {
+            Console.WriteLine($"      Point {j} => X: {line.BoundingPolygon[j].X}, Y: {line.BoundingPolygon[j].Y}");
+        }
     }
 
     for (int i = 0; i < page.SelectionMarks.Count; i++)
@@ -128,11 +143,24 @@ foreach (DocumentPage page in result.Pages)
         DocumentSelectionMark selectionMark = page.SelectionMarks[i];
 
         Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
-        Console.WriteLine($"    Its bounding box is:");
-        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
-        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
-        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
-        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+        Console.WriteLine($"    Its bounding polygon (points ordered clockwise):");
+
+        for (int j = 0; j < selectionMark.BoundingPolygon.Points.Length; j++)
+        {
+            Console.WriteLine($"      Point {j} => X: {selectionMark.BoundingPolygon[j].X}, Y: {selectionMark.BoundingPolygon[j].Y}");
+        }
+    }
+}
+
+Console.WriteLine("Paragraphs:");
+
+foreach (DocumentParagraph paragraph in result.Paragraphs)
+{
+    Console.WriteLine($"  Paragraph content: {paragraph.Content}");
+
+    if (paragraph.Role != null)
+    {
+        Console.WriteLine($"    Role: {paragraph.Role}");
     }
 }
 

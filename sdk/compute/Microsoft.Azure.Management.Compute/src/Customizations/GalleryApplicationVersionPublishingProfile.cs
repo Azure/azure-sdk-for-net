@@ -19,5 +19,14 @@
             EnableHealthCheck = enableHealthCheck;
             CustomInit();
         }
+
+        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, System.DateTime? publishedDate, System.DateTime? endOfLifeDate, string storageAccountType, string replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, UserArtifactManage manageActions, bool? enableHealthCheck = default(bool?))
+            : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, replicationMode, targetExtendedLocations)
+        {
+            Source = source;
+            ManageActions = manageActions;
+            EnableHealthCheck = enableHealthCheck;
+            CustomInit();
+        }
     }
 }

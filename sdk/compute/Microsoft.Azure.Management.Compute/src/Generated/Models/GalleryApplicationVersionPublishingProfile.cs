@@ -59,13 +59,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="targetExtendedLocations">The target extended locations
         /// where the Image Version is going to be replicated to. This property
         /// is updatable.</param>
+        /// <param name="advancedSettings">Optional. Additional settings to
+        /// pass to the VMApp extension. For advanced use only.</param>
         /// <param name="enableHealthCheck">Optional. Whether or not this
         /// application reports health.</param>
-        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string replicationMode = default(string), IList<GalleryTargetExtendedLocation> targetExtendedLocations = default(IList<GalleryTargetExtendedLocation>), UserArtifactManage manageActions = default(UserArtifactManage), bool? enableHealthCheck = default(bool?))
+        public GalleryApplicationVersionPublishingProfile(UserArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string), string replicationMode = default(string), IList<GalleryTargetExtendedLocation> targetExtendedLocations = default(IList<GalleryTargetExtendedLocation>), UserArtifactManage manageActions = default(UserArtifactManage), UserArtifactSettings settings = default(UserArtifactSettings), IDictionary<string, string> advancedSettings = default(IDictionary<string, string>), bool? enableHealthCheck = default(bool?))
             : base(targetRegions, replicaCount, excludeFromLatest, publishedDate, endOfLifeDate, storageAccountType, replicationMode, targetExtendedLocations)
         {
             Source = source;
             ManageActions = manageActions;
+            Settings = settings;
+            AdvancedSettings = advancedSettings;
             EnableHealthCheck = enableHealthCheck;
             CustomInit();
         }
@@ -84,6 +88,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "manageActions")]
         public UserArtifactManage ManageActions { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "settings")]
+        public UserArtifactSettings Settings { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional. Additional settings to pass to the VMApp
+        /// extension. For advanced use only.
+        /// </summary>
+        [JsonProperty(PropertyName = "advancedSettings")]
+        public IDictionary<string, string> AdvancedSettings { get; set; }
 
         /// <summary>
         /// Gets or sets optional. Whether or not this application reports

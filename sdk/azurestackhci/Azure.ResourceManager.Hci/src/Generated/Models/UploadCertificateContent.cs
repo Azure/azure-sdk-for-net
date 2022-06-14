@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The UploadCertificateRequest. </summary>
+    /// <summary> The UploadCertificateContent. </summary>
     public partial class UploadCertificateContent
     {
         /// <summary> Initializes a new instance of UploadCertificateContent. </summary>

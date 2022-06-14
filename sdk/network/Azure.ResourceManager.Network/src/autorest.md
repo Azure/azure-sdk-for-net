@@ -226,7 +226,11 @@ directive:
       $.AvailableProvidersListParameters.properties.azureLocations.items['x-ms-format'] = 'azure-location';
       $.AzureReachabilityReportParameters.properties.azureLocations.items['x-ms-format'] = 'azure-location';
       $.AzureReachabilityReportItem.properties.azureLocation['x-ms-format'] = 'azure-location';
-      $.PacketCapture.properties.id['x-ms-format'] = 'arm-id';
+      $.PacketCapture.properties.type = {
+        "readOnly": true,
+        "type": "string",
+        "description": "Resource type."
+      };
       $.ConnectionMonitorWorkspaceSettings.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
       $.TrafficAnalyticsConfigurationProperties.properties.workspaceResourceId['x-ms-format'] = 'arm-id';
       $.EvaluatedNetworkSecurityGroup.properties.networkSecurityGroupId['x-ms-format'] = 'arm-id';
