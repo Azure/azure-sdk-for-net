@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Workloads.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
