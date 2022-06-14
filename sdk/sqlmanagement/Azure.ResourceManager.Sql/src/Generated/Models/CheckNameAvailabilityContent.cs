@@ -14,8 +14,9 @@ namespace Azure.ResourceManager.Sql.Models
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityContent. </summary>
         /// <param name="name"></param>
+        /// <param name="resourceType"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CheckNameAvailabilityContent(string name)
+        public CheckNameAvailabilityContent(string name, CheckNameAvailabilityResourceType resourceType)
         {
             if (name == null)
             {
@@ -23,12 +24,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             Name = name;
-            ResourceType = "Microsoft.Sql/servers";
+            ResourceType = resourceType;
         }
 
         /// <summary> Gets the name. </summary>
         public string Name { get; }
         /// <summary> Gets the resource type. </summary>
-        public string ResourceType { get; }
+        public CheckNameAvailabilityResourceType ResourceType { get; }
     }
 }

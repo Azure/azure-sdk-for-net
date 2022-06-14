@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
             if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method");
-                writer.WriteStringValue(Method);
+                writer.WriteStringValue(Method.Value.ToString());
             }
             if (Optional.IsDefined(ClientSecretSettingName))
             {
@@ -30,13 +30,18 @@ namespace Azure.ResourceManager.Applications.Containers.Models
 
         internal static OpenIdConnectClientCredential DeserializeOpenIdConnectClientCredential(JsonElement element)
         {
-            Optional<string> method = default;
+            Optional<ClientCredentialMethod> method = default;
             Optional<string> clientSecretSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("method"))
                 {
-                    method = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    method = new ClientCredentialMethod(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clientSecretSettingName"))
@@ -45,7 +50,7 @@ namespace Azure.ResourceManager.Applications.Containers.Models
                     continue;
                 }
             }
-            return new OpenIdConnectClientCredential(method.Value, clientSecretSettingName.Value);
+            return new OpenIdConnectClientCredential(Optional.ToNullable(method), clientSecretSettingName.Value);
         }
     }
 }

@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of ApiKeyVaultReferenceData. </summary>
         public ApiKeyVaultReferenceData()
         {
-            Source = "KeyVault";
         }
 
         /// <summary> Initializes a new instance of ApiKeyVaultReferenceData. </summary>
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="details"></param>
         /// <param name="source"></param>
         /// <param name="activeVersion"></param>
-        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identityType, string details, string source, string activeVersion) : base(id, name, resourceType, systemData, kind)
+        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identityType, string details, ConfigReferenceSource? source, string activeVersion) : base(id, name, resourceType, systemData, kind)
         {
             Reference = reference;
             Status = status;
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets or sets the details. </summary>
         public string Details { get; set; }
         /// <summary> Gets or sets the source. </summary>
-        public string Source { get; set; }
+        public ConfigReferenceSource? Source { get; set; }
         /// <summary> Gets or sets the active version. </summary>
         public string ActiveVersion { get; set; }
     }

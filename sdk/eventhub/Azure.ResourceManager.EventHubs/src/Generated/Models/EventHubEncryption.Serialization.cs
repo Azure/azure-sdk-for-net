@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource");
-                writer.WriteStringValue(KeySource);
+                writer.WriteStringValue(KeySource.Value.ToString());
             }
             if (Optional.IsDefined(RequireInfrastructureEncryption))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         internal static EventHubEncryption DeserializeEventHubEncryption(JsonElement element)
         {
             Optional<IList<KeyVaultProperties>> keyVaultProperties = default;
-            Optional<string> keySource = default;
+            Optional<KeySource> keySource = default;
             Optional<bool> requireInfrastructureEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -63,7 +63,12 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("keySource"))
                 {
-                    keySource = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    keySource = new KeySource(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("requireInfrastructureEncryption"))
@@ -77,7 +82,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubEncryption(Optional.ToList(keyVaultProperties), keySource.Value, Optional.ToNullable(requireInfrastructureEncryption));
+            return new EventHubEncryption(Optional.ToList(keyVaultProperties), Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption));
         }
     }
 }

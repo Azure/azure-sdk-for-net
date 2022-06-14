@@ -12,8 +12,8 @@ public-clients: false
 head-as-boolean: false
 
 batch:
-  - tag: package-common-type-2022-04
-  - tag: package-resources-2022-04
+  # - tag: package-common-type-2022-04
+  # - tag: package-resources-2022-04
   - tag: package-management-2022-04
 ```
 
@@ -637,14 +637,6 @@ directive:
   - rename-model:
       from: CreateParentGroupInfo
       to: ManagementGroupParentCreateOptions
-  - from: management.json
-    where: $.definitions.CheckNameAvailabilityRequest.properties.type
-    transform: >
-      $['x-ms-client-name'] = "ResourceType";
-      $['x-ms-contant'] = true;
-  - rename-model:
-      from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityContent
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -729,5 +721,8 @@ directive:
     where: $.definitions
     transform: >
       $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
-      $.ManagementGroupNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
+      $.CheckNameAvailabilityRequest["x-ms-client-name"] = "ManagementGroupNameAvailabilityContent";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-client-name'] = "ResourceType";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-contant'] = true;
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```

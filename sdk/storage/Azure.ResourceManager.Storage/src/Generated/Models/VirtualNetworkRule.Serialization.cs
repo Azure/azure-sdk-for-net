@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action");
-                writer.WriteStringValue(Action);
+                writer.WriteStringValue(Action.Value.ToString());
             }
             if (Optional.IsDefined(State))
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static VirtualNetworkRule DeserializeVirtualNetworkRule(JsonElement element)
         {
             string id = default;
-            Optional<string> action = default;
+            Optional<Action> action = default;
             Optional<State> state = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +44,12 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("action"))
                 {
-                    action = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    action = new Action(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"))
@@ -58,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new VirtualNetworkRule(id, action.Value, Optional.ToNullable(state));
+            return new VirtualNetworkRule(id, Optional.ToNullable(action), Optional.ToNullable(state));
         }
     }
 }

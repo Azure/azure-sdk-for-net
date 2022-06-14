@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
+                writer.WriteObjectValue(Identity);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> managedBy = default;
             Optional<string> kind = default;
             Optional<string> etag = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ResourceModelWithAllowedPropertySetIdentity> identity = default;
             Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
             Optional<ArmPlan> plan = default;
             IDictionary<string, string> tags = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
+                    identity = ResourceModelWithAllowedPropertySetIdentity.DeserializeResourceModelWithAllowedPropertySetIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new VirtualApplicationGroupData(id, name, type, systemData, tags, location, managedBy.Value, kind.Value, etag.Value, identity, sku.Value, plan, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPcResource));
+            return new VirtualApplicationGroupData(id, name, type, systemData, tags, location, managedBy.Value, kind.Value, etag.Value, identity.Value, sku.Value, plan, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, migrationRequest.Value, Optional.ToNullable(cloudPcResource));
         }
     }
 }
