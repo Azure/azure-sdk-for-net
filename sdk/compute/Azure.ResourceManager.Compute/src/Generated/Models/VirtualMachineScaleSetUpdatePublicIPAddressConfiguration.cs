@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machines scale set IP Configuration&apos;s PublicIPAddress configuration. </summary>
@@ -19,12 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The publicIP address configuration name. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
         /// <param name="dnsSettings"> The dns settings to be applied on the publicIP addresses . </param>
+        /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
-        internal VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, DeleteOptions? deleteOption)
+        internal VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, WritableSubResource publicIPPrefix, DeleteOptions? deleteOption)
         {
             Name = name;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
+            PublicIPPrefix = publicIPPrefix;
             DeleteOption = deleteOption;
         }
 
@@ -39,6 +44,20 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get => DnsSettings is null ? default : DnsSettings.DomainNameLabel;
             set => DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(value);
+        }
+
+        /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
+        internal WritableSubResource PublicIPPrefix { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPPrefixId
+        {
+            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            set
+            {
+                if (PublicIPPrefix is null)
+                    PublicIPPrefix = new WritableSubResource();
+                PublicIPPrefix.Id = value;
+            }
         }
 
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>

@@ -4,6 +4,9 @@
 using System;
 using System.Globalization;
 using System.Threading;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests

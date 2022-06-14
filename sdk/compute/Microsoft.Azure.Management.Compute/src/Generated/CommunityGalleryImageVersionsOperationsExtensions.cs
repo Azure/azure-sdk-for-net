@@ -79,5 +79,85 @@ namespace Microsoft.Azure.Management.Compute
                 }
             }
 
+            /// <summary>
+            /// List community gallery image versions inside an image.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Resource location.
+            /// </param>
+            /// <param name='publicGalleryName'>
+            /// The public name of the community gallery.
+            /// </param>
+            /// <param name='galleryImageName'>
+            /// The name of the community gallery image definition.
+            /// </param>
+            public static IPage<CommunityGalleryImageVersion> List(this ICommunityGalleryImageVersionsOperations operations, string location, string publicGalleryName, string galleryImageName)
+            {
+                return operations.ListAsync(location, publicGalleryName, galleryImageName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List community gallery image versions inside an image.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Resource location.
+            /// </param>
+            /// <param name='publicGalleryName'>
+            /// The public name of the community gallery.
+            /// </param>
+            /// <param name='galleryImageName'>
+            /// The name of the community gallery image definition.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CommunityGalleryImageVersion>> ListAsync(this ICommunityGalleryImageVersionsOperations operations, string location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, publicGalleryName, galleryImageName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List community gallery image versions inside an image.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CommunityGalleryImageVersion> ListNext(this ICommunityGalleryImageVersionsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List community gallery image versions inside an image.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CommunityGalleryImageVersion>> ListNextAsync(this ICommunityGalleryImageVersionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

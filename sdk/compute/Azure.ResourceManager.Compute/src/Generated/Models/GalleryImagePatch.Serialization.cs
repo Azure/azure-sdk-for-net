@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Architecture))
+            {
+                writer.WritePropertyName("architecture");
+                writer.WriteStringValue(Architecture.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

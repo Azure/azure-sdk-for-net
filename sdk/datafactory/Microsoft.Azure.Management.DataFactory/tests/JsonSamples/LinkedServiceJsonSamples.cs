@@ -3386,5 +3386,27 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+        [JsonSample]
+        public const string RestLinkedServiceOAuth2 = @"
+{
+    name: ""LinkedService-Rest"",
+    properties:
+    {
+        type: ""RestService"",
+        typeProperties: {
+            url: ""http://example.com"",
+            enableServerCertificateValidation: true,
+            authenticationType: ""OAuth2ClientCredential"",
+            clientId: ""fakeClientId"",
+            clientSecret: {
+                type: ""SecureString"",
+                value: ""somesecretClientSecret""
+            },
+            tokenEndpoint: ""fakeTokenEndpoint"",
+            resource: ""fakeResource"",
+            scope: ""fakeScope""
+        }
+    }
+}";
     }
 }

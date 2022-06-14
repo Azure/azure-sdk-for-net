@@ -35,8 +35,8 @@ namespace Azure.Data.Tables.Tests
         private static string s_someDateTimeOffsetRoundtrip = XmlConvert.ToString(s_someDateTimeOffset.UtcDateTime, XmlDateTimeSerializationMode.RoundtripKind);
         private static readonly Guid s_someGuid = new Guid("66cf3753-1cc9-44c4-b857-4546f744901b");
         private static readonly string s_someGuidString = "66cf3753-1cc9-44c4-b857-4546f744901b";
-        private static readonly byte[] s_someBinary = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
-        private static readonly BinaryData s_someBinaryData = new BinaryData(new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 });
+        private static readonly byte[] s_someBinary = new byte[] { 0x01, 0x02, 0x03, 0x04, 0xFF };
+        private static readonly BinaryData s_someBinaryData = new BinaryData(new byte[] { 0x01, 0x02, 0x03, 0x04, 0xFF });
         private static readonly Expression<Func<TableItem, bool>> s_ne_TI = x => x.Name != TableName;
         private static readonly Expression<Func<ComplexEntity, bool>> s_ne = x => x.PartitionKey == Partition && x.RowKey != Row;
         private static readonly Expression<Func<TableEntity, bool>> s_neDE = x => x.PartitionKey == Partition && x.RowKey != Row;
@@ -96,8 +96,8 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtExp },
             new object[] { $"Bool eq true", s_boolTrueExp },
             new object[] { $"Bool eq false", s_boolFalseExp },
-            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("D2")))}'", s_binaryExp },
-            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("D2")))}'", s_binaryExp },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("X2")))}'", s_binaryExp },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("X2")))}'", s_binaryExp },
             new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExp },
         };
 
@@ -129,8 +129,8 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtExpDE },
             new object[] { $"Bool eq true", s_boolTrueExpDE },
             new object[] { $"Bool eq false", s_boolFalseExpDE },
-            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("D2")))}'", s_binaryExpDE },
-            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("D2")))}'", s_binaryExpDE },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("X2")))}'", s_binaryExpDE },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("X2")))}'", s_binaryExpDE },
             new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExpDE },
         };
 

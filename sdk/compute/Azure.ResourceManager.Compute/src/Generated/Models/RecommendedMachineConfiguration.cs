@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
-        /// <param name="vcpUs"> Describes the resource range. </param>
+        /// <param name="vCpus"> Describes the resource range. </param>
         /// <param name="memory"> Describes the resource range. </param>
-        internal RecommendedMachineConfiguration(ResourceRange vcpUs, ResourceRange memory)
+        internal RecommendedMachineConfiguration(ResourceRange vCpus, ResourceRange memory)
         {
-            VCPUs = vcpUs;
+            VCpus = vCpus;
             Memory = memory;
         }
 
         /// <summary> Describes the resource range. </summary>
-        public ResourceRange VCPUs { get; set; }
+        public ResourceRange VCpus { get; set; }
         /// <summary> Describes the resource range. </summary>
         public ResourceRange Memory { get; set; }
     }

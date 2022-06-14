@@ -249,6 +249,12 @@
         "mhsmip"
       ]
     },
+	{
+      "filename": "**/sdk/networkfunction/**/*.cs",
+      "words": [
+        "ipfix"
+      ]
+    },
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
@@ -388,6 +394,13 @@
         "ssdlrs",
         "vmss"
       ]
+    },
+   {
+      "filename": "**/sdk/containerinstance/**/*.cs",
+      "words": [
+        "Noreuse",
+        "Unsecure"
+        ]
     }
   ],
   "allowCompoundWords": true
