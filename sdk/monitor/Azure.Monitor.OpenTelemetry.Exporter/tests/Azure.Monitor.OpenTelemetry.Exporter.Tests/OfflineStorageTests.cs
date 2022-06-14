@@ -14,10 +14,6 @@ using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
-using OpenTelemetry.Contrib.Extensions.PersistentStorage;
-
-using Xunit;
-
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class OfflineStorageTests

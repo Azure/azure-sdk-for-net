@@ -11,9 +11,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal static ExportResult SaveTelemetry(this PersistentBlobProvider storage, byte[] content, int leaseTime)
         {
             return storage.TryCreateBlob(content, leaseTime, out _) ? ExportResult.Success : ExportResult.Failure;
-            var blob = storage.CreateBlob(content, leaseTime);
-
-            return blob == null ? ExportResult.Failure : ExportResult.Success;
         }
     }
 }
