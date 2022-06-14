@@ -986,6 +986,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase("A192KW")]
         [TestCase("A256KW")]
         [LiveOnly]
+        [Ignore("unclear keyvault requirements")] // TODO investigate
         public async Task V2CanWrapContentEncryptionAlgorithmWithContentEncryptionKey(string keywrapAlgorithm)
         {
             const int keyBytes = 256 / 8;
