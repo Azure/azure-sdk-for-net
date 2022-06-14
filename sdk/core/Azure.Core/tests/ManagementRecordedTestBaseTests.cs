@@ -13,7 +13,7 @@ namespace Azure.Core.Tests.Management
 {
     [Parallelizable]
     [PlaybackOnly("These are fake clients that won't run live")]
-    internal class ManagementRecordedTestBaseTests : ManagementRecordedTestBase<TestEnvironmentTests.MockTestEnvironment>
+    internal class ManagementRecordedTestBaseTests : ManagementRecordedTestBase<MockTestEnvironment>
     {
         public ManagementRecordedTestBaseTests(bool isAsync)
             : base(isAsync)
