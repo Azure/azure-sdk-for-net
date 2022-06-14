@@ -83,4 +83,9 @@ directive:
               $.properties[key] = property;
           }
       }
+  - from: swagger-document
+    where: $.definitions
+    transform: >
+      $.StorageAccountCheckNameAvailabilityParameters["x-ms-client-name"] = "StorageAccountNameAvailabilityContent";
+      $.StorageAccountCheckNameAvailabilityParameters.properties.type["x-ms-format"] = "resource-type";
 ```
