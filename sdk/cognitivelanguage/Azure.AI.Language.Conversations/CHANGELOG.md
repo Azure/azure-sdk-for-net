@@ -3,16 +3,14 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-* Added Conversation issue summarization task (Long-running operation)
-* Added Conversation PII extraction task (Long-running operation)
+
+* Added `ConversationAnalysisProjectsClient` to manage projects.
+* Added conversation issue summarization as a long-running operation.
+* Added conversation personally identifiable information (PII) extraction as a long-running operation.
 
 ### Breaking Changes
-- Client now uses python dictionaries for method parameters and results instead of classes.
-- Many input and result parameter name changes in `analyze_conversation()` method
 
-### Bugs Fixed
-
-### Other Changes
+- Removed all models. See README.md for samples to use this client library.
 
 ## 1.0.0-beta.3 (2022-04-20)
 
