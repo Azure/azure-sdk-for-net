@@ -1,46 +1,44 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://clubuildppe.ppe.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Connection": "keep-alive",
-        "Content-Length": "231",
+        "Content-Length": "261",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "1680870108ec4d0cef8447445277c4e2",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220610.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "881fed9b11d1c90b7cc91568c9ae6bfa",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "analysisInput": {
           "conversationItem": {
-            "text": "Send an email to Carol about the tomorrow\u0027s demo",
+            "text": "Send an email to Carol about tomorrow\u0027s demo",
             "id": "1",
             "participantId": "1"
           }
         },
         "parameters": {
           "projectName": "invalid-project",
-          "deploymentName": "production"
+          "deploymentName": "production",
+          "stringIndexType": "Utf16CodeUnit"
         },
         "kind": "Conversation"
       },
       "StatusCode": 404,
       "ResponseHeaders": {
-        "apim-request-id": "8daf5085-5049-4d0b-b152-38dfdcfdb512",
+        "apim-request-id": "5f8d5ce9-37cd-43bd-97d9-705d74acacdb",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json",
-        "Date": "Thu, 19 May 2022 14:56:12 GMT",
+        "Date": "Fri, 10 Jun 2022 22:53:49 GMT",
         "Pragma": "no-cache",
-        "Request-Id": "8daf5085-5049-4d0b-b152-38dfdcfdb512",
-        "Server": "istio-envoy",
+        "request-id": "5f8d5ce9-37cd-43bd-97d9-705d74acacdb",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "226",
-        "x-http2-stream-id": "3"
+        "x-envoy-upstream-service-time": "156"
       },
       "ResponseBody": {
         "error": {
@@ -51,8 +49,8 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://clubuildppe.ppe.cognitiveservices.azure.com/",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "RandomSeed": "1559919920"
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "RandomSeed": "303379496"
   }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> Client options for ConversationAnalysisClient. </summary>
+    /// <summary> Client options for ConversationAnalysisProjectsClient. </summary>
     public partial class ConversationAnalysisClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2022_05_15_Preview;

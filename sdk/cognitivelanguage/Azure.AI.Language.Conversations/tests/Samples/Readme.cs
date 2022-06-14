@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
@@ -27,10 +28,29 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:ConversationAnalysisClient_BadRequest
             try
             {
-                ConversationsProject conversationsProject = new ConversationsProject("invalid-project", "production");
-                Response<AnalyzeConversationTaskResult> response = client.AnalyzeConversation(
-                    "Send an email to Carol about the tomorrow's demo",
-                    conversationsProject);
+                var data = new
+                {
+                    analysisInput = new
+                    {
+                        conversationItem = new
+                        {
+                            text = "Send an email to Carol about tomorrow's demo",
+                            id = "1",
+                            participantId = "1",
+                        }
+                    },
+                    parameters = new
+                    {
+                        projectName = "invalid-project",
+                        deploymentName = "production",
+
+                        // Use Utf16CodeUnit for strings in .NET.
+                        stringIndexType = "Utf16CodeUnit",
+                    },
+                    kind = "Conversation",
+                };
+
+                Response response = client.AnalyzeConversation(RequestContent.Create(data));
             }
             catch (RequestFailedException ex)
             {

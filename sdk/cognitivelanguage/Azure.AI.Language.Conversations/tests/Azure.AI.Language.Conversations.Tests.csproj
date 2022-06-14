@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
@@ -13,6 +15,14 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.AI.Language.Conversations.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <!-- Remove the generated HLC clients that are needed to generate HLC serialization code. -->
+    <Compile Remove="Generated\ConversationAnalysisCancelJobHeaders.cs" />
+    <Compile Remove="Generated\ConversationAnalysisRestClient.cs" />
+    <Compile Remove="Generated\ConversationAnalysisSubmitJobHeaders.cs" />
+    <Compile Remove="Generated\ConversationsModelFactory.cs" />
   </ItemGroup>
 
   <ItemGroup>

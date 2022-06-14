@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "230",
+        "Content-Length": "263",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-62d8474f48f19b4eb2a7b52658935f5d-0994fea77f46bc42-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "12dbf596365f5ae0a1ce375e3a6c7129",
+        "traceparent": "00-8822852bba5531e662ee3cba5caea5d2-ac3195b57a2fbc7d-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220606.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "76ff22fb9593b7ecc076edf968c9e441",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,24 +22,25 @@
           }
         },
         "parameters": {
-          "projectName": "OrchestrationProject",
-          "deploymentName": "production"
+          "projectName": "OrchScriptDeployed1",
+          "deploymentName": "production",
+          "stringIndexType": "Utf16CodeUnit"
         },
         "kind": "Conversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "b958edcc-1a83-4561-8759-9c8972f84225",
+        "apim-request-id": "f47350c9-2daa-47e0-9dba-7e567c139031",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Thu, 19 May 2022 15:14:01 GMT",
+        "Date": "Mon, 06 Jun 2022 20:17:28 GMT",
         "Pragma": "no-cache",
-        "request-id": "b958edcc-1a83-4561-8759-9c8972f84225",
+        "request-id": "f47350c9-2daa-47e0-9dba-7e567c139031",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "121"
+        "x-envoy-upstream-service-time": "453"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -50,7 +51,7 @@
             "projectKind": "Orchestration",
             "intents": {
               "RestaurantIntent": {
-                "confidenceScore": 0.94069785,
+                "confidenceScore": 0.940697,
                 "targetProjectKind": "Luis",
                 "result": {
                   "query": "Reserve a table for 2 at the Italian restaurant",
@@ -58,31 +59,31 @@
                     "topIntent": "Reserve",
                     "intents": {
                       "Reserve": {
-                        "score": 0.9980438
+                        "score": 0.9980588
                       },
                       "Reject": {
-                        "score": 0.0063399523
+                        "score": 0.0063590785
                       },
                       "FindReservationEntry": {
-                        "score": 0.005012738
+                        "score": 0.005097165
                       },
                       "Confirm": {
-                        "score": 0.0044919797
+                        "score": 0.0044939914
                       },
                       "DeleteReservation": {
-                        "score": 0.002177323
+                        "score": 0.0022345681
                       },
                       "FindReservationWhen": {
-                        "score": 0.0016674146
+                        "score": 0.0016679561
                       },
                       "FindReservationWhere": {
-                        "score": 0.00022145486
+                        "score": 0.00022148465
                       },
                       "None": {
-                        "score": 0.00016065584
+                        "score": 0.00016065614
                       },
                       "ChangeReservation": {
-                        "score": 9.196726E-05
+                        "score": 9.267964E-05
                       }
                     },
                     "entities": {
@@ -127,11 +128,11 @@
                 }
               },
               "ChitChat-QnA": {
-                "confidenceScore": 0.6333038,
+                "confidenceScore": 0.61326313,
                 "targetProjectKind": "QuestionAnswering"
               },
               "EmailIntent": {
-                "confidenceScore": 0.26476184,
+                "confidenceScore": 0.2647618,
                 "targetProjectKind": "Conversation"
               },
               "None": {
@@ -145,10 +146,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
-    "AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationProject",
-    "RandomSeed": "1407805130"
+    "CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
+    "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchScriptDeployed1",
+    "RandomSeed": "2094360495"
   }
 }

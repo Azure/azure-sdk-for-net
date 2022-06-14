@@ -1,17 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Connection": "keep-alive",
-        "Content-Length": "227",
+        "Content-Length": "267",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7fcbd27f3670074296685c6eda2c95d1-416b571381588648-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220519.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "9b42d9b378a95965ec4953fbfa3358fa",
+        "traceparent": "00-27b8901a99d08c0178ddd7d2ab56aeb4-43edbb7585dec272-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220606.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "373b0f44f29478b77b40ba4000cc42bd",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,68 +22,69 @@
           }
         },
         "parameters": {
-          "projectName": "EmailDomain",
-          "deploymentName": "production"
+          "projectName": "CLUScriptDeployed",
+          "deploymentName": "production",
+          "stringIndexType": "Utf16CodeUnit"
         },
         "kind": "Conversation"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4d9b6776-b816-46a4-85fb-e38a9c32ebd5",
+        "apim-request-id": "1990cc89-32b6-4f41-b10b-4bef7c1212de",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.ConversationalLanguageUnderstanding.Prediction=1",
-        "Date": "Thu, 19 May 2022 15:13:59 GMT",
+        "Date": "Mon, 06 Jun 2022 21:01:40 GMT",
         "Pragma": "no-cache",
-        "request-id": "4d9b6776-b816-46a4-85fb-e38a9c32ebd5",
+        "request-id": "1990cc89-32b6-4f41-b10b-4bef7c1212de",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "169"
+        "x-envoy-upstream-service-time": "267"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
         "result": {
           "query": "Send an email to Carol about the tomorrow\u0027s demo",
           "prediction": {
-            "topIntent": "Read",
+            "topIntent": "Send",
             "projectKind": "Conversation",
             "intents": [
               {
-                "category": "Read",
-                "confidenceScore": 0.53281987
+                "category": "Send",
+                "confidenceScore": 0.9053172
               },
               {
-                "category": "Send",
-                "confidenceScore": 0.2706726
+                "category": "Read",
+                "confidenceScore": 0.44011447
               },
               {
                 "category": "Setup",
-                "confidenceScore": 0.12964208
-              },
-              {
-                "category": "Find",
-                "confidenceScore": 0.056024347
+                "confidenceScore": 0.41303915
               },
               {
                 "category": "Set",
-                "confidenceScore": 0.006720359
-              },
-              {
-                "category": "Call",
-                "confidenceScore": 0.0032539133
+                "confidenceScore": 0.21186642
               },
               {
                 "category": "None",
-                "confidenceScore": 0.0005657527
+                "confidenceScore": 0.20198277
               },
               {
-                "category": "Open",
-                "confidenceScore": 0.00024706984
+                "category": "Find",
+                "confidenceScore": 0.19216746
+              },
+              {
+                "category": "Call",
+                "confidenceScore": 0.16446844
               },
               {
                 "category": "Play",
-                "confidenceScore": 5.4002798E-05
+                "confidenceScore": 0.15655291
+              },
+              {
+                "category": "Open",
+                "confidenceScore": 0.08699014
               }
             ],
             "entities": [
@@ -111,8 +111,8 @@
                   {
                     "resolutionKind": "DateTimeResolution",
                     "dateTimeSubKind": "Date",
-                    "timex": "2022-05-20",
-                    "value": "2022-05-20"
+                    "timex": "2022-06-07",
+                    "value": "2022-06-07"
                   }
                 ],
                 "extraInformation": [
@@ -121,13 +121,6 @@
                     "value": "datetime.date"
                   }
                 ]
-              },
-              {
-                "category": "Contact",
-                "text": "demo",
-                "offset": 44,
-                "length": 4,
-                "confidenceScore": 1
               }
             ]
           }
@@ -136,10 +129,10 @@
     }
   ],
   "Variables": {
-    "AZURE_CONVERSATIONS_DEPLOYMENT_NAME": "production",
-    "AZURE_CONVERSATIONS_ENDPOINT": "https://language-dev-frontend-westus2-qna.cognitiveservices.azure.com/",
-    "AZURE_CONVERSATIONS_KEY": "Sanitized",
-    "AZURE_CONVERSATIONS_PROJECT_NAME": "EmailDomain",
-    "RandomSeed": "620860292"
+    "CONVERSATIONS_DEPLOYMENT_NAME": "production",
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "CONVERSATIONS_KEY": "Sanitized",
+    "CONVERSATIONS_PROJECT_NAME": "CLUScriptDeployed",
+    "RandomSeed": "1488141804"
   }
 }
