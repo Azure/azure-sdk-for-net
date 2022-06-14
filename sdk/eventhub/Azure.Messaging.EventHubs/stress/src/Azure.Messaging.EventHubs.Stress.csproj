@@ -14,6 +14,7 @@
     <PackageReference Include="CommandLineParser" />
     <PackageReference Include="StackExchange.Redis" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Azure.Data.Tables" />
   </ItemGroup>
 
   <ItemGroup>

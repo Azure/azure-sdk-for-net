@@ -8,7 +8,5 @@ public enum Role
     Publisher,
     BufferedPublisher,
     Processor,
-    Consumer,
-    SenderQueue,
-    BufferedSenderQueue
+    Consumer
 }

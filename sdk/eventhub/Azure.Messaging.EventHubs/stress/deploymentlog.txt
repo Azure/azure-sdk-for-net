@@ -20,3 +20,11 @@ app insights
 shared volume mount
 
 logs
+
+Event hub stress test things - merged in updates last week
+working on a demo for the stress tests for the sprint review
+adding in event validation for the processor test 
+
+
+
+
