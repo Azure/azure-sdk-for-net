@@ -28,5 +28,30 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
+
+        internal static BlobRestoreContent DeserializeBlobRestoreContent(JsonElement element)
+        {
+            DateTimeOffset timeToRestore = default;
+            IList<BlobRestoreRange> blobRanges = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("timeToRestore"))
+                {
+                    timeToRestore = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("blobRanges"))
+                {
+                    List<BlobRestoreRange> array = new List<BlobRestoreRange>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(BlobRestoreRange.DeserializeBlobRestoreRange(item));
+                    }
+                    blobRanges = array;
+                    continue;
+                }
+            }
+            return new BlobRestoreContent(timeToRestore, blobRanges);
+        }
     }
 }
