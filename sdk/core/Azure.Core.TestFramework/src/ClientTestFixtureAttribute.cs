@@ -74,14 +74,14 @@ namespace Azure.Core.TestFramework
         /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
         /// </summary>
         /// <param name="serviceVersions">The set of service versions that will be passed to the test suite.</param>
-        public ClientTestFixtureAttribute(params object[] serviceVersions) : this(serviceVersions: serviceVersions, default)
+        public ClientTestFixtureAttribute(params object[] serviceVersions) : this(serviceVersions: serviceVersions, additionalParameters: default)
         { }
 
         /// <summary>
         /// Initializes an instance of the <see cref="ClientTestFixtureAttribute"/> accepting additional fixture parameters.
         /// </summary>
         /// <param name="serviceVersions">The set of service versions that will be passed to the test suite.</param>
-        public ClientTestFixtureAttribute(bool recordAllVersions, params object[] serviceVersions) : this(serviceVersions: serviceVersions, default, recordAllVersions)
+        public ClientTestFixtureAttribute(bool recordAllVersions, params object[] serviceVersions) : this(serviceVersions: serviceVersions, additionalParameters: default, recordAllVersions)
         { }
 
         /// <summary>
@@ -199,8 +199,9 @@ namespace Azure.Core.TestFramework
                 }
             }
 
+            var serviceVersions = _serviceVersions.Any() ? _serviceVersions : new object[] { null };
             var parameters = _additionalParameters.Any() ? _additionalParameters : new object[] { null };
-            foreach (object serviceVersion in _serviceVersions.Distinct())
+            foreach (object serviceVersion in serviceVersions.Distinct())
             {
                 foreach (var parameter in parameters)
                 {
@@ -218,7 +219,8 @@ namespace Azure.Core.TestFramework
                 testSuite.Properties.Set(RecordingDirectorySuffixKey, parameter.ToString());
             }
 
-            ApplyLimits(serviceVersion, testSuite);
+            if (serviceVersion != null)
+                ApplyLimits(serviceVersion, testSuite);
 
             ProcessTestList(testSuite, serviceVersion, isAsync, parameter);
         }
@@ -333,7 +335,7 @@ namespace Azure.Core.TestFramework
                     return false;
                 }
 
-                if (serviceVersionAttribute.Max != null &
+                if (serviceVersionAttribute.Max != null &&
                     testVersion.CompareTo(new TestVersion(serviceVersionAttribute.Max)) > 0)
                 {
                     test.RunState = RunState.Ignored;

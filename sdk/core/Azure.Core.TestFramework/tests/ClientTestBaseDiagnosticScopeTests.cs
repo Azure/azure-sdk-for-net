@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework.Tests
 {
     public class ClientTestBaseDiagnosticScopeTests : ClientTestBase
     {

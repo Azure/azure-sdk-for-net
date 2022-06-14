@@ -4,28 +4,17 @@
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework.Tests
 {
-    [ClientTestFixture(
-        serviceVersions: new object[] { FakeClientVersion.V1, FakeClientVersion.V2, FakeClientVersion.V3 },
-         additionalParameters: new object[] { someParam1, someParam2 })]
-    public class ClientTestBaseMultiVersionWithArgsTests : ClientTestBase
+    [ClientTestFixture(FakeClientVersion.V0, FakeClientVersion.V1, FakeClientVersion.V2, FakeClientVersion.V3, FakeClientVersion.V4)]
+    [ServiceVersion(Min = FakeClientVersion.V1, Max = FakeClientVersion.V3)]
+    public class ClientTestBaseMultiVersionTests : ClientTestBase
     {
         private readonly FakeClientVersion _version;
-        private readonly string _param;
 
-        public ClientTestBaseMultiVersionWithArgsTests(bool isAsync, FakeClientVersion version, string param) : base(isAsync)
+        public ClientTestBaseMultiVersionTests(bool isAsync, FakeClientVersion version) : base(isAsync)
         {
             _version = version;
-            _param = param;
-        }
-
-        [Test]
-        public void HasValidAdditionalParam()
-        {
-            Assert.IsTrue(
-                _param == someParam1 ||
-                _param == someParam2);
         }
 
         [Test]
@@ -71,12 +60,11 @@ namespace Azure.Core.Tests
 
         public enum FakeClientVersion
         {
+            V0 = 0,
             V1 = 1,
             V2 = 2,
-            V3 = 3
+            V3 = 3,
+            V4 = 4
         }
-
-        public const string someParam1 = "someParam1";
-        public const string someParam2 = "someParam2";
     }
 }

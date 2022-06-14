@@ -4,7 +4,7 @@
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework.Tests
 {
     [ClientTestFixture(
             serviceVersions: default,

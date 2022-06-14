@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{8E60A748-3973-471A-B103-EC9406BB3313}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework.Tests", "..\Azure.Core.TestFramework\tests\Azure.Core.TestFramework.Tests\Azure.Core.TestFramework.Tests.csproj", "{33C299B5-ABDA-47BC-838F-973E62C067F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework.Tests", "..\Azure.Core.TestFramework\tests\Azure.Core.TestFramework.Tests.csproj", "{33C299B5-ABDA-47BC-838F-973E62C067F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

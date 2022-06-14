@@ -10,7 +10,7 @@ namespace Azure.Core.TestFramework.Tests
 {
     public class ClientTestFixtureTests
     {
-        private enum FakeVersion : int
+        private enum FakeVersion
         {
             /// <summary>
             /// The 2021-06-08 service version.
