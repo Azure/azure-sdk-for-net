@@ -1,6 +1,6 @@
 # Get updates
 
-This sample demonstrates using `DeviceUpdateClient` class in this library to import new device update. `DeviceUpdateClient` is used to manage updates in Device Update for IoT Hub - each method call sends a request to the service's REST API.  To get started, you'll need a connection string to the Azure App Configuration. See the [README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/deviceupdate/README.md) for links and instructions.
+This sample demonstrates using `DeviceUpdateClient` class in this library to import new device update. `DeviceUpdateClient` is used to manage updates in Device Update for IoT Hub - each method call sends a request to the service's REST API.  To get started, you'll need a connection string to the Azure App Configuration. See the [README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/deviceupdate/Azure.IoT.DeviceUpdate/README.md) for links and instructions.
 
  ## Create a DeviceUpdateClient
  
