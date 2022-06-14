@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public const string Create = "Create";
         public const string Replace = "Replace";
         public const string Delete = "Delete";
+        public const string Recreate = "Recreate";
         public const string SystemOperation = "SystemOperation";
     }
 }

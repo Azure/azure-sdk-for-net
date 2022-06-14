@@ -265,6 +265,202 @@ namespace CosmosDB.Tests.ScenarioTests
         }
 
         [Fact]
+        public void SqlInAccountRestoreTest()
+        {
+           
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Init(context);
+                var client = this.fixture.CosmosDBManagementClient.SqlResources;
+
+                var databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.PitrSql);
+                var restorableAccounts = (await this.fixture.CosmosDBManagementClient.RestorableDatabaseAccounts.ListByLocationAsync(this.fixture.Location)).ToList();
+                var restorableDatabaseAccount = restorableAccounts.
+                    SingleOrDefault(account => account.AccountName.Equals(databaseAccountName, StringComparison.OrdinalIgnoreCase));
+
+                var databaseName = TestUtilities.GenerateName("database");
+                SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
+                {
+                    Resource = new SqlDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                //create db
+                SqlDatabaseGetResults sqlDatabaseGetResults = client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    sqlDatabaseCreateUpdateParameters
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults);
+                Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
+
+                // get db
+                SqlDatabaseGetResults sqlDatabaseGetResults2 = client.GetSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults2);
+                Assert.Equal(databaseName, sqlDatabaseGetResults2.Name);
+
+                VerifyEqualSqlDatabases(sqlDatabaseGetResults, sqlDatabaseGetResults2);
+                
+                //update db
+                SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters2 = new SqlDatabaseCreateUpdateParameters
+                {
+                    Location = this.fixture.Location,
+                    Tags = tags,
+                    Resource = new SqlDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions
+                    {
+                        Throughput = sampleThroughput
+                    }
+                };
+
+                SqlDatabaseGetResults sqlDatabaseGetResults3 = client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    sqlDatabaseCreateUpdateParameters2
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults3);
+                Assert.Equal(databaseName, sqlDatabaseGetResults3.Name);
+
+                IEnumerable<SqlDatabaseGetResults> sqlDatabases = client.ListSqlDatabasesWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabases);
+
+                // create container
+                var containerName = TestUtilities.GenerateName("container");
+                SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
+                {
+                    Resource = new SqlContainerResource
+                    {
+                        Id = containerName,
+                        PartitionKey = new ContainerPartitionKey
+                        {
+                            Kind = "Hash",
+                            Paths = new List<string> { "/address/zipCode" }
+                        },
+                        IndexingPolicy = new IndexingPolicy
+                        {
+                            Automatic = true,
+                            IndexingMode = IndexingMode.Consistent,
+                            IncludedPaths = new List<IncludedPath>
+                        {
+                            new IncludedPath { Path = "/*"}
+                        },
+                            ExcludedPaths = new List<ExcludedPath>
+                        {
+                            new ExcludedPath { Path = "/pathToNotIndex/*"}
+                        },
+                            CompositeIndexes = new List<IList<CompositePath>>
+                        {
+                            new List<CompositePath>
+                            {
+                                new CompositePath { Path = "/orderByPath1", Order = CompositePathSortOrder.Ascending },
+                                new CompositePath { Path = "/orderByPath2", Order = CompositePathSortOrder.Descending }
+                            },
+                            new List<CompositePath>
+                            {
+                                new CompositePath { Path = "/orderByPath3", Order = CompositePathSortOrder.Ascending },
+                                new CompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
+                            }
+                        }
+                        }
+                    },
+                    Options = new CreateUpdateOptions
+                    {
+                        Throughput = sampleThroughput
+                    }
+                };
+
+                SqlContainerGetResults sqlContainerGetResults = client.CreateUpdateSqlContainerWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                
+                Assert.NotNull(sqlContainerGetResults);
+
+                IEnumerable<SqlContainerGetResults> sqlContainers = client.ListSqlContainersWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlContainers);
+                DateTime restoreTimestampInUtc = DateTime.UtcNow;
+                String restoreSource = restorableDatabaseAccount.Id;
+
+                //delete container
+                client.DeleteSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName,  sqlContainerGetResults.Name);
+
+                // restore container
+                SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters2 = new SqlContainerCreateUpdateParameters
+                {
+                    Resource = new SqlContainerResource
+                    {
+                        Id = containerName,
+                        RestoreParameters = new RestoreParameters
+                        {
+                            RestoreSource = restoreSource,
+                            RestoreTimestampInUtc = restoreTimestampInUtc
+                        },
+                        CreateMode = CreateMode.Restore
+                    }
+                };
+                SqlContainerGetResults sqlContainerGetResults2 = client.CreateUpdateSqlContainerWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    containerName,
+                    sqlContainerCreateUpdateParameters2).GetAwaiter().GetResult().Body;
+                
+                Assert.NotNull(sqlContainerGetResults2);
+                VerifyEqualSqlContainers(sqlContainerGetResults, sqlContainerGetResults2);
+
+                //delete database
+                client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName);
+
+                //restore database
+                SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters3 = new SqlDatabaseCreateUpdateParameters
+                {
+                    Resource = new SqlDatabaseResource
+                    { 
+                        Id = databaseName,
+                        RestoreParameters = new RestoreParameters
+                        {
+                            RestoreSource = restoreSource,
+                            RestoreTimestampInUtc = restoreTimestampInUtc
+                        },
+                        CreateMode = CreateMode.Restore
+                    }
+                };
+
+                SqlDatabaseGetResults sqlDatabaseGetResults4 = client.CreateUpdateSqlDatabaseWithHttpMessagesAsync(
+                    this.fixture.ResourceGroupName,
+                    databaseAccountName,
+                    databaseName,
+                    sqlDatabaseCreateUpdateParameters3
+                ).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabaseGetResults4);
+                Assert.Equal(databaseName, sqlDatabaseGetResults4.Name);
+
+                IEnumerable<SqlDatabaseGetResults> sqlDatabases = client.ListSqlDatabasesWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlDatabases);
+
+                //clean up containers
+                foreach (SqlContainerGetResults sqlContainer in sqlContainers)
+                {
+                    client.DeleteSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName,  sqlContainer.Name);
+                }
+
+                //clean up databases
+                foreach (SqlDatabaseGetResults sqlDatabase in sqlDatabases)
+                {
+                    client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, sqlDatabase.Name);
+                }
+            }
+        }
+
+        [Fact]
         public void SqlPartitionMergeTests()
         {
 
@@ -1016,6 +1212,15 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(expectedValue.Resource._etag, actualValue.Resource._etag);
             Assert.Equal(expectedValue.Resource._colls, actualValue.Resource._colls);
             Assert.Equal(expectedValue.Resource._users, actualValue.Resource._users);
+        }
+
+        private void VerifyEqualSqlContainers(SqlContainerGetResults expectedValue, SqlContainerGetResults actualValue)
+        {
+            Assert.Equal(expectedValue.Resource.Id, actualValue.Resource.Id);
+            Assert.Equal(expectedValue.Resource.IndexingPolicy.IndexingMode.ToLower(), actualValue.Resource.IndexingPolicy.IndexingMode.ToLower());
+            Assert.Equal(expectedValue.Resource.PartitionKey.Kind, actualValue.Resource.PartitionKey.Kind);
+            Assert.Equal(expectedValue.Resource.PartitionKey.Paths, actualValue.Resource.PartitionKey.Paths);
+            Assert.Equal(expectedValue.Resource.DefaultTtl, actualValue.Resource.DefaultTtl);
         }
 
         private void VerifyEqualSqlRoleDefinitions(SqlRoleDefinitionGetResults expectedValue, SqlRoleDefinitionGetResults actualValue)
