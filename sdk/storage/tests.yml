@@ -3,6 +3,8 @@ trigger: none
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
+    EnvVars:
+      DYLD_LIBRARY_PATH: /usr/local/opt/openssl@3/lib
     ServiceDirectory: storage
     BuildInParallel: true
     TimeoutInMinutes: 180
@@ -26,10 +28,8 @@ extends:
     ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
       EnvVars:
         AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
-        DYLD_LIBRARY_PATH: /usr/local/opt/openssl@3/lib
-    PreSteps:
-      - bash: brew install openssl@3
-        displayName: (MacOS) Install OpenSSL
-        condition: contains(variables['OSVmImage'], 'mac')
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
+    - bash: brew install openssl@3
+        displayName: (MacOS) Install OpenSSL
+        condition: contains(variables['OSVmImage'], 'mac')

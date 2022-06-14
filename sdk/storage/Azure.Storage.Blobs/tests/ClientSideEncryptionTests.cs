@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
@@ -187,7 +188,7 @@ namespace Azure.Storage.Blobs.Test
             keyMock.SetupGet(k => k.DefaultKeyWrapAlgorithm).Returns(s_algorithmName);
             // track one had async-only key wrapping
             keyMock.Setup(k => k.WrapKeyAsync(IsNotNull<byte[]>(), IsAny<string>(), IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
-                // track 1 doesn't pass in the algorithm name, it lets the implementation return the default algorithm it chose
+                                                                                                                     // track 1 doesn't pass in the algorithm name, it lets the implementation return the default algorithm it chose
                 .Returns<byte[], string, CancellationToken>((key, algorithm, cancellationToken) => Task.FromResult(Tuple.Create(Xor(userKeyBytes, key), s_algorithmName)));
             keyMock.Setup(k => k.UnwrapKeyAsync(IsNotNull<byte[]>(), s_algorithmName, IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
                 .Returns<byte[], string, CancellationToken>((wrappedKey, algorithm, cancellationToken) => Task.FromResult(Xor(userKeyBytes, wrappedKey)));
@@ -557,7 +558,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(ClientSideEncryptionVersion.V1_0, 14, null)] // a single unalligned cipher block
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB, null)] // multiple blocks
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.KB - 4, null)] // multiple unalligned blocks
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)] // make sure we cache unwrapped key for large downloads
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64 * Constants.KB)] // make sure we cache unwrapped key for large downloads
         // TODO don't move to recorded tests without making the encryption region size configurable
         [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize, null)] // a single cipher block
         [TestCase(ClientSideEncryptionVersion.V2_0, V2.EncryptionRegionDataSize - 1000000, null)] // a single unalligned cipher block
@@ -646,9 +647,9 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64 * Constants.KB)]
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, Constants.MB)]
-        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 4*Constants.MB)]
+        [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 4 * Constants.MB)]
         [TestCase(ClientSideEncryptionVersion.V2_0, Constants.MB, 128 * Constants.KB)]
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize, Constants.MB)]
         [TestCase(ClientSideEncryptionVersion.V2_0, 2 * V2.EncryptionRegionDataSize + 1000, Constants.MB + 15)]
@@ -859,7 +860,7 @@ namespace Azure.Storage.Blobs.Test
 #if NET6_0_OR_GREATER
             RandomNumberGenerator.Create().GetBytes(keyEncryptionKeyBytes);
 #else
-                new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
 #endif
             var keyId = Guid.NewGuid().ToString();
 
@@ -911,7 +912,7 @@ namespace Azure.Storage.Blobs.Test
 #if NET6_0_OR_GREATER
             RandomNumberGenerator.Create().GetBytes(keyEncryptionKeyBytes);
 #else
-                new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
+            new RNGCryptoServiceProvider().GetBytes(keyEncryptionKeyBytes);
 #endif
             var keyId = Guid.NewGuid().ToString();
 
@@ -977,7 +978,43 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        // TODO revisit when openread implemented
+        // strings taken from Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm
+        [TestCase("RSA-OAEP")]
+        [TestCase("RSA1_5")]
+        [TestCase("RSA-OAEP-256")]
+        [TestCase("A128KW")]
+        [TestCase("A192KW")]
+        [TestCase("A256KW")]
+        [LiveOnly]
+        public async Task V2CanWrapContentEncryptionAlgorithmWithContentEncryptionKey(string keywrapAlgorithm)
+        {
+            const int keyBytes = 256 / 8;
+
+            // Arrange
+            var keywrapper = await GetKeyvaultIKeyEncryptionKey();
+            var contentEncryptionKey = GetRandomBuffer(keyBytes);
+
+            // Act
+            var v2EncryptionData = await EncryptionData.CreateInternalV2_0(
+                keywrapAlgorithm,
+                contentEncryptionKey,
+                keywrapper,
+                IsAsync,
+                s_cancellationToken);
+
+            // Assert
+            byte[] unwrappedRawData = await keywrapper.UnwrapKeyAsync(
+                v2EncryptionData.WrappedContentKey.Algorithm,
+                v2EncryptionData.WrappedContentKey.EncryptedKey,
+                s_cancellationToken);
+
+            byte[] unwrappedContentEncryptionKey = new Span<byte>(unwrappedRawData, 0, keyBytes).ToArray();
+            byte[] unwrappedContentEncryptionAlgorithm = new Span<byte>(unwrappedRawData, keyBytes, unwrappedRawData.Length - keyBytes).ToArray();
+
+            Assert.AreEqual(contentEncryptionKey, unwrappedContentEncryptionKey);
+            Assert.AreEqual("AES_GCM_256", Encoding.UTF8.GetString(unwrappedContentEncryptionAlgorithm));
+        }
+
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)]
         [TestCase(ClientSideEncryptionVersion.V2_0,  Constants.MB, 64 * Constants.KB)]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
