@@ -14,8 +14,8 @@ mgmt-debug:
   show-request-path: true
 batch:
   - tag: package-common-type-2022-04
-#   - tag: package-resources-2022-04
-#   - tag: package-management-2022-04
+  - tag: package-resources-2022-04
+  - tag: package-management-2022-04
 ```
 
 ### Tag: package-common-type-2022-04
