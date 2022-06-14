@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Core.Tests
 {
-    public class TestClient
+    internal class TestClient
     {
         private readonly ClientDiagnostics _diagnostics;
 

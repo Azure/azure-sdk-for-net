@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Tests
 {
-    public class InvalidTestClient
+    internal class InvalidTestClient
     {
         public Task<string> MethodAsync(int i)
         {

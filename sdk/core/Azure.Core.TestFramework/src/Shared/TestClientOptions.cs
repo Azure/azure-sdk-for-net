@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Core.TestFramework.Tests
+namespace Azure.Core.Tests
 {
-    public class TestClientOptions : ClientOptions
+    internal class TestClientOptions : ClientOptions
     {
     }
 }

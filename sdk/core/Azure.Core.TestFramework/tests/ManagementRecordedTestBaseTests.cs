@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests.Management
+namespace Azure.Core.TestFramework.Tests.Management
 {
     [Parallelizable]
     [PlaybackOnly("These are fake clients that won't run live")]

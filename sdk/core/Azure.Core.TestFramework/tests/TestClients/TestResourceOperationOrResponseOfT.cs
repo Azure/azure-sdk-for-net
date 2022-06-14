@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework.Tests
 {
     internal class TestResourceOperationOrResponseOfT : Operation<TestResource>, IOperationSource<TestResource>
     {

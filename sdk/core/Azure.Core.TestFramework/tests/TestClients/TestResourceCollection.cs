@@ -13,7 +13,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.TestFramework.Tests
 {
     internal class TestResourceCollection : ArmCollection, IEnumerable<TestResource>, IAsyncEnumerable<TestResource>
     {

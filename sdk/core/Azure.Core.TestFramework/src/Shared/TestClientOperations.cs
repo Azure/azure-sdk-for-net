@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Tests
 {
-    public class TestClientOperations
+    internal class TestClientOperations
     {
         public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
         {
