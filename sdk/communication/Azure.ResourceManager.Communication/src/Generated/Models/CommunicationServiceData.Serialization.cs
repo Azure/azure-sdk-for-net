@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Communication
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
             Optional<string> dataLocation = default;
@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.Communication
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -149,7 +154,7 @@ namespace Azure.ResourceManager.Communication
                     continue;
                 }
             }
-            return new CommunicationServiceData(id, name, type, systemData, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, immutableResourceId.Value, location.Value, Optional.ToDictionary(tags));
+            return new CommunicationServiceData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, immutableResourceId.Value, location.Value, Optional.ToDictionary(tags));
         }
     }
 }

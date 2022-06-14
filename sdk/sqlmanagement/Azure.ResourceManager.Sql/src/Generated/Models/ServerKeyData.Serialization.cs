@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> subregion = default;
             Optional<ServerKeyType> serverKeyType = default;
             Optional<Uri> uri = default;
@@ -77,6 +77,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -143,7 +148,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ServerKeyData(id, name, type, systemData, kind.Value, location.Value, subregion.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled));
+            return new ServerKeyData(id, name, type, systemData.Value, kind.Value, location.Value, subregion.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

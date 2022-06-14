@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> updatedAtUtc = default;
             Optional<DateTimeOffset> createdAtUtc = default;
             Optional<Guid> eTag = default;
@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 if (property.NameEquals("systemData"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
@@ -164,7 +169,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new SchemaGroupData(id, name, type, systemData, location.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType));
+            return new SchemaGroupData(id, name, type, systemData.Value, location.Value, Optional.ToNullable(updatedAtUtc), Optional.ToNullable(createdAtUtc), Optional.ToNullable(eTag), Optional.ToDictionary(groupProperties), Optional.ToNullable(schemaCompatibility), Optional.ToNullable(schemaType));
         }
     }
 }
