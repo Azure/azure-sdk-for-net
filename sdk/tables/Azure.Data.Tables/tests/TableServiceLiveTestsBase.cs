@@ -269,8 +269,8 @@ namespace Azure.Data.Tables.Tests
                         return new ComplexEntity(partitionKeyValue, string.Format("{0:0000}", n))
                         {
                             String = string.Format("{0:0000}", n),
-                            Binary = new BinaryData(new byte[] { 0x01, 0x02, (byte)n }),
-                            BinaryPrimitive = new byte[] { 0x01, 0x02, (byte)n },
+                            Binary = new BinaryData(new byte[] { 0x01, 0x02, 0xFF, (byte)n }),
+                            BinaryPrimitive = new byte[] { 0x01, 0x02, 0xFF, (byte)n },
                             Bool = n % 2 == 0,
                             BoolPrimitive = n % 2 == 0,
                             DateTime = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
