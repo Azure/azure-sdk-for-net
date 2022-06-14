@@ -394,6 +394,13 @@
         "ssdlrs",
         "vmss"
       ]
+    },
+   {
+      "filename": "**/sdk/containerinstance/**/*.cs",
+      "words": [
+        "Noreuse",
+        "Unsecure"
+        ]
     }
   ],
   "allowCompoundWords": true
