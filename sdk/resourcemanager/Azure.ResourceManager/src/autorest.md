@@ -10,8 +10,7 @@ skip-csproj: true
 model-namespace: false
 public-clients: false
 head-as-boolean: false
-mgmt-debug:
-  show-request-path: true
+
 batch:
   - tag: package-common-type-2022-04
   - tag: package-resources-2022-04
@@ -641,10 +640,11 @@ directive:
   - from: management.json
     where: $.definitions.CheckNameAvailabilityRequest.properties.type
     transform: >
-      $['x-ms-client-name'] = "ResourceType"
+      $['x-ms-client-name'] = "ResourceType";
+      $['x-ms-contant'] = true;
   - rename-model:
       from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityRequest
+      to: ManagementGroupNameAvailabilityContent
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
