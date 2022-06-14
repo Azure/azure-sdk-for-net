@@ -978,44 +978,6 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        // strings taken from Azure.Security.KeyVault.Keys.Cryptography.KeyWrapAlgorithm
-        [TestCase("RSA-OAEP")]
-        [TestCase("RSA1_5")]
-        [TestCase("RSA-OAEP-256")]
-        [TestCase("A128KW")]
-        [TestCase("A192KW")]
-        [TestCase("A256KW")]
-        [LiveOnly]
-        [Ignore("unclear keyvault requirements")] // TODO investigate
-        public async Task V2CanWrapContentEncryptionAlgorithmWithContentEncryptionKey(string keywrapAlgorithm)
-        {
-            const int keyBytes = 256 / 8;
-
-            // Arrange
-            var keywrapper = await GetKeyvaultIKeyEncryptionKey();
-            var contentEncryptionKey = GetRandomBuffer(keyBytes);
-
-            // Act
-            var v2EncryptionData = await EncryptionData.CreateInternalV2_0(
-                keywrapAlgorithm,
-                contentEncryptionKey,
-                keywrapper,
-                IsAsync,
-                s_cancellationToken);
-
-            // Assert
-            byte[] unwrappedRawData = await keywrapper.UnwrapKeyAsync(
-                v2EncryptionData.WrappedContentKey.Algorithm,
-                v2EncryptionData.WrappedContentKey.EncryptedKey,
-                s_cancellationToken);
-
-            byte[] unwrappedContentEncryptionKey = new Span<byte>(unwrappedRawData, 0, keyBytes).ToArray();
-            byte[] unwrappedContentEncryptionAlgorithm = new Span<byte>(unwrappedRawData, keyBytes, unwrappedRawData.Length - keyBytes).ToArray();
-
-            Assert.AreEqual(contentEncryptionKey, unwrappedContentEncryptionKey);
-            Assert.AreEqual("AES_GCM_256", Encoding.UTF8.GetString(unwrappedContentEncryptionAlgorithm));
-        }
-
         [TestCase(ClientSideEncryptionVersion.V1_0, Constants.MB, 64*Constants.KB)]
         [TestCase(ClientSideEncryptionVersion.V2_0,  Constants.MB, 64 * Constants.KB)]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
