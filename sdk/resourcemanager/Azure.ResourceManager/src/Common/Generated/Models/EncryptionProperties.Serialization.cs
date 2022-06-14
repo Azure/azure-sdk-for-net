@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
-    [JsonConverter(typeof(EncryptionPropertiesConverter))]
     public partial class EncryptionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -26,7 +23,7 @@ namespace Azure.ResourceManager.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties");
-                writer.WriteObjectValue(KeyVaultProperties);
+                JsonSerializer.Serialize(writer, KeyVaultProperties);
             }
             writer.WriteEndObject();
         }
@@ -54,24 +51,11 @@ namespace Azure.ResourceManager.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    keyVaultProperties = JsonSerializer.Deserialize<KeyVaultProperties>(property.Value.ToString());
                     continue;
                 }
             }
-            return new EncryptionProperties(Optional.ToNullable(status), keyVaultProperties.Value);
-        }
-
-        internal partial class EncryptionPropertiesConverter : JsonConverter<EncryptionProperties>
-        {
-            public override void Write(Utf8JsonWriter writer, EncryptionProperties model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override EncryptionProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeEncryptionProperties(document.RootElement);
-            }
+            return new EncryptionProperties(Optional.ToNullable(status), keyVaultProperties);
         }
     }
 }
