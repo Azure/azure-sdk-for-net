@@ -88,7 +88,7 @@ namespace Microsoft.Extensions.Azure
             var credentialType = configuration["credential"];
             var clientId = configuration["clientId"];
             var tenantId = configuration["tenantId"];
-            var resourceId = configuration["UserAssignedManagedIdentityResourceId"];
+            var resourceId = configuration["managedIdentityResourceId"];
             var clientSecret = configuration["clientSecret"];
             var certificate = configuration["clientCertificate"];
             var certificateStoreName = configuration["clientCertificateStoreName"];

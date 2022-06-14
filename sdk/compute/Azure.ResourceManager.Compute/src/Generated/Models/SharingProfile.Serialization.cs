@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -21,6 +22,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("permissions");
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
+            if (Optional.IsDefined(CommunityGalleryInfo))
+            {
+                writer.WritePropertyName("communityGalleryInfo");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CommunityGalleryInfo);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CommunityGalleryInfo.ToString()).RootElement);
+#endif
+            }
             writer.WriteEndObject();
         }
 
@@ -28,6 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<GallerySharingPermissionTypes> permissions = default;
             Optional<IReadOnlyList<SharingProfileGroup>> groups = default;
+            Optional<BinaryData> communityGalleryInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("permissions"))
@@ -55,8 +66,18 @@ namespace Azure.ResourceManager.Compute.Models
                     groups = array;
                     continue;
                 }
+                if (property.NameEquals("communityGalleryInfo"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    communityGalleryInfo = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
             }
-            return new SharingProfile(Optional.ToNullable(permissions), Optional.ToList(groups));
+            return new SharingProfile(Optional.ToNullable(permissions), Optional.ToList(groups), communityGalleryInfo.Value);
         }
     }
 }
