@@ -31,5 +31,5 @@ extends:
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
     - bash: brew install openssl@3
-        displayName: (MacOS) Install OpenSSL
-        condition: contains(variables['OSVmImage'], 'mac')
+      displayName: (MacOS) Install OpenSSL
+      condition: contains(variables['OSVmImage'], 'mac')
