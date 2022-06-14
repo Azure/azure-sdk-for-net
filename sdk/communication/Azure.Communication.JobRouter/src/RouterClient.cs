@@ -870,7 +870,7 @@ using Azure.Core.Pipeline;
                 var request = new ExceptionPolicy()
                 {
                     Name = options.Name,
-                    ExceptionRules = options.ExceptionRules,
+                    ExceptionRules = options.ExceptionRules ?? new Dictionary<string, ExceptionRule>(),
                 };
 
                 return await RestClient.UpsertExceptionPolicyAsync(
@@ -905,7 +905,7 @@ using Azure.Core.Pipeline;
                 var request = new ExceptionPolicy()
                 {
                     Name = options.Name,
-                    ExceptionRules = options.ExceptionRules,
+                    ExceptionRules = options.ExceptionRules ?? new Dictionary<string, ExceptionRule>(),
                 };
 
                 return RestClient.UpsertExceptionPolicy(

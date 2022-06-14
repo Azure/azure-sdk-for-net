@@ -1,0 +1,168 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/BE-20-0C-38-E4-F0-52-23-24-3D-8A-FC-69-2E-B6-42-06?api-version=2021-10-20-preview2",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "Content-Length": "479",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-3f69b2d8ed31bf4491a0e6c27efc43fd-9e3ca8e8a9f5004e-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220613.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "fb9c2c09572479d4066fc911edf158c0",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 13 Jun 2022 23:59:50 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "BE-20-0C-38-E4-F0-52-23-24-3D-8A-FC-69-2E-B6-42-06-Name",
+        "offerTtlSeconds": 1,
+        "mode": {
+          "scoringRule": {
+            "functionUrl": "https://my.function.app/api/myfunction?code=Kg==",
+            "credential": {
+              "appKey": "Sanitized",
+              "clientId": "MyClientId"
+            },
+            "kind": "azure-function-rule"
+          },
+          "scoringRuleOptions": {
+            "scoringParameters": [
+              "workerSelectors"
+            ],
+            "allowScoringBatchOfWorkers": false,
+            "descendingOrder": true
+          },
+          "kind": "best-worker",
+          "minConcurrentOffers": 1,
+          "maxConcurrentOffers": 2,
+          "bypassSelectors": false
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 13 Jun 2022 23:59:51 GMT",
+        "ETag": "\u00226b0229fb-0000-0700-0000-62a7cf770000\u0022",
+        "Last-Modified": "Mon, 13 Jun 2022 23:59:51 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "3f69b2d8ed31bf4491a0e6c27efc43fd",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0d8\u002BnYgAAAABaRc/4uFwXSpRp3ST\u002BoBqSU0pDRURHRTAzMDgAY2M5Mjc1OGQtMDVmNy00YWQ2LWFhNWUtMGZhOTcxOGQ4OTg1",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "BE-20-0C-38-E4-F0-52-23-24-3D-8A-FC-69-2E-B6-42-06",
+        "name": "BE-20-0C-38-E4-F0-52-23-24-3D-8A-FC-69-2E-B6-42-06-Name",
+        "offerTtlSeconds": 1,
+        "mode": {
+          "kind": "best-worker",
+          "scoringRule": {
+            "kind": "azure-function-rule",
+            "functionUrl": "https://my.function.app/api/myfunction?code=Kg==",
+            "credential": {
+              "appKey": "Sanitized",
+              "clientId": "MyClientId"
+            }
+          },
+          "scoringRuleOptions": {
+            "scoringParameters": [
+              "workerSelectors"
+            ],
+            "allowScoringBatchOfWorkers": false,
+            "descendingOrder": true
+          },
+          "minConcurrentOffers": 1,
+          "maxConcurrentOffers": 2,
+          "bypassSelectors": false
+        }
+      }
+    },
+    {
+      "RequestUri": "https://rsarkar-sdktest.int.communication.azure.net/routing/distributionPolicies/BE-20-0C-38-E4-F0-52-23-24-3D-8A-FC-69-2E-B6-42-06?api-version=2021-10-20-preview2",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "375",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-f0c02d6735a7df42a3b2bc7a8592ac57-9b1a5675b49c1a4d-00",
+        "User-Agent": "azsdk-net-Communication.JobRouter/1.0.0-alpha.20220613.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "640ea325e4fd6c0f33159a7a8079f331",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Mon, 13 Jun 2022 23:59:50 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "mode": {
+          "scoringRule": {
+            "functionUrl": "https://my.function.app/api/myfunction?code=Kg==",
+            "credential": {
+              "functionKey": "Sanitized"
+            },
+            "kind": "azure-function-rule"
+          },
+          "scoringRuleOptions": {
+            "scoringParameters": [
+              "workerSelectors"
+            ],
+            "allowScoringBatchOfWorkers": false,
+            "descendingOrder": true
+          },
+          "kind": "best-worker",
+          "minConcurrentOffers": 1,
+          "maxConcurrentOffers": 2,
+          "bypassSelectors": false
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-04-07-preview1, 2021-10-20-preview2",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 13 Jun 2022 23:59:51 GMT",
+        "ETag": "\u00226b0244fb-0000-0700-0000-62a7cf770000\u0022",
+        "Last-Modified": "Mon, 13 Jun 2022 23:59:51 GMT",
+        "Request-Context": "appId=",
+        "trace-id": "f0c02d6735a7df42a3b2bc7a8592ac57",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0d8\u002BnYgAAAABouUmBaItXRqj15y4gsGzBU0pDRURHRTAzMDgAY2M5Mjc1OGQtMDVmNy00YWQ2LWFhNWUtMGZhOTcxOGQ4OTg1",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "id": "BE-20-0C-38-E4-F0-52-23-24-3D-8A-FC-69-2E-B6-42-06",
+        "name": "BE-20-0C-38-E4-F0-52-23-24-3D-8A-FC-69-2E-B6-42-06-Name",
+        "offerTtlSeconds": 1,
+        "mode": {
+          "kind": "best-worker",
+          "scoringRule": {
+            "kind": "azure-function-rule",
+            "functionUrl": "https://my.function.app/api/myfunction?code=Kg==",
+            "credential": {
+              "functionKey": "Sanitized",
+              "appKey": "Sanitized",
+              "clientId": "MyClientId"
+            }
+          },
+          "scoringRuleOptions": {
+            "scoringParameters": [
+              "workerSelectors"
+            ],
+            "allowScoringBatchOfWorkers": false,
+            "descendingOrder": true
+          },
+          "minConcurrentOffers": 1,
+          "maxConcurrentOffers": 2,
+          "bypassSelectors": false
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://rsarkar-sdktest.int.communication.azure.net/;accesskey=Kg==",
+    "id-prefix": "sdk-54EfWwFj70CBH1m2lGAPrA-",
+    "RandomSeed": "1577131761"
+  }
+}

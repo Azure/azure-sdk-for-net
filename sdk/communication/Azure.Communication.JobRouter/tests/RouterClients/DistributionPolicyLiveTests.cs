@@ -165,7 +165,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             {
                 // any value will be sanitized when recordings are saved
                 Assert.AreEqual("MyKey", azureFuncScoringRule.Credential.FunctionKey);
-                Assert.IsTrue(string.IsNullOrWhiteSpace(azureFuncScoringRule.Credential.AppKey) && string.IsNullOrWhiteSpace(azureFuncScoringRule.Credential.ClientId));
             }
 
             AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(bestWorkerModeDistributionPolicyId)));
