@@ -21,11 +21,14 @@ namespace Azure.AI.Language.Conversations
         /// <param name="targetProjectKind"> This discriminator property specifies the type of the target project that returns the response. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="internalResult"> The actual response from a LUIS Generally Available application. </param>
-        internal LuisTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, object internalResult) : base(targetProjectKind, apiVersion, confidence)
+        /// <param name="result"> The actual response from a LUIS Generally Available application. </param>
+        internal LuisTargetIntentResult(TargetProjectKind targetProjectKind, string apiVersion, double confidence, object result) : base(targetProjectKind, apiVersion, confidence)
         {
-            InternalResult = internalResult;
+            Result = result;
             TargetProjectKind = targetProjectKind;
         }
+
+        /// <summary> The actual response from a LUIS Generally Available application. </summary>
+        public object Result { get; }
     }
 }

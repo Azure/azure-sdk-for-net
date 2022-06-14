@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation task. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInput"/> or <paramref name="parameters"/> is null. </exception>
-        public ConversationalTask(AnalyzeConversationOptions analysisInput, ConversationTaskParameters parameters)
+        public ConversationalTask(ConversationAnalysisOptions analysisInput, ConversationTaskParameters parameters)
         {
             if (analysisInput == null)
             {
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Conversations
         }
 
         /// <summary> The input ConversationItem and its optional parameters. </summary>
-        public AnalyzeConversationOptions AnalysisInput { get; }
+        public ConversationAnalysisOptions AnalysisInput { get; }
         /// <summary> Input parameters necessary for a Conversation task. </summary>
         public ConversationTaskParameters Parameters { get; }
     }

@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://languagesdktest.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:analyze-conversations?api-version=2022-05-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "228",
+        "Content-Length": "236",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-9d390fe7c205b361bb490e21b11dfd8a-f4b20a0dc4edb7fd-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220525.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "62a1621a919d41660f500dcd2a9002ad",
+        "traceparent": "00-72f002685e7e79594a453827d6efa3cc-be93bdbe09f1ec23-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.1.0-alpha.20220614.1 (.NET 6.0.5; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "8249bad3e88cda82aadfb38cfc3c2fe8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,7 +22,7 @@
           }
         },
         "parameters": {
-          "projectName": "OrchScriptDeployed1",
+          "projectName": "OrchestrationScriptDeployed",
           "deploymentName": "production",
           "stringIndexType": "Utf16CodeUnit"
         },
@@ -30,17 +30,17 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3d7ec466-d89a-4f14-baaa-96b9c96f47f9",
+        "apim-request-id": "c1c203d6-22be-4558-8ef2-caf5ff162b1a",
         "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.Language.OrchestrationWorkflow.Prediction=1",
-        "Date": "Wed, 25 May 2022 20:44:31 GMT",
+        "Date": "Tue, 14 Jun 2022 20:30:58 GMT",
         "Pragma": "no-cache",
-        "request-id": "3d7ec466-d89a-4f14-baaa-96b9c96f47f9",
+        "request-id": "c1c203d6-22be-4558-8ef2-caf5ff162b1a",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "484"
+        "x-envoy-upstream-service-time": "395"
       },
       "ResponseBody": {
         "kind": "ConversationResult",
@@ -105,16 +105,12 @@
                   ]
                 }
               },
-              "RestaurantIntent": {
-                "confidenceScore": 0.52488816,
-                "targetProjectKind": "Luis"
-              },
               "EmailIntent": {
-                "confidenceScore": 0.20137204,
+                "confidenceScore": 0.2013731,
                 "targetProjectKind": "Conversation"
               },
               "None": {
-                "confidenceScore": 0.16740131,
+                "confidenceScore": 0.1674014,
                 "targetProjectKind": "NonLinked"
               }
             }
@@ -124,10 +120,10 @@
     }
   ],
   "Variables": {
-    "CONVERSATIONS_ENDPOINT": "https://languagesdktest.cognitiveservices.azure.com",
+    "CONVERSATIONS_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME": "production",
-    "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchScriptDeployed1",
-    "RandomSeed": "1634038443"
+    "CONVERSATIONS_WORKFLOW_PROJECT_NAME": "OrchestrationScriptDeployed",
+    "RandomSeed": "1430188584"
   }
 }
