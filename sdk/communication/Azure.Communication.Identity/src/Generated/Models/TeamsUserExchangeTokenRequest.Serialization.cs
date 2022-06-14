@@ -10,13 +10,17 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
-    internal partial class TeamsUserAccessTokenRequest : IUtf8JsonSerializable
+    internal partial class TeamsUserExchangeTokenRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("token");
             writer.WriteStringValue(Token);
+            writer.WritePropertyName("appId");
+            writer.WriteStringValue(AppId);
+            writer.WritePropertyName("userId");
+            writer.WriteStringValue(UserId);
             writer.WriteEndObject();
         }
     }
