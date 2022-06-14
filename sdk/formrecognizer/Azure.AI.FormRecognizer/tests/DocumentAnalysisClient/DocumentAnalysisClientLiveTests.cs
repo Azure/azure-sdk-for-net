@@ -1451,7 +1451,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1726")]
         public async Task StartAnalyzeDocumentCanAuthenticateWithTokenCredential()
         {
             var client = CreateDocumentAnalysisClient(useTokenCredential: true);
