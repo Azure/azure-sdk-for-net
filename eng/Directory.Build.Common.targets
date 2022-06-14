@@ -194,7 +194,6 @@
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared/Core" />

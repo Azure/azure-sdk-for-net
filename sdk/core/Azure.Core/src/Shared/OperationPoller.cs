@@ -28,10 +28,10 @@ namespace Azure.Core
         public Response WaitForCompletionResponse(Operation operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
             => WaitForCompletionAsync(false, operation, suggestedInterval, cancellationToken).EnsureCompleted();
 
-        public ValueTask<Response> WaitForCompletionResponseAsync(OperationInternalBase operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
+        public ValueTask<Response<T>> WaitForCompletionResponseAsync<T>(OperationInternal<T> operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
             => WaitForCompletionAsync(true, operation, suggestedInterval, cancellationToken);
 
-        public Response WaitForCompletionResponse(OperationInternalBase operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
+        public Response<T> WaitForCompletionResponse<T>(OperationInternal<T> operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
             => WaitForCompletionAsync(false, operation, suggestedInterval, cancellationToken).EnsureCompleted();
 
         public async ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken) where T : notnull
@@ -48,14 +48,12 @@ namespace Azure.Core
 
         public async ValueTask<Response<T>> WaitForCompletionAsync<T>(OperationInternal<T> operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken) where T : notnull
         {
-            Response response = await WaitForCompletionAsync(true, operation, suggestedInterval, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(operation.Value, response);
+            return await WaitForCompletionAsync(true, operation, suggestedInterval, cancellationToken).ConfigureAwait(false);
         }
 
         public Response<T> WaitForCompletion<T>(OperationInternal<T> operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken) where T : notnull
         {
-            Response response = WaitForCompletionAsync(false, operation, suggestedInterval, cancellationToken).EnsureCompleted();
-            return Response.FromValue(operation.Value, response);
+            return WaitForCompletionAsync(false, operation, suggestedInterval, cancellationToken).EnsureCompleted();
         }
 
         private async ValueTask<Response> WaitForCompletionAsync(bool async, Operation operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
@@ -72,14 +70,14 @@ namespace Azure.Core
             }
         }
 
-        private async ValueTask<Response> WaitForCompletionAsync(bool async, OperationInternalBase operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
+        private async ValueTask<Response<T>> WaitForCompletionAsync<T>(bool async, OperationInternal<T> operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
         {
             while (true)
             {
                 Response response = async ? await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : operation.UpdateStatus(cancellationToken);
                 if (operation.HasCompleted)
                 {
-                    return operation.RawResponse;
+                    return Response.FromValue(operation.Value, response);
                 }
 
                 await Delay(async, _delayStrategy.GetNextDelay(response, suggestedInterval), cancellationToken).ConfigureAwait(false);

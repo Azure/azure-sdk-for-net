@@ -49,7 +49,7 @@ namespace Azure.Core.Tests.DelayStrategies
         {
             var cts = new CancellationTokenSource();
             var poller = new OperationPoller(new TestDelayStrategy(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1), cts));
-            var operation = new OperationInternal(new ClientDiagnostics(ClientOptions.Default), new EndlessOperation(), new MockResponse(200));
+            var operation = new OperationInternal<int>(new ClientDiagnostics(ClientOptions.Default), new EndlessOperation(), new MockResponse(200));
             Assert.CatchAsync<OperationCanceledException>(async () => await poller.WaitForCompletionResponseAsync(operation, null, cts.Token));
         }
 
@@ -58,13 +58,13 @@ namespace Azure.Core.Tests.DelayStrategies
         {
             var cts = new CancellationTokenSource();
             var poller = new OperationPoller(new TestDelayStrategy(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1), cts));
-            var operation = new OperationInternal(new ClientDiagnostics(ClientOptions.Default), new EndlessOperation(), new MockResponse(200));
+            var operation = new OperationInternal<int>(new ClientDiagnostics(ClientOptions.Default), new EndlessOperation(), new MockResponse(200));
             Assert.Catch<OperationCanceledException>(() => poller.WaitForCompletionResponse(operation, null, cts.Token));
         }
 
-        private class EndlessOperation : IOperation
+        private class EndlessOperation : IOperation<int>
         {
-            public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(OperationState.Pending(new MockResponse(200)));
+            public ValueTask<OperationState<int>> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(OperationState<int>.Pending(new MockResponse(200)));
         }
 
         private class TestDelayStrategy : DelayStrategy

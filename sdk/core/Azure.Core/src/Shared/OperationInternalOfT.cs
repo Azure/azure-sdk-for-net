@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -24,19 +25,19 @@ namespace Azure.Core
     ///     <description><see cref="HasValue"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.HasCompleted"/></description>
+    ///     <description><see cref="OperationInternal{T}.HasCompleted"/></description>
     ///   </item>
     ///   <item>
     ///     <description><see cref="Value"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></description>
+    ///     <description><see cref="OperationInternal{T}.RawResponse"/>, used for <see cref="Operation.GetRawResponse"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.UpdateStatus"/></description>
+    ///     <description><see cref="OperationInternal{T}.UpdateStatus"/></description>
     ///   </item>
     ///   <item>
-    ///     <description><see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/></description>
+    ///     <description><see cref="OperationInternal{T}.UpdateStatusAsync(CancellationToken)"/></description>
     ///   </item>
     ///   <item>
     ///     <description><see cref="WaitForCompletionAsync(CancellationToken)"/></description>
@@ -48,24 +49,29 @@ namespace Azure.Core
     /// </summary>
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    internal class OperationInternal<T> : OperationInternalBase
+    internal class OperationInternal<T>
 #pragma warning restore SA1649
     {
         private readonly IOperation<T> _operation;
         private readonly AsyncLockWithValue<OperationState<T>> _stateLock;
+        private readonly AsyncLockWithValue<Response> _responseLock;
+        private readonly DelayStrategy? _fallbackStrategy;
+        private readonly ClientDiagnostics _diagnostics;
+        private readonly string _updateStatusScopeName;
+        private readonly IReadOnlyDictionary<string, string>? _scopeAttributes;
         private Response _rawResponse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
         /// </summary>
-        /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
+        /// <param name="rawResponse">The final value of <see cref="OperationInternal{T}.RawResponse"/>.</param>
         /// <param name="value">The final result of the long-running operation.</param>
         public static OperationInternal<T> Succeeded(Response rawResponse, T value) => new(OperationState<T>.Success(rawResponse, value));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.
         /// </summary>
-        /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
+        /// <param name="rawResponse">The final value of <see cref="OperationInternal{T}.RawResponse"/>.</param>
         /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
         public static OperationInternal<T> Failed(Response rawResponse, RequestFailedException operationFailedException) => new(OperationState<T>.Failure(rawResponse, operationFailedException));
 
@@ -75,7 +81,7 @@ namespace Azure.Core
         /// <param name="clientDiagnostics">Used for diagnostic scope and exception creation. This is expected to be the instance created during the construction of your main client.</param>
         /// <param name="operation">The long-running operation making use of this class. Passing "<c>this</c>" is expected.</param>
         /// <param name="rawResponse">
-        /// The initial value of <see cref="OperationInternalBase.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
+        /// The initial value of <see cref="OperationInternal{T}.RawResponse"/>. Usually, long-running operation objects can be instantiated in two ways:
         /// <list type="bullet">
         ///   <item>
         ///   When calling a client's "<c>Start&lt;OperationName&gt;</c>" method, a service call is made to start the operation, and an <see cref="Operation{T}"/> instance is returned.
@@ -99,26 +105,54 @@ namespace Azure.Core
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
+            _diagnostics = clientDiagnostics;
             _operation = operation;
             _rawResponse = rawResponse;
             _stateLock = new AsyncLockWithValue<OperationState<T>>();
+            _responseLock = new AsyncLockWithValue<Response>();
+            _fallbackStrategy = fallbackStrategy;
+            _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            operationTypeName ??= operation.GetType().Name;
+            _updateStatusScopeName = $"{operationTypeName}.UpdateStatus";
         }
 
         private OperationInternal(OperationState<T> finalState)
-            : base(finalState.RawResponse)
         {
             // FinalOperation represents operation that is in final state and can't be updated.
             // It implements IOperation<T> and throws exception when UpdateStateAsync is called.
             _operation = new FinalOperation();
+            _diagnostics = new ClientDiagnostics(ClientOptions.Default);
             _rawResponse = finalState.RawResponse;
             _stateLock = new AsyncLockWithValue<OperationState<T>>(finalState);
+            _responseLock = new AsyncLockWithValue<Response>(finalState.RawResponse);
+            _fallbackStrategy = default;
+            _updateStatusScopeName = string.Empty;
+            _scopeAttributes = default;
         }
 
-        public override Response RawResponse => _stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse;
+        /// <summary>
+        /// The last HTTP response received from the server. Its update already handled in calls to "<c>UpdateStatus</c>" and
+        /// "<c>WaitForCompletionAsync</c>", but custom methods not supported by this class, such as "<c>CancelOperation</c>",
+        /// must update it as well.
+        /// <example>Usage example:
+        /// <code>
+        ///   public Response GetRawResponse() => _operationInternal.RawResponse;
+        /// </code>
+        /// </example>
+        /// </summary>
+        public Response RawResponse => _stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse;
 
-        public override bool HasCompleted => _stateLock.HasValue;
+        /// <summary>
+        /// Returns <c>true</c> if the long-running operation has completed.
+        /// <example>Usage example:
+        /// <code>
+        ///   public bool HasCompleted => _operationInternal.HasCompleted;
+        /// </code>
+        /// </example>
+        /// </summary>
+        public bool HasCompleted => _stateLock.HasValue;
 
         /// <summary>
         /// Returns <c>true</c> if the long-running operation completed successfully and has produced a final result.
@@ -158,7 +192,7 @@ namespace Azure.Core
             }
         }
         /// <summary>
-        /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes.
+        /// Periodically calls <see cref="OperationInternal{T}.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
         /// is then used as the wait interval.
@@ -180,7 +214,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
+        /// Periodically calls <see cref="OperationInternal{T}.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
         /// between calls is defined by the parameter <paramref name="pollingInterval"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed. In this case, the maximum value between the <paramref name="pollingInterval"/>
@@ -204,7 +238,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes.
+        /// Periodically calls <see cref="OperationInternal{T}.UpdateStatus(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
         /// is then use as the wait interval.
@@ -226,7 +260,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Periodically calls <see cref="OperationInternalBase.UpdateStatus(CancellationToken)"/> until the long-running operation completes. The interval
+        /// Periodically calls <see cref="OperationInternal{T}.UpdateStatus(CancellationToken)"/> until the long-running operation completes. The interval
         /// between calls is defined by the property <see cref="ConstantDelayStrategy.DefaultPollingInterval"/>, but it can change based on information returned
         /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
         /// for status change until the specified time has passed. In this case, the maximum value between the <see cref="ConstantDelayStrategy.DefaultPollingInterval"/>
@@ -249,7 +283,145 @@ namespace Azure.Core
             return Response.FromValue(Value, rawResponse);
         }
 
-        protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        /// <summary>
+        /// Calls the server to get the latest status of the long-running operation, handling diagnostic scope creation for distributed
+        /// tracing. The default scope name can be changed with the "<c>operationTypeName</c>" parameter passed to the constructor.
+        /// <example>Usage example:
+        /// <code>
+        ///   public async ValueTask&lt;Response&gt; UpdateStatusAsync(CancellationToken cancellationToken) =>
+        ///     await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The HTTP response received from the server.</returns>
+        /// <remarks>
+        /// After a successful run, this method will update <see cref="RawResponse"/> and might update <see cref="HasCompleted"/>.
+        /// </remarks>
+        /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
+        public async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken) =>
+            await UpdateStatusAsync(async: true, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Calls the server to get the latest status of the long-running operation, handling diagnostic scope creation for distributed
+        /// tracing. The default scope name can be changed with the "<c>operationTypeName</c>" parameter passed to the constructor.
+        /// <example>Usage example:
+        /// <code>
+        ///   public Response UpdateStatus(CancellationToken cancellationToken) => _operationInternal.UpdateStatus(cancellationToken);
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The HTTP response received from the server.</returns>
+        /// <remarks>
+        /// After a successful run, this method will update <see cref="RawResponse"/> and might update <see cref="HasCompleted"/>.
+        /// </remarks>
+        /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
+        public Response UpdateStatus(CancellationToken cancellationToken) =>
+            UpdateStatusAsync(async: false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes.
+        /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
+        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
+        /// is then used as the wait interval.
+        /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
+        /// <example>Usage example:
+        /// <code>
+        ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(CancellationToken cancellationToken) =>
+        ///     await _operationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
+        /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
+        public async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken)
+            => await WaitForCompletionResponseAsync(async: true, null, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Periodically calls <see cref="UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes. The interval
+        /// between calls is defined by the parameter <paramref name="pollingInterval"/>, but it can change based on information returned
+        /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
+        /// for status change until the specified time has passed. In this case, the maximum value between the <paramref name="pollingInterval"/>
+        /// parameter and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
+        /// and "x-ms-retry-after-ms".
+        /// <example>Usage example:
+        /// <code>
+        ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        ///     await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="pollingInterval">The interval between status requests to the server. <strong></strong></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
+        /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
+        public async ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+            => await WaitForCompletionResponseAsync(async: true, pollingInterval, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Periodically calls <see cref="UpdateStatus(CancellationToken)"/> until the long-running operation completes.
+        /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
+        /// for status change until the specified time has passed.  The maximum of the retry after value and the fallback <see cref="DelayStrategy"/>
+        /// is then used as the wait interval.
+        /// Headers supported are: "Retry-After", "retry-after-ms", and "x-ms-retry-after-ms",
+        /// and "x-ms-retry-after-ms".
+        /// <example>Usage example:
+        /// <code>
+        ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        ///     await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
+        /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
+        public Response WaitForCompletionResponse(CancellationToken cancellationToken)
+            => WaitForCompletionResponseAsync(async: false, null, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Periodically calls <see cref="UpdateStatus(CancellationToken)"/> until the long-running operation completes. The interval
+        /// between calls is defined by the parameter <paramref name="pollingInterval"/>, but it can change based on information returned
+        /// from the server. After each service call, a retry-after header may be returned to communicate that there is no reason to poll
+        /// for status change until the specified time has passed. In this case, the maximum value between the <paramref name="pollingInterval"/>
+        /// parameter and the retry-after header is chosen as the wait interval. Headers supported are: "Retry-After", "retry-after-ms",
+        /// and "x-ms-retry-after-ms".
+        /// <example>Usage example:
+        /// <code>
+        ///   public async ValueTask&lt;Response&lt;T&gt;&gt; WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        ///     await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="pollingInterval">The interval between status requests to the server.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The last HTTP response received from the server, including the final result of the long-running operation.</returns>
+        /// <exception cref="RequestFailedException">Thrown if there's been any issues during the connection, or if the operation has completed with failures.</exception>
+        public Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken)
+            => WaitForCompletionResponseAsync(async: false, pollingInterval, cancellationToken).EnsureCompleted();
+
+        private async ValueTask<Response> WaitForCompletionResponseAsync(bool async, TimeSpan? pollingInterval, CancellationToken cancellationToken)
+        {
+            // If _responseLock has the value, lockOrValue will contain that value, and no lock is acquired.
+            // If _responseLock doesn't have the value, GetLockOrValueAsync will acquire the lock that will be released when lockOrValue is disposed
+            using var lockOrValue = await _responseLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            if (lockOrValue.HasValue)
+            {
+                return lockOrValue.Value;
+            }
+
+            var poller = new OperationPoller(_fallbackStrategy);
+            var response = async
+                ? await poller.WaitForCompletionResponseAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false)
+                : poller.WaitForCompletionResponse(this, pollingInterval, cancellationToken);
+
+            var rawResponse = response.GetRawResponse();
+            lockOrValue.SetValue(rawResponse);
+            return rawResponse;
+        }
+
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             // If _stateLock has the final state, lockOrValue will contain that state, and no lock is acquired.
             // If _stateLock doesn't have the state, GetLockOrValueAsync will acquire the lock that will be released when lockOrValue is disposed
@@ -272,7 +444,10 @@ namespace Azure.Core
 
                 if (!state.HasSucceeded && state.OperationFailedException == null)
                 {
-                    state = OperationState<T>.Failure(state.RawResponse, await CreateException(async, state.RawResponse).ConfigureAwait(false));
+                    var exception = async
+                        ? await _diagnostics.CreateRequestFailedExceptionAsync(state.RawResponse).ConfigureAwait(false)
+                        : _diagnostics.CreateRequestFailedException(state.RawResponse);
+                    state = OperationState<T>.Failure(state.RawResponse, exception);
                 }
 
                 asyncLock.SetValue(state);
@@ -295,6 +470,22 @@ namespace Azure.Core
             throw state.OperationFailedException!;
         }
 
+        private DiagnosticScope CreateScope()
+        {
+            DiagnosticScope scope = _diagnostics.CreateScope(_updateStatusScopeName);
+
+            if (_scopeAttributes != null)
+            {
+                foreach (KeyValuePair<string, string> attribute in _scopeAttributes)
+                {
+                    scope.AddAttribute(attribute.Key, attribute.Value);
+                }
+            }
+
+            scope.Start();
+            return scope;
+        }
+
         private class FinalOperation : IOperation<T>
         {
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
@@ -311,7 +502,7 @@ namespace Azure.Core
     {
         /// <summary>
         /// Calls the service and updates the state of the long-running operation. Properties directly handled by the
-        /// <see cref="OperationInternal{T}"/> class, such as <see cref="OperationInternalBase.RawResponse"/> or
+        /// <see cref="OperationInternal{T}"/> class, such as <see cref="OperationInternal{T}.RawResponse"/> or
         /// <see cref="OperationInternal{T}.Value"/>, don't need to be updated. Operation-specific properties, such
         /// as "<c>CreateOn</c>" or "<c>LastModified</c>", must be manually updated by the operation implementing this
         /// method.
