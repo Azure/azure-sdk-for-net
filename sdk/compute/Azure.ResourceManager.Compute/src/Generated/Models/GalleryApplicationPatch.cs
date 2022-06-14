@@ -6,19 +6,15 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery Application Definition that you want to update. </summary>
-    public partial class GalleryApplicationPatch : ResourceData
+    public partial class GalleryApplicationPatch : GalleryUpdateResourceData
     {
         /// <summary> Initializes a new instance of GalleryApplicationPatch. </summary>
         public GalleryApplicationPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The description of this gallery Application Definition resource. This property is updatable. </summary>
@@ -33,7 +29,5 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? EndOfLifeOn { get; set; }
         /// <summary> This property allows you to specify the supported type of the OS that application is built for. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
         public OperatingSystemTypes? SupportedOSType { get; set; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

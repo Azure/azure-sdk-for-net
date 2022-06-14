@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the SecurityType of the virtual machine. It is set as TrustedLaunch to enable UefiSettings. &lt;br&gt;&lt;br&gt; Default: UefiSettings will not be enabled unless this property is set as TrustedLaunch. </summary>
+    /// <summary> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. &lt;br&gt;&lt;br&gt; Default: UefiSettings will not be enabled unless this property is set. </summary>
     public readonly partial struct SecurityTypes : IEquatable<SecurityTypes>
     {
         private readonly string _value;
@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         private const string TrustedLaunchValue = "TrustedLaunch";
+        private const string ConfidentialVmValue = "ConfidentialVM";
 
         /// <summary> TrustedLaunch. </summary>
         public static SecurityTypes TrustedLaunch { get; } = new SecurityTypes(TrustedLaunchValue);
+        /// <summary> ConfidentialVM. </summary>
+        public static SecurityTypes ConfidentialVm { get; } = new SecurityTypes(ConfidentialVmValue);
         /// <summary> Determines if two <see cref="SecurityTypes"/> values are the same. </summary>
         public static bool operator ==(SecurityTypes left, SecurityTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityTypes"/> values are not the same. </summary>
