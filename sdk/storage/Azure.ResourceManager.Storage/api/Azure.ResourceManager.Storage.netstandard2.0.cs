@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class BlobRestoreContent
     {
-        public BlobRestoreContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.BlobRestoreRange> blobRanges, System.DateTimeOffset timeToRestore) { }
+        public BlobRestoreContent(System.DateTimeOffset timeToRestore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.BlobRestoreRange> blobRanges) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.BlobRestoreRange> BlobRanges { get { throw null; } }
         public System.DateTimeOffset TimeToRestore { get { throw null; } set { } }
     }
