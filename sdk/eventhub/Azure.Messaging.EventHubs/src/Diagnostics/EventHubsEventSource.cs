@@ -2631,7 +2631,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="operationId">An artificial identifier for the idle operation.</param>
         /// <param name="durationSeconds">The total duration that the idle await took place, in seconds.</param>
         ///
-        [Event(127, Level = EventLevel.Verbose, Message = "Publishing for the buffered producer instance with identifier '{0}' for Event Hub: {1} has completed its idle state; one or more events was enqueued.  Operation Id: '{2},' Duration: '{3:0.00}' seconds.")]
+        [Event(127, Level = EventLevel.Verbose, Message = "Publishing for the buffered producer instance with identifier '{0}' for Event Hub: {1} has exited the idle state; one or more events was enqueued.  Operation Id: '{2},' Duration: '{3:0.00}' seconds.")]
         public virtual void BufferedProducerIdleComplete(string identifier,
                                                                  string eventHubName,
                                                                  string operationId,
