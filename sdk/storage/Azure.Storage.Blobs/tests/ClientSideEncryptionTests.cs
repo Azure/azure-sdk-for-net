@@ -1548,6 +1548,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Combinatorial]
+        [LiveOnly] // current pipeline limitation
         public void AesGcmStreaming(
             [Values(true, false)] bool alligned,
             [Values(1, 3)] int numAuthBlocks)
