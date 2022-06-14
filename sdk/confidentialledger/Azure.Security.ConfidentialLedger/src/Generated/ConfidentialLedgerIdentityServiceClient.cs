@@ -39,11 +39,12 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetLedgerIdentityAsync.
+        /// This sample shows how to call GetLedgerIdentityAsync and parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new ConfidentialLedgerIdentityServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.GetLedgerIdentityAsync("ledgerId");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("ledgerId").ToString());
@@ -92,11 +93,12 @@ namespace Azure.Security.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="ledgerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GetLedgerIdentity.
+        /// This sample shows how to call GetLedgerIdentity and parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new ConfidentialLedgerIdentityServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.GetLedgerIdentity("ledgerId");
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("ledgerId").ToString());

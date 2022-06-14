@@ -39,21 +39,13 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call GenerateClientTokenImplAsync with required parameters and properties.
+        /// This sample shows how to call GenerateClientTokenImplAsync with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = await client.GenerateClientTokenImplAsync();
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
-        /// This sample shows how to call GenerateClientTokenImplAsync with all parameters and properties.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = await client.GenerateClientTokenImplAsync(null, null, null);
+        /// 
+        /// Response response = await client.GenerateClientTokenImplAsync("userId", new String[]{"role"}, 1234);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("token").ToString());
         /// </code>
@@ -100,21 +92,13 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="minutesToExpire"> The expire time of the generated token. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call GenerateClientTokenImpl with required parameters and properties.
+        /// This sample shows how to call GenerateClientTokenImpl with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = client.GenerateClientTokenImpl();
-        /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
-        /// Console.WriteLine(result.ToString());
-        /// </code>
-        /// This sample shows how to call GenerateClientTokenImpl with all parameters and properties.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = client.GenerateClientTokenImpl(null, null, null);
+        /// 
+        /// Response response = client.GenerateClientTokenImpl("userId", new String[]{"role"}, 1234);
         /// JsonElement result = JsonDocument.Parse(GetContentFromResponse(response)).RootElement;
         /// Console.WriteLine(result.GetProperty("token").ToString());
         /// </code>
@@ -160,19 +144,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call CloseAllConnectionsAsync with required parameters and properties.
+        /// This sample shows how to call CloseAllConnectionsAsync with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = await client.CloseAllConnectionsAsync();
-        /// </code>
-        /// This sample shows how to call CloseAllConnectionsAsync with all parameters and properties.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = await client.CloseAllConnectionsAsync(null, null);
+        /// 
+        /// Response response = await client.CloseAllConnectionsAsync(new String[]{"excluded"}, "reason");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -211,19 +190,14 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="reason"> The reason closing the client connection. </param>
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <example>
-        /// This sample shows how to call CloseAllConnections with required parameters and properties.
+        /// This sample shows how to call CloseAllConnections with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = client.CloseAllConnections();
-        /// </code>
-        /// This sample shows how to call CloseAllConnections with all parameters and properties.
-        /// <code>
-        /// var credential = new DefaultAzureCredential();
-        /// var endpoint = new Uri("https://my-account-name.azure.com");
-        /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = client.CloseAllConnections(null, null);
+        /// 
+        /// Response response = client.CloseAllConnections(new String[]{"excluded"}, "reason");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -264,23 +238,27 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call SendToAllAsync with required parameters and properties.
+        /// This sample shows how to call SendToAllAsync with required parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
         /// Response response = await client.SendToAllAsync(RequestContent.Create(data), null);
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call SendToAllAsync with all parameters and properties.
+        /// This sample shows how to call SendToAllAsync with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.SendToAllAsync(RequestContent.Create(data), null, null);
+        /// Response response = await client.SendToAllAsync(RequestContent.Create(data), null, new String[]{"excluded"});
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -323,23 +301,27 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <example>
-        /// This sample shows how to call SendToAll with required parameters and properties.
+        /// This sample shows how to call SendToAll with required parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
         /// Response response = client.SendToAll(RequestContent.Create(data), null);
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call SendToAll with all parameters and properties.
+        /// This sample shows how to call SendToAll with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
-        /// Response response = client.SendToAll(RequestContent.Create(data), null, null);
+        /// Response response = client.SendToAll(RequestContent.Create(data), null, new String[]{"excluded"});
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -386,7 +368,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.ConnectionExistsImplAsync("connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -433,7 +417,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.ConnectionExistsImpl("connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -476,19 +462,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CloseConnectionAsync with required parameters and properties.
+        /// This sample shows how to call CloseConnectionAsync with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.CloseConnectionAsync("connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call CloseConnectionAsync with all parameters and properties.
+        /// This sample shows how to call CloseConnectionAsync with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = await client.CloseConnectionAsync("connectionId", null);
+        /// 
+        /// Response response = await client.CloseConnectionAsync("connectionId", "reason");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -531,19 +521,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CloseConnection with required parameters and properties.
+        /// This sample shows how to call CloseConnection with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.CloseConnection("connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call CloseConnection with all parameters and properties.
+        /// This sample shows how to call CloseConnection with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = client.CloseConnection("connectionId", null);
+        /// 
+        /// Response response = client.CloseConnection("connectionId", "reason");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -592,9 +586,11 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
         /// Response response = await client.SendToConnectionAsync("connectionId", RequestContent.Create(data), null);
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -644,9 +640,11 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
         /// Response response = client.SendToConnection("connectionId", RequestContent.Create(data), null);
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -694,7 +692,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.GroupExistsImplAsync("group");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -741,7 +741,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.GroupExistsImpl("group");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -785,19 +787,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CloseGroupConnectionsAsync with required parameters and properties.
+        /// This sample shows how to call CloseGroupConnectionsAsync with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.CloseGroupConnectionsAsync("group");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call CloseGroupConnectionsAsync with all parameters and properties.
+        /// This sample shows how to call CloseGroupConnectionsAsync with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = await client.CloseGroupConnectionsAsync("group", null, null);
+        /// 
+        /// Response response = await client.CloseGroupConnectionsAsync("group", new String[]{"excluded"}, "reason");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -841,19 +847,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CloseGroupConnections with required parameters and properties.
+        /// This sample shows how to call CloseGroupConnections with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.CloseGroupConnections("group");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call CloseGroupConnections with all parameters and properties.
+        /// This sample shows how to call CloseGroupConnections with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = client.CloseGroupConnections("group", null, null);
+        /// 
+        /// Response response = client.CloseGroupConnections("group", new String[]{"excluded"}, "reason");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -898,23 +908,27 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call SendToGroupAsync with required parameters and properties.
+        /// This sample shows how to call SendToGroupAsync with required parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
         /// Response response = await client.SendToGroupAsync("group", RequestContent.Create(data), null);
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call SendToGroupAsync with all parameters and properties.
+        /// This sample shows how to call SendToGroupAsync with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.SendToGroupAsync("group", RequestContent.Create(data), null, null);
+        /// Response response = await client.SendToGroupAsync("group", RequestContent.Create(data), null, new String[]{"excluded"});
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -960,23 +974,27 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call SendToGroup with required parameters and properties.
+        /// This sample shows how to call SendToGroup with required parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
         /// Response response = client.SendToGroup("group", RequestContent.Create(data), null);
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call SendToGroup with all parameters and properties.
+        /// This sample shows how to call SendToGroup with all parameters and request content, and how to parse the result.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
-        /// Response response = client.SendToGroup("group", RequestContent.Create(data), null, null);
+        /// Response response = client.SendToGroup("group", RequestContent.Create(data), null, new String[]{"excluded"});
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1025,7 +1043,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.AddConnectionToGroupAsync("group", "connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1074,7 +1094,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.AddConnectionToGroup("group", "connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1123,7 +1145,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.RemoveConnectionFromGroupAsync("group", "connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1172,7 +1196,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.RemoveConnectionFromGroup("group", "connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1220,7 +1246,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.UserExistsImplAsync("userId");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1267,7 +1295,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.UserExistsImpl("userId");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1311,19 +1341,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CloseUserConnectionsAsync with required parameters and properties.
+        /// This sample shows how to call CloseUserConnectionsAsync with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.CloseUserConnectionsAsync("userId");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call CloseUserConnectionsAsync with all parameters and properties.
+        /// This sample shows how to call CloseUserConnectionsAsync with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = await client.CloseUserConnectionsAsync("userId", null, null);
+        /// 
+        /// Response response = await client.CloseUserConnectionsAsync("userId", new String[]{"excluded"}, "reason");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1367,19 +1401,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CloseUserConnections with required parameters and properties.
+        /// This sample shows how to call CloseUserConnections with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.CloseUserConnections("userId");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call CloseUserConnections with all parameters and properties.
+        /// This sample shows how to call CloseUserConnections with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = client.CloseUserConnections("userId", null, null);
+        /// 
+        /// Response response = client.CloseUserConnections("userId", new String[]{"excluded"}, "reason");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1428,9 +1466,11 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
         /// Response response = await client.SendToUserAsync("userId", RequestContent.Create(data), null);
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1480,9 +1520,11 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// var data = new {};
         /// 
         /// Response response = client.SendToUser("userId", RequestContent.Create(data), null);
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1530,7 +1572,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.RemoveUserFromAllGroupsAsync("userId");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1577,7 +1621,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.RemoveUserFromAllGroups("userId");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1621,19 +1667,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GrantPermissionAsync with required parameters and properties.
+        /// This sample shows how to call GrantPermissionAsync with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.GrantPermissionAsync("permission", "connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call GrantPermissionAsync with all parameters and properties.
+        /// This sample shows how to call GrantPermissionAsync with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = await client.GrantPermissionAsync("permission", "connectionId", null);
+        /// 
+        /// Response response = await client.GrantPermissionAsync("permission", "connectionId", "targetName");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1678,19 +1728,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call GrantPermission with required parameters and properties.
+        /// This sample shows how to call GrantPermission with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.GrantPermission("permission", "connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call GrantPermission with all parameters and properties.
+        /// This sample shows how to call GrantPermission with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = client.GrantPermission("permission", "connectionId", null);
+        /// 
+        /// Response response = client.GrantPermission("permission", "connectionId", "targetName");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1735,19 +1789,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call RevokePermissionAsync with required parameters and properties.
+        /// This sample shows how to call RevokePermissionAsync with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.RevokePermissionAsync("permission", "connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call RevokePermissionAsync with all parameters and properties.
+        /// This sample shows how to call RevokePermissionAsync with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = await client.RevokePermissionAsync("permission", "connectionId", null);
+        /// 
+        /// Response response = await client.RevokePermissionAsync("permission", "connectionId", "targetName");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1792,19 +1850,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call RevokePermission with required parameters and properties.
+        /// This sample shows how to call RevokePermission with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.RevokePermission("permission", "connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call RevokePermission with all parameters and properties.
+        /// This sample shows how to call RevokePermission with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = client.RevokePermission("permission", "connectionId", null);
+        /// 
+        /// Response response = client.RevokePermission("permission", "connectionId", "targetName");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1849,19 +1911,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CheckPermissionAsync with required parameters and properties.
+        /// This sample shows how to call CheckPermissionAsync with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = await client.CheckPermissionAsync("permission", "connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call CheckPermissionAsync with all parameters and properties.
+        /// This sample shows how to call CheckPermissionAsync with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = await client.CheckPermissionAsync("permission", "connectionId", null);
+        /// 
+        /// Response response = await client.CheckPermissionAsync("permission", "connectionId", "targetName");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>
@@ -1906,19 +1972,23 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> or <paramref name="connectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <example>
-        /// This sample shows how to call CheckPermission with required parameters and properties.
+        /// This sample shows how to call CheckPermission with required parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
+        /// 
         /// Response response = client.CheckPermission("permission", "connectionId");
+        /// Console.WriteLine(response.Status);
         /// </code>
-        /// This sample shows how to call CheckPermission with all parameters and properties.
+        /// This sample shows how to call CheckPermission with all parameters.
         /// <code>
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new WebPubSubServiceClient(endpoint, credential);
-        /// Response response = client.CheckPermission("permission", "connectionId", null);
+        /// 
+        /// Response response = client.CheckPermission("permission", "connectionId", "targetName");
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         /// <remarks>

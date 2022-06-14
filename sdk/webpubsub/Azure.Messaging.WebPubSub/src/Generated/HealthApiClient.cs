@@ -61,7 +61,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new HealthApiClient(endpoint, credential);
+        /// 
         /// Response response = await client.GetServiceStatusAsync();
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         public virtual async Task<Response> GetServiceStatusAsync(RequestContext context = null)
@@ -88,7 +90,9 @@ namespace Azure.Messaging.WebPubSub
         /// var credential = new DefaultAzureCredential();
         /// var endpoint = new Uri("https://my-account-name.azure.com");
         /// var client = new HealthApiClient(endpoint, credential);
+        /// 
         /// Response response = client.GetServiceStatus();
+        /// Console.WriteLine(response.Status);
         /// </code>
         /// </example>
         public virtual Response GetServiceStatus(RequestContext context = null)
