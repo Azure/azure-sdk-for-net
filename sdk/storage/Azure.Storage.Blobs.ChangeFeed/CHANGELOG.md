@@ -1,5 +1,15 @@
 # Release History
 
+## 12.0.0-preview.27 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.0.0-preview.26 (2022-06-15)
 - Added support for service version 2021-08-06.
 - Fixed bug where BlobType == PageBlob was not being parsed correctly.
