@@ -23,24 +23,30 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             RouterClient client = CreateRouterClientWithConnectionString();
 
             var channelResponse = GenerateUniqueId($"Channel-{IdPrefix}-{nameof(AssignmentScenario)}");
+            var distributionPolicyId = GenerateUniqueId($"{IdPrefix}-dist-policy");
             var distributionPolicyResponse = await client.CreateDistributionPolicyAsync(
-                $"{IdPrefix}-dist-policy",
+                distributionPolicyId,
                 10 * 60,
                 new LongestIdleMode(1, 1),
                 new CreateDistributionPolicyOptions()
                 {
                     Name = "test",
                 });
+            AddForCleanup(new Task(async () => await client.DeleteDistributionPolicyAsync(distributionPolicyId)));
+
+            var queueId = GenerateUniqueId($"{IdPrefix}-queue");
             var queueResponse = await client.CreateQueueAsync(
-                $"{IdPrefix}-queue",
+                queueId,
                 distributionPolicyResponse.Value.Id,
                 new CreateQueueOptions()
                 {
                     Name = "test",
                 });
+            AddForCleanup(new Task(async () => await client.DeleteQueueAsync(queueId)));
 
+            var workerId1 = GenerateUniqueId($"{IdPrefix}-w1");
             var registerWorker = await client.CreateWorkerAsync(
-                id: $"{IdPrefix}-w1",
+                id: workerId1,
                 totalCapacity: 1,
                 new CreateWorkerOptions()
                 {
@@ -48,10 +54,12 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     ChannelConfigurations = new Dictionary<string, ChannelConfiguration>
                     {
                         [channelResponse] = new ChannelConfiguration(1)
-                    }
+                    },
+                    AvailableForOffers = true,
                 });
+            AddForCleanup(new Task(async () => await client.UpdateWorkerAsync(workerId1, new UpdateWorkerOptions(){ AvailableForOffers = false })));
 
-            var jobId = $"JobId-{nameof(AssignmentScenario)}";
+            var jobId = GenerateUniqueId($"{IdPrefix}-JobId-{nameof(AssignmentScenario)}");
             var createJob = await client.CreateJobAsync(
                 id: jobId,
                 channelId: channelResponse,
@@ -60,6 +68,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     Priority = 1
                 });
+            AddForCleanup(new Task(async () => await client.DeleteJobAsync(jobId)));
 
             var worker = await Poll(async () => await client.GetWorkerAsync(registerWorker.Value.Id),
                 w => w.Value.Offers.Any(x => x.JobId == createJob.Value.Id),
@@ -79,17 +88,16 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeclineJobOfferAsync(worker.Value.Id, offer.Id));
 
             var complete = await client.CompleteJobAsync(createJob.Value.Id, accept.Value.AssignmentId);
-            Assert.AreEqual(204, complete.GetRawResponse().Status);
+            Assert.AreEqual(200, complete.GetRawResponse().Status);
 
             var close = await client.CloseJobAsync(createJob.Value.Id, accept.Value.AssignmentId);
-            Assert.AreEqual(204, complete.GetRawResponse().Status);
+            Assert.AreEqual(200, complete.GetRawResponse().Status);
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].AssignTime);
-            // TODO: uncomment after service deployment
-            // Assert.AreEqual(worker.Value.Id, finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId);
-            // Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompleteTime);
-            // Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CloseTime);
+            Assert.AreEqual(worker.Value.Id, finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId);
+            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompleteTime);
+            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CloseTime);
         }
     }
 }

@@ -80,6 +80,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
+        [Ignore(reason: "Pagination doesn't get generated correctly")]
         public async Task GetWorkersTest()
         {
             RouterClient routerClient = CreateRouterClientWithConnectionString();

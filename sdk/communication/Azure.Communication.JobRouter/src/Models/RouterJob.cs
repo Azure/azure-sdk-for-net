@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using Azure.Core;
@@ -58,14 +59,14 @@ namespace Azure.Communication.JobRouter
             get
             {
                 return Notes != null
-                    ? Notes?.ToDictionary(x => JsonSerializer.Serialize(x.Key),
+                    ? Notes?.ToDictionary(x => x.Key.ToString("O", CultureInfo.InvariantCulture),
                         x => x.Value)
                     : new ChangeTrackingDictionary<string, string>();
             }
             set
             {
                 Notes = new SortedDictionary<DateTimeOffset, string>(
-                    value.ToDictionary(x => JsonSerializer.Deserialize<DateTimeOffset>(x.Key), x => x.Value));
+                    value.ToDictionary(x => DateTimeOffset.ParseExact(x.Key, "O", CultureInfo.InvariantCulture), x => x.Value));
             }
         }
 

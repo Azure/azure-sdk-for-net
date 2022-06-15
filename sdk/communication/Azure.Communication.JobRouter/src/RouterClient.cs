@@ -1492,15 +1492,13 @@ using Azure.Core.Pipeline;
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
         /// <param name="jobId"> The Id of the Job. </param>
-        /// <param name="dispositionCode"> (Optional) Customer supplied disposition code for specifying any short label </param>
-        /// <param name="note"> (Optional) Customer supplied note, e.g., cancellation reason. </param>
+        /// <param name="options"> Options for cancelling a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/></exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<CancelJobResult>> CancelJobAsync(
             string jobId,
-            string dispositionCode = default,
-            string note = default,
+            CancelJobOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
@@ -1510,8 +1508,8 @@ using Azure.Core.Pipeline;
             {
                 var response = await RestClient.CancelJobActionAsync(
                         id: jobId,
-                        note: note,
-                        dispositionCode: dispositionCode,
+                        note: options?.Note,
+                        dispositionCode: options?.DispositionCode,
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(new CancelJobResult(response.Value), response.GetRawResponse());
@@ -1525,15 +1523,13 @@ using Azure.Core.Pipeline;
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
         /// <param name="jobId"> The Id of the Job. </param>
-        /// <param name="dispositionCode"> (Optional) Customer supplied disposition code for specifying any short label </param>
-        /// <param name="note"> (Optional) Customer supplied note, e.g., cancellation reason. </param>
+        /// <param name="options"> Options for cancelling a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/></exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<CancelJobResult> CancelJob(
             string jobId,
-            string dispositionCode = default,
-            string note = default,
+            CancelJobOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
@@ -1543,8 +1539,8 @@ using Azure.Core.Pipeline;
             {
                 var response = RestClient.CancelJobAction(
                     id: jobId,
-                    note: note,
-                    dispositionCode: dispositionCode,
+                    note: options?.Note,
+                    dispositionCode: options?.DispositionCode,
                     cancellationToken: cancellationToken);
                 return Response.FromValue(new CancelJobResult(response.Value), response.GetRawResponse());
             }
@@ -1558,7 +1554,7 @@ using Azure.Core.Pipeline;
         /// <summary> Completes an assigned job. </summary>
         /// <param name="jobId"> The Id of the Job. </param>
         /// <param name="assignmentId"> The id used to assign the job to a worker. </param>
-        /// <param name="note"> (Optional) Customer supplied note, e.g., completion reason. </param>
+        /// <param name="options"> Options for completing a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
@@ -1566,7 +1562,7 @@ using Azure.Core.Pipeline;
         public virtual async Task<Response<CompleteJobResult>> CompleteJobAsync(
             string jobId,
             string assignmentId,
-            string note = default,
+            CompleteJobOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
@@ -1578,7 +1574,7 @@ using Azure.Core.Pipeline;
                 var response = await RestClient.CompleteJobActionAsync(
                         id: jobId,
                         assignmentId: assignmentId,
-                        note: note,
+                        note: options?.Note,
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1594,7 +1590,7 @@ using Azure.Core.Pipeline;
         /// <summary> Completes an assigned job. </summary>
         /// <param name="jobId"> The Id of the Job. </param>
         /// <param name="assignmentId"> The id used to assign the job to the worker. </param>
-        /// <param name="note"> (Optional) Customer supplied note, e.g., completion reason. </param>
+        /// <param name="options"> Options for completing a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
@@ -1602,7 +1598,7 @@ using Azure.Core.Pipeline;
         public virtual Response<CompleteJobResult> CompleteJob(
             string jobId,
             string assignmentId,
-            string note = default,
+            CompleteJobOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
@@ -1615,7 +1611,7 @@ using Azure.Core.Pipeline;
                 var response = RestClient.CompleteJobAction(
                     id: jobId,
                     assignmentId: assignmentId,
-                    note: note,
+                    note: options?.Note,
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(new CompleteJobResult(response.Value), response.GetRawResponse());
@@ -1630,9 +1626,7 @@ using Azure.Core.Pipeline;
         /// <summary> Closes a completed job. </summary>
         /// <param name="jobId"> The Id of the Job. </param>
         /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
-        /// <param name="dispositionCode"> (Optional) Indicates the outcome of the job, populate this field with your own custom values. </param>
-        /// <param name="closeTime"> (Optional) If provided, the future time at which to release the capacity. If not provided capacity will be released immediately. </param>
-        /// <param name="note"> (Optional) Customer supplied note, e.g., close reason. </param>
+        /// <param name="options"> Options for closing a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
@@ -1640,9 +1634,7 @@ using Azure.Core.Pipeline;
         public virtual async Task<Response<CloseJobResult>> CloseJobAsync(
             string jobId,
             string assignmentId,
-            string dispositionCode = default,
-            DateTimeOffset? closeTime = default,
-            string note = default,
+            CloseJobOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
@@ -1651,19 +1643,12 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var closeJob = new CloseJobRequest(assignmentId)
-                {
-                    CloseTime = closeTime,
-                    DispositionCode = dispositionCode,
-                    Note = note,
-                };
-
                 var response = await RestClient.CloseJobActionAsync(
                         id: jobId,
                         assignmentId: assignmentId,
-                        dispositionCode: dispositionCode,
-                        closeTime: closeTime,
-                        note: note,
+                        dispositionCode: options?.DispositionCode,
+                        closeTime: options?.CloseTime,
+                        note: options?.Note,
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
                 return Response.FromValue(new CloseJobResult(response.Value), response.GetRawResponse());
@@ -1678,9 +1663,7 @@ using Azure.Core.Pipeline;
         /// <summary> Closes a completed job. </summary>
         /// <param name="jobId"> The Id of the Job. </param>
         /// <param name="assignmentId"> The assignment within which the job is to be closed. </param>
-        /// <param name="dispositionCode"> (Optional) Indicates the outcome of the job, populate this field with your own custom values. </param>
-        /// <param name="closeTime"> (Optional) If provided, the future time at which to release the capacity. If not provided capacity will be released immediately. </param>
-        /// <param name="note"> (Optional) Customer supplied note, e.g., close reason. </param>
+        /// <param name="options"> Options for closing a job. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
@@ -1688,9 +1671,7 @@ using Azure.Core.Pipeline;
         public virtual Response<CloseJobResult> CloseJob(
             string jobId,
             string assignmentId,
-            string dispositionCode = default,
-            DateTimeOffset? closeTime = default,
-            string note = default,
+            CloseJobOptions options = default,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(jobId, nameof(jobId));
@@ -1702,9 +1683,9 @@ using Azure.Core.Pipeline;
                 var response = RestClient.CloseJobAction(
                     id: jobId,
                     assignmentId: assignmentId,
-                    dispositionCode: dispositionCode,
-                    closeTime: closeTime,
-                    note: note,
+                    dispositionCode: options?.DispositionCode,
+                    closeTime: options?.CloseTime,
+                    note: options?.Note,
                     cancellationToken: cancellationToken);
                 return Response.FromValue(new CloseJobResult(response.Value), response.GetRawResponse());
             }
