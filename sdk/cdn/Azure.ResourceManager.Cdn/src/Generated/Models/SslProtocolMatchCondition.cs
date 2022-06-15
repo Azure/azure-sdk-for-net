@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of SslProtocolMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
-        public SslProtocolMatchCondition(SslProtocolMatchConditionType conditionType, SslProtocolOperator @operator)
+        /// <param name="op"> Describes operator to be matched. </param>
+        public SslProtocolMatchCondition(SslProtocolMatchConditionType conditionType, SslProtocolOperator op)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            Op = op;
             MatchValues = new ChangeTrackingList<SslProtocol>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of SslProtocolMatchCondition. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="operator"> Describes operator to be matched. </param>
+        /// <param name="op"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal SslProtocolMatchCondition(SslProtocolMatchConditionType conditionType, SslProtocolOperator @operator, bool? negateCondition, IList<SslProtocol> matchValues, IList<PreTransformCategory> transforms)
+        internal SslProtocolMatchCondition(SslProtocolMatchConditionType conditionType, SslProtocolOperator op, bool? negateCondition, IList<SslProtocol> matchValues, IList<PreTransformCategory> transforms)
         {
             ConditionType = conditionType;
-            Operator = @operator;
+            Op = op;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Gets or sets the condition type. </summary>
         public SslProtocolMatchConditionType ConditionType { get; set; }
         /// <summary> Describes operator to be matched. </summary>
-        public SslProtocolOperator Operator { get; set; }
+        public SslProtocolOperator Op { get; set; }
         /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
         /// <summary> The match value for the condition of the delivery rule. </summary>

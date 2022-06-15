@@ -89,6 +89,9 @@ directive:
                         if(key.endsWith('ActionParameters')) {
                              $[key]['x-ms-client-name'] = newKey + 'Properties';
                         }
+                        if(key.endsWith('ConditionParameters')) {
+                            $[key].properties.operator['x-ms-client-name'] = 'op';
+                        }
                         $[key].properties.typeName['x-ms-client-name'] = 'type';
                         $[key].properties.typeName['x-ms-enum'] = {
                             "name": newKey + 'Type',
@@ -321,6 +324,7 @@ directive:
       $.CdnEndpoint['x-ms-client-name'] = 'CdnEndpointReference';
       $.CdnWebApplicationFirewallPolicyProperties.properties.rateLimitRules['x-ms-client-name'] = 'RateLimitSettings';
       $.CdnWebApplicationFirewallPolicyProperties.properties.customRules['x-ms-client-name'] = 'CustomSettings';
+      $.MatchCondition.properties.operator['x-ms-client-name'] = 'op';
       $.MatchCondition.properties.operator['x-ms-enum'].name = 'matchOperator';
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;
   - remove-operation: Validate_Secret
