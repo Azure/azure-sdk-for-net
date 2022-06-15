@@ -1,5 +1,11 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 6.3.0
+###  Feature Additions
+- Changed FactoryGitHubConfiguration url format for hostName description
+- Added SAP ODP connector in ADF
+- Added support OAuth2ClientCredential auth in RestSevice
+
 ## Version 6.2.0
 ###  Feature Additions
 - Added globalParameters apis into ADF

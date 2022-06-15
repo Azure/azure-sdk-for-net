@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
         private const string AddValue = "Add";
         private const string RemoveValue = "Remove";
         private const string ResetValue = "Reset";
+        private const string EnableCommunityValue = "EnableCommunity";
 
         /// <summary> Add. </summary>
         public static SharingUpdateOperationTypes Add { get; } = new SharingUpdateOperationTypes(AddValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Compute.Models
         public static SharingUpdateOperationTypes Remove { get; } = new SharingUpdateOperationTypes(RemoveValue);
         /// <summary> Reset. </summary>
         public static SharingUpdateOperationTypes Reset { get; } = new SharingUpdateOperationTypes(ResetValue);
+        /// <summary> EnableCommunity. </summary>
+        public static SharingUpdateOperationTypes EnableCommunity { get; } = new SharingUpdateOperationTypes(EnableCommunityValue);
         /// <summary> Determines if two <see cref="SharingUpdateOperationTypes"/> values are the same. </summary>
         public static bool operator ==(SharingUpdateOperationTypes left, SharingUpdateOperationTypes right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharingUpdateOperationTypes"/> values are not the same. </summary>

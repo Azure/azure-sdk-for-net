@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an available virtual machine scale set sku. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resourceType"> The type of resource the sku applies to. </param>
         /// <param name="sku"> The Sku. </param>
         /// <param name="capacity"> Specifies the number of virtual machines in the scale set. </param>
-        internal VirtualMachineScaleSetSku(string resourceType, ComputeSku sku, VirtualMachineScaleSetSkuCapacity capacity)
+        internal VirtualMachineScaleSetSku(ResourceType? resourceType, ComputeSku sku, VirtualMachineScaleSetSkuCapacity capacity)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The type of resource the sku applies to. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The Sku. </summary>
         public ComputeSku Sku { get; }
         /// <summary> Specifies the number of virtual machines in the scale set. </summary>

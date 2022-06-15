@@ -38,7 +38,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// For FileDataset, this is the number of files per mini-batch.
         /// For TabularDataset, this is the size of the records in bytes, per mini-batch.
         /// </param>
-        /// <param name="model"> Reference to the model asset for the endpoint deployment. </param>
+        /// <param name="model">
+        /// Reference to the model asset for the endpoint deployment.
+        /// Please note <see cref="AssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataPathAssetReference"/>, <see cref="IdAssetReference"/> and <see cref="OutputPathAssetReference"/>.
+        /// </param>
         /// <param name="outputAction"> Indicates how the output will be organized. </param>
         /// <param name="outputFileName"> Customized output file name for append_row output action. </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint deployment. </param>
@@ -85,7 +89,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// For TabularDataset, this is the size of the records in bytes, per mini-batch.
         /// </summary>
         public long? MiniBatchSize { get; set; }
-        /// <summary> Reference to the model asset for the endpoint deployment. </summary>
+        /// <summary>
+        /// Reference to the model asset for the endpoint deployment.
+        /// Please note <see cref="AssetReferenceBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataPathAssetReference"/>, <see cref="IdAssetReference"/> and <see cref="OutputPathAssetReference"/>.
+        /// </summary>
         public AssetReferenceBase Model { get; set; }
         /// <summary> Indicates how the output will be organized. </summary>
         public BatchOutputAction? OutputAction { get; set; }

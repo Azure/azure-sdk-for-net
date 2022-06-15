@@ -5,6 +5,7 @@
 - Added support for clientside encryption V2.0
   - GCM support
   - V2.0 is considered a security upgrade, and it is recommended applications switch to server-side encryption or upgrade to clientside V2.0.
+- Fixed bug where calling AppendBlockFromUri() without AppendBlobAppendBlockFromUriOptions throws a null exception error
 
 ## 12.12.0 (2022-05-02)
 - Includes all features from 12.12.0-beta.1.

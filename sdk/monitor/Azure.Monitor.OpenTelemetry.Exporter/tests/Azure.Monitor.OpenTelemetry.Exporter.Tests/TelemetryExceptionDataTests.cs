@@ -8,10 +8,16 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using Microsoft.Extensions.Logging;
+
 using Moq;
+
 using OpenTelemetry.Logs;
+
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -86,9 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var frameMock = new Mock<System.Diagnostics.StackFrame>(null, 0, 0);
             frameMock.Setup(x => x.GetMethod()).Returns((MethodBase)null);
 
-            Models.StackFrame stackFrame = null;
-
-            stackFrame = TelemetryExceptionDetails.GetStackFrame(frameMock.Object, 0);
+            Models.StackFrame stackFrame = new Models.StackFrame(frameMock.Object, 0);
 
             Assert.Equal("unknown", stackFrame.Assembly);
             Assert.Null(stackFrame.FileName);
@@ -151,16 +155,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exception = CreateException(300);
 
             var exceptionDetails = new TelemetryExceptionDetails(exception, exception.Message, null);
-            int parsedStackLength = 0;
 
             var stack = exceptionDetails.ParsedStack;
-            for (int i = 0; i < stack.Count; i++)
-            {
-                parsedStackLength += (stack[i].Method == null ? 0 : stack[i].Method.Length)
-                                     + (stack[i].Assembly == null ? 0 : stack[i].Assembly.Length)
-                                     + (stack[i].FileName == null ? 0 : stack[i].FileName.Length);
-            }
-            Assert.True(parsedStackLength <= TelemetryExceptionDetails.MaxParsedStackLength);
+
+            int parsedStackLength = stack.Sum(x => x.GetStackFrameLength());
+
+            Assert.True(parsedStackLength <= SchemaConstants.ExceptionDetails_Stack_MaxLength);
         }
 
         [Fact]

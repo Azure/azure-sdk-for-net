@@ -60,8 +60,8 @@ namespace Azure.Data.Tables
                     Guid x => $"{XmlConstants.LiteralPrefixGuid}'{x.ToString()}'",
 
                     // binary
-                    byte[] x => $"X'{string.Join(string.Empty, x.Select(b => b.ToString("D2", CultureInfo.InvariantCulture)))}'",
-                    BinaryData x => $"X'{string.Join(string.Empty, x.ToArray().Select(b => b.ToString("D2", CultureInfo.InvariantCulture)))}'",
+                    byte[] x => $"X'{string.Join(string.Empty, x.Select(b => b.ToString("X2", CultureInfo.InvariantCulture)))}'",
+                    BinaryData x => $"X'{string.Join(string.Empty, x.ToArray().Select(b => b.ToString("X2", CultureInfo.InvariantCulture)))}'",
 
                     // Dates as 8601 with a time zone
                     DateTimeOffset x => $"{XmlConstants.LiteralPrefixDateTime}'{XmlConvert.ToString(x.UtcDateTime, XmlDateTimeSerializationMode.RoundtripKind)}'",
