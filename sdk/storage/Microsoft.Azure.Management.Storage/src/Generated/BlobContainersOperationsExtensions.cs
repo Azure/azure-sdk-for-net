@@ -908,7 +908,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='parameters'>
             /// Lease Container request body.
             /// </param>
-            public static LeaseContainerResponse Lease(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, LeaseContainerRequest parameters = default(LeaseContainerRequest))
+            public static LeaseContainerResponse Lease(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, LeaseContainerRequest1 parameters = default(LeaseContainerRequest1))
             {
                 return operations.LeaseAsync(resourceGroupName, accountName, containerName, parameters).GetAwaiter().GetResult();
             }
@@ -942,7 +942,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LeaseContainerResponse> LeaseAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, LeaseContainerRequest parameters = default(LeaseContainerRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LeaseContainerResponse> LeaseAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string containerName, LeaseContainerRequest1 parameters = default(LeaseContainerRequest1), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.LeaseWithHttpMessagesAsync(resourceGroupName, accountName, containerName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

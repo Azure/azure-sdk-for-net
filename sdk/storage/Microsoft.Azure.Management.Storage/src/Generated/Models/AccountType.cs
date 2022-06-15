@@ -12,14 +12,11 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for LeaseContainerRequest.
+    /// Defines values for AccountType.
     /// </summary>
-    public static class LeaseContainerRequest
+    public static class AccountType
     {
-        public const string Acquire = "Acquire";
-        public const string Renew = "Renew";
-        public const string Change = "Change";
-        public const string Release = "Release";
-        public const string Break = "Break";
+        public const string User = "User";
+        public const string Computer = "Computer";
     }
 }

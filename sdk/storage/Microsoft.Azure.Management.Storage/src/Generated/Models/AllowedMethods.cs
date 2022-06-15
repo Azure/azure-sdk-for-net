@@ -12,14 +12,17 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
 
     /// <summary>
-    /// Defines values for LeaseContainerRequest.
+    /// Defines values for AllowedMethods.
     /// </summary>
-    public static class LeaseContainerRequest
+    public static class AllowedMethods
     {
-        public const string Acquire = "Acquire";
-        public const string Renew = "Renew";
-        public const string Change = "Change";
-        public const string Release = "Release";
-        public const string Break = "Break";
+        public const string DELETE = "DELETE";
+        public const string GET = "GET";
+        public const string HEAD = "HEAD";
+        public const string MERGE = "MERGE";
+        public const string POST = "POST";
+        public const string OPTIONS = "OPTIONS";
+        public const string PUT = "PUT";
+        public const string PATCH = "PATCH";
     }
 }
