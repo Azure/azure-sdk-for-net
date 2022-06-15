@@ -129,6 +129,7 @@ directive:
       $.CheckNameAvailabilityInput['x-ms-client-name'] = 'CdnNameAvailabilityContent';
       $.CheckNameAvailabilityOutput['x-ms-client-name'] = 'CdnNameAvailabilityResult';
       $.ValidateProbeOutput['x-ms-client-name'] = 'ValidateProbeResult';
+      $.CacheConfiguration.properties.queryParameters['x-ms-client-name'] = 'specifiedQueryStrings';
       $.ValidateCustomDomainOutput.properties.customDomainValidated['x-ms-client-name'] = 'isCustomDomainValid';
       $.CustomDomainProperties.properties.customHttpsParameters['x-ms-client-name'] = 'customDomainHttpsContent';
       $.CustomDomainProperties.properties.customHttpsProvisioningSubstate['x-ms-client-name'] = 'customHttpsAvailabilityState';
@@ -257,6 +258,7 @@ directive:
       $.CheckEndpointNameAvailabilityOutput['x-ms-client-name'] = 'EndpointNameAvailabilityResult';
       $.SecurityPolicyWebApplicationFirewallParameters['x-ms-client-name'] = 'SecurityPolicyWebApplicationFirewall';
       $.ActivatedResourceReference['x-ms-client-name'] = 'FrontDoorActivatedResourceData';
+      $.AfdRouteCacheConfiguration.properties.queryParameters['x-ms-client-name'] = 'specifiedQueryStrings';
       $.AFDDomainUpdatePropertiesParameters.properties.azureDnsZone['x-ms-client-name'] = 'dnsZone';
       $.AFDOriginUpdatePropertiesParameters.properties.azureOrigin['x-ms-client-name'] = 'origin';
       $.AFDOriginGroupUpdatePropertiesParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes['x-ms-client-name'] = 'trafficRestorationTimeInMinutes';

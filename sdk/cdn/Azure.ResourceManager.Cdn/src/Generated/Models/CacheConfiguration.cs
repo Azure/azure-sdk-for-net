@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of CacheConfiguration. </summary>
         /// <param name="queryStringCachingBehavior"> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </param>
-        /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
+        /// <param name="specifiedQueryStrings"> query parameters to include or exclude (comma separated). </param>
         /// <param name="isCompressionEnabled"> Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won&apos;t be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-        internal CacheConfiguration(RuleQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, RuleIsCompressionEnabled? isCompressionEnabled, RuleCacheBehavior? cacheBehavior, TimeSpan? cacheDuration)
+        internal CacheConfiguration(RuleQueryStringCachingBehavior? queryStringCachingBehavior, string specifiedQueryStrings, RuleIsCompressionEnabled? isCompressionEnabled, RuleCacheBehavior? cacheBehavior, TimeSpan? cacheDuration)
         {
             QueryStringCachingBehavior = queryStringCachingBehavior;
-            QueryParameters = queryParameters;
+            SpecifiedQueryStrings = specifiedQueryStrings;
             IsCompressionEnabled = isCompressionEnabled;
             CacheBehavior = cacheBehavior;
             CacheDuration = cacheDuration;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </summary>
         public RuleQueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
         /// <summary> query parameters to include or exclude (comma separated). </summary>
-        public string QueryParameters { get; set; }
+        public string SpecifiedQueryStrings { get; set; }
         /// <summary> Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won&apos;t be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </summary>
         public RuleIsCompressionEnabled? IsCompressionEnabled { get; set; }
         /// <summary> Caching behavior for the requests. </summary>

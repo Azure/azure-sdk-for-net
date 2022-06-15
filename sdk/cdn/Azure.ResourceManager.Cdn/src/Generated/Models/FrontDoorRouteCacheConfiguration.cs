@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of FrontDoorRouteCacheConfiguration. </summary>
         /// <param name="queryStringCachingBehavior"> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </param>
-        /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
+        /// <param name="specifiedQueryStrings"> query parameters to include or exclude (comma separated). </param>
         /// <param name="compressionSettings"> compression settings. </param>
-        internal FrontDoorRouteCacheConfiguration(FrontDoorQueryStringCachingBehavior? queryStringCachingBehavior, string queryParameters, RouteCacheCompressionSettings compressionSettings)
+        internal FrontDoorRouteCacheConfiguration(FrontDoorQueryStringCachingBehavior? queryStringCachingBehavior, string specifiedQueryStrings, RouteCacheCompressionSettings compressionSettings)
         {
             QueryStringCachingBehavior = queryStringCachingBehavior;
-            QueryParameters = queryParameters;
+            SpecifiedQueryStrings = specifiedQueryStrings;
             CompressionSettings = compressionSettings;
         }
 
         /// <summary> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </summary>
         public FrontDoorQueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
         /// <summary> query parameters to include or exclude (comma separated). </summary>
-        public string QueryParameters { get; set; }
+        public string SpecifiedQueryStrings { get; set; }
         /// <summary> compression settings. </summary>
         public RouteCacheCompressionSettings CompressionSettings { get; set; }
     }
