@@ -103,10 +103,13 @@ directive:
     where: $.paths['/{roleDefinitionId}']
     transform: $ = {}
 
-  # Rename models with too long names
+  # Rename models
   - rename-model:
       from: RoleAssignmentScheduleRequestProperties
       to: RoleAssignmentSchedule
+  - rename-model:
+      from: ProviderOperationsMetadata
+      to: ProviderOperations
 
   # Assign the specified type
   # - from: RoleAssignmentSchedule.json

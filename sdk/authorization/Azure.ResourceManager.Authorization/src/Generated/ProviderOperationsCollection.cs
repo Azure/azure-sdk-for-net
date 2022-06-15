@@ -21,28 +21,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProviderOperationsMetadataResource" /> and their operations.
-    /// Each <see cref="ProviderOperationsMetadataResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="ProviderOperationsMetadataCollection" /> instance call the GetProviderOperationsMetadata method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="ProviderOperationsResource" /> and their operations.
+    /// Each <see cref="ProviderOperationsResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
+    /// To get a <see cref="ProviderOperationsCollection" /> instance call the GetProviderOperations method from an instance of <see cref="TenantResource" />.
     /// </summary>
-    public partial class ProviderOperationsMetadataCollection : ArmCollection, IEnumerable<ProviderOperationsMetadataResource>, IAsyncEnumerable<ProviderOperationsMetadataResource>
+    public partial class ProviderOperationsCollection : ArmCollection, IEnumerable<ProviderOperationsResource>, IAsyncEnumerable<ProviderOperationsResource>
     {
-        private readonly ClientDiagnostics _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics;
-        private readonly ProviderOperationsMetadataRestOperations _providerOperationsMetadataProviderOperationsMetadataRestClient;
+        private readonly ClientDiagnostics _providerOperationsProviderOperationsMetadataClientDiagnostics;
+        private readonly ProviderOperationsMetadataRestOperations _providerOperationsProviderOperationsMetadataRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderOperationsMetadataCollection"/> class for mocking. </summary>
-        protected ProviderOperationsMetadataCollection()
+        /// <summary> Initializes a new instance of the <see cref="ProviderOperationsCollection"/> class for mocking. </summary>
+        protected ProviderOperationsCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProviderOperationsMetadataCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProviderOperationsCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ProviderOperationsMetadataCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProviderOperationsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderOperationsMetadataResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ProviderOperationsMetadataResource.ResourceType, out string providerOperationsMetadataProviderOperationsMetadataApiVersion);
-            _providerOperationsMetadataProviderOperationsMetadataRestClient = new ProviderOperationsMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerOperationsMetadataProviderOperationsMetadataApiVersion);
+            _providerOperationsProviderOperationsMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderOperationsResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ProviderOperationsResource.ResourceType, out string providerOperationsProviderOperationsMetadataApiVersion);
+            _providerOperationsProviderOperationsMetadataRestClient = new ProviderOperationsMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerOperationsProviderOperationsMetadataApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,18 +64,18 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual async Task<Response<ProviderOperationsMetadataResource>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderOperationsResource>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.Get");
+            using var scope = _providerOperationsProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsCollection.Get");
             scope.Start();
             try
             {
-                var response = await _providerOperationsMetadataProviderOperationsMetadataRestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _providerOperationsProviderOperationsMetadataRestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProviderOperationsMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderOperationsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -94,18 +94,18 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<ProviderOperationsMetadataResource> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ProviderOperationsResource> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.Get");
+            using var scope = _providerOperationsProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsCollection.Get");
             scope.Start();
             try
             {
-                var response = _providerOperationsMetadataProviderOperationsMetadataRestClient.Get(resourceProviderNamespace, expand, cancellationToken);
+                var response = _providerOperationsProviderOperationsMetadataRestClient.Get(resourceProviderNamespace, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProviderOperationsMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderOperationsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProviderOperationsMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProviderOperationsMetadataResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProviderOperationsResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProviderOperationsResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderOperationsMetadataResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ProviderOperationsResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.GetAll");
+                using var scope = _providerOperationsProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _providerOperationsMetadataProviderOperationsMetadataRestClient.ListAsync(expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderOperationsMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _providerOperationsProviderOperationsMetadataRestClient.ListAsync(expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProviderOperationsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Authorization
                     throw;
                 }
             }
-            async Task<Page<ProviderOperationsMetadataResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ProviderOperationsResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.GetAll");
+                using var scope = _providerOperationsProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _providerOperationsMetadataProviderOperationsMetadataRestClient.ListNextPageAsync(nextLink, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderOperationsMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _providerOperationsProviderOperationsMetadataRestClient.ListNextPageAsync(nextLink, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProviderOperationsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -164,17 +164,17 @@ namespace Azure.ResourceManager.Authorization
         /// </summary>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProviderOperationsMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProviderOperationsMetadataResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProviderOperationsResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProviderOperationsResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<ProviderOperationsMetadataResource> FirstPageFunc(int? pageSizeHint)
+            Page<ProviderOperationsResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.GetAll");
+                using var scope = _providerOperationsProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _providerOperationsMetadataProviderOperationsMetadataRestClient.List(expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderOperationsMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _providerOperationsProviderOperationsMetadataRestClient.List(expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProviderOperationsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -182,14 +182,14 @@ namespace Azure.ResourceManager.Authorization
                     throw;
                 }
             }
-            Page<ProviderOperationsMetadataResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ProviderOperationsResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.GetAll");
+                using var scope = _providerOperationsProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _providerOperationsMetadataProviderOperationsMetadataRestClient.ListNextPage(nextLink, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProviderOperationsMetadataResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _providerOperationsProviderOperationsMetadataRestClient.ListNextPage(nextLink, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ProviderOperationsResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -214,11 +214,11 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.Exists");
+            using var scope = _providerOperationsProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _providerOperationsMetadataProviderOperationsMetadataRestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _providerOperationsProviderOperationsMetadataRestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope = _providerOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsMetadataCollection.Exists");
+            using var scope = _providerOperationsProviderOperationsMetadataClientDiagnostics.CreateScope("ProviderOperationsCollection.Exists");
             scope.Start();
             try
             {
-                var response = _providerOperationsMetadataProviderOperationsMetadataRestClient.Get(resourceProviderNamespace, expand, cancellationToken: cancellationToken);
+                var response = _providerOperationsProviderOperationsMetadataRestClient.Get(resourceProviderNamespace, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
-        IEnumerator<ProviderOperationsMetadataResource> IEnumerable<ProviderOperationsMetadataResource>.GetEnumerator()
+        IEnumerator<ProviderOperationsResource> IEnumerable<ProviderOperationsResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Authorization
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ProviderOperationsMetadataResource> IAsyncEnumerable<ProviderOperationsMetadataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ProviderOperationsResource> IAsyncEnumerable<ProviderOperationsResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

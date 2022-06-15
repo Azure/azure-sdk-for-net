@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static ProviderOperationsMetadataListResult DeserializeProviderOperationsMetadataListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ProviderOperationsMetadataData>> value = default;
+            Optional<IReadOnlyList<ProviderOperationsData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProviderOperationsMetadataData> array = new List<ProviderOperationsMetadataData>();
+                    List<ProviderOperationsData> array = new List<ProviderOperationsData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderOperationsMetadataData.DeserializeProviderOperationsMetadataData(item));
+                        array.Add(ProviderOperationsData.DeserializeProviderOperationsData(item));
                     }
                     value = array;
                     continue;

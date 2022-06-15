@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> A class representing the ProviderOperationsMetadata data model. </summary>
-    public partial class ProviderOperationsMetadataData : ResourceData
+    /// <summary> A class representing the ProviderOperations data model. </summary>
+    public partial class ProviderOperationsData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProviderOperationsMetadataData. </summary>
-        internal ProviderOperationsMetadataData()
+        /// <summary> Initializes a new instance of ProviderOperationsData. </summary>
+        internal ProviderOperationsData()
         {
             ResourceTypes = new ChangeTrackingList<ProviderOperationsResourceType>();
             Operations = new ChangeTrackingList<ProviderOperation>();
         }
 
-        /// <summary> Initializes a new instance of ProviderOperationsMetadataData. </summary>
+        /// <summary> Initializes a new instance of ProviderOperationsData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="displayName"> The provider display name. </param>
         /// <param name="resourceTypes"> The provider resource types. </param>
         /// <param name="operations"> The provider operations. </param>
-        internal ProviderOperationsMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<ProviderOperationsResourceType> resourceTypes, IReadOnlyList<ProviderOperation> operations) : base(id, name, resourceType, systemData)
+        internal ProviderOperationsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<ProviderOperationsResourceType> resourceTypes, IReadOnlyList<ProviderOperation> operations) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ResourceTypes = resourceTypes;

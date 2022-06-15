@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    public partial class ProviderOperationsMetadataData
+    public partial class ProviderOperationsData
     {
-        internal static ProviderOperationsMetadataData DeserializeProviderOperationsMetadataData(JsonElement element)
+        internal static ProviderOperationsData DeserializeProviderOperationsData(JsonElement element)
         {
             Optional<string> displayName = default;
             Optional<IReadOnlyList<ProviderOperationsResourceType>> resourceTypes = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new ProviderOperationsMetadataData(id, name, type, systemData, displayName.Value, Optional.ToList(resourceTypes), Optional.ToList(operations));
+            return new ProviderOperationsData(id, name, type, systemData, displayName.Value, Optional.ToList(resourceTypes), Optional.ToList(operations));
         }
     }
 }
