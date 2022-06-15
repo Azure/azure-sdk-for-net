@@ -63,9 +63,6 @@ directive:
     where: $.definitions.Permission
     transform: $['x-ms-client-name'] = "AzurePermission"
   - from: common-types.json
-    where: $.definitions.Permission
-    transform: $['x-ms-client-name'] = "AzurePermission"
-  - from: common-types.json
     where: $.definitions.Principal
     transform: $['x-ms-client-name'] = "AzurePrincipal"
   - from: RoleAssignmentSchedule.json
@@ -86,15 +83,12 @@ directive:
   - from: RoleEligibilityScheduleRequest.json
     where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.status
     transform: $['x-ms-enum'].name = "RoleEligibilityScheduleRequestStatus"
-
   - from: RoleAssignmentScheduleRequest.json
     where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
     transform: $['x-ms-enum'].name = "RoleAssignmentScheduleType"
   - from: RoleEligibilityScheduleRequest.json
     where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
     transform: $['x-ms-enum'].name = "RoleEligibilityScheduleType"
-
-
 
   # Rename the name of the common class
   - from: authorization-ProviderOperationsCalls.json
@@ -124,5 +118,4 @@ directive:
   # - from: RoleAssignmentScheduleRequest.json
   #   where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.linkedRoleEligibilityScheduleId
   #   transform: $['x-ms-format'] = 'azure-location'
-
 ```
