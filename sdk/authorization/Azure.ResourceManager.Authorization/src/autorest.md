@@ -58,10 +58,6 @@ directive:
     where: $.definitions.RoleManagementPolicyExpirationRule.properties.maximumDuration
     transform: $['x-ms-format'] = 'duration-constant'
 
-  - rename-model:
-      from: RoleAssignmentScheduleRequestProperties
-      to: RoleAssignmentSchedule
-
   # change single class name
   - from: authorization-RoleDefinitionsCalls.json
     where: $.definitions.Permission
@@ -72,28 +68,38 @@ directive:
   - from: common-types.json
     where: $.definitions.Principal
     transform: $['x-ms-client-name'] = "AzurePrincipal"
-
   - from: RoleAssignmentSchedule.json
     where: $.definitions.RoleAssignmentScheduleProperties.properties.status
     transform: $['x-ms-enum'].name = "RoleAssignmentScheduleStatus"
   - from: RoleAssignmentScheduleInstance.json
     where: $.definitions.RoleAssignmentScheduleInstanceProperties.properties.status
     transform: $['x-ms-enum'].name = "RoleAssignmentScheduleInstanceStatus"
-  # - from: RoleAssignmentScheduleRequest.json
-  #   where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.status
-  #   transform: $['x-ms-enum'].name = "RoleAssignmentScheduleRequestStatus"
-  # - from: RoleAssignmentScheduleRequest.json
-  #   where: $.definitions.RoleAssignmentScheduleRequestFilter.properties.principalId.description
-  #   transform: $ = "foo"
-  # - from: RoleAssignmentScheduleRequest.json
-  #   where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.type
-  #   transform: $['x-ms-enum'].name = "RoleAssignmentScheduleRequestType"
+  - from: RoleAssignmentScheduleRequest.json
+    where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.status
+    transform: $['x-ms-enum'].name = "RoleAssignmentScheduleRequestStatus"
+  - from: RoleEligibilitySchedule.json
+    where: $.definitions.RoleEligibilityScheduleProperties.properties.status
+    transform: $['x-ms-enum'].name = "RoleEligibilityScheduleStatus"
+  - from: RoleEligibilityScheduleInstance.json
+    where: $.definitions.RoleEligibilityScheduleInstanceProperties.properties.status
+    transform: $['x-ms-enum'].name = "RoleEligibilityScheduleInstanceStatus"
+  - from: RoleEligibilityScheduleRequest.json
+    where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.status
+    transform: $['x-ms-enum'].name = "RoleEligibilityScheduleRequestStatus"
+
+  - from: RoleAssignmentScheduleRequest.json
+    where: $.definitions.RoleAssignmentScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
+    transform: $['x-ms-enum'].name = "RoleAssignmentScheduleType"
+  - from: RoleEligibilityScheduleRequest.json
+    where: $.definitions.RoleEligibilityScheduleRequestProperties.properties.scheduleInfo.properties.expiration.properties.type
+    transform: $['x-ms-enum'].name = "RoleEligibilityScheduleType"
+
+
 
   # Rename the name of the common class
   - from: authorization-ProviderOperationsCalls.json
     where: $.definitions.ResourceType
     transform:  $['x-ms-client-name'] = "ProviderOperationsResourceType"
-
 
   # remove all ById Path
   - from: authorization-RoleAssignmentsCalls.json
@@ -102,6 +108,11 @@ directive:
   - from: authorization-RoleDefinitionsCalls.json
     where: $.paths['/{roleDefinitionId}']
     transform: $ = {}
+
+  # Rename models with too long names
+  - rename-model:
+      from: RoleAssignmentScheduleRequestProperties
+      to: RoleAssignmentSchedule
 
   # Assign the specified type
   # - from: RoleAssignmentSchedule.json

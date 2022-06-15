@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
         /// <param name="createdOn"> DateTime when role eligibility schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleEligibilityScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, string roleEligibilityScheduleId, Status? status, DateTimeOffset? startOn, DateTimeOffset? endOn, MemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleEligibilityScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, string roleEligibilityScheduleId, RoleEligibilityScheduleInstanceStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, MemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Id of the master role eligibility schedule. </summary>
         public string RoleEligibilityScheduleId { get; }
         /// <summary> The status of the role eligibility schedule instance. </summary>
-        public Status? Status { get; }
+        public RoleEligibilityScheduleInstanceStatus? Status { get; }
         /// <summary> The startDateTime of the role eligibility schedule instance. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The endDateTime of the role eligibility schedule instance. </summary>

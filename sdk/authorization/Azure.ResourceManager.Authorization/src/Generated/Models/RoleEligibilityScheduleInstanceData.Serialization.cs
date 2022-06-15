@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> principalId = default;
             Optional<PrincipalType> principalType = default;
             Optional<string> roleEligibilityScheduleId = default;
-            Optional<Status> status = default;
+            Optional<RoleEligibilityScheduleInstanceStatus> status = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
             Optional<MemberType> memberType = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new Status(property0.Value.GetString());
+                            status = new RoleEligibilityScheduleInstanceStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startDateTime"))

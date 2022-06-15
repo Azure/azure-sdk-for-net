@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleAssignmentScheduleInfoExpiration DeserializeRoleAssignmentScheduleInfoExpiration(JsonElement element)
         {
-            Optional<Type> type = default;
+            Optional<RoleAssignmentScheduleType> type = default;
             Optional<DateTimeOffset> endDateTime = default;
             Optional<TimeSpan> duration = default;
             foreach (var property in element.EnumerateObject())
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new Type(property.Value.GetString());
+                    type = new RoleAssignmentScheduleType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("endDateTime"))

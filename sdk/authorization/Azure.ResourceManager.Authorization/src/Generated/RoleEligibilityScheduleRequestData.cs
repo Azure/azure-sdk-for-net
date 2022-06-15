@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="createdOn"> DateTime when role eligibility schedule request was created. </param>
         /// <param name="requestorId"> Id of the user who created this request. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, RequestType? requestType, Status? status, string approvalId, RoleEligibilityScheduleRequestPropertiesScheduleInfo scheduleInfo, string targetRoleEligibilityScheduleId, string targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, string requestorId, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, RequestType? requestType, RoleEligibilityScheduleRequestStatus? status, string approvalId, RoleEligibilityScheduleRequestPropertiesScheduleInfo scheduleInfo, string targetRoleEligibilityScheduleId, string targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, string requestorId, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc. </summary>
         public RequestType? RequestType { get; set; }
         /// <summary> The status of the role eligibility schedule request. </summary>
-        public Status? Status { get; }
+        public RoleEligibilityScheduleRequestStatus? Status { get; }
         /// <summary> The approvalId of the role eligibility schedule request. </summary>
         public string ApprovalId { get; }
         /// <summary> Schedule info of the role eligibility schedule. </summary>

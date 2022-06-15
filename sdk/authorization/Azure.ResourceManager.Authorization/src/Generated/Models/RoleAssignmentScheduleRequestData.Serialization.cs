@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> principalId = default;
             Optional<PrincipalType> principalType = default;
             Optional<RequestType> requestType = default;
-            Optional<Status> status = default;
+            Optional<RoleAssignmentScheduleRequestStatus> status = default;
             Optional<string> approvalId = default;
             Optional<string> targetRoleAssignmentScheduleId = default;
             Optional<string> targetRoleAssignmentScheduleInstanceId = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new Status(property0.Value.GetString());
+                            status = new RoleAssignmentScheduleRequestStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("approvalId"))

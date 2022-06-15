@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="createdOn"> DateTime when role eligibility schedule was created. </param>
         /// <param name="updatedOn"> DateTime when role eligibility schedule was modified. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleEligibilityScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, string roleEligibilityScheduleRequestId, MemberType? memberType, Status? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        internal RoleEligibilityScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, string roleDefinitionId, string principalId, PrincipalType? principalType, string roleEligibilityScheduleRequestId, MemberType? memberType, RoleEligibilityScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, ExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Membership type of the role eligibility schedule. </summary>
         public MemberType? MemberType { get; }
         /// <summary> The status of the role eligibility schedule. </summary>
-        public Status? Status { get; }
+        public RoleEligibilityScheduleStatus? Status { get; }
         /// <summary> Start DateTime when role eligibility schedule. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> End DateTime when role eligibility schedule. </summary>
