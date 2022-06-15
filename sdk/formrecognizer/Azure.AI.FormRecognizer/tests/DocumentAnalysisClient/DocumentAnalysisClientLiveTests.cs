@@ -1388,7 +1388,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net-pr/issues/1728")]
         public async Task StartAnalyzeDocumentCanParseMultipageReceiptWithBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
