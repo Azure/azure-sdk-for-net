@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources

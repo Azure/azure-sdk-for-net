@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary> A class representing the MachineLearningWorkspace data model. </summary>
-    public partial class MachineLearningWorkspaceData : ResourceData
+    public partial class MachineLearningWorkspaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MachineLearningWorkspaceData. </summary>
-        public MachineLearningWorkspaceData()
+        /// <param name="location"> The location. </param>
+        public MachineLearningWorkspaceData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             PrivateEndpointConnections = new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
             SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkResource>();
         }
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
         /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
         /// <param name="description"> The description of this workspace. </param>
@@ -57,11 +57,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="tenantId"> The tenant id associated with this workspace. </param>
         /// <param name="storageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
         /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
-        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, AzureLocation? location, IDictionary<string, string> tags, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri) : base(id, name, resourceType, systemData)
+        internal MachineLearningWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MachineLearningSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, Uri discoveryUri, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, Guid? tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
-            Location = location;
-            Tags = tags;
             Sku = sku;
             WorkspaceId = workspaceId;
             Description = description;
@@ -91,10 +89,6 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Specifies the location of the resource. </summary>
-        public AzureLocation? Location { get; set; }
-        /// <summary> Contains resource tags defined as key/value pairs. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
         public MachineLearningSku Sku { get; set; }
         /// <summary> The immutable id associated with this workspace. </summary>
