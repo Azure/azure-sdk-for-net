@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountCheckNameAvailabilityContent : IUtf8JsonSerializable
+    public partial class StorageAccountNameAvailabilityContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ResourceType.ToString());
+            writer.WriteStringValue(ResourceType);
             writer.WriteEndObject();
         }
     }
