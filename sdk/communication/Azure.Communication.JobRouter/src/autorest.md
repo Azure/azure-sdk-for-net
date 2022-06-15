@@ -18,6 +18,7 @@ require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/5cd329c4ab95ed45749f78026cae892b73015a82/specification/communication/data-plane/JobRouter/readme.md
 
 generation1-convenience-client: true
+reflect-api-versions: true
 ```
 
 ### Rename AcceptJobOfferResponse to AcceptJobOfferResult
@@ -27,4 +28,12 @@ directive:
     where: '$.definitions.AcceptJobOfferResponse'
     transform: >
       $["x-ms-client-name"] = "AcceptJobOfferResult";
+```
+
+### Remove distributionPolicyId as required from JobQueue
+```yaml
+directive:
+  - from: swagger-document
+    where: '$.definitions.JobQueue'
+    transform: delete $.required
 ```

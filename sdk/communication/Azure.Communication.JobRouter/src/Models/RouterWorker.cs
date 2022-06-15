@@ -16,7 +16,10 @@ namespace Azure.Communication.JobRouter
         {
             get
             {
-                return Labels?.ToDictionary(x => x.Key, x => x.Value);
+                return Labels != null
+                    ? Labels?.ToDictionary(x => x.Key,
+                        x => x.Value)
+                    : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
@@ -34,7 +37,10 @@ namespace Azure.Communication.JobRouter
         {
             get
             {
-                return Tags?.ToDictionary(x => x.Key, x => x.Value);
+                return Tags != null
+                    ? Tags?.ToDictionary(x => x.Key,
+                        x => x.Value)
+                    : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
@@ -47,9 +53,20 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public LabelCollection Tags { get; set; }
 
-        /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
         [CodeGenMember("ChannelConfigurations")]
 #pragma warning disable CA2227 // Collection properties should be read only
+        internal IDictionary<string, ChannelConfiguration> _channelConfigurations {
+            get
+            {
+                return ChannelConfigurations ?? new ChangeTrackingDictionary<string, ChannelConfiguration>();
+            }
+            set
+            {
+                ChannelConfigurations = value;
+            }
+        }
+
+        /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
         public IDictionary<string, ChannelConfiguration> ChannelConfigurations { get; set; }
 
         [CodeGenMember("QueueAssignments")]
@@ -57,11 +74,14 @@ namespace Azure.Communication.JobRouter
         {
             get
             {
-                return QueueAssignments.ToDictionary(x => x.Key, x => (object)x.Value);
+                return QueueAssignments != null
+                    ? QueueAssignments.ToDictionary(x => x.Key,
+                        x => (object)x.Value)
+                    : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
-                QueueAssignments = value.ToDictionary(x => x.Key, x => new QueueAssignment());
+                QueueAssignments = value.ToDictionary(x => x.Key, x => new QueueAssignment(null));
             }
         }
 

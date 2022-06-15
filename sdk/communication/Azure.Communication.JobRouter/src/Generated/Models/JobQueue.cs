@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,19 +13,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> A queue that can contain jobs to be routed. </summary>
     public partial class JobQueue
     {
-        /// <summary> Initializes a new instance of JobQueue. </summary>
-        /// <param name="distributionPolicyId"> The ID of the distribution policy that will determine how a job is distributed to workers. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
-        public JobQueue(string distributionPolicyId)
-        {
-            if (distributionPolicyId == null)
-            {
-                throw new ArgumentNullException(nameof(distributionPolicyId));
-            }
-
-            DistributionPolicyId = distributionPolicyId;
-            _labels = new ChangeTrackingDictionary<string, object>();
-        }
 
         /// <summary> Initializes a new instance of JobQueue. </summary>
         /// <param name="id"> The Id of this queue. </param>

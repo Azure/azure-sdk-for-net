@@ -47,11 +47,11 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("dispositionCode");
                 writer.WriteStringValue(DispositionCode);
             }
-            if (Optional.IsCollectionDefined(RequestedWorkerSelectors))
+            if (Optional.IsCollectionDefined(_requestedWorkerSelectors))
             {
                 writer.WritePropertyName("requestedWorkerSelectors");
                 writer.WriteStartArray();
-                foreach (var item in RequestedWorkerSelectors)
+                foreach (var item in _requestedWorkerSelectors)
                 {
                     writer.WriteObjectValue(item);
                 }

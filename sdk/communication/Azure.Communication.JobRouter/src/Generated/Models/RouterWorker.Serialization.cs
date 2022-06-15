@@ -54,11 +54,11 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ChannelConfigurations))
+            if (Optional.IsCollectionDefined(_channelConfigurations))
             {
                 writer.WritePropertyName("channelConfigurations");
                 writer.WriteStartObject();
-                foreach (var item in ChannelConfigurations)
+                foreach (var item in _channelConfigurations)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value);

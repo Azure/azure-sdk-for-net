@@ -1132,9 +1132,9 @@ using Azure.Core.Pipeline;
                     ChannelReference = options?.ChannelReference,
                     QueueId = options?.QueueId,
                     Priority = options?.Priority,
-                    RequestedWorkerSelectors = options?.RequestedWorkerSelectors.ToList(),
+                    RequestedWorkerSelectors = options?.RequestedWorkerSelectors,
                     Tags = options?.Tags,
-                    Notes = options?.Notes != null ? new SortedDictionary<DateTimeOffset, string>(options?.Notes) : new SortedDictionary<DateTimeOffset, string>(),
+                    Notes = options?.Notes,
                 };
 
                 return await RestClient.UpsertJobAsync(
@@ -1183,9 +1183,9 @@ using Azure.Core.Pipeline;
                     ChannelReference = options?.ChannelReference,
                     QueueId = options?.QueueId,
                     Priority = options?.Priority,
-                    RequestedWorkerSelectors = options?.RequestedWorkerSelectors.ToList(),
+                    RequestedWorkerSelectors = options?.RequestedWorkerSelectors,
                     Tags = options?.Tags,
-                    Notes = options?.Notes != null ? new SortedDictionary<DateTimeOffset, string>(options?.Notes) : new SortedDictionary<DateTimeOffset, string>(),
+                    Notes = options?.Notes,
                 };
 
                 return RestClient.UpsertJob(
@@ -1236,9 +1236,9 @@ using Azure.Core.Pipeline;
                     ChannelReference = options?.ChannelReference,
                     QueueId = queueId,
                     Priority = options?.Priority,
-                    RequestedWorkerSelectors = options?.RequestedWorkerSelectors.ToList(),
+                    RequestedWorkerSelectors = options?.RequestedWorkerSelectors,
                     Tags = options?.Tags,
-                    Notes = options?.Notes != null ? new SortedDictionary<DateTimeOffset, string>(options?.Notes) : new SortedDictionary<DateTimeOffset, string>(),
+                    Notes = options?.Notes,
                 };
 
                 return await RestClient.UpsertJobAsync(
@@ -1286,9 +1286,9 @@ using Azure.Core.Pipeline;
                     ChannelReference = options?.ChannelReference,
                     QueueId = queueId,
                     Priority = options?.Priority,
-                    RequestedWorkerSelectors = options?.RequestedWorkerSelectors.ToList(),
+                    RequestedWorkerSelectors = options?.RequestedWorkerSelectors,
                     Tags = options?.Tags,
-                    Notes = options?.Notes != null ? new SortedDictionary<DateTimeOffset, string>(options?.Notes) : new SortedDictionary<DateTimeOffset, string>(),
+                    Notes = options?.Notes,
                 };
 
                 return RestClient.UpsertJob(
@@ -2071,10 +2071,11 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var request = new JobQueue(distributionPolicyId)
+                var request = new JobQueue()
                 {
+                    DistributionPolicyId = distributionPolicyId,
                     Name = options?.Name,
-                    Labels = options?.Labels,
+                    Labels = options?.Labels ?? new LabelCollection(),
                     ExceptionPolicyId = options?.ExceptionPolicyId,
                 };
 
@@ -2110,10 +2111,11 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var request = new JobQueue(distributionPolicyId)
+                var request = new JobQueue()
                 {
+                    DistributionPolicyId = distributionPolicyId,
                     Name = options?.Name,
-                    Labels = options?.Labels,
+                    Labels = options?.Labels ?? new LabelCollection(),
                     ExceptionPolicyId = options?.ExceptionPolicyId,
                 };
 
@@ -2147,10 +2149,11 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var request = new JobQueue(options.DistributionPolicyId)
+                var request = new JobQueue()
                 {
+                    DistributionPolicyId = options.DistributionPolicyId,
                     Name = options.Name,
-                    Labels = options.Labels,
+                    Labels = options.Labels ?? new LabelCollection(),
                     ExceptionPolicyId = options.ExceptionPolicyId,
                 };
 
@@ -2180,15 +2183,15 @@ using Azure.Core.Pipeline;
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(id, nameof(id));
-            Argument.AssertNotNullOrWhiteSpace(options.DistributionPolicyId, nameof(options.DistributionPolicyId));
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RouterClient)}.{nameof(UpdateQueue)}");
             scope.Start();
             try
             {
-                var request = new JobQueue(options.DistributionPolicyId)
+                var request = new JobQueue()
                 {
+                    DistributionPolicyId = options.DistributionPolicyId,
                     Name = options.Name,
-                    Labels = options.Labels,
+                    Labels = options.Labels ?? new LabelCollection(),
                     ExceptionPolicyId = options.ExceptionPolicyId,
                 };
 
@@ -2456,7 +2459,7 @@ using Azure.Core.Pipeline;
                 var request = new RouterWorker()
                 {
                     TotalCapacity = totalCapacity,
-                    QueueAssignments = options?.QueueIds?.ToDictionary(x => x, x => new QueueAssignment()),
+                    QueueAssignments = options?.QueueIds?.ToDictionary(x => x, x => new QueueAssignment(null)),
                     Labels = options?.Labels,
                     ChannelConfigurations = options?.ChannelConfigurations,
                     AvailableForOffers = options?.AvailableForOffers,
@@ -2499,7 +2502,7 @@ using Azure.Core.Pipeline;
                 var request = new RouterWorker()
                 {
                     TotalCapacity = totalCapacity,
-                    QueueAssignments = options?.QueueIds?.ToDictionary(x => x, x => new QueueAssignment()),
+                    QueueAssignments = options?.QueueIds?.ToDictionary(x => x, x => new QueueAssignment(null)),
                     Labels = options?.Labels,
                     ChannelConfigurations = options?.ChannelConfigurations,
                     AvailableForOffers = options?.AvailableForOffers,
@@ -2539,7 +2542,7 @@ using Azure.Core.Pipeline;
                 var request = new RouterWorker()
                 {
                     TotalCapacity = options.TotalCapacity,
-                    QueueAssignments = options.QueueIds?.ToDictionary(x => x, x => new QueueAssignment()),
+                    QueueAssignments = options.QueueIds?.ToDictionary(x => x, x => new QueueAssignment(null)),
                     Labels = options.Labels,
                     ChannelConfigurations = options.ChannelConfigurations,
                     AvailableForOffers = options.AvailableForOffers,
@@ -2580,7 +2583,7 @@ using Azure.Core.Pipeline;
                 var request = new RouterWorker()
                 {
                     TotalCapacity = options.TotalCapacity,
-                    QueueAssignments = options.QueueIds?.ToDictionary(x => x, x => new QueueAssignment()),
+                    QueueAssignments = options.QueueIds?.ToDictionary(x => x, x => new QueueAssignment(null)),
                     Labels = options.Labels,
                     ChannelConfigurations = options.ChannelConfigurations,
                     AvailableForOffers = options.AvailableForOffers,
@@ -2616,10 +2619,10 @@ using Azure.Core.Pipeline;
                 try
                 {
                     Response<WorkerCollection> response = await RestClient.ListWorkersAsync(
-                        status: options.Status,
-                        channelId: options.ChannelId,
-                        queueId: options.QueueId,
-                        hasCapacity: options.HasCapacity,
+                        status: options?.Status,
+                        channelId: options?.ChannelId,
+                        queueId: options?.QueueId,
+                        hasCapacity: options?.HasCapacity,
                         maxpagesize: maxPageSize,
                         cancellationToken:  cancellationToken)
                         .ConfigureAwait(false);
@@ -2643,10 +2646,10 @@ using Azure.Core.Pipeline;
                     Response<WorkerCollection> response = await RestClient
                         .ListWorkersNextPageAsync(
                             nextLink: nextLink,
-                            status: options.Status,
-                            channelId: options.ChannelId,
-                            queueId: options.QueueId,
-                            hasCapacity: options.HasCapacity,
+                            status: options?.Status,
+                            channelId: options?.ChannelId,
+                            queueId: options?.QueueId,
+                            hasCapacity: options?.HasCapacity,
                             maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -2678,10 +2681,10 @@ using Azure.Core.Pipeline;
                 try
                 {
                     Response<WorkerCollection> response = RestClient.ListWorkers(
-                        status: options.Status,
-                        channelId: options.ChannelId,
-                        queueId: options.QueueId,
-                        hasCapacity: options.HasCapacity,
+                        status: options?.Status,
+                        channelId: options?.ChannelId,
+                        queueId: options?.QueueId,
+                        hasCapacity: options?.HasCapacity,
                         maxpagesize: maxPageSize,
                         cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -2704,10 +2707,10 @@ using Azure.Core.Pipeline;
                     Response<WorkerCollection> response = RestClient
                         .ListWorkersNextPage(
                             nextLink: nextLink,
-                            status: options.Status,
-                            channelId: options.ChannelId,
-                            queueId: options.QueueId,
-                            hasCapacity: options.HasCapacity,
+                            status: options?.Status,
+                            channelId: options?.ChannelId,
+                            queueId: options?.QueueId,
+                            hasCapacity: options?.HasCapacity,
                             maxpagesize: maxPageSize,
                             cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());

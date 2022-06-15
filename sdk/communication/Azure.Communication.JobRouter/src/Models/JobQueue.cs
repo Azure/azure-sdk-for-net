@@ -26,5 +26,10 @@ namespace Azure.Communication.JobRouter
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
         public LabelCollection Labels { get; set; }
+
+        /// <summary> Initializes a new instance of JobQueue. </summary>
+        internal JobQueue()
+        {
+        }
     }
 }

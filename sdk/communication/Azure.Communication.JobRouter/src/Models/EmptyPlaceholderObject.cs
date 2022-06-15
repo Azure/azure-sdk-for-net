@@ -4,13 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// Abstract class for empty classes.
     /// </summary>
-    public abstract class EmptyPlaceholderObject
+    public abstract class EmptyPlaceholderObject: IUtf8JsonSerializable
     {
         /// <summary>
         /// Generic value.
@@ -25,5 +27,14 @@ namespace Azure.Communication.JobRouter
         {
             Value = value;
         }
+
+        /// <inheritdoc />
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+        public void Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteEndObject();
+        }
+#pragma warning restore AZC0014 // Avoid using banned types in public API
     }
 }

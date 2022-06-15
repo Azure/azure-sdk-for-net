@@ -15,12 +15,12 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
 {
     public class RouterLiveTestBase : RecordedTestBase<RouterTestEnvironment>
     {
-        internal ConcurrentBag<Task> _cleanupTasks;
+        private ConcurrentDictionary<string, Stack<Task>> _testCleanupTasks;
         protected const string Delimeter = "-";
 
         public RouterLiveTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
-            _cleanupTasks = new ConcurrentBag<Task>();
+            _testCleanupTasks = new ConcurrentDictionary<string, Stack<Task>>();
             JsonPathSanitizers.Add("$..token");
             JsonPathSanitizers.Add("$..accessToken");
             JsonPathSanitizers.Add("$..functionKey");
@@ -34,14 +34,25 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             IdPrefix = Recording.GetVariable("id-prefix", $"sdk-{GetSmallGuid()}-");
         }
 
-        [OneTimeTearDown]
+        [TearDown]
         public async Task CleanUp()
         {
             if (Mode != RecordedTestMode.Playback)
             {
-                // Cleanup resources only during Live and Record modes
-                Parallel.ForEach(_cleanupTasks, t => t.Start());
-                await Task.WhenAll(_cleanupTasks);
+                var testName = TestContext.CurrentContext.Test.FullName;
+
+                var popTestResources = _testCleanupTasks.TryRemove(testName, out var cleanupTasks);
+                if (popTestResources)
+                {
+                    if (cleanupTasks != null && cleanupTasks.Any())
+                    {
+                        while (cleanupTasks.Count > 0)
+                        {
+                            var executableTask = cleanupTasks.Pop();
+                            await Task.Run(() => executableTask.Start());
+                        }
+                    }
+                }
             }
         }
 
@@ -83,7 +94,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         {
             RouterClient routerClient = CreateRouterClientWithConnectionString();
             var createDistributionPolicyResponse = await CreateDistributionPolicy(uniqueIdentifier);
-            var queueId = GenerateUniqueId($"{IdPrefix}{uniqueIdentifier}");
+            var queueId = GenerateUniqueId($"{IdPrefix}-{uniqueIdentifier}");
             var queueName = "DefaultQueue-Sdk-Test" + queueId;
             var queueLabels = new LabelCollection() { ["Label_1"] = "Value_1" };
             var createQueueResponse = await routerClient.CreateQueueAsync(
@@ -169,7 +180,13 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
 
         protected void AddForCleanup(Task t)
         {
-            _cleanupTasks.Add(t);
+            var testName = TestContext.CurrentContext.Test.FullName;
+
+            if (!_testCleanupTasks.ContainsKey(testName))
+            {
+                _testCleanupTasks[testName] = new Stack<Task>();
+            }
+            _testCleanupTasks[testName].Push(t);
         }
 
         #endregion

@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter
             _queueAssignments = new ChangeTrackingDictionary<string, object>();
             _labels = new ChangeTrackingDictionary<string, object>();
             _tags = new ChangeTrackingDictionary<string, object>();
-            ChannelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
+            _channelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
             Offers = new ChangeTrackingList<JobOffer>();
             AssignedJobs = new ChangeTrackingList<WorkerAssignment>();
         }
@@ -44,7 +44,7 @@ namespace Azure.Communication.JobRouter
             TotalCapacity = totalCapacity;
             _labels = labels;
             _tags = tags;
-            ChannelConfigurations = channelConfigurations;
+            _channelConfigurations = channelConfigurations;
             Offers = offers;
             AssignedJobs = assignedJobs;
             LoadRatio = loadRatio;

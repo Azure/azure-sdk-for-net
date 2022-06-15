@@ -17,7 +17,10 @@ namespace Azure.Communication.JobRouter
         {
             get
             {
-                return Labels?.ToDictionary(x => x.Key, x => x.Value);
+                return Labels != null
+                    ? Labels?.ToDictionary(x => x.Key,
+                        x => x.Value)
+                    : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
@@ -35,7 +38,10 @@ namespace Azure.Communication.JobRouter
         {
             get
             {
-                return Tags?.ToDictionary(x => x.Key, x => x.Value);
+                return Tags != null
+                    ? Tags?.ToDictionary(x => x.Key,
+                        x => x.Value)
+                    : new ChangeTrackingDictionary<string, object>();
             }
             set
             {
@@ -51,7 +57,10 @@ namespace Azure.Communication.JobRouter
         {
             get
             {
-                return Notes?.ToDictionary(x => JsonSerializer.Serialize(x.Key), x => x.Value);
+                return Notes != null
+                    ? Notes?.ToDictionary(x => JsonSerializer.Serialize(x.Key),
+                        x => x.Value)
+                    : new ChangeTrackingDictionary<string, string>();
             }
             set
             {
@@ -66,6 +75,17 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
         public IList<WorkerSelector> RequestedWorkerSelectors { get; set; }
+
+        [CodeGenMember("RequestedWorkerSelectors")]
+        internal IList<WorkerSelector> _requestedWorkerSelectors {
+            get
+            {
+                return RequestedWorkerSelectors != null ? RequestedWorkerSelectors.ToList() : new ChangeTrackingList<WorkerSelector>();
+            }
+            set
+            {
+                RequestedWorkerSelectors = value;
+            } }
 #pragma warning restore CA2227 // Collection properties should be read only
     }
 }

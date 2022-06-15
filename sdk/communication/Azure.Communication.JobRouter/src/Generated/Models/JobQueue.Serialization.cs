@@ -21,8 +21,11 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("distributionPolicyId");
-            writer.WriteStringValue(DistributionPolicyId);
+            if (Optional.IsDefined(DistributionPolicyId))
+            {
+                writer.WritePropertyName("distributionPolicyId");
+                writer.WriteStringValue(DistributionPolicyId);
+            }
             if (Optional.IsCollectionDefined(_labels))
             {
                 writer.WritePropertyName("labels");
@@ -46,7 +49,7 @@ namespace Azure.Communication.JobRouter
         {
             Optional<string> id = default;
             Optional<string> name = default;
-            string distributionPolicyId = default;
+            Optional<string> distributionPolicyId = default;
             Optional<IDictionary<string, object>> labels = default;
             Optional<string> exceptionPolicyId = default;
             foreach (var property in element.EnumerateObject())
@@ -87,7 +90,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new JobQueue(id.Value, name.Value, distributionPolicyId, Optional.ToDictionary(labels), exceptionPolicyId.Value);
+            return new JobQueue(id.Value, name.Value, distributionPolicyId.Value, Optional.ToDictionary(labels), exceptionPolicyId.Value);
         }
     }
 }

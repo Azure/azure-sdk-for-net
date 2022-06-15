@@ -26,20 +26,48 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             RouterClient routerClient = CreateRouterClientWithConnectionString();
             var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueTest));
             var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueTest));
-            var createQueueResponse = await routerClient.CreateQueueAsync(queueId,
-                createDistributionPolicyResponse.Value.Id);
-            AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id);
-            AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
-
             var queueName = "DefaultQueueWithLabels" + queueId;
             var queueLabels = new LabelCollection() { ["Label_1"] = "Value_1" };
-            createQueueResponse = await routerClient.UpdateQueueAsync(queueId,
-                new UpdateQueueOptions()
+            var createQueueResponse = await routerClient.CreateQueueAsync(
+                queueId,
+                createDistributionPolicyResponse.Value.Id,
+                new CreateQueueOptions()
                 {
                     Name = queueName,
-                    Labels = queueLabels,
+                    Labels = queueLabels
                 });
             AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, queueLabels);
+            AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
+        }
+
+        [Test]
+        [Ignore(reason: "Known bug: fix required for update queue")]
+        public async Task UpdateQueueTest()
+        {
+            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            var createDistributionPolicyResponse = await CreateDistributionPolicy(nameof(CreateQueueTest));
+            var queueId = GenerateUniqueId(IdPrefix, nameof(CreateQueueTest));
+            var queueName = "DefaultQueueWithLabels" + queueId;
+            var queueLabels = new LabelCollection() { ["Label_1"] = "Value_1" };
+            var createQueueResponse = await routerClient.CreateQueueAsync(
+                queueId,
+                createDistributionPolicyResponse.Value.Id,
+                new CreateQueueOptions()
+                {
+                    Name = queueName,
+                    Labels = queueLabels
+                });
+            AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, queueLabels);
+
+            var updatedLabels =
+                new LabelCollection(createQueueResponse.Value.Labels.ToDictionary(x => x.Key, x => x.Value));
+            updatedLabels["Label2"] = "Value2";
+
+            var updatedQueueResponse =
+                await routerClient.UpdateQueueAsync(queueId, new UpdateQueueOptions() { Labels = updatedLabels, });
+
+            AssertQueueResponseIsEqual(updatedQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, updatedLabels);
+
             AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
         }
 

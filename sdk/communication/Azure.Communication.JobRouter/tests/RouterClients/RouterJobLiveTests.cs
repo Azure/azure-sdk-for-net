@@ -25,7 +25,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         {
             RouterClient routerClient = CreateRouterClientWithConnectionString();
 
-            var channelId = $"{nameof(GetJobsTest)}-Channel";
+            var channelId = GenerateUniqueId($"{nameof(GetJobsTest)}-Channel");
 
             // Setup queue
             var createQueueResponse = await CreateQueueAsync(nameof(GetJobsTest));
@@ -92,25 +92,49 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(createJob1.Id)));
             AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(createJob2.Id)));
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob2.Id)));
         }
 
         [Test]
         public async Task CreateJobWithClassificationPolicy_w_StaticPriority()
         {
             RouterClient routerClient = CreateRouterClientWithConnectionString();
+
+            // Delete this
+            var dq = "02-40-D5-4C-9A-35-6A-63-95-0D-D7-AE-0A-71-26-6F-11";
+
+            var jobsInDq = routerClient.GetJobsAsync(new GetJobsOptions() { QueueId = dq, });
+
+            await foreach (var jobPage in jobsInDq.AsPages(pageSizeHint: 100))
+            {
+                foreach (var jobPageValue in jobPage.Values)
+                {
+                    await routerClient.CancelJobAsync(jobPageValue.Id);
+                    await routerClient.DeleteJobAsync(jobPageValue.Id);
+                }
+            }
+
+            var flbkQCp = routerClient.GetClassificationPoliciesAsync();
+            await foreach (var cpPage in flbkQCp.AsPages(pageSizeHint: 100))
+            {
+                foreach (var classificationPolicy in cpPage.Values)
+                {
+                    await routerClient.DeleteClassificationPolicyAsync(classificationPolicy.Id);
+                }
+            }
+
+            _ = await routerClient.DeleteQueueAsync(dq);
+
             // Setup channel
             var channelId = GenerateUniqueId($"{nameof(CreateJobWithClassificationPolicy_w_StaticPriority)}-Channel");
 
             // Setup queue - to specify on job
-            var createQueueResponse = await CreateQueueAsync($"Q1_CP_StaticPriority");
+            var createQueueResponse = await CreateQueueAsync($"{nameof(CreateJobWithClassificationPolicy_w_StaticPriority)}-Q1_CP_StaticPriority");
             var createQueue = createQueueResponse.Value;
 
-            // Setup queue - to specify on classification fallback queue id
-            var createQueue2Response = await CreateQueueAsync($"Q2_CP_StaticPriority");
-            var createQueue2 = createQueue2Response.Value;
-
             // Setup Classification Policies
-            var classificationPolicyId = GenerateUniqueId($"{IdPrefix}-CP_StaticPriority");
+            var classificationPolicyId = GenerateUniqueId($"{IdPrefix}-{nameof(CreateJobWithClassificationPolicy_w_StaticPriority)}-CP_StaticPriority");
             var classificationPolicyName = $"StaticPriority-ClassificationPolicy";
             var priorityRule = new StaticRule(10);
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
@@ -119,13 +143,14 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Name = classificationPolicyName,
                     PrioritizationRule = priorityRule,
-                    FallbackQueueId = createQueue2.Id,
                 });
             var createClassificationPolicy = createClassificationPolicyResponse.Value;
+            AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
 
             // Create job
             var jobId = GenerateUniqueId(
                 $"{IdPrefix}{nameof(CreateJobWithClassificationPolicy_w_StaticPriority)}");
+
             var createJobResponse = await routerClient.CreateJobWithClassificationPolicyAsync(
                 id: jobId,
                 channelId: channelId,
@@ -137,6 +162,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 });
             var createJob = createJobResponse.Value;
 
+            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(jobId)));
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId)));
+
             var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob.Id),
                 job => job.Value.JobStatus == JobStatus.Queued, TimeSpan.FromSeconds(10));
 
@@ -144,10 +172,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(createJob.Id, queuedJob.Value.Id);
             Assert.AreEqual(10, queuedJob.Value.Priority); // from classification policy
             Assert.AreEqual(createQueue.Id, queuedJob.Value.QueueId); // from direct queue assignment
-
-            // in-test cleanup
-            await routerClient.CancelJobAsync(createJob.Id); // other wise queue deletion will throw error
-            await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId); // other wise default queue deletion will throw error
         }
 
         [Test]
@@ -249,17 +273,18 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
+        [Ignore(reason: "Temporarily skipped")]
         public async Task CreateJobWithQueue_And_ClassificationPolicy_w_FallbackQueue()
         {
             RouterClient routerClient = CreateRouterClientWithConnectionString();
             // Setup queue - to specify on classification default queue id
-            var createQueue1Response = await CreateQueueAsync($"Q1_CP_JobQVsFallbackQ");
+            var createQueue1Response = await CreateQueueAsync($"{nameof(CreateJobWithQueue_And_ClassificationPolicy_w_FallbackQueue)}-Q1_CP_JobQVsFallbackQ");
             var createQueue1 = createQueue1Response.Value;
-            var createQueue2Response = await CreateQueueAsync($"Q2_CP_JobQVsFallbackQ");
+            var createQueue2Response = await CreateQueueAsync($"{nameof(CreateJobWithQueue_And_ClassificationPolicy_w_FallbackQueue)}-Q2_CP_JobQVsFallbackQ");
             var createQueue2 = createQueue2Response.Value;
 
             // Setup Classification Policy - no default queue id is specified while creating classification policy - queueId should be evaluated from queueSelector
-            var classificationPolicyId = GenerateUniqueId($"{IdPrefix}-CP_JobQVsFallbackQ");
+            var classificationPolicyId = GenerateUniqueId($"{IdPrefix}-{nameof(CreateJobWithQueue_And_ClassificationPolicy_w_FallbackQueue)}-CP_JobQVsFallbackQ");
             var classificationPolicyName = $"JobQVsFallbackQ-ClassificationPolicy";
 
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
@@ -270,6 +295,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     FallbackQueueId = createQueue2.Id,
                 });
             var createClassificationPolicy = createClassificationPolicyResponse.Value;
+            AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
 
             // Create job - queue1 specified - should override default queue of classification policy
             var createJobResponse = await routerClient.CreateJobWithClassificationPolicyAsync(
@@ -282,6 +308,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     QueueId = createQueue1.Id,
                 });
             var createJob = createJobResponse.Value;
+            AddForCleanup( new Task(async () => await routerClient.CancelJobAsync(createJob.Id)));
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob.Id)));
 
             var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob.Id),
                 job => job.Value.JobStatus == JobStatus.Queued, TimeSpan.FromSeconds(10));
@@ -290,10 +318,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(createJob.Id, queuedJob.Value.Id);
             Assert.AreEqual(1, queuedJob.Value.Priority); // default value
             Assert.AreEqual(createQueue1.Id, queuedJob.Value.QueueId); // from queue selector in classification policy
-
-            // in-test cleanup
-            await routerClient.CancelJobAsync(createJob.Id); // other wise queue deletion will throw error
-            await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId); // other wise default queue deletion will throw error
         }
 
         #endregion Job Tests

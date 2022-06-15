@@ -117,6 +117,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     AvailableForOffers = true
                 });
             var registerWorker1 = registerWorker1Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(workerId1, new UpdateWorkerOptions(){ AvailableForOffers = false})));
 
             var registerWorker2Response = await routerClient.CreateWorkerAsync(
                 workerId2,
@@ -135,6 +136,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     AvailableForOffers = true,
                 });
             var registerWorker2 = registerWorker2Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(workerId2, new UpdateWorkerOptions() { AvailableForOffers = false })));
 
             var registerWorker3Response = await routerClient.CreateWorkerAsync(
                 workerId3,
@@ -153,6 +155,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     AvailableForOffers = true,
                 });
             var registerWorker3 = registerWorker3Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(workerId3, new UpdateWorkerOptions() { AvailableForOffers = false })));
 
             var registerWorker4Response = await routerClient.CreateWorkerAsync(
                 workerId4,
@@ -170,6 +173,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     AvailableForOffers = true,
                 });
             var registerWorker4 = registerWorker4Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.UpdateWorkerAsync(workerId4, new UpdateWorkerOptions() { AvailableForOffers = false })));
 
             // Query all workers with channel filter
             var channel2Workers = new HashSet<string>() { workerId1, workerId2, workerId3 };
@@ -179,9 +183,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 Assert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
-                    Assert.IsTrue(channel2Workers.Contains(worker.Id));
+                    if (channel2Workers.Contains(worker.Id))
+                    {
+                        channel2Workers.Remove(worker.Id);
+                    }
                 }
             }
+            Assert.IsEmpty(channel2Workers);
 
             // Query all workers with queue filter
             var queue2Workers = new HashSet<string>() { workerId2, workerId3 };
@@ -191,9 +199,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 Assert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
-                    Assert.IsTrue(queue2Workers.Contains(worker.Id));
+                    if (queue2Workers.Contains(worker.Id))
+                    {
+                        queue2Workers.Remove(worker.Id);
+                    }
                 }
             }
+            Assert.IsEmpty(queue2Workers);
 
             // Query all workers with channel + hasCapacity filter
             var channel1Workers = new HashSet<string>() { workerId1, workerId2, workerId3, workerId4 }; // no worker is expected to get any job
@@ -203,9 +215,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 Assert.AreEqual(1, workerPage.Values.Count);
                 foreach (var worker in workerPage.Values)
                 {
-                    Assert.IsTrue(channel1Workers.Contains(worker.Id));
+                    if (channel1Workers.Contains(worker.Id))
+                    {
+                        channel1Workers.Remove(worker.Id);
+                    }
                 }
             }
+            Assert.IsEmpty(channel1Workers);
 
             // Deregister worker1
             await routerClient.UpdateWorkerAsync(workerId1, new UpdateWorkerOptions(){ AvailableForOffers = false});

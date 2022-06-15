@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of RouterJob. </summary>
         public RouterJob()
         {
-            RequestedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
+            _requestedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
             AttachedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
             _labels = new ChangeTrackingDictionary<string, object>();
             Assignments = new ChangeTrackingDictionary<string, JobAssignment>();
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter
             QueueId = queueId;
             Priority = priority;
             DispositionCode = dispositionCode;
-            RequestedWorkerSelectors = requestedWorkerSelectors;
+            _requestedWorkerSelectors = requestedWorkerSelectors;
             AttachedWorkerSelectors = attachedWorkerSelectors;
             _labels = labels;
             Assignments = assignments;
