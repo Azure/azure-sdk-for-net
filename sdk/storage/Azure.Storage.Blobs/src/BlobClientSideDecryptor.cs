@@ -145,6 +145,8 @@ namespace Azure.Storage.Blobs
                     _ = encryptionData.EncryptedRegionInfo ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
                         nameof(EncryptionData.EncryptedRegionInfo));
                     break;
+                default:
+                    throw Errors.ClientSideEncryption.ClientSideEncryptionVersionNotSupported();
             }
             _ = encryptionData.WrappedContentKey.EncryptedKey ?? throw Errors.ClientSideEncryption.MissingEncryptionMetadata(
                 nameof(EncryptionData.WrappedContentKey.EncryptedKey));
